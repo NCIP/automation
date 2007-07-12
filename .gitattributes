@@ -1,3 +1,5 @@
 * text=auto !eol
 /README -text
+WebRoot/WEB-INF/web.xml -text
 /build.xml -text
+doc/README -text
