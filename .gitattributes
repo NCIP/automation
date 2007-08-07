@@ -7,3 +7,4 @@ conf/README -text
 db-sql/README -text
 doc/README -text
 scripts/README -text
+/template.build.properties -text
