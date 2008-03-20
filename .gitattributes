@@ -1,8 +1,8 @@
 * text=auto !eol
 /README -text
-WebRoot/README -text
-WebRoot/WEB-INF/web.xml -text
 /build.xml -text
+reference-architecture/WebRoot/README -text
+reference-architecture/WebRoot/WEB-INF/web.xml -text
 reference-architecture/conf/README -text
 reference-architecture/db-sql/README -text
 reference-architecture/doc/README -text
