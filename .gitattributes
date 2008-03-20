@@ -6,5 +6,5 @@ WebRoot/WEB-INF/web.xml -text
 reference-architecture/conf/README -text
 reference-architecture/db-sql/README -text
 reference-architecture/doc/README -text
-scripts/README -text
+reference-architecture/scripts/README -text
 /template.build.properties -text
