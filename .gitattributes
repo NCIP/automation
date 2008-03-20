@@ -1,5 +1,5 @@
 * text=auto !eol
-/README -text
+reference-architecture/README -text
 reference-architecture/WebRoot/README -text
 reference-architecture/WebRoot/WEB-INF/web.xml -text
 reference-architecture/build.xml -text
