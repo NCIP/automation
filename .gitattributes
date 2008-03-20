@@ -7,4 +7,4 @@ reference-architecture/conf/README -text
 reference-architecture/db-sql/README -text
 reference-architecture/doc/README -text
 reference-architecture/scripts/README -text
-/template.build.properties -text
+reference-architecture/template.build.properties -text
