@@ -3,8 +3,8 @@
 WebRoot/README -text
 WebRoot/WEB-INF/web.xml -text
 /build.xml -text
-doc/README -text
 reference-architecture/conf/README -text
 reference-architecture/db-sql/README -text
+reference-architecture/doc/README -text
 scripts/README -text
 /template.build.properties -text
