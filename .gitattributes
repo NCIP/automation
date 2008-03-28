@@ -1,10 +1,10 @@
 * text=auto !eol
-reference-architecture/README -text
-reference-architecture/WebRoot/README -text
-reference-architecture/WebRoot/WEB-INF/web.xml -text
-reference-architecture/build.xml -text
-reference-architecture/conf/README -text
-reference-architecture/db-sql/README -text
-reference-architecture/doc/README -text
-reference-architecture/scripts/README -text
-reference-architecture/template.build.properties -text
+docs/reference-architecture/README -text
+docs/reference-architecture/WebRoot/README -text
+docs/reference-architecture/WebRoot/WEB-INF/web.xml -text
+docs/reference-architecture/build.xml -text
+docs/reference-architecture/conf/README -text
+docs/reference-architecture/db-sql/README -text
+docs/reference-architecture/doc/README -text
+docs/reference-architecture/scripts/README -text
+docs/reference-architecture/template.build.properties -text
