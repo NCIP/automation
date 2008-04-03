@@ -8,3 +8,8 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
+software/heartbeat/.classpath -text
+software/heartbeat/.project -text
+software/heartbeat/pom.xml -text
+software/heartbeat/src/main/webapp/WEB-INF/web.xml -text
+software/heartbeat/src/main/webapp/index.jsp -text
