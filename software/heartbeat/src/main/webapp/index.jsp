@@ -1,5 +1,9 @@
+<%@ taglib uri="/WEB-INF/taglib.tld" prefix="heartbeat"%>
 <html>
-<body>
-<h2>NCICB Heartbeat Page</h2>
-</body>
+	<head>
+		<title>NCI Heartbeat Web Application</title>
+	</head>
+	<body>
+		<heartbeat:dbvalidate />
+	</body>
 </html>

@@ -11,5 +11,7 @@ docs/reference-architecture/template.build.properties -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
+software/heartbeat/src/main/java/gov/nih/nci/bda/DbValidationTag.java -text
+software/heartbeat/src/main/webapp/WEB-INF/taglib.tld -text
 software/heartbeat/src/main/webapp/WEB-INF/web.xml -text
 software/heartbeat/src/main/webapp/index.jsp -text

@@ -3,5 +3,10 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+	<display-name>Heartbeat Web Application</display-name>
+
+	<taglib>
+		<taglib-uri>heartbeat</taglib-uri>
+		<taglib-location>/WEB-INF/taglib.tld</taglib-location>
+	</taglib>
 </web-app>
