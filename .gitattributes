@@ -1,4 +1,5 @@
 * text=auto !eol
+docs/cbiit-goals.doc -text
 docs/reference-architecture/README -text
 docs/reference-architecture/WebRoot/README -text
 docs/reference-architecture/WebRoot/WEB-INF/web.xml -text
