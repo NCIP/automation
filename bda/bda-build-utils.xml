@@ -982,4 +982,52 @@
 	
 		</sequential>
 	</macrodef>
+	<macrodef name="tomcat-stop">
+		<attribute name="tomcat.home" />
+		<sequential>
+			<echo message="Stopping Tomcat instance at @{tomcat.home}" />
+			<exec executable="sh" os="Linux" dir="@{tomcat.home}/bin" spawn="true">
+				<env key="NOPAUSE" value="true" />
+				<arg line="shutdown.sh" />
+			</exec>
+			<exec os="Windows XP, Windows 2000, Windows 2003" executable="cmd" dir="@{tomcat.home}/bin" spawn="true" >
+				<env key="NOPAUSE" value="true" />
+				<arg line="/c shutdown.bat" />
+			</exec>
+			<sleep seconds="5" />
+		</sequential>
+	</macrodef>
+	<macrodef name="tomcat-start" description="Starts a local JBoss instance">
+		<attribute name="tomcat.home" />
+		<sequential>
+			<echo message="Starting Tomcat instance at @{tomcat.home}" />
+			<exec executable="sh" os="Linux" dir="@{tomcat.home}/bin" spawn="true">
+				<env key="NOPAUSE" value="true" />
+				<arg line="startup.sh" />
+			</exec>
+			<exec os="Windows XP, Windows 2000, Windows 2003" executable="cmd" dir="@{tomcat.home}/bin" spawn="true" >
+				<env key="NOPAUSE" value="true" />
+				<arg line="/c startup.bat" />
+			</exec>
+			<sleep seconds="5" />
+		</sequential>
+	</macrodef>
+	<macrodef name="properties-exist" description="Starts a local JBoss instance">
+		<attribute name="properties.list" />
+		<sequential>
+			<for list="@{properties.list}" param="prop.list.item" delimiter=",">
+				<sequential>
+					<echo message="checking for existance of property @{prop.list.item}"/>
+					<if>
+						<not>
+							<isset property="@{prop.list.item}"/>
+						</not>
+						<then>
+							<fail message="Property @{property.list.item} is not set, it needs to be set, please set it to continue"/>
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
 </project>
