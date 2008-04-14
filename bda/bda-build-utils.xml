@@ -3,7 +3,7 @@
  	<!-- Properties -->
 	<property name="bda-utils.lib.dir" value="${basedir}/bda-utils"/>
 	<property name="bda-utils.db.dir" value="${basedir}/bda-utils/resource"/>	
- 	<property name="antunit.jar" value="ant-antunit-1.0.jar"/>
+ 	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" value="${bda-utils.db.dir}/template-db-integrate.xml"/>
 
 	<!-- PATHS -->
@@ -34,7 +34,7 @@
 	
 	<taskdef name="elopeif" classname="ise.antelope.tasks.IfTask">
 		<classpath>
-			<pathelement location="${bda-utils.lib.dir}/antelope_app.jar"/>
+			<pathelement location="${bda-utils.lib.dir}/antelope_app-3.4.1.jar"/>
 		</classpath>
 	</taskdef>
 	
@@ -248,10 +248,11 @@
 			<check-not-child-directory
 				parent.dir.property="application.base.path"
 				child.dir.property="basedir"
+				/>
 			<check-valid-directory-name
 				directory.property="application.base.path"
 				/>
-			<validate-application-exists
+			<check-application-exists
 				application.dir.property="jboss.home"
 				/>
 			<check-database-exists
@@ -308,7 +309,7 @@
 				</else>
 			</if>
 		</sequential>
-	</macrodefs>
+	</macrodef>
 
 	<macrodef name="validate-properties" description="Diagnose the host system before the installation">
 		<sequential>
@@ -382,8 +383,8 @@
 						<then>
 							<for list="${all.match.property}" delimiter="${line.separator}" param="matches.line">
 								<sequential>
-									<echo message="Evaluating line in properties file = ${matches.line}"/>
-									<property name="match.tmp" value="${matches.line}"/>
+									<echo message="Evaluating line in properties file = @{matches.line}"/>
+									<property name="match.tmp" value="@{matches.line}"/>
 									<propertyregex property="is.system.user"
 										input="${match.tmp}"
 										regexp="database.system.user.*"
@@ -419,15 +420,15 @@
 						<then>
 							<for list="${hostname.property.list}"  param="hostname.property" >
 								<sequential>
-		 							<propertycopy name="hostname.value" from="${hostname.property}" />
+		 							<propertycopy name="hostname.value" from="@{hostname.property}" />
 									<echo message="Attempting to connnect to ${hostname.value}...."/>
 									<if>
 										<isreachable host="${hostname.value}" timeout="5"/>
 										<then>
-											<echo message="${hostname.value} reached. (${hostname.property})"/>
+											<echo message="${hostname.value} reached. (@{hostname.property})"/>
 										</then>
 										<else>
-											<echo message="Could not reach host from property ${hostname.property} with value of ${hostname.value}"/>
+											<echo message="Could not reach host from property @{hostname.property} with value of ${hostname.value}"/>
 										</else>
 									</if>
 								</sequential>
@@ -437,11 +438,12 @@
 				</then>
 			</if>
 		</sequential>
-	</macrodefs>
+	</macrodef>
 			
 
 	<macrodef name="validate-ports-preinstall" description="Diagnose the host system before the installation">
 		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
+		<attribute name="hostname" default="${jboss.server.hostname}" />
 		<sequential>
 			<!-- Validate ports are not listening -->
 			<if>
@@ -450,11 +452,11 @@
  					<echo message="Validationg Ports Are not in use..."/>
  					<for list="@{validation.pre.port.list}" param="validate.port">
 						<sequential>
-				 			<echo message="Checking if ${validate.port} is running."/>
+				 			<echo message="Checking if @{validate.port} is running."/>
 				 			<condition property="port.listening">
-				 				<socket server="${jboss.server.hostname}" port="${validate.port}" />
+				 				<socket server="@{hostname}" port="@{validate.port}" />
 							</condition>
-				 			<antunit:assertFalse message="${line.separator}${line.separator}    Port is listening at ${jboss.server.hostname}:${validate.port}.${line.separator}Verify the JBoss server is not running at ${jboss.server.hostname}:${validate.port}. If it is not, there may be a different process or application using this port (${validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing.">
+				 			<antunit:assertFalse message="${line.separator}${line.separator}    Port is listening at @{hostname}:@{validate.port}.${line.separator}Verify the JBoss server is not running at @{hostname}:@{validate.port}. If it is not, there may be a different process or application using this port (@{validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing.">
 				 				<isset property="port.listening"/>
 				 			</antunit:assertFalse>
  							<echo message="Ports check: PASSED" /> 
@@ -463,7 +465,7 @@
 				</then>
 			</if>
 		</sequential>
-	</macrodefs>
+	</macrodef>
  			
 
 	<macrodef name="check-direct-child-directory" description="Diagnose the host system before the installation">
@@ -495,23 +497,25 @@
 		<attribute name="child.dir.property" />
 		<sequential>
 			<!-- Application.base.path compare basedir -->
-			<propertycopy name="child.dir" from="@{child.dir.property}" />
-			<propertycopy name="parent.dir" from="@{parent.dir.property}" />
+			<propertycopy name="not.child.dir" from="@{child.dir.property}" />
+			<propertycopy name="not.parent.dir" from="@{parent.dir.property}" />
 			<propertyregex property="child.bad"
-				input="${child.dir}"
-				regexp="${parent.dir}"
+				input="${not.child.dir}"
+				regexp="${not.parent.dir}"
 				select="true"
 				/>
 			<if>
 				<isset property="child.bad"/>
 				<then>
-					<echo message="@{child.dir.property}=${child.dir} is child of @{parent.dir.property}=${parent.dir}."/>
+					<echo message="@{child.dir.property}=${not.child.dir} is child of @{parent.dir.property}=${not.parent.dir}."/>
 					<fail message="@{child.dir.property} cannt be be direct child of @{parent.dir.property}, please update the properties file and retry the build."/>
 				</then>
 				<else>
-					<echo message="@{child.dir.property}=${child.dir} is not child of @{parent.dir.property}=${parent.dir}."/>
+					<echo message="@{child.dir.property}=${not.child.dir} is not child of @{parent.dir.property}=${not.parent.dir}."/>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
 
 
 	<macrodef name="check-valid-directory-name" description="Diagnose the host system before the installation">
@@ -574,7 +578,7 @@
 				</then>
 			</if>
 		</sequential>
-	</macrodefs>
+	</macrodef>
 
 	<macrodef name="check-application-exists" description="Diagnose the host system before the installation">
 		<attribute name="application.dir.property" />
@@ -605,7 +609,7 @@
 				</else>
 			</if>
 		</sequential>
-	</macrodefs>
+	</macrodef>
 	<macrodef name="check-database-exists" description="Diagnose the host system before the installation">
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
@@ -700,21 +704,22 @@
 	<macrodef name="validate-ports-postinstall" description="Diagnose the host system after the installation">
 		<attribute name="validation.post.http.list" default="${validation.post.http.list}" />
 		<attribute name="validation.post.socket.list" default="${validation.post.socket.list}" />
+		<attribute name="hostname" default="${jboss.server.hostname}" />
 		<sequential>
 			<!-- For each http port call validate:post:http -->
 			<for list="${validation.post.http.list}" param="validate.port">
 				<sequential>
-					<echo message="Checking if ${validate.port} is running."/>
+					<echo message="Checking if @{validate.port} is running."/>
 					<condition property="port.listening">
-						<http url="http://${jboss.server.hostname}:${validate.port}" />
+						<http url="http://@{hostname}:@{validate.port}" />
 					</condition>
 					<if>
 						<isset property="port.listening"/>
 						<then>
-							<echo message="Port is ${validate.port} RUNNNING as expected."/>
+							<echo message="Port is @{validate.port} RUNNNING as expected."/>
 						</then>
 						<else>
-							<echo message="Port is not responding or giving an HTTP error code ${jboss.server.hostname}:${validate.port}. You may experience problems using the application."/>
+							<echo message="Port is not responding or giving an HTTP error code @{hostname}:@{validate.port}. You may experience problems using the application."/>
 						</else>
 					</if>
 				</sequential>
@@ -723,17 +728,17 @@
 			<!-- For each socket port call validate:post:socket -->
 			<for list="${validation.post.http.list}" param="validate.port" >
 				<sequential>
-					<echo message="Checking if ${validate.port} is running."/>
+					<echo message="Checking if @{validate.port} is running."/>
 					<condition property="port.listening">
-						<socket server="${jboss.server.hostname}" port="${validate.port}" />
+						<socket server="@{hostname}" port="@{validate.port}" />
 					</condition>
 					<if>
 						<isset property="port.listening"/>
 						<then>
-							<echo message="Port is ${validate.port} RUNNNING as expected."/>
+							<echo message="Port is @{validate.port} RUNNNING as expected."/>
 						</then>
 						<else>
-							<echo message="Unable to reach ${jboss.server.hostname}:${validate.port}. You may experience problems using the application."/>
+							<echo message="Unable to reach @{hostname}:@{validate.port}. You may experience problems using the application."/>
 						</else>
 					</if>
 				</sequential>
@@ -831,7 +836,7 @@
 				</then>
 			</if>
 		</sequential>
-	</macrodefs>
+	</macrodef>
 	
 
 	<macrodef name="create-database">
