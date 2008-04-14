@@ -1,0 +1,980 @@
+<project name="bda-utils" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+ 	<!-- Properties -->
+	<property name="bda-utils.lib.dir" value="${basedir}/bda-utils"/>
+	<property name="bda-utils.db.dir" value="${basedir}/bda-utils/resource"/>	
+ 	<property name="antunit.jar" value="ant-antunit-1.0.jar"/>
+	<property name="template.dbintegrate.file" value="${bda-utils.db.dir}/template-db-integrate.xml"/>
+
+	<!-- PATHS -->
+	<path id="macrodef.classpath">
+		<fileset dir="bda-utils">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Taskdefs -->
+	<taskdef name="dbconfig" classname="com.dbconfig.anttask.DbConfig" classpathref="macrodef.classpath" />
+
+ 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+ 		<classpath>
+			<pathelement location="${bda-utils.lib.dir}/ant-contrib-1.0b3.jar"/>
+			<pathelement location="${bda-utils.lib.dir}/bcel-5.1.jar"/>
+			<pathelement location="${bda-utils.lib.dir}/commons-httpclient-3.0.1.jar"/>
+			<pathelement location="${bda-utils.lib.dir}/commons-logging-1.0.4.jar"/>
+			<pathelement location="${bda-utils.lib.dir}/ivy-1.3.1.jar"/>
+ 		</classpath>
+ 	</taskdef>
+ 
+ 	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml">
+ 		<classpath>
+			<pathelement location="${bda-utils.lib.dir}/${antunit.jar}"/>
+ 		</classpath>
+ 	</taskdef>
+	
+	<taskdef name="elopeif" classname="ise.antelope.tasks.IfTask">
+		<classpath>
+			<pathelement location="${bda-utils.lib.dir}/antelope_app.jar"/>
+		</classpath>
+	</taskdef>
+	
+	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
+		<classpath>
+			<pathelement location="${bda-utils.lib.dir}/ant-contrib-1.0b3.jar"/>
+		</classpath>
+	</taskdef>
+	
+ 	<tstamp>
+ 		<format property="run.date" pattern="yyMMddHHmm"/>
+ 	</tstamp>
+
+	<!-- init tasks -->
+	<mkdir dir="${basedir}/tmp"/>
+
+	<!-- Macrodefs -->
+	<macrodef name="run-junit-tests">
+		<attribute name="test.src.dir" />
+		<attribute name="xml.output.dir" />
+		<attribute name="classpath" default="" />
+		<attribute name="instrumented.classes" default="" />
+
+		<sequential>
+			<mkdir dir="@{xml.output.dir}" />
+			<junit printsummary="on" failureproperty="junit.failure" fork="true" forkmode="once" maxmemory="256m">
+				<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.file}" />
+				<sysproperty key="server.hostname" value="${jboss.server.hostname}" />
+				<sysproperty key="server.port" value="${jboss.server.port}" />
+				<sysproperty key="server.jndi.port" value="${jboss.server.jndi.port}" />
+				<sysproperty key="selenium.server.port" value="${selenium.server.port}" />
+
+				<classpath>
+					<pathelement path="@{instrumented.classes}" />
+					<pathelement path="@{classpath}" />
+					<path refid="cobertura.classpath" />
+				</classpath>
+				<formatter type="xml" />
+				<batchtest todir="@{xml.output.dir}">
+					<fileset dir="@{test.src.dir}">
+						<include name="**/*Test.java" />
+						<exclude name="**/Abstract*Test.java" />
+					</fileset>
+				</batchtest>
+			</junit>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
+		<attribute name="sql.file" />
+		<attribute name="sql.delimiter" default=";" />
+		<attribute name="sql.delimitertype" default="normal" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<sequential>
+			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="abort" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+				<classpath>
+					<pathelement location="common/lib/mysql-connector-java-5.0.5-bin.jar" />
+				</classpath>
+			</sql>
+		</sequential>
+	</macrodef>
+
+	<!-- EXAMPLE: <remote-ssh remotesshcommand="mv ${jboss.temp.dir}/caarray.ear ${jboss.home}/deploy/" /> -->
+	<macrodef name="remote-ssh" description="This is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execure remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.">
+		<attribute name="remoteSshCommand" />
+		<attribute name="remoteSshPort" default="${ssh.port}" />
+		<attribute name="remoteSshHost" default="${ssh.server.hostname}" />
+		<attribute name="remoteSshUser" default="${ssh.server.username}" />
+		<attribute name="remoteSshKeyfile" default="${ssh.key.file}" />
+		<attribute name="remoteSshSleep" default="5" />
+		<sequential>
+			<sshexec port="@{remotesshport}" host="@{remotesshhost}" username="@{remoteSshUser}" keyfile="@{remoteSshKeyfile}" trust="true" passphrase="" verbose="true" command="@{remotesshcommand}" />
+			<sleep seconds="@{remoteSshSleep}" />
+			<echo message="Performed @{remoteSshCommand} command on @{remoteSshHost}:@{remoteSshPort} using SSH..." />
+		</sequential>
+	</macrodef>
+
+	<!-- EXAMPLE: <remote-scp remoteScpFileToCopy="${caarray.ear}" 
+	remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${jboss.temp.dir}" />
+	-->
+	<macrodef name="remote-scp" description="This task copies files in a secure manner using SCP. 
+	remoteScpToDir and remoteScpFileToCopy are required attributes to this macrodef.">
+		<attribute name="remoteScpFileToCopy" />
+		<attribute name="remoteScpToDir" />
+		<attribute name="remoteScpKeyFile" default="${ssh.key.file}" />
+		<attribute name="remoteScpPassphrase" default="" />
+		<attribute name="remoteScpTrust" default="true" />
+		<attribute name="remoteScpVerbose" default="true" />
+		<attribute name="remoteScpSleep" default="5"  />
+		<sequential>
+			<scp file="@{remoteScpFileToCopy}" keyfile="@{remoteScpKeyFile}" passphrase="@{remoteScpPassphrase}" trust="@{remoteScpTrust}" verbose="@{remoteScpVerbose}" todir="@{remoteScpToDir}" />
+			<sleep seconds="@{remoteScpSleep}" />
+			<echo message="Copied @{remoteScpFileToCopy} to @{remoteScpToDir} using SCP..." />
+		</sequential>
+	</macrodef>
+
+	<!-- JBoss  -->
+	<macrodef name="jboss-stop-jboss">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}" />
+		<sequential>
+			<java classname="org.jboss.Shutdown" fork="true" spawn="false">
+				<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
+				<classpath>
+					<pathelement location="@{jboss.home}/bin/shutdown.jar" />
+				</classpath>
+			</java>
+			<sleep seconds="15" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jboss-check-if-jboss-is-running" description="Checks if a local JBoss instance is running">
+		<attribute name="jboss.server.port" default="${jboss.server.port}" />
+		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
+		<sequential>
+			<condition property="jboss.running">
+				<socket port="@{jboss.server.port}" server="@{jboss.server.hostname}" />
+			</condition>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jboss-start-jboss" description="Starts a local JBoss instance">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<sequential>
+			<echo message="Starting JBoss instance at @{jboss.home}" />
+
+			<exec os="Linux" executable="chmod" spawn="true">
+				<arg value="+x" />
+				<arg file="@{jboss.home}/bin/run.sh" />
+				<arg file="@{jboss.home}/bin/shutdown.sh" />
+			</exec>
+
+			<exec executable="sh" os="Linux" dir="@{jboss.home}/bin" spawn="true">
+				<env key="NOPAUSE" value="true" />
+				<arg line="run.sh" />
+			</exec>
+
+			<exec os="Windows XP, Windows 2000, Windows 2003" executable="cmd" dir="@{jboss.home}/bin" spawn="true" >
+				<env key="NOPAUSE" value="true" />
+				<arg line="/c run.bat" />
+			</exec>
+			<sleep seconds="15" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jboss-update-shutdown" description="Update the shutdown.jar ">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}" />
+		<sequential>
+			<delete dir="${temp.dir}/shutdown"/>
+			<unzip src="${jboss.home}/bin/shutdown.jar" dest="${temp.dir}/shutdown" />
+			<replaceregexp file="${temp.dir}/shutdown/jndi.properties" byline="true"
+				match="^(java.naming.provider.url)=(.*)"
+				replace="\1=jnp://@{jboss.server.hostname}:@{jboss.server.jndi.port}"/>
+			
+			<jar jarfile="${temp.dir}/shutdown/shutdown.jar" compress="false" manifest="${temp.dir}/shutdown/META-INF/MANIFEST.MF">
+				<fileset dir="${temp.dir}/shutdown">
+					<include name="*/**" />
+				</fileset>
+			</jar>
+			<copy file="${temp.dir}/shutdown/shutdown.jar" todir="${jboss.home}/bin" overwrite="true"/>
+		</sequential>
+	</macrodef>
+	
+	<!-- Updates run.conf JAVA_OPTS and sets to property -->
+	<macrodef name="jboss-update-runconf">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.java.opts" default="${jboss.java.opts}" />
+		<sequential>
+			<replaceregexp file="${jboss.home}/bin/run.conf" byline="true"
+				match="^(\s+JAVA_OPTS)=(.*)"
+				replace="\1='@{jboss.java.opts}'"/>
+		</sequential>
+	</macrodef>
+
+	<!-- System Diagnostics  -->
+	<macrodef name="validate-pre-install" description="Diagnose the host system before the installation">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.system.url" default="${database.system.url}" />
+		<attribute name="database.system.user" default="${database.system.user}" />
+		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.version" default="5.0.27" />
+		<attribute name="database.name" default="${database.name}" />
+ 		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
+		<attribute name="ant.check.version" default="1.7.0" />
+		<attribute name="java.check.version.major" default="1.5" />
+		<attribute name="java.check.version.minor" default="1.5.0_10" />
+		<sequential>
+			<validate-environment
+				ant.check.version="@{ant.check.version}"
+				java.check.version.major="@{java.check.version.major}"
+				java.check.version.minor="@{java.check.version.minor}"
+				/>
+			<validate-database
+				database.driver="@{database.driver}"
+				database.system.url="@{database.system.url}"
+				database.system.user="@{database.system.user}"
+				database.system.password="@{database.system.password}"
+				database.version="@{database.version}"
+				database.name="@{database.name}"
+				/>
+			<validate-properties/>
+			<check-direct-child-directory
+				parent.dir.property="application.base.path"
+				child.dir.property="jboss.home"
+				/>
+			<check-not-child-directory
+				parent.dir.property="application.base.path"
+				child.dir.property="basedir"
+			<check-valid-directory-name
+				directory.property="application.base.path"
+				/>
+			<validate-application-exists
+				application.dir.property="jboss.home"
+				/>
+			<check-database-exists
+				database.driver="@{database.driver}"
+				database.system.url="@{database.system.url}"
+				database.system.user="@{database.system.user}"
+				database.system.password="@{database.system.password}"
+				database.name="@{database.name}"
+				/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-environment" description="Diagnose the host system before the installation">
+		<attribute name="ant.check.version" default="1.7.0" />
+		<attribute name="java.check.version.major" default="1.5" />
+		<attribute name="java.check.version.minor" default="1.5.0_10" />
+		<sequential>
+			<!-- Echo the properties for diagnostic purposes -->
+			<echoproperties/>
+			<!-- Validate Ant version is 1.7.x -->
+			<echo message="Validating Ant version..." />
+			<condition property="ant.version.success">
+				<antversion atleast="@{ant.check.version}" />
+			</condition>
+			<antunit:assertPropertyEquals name="ant.version.success" value="true" />
+			<echo message="Ant Version: PASSED" />
+
+ 			<echo message="Validating Java version..."/>
+ 			<condition property="java.major.version.good">
+				<equals arg1="${ant.java.version}" arg2="@{java.check.version.major}" />
+ 			</condition>
+ 			<antunit:assertTrue message="${line.separator}${line.separator}    Your Java SDK version must be 1.5 (1.5.0_10 recommended). The version you have installed is ${java.version}. Please install the correct version of the Java SDK and update your System PATH to point to directory where you installed it. ${line.separator}">
+ 				<isset property="java.major.version.good"/>
+ 			</antunit:assertTrue>
+			<if>
+				<equals arg1="${java.version}" arg2="@{java.check.version.minor}" />
+				<then>
+					<echo message="Java version check: PASSED" />
+				</then>
+				<else>
+					<echo message="Java version check: WARNING, version is not 1.5.0_10" />
+				</else>
+			</if>
+ 			<echo message="Java version check: PASSED" /> 
+
+			<!-- Checks if user running build is root, if so it fails -->
+			<if>
+				<equals arg1="${user.name}" arg2="root"/>
+				<then>
+					<fail message="Cannot run build as root."/>
+				</then>
+				<else>
+					<echo message="Not running as root."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodefs>
+
+	<macrodef name="validate-properties" description="Diagnose the host system before the installation">
+		<sequential>
+			<!-- Validate properties, checks if an REPLACE are left and fails the build -->
+			<if>
+				<isset property="properties.file"/>
+				<then>
+					<echo message="Validating properties file  ${properties.file}..."/>
+					<loadfile
+						property="fail.properties"
+						srcFile="${properties.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="REPLACE"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<if>
+						<isset property="fail.properties"/>
+						<then>
+							<echo message="Property file validation: FAILED 'replace' found in file"/>
+							<echo message="${fail.properties}"/>
+							<fail message="Some properties still have 'REPLACE' in them. These properties require valid values. Please update ${properties.file} and run the installer again. " />
+						</then>
+					</if>
+				</then>
+				<else>
+					<echo message="Warning: properties.file property is not set"/>
+				</else>	
+			</if>
+			<if>
+				<isset property="properties.file"/>
+				<then>
+					<loadfile
+						property="warn.properties"
+						srcFile="${properties.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="replace"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<if>
+						<isset property="warn.properties"/>
+						<then>
+							<echo message="Some properties still have 'replace' in them, this may cause issues."/> 
+							<echo message="${warn.properties}"/>
+						</then>
+					</if>
+				</then>
+				<else>
+					<echo message="Properties file validation: PASSED"/>
+				</else>	
+			</if>
+			
+			<!-- Validate database properties, compares database.system.user to other *databases.*.user  -->
+			<if>
+				<isset property="properties.file"/>
+				<then>
+					<loadfile
+						property="all.match.property"
+						srcFile="${properties.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern=".*database.*user=${database.system.user}\r*\n"/> 
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<if>
+						<isset property="all.match.property"/>
+						<then>
+							<for list="${all.match.property}" delimiter="${line.separator}" param="matches.line">
+								<sequential>
+									<echo message="Evaluating line in properties file = ${matches.line}"/>
+									<property name="match.tmp" value="${matches.line}"/>
+									<propertyregex property="is.system.user"
+										input="${match.tmp}"
+										regexp="database.system.user.*"
+										select="true"
+										/>
+									<if>
+										<isset property="is.system.user"/>
+										<else>
+											<fail message="${line.separator}    The above line in the properties file uses the same user as the database.system.user. This will cause problems creating the database. Please change the mentioned property value to something other than ${database.system.user} and run the install again."/>
+										</else>
+									</if>
+								</sequential>
+							</for>
+						</then>
+						<else> 
+							<echo message="No other users match database.system.user = ${database.system.user}"/>
+						</else>
+					</if>
+				</then>
+			</if>
+			<!-- Checks that hostnames are reachable, does not fail build, just prints message -->
+			<if>
+				<isset property="properties.file"/>
+				<then>
+					<propertyselector property="hostname.property.list"
+						delimiter=","
+						match="^(.*hostname)$"
+						select="\1"              
+						casesensitive="true" /> 
+
+					<if>
+						<isset property="hostname.property.list"/>
+						<then>
+							<for list="${hostname.property.list}"  param="hostname.property" >
+								<sequential>
+		 							<propertycopy name="hostname.value" from="${hostname.property}" />
+									<echo message="Attempting to connnect to ${hostname.value}...."/>
+									<if>
+										<isreachable host="${hostname.value}" timeout="5"/>
+										<then>
+											<echo message="${hostname.value} reached. (${hostname.property})"/>
+										</then>
+										<else>
+											<echo message="Could not reach host from property ${hostname.property} with value of ${hostname.value}"/>
+										</else>
+									</if>
+								</sequential>
+							</for>
+						</then>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodefs>
+			
+
+	<macrodef name="validate-ports-preinstall" description="Diagnose the host system before the installation">
+		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
+		<sequential>
+			<!-- Validate ports are not listening -->
+			<if>
+				<isset property="validation.pre.port.list"/>
+				<then>
+ 					<echo message="Validationg Ports Are not in use..."/>
+ 					<for list="@{validation.pre.port.list}" param="validate.port">
+						<sequential>
+				 			<echo message="Checking if ${validate.port} is running."/>
+				 			<condition property="port.listening">
+				 				<socket server="${jboss.server.hostname}" port="${validate.port}" />
+							</condition>
+				 			<antunit:assertFalse message="${line.separator}${line.separator}    Port is listening at ${jboss.server.hostname}:${validate.port}.${line.separator}Verify the JBoss server is not running at ${jboss.server.hostname}:${validate.port}. If it is not, there may be a different process or application using this port (${validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing.">
+				 				<isset property="port.listening"/>
+				 			</antunit:assertFalse>
+ 							<echo message="Ports check: PASSED" /> 
+						</sequential>
+					</for>
+				</then>
+			</if>
+		</sequential>
+	</macrodefs>
+ 			
+
+	<macrodef name="check-direct-child-directory" description="Diagnose the host system before the installation">
+		<attribute name="parent.dir.property" />
+		<attribute name="child.dir.property" />
+		<sequential>
+			<!-- Application.base.path compare to Jboss.home -->
+			<propertycopy name="child.dir" from="@{child.dir.property}" />
+			<propertycopy name="parent.dir" from="@{parent.dir.property}" />
+			<propertyregex property="child.good"
+				input="${child.dir}"
+				regexp="${parent.dir}/[\d\w\.\-\_]+"
+				select="true"
+				/>
+			<if>
+				<isset property="child.good"/>
+				<then>
+					<echo message="@{child.dir.property}=${child.dir} is direct child of @{parent.dir.property}=${parent.dir}."/>
+				</then>
+				<else>
+					<echo message="@{child.dir.property}=${child.dir} is not a direct child of @{parent.dir.property}=${parent.dir}."/>
+					<fail message="@{child.dir.property} needs to be direct child of @{parent.dir.property}, please update the properties file and retry the build."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="check-not-child-directory" description="Diagnose the host system before the installation">
+		<attribute name="parent.dir.property" />
+		<attribute name="child.dir.property" />
+		<sequential>
+			<!-- Application.base.path compare basedir -->
+			<propertycopy name="child.dir" from="@{child.dir.property}" />
+			<propertycopy name="parent.dir" from="@{parent.dir.property}" />
+			<propertyregex property="child.bad"
+				input="${child.dir}"
+				regexp="${parent.dir}"
+				select="true"
+				/>
+			<if>
+				<isset property="child.bad"/>
+				<then>
+					<echo message="@{child.dir.property}=${child.dir} is child of @{parent.dir.property}=${parent.dir}."/>
+					<fail message="@{child.dir.property} cannt be be direct child of @{parent.dir.property}, please update the properties file and retry the build."/>
+				</then>
+				<else>
+					<echo message="@{child.dir.property}=${child.dir} is not child of @{parent.dir.property}=${parent.dir}."/>
+				</else>
+			</if>
+
+
+	<macrodef name="check-valid-directory-name" description="Diagnose the host system before the installation">
+		<attribute name="directory.property" />
+		<sequential>
+			<!-- Application.base.path check for bad directory -->
+			<propertycopy name="directory.value" from="@{directory.property}" />
+			<propertyregex property="has.spaces"
+				regexp="\s+"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<if>
+				<isset property="has.spaces"/>
+				<then>
+					<fail message="@{directory.property} is using directory that space in the name, this is not supported by our current build process.  Please chose another diretory name without a space in it."/>
+				</then>
+			</if>
+
+			<!-- Application.base.path check for bad directory -->
+			<propertyregex property="directory.bad"
+				regexp="^(\w:[\/\\])$"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<propertyregex property="directory.bad"
+				regexp="^(\w:[\\\/]win.*)"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<propertyregex property="directory.bad"
+				regexp="^(\w:[\\\/]WIN.*)"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<propertyregex property="directory.bad"
+				regexp="^(\/)$"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<propertyregex property="directory.bad"
+				regexp="^(\/usr)$"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<propertyregex property="directory.bad"
+				regexp="^(\/usr\/local)$"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<propertyregex property="directory.bad"
+				regexp="^(\/opt)$"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<if>
+				<isset property="directory.bad"/>
+				<then>
+					<fail message="@{directory.property} is set to or includes '${directory.bad}, this is not allowed.  As part of the install proces the first thing we do is delete this directory.  Deleting the directory you specified may cause system issues, please chose another directory."/>
+				</then>
+			</if>
+		</sequential>
+	</macrodefs>
+
+	<macrodef name="check-application-exists" description="Diagnose the host system before the installation">
+		<attribute name="application.dir.property" />
+		<sequential>
+			<!-- If jboss.home exists prompt to conntinue -->
+			<propertycopy name="application.dir" from="@{application.dir.property}" />
+			<available property="${application.dir.exists}" file="${application.dir}"/>
+			<if>
+				<and>
+					<isset property="application.dir.exists"/>
+					<not>
+						<isset property="force.reinstall"/>
+					</not>
+				</and>
+				<then>
+					<input message="The @{application.dir.property} (${application.dir}) already exists.  Please be sure you have a recent backup of this directory.  This process will alter files in this path and any customizations you have could be lost.  Do you want to proceed?"
+						validargs="y,n"
+						addproperty="accept.application.dir.update" />
+					<if>
+						<equals arg1="${accept.application.dir.update}" arg2="n"/>
+						<then>
+							<fail message="User tereminated the build."/>
+						</then>
+					</if>
+				</then>
+				<else>
+					<echo message="@{application.dir.property} ${application.dir} does not exist or the force.reinstall property is set."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodefs>
+	<macrodef name="check-database-exists" description="Diagnose the host system before the installation">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.system.url" default="${database.system.url}" />
+		<attribute name="database.system.user" default="${database.system.user}" />
+		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.name" default="${database.name}" />
+		<sequential>
+			<dbconfig property="database.exists" 
+				driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+				<validate />
+				<checkdatabaseexists exactly="${database.name}" />
+			</dbconfig>
+			<echo message="Does @{database.name} exist = ${database.exists} "/>
+			<if>
+				<and>
+					<equals arg1="${database.exists}" arg2="true"/>
+					<not>
+						<isset property="force.reinstall"/>
+					</not>
+				</and>
+				<then>
+					<input message="The database @{database.name} already exists.  Please be sure you have a recent backup of this database.  This process will alter the database if you need to return your database to the current state you need a good backup.  Please ensure you have a good backup before proceeding.  Do you want to proceed?"
+						validargs="y,n"
+						addproperty="accept.database.update" />
+					<if>
+						<equals arg1="${accept.database.update}" arg2="n"/>
+						<then>
+							<fail message="User tereminated the build."/>
+						</then>
+					</if>
+				</then>
+				<else>
+					<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+
+	<macrodef name="validate-post-install" description="Diagnose the host system after the installation">
+ 		<attribute name="validation.post.http.list" default="${validation.post.http.list}" />
+ 		<attribute name="validation.post.socket.list" default="${validation.post.socket.list}" />
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<sequential>
+
+			<!-- Echo the properties for diagnostic purposes -->
+			<echoproperties/>
+
+			<!-- Give JBOSS another couple of seconds to come up -->
+			<validate-ports-postinstall  
+				validation.post.http.list="@{validation.post.http.list}"
+				validation.post.socket.list="@{validation.post.socket.list}"
+			/>
+			<validate-jboss-logs-postinstall
+				jboss.home="@{jboss.home}"
+				jboss.server.name="@{jboss.server.name}"
+			/>
+
+			<!-- Send test message if smtp proeprties are set
+			<if>
+				<and>
+					<isset property="mail.smtp.host"/>
+					<isset property="mail.smtp.port"/>
+					<isset property="validation.email.from"/>
+					<isset property="validation.email.to"/>
+				</and>
+			<then>
+				<if>
+						<socket port="${mail.smtp.port}" server="${mail.smtp.host}" />
+					<then>
+						<echo message="Able to connect to smpt host on port."/>
+					</then>
+					<else>
+						<echo message="Failed to connnect to ${mail.smtp.host}:${mail.smtp.port}"/>
+					</else>
+				</if>
+				<echo message="Sending Test message- look for errors below"/>
+				<mail mailhost="${mail.smtp.host}" mailport="${mail.smtp.port}" subject="Test Message" failonerror="false">
+					<from address="${validation.email.from}"/>
+					<to address="${validation.email.to}"/>
+				<message>Attempting install of ${project.name} ${env.USER}@${env.HOSTNAME} at ${run.date}.</message>
+				</mail>
+			</then>
+			</if>
+			-->
+			<echo message="******* INSTALLATION COMPLETED SUCESSFULLY *******"/>
+			<echo message="${line.separator}To view your application goto ${application.url}."/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-ports-postinstall" description="Diagnose the host system after the installation">
+		<attribute name="validation.post.http.list" default="${validation.post.http.list}" />
+		<attribute name="validation.post.socket.list" default="${validation.post.socket.list}" />
+		<sequential>
+			<!-- For each http port call validate:post:http -->
+			<for list="${validation.post.http.list}" param="validate.port">
+				<sequential>
+					<echo message="Checking if ${validate.port} is running."/>
+					<condition property="port.listening">
+						<http url="http://${jboss.server.hostname}:${validate.port}" />
+					</condition>
+					<if>
+						<isset property="port.listening"/>
+						<then>
+							<echo message="Port is ${validate.port} RUNNNING as expected."/>
+						</then>
+						<else>
+							<echo message="Port is not responding or giving an HTTP error code ${jboss.server.hostname}:${validate.port}. You may experience problems using the application."/>
+						</else>
+					</if>
+				</sequential>
+			</for>
+
+			<!-- For each socket port call validate:post:socket -->
+			<for list="${validation.post.http.list}" param="validate.port" >
+				<sequential>
+					<echo message="Checking if ${validate.port} is running."/>
+					<condition property="port.listening">
+						<socket server="${jboss.server.hostname}" port="${validate.port}" />
+					</condition>
+					<if>
+						<isset property="port.listening"/>
+						<then>
+							<echo message="Port is ${validate.port} RUNNNING as expected."/>
+						</then>
+						<else>
+							<echo message="Unable to reach ${jboss.server.hostname}:${validate.port}. You may experience problems using the application."/>
+						</else>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-jboss-logs-postinstall" description="Diagnose the host system after the installation">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<sequential>
+			<!-- Process jboss server.log for errors and warnings and display on screen -->
+			<property name="server.log" value="@{jboss.home}/server/@{jboss.server.name}/log/server.log"/>
+			<property name="boot.log" value="@{jboss.home}/server/@{jboss.server.name}/log/boot.log"/>
+			<available property="server.log.exists" file="${server.log}"/>
+			<available property="boot.log.exists" file="${boot.log}"/>
+			<if>
+				<isset property="server.log.exists"/>
+				<then>
+					<loadfile
+						property="log.server.errors"
+						srcFile="${server.log}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="^\w+.* ERROR "/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<if>
+						<isset property="log.server.errors"/>
+						<then>
+							<echo message="The following are ERRORS from the ${server.log}."/>
+							<echo message="${log.server.errors}"/>
+						</then>
+					</if>
+			
+					<loadfile
+						property="log.server.warnings"
+						srcFile="${server.log}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="^\w+.* WARN "/>
+							</linecontainsregexp>
+	
+						</filterchain>
+					</loadfile>
+					<if>
+						<isset property="log.server.warnings"/>
+						<then>
+							<echo message="${line.separator}The following are WARNINGS from the ${server.log}."/>
+							<echo message="${log.server.warnings}"/>
+						</then>
+					</if>
+				</then>
+			</if>
+	
+			<!-- Process jboss boot.log for errors and warnings and display on screen -->
+			<if>
+				<isset property="boot.log.exists"/>
+				<then>
+					<loadfile
+						property="log.boot.errors"
+						srcFile="${boot.log}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="^\w+.* ERROR "/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<if>
+						<isset property="log.boot.errors"/>
+						<then>
+							<echo message="The following are ERRORS from the ${boot.log}."/>
+							<echo message="${log.boot.errors}"/>
+						</then>
+					</if>
+			
+					<loadfile
+						property="log.boot.warnings"
+						srcFile="${boot.log}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="^\w+.* WARN "/>
+							</linecontainsregexp>
+			
+						</filterchain>
+					</loadfile>
+					<if>
+						<isset property="log.boot.warnings"/>
+						<then>
+							<echo message="${line.separator}The following are WARNINGS from the ${boot.log}."/>
+							<echo message="${log.boot.warnings}"/>
+						</then>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodefs>
+	
+
+	<macrodef name="create-database">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.system.url" default="${database.system.url}" />
+		<attribute name="database.system.user" default="${database.system.user}" />
+		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.version" default="5.0.27" />
+		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<sequential>
+			<validate-database/>
+			<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
+			<property name="create.sql.dir" value="${bda-utils.db.dir}/target" />
+			<delete dir="${create.sql.dir}"/>
+			<copy todir="${create.sql.dir}">
+				<filterset>
+					<filtersfile file="${properties.file}" />
+				</filterset>
+				<fileset dir="${bda-utils.db.dir}" includes="create_database_and_user.sql" />									
+			</copy>		
+			<run-sql-script database.url="${database.system.url}" database.user="${database.system.user}" database.password="${database.system.password}" sql.file="${create.sql.dir}/create_database_and_user.sql" />
+			<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${bda-utils.db.dir}/create_build_control.sql" />
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="validate-database">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.system.url" default="${database.system.url}" />
+		<attribute name="database.system.user" default="${database.system.user}" />
+		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.version" default="5.0.27" />
+		<attribute name="database.name" default="${database.name}" />
+		<sequential>
+			<echo message="Validating database connection..." />
+			<dbconfig property="db.connection.success" 
+				driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+				<validate />
+				<checkversion atleast="@{database.version}" />
+			</dbconfig>
+			<antunit:assertPropertyEquals message="Database connection failed for @{database.system.url}. Verify that your database.system.user and database.system.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+			<echo message="Database Connection: PASSED" />
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="identify-scripts">
+		<attribute name="sqlfiles.list.file" default="dbfiles_list.txt" />
+ 		<attribute name="build.properties.file" default="build.properties" />
+
+		<sequential>
+			<loadfile
+				property="dbfiles.list.property"
+				srcFile="@{sqlfiles.list.file}">
+			</loadfile>
+			
+			<property file="@{sqlfiles.list.file}" />			
+			<property file="@{build.properties.file}" />
+			
+			<copy file="${template.dbintegrate.file}" tofile="${this.dir}/db-integrate.xml" overwrite="true" />
+			<sql
+			    driver="${database.driver}"
+			    url="${database.url}"
+			    userid="${database.user}"
+			    password="${database.password}"
+				print="yes"
+				output="outputfile.txt"
+			    >
+				<classpath>
+					<pathelement location="common/lib/mysql-connector-java-5.0.5-bin.jar" />
+				</classpath>
+				select  ifnull(max(revision_number),0) as revision_number from build_control
+			</sql>
+			<loadfile
+				property="revision.list.property"
+				srcFile="outputfile.txt">
+			</loadfile>
+			<for list="${revision.list.property}" delimiter="${line.separator}" param="last.revision.property" >
+					<sequential>
+			
+						<if> 
+							<equals arg1="@{last.revision.property}" arg2="revision_number" />
+							 <elseif>						 							 							 					
+								<equals arg1="@{last.revision.property}" arg2="0 rows affected" />
+							 </elseif>
+							 <else>
+							 	
+							 	<property name="last.execute.property" value="@{last.revision.property}"/>
+							 </else>
+						</if> 	
+				
+					</sequential>
+			</for>
+			
+			<var name="counter" value="1"/>
+			<for list="${dbfiles.list.property}" delimiter="${line.separator}" param="file.line.property" >
+				<sequential>
+									
+					<propertyregex property="commit.revision.value"
+						input="@{file.line.property}"
+						regexp="(.*)=(.*)"
+						select="\2"
+						/>
+
+					<propertyregex property="file.name.property"
+						input="@{file.line.property}"
+						regexp="(.*)=(.*)"
+						select="\1"
+						/>
+
+
+					<elopeif>
+						<bool>						
+								<islessthan arg1="${commit.revision.value}" arg2="${last.execute.property}"/>									
+						</bool>	
+						
+				        <echo>${commit.revision.value} is less than ${last.execute.property}</echo>
+
+				        <!-- if false, then tasks inside the "else" will execute -->
+				        <else>				        	
+				            <echo>${commit.revision.value} is greater than ${last.execute.property}</echo>
+				        	<echo>execute the script ${file.name.property} </echo>
+				        	<xmlconfig in="${this.dir}/db-integrate.xml" verbose="false">
+				        		<insert name="run-sql-script" type="element" path="//target[@name='mysql:db-integrate']" />
+				        		<insert name="database.url" value="${database.url}" type="attribute" path="//target/run-sql-script[${counter}]" />
+				        		<insert name="database.user" value="${database.user}" type="attribute" path="//target/run-sql-script[${counter}]" />
+				        		<insert name="database.password" value="${database.password}" type="attribute" path="//target/run-sql-script[${counter}]" />
+				        		<insert name="sql.file" value="${db.dir}/${file.name.property}" type="attribute" path="//target/run-sql-script[${counter}]" />
+				        	</xmlconfig>
+							<math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>					
+							<echo>${counter}</echo>
+				        </else>
+
+					</elopeif>
+					
+
+					<var name="commit.revision.value" unset="true"/>
+					<var name="file.name.property" unset="true"/>
+					
+				</sequential>
+			</for>
+	
+		</sequential>
+	</macrodef>
+</project>
