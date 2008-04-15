@@ -15,6 +15,7 @@
 
 	<!-- Taskdefs -->
 	<taskdef name="dbconfig" classname="com.dbconfig.anttask.DbConfig" classpathref="macrodef.classpath" />
+	<taskdef name="svn" classpathref="macrodef.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
 
  	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
  		<classpath>
