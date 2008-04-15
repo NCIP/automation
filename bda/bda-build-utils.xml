@@ -996,7 +996,7 @@
 
 			<for param="file">
 				<path>
-					<fileset dir="${incr.sql.dir}" includes="*.sql"/>
+					<fileset dir="@{incr.sql.dir}" includes="*.sql"/>
 				</path>
 				<sequential>
 					<echo message="file name is "/>
