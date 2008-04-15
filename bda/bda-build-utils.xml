@@ -93,7 +93,7 @@
 		<sequential>
 			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="abort" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
 				<classpath>
-					<pathelement location="common/lib/mysql-connector-java-5.0.5-bin.jar" />
+					<pathelement location="${bda-utils.dir}/mysql-connector-java-5.0.5-bin.jar" />
 				</classpath>
 			</sql>
 		</sequential>
@@ -907,7 +907,7 @@
 				output="outputfile.txt"
 			    >
 				<classpath>
-					<pathelement location="common/lib/mysql-connector-java-5.0.5-bin.jar" />
+					<pathelement location="${bda-utils.dir}/mysql-connector-java-5.0.5-bin.jar" />
 				</classpath>
 				select  ifnull(max(revision_number),0) as revision_number from build_control
 			</sql>
