@@ -850,18 +850,24 @@
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<sequential>
-			<validate-database/>
-			<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
-			<property name="create.sql.dir" value="${bda-utils.db.dir}/target" />
-			<delete dir="${create.sql.dir}"/>
-			<copy todir="${create.sql.dir}">
-				<filterset>
-					<filtersfile file="${properties.file}" />
-				</filterset>
-				<fileset dir="${bda-utils.db.dir}" includes="create_database_and_user.sql" />									
-			</copy>		
-			<run-sql-script database.url="${database.system.url}" database.user="${database.system.user}" database.password="${database.system.password}" sql.file="${create.sql.dir}/create_database_and_user.sql" />
-			<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${bda-utils.db.dir}/create_build_control.sql" />
+			<if>
+				<not>
+					<isset property="${database.exists}"/>
+				</not>
+				<then>
+					<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
+					<property name="create.sql.dir" value="${bda-utils.db.dir}/target" />
+					<delete dir="${create.sql.dir}"/>
+					<copy todir="${create.sql.dir}">
+						<filterset>
+							<filtersfile file="${properties.file}" />
+						</filterset>
+						<fileset dir="${bda-utils.db.dir}" includes="create_database_and_user.sql" />									
+					</copy>		
+					<run-sql-script database.url="${database.system.url}" database.user="${database.system.user}" database.password="${database.system.password}" sql.file="${create.sql.dir}/create_database_and_user.sql" />
+					<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${bda-utils.db.dir}/create_build_control.sql" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 	
@@ -982,6 +988,40 @@
 	
 		</sequential>
 	</macrodef>
+	<macrodef name="database-build-filelist">
+		<attribute name="incr.sql.dir"/>
+		<sequential>
+			<delete file="${this.dir}/dbfiles_list.txt"/>
+			<delete file="${this.dir}/build.properties"/>
+
+			<for param="file">
+				<path>
+					<fileset dir="${incr.sql.dir}" includes="*.sql"/>
+				</path>
+				<sequential>
+					<echo message="file name is "/>
+					<echo message="echo @{file}"/>
+
+					<propertyregex property="file.name.property"
+						input="@{file}"
+						regexp=".*[\\\/]+(.*.sql)"
+						select="\1"
+						/>
+					<echo message="${file.name.property}"/>
+
+					<svn javahl="false">
+						<status path="@{file}" lastChangedRevisionProperty="svn.revision" revisionProperty="build.svn.revision"/>
+					</svn>
+					<echo message="${svn.revision}"/>
+					<echo file="${this.dir}/dbfiles_list.txt" append="true">${file.name.property}=${svn.revision}
+					</echo>
+					<var name="file.name.property" unset="true"/>
+				</sequential>
+			</for>  
+			<echo file="${this.dir}/build.properties" append="true">build.repository.revision=${build.svn.revision}</echo>
+		</sequential>
+	</macrodef>
+			
 	<macrodef name="tomcat-stop">
 		<attribute name="tomcat.home" />
 		<sequential>
