@@ -894,6 +894,7 @@
 	<macrodef name="identify-scripts">
 		<attribute name="sqlfiles.list.file" default="dbfiles_list.txt" />
  		<attribute name="build.properties.file" default="build.properties" />
+ 		<attribute name="database.sql.dir" />
 
 		<sequential>
 			<loadfile
@@ -972,7 +973,7 @@
 				        		<insert name="database.url" value="${database.url}" type="attribute" path="//target/run-sql-script[${counter}]" />
 				        		<insert name="database.user" value="${database.user}" type="attribute" path="//target/run-sql-script[${counter}]" />
 				        		<insert name="database.password" value="${database.password}" type="attribute" path="//target/run-sql-script[${counter}]" />
-				        		<insert name="sql.file" value="${db.dir}/${file.name.property}" type="attribute" path="//target/run-sql-script[${counter}]" />
+				        		<insert name="sql.file" value="${database.sql.dir}/${file.name.property}" type="attribute" path="//target/run-sql-script[${counter}]" />
 				        	</xmlconfig>
 							<math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>					
 							<echo>${counter}</echo>
