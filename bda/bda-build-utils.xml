@@ -857,7 +857,10 @@
 		<attribute name="database.password" default="${database.password}" />
 		<sequential>
 			<if>
-				<equals arg1="${database.exists}" arg2="false"/>
+				<or>
+					<equals arg1="${database.exists}" arg2="false"/>
+					<isset property="force.reinstall"/>
+				</or>
 				<then>
 					<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 					<property name="create.sql.dir" value="${bda-utils.db.dir}/target" />
