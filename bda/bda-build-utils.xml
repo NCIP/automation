@@ -962,7 +962,7 @@
 
 					<elopeif>
 						<bool>						
-								<islessthan arg1="${commit.revision.value}" arg2="${last.execute.property}"/>									
+								<isgreaterthan arg2="${commit.revision.value}" arg1="${last.execute.property}"/>									
 						</bool>	
 						
 				        <echo>${commit.revision.value} is less than ${last.execute.property}</echo>
