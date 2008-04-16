@@ -236,6 +236,8 @@
 		<attribute name="ant.check.version" default="1.7.0" />
 		<attribute name="java.check.version.major" default="1.5" />
 		<attribute name="java.check.version.minor" default="1.5.0_10" />
+		<attribute name="property.template.file" default="${properties.template.file}"/>
+		<attribute name="envpropertyfile" default="${properties.file}"/>
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -251,6 +253,10 @@
 				database.name="@{database.name}"
 				/>
 			<validate-properties/>
+			<compare-properties
+				property.template.file=@{property.template.file}"
+				envpropertyfile=@{properties.file}"
+				/>
 			<check-direct-child-directory
 				parent.dir.property="application.base.path"
 				child.dir.property="jboss.home"
@@ -1093,7 +1099,7 @@
 
 	<macrodef name="compare-properties" description="validate the properties from the given files">
 		<attribute name="property.template.file" />
-		<attribute name="envpropertyfile" />
+		<attribute name="envpropertyfile" default="${properties.file}"/>
 		<sequential>		
 			<ncitask keyFile="@{property.template.file}" compareFile="@{envpropertyfile}" />
 		</sequential>
