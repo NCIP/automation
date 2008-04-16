@@ -965,26 +965,33 @@
 
 					<elopeif>
 						<bool>						
-								<isgreaterthan arg2="${commit.revision.value}" arg1="${last.execute.property}"/>									
+								<isgreaterthan arg1="${last.execute.property}" arg2="${commit.revision.value}" />
 						</bool>	
 						
-				        <echo>${commit.revision.value} is less than ${last.execute.property}</echo>
+						<echo>${commit.revision.value} is less than ${last.execute.property}, Skips the execution of ${file.name.property}</echo>
 
-				        <!-- if false, then tasks inside the "else" will execute -->
-				        <else>				        	
-				            <echo>${commit.revision.value} is greater than ${last.execute.property}</echo>
-				        	<echo>execute the script ${file.name.property} </echo>
-				        	<xmlconfig in="${this.dir}/db-integrate.xml" verbose="false">
-				        		<insert name="run-sql-script" type="element" path="//target[@name='mysql:db-integrate']" />
-				        		<insert name="database.url" value="${database.url}" type="attribute" path="//target/run-sql-script[${counter}]" />
-				        		<insert name="database.user" value="${database.user}" type="attribute" path="//target/run-sql-script[${counter}]" />
-				        		<insert name="database.password" value="${database.password}" type="attribute" path="//target/run-sql-script[${counter}]" />
-				        		<insert name="sql.file" value="@{database.sql.dir}/${file.name.property}" type="attribute" path="//target/run-sql-script[${counter}]" />
-				        	</xmlconfig>
-							<math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>					
-							<echo>${counter}</echo>
-				        </else>
-
+						<!-- if false, then tasks inside the "else" will execute -->
+						<else>
+							<if>
+								<equals arg1="${last.execute.property}" arg2="${commit.revision.value}" />
+								<then>
+									<echo>${commit.revision.value} is equal to ${last.execute.property}, Skips the execution of ${file.name.property}</echo>
+								</then>
+								<else>
+									<echo>${commit.revision.value} is greater than ${last.execute.property}</echo>
+									<echo>execute the script ${file.name.property} </echo>
+									<xmlconfig in="${this.dir}/db-integrate.xml" verbose="false">
+									<insert name="run-sql-script" type="element" path="//target[@name='mysql:db-integrate']" />
+									<insert name="database.url" value="${database.url}" type="attribute" path="//target/run-sql-script[${counter}]" />
+									<insert name="database.user" value="${database.user}" type="attribute" path="//target/run-sql-script[${counter}]" />
+									<insert name="database.password" value="${database.password}" type="attribute" path="//target/run-sql-script[${counter}]" />
+									<insert name="sql.file" value="@{database.sql.dir}/${file.name.property}" type="attribute" path="//target/run-sql-script[${counter}]" />
+									</xmlconfig>
+									<math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>
+									<echo>${counter}</echo>
+								</else>
+							</if>
+						</else>
 					</elopeif>
 					
 
