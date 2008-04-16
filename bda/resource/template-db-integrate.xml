@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="db-integrate">
+	<!--
+	$Id$
+	$HeadURL$
+	-->
+
 	<target name="mysql:db-integrate" description="Apply DB changes">	
 	</target>
 </project>

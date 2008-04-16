@@ -1,3 +1,7 @@
+--
+-- $Id$
+-- $HeadURL$
+--
 
 DROP TABLE IF EXISTS `build_control`;
 CREATE TABLE `build_control` (

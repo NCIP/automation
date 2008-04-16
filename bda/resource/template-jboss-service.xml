@@ -1,3 +1,8 @@
+<!--
+$Id$
+$HeadURL$
+-->
+
    <mbean code="org.jboss.services.binding.ServiceBindingManager"
      name="jboss.system:service=ServiceBindingManager">
      <attribute name="ServerName">ports-01</attribute>

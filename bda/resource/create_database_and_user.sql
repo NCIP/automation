@@ -1,3 +1,8 @@
+--
+-- $Id$
+-- $HeadURL$
+--
+
 DROP DATABASE IF EXISTS @database.name@;
 CREATE DATABASE @database.name@ DEFAULT CHARACTER SET latin1;
 

@@ -1,10 +1,15 @@
 <project name="bda-utils" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+	<!--
+	$Id$
+	$HeadURL$
+	-->
 
  	<!-- Properties -->
 	<property name="bda-utils.lib.dir" value="${basedir}/bda-utils"/>
 	<property name="bda-utils.db.dir" value="${basedir}/bda-utils/resource"/>	
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" value="${bda-utils.db.dir}/template-db-integrate.xml"/>
+	<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
 
 	<!-- PATHS -->
 	<path id="macrodef.classpath">
@@ -94,7 +99,7 @@
 		<sequential>
 			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="abort" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
 				<classpath>
-					<pathelement location="${bda-utils.lib.dir}/mysql-connector-java-5.0.5.jar" />
+					<pathelement location="${database.driver.file}" />
 				</classpath>
 			</sql>
 		</sequential>
@@ -915,7 +920,7 @@
 				output="outputfile.txt"
 			    >
 				<classpath>
-					<pathelement location="${bda-utils.lib.dir}/mysql-connector-java-5.0.5.jar" />
+					<pathelement location="${database.driver.file}" />
 				</classpath>
 				select  ifnull(max(revision_number),0) as revision_number from build_control
 			</sql>
