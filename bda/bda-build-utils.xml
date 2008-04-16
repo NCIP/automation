@@ -255,7 +255,7 @@
 			<validate-properties/>
 			<compare-properties
 				property.template.file="@{property.template.file}"
-				envpropertyfile="@{properties.file}"
+				envpropertyfile="@{envpropertyfile}"
 				/>
 			<check-direct-child-directory
 				parent.dir.property="application.base.path"
