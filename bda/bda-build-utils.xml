@@ -1022,8 +1022,7 @@
 						<status path="@{file}" lastChangedRevisionProperty="svn.revision" revisionProperty="build.svn.revision"/>
 					</svn>
 					<echo message="${svn.revision}"/>
-					<echo file="@{sqlfiles.list.file}" append="true">${file.name.property}=${svn.revision}
-					</echo>
+					<echo file="@{sqlfiles.list.file}" append="true" message="${file.name.property}=${svn.revision}${line.separator}"/>
 					<var name="file.name.property" unset="true"/>
 				</sequential>
 			</for>  
