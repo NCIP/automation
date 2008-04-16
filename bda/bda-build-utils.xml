@@ -21,7 +21,7 @@
 	<!-- Taskdefs -->
 	<taskdef name="dbconfig" classname="com.dbconfig.anttask.DbConfig" classpathref="macrodef.classpath" />
 	<taskdef name="svn" classpathref="macrodef.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
-	<taskdef name="sshexec" classpathref="macrodef.classpath" classname="org.apache.tools.ant.taskdefs.optional.SSHExec" />
+	<taskdef name="sshexec" classpathref="macrodef.classpath" classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec" />
 
  	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
  		<classpath>
