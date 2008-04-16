@@ -997,9 +997,11 @@
 	</macrodef>
 	<macrodef name="database-build-filelist">
 		<attribute name="incr.sql.dir"/>
+		<attribute name="sqlfiles.list.file" default="dbfiles_list.txt" />
+ 		<attribute name="build.properties.file" default="build.properties" />
 		<sequential>
-			<delete file="${this.dir}/dbfiles_list.txt"/>
-			<delete file="${this.dir}/build.properties"/>
+			<delete file="${sqlfiles.list.file}"/>
+			<delete file="${build.properties.file}"/>
 
 			<for param="file">
 				<path>
@@ -1020,12 +1022,12 @@
 						<status path="@{file}" lastChangedRevisionProperty="svn.revision" revisionProperty="build.svn.revision"/>
 					</svn>
 					<echo message="${svn.revision}"/>
-					<echo file="${this.dir}/dbfiles_list.txt" append="true">${file.name.property}=${svn.revision}
+					<echo file="${sqlfiles.list.file}" append="true">${file.name.property}=${svn.revision}
 					</echo>
 					<var name="file.name.property" unset="true"/>
 				</sequential>
 			</for>  
-			<echo file="${this.dir}/build.properties" append="true">build.repository.revision=${build.svn.revision}</echo>
+			<echo file="${build.properties.file}" append="true">build.repository.revision=${build.svn.revision}</echo>
 		</sequential>
 	</macrodef>
 			
