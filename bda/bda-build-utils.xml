@@ -50,6 +50,10 @@
 		</classpath>
 	</taskdef>
 	
+	<taskdef name="ncitask" classname="gov.nih.ncicb.anttasks.PropertyValidator" classpathref="macrodef.classpath" />
+
+
+	
  	<tstamp>
  		<format property="run.date" pattern="yyMMddHHmm"/>
  	</tstamp>
@@ -1086,4 +1090,14 @@
 			</for>
 		</sequential>
 	</macrodef>
+
+	<macrodef name="validate-properties" description="validate the properties from the given files">
+		<attribute name="property.template.file" />
+		<attribute name="envpropertyfile" />
+		<sequential>		
+			<ncitask keyFile="${this.dir}/@{property.template.file}" compareFile="@{envpropertyfile}" />
+		</sequential>
+	</macrodef>
+  
+    
 </project>
