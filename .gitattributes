@@ -8,6 +8,8 @@ bda/resource/create_database_and_user.sql -text
 bda/resource/template-binding.xml -text
 bda/resource/template-db-integrate.xml -text
 bda/resource/template-jboss-service.xml -text
+bda/sample.properties -text
+bda/test-bda-utils.xml -text
 docs/cbiit-goals.doc -text
 docs/reference-architecture/README -text
 docs/reference-architecture/WebRoot/README -text

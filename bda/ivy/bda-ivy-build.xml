@@ -1,11 +1,6 @@
 <project name="bda-utils" default="retrieve-bda" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
-	<!--
-	$Id$
-	$HeadURL$
-	-->
-
 	<property name="ivy.src.url" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/apache/ivy/2.0.0-beta2/ivy-2.0.0-beta2.jar"/>
 	<property name="ivy-core.src.url" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/apache/ivy-core/2.0.0-beta2/ivy-core-2.0.0-beta2.jar"/>
 	<property name="ivy.dest.file" value="${lib.dir}/ivy-2.0.0-beta2.jar"/>
@@ -21,6 +16,7 @@
 	</path>
 
 	<target name="retrieve-bda">
+		<mkdir dir="${lib.dir}"/>
 		<get src="${ivy.src.url}" dest="${ivy.dest.file}"/>
 		<get src="${ivy-core.src.url}" dest="${ivy-core.dest.file}"/>
 		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath"/>
@@ -29,6 +25,7 @@
 		<property name="ivy.dep.file" value="ivy-bda.xml"/>
 		<ivy:settings file="ivy-bda-settings.xml" />
 		<ivy:retrieve pattern="${bda-utils.dir}/[artifact]-[revision].[ext]" />
+		<unzip dest="${bda-utils.dir}" src="${bda-utils.dir}/bda-build-utils-1.0.zip"/>
 	</target>
 
 </project>
