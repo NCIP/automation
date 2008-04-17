@@ -875,7 +875,7 @@
 	</macrodef>
 	
 
-	<macrodef name="create-database">
+	<macrodef name="database-create">
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
@@ -927,7 +927,7 @@
 		</sequential>
 	</macrodef>
 	
-	<macrodef name="identify-scripts">
+	<macrodef name="database-identify-scripts">
 		<attribute name="sqlfiles.list.file" default="dbfiles_list.txt" />
  		<attribute name="build.properties.file" default="build.properties" />
  		<attribute name="database.sql.dir" />
@@ -1067,7 +1067,31 @@
 			<echo file="@{build.properties.file}" append="true">build.repository.revision=${build.svn.revision}</echo>
 		</sequential>
 	</macrodef>
+
+	<macrodef name="database-update-version-table">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<sequential>
+			<sql    
+				driver="${database.driver}"
+				url="${database.url}"
+				userid="${database.user}"
+				password="${database.password}"
+				>
+				<classpath>
+					<pathelement location="${database.driver.file}" />
+				</classpath>
+				<transaction>
+					insert into build_control values(${build.repository.revision});
+				</transaction>
+			</sql>  
+
 			
+		</sequential>
+	</macrodef>
+
 	<macrodef name="tomcat-stop">
 		<attribute name="tomcat.home" />
 		<sequential>
