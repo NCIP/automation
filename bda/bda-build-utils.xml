@@ -9,7 +9,6 @@
 	<property name="bda-utils.db.dir" value="${basedir}/bda-utils/resource"/>	
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" value="${bda-utils.db.dir}/template-db-integrate.xml"/>
-	<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
 
 	<!-- PATHS -->
 	<path id="macrodef.classpath">
@@ -60,6 +59,27 @@
 
 	<!-- init tasks -->
 	<mkdir dir="${basedir}/tmp"/>
+	<property name="database.type" value="mysql"/>
+	<if>
+		<equals arg1="${database.type}" arg2="oracle"/>
+		<then>  
+			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
+			<property name="is.oracle" value="true"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc-10.2.0.3.0.jar "/>
+		</then> 
+		<elseif>    
+			<equals arg1="${database.type}" arg2="mysql"/>
+			<then>  
+				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+				<property name="is.mysql" value="true"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
+			</then> 
+			<else>  
+				<fail message="Invalid or unsupported database type ${database.type}"/>
+			</else> 
+		</elseif> 
+	</if>
+
 
 	<!-- Macrodefs -->
 	<macrodef name="run-junit-tests">
