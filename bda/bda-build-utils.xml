@@ -1104,6 +1104,31 @@
 			<ncitask keyFile="@{property.template.file}" compareFile="@{envpropertyfile}" />
 		</sequential>
 	</macrodef>
-  
+	<!-- This target assumes that all code required to build the application will be located under the software folder off the project root.  You will not be able to use this macro if you do not adhere to this structure. -->
+	<macrodef name="svn-co" description="based on properties passed to macro, clean the destination directory, then check out the tag specified into the destination directory.">
+		<attribute name="svn.project.base.url" default="${svn.project.base.url}" />
+		<attribute name="svn.project.name" default="${svn.project.name}"/>
+		<attribute name="svn.tag" default="trunk"/>
+		<attribute name="svn.co.base.dir" default="${user.home}/tmp/" />
+		<sequential>		
+			<if>
+				<equals arg1="@{svn.tag}" arg2="trunk"/>
+				<then>
+					<property name="svn.url" value="@{svn.project.base.url}/trunk/software"/>
+				</then>
+				<else>
+					<property name="svn.url" value="@{svn.project.base.url}/tags/@{svn.tag}/software"/>
+				</else>
+			</if>
+			<property name="svn.co.dir" value="@{svn.co.base.dir}/svn/@{svn.tag}/@{svn.project.name}"/>
+			<echo message="Scorching temporary checkout directory ${svn.co.dir}."/>
+			<delete dir="${svn.co.dir}" failonerror="false"/>
+			<mkdir dir="${svn.co.dir}"/>
+			<echo message="Checking out @{svn.tag} from ${svn.url} to ${svn.co.dir}."/>
+			<svn username="anonymous" password="">
+				<checkout url="${svn.url}" revision="HEAD" destPath="${svn.co.dir}" />
+			</svn> 
+		</sequential>
+	</macrodef>
     
 </project>
