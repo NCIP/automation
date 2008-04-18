@@ -1209,7 +1209,7 @@
 
 			<xmlconfig in="${jboss-service.file}" verbose="false">
 				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']" value="@{jboss.server.ports.name}" />
-				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="@{binding.file}" />
+				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="${binding.file}" />
 			</xmlconfig>
 		</sequential>
 	</macrodef>
