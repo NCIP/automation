@@ -1202,7 +1202,7 @@
 				</filterset>
 			</copy> 
 
-			<xmlconfig in="${jboss-service.file}" verbose="true">
+			<xmlconfig in="${jboss-service.file}" verbose="false">
 				<insertbranch path="//server" srcxmlfile="${bda-utils.resource.dir}/template-jboss-service.xml" srcpath="/mbean" />
 			</xmlconfig>
 
