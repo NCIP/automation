@@ -6,9 +6,9 @@
 
  	<!-- Properties -->
 	<property name="bda-utils.lib.dir" value="${basedir}/bda-utils"/>
-	<property name="bda-utils.db.dir" value="${basedir}/bda-utils/resource"/>	
+	<property name="bda-utils.resource.dir" value="${basedir}/bda-utils/resource"/>	
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
-	<property name="template.dbintegrate.file" value="${bda-utils.db.dir}/template-db-integrate.xml"/>
+	<property name="template.dbintegrate.file" value="${bda-utils.resource.dir}/template-db-integrate.xml"/>
 
 	<!-- PATHS -->
 	<path id="macrodef.classpath">
@@ -892,16 +892,16 @@
 				</or>
 				<then>
 					<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
-					<property name="create.sql.dir" value="${bda-utils.db.dir}/target" />
+					<property name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
 					<delete dir="${create.sql.dir}"/>
 					<copy todir="${create.sql.dir}">
 						<filterset>
 							<filtersfile file="${properties.file}" />
 						</filterset>
-						<fileset dir="${bda-utils.db.dir}" includes="create_database_and_user.sql" />									
+						<fileset dir="${bda-utils.resource.dir}" includes="create_database_and_user.sql" />									
 					</copy>		
 					<run-sql-script database.url="${database.system.url}" database.user="${database.system.user}" database.password="${database.system.password}" sql.file="${create.sql.dir}/create_database_and_user.sql" />
-					<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${bda-utils.db.dir}/create_build_control.sql" />
+					<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${bda-utils.resource.dir}/create_build_control.sql" />
 				</then>
 			</if>
 		</sequential>
@@ -1194,14 +1194,14 @@
 		<sequential>
 			<property name="binding.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/bindings.xml"/>
 			<property name="jboss-service.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml"/>
-			<copy tofile="${binding.file}" file="${bda-utils.dir}/template-binding.xml">
+			<copy tofile="${binding.file}" file="${bda-utils.resource.dir}/template-binding.xml">
 				<filterset>
 					<filtersfile file="${properties.file}" />
 				</filterset>
 			</copy> 
 
 			<xmlconfig in="${jboss-service.file}" verbose="true">
-				<insertbranch path="//server" srcxmlfile="${bda-utils.dir}/template-jboss-service.xml" srcpath="/mbean" />
+				<insertbranch path="//server" srcxmlfile="${bda-utils.resource.dir}/template-jboss-service.xml" srcpath="/mbean" />
 			</xmlconfig>
 
 
