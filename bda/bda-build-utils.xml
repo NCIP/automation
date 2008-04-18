@@ -596,11 +596,13 @@
 				input="${directory.value}"
 				select="\1"
 				/>
+			<!-- Relax this one for local installs
 			<propertyregex property="directory.bad"
 				regexp="^(\/usr\/local)$"
 				input="${directory.value}"
 				select="\1"
 				/>
+			-->
 			<propertyregex property="directory.bad"
 				regexp="^(\/opt)$"
 				input="${directory.value}"
