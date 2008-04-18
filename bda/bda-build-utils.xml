@@ -1189,7 +1189,7 @@
 			</exec>
 		</sequential>
 	</macrodef>
-	<macrodef name="bindings" description="generates grand graphs of build.xml files">
+	<macrodef name="jboss-bindings" description="generates grand graphs of build.xml files">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="ports-01"/>
@@ -1211,6 +1211,36 @@
 				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']" value="@{jboss.server.ports.name}" />
 				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="@{binding.file}" />
 			</xmlconfig>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jboss-read-dbconfig" description="generates grand graphs of build.xml files">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.ds-xml.file"/>
+		<sequential>
+			<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
+				<read path="//datasources/local-tx-datasource/connection-url" property="database.url" />
+				<read path="//datasources/local-tx-datasource/user-name" property="database.user" />
+				<read path="//datasources/local-tx-datasource/password" property="database.password" />
+			</xmlconfig>
+			<dbconfig property="db.appuser.works" 
+				driver="${database.driver}"
+				url="${database.url}"
+				user="${database.user}"
+				password="${database.password}">
+				<validate />
+			</dbconfig>
+			<if>    
+				<isset property="db.appuser.works"/>
+				<then>  
+					<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/caarray-mysql-ds.xml"/>
+					<echo  message="URL- ${database.url}  USER- ${database.user} PASS- ${database.password}"/>
+				</then> 
+				<else>  
+					<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password}"/>
+				</else> 
+			</if>   
 		</sequential>
 	</macrodef>
 </project>
