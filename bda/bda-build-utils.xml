@@ -1194,7 +1194,7 @@
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="ports-01"/>
 		<sequential>
-			<property name="binding.file" value="file://@{jboss.home}/server/@{jboss.server.name}/conf/bindings.xml"/>
+			<property name="binding.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/bindings.xml"/>
 			<property name="jboss-service.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml"/>
 			<copy tofile="${binding.file}" file="${bda-utils.resource.dir}/template-binding.xml">
 				<filterset>
@@ -1209,7 +1209,7 @@
 
 			<xmlconfig in="${jboss-service.file}" verbose="false">
 				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']" value="@{jboss.server.ports.name}" />
-				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="${binding.file}" />
+				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="file://${binding.file}" />
 			</xmlconfig>
 		</sequential>
 	</macrodef>
