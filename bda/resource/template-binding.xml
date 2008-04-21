@@ -7,7 +7,7 @@
    -->
 
   <service-bindings> 
-   <server name="ports-01">
+   <server name="@jboss.server.ports.name@">
    
       <!-- EJB3 Remoting Connector ejb3.deployer/META-INF/jboss-service.xml -->
 
@@ -24,7 +24,7 @@
          delegateClass="org.jboss.services.binding.AttributeMappingDelegate"
          >
          <delegate-config portName="Port" hostName="BindAddress">
-            <attribute name="RmiPort">${jboss.server.rmi.port}</attribute>
+            <attribute name="RmiPort">@jboss.server.rmi.port@</attribute>
          </delegate-config>
          <binding port="@jboss.server.jndi.port@" host="${jboss.bind.address}"/>
       </service-config>
