@@ -884,7 +884,18 @@
 		</sequential>
 	</macrodef>
 	
-
+	<!-- 
+	database-create macro create the mysql database and user and grant priledges to the user
+	usage: <database-create database.driver="${database.driver}" database.system.url="${database.system.url}" database.system.user="${database.system.user}" database.system.password="${database.system.password} database.name="${database.name}" database.url="${database.url}" database.password="${database.password}"/>
+		database.driver is the jdbc driver to connect to database
+		database.system.url is the installed host of the database
+		database.system.user is the system user for the database
+		database.system.password is the system password for the database		
+		database.name is the name of the database
+		database.url is the url of the database where it is hosted
+		database.user is the user of the database
+		database.password is the password of the user for the database
+	-->
 	<macrodef name="database-create">
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
@@ -940,6 +951,14 @@
 				/>
 		</sequential>
 	</macrodef>
+
+	<!-- 
+	database-create-control-table macro creates the build control table which stores the revision number of the build that was last executed
+	usage: <database-create-control-table database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		database.url is the url of the database where it is hosted
+		database.user is the user of the database
+		database.password is the password of the user for the database
+	-->		
 	<macrodef name="database-create-control-table">
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
@@ -966,6 +985,15 @@
 		</sequential>
 	</macrodef>
 	
+	<!-- 
+	validate-database macro validates the creadentials of the provided system user and the installed version of the database
+	usage: <validate-database database.driver="${database.driver}" database.system.url="${database.system.url}" database.system.user="${database.system.user}" database.system.password="${database.system.password}" database.version="${database.version}"/>
+		database.driver is the jdbc driver to connect to database
+		database.system.url is the installed host of the database
+		database.system.user is the system user for the database
+		database.system.password is the system password for the database
+		database.version is the version of the installed database
+	-->
 	<macrodef name="validate-database">
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
@@ -1007,7 +1035,15 @@
 			</if>
 		</sequential>
 	</macrodef>
-	
+
+	<!-- 
+	database-identify-scripts identifies the incremental sql scripts which should be executed and added them to the db-integrate target
+	This macro is part of the incremental database upgrade and is called during the install time.
+	usage: <database-identify-scripts database.sql.dir="${database.sql.dir}" sqlfiles.list.file="${sqlfiles.list.file}" build.properties.file="${build.properties.file}" />
+		database.sql.dir is the directory that has the sql files needed to be executed.
+		sqlfiles.list.file is the list of sql files with the revision number.By default the macro writes into dbfiles_list.txt
+		build.properties.file is the file that stores the build revision number.By default the macro writes into build.properties
+	-->	
 	<macrodef name="database-identify-scripts">
 		<attribute name="sqlfiles.list.file" default="dbfiles_list.txt" />
  		<attribute name="build.properties.file" default="build.properties" />
@@ -1128,6 +1164,16 @@
 	
 		</sequential>
 	</macrodef>
+	
+	<!-- 
+	database-build-filelist builds a file with the list of all sqlfiles and the lastCommitRevision for the file in the provided directory.
+	It also generates a file with the revision number of the repository on which the build is performed
+	This macro is part of the incremental database upgrade and is called during the build time.
+	usage: <database-build-filelist incr.sql.dir="${incr.sql.dir}" sqlfiles.list.file="${sqlfiles.list.file}" build.properties.file="${build.properties.file}" />
+		incr.sql.dir is the name of the directory where the sql files are stored
+		sqlfiles.list.file is the list of sql files with the revision number.By default the macro writes into dbfiles_list.txt
+		build.properties.file is the file that stores the build revision number.By default the macro writes into build.properties
+	-->
 	<macrodef name="database-build-filelist">
 		<attribute name="incr.sql.dir"/>
 		<attribute name="sqlfiles.list.file" default="dbfiles_list.txt" />
@@ -1163,6 +1209,13 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	database-update-version-table macro updates the build_control table in the database with the lastest build revision repository number.
+	This macro is part of the incremental database upgrade and is called after the database scripts are executed 
+	usage: <database-update-version-table />
+		The database information is read from install.properties file and latest build revision repository number 
+		is read from build.properties file
+	-->
 	<macrodef name="database-update-version-table">
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.url" default="${database.url}" />
@@ -1188,7 +1241,12 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="tomcat-stop">
+	<!-- 
+	tomcat-stop macro stops the tomcat instance and can be used in both linux and windows platforms	
+	usage: <tomcat-stop tomcat.home="${tomcat.home}"/>
+		The tomcat.home must be set and passed when calling this macro		
+	-->
+	<macrodef name="tomcat-stop" description="Stops a local tomcat instance">
 		<attribute name="tomcat.home" />
 		<sequential>
 			<echo message="Stopping Tomcat instance at @{tomcat.home}" />
@@ -1203,7 +1261,13 @@
 			<sleep seconds="5" />
 		</sequential>
 	</macrodef>
-	<macrodef name="tomcat-start" description="Starts a local JBoss instance">
+	
+	<!-- 
+	tomcat-stop macro starts the tomcat instance and can be used in both linux and windows platforms	
+	usage: <tomcat-start tomcat.home="${tomcat.home}"/>
+		The tomcat.home must be set and passed when calling this macro		
+	-->	
+	<macrodef name="tomcat-start" description="Starts a local tomcat instance">
 		<attribute name="tomcat.home" />
 		<sequential>
 			<echo message="Starting Tomcat instance at @{tomcat.home}" />
@@ -1218,7 +1282,13 @@
 			<sleep seconds="5" />
 		</sequential>
 	</macrodef>
-	<macrodef name="properties-exist" description="Starts a local JBoss instance">
+	
+	<!-- 
+	properties-exist macro checks if the value of the property is set in the list of properties seperated by ','
+	usage: <properties-exist properties.list="${properties.list}"/>
+		The properties.list must be set and passed when calling this macro		
+	-->
+	<macrodef name="properties-exist" description="Check if the value of the property is set">
 		<attribute name="properties.list" />
 		<sequential>
 			<for list="@{properties.list}" param="prop.list.item" delimiter=",">
@@ -1237,6 +1307,12 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	compare-properties macro checks that there are same number of key for a given property files
+	usage: <compare-properties property.template.file="${property.template.file} envpropertyfile="${envpropertyfile} "/>
+		The property.template.file is the template file to compare with
+		The envpropertyfile is the properties file to be compared to
+	-->
 	<macrodef name="compare-properties" description="validate the properties from the given files">
 		<attribute name="property.template.file" />
 		<attribute name="envpropertyfile" default="${properties.file}"/>
@@ -1244,7 +1320,16 @@
 			<ncitask keyFile="@{property.template.file}" compareFile="@{envpropertyfile}" />
 		</sequential>
 	</macrodef>
-	<!-- This target assumes that all code required to build the application will be located under the software folder off the project root.  You will not be able to use this macro if you do not adhere to this structure. -->
+	
+	<!-- 
+	svn-co macro checks out from a subversion repository based on properties passed to macro, clean the destination directory, then check out the tag specified into the destination directory. 
+	The macro assumes that all code required to build the application will be located under the software folder off the project root.  You will not be able to use this macro if you do not adhere to this structure.
+	usage: <svn-co svn.project.base.url="${svn.project.base.url}" svn.project.name="${svn.project.name}" svn.tag="${svn.tag}" svn.co.base.dir="${svn.co.base.dir}"/>
+		The svn.project.base.url is the URL of Subverion reposition to check out from
+		The svn.project.name is the name of the project in the repositiory
+		The svn.tag is the tag of the build ex. trunk
+		The svn.co.base.dir is the local directory to the checkout
+	-->	
 	<macrodef name="svn-co" description="based on properties passed to macro, clean the destination directory, then check out the tag specified into the destination directory.">
 		<attribute name="svn.project.base.url" default="${svn.project.base.url}" />
 		<attribute name="svn.project.name" default="${svn.project.name}"/>
@@ -1284,32 +1369,45 @@
 			</exec>
 		</sequential>
 	</macrodef>
-	<macrodef name="jboss-bindings" description="generates grand graphs of build.xml files">
+	
+	<!-- 
+	jboss-bindings macro configures the binding.xml and the jboss-service.xml which is used by jboss Binding Manager. 	
+	usage: <jboss-bindings jboss.home="${jboss.home}" jboss.server.name="${jboss.server.name}" jboss.server.ports.name="${jboss.server.ports.name}" jboss.server.bindingfile.location="${jboss.server.bindingfile.location}"/>
+		The jboss.home is the location where Jboss is installed
+		The jboss.server.name is the name of the deployed Jboss server 
+		The jboss.server.ports.name is the name of the configuration to be used from binding.xml	
+		jboss.server.bindingfile.location is the location of the binding.xml
+	-->		
+	<macrodef name="jboss-bindings" description="configures the binding.xml and the jboss-service.xml">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="ports-01"/>
-		<sequential>
-			<property name="binding.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/bindings.xml"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
+		<sequential>			
 			<property name="jboss-service.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml"/>
-			<copy tofile="${binding.file}" file="${bda-utils.resource.dir}/template-binding.xml">
+			<copy tofile="@{jboss.server.bindingfile.location}" file="${bda-utils.resource.dir}/template-binding.xml">
 				<filterset>
 					<filtersfile file="${properties.file}" />
 				</filterset>
 			</copy> 
-
-			<xmlconfig in="${jboss-service.file}" verbose="false">
-				<insertbranch path="//server" srcxmlfile="${bda-utils.resource.dir}/template-jboss-service.xml" srcpath="/mbean" />
-			</xmlconfig>
-
+	
+			<copy file="${bda-utils.resource.dir}/template-jboss-service.xml" tofile="${jboss.home}/server/default/conf/jboss-service.xml" overwrite="true"/>
 
 			<xmlconfig in="${jboss-service.file}" verbose="false">
 				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']" value="@{jboss.server.ports.name}" />
-				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="file://${binding.file}" />
+				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="file://@{jboss.server.bindingfile.location}" />
 			</xmlconfig>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jboss-read-dbconfig" description="generates grand graphs of build.xml files">
+	<!-- 
+	jboss-read-dbconfig macro reads the database information from the application ds.xml and makes connection to the database to check is the application and the database is installed
+	usage: <jboss-read-dbconfig jboss.home="${jboss.home} jboss.server.name="${svn.project.name} jboss.ds-xml.file="name if the ds file"/>
+		The jboss.home is the location where Jboss is installed
+		The jboss.server.name is the name of the deployed Jboss server 
+		The jboss.ds-xml.file is the name of the ds.xml file	
+	-->
+	<macrodef name="jboss-read-dbconfig" description="check if the application is installed">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.ds-xml.file"/>
