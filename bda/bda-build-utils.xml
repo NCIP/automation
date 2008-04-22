@@ -888,24 +888,70 @@
 		<attribute name="database.password" default="${database.password}" />
 		<sequential>
 			<if>
-				<or>
-					<equals arg1="${database.exists}" arg2="false"/>
+				<and>
+					<equals arg1="${database.type}" arg2="mysql"/>
 					<isset property="force.reinstall"/>
-				</or>
+				</and>
 				<then>
 					<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 					<property name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
 					<delete dir="${create.sql.dir}"/>
+					<!--
 					<copy todir="${create.sql.dir}">
 						<filterset>
 							<filtersfile file="${properties.file}" />
 						</filterset>
 						<fileset dir="${bda-utils.resource.dir}" includes="create_database_and_user.sql" />									
 					</copy>		
-					<run-sql-script database.url="${database.system.url}" database.user="${database.system.user}" database.password="${database.system.password}" sql.file="${create.sql.dir}/create_database_and_user.sql" />
-					<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${bda-utils.resource.dir}/create_build_control.sql" />
+					-->
+					<sql    
+						driver="@{database.driver}"
+						url="@{database.system.url}"
+						userid="@{database.system.user}"
+						password="@{database.system.password}"
+						>
+						<classpath>
+							<pathelement location="${database.driver.file}" />
+						</classpath>
+						<transaction>
+							DROP DATABASE IF EXISTS @{database.name};
+							CREATE DATABASE @{database.name} DEFAULT CHARACTER SET latin1;
+							DELETE FROM mysql.user WHERE User='@{database.user}';
+							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'localhost' IDENTIFIED BY '@{database.password}' WITH GRANT OPTION;
+							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'%' IDENTIFIED BY '@{database.password}' WITH GRANT OPTION;
+						</transaction>
+					</sql>  
 				</then>
 			</if>
+			<database-create-control-table
+				database.url="@{database.url}"
+				database.user="@{database.user}"
+				database.password="@{database.password}"
+				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="database-create-control-table">
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<sequential>
+			<echo messages="Please ignore errors about build_control table already exists."/>
+			<sql    
+				driver="${database.driver}"
+				url="@{database.url}"
+				userid="@{database.user}"
+				password="@{database.password}"
+				onerror="continue"
+				>
+				<classpath>
+					<pathelement location="${database.driver.file}" />
+				</classpath>
+				<transaction>
+					CREATE TABLE build_control (
+						revision_number int NOT NULL
+						);
+				</transaction>
+			</sql>  
 		</sequential>
 	</macrodef>
 	
@@ -1012,7 +1058,7 @@
 									<echo>${commit.revision.value} is greater than ${last.execute.property}</echo>
 									<echo>execute the script ${file.name.property} </echo>
 									<xmlconfig in="${this.dir}/db-integrate.xml" verbose="false">
-									<insert name="run-sql-script" type="element" path="//target[@name='mysql:db-integrate']" />
+									<insert name="run-sql-script" type="element" path="//target[@name='database-integrate']" />
 									<insert name="database.url" value="${database.url}" type="attribute" path="//target/run-sql-script[${counter}]" />
 									<insert name="database.user" value="${database.user}" type="attribute" path="//target/run-sql-script[${counter}]" />
 									<insert name="database.password" value="${database.password}" type="attribute" path="//target/run-sql-script[${counter}]" />
