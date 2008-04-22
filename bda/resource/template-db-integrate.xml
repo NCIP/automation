@@ -5,6 +5,6 @@
 	$HeadURL$
 	-->
 
-	<target name="mysql:db-integrate" description="Apply DB changes">	
+	<target name="database-integrate" description="Apply DB changes">	
 	</target>
 </project>
