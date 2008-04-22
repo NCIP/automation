@@ -64,7 +64,7 @@
 		<then>  
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="is.oracle" value="true"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc-10.2.0.3.0.jar "/>
+			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar "/>
 		</then> 
 		<elseif>    
 			<equals arg1="${database.type}" arg2="mysql"/>
