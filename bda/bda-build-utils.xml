@@ -1045,7 +1045,7 @@
 				<classpath>
 					<pathelement location="${database.driver.file}" />
 				</classpath>
-				select  ifnull(max(revision_number),0) as revision_number from build_control
+					${sql.revision_number}
 			</sql>
 			<loadfile
 				property="revision.list.property"
