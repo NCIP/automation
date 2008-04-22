@@ -918,6 +918,7 @@
 						url="@{database.system.url}"
 						userid="@{database.system.user}"
 						password="@{database.system.password}"
+						expandproperties="true"
 						>
 						<classpath>
 							<pathelement location="${database.driver.file}" />
@@ -950,6 +951,7 @@
 				url="@{database.url}"
 				userid="@{database.user}"
 				password="@{database.password}"
+				expandproperties="true"
 				onerror="continue"
 				>
 				<classpath>
@@ -1035,12 +1037,13 @@
 			</if>
 
 			<sql
-			    driver="${database.driver}"
-			    url="${database.url}"
-			    userid="${database.user}"
-			    password="${database.password}"
+				driver="${database.driver}"
+				url="${database.url}"
+				userid="${database.user}"
+				password="${database.password}"
 				print="yes"
 				output="outputfile.txt"
+				expandproperties="true"
 			    >
 				<classpath>
 					<pathelement location="${database.driver.file}" />
@@ -1171,6 +1174,7 @@
 				url="${database.url}"
 				userid="${database.user}"
 				password="${database.password}"
+				expandproperties="true"
 				>
 				<classpath>
 					<pathelement location="${database.driver.file}" />
