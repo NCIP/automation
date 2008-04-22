@@ -935,7 +935,7 @@
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<sequential>
-			<echo messages="Please ignore errors about build_control table already exists."/>
+			<echo message="Please ignore errors about build_control table already exists."/>
 			<sql    
 				driver="${database.driver}"
 				url="@{database.url}"
