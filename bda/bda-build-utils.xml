@@ -654,32 +654,40 @@
 		<attribute name="database.system.password" default="${database.system.password}" />
 		<attribute name="database.name" default="${database.name}" />
 		<sequential>
-			<dbconfig property="database.exists" 
-				driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
-				<validate />
-				<checkdatabaseexists exactly="${database.name}" />
-			</dbconfig>
-			<echo message="Does @{database.name} exist = ${database.exists} "/>
 			<if>
-				<and>
-					<equals arg1="${database.exists}" arg2="true"/>
-					<not>
-						<isset property="force.reinstall"/>
-					</not>
-				</and>
+				<equals arg1="${database.type}" arg2="mysql" />
 				<then>
-					<input message="The database @{database.name} already exists.  Please be sure you have a recent backup of this database.  This process will alter the database if you need to return your database to the current state you need a good backup.  Please ensure you have a good backup before proceeding.  Do you want to proceed?"
-						validargs="y,n"
-						addproperty="accept.database.update" />
+					<dbconfig property="database.exists" 
+						driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+						<validate />
+						<checkdatabaseexists exactly="${database.name}" />
+					</dbconfig>
+					<echo message="Does @{database.name} exist = ${database.exists} "/>
 					<if>
-						<equals arg1="${accept.database.update}" arg2="n"/>
+						<and>
+							<equals arg1="${database.exists}" arg2="true"/>
+							<not>
+								<isset property="force.reinstall"/>
+							</not>
+						</and>
 						<then>
-							<fail message="User tereminated the build."/>
+							<input message="The database @{database.name} already exists.  Please be sure you have a recent backup of this database.  This process will alter the database if you need to return your database to the current state you need a good backup.  Please ensure you have a good backup before proceeding.  Do you want to proceed?"
+								validargs="y,n"
+								addproperty="accept.database.update" />
+							<if>
+								<equals arg1="${accept.database.update}" arg2="n"/>
+								<then>
+									<fail message="User tereminated the build."/>
+								</then>
+							</if>
 						</then>
+						<else>
+							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
+						</else>
 					</if>
 				</then>
 				<else>
-					<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
+					<echo message="Database is ${database.type}, warning prompt not displayed."/>
 				</else>
 			</if>
 		</sequential>
@@ -963,14 +971,37 @@
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
 		<sequential>
+			<!-- Only validates connection for oracle -->
 			<echo message="Validating database connection..." />
-			<dbconfig property="db.connection.success" 
-				driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
-				<validate />
-				<checkversion atleast="@{database.version}" />
-			</dbconfig>
-			<antunit:assertPropertyEquals message="Database connection failed for @{database.system.url}. Verify that your database.system.user and database.system.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
-			<echo message="Database Connection: PASSED" />
+			<if>
+				<equals arg1="${database.type}" arg2="mysql"/>
+				<then>
+					<dbconfig property="db.connection.success" 
+						driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+						<validate />
+						<checkversion atleast="@{database.version}" />
+					</dbconfig>
+					<antunit:assertPropertyEquals message="Database connection failed for @{database.system.url}. Verify that your database.system.user and database.system.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+					<echo message="Database Connection: PASSED" />
+				</then>
+				<elseif>
+					<equals arg1="${database.type}" arg2="oracle"/>
+					<then>
+						<dbconfig property="oracle.connection.success" 
+							driver="@{database.driver}"
+							url="@{database.url}"
+							user="@{database.user}"
+							password="@{database.password}">
+							<validate />
+						</dbconfig>
+						<antunit:assertPropertyEquals
+							message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
+							name="oracle.connection.success"
+						       	value="true" />
+						<echo message="Database Connection: PASSED" />
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 	
@@ -988,7 +1019,20 @@
 			<property file="@{sqlfiles.list.file}" />			
 			<property file="@{build.properties.file}" />
 			
-			<copy file="${template.dbintegrate.file}" tofile="${this.dir}/db-integrate.xml" overwrite="true" />
+			<copy file="${template.dbintegrate.file}" tofile="${basedir}/db-integrate.xml" overwrite="true" />
+			<if>
+				<equals arg1="${database.type}" arg2="mysql" />
+				<then>
+					<property name="sql.revision_number" value="select  ifnull(max(revision_number),0) as revision_number from build_control"/>
+				</then>
+				<elseif>
+					<equals arg1="${database.type}" arg2="mysql" />
+					<then>
+						<property name="sql.revision_number" value="select max(nvl(revision_number,0)) as revision_number from build_control"/>
+					</then>
+				</elseif>
+			</if>
+
 			<sql
 			    driver="${database.driver}"
 			    url="${database.url}"
@@ -1057,7 +1101,7 @@
 								<else>
 									<echo>${commit.revision.value} is greater than ${last.execute.property}</echo>
 									<echo>execute the script ${file.name.property} </echo>
-									<xmlconfig in="${this.dir}/db-integrate.xml" verbose="false">
+									<xmlconfig in="${basedir}/db-integrate.xml" verbose="false">
 									<insert name="run-sql-script" type="element" path="//target[@name='database-integrate']" />
 									<insert name="database.url" value="${database.url}" type="attribute" path="//target/run-sql-script[${counter}]" />
 									<insert name="database.user" value="${database.user}" type="attribute" path="//target/run-sql-script[${counter}]" />
