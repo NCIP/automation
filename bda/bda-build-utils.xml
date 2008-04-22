@@ -1065,7 +1065,7 @@
 					<property name="sql.revision_number" value="select  ifnull(max(revision_number),0) as revision_number from build_control"/>
 				</then>
 				<elseif>
-					<equals arg1="${database.type}" arg2="mysql" />
+					<equals arg1="${database.type}" arg2="oracle" />
 					<then>
 						<property name="sql.revision_number" value="select max(nvl(revision_number,0)) as revision_number from build_control"/>
 					</then>
