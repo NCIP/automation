@@ -80,7 +80,10 @@
 	</if>
 
 
-	<!-- Macrodefs -->
+	
+	<!-- run-junit-tests macro runs the unit test cases  
+	usage: <run-junit-tests test.src.dir="${test.src.dir}" xml.output.dir="${target.dir}/junit" instrumented.classes="${instrumented.classes.dir}" classpath="${caarray-client.test.classes.dir};${test.data.files.dir};${test.classes.dir};${commons-lang.jar};${commons-io.jar};${caarray-client.test.files.dir};${caarray-client.classes.dir};${caarray-client.resources.dir};${junit.jar};${nci-commons-core.jar}" />
+	-->
 	<macrodef name="run-junit-tests">
 		<attribute name="test.src.dir" />
 		<attribute name="xml.output.dir" />
@@ -112,6 +115,9 @@
 		</sequential>
 	</macrodef>
 
+	<!-- run-sql-script macro executes the sql scripts for a database 
+	usage: <run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${sql.dir}/create_table.sql" /> 
+	-->
 	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
 		<attribute name="sql.file" />
 		<attribute name="sql.delimiter" default=";" />
@@ -129,7 +135,9 @@
 		</sequential>
 	</macrodef>
 
-	<!-- EXAMPLE: <remote-ssh remotesshcommand="mv ${jboss.temp.dir}/caarray.ear ${jboss.home}/deploy/" /> -->
+	<!-- remote-ssh macro is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execure remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.
+	usage: <remote-ssh remotesshcommand="mv ${jboss.temp.dir}/caarray.ear ${jboss.home}/deploy/" /> 
+	-->
 	<macrodef name="remote-ssh" description="This is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execure remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.">
 		<attribute name="remoteSshCommand" />
 		<attribute name="remoteSshPort" default="${ssh.port}" />
@@ -144,7 +152,9 @@
 		</sequential>
 	</macrodef>
 
-	<!-- EXAMPLE: <remote-scp remoteScpFileToCopy="${caarray.ear}" 
+	<!-- remote-scp macro copies files in a secure manner using SCP. 
+	remoteScpToDir and remoteScpFileToCopy are required attributes to this macrodef
+	usage: <remote-scp remoteScpFileToCopy="${caarray.ear}" 
 	remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${jboss.temp.dir}" />
 	-->
 	<macrodef name="remote-scp" description="This task copies files in a secure manner using SCP. 
@@ -163,7 +173,13 @@
 		</sequential>
 	</macrodef>
 
-	<!-- JBoss  -->
+	<!-- 
+	jboss-stop-jboss macro will stop the jboss instance
+	usage: 	<jboss-start-jboss jboss.home="${jboss.home}"/>
+		jboss.home is the location where Jboss is installed
+		jboss.server.hostname is the host name where the application server is installed
+		jboss.server.jndi.port is the JNDI port on which the server listens
+	-->
 	<macrodef name="jboss-stop-jboss">
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
@@ -179,6 +195,12 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	jboss-check-if-jboss-is-running macro checks if the jboss server is up and listening
+	usage: 	<jboss-check-if-jboss-is-running jboss.server.port="${jboss.server.port}" jboss.server.hostname="${jboss.server.hostname}" jboss.server.jndi.port="${jboss.server.jndi.port}"/>
+		jboss.server.port is the http port number of which the web container listens
+		jboss.server.hostname is the host name where the application server is installed		
+	-->
 	<macrodef name="jboss-check-if-jboss-is-running" description="Checks if a local JBoss instance is running">
 		<attribute name="jboss.server.port" default="${jboss.server.port}" />
 		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
@@ -189,6 +211,11 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	jboss-start-jboss macro will start the jboss instance
+	usage: 	<jboss-start-jboss jboss.home="${jboss.home}"/>
+		jboss.home is the location where Jboss is installed		
+	-->
 	<macrodef name="jboss-start-jboss" description="Starts a local JBoss instance">
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<sequential>
@@ -213,6 +240,13 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	jboss-update-shutdown macro updates the shutdown.jar with the host and jndi port information
+	usage: 	<jboss-update-runconf jboss.home="${jboss.home}" jboss.server.hostname="${jboss.server.hostname}" jboss.server.jndi.port="${jboss.server.jndi.port}"/>
+		jboss.home is the location where Jboss is installed
+		jboss.server.hostname is the host name where the application server is installed
+		jboss.server.jndi.port is the JNDI port on which the server listens
+	-->
 	<macrodef name="jboss-update-shutdown" description="Update the shutdown.jar ">
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
@@ -233,7 +267,12 @@
 		</sequential>
 	</macrodef>
 	
-	<!-- Updates run.conf JAVA_OPTS and sets to property -->
+	<!-- 
+	jboss-update-runconf macro updates the configuration of run.conf and sets the desired JAVA_OPTS
+	usage: 	<jboss-update-runconf jboss.home="${jboss.home}" jboss.java.opts="${jboss.java.opts}"/>
+		jboss.home is the location where Jboss is installed
+		jboss.java.opts are the desired java options for the application server
+	-->
 	<macrodef name="jboss-update-runconf">
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}" />
@@ -244,6 +283,24 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	validate-pre-install macro is a wrapper for all the pre-install validations and would vaildate for the environment, properties and directory structure of the host before application installation
+	usage: 	<validate-pre-install />
+		database.driver is the jdbc driver to connect to database
+		database.system.url is the installed host of the database
+		database.system.user is the system user for the database
+		database.system.password is the system password for the database		
+		database.name is the name of the database
+		database.url is the url of the database where it is hosted
+		database.user is the user of the database
+		database.password is the password of the user for the database
+		validate-ports-preinstall is the list of comma seperated port numbers		
+		ant.check.version is the version of ant. By default the ant version should be greater than 1.7.0
+		java.check.version.major is the major version of java. By default the major version should be greater than 1.5
+		java.check.version.minor is the minor version of java. By default the minor version should be greater than 1.5.0_10
+		The property.template.file is the template file to compare with
+		The envpropertyfile is the properties file to be compared to
+	-->
 	<!-- System Diagnostics  -->
 	<macrodef name="validate-pre-install" description="Diagnose the host system before the installation">
 		<attribute name="database.driver" default="${database.driver}" />
@@ -307,6 +364,13 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	validate-environment macro validates host environment i.e the version of the installed ant, jdk.
+	usage: 	<validate-environment ant.check.version="1.7.0" java.check.version.major="1.5" java.check.version.minor="1.5.0_10"/>
+		ant.check.version is the version of ant. By default the ant version should be greater than 1.7.0
+		java.check.version.major is the major version of java. By default the major version should be greater than 1.5
+		java.check.version.minor is the minor version of java. By default the minor version should be greater than 1.5.0_10	
+	-->
 	<macrodef name="validate-environment" description="Diagnose the host system before the installation">
 		<attribute name="ant.check.version" default="1.7.0" />
 		<attribute name="java.check.version.major" default="1.5" />
@@ -353,6 +417,11 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	validate-properties macro validates the property values in the property file. The checks include if an REPLACE are left and fails the build,compares database system user and databases users are the same,Checks that hostnames are reachable.
+	usage: 	<validate-properties />
+		properties.file property should be set before calling this macro		
+	-->
 	<macrodef name="validate-properties" description="Diagnose the host system before the installation">
 		<sequential>
 			<!-- Validate properties, checks if an REPLACE are left and fails the build -->
@@ -482,9 +551,14 @@
 		</sequential>
 	</macrodef>
 			
-
+	<!-- 
+	validate-ports-preinstall macro validates whether the host listens on provided list of comma seperated ports 
+	usage: 	<validate-ports-preinstall validate-ports-preinstall="${validate-ports-preinstall}" hostname="${jboss.server.hostname}" />
+		validate-ports-preinstall is the list of comma seperated port numbers
+		hostname is the host name of the machine e.x.localhost
+	-->
 	<macrodef name="validate-ports-preinstall" description="Diagnose the host system before the installation">
-		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
+		<attribute name="validate-ports-preinstall" default="${validation.pre.port.list}" />
 		<attribute name="hostname" default="${jboss.server.hostname}" />
 		<sequential>
 			<!-- Validate ports are not listening -->
@@ -509,7 +583,12 @@
 		</sequential>
 	</macrodef>
  			
-
+	<!-- 
+	check-direct-child-directory macro checks the child directory is the child of the parent directory
+	usage: 	<check-direct-child-directory parent.dir.property="application.base.path" child.dir.property="jboss.home" />
+		parent.dir.property is the property for the parent directory
+		child.dir.property is the property for the child directory
+	-->
 	<macrodef name="check-direct-child-directory" description="Diagnose the host system before the installation">
 		<attribute name="parent.dir.property" />
 		<attribute name="child.dir.property" />
@@ -534,6 +613,13 @@
 			</if>
 		</sequential>
 	</macrodef>
+	
+	<!-- 
+	check-not-child-directory macro checks the parent and child directories do not have the same name
+	usage: 	<check-not-child-directory parent.dir.property="application.base.path" child.dir.property="basedir" />
+		parent.dir.property is the property for the parent directory
+		child.dir.property is the property for the child directory
+	-->
 	<macrodef name="check-not-child-directory" description="Diagnose the host system before the installation">
 		<attribute name="parent.dir.property" />
 		<attribute name="child.dir.property" />
@@ -559,7 +645,11 @@
 		</sequential>
 	</macrodef>
 
-
+	<!-- 
+	check-valid-directory-name macro checks for the possible combinations of the directories and should be called before deleting any directories
+	usage: <check-valid-directory-name directory.property="jboss.home" />
+		directory.property is the property for the directory to be checked
+	-->
 	<macrodef name="check-valid-directory-name" description="Diagnose the host system before the installation">
 		<attribute name="directory.property" />
 		<sequential>
@@ -624,6 +714,11 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	check-application-exists macro checks if the application exists. The property where the applications is installed should be priovided as input
+	usage: <check-application-exists application.dir.property="jboss.home" />
+		application.dir.property is the property for the installation directory of the application
+	-->
 	<macrodef name="check-application-exists" description="Diagnose the host system before the installation">
 		<attribute name="application.dir.property" />
 		<sequential>
@@ -654,7 +749,17 @@
 			</if>
 		</sequential>
 	</macrodef>
-	<macrodef name="check-database-exists" description="Diagnose the host system before the installation">
+	
+	<!-- 
+	check-database-exists macro checks if the database exists. The root user name and password should be provided
+	usage: <check-database-exists database.driver="${database.driver}" database.system.url="${database.system.url}" database.system.user="${database.system.user}" database.system.password="${database.system.password} database.name="${database.name}" />
+		database.driver is the jdbc driver to connect to database
+		database.system.url is the installed host of the database
+		database.system.user is the system user for the database
+		database.system.password is the system password for the database		
+		database.name is the name of the database
+	-->
+	<macrodef name="check-database-exists" description="Checks if the database exists">
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
@@ -700,7 +805,14 @@
 		</sequential>
 	</macrodef>
 
-
+	<!-- 
+	validate-post-install macro Diagnose the host system after the installation
+	usage: <validate-post-install validation.post.http.list="${validation.post.http.list}" validation.post.socket.list="${validation.post.socket.list}" jboss.home="${jboss.home}" jboss.server.name="${jboss.server.name}"/>
+		validation.post.http.list is the list of all comma seperated ports numbers 
+		validation.post.socket.list is the list of all comma seperated sockets
+		jboss.home is the location where Jboss is installed
+		jboss.server.name is the name of the deployed Jboss server 
+	-->
 	<macrodef name="validate-post-install" description="Diagnose the host system after the installation">
  		<attribute name="validation.post.http.list" default="${validation.post.http.list}" />
  		<attribute name="validation.post.socket.list" default="${validation.post.socket.list}" />
@@ -753,6 +865,13 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	validate-ports-postinstall macro checks if the application listens on the specified port numbers and is part of postinstall checks
+	usage: <validate-ports-postinstall validation.post.http.list="${validation.post.http.list}" validation.post.socket.list="${validation.post.socket.list}" hostname="${jboss.server.hostname}" />
+		validation.post.http.list is the list of all comma seperated ports numbers 
+		validation.post.socket.list is the list of all comma seperated sockets
+		hostname is the deployed host ex. localhost
+	-->
 	<macrodef name="validate-ports-postinstall" description="Diagnose the host system after the installation">
 		<attribute name="validation.post.http.list" default="${validation.post.http.list}" />
 		<attribute name="validation.post.socket.list" default="${validation.post.socket.list}" />
@@ -798,6 +917,12 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+	validate-jboss-logs-postinstall macro is part of postinstall checks and parses the the jboss server.log and boot.log for any warning and errors after the installation.
+	usage: <validate-jboss-logs-postinstall jboss.home="${jboss.home}" jboss.server.name="${jboss.server.name}" />
+		jboss.home is the location where Jboss is installed
+		jboss.server.name is the name of the deployed Jboss server 
+	-->
 	<macrodef name="validate-jboss-logs-postinstall" description="Diagnose the host system after the installation">
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
