@@ -250,6 +250,9 @@
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
 		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
  		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
@@ -269,6 +272,9 @@
 				database.system.url="@{database.system.url}"
 				database.system.user="@{database.system.user}"
 				database.system.password="@{database.system.password}"
+				database.url="@{database.url}"
+				database.user="@{database.user}"
+				database.password="@{database.password}"
 				database.version="@{database.version}"
 				database.name="@{database.name}"
 				/>
@@ -999,6 +1005,9 @@
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
 		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
 		<sequential>
