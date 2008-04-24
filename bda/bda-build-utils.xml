@@ -558,7 +558,7 @@
 		hostname is the host name of the machine e.x.localhost
 	-->
 	<macrodef name="validate-ports-preinstall" description="Diagnose the host system before the installation">
-		<attribute name="validate-ports-preinstall" default="${validation.pre.port.list}" />
+		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
 		<attribute name="hostname" default="${jboss.server.hostname}" />
 		<sequential>
 			<!-- Validate ports are not listening -->
