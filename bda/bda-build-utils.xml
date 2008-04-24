@@ -1522,6 +1522,8 @@
 			<copy tofile="@{jboss.server.bindingfile.location}" file="${bda-utils.resource.dir}/template-binding.xml">
 				<filterset>
 					<filtersfile file="${properties.file}" />
+					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
+					<filter token="jboss.server.bindingfile.location" value="@{jboss.server.bindingfile.location}"/>
 				</filterset>
 			</copy> 
 	
