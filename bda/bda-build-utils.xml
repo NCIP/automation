@@ -1525,36 +1525,43 @@
 				</filterset>
 			</copy> 
 	
-			<copy file="${bda-utils.resource.dir}/template-jboss-service.xml" tofile="${jboss.home}/server/default/conf/jboss-service.xml" overwrite="true"/>
+			<copy file="${bda-utils.resource.dir}/template-jboss-service.xml" tofile="${jboss-service.file}" overwrite="true">
+				<filterset>
+					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
+					<filter token="jboss.server.bindingfile.location" value="@{jboss.server.bindingfile.location}"/>
+				</filterset>
+			</copy>
 
+			<!-- Use tokens where possible
 			<xmlconfig in="${jboss-service.file}" verbose="false">
 				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']" value="@{jboss.server.ports.name}" />
 				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="file://@{jboss.server.bindingfile.location}" />
 			</xmlconfig>
+			-->
 		</sequential>
 	</macrodef>
 
 	<!-- 
 	jboss-read-dbconfig macro reads the database information from the application ds.xml and makes connection to the database to check is the application and the database is installed
-	usage: <jboss-read-dbconfig jboss.home="${jboss.home} jboss.server.name="${svn.project.name} jboss.ds-xml.file="name if the ds file"/>
-		The jboss.home is the location where Jboss is installed
-		The jboss.server.name is the name of the deployed Jboss server 
-		The jboss.ds-xml.file is the name of the ds.xml file	
-	-->
-	<macrodef name="jboss-read-dbconfig" description="check if the application is installed">
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="jboss.ds-xml.file"/>
-		<sequential>
-			<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
-				<read path="//datasources/local-tx-datasource/connection-url" property="database.url" />
-				<read path="//datasources/local-tx-datasource/user-name" property="database.user" />
-				<read path="//datasources/local-tx-datasource/password" property="database.password" />
-			</xmlconfig>
-			<dbconfig property="db.appuser.works" 
-				driver="${database.driver}"
-				url="${database.url}"
-				user="${database.user}"
+		usage: <jboss-read-dbconfig jboss.home="${jboss.home} jboss.server.name="${svn.project.name} jboss.ds-xml.file="name if the ds file"/>
+			The jboss.home is the location where Jboss is installed
+			The jboss.server.name is the name of the deployed Jboss server 
+			The jboss.ds-xml.file is the name of the ds.xml file	
+		-->
+		<macrodef name="jboss-read-dbconfig" description="check if the application is installed">
+			<attribute name="jboss.home" default="${jboss.home}"/>
+			<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+			<attribute name="jboss.ds-xml.file"/>
+			<sequential>
+				<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
+					<read path="//datasources/local-tx-datasource/connection-url" property="database.url" />
+					<read path="//datasources/local-tx-datasource/user-name" property="database.user" />
+					<read path="//datasources/local-tx-datasource/password" property="database.password" />
+				</xmlconfig>
+				<dbconfig property="db.appuser.works" 
+					driver="${database.driver}"
+					url="${database.url}"
+					user="${database.user}"
 				password="${database.password}">
 				<validate />
 			</dbconfig>
