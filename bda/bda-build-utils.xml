@@ -1182,6 +1182,8 @@
 		<attribute name="sqlfiles.list.file" default="dbfiles_list.txt" />
  		<attribute name="build.properties.file" default="build.properties" />
  		<attribute name="database.sql.dir" />
+ 		<attribute name="sql.delimiter" default=";" />
+ 		<attribute name="sql.delimitertype" default="normal" />
 
 		<sequential>
 			<loadfile
@@ -1225,26 +1227,23 @@
 				srcFile="outputfile.txt">
 			</loadfile>
 			<for list="${revision.list.property}" delimiter="${line.separator}" param="last.revision.property" >
-					<sequential>
-			
-						<if> 
-							<equals arg1="@{last.revision.property}" arg2="revision_number" />
-							 <elseif>						 							 							 					
-								<equals arg1="@{last.revision.property}" arg2="0 rows affected" />
-							 </elseif>
-							 <else>
-							 	
-							 	<property name="last.execute.property" value="@{last.revision.property}"/>
-							 </else>
-						</if> 	
+				<sequential>
+					<if> 
+						<equals arg1="@{last.revision.property}" arg2="revision_number" casesensitive="false"/>
+						<elseif>
+							<equals arg1="@{last.revision.property}" arg2="0 rows affected" />
+						</elseif>
+						<else>
+						 	<property name="last.execute.property" value="@{last.revision.property}"/>
+						</else>
+					</if> 	
 				
-					</sequential>
+				</sequential>
 			</for>
 			
 			<var name="counter" value="1"/>
 			<for list="${dbfiles.list.property}" delimiter="${line.separator}" param="file.line.property" >
 				<sequential>
-									
 					<propertyregex property="commit.revision.value"
 						input="@{file.line.property}"
 						regexp="(.*)=(.*)"
@@ -1281,6 +1280,8 @@
 									<insert name="database.user" value="${database.user}" type="attribute" path="//target/run-sql-script[${counter}]" />
 									<insert name="database.password" value="${database.password}" type="attribute" path="//target/run-sql-script[${counter}]" />
 									<insert name="sql.file" value="@{database.sql.dir}/${file.name.property}" type="attribute" path="//target/run-sql-script[${counter}]" />
+									<insert name="sql.delimiter" value="@{sql.delimiter}" type="attribute" path="//target/run-sql-script[${counter}]" />
+									<insert name="sql.delimitertype" value="@{sql.delimitertype}" type="attribute" path="//target/run-sql-script[${counter}]" />
 									</xmlconfig>
 									<math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>
 									<echo>${counter}</echo>
