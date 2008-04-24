@@ -1554,29 +1554,44 @@
 			<attribute name="jboss.home" default="${jboss.home}"/>
 			<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 			<attribute name="jboss.ds-xml.file"/>
+			<attribute name="database.url.property.name" default="database.url" />
+			<attribute name="database.name.property.name" default="database.name" />
+			<attribute name="database.user.property.name" default="database.user" />
+			<attribute name="database.password.property.name" default="database.password" />
 			<sequential>
 				<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
-					<read path="//datasources/local-tx-datasource/connection-url" property="database.url" />
-					<read path="//datasources/local-tx-datasource/user-name" property="database.user" />
-					<read path="//datasources/local-tx-datasource/password" property="database.password" />
+					<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
+					<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
+					<read path="//datasources/local-tx-datasource/password" property="read.database.password" />
 				</xmlconfig>
 				<dbconfig property="db.appuser.works" 
-					driver="${database.driver}"
-					url="${database.url}"
-					user="${database.user}"
-				password="${database.password}">
-				<validate />
-			</dbconfig>
-			<if>    
-				<isset property="db.appuser.works"/>
-				<then>  
-					<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/caarray-mysql-ds.xml"/>
-					<echo  message="URL- ${database.url}  USER- ${database.user} PASS- ${database.password}"/>
-				</then> 
-				<else>  
-					<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password}"/>
-				</else> 
-			</if>   
+					driver="${read.database.driver}"
+					url="${read.database.url}"
+					user="${read.database.user}"
+					password="${read.database.password}">
+					<validate />
+				</dbconfig>
+				<propertyregex property="read.database.name"
+					input="${database.url}"
+					regexp=".*\/(.*)"
+					select="\1"
+					/>
+				
+				<property property="${database.url.property.name}" from="${read.database.url}" />
+				<property property="${database.user.property.name}" from="${read.database.user}" />
+				<property property="${database.password.property.name}" from="${read.database.password}" />
+				<property property="${database.name.property.name}" from="${read.database.name}" />
+
+				<if>    
+					<isset property="db.appuser.works"/>
+					<then>  
+						<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/caarray-mysql-ds.xml"/>
+						<echo  message="URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name}"/>
+					</then> 
+					<else>  
+						<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password}"/>
+					</else> 
+				</if>   
 		</sequential>
 	</macrodef>
 </project>
