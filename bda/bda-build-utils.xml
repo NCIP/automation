@@ -1577,10 +1577,10 @@
 					select="\1"
 					/>
 				
-				<property property="${database.url.property.name}" from="${read.database.url}" />
-				<property property="${database.user.property.name}" from="${read.database.user}" />
-				<property property="${database.password.property.name}" from="${read.database.password}" />
-				<property property="${database.name.property.name}" from="${read.database.name}" />
+				<property name="${database.url.property.name}" value="${read.database.url}" />
+				<property name="${database.user.property.name}" value="${read.database.user}" />
+				<property name="${database.password.property.name}" value="${read.database.password}" />
+				<property name="${database.name.property.name}" value="${read.database.name}" />
 
 				<if>    
 					<isset property="db.appuser.works"/>
