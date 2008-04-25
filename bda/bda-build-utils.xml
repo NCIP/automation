@@ -1599,4 +1599,20 @@
 				</if>   
 		</sequential>
 	</macrodef>
+	
+	<!-- 
+	svn-getinfo macro gets the latest revision number in the repository for the give path and will set the lsd.revision property
+		usage: <svn-getinfo />
+		my.path is the checked out location of the project
+	-->
+	<macrodef name="svn-getinfo">		
+		<attribute name="my.path" default="${basedir}/.."/>
+		<sequential>			
+			<svn javahl="false">
+				<status path="${my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
+			</svn>
+			<property name="lsd.revision" value="${svn.revision}" />
+			<echo> in macrodef - ${my.path} </echo>
+		</sequential>
+	</macrodef>
 </project>
