@@ -1573,20 +1573,20 @@
 					<validate />
 				</dbconfig>
 				<propertyregex property="read.database.name"
-					input="${database.url}"
+					input="${read.database.url}"
 					regexp=".*\/(.*)"
 					select="\1"
 					/>
 				
-				<property name="${database.url.property.name}" value="${read.database.url}" />
-				<property name="${database.user.property.name}" value="${read.database.user}" />
-				<property name="${database.password.property.name}" value="${read.database.password}" />
-				<property name="${database.name.property.name}" value="${read.database.name}" />
+				<property name="@{database.url.property.name}" value="${read.database.url}" />
+				<property name="@{database.user.property.name}" value="${read.database.user}" />
+				<property name="@{database.password.property.name}" value="${read.database.password}" />
+				<property name="@{database.name.property.name}" value="${read.database.name}" />
 
 				<if>    
 					<isset property="db.appuser.works"/>
 					<then>  
-						<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/caarray-mysql-ds.xml"/>
+						<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
 						<echo  message="URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name}"/>
 					</then> 
 					<else>  
