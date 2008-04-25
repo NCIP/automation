@@ -1606,7 +1606,7 @@
 		my.path is the checked out location of the project
 	-->
 	<macrodef name="svn-getinfo">		
-		<attribute name="my.path" default="${basedir}/.."/>
+		<attribute name="my.path" default="${basedir}"/>
 		<sequential>			
 			<svn javahl="false">
 				<status path="${my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
