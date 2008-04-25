@@ -1494,7 +1494,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="grand" description="generates grand graphs of build.xml files">
+	<macrodef name="report-grand" description="generates grand graphs of build.xml files">
 		<attribute name="build.file.location" default="build.xml"/>
 		<attribute name="output.file.dir" default="."/>
 		<attribute name="output.file.name" default="build.xml"/>
