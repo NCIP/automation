@@ -1609,10 +1609,10 @@
 		<attribute name="my.path" default="${basedir}"/>
 		<sequential>			
 			<svn javahl="false">
-				<status path="${my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
+				<status path="@{my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
 			</svn>
 			<property name="lsd.revision" value="${svn.revision}" />
-			<echo> in macrodef - ${my.path} </echo>
+			<echo> in macrodef - @{my.path} </echo>
 		</sequential>
 	</macrodef>
 </project>
