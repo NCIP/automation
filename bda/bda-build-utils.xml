@@ -1560,6 +1560,7 @@
 			<attribute name="database.user.property.name" default="database.user" />
 			<attribute name="database.password.property.name" default="database.password" />
 			<sequential>
+				<echo  message="Value of properites before reading existing *-ds.xml file: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name}"/>
 				<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
 					<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
 					<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
@@ -1587,7 +1588,7 @@
 					<isset property="db.appuser.works"/>
 					<then>  
 						<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-						<echo  message="URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name}"/>
+						<echo  message="Value after read of *-ds.xml: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name}"/>
 					</then> 
 					<else>  
 						<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password}"/>
