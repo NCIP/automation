@@ -478,7 +478,10 @@
 			
 			<!-- Validate database properties, compares database.system.user to other *databases.*.user  -->
 			<if>
-				<isset property="properties.file"/>
+				<and>
+					<isset property="properties.file"/>
+					<isset property="database.system.user"/>
+				</and>
 				<then>
 					<loadfile
 						property="all.match.property"
