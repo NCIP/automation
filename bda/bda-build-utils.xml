@@ -1521,8 +1521,7 @@
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="ports-01"/>
 		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
-		<sequential>			
-			<property name="jboss-service.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml"/>
+		<sequential>						
 			<copy tofile="@{jboss.server.bindingfile.location}" file="${bda-utils.resource.dir}/template-binding.xml">
 				<filterset>
 					<filtersfile file="${properties.file}" />
@@ -1531,7 +1530,7 @@
 				</filterset>
 			</copy> 
 	
-			<copy file="${bda-utils.resource.dir}/template-jboss-service.xml" tofile="${jboss-service.file}" overwrite="true">
+			<copy file="${bda-utils.resource.dir}/template-jboss-service.xml" tofile="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" overwrite="true">
 				<filterset>
 					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
 					<filter token="jboss.server.bindingfile.location" value="@{jboss.server.bindingfile.location}"/>
