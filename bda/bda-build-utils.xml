@@ -189,7 +189,7 @@
 				<isset property="jboss.bin.exists"/>
 				<then>
 					<echo message="Shutting down jboss with stop_jboss"/>
-					<exec executable="stop_jboss" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin"/>
+					<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/stop_jboss" os="Linux"/>
 				</then>
 				<else>
 					<echo message="Shutting down jboss with shutdown.jar"/>
