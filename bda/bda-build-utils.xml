@@ -189,7 +189,7 @@
 				<isset property="jboss.bin.exists"/>
 				<then>
 					<echo message="Shutting down jboss with stop_jboss"/>
-					<exec executable="sh" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin" spawn="true">
+					<exec executable="sh" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin">
 						<env key="NOPAUSE" value="true" />
 						<arg line="stop_jboss" />
 					</exec>
