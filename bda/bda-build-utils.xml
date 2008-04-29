@@ -189,10 +189,7 @@
 				<isset property="jboss.bin.exists"/>
 				<then>
 					<echo message="Shutting down jboss with stop_jboss"/>
-					<exec executable="sh" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin">
-						<env key="NOPAUSE" value="true" />
-						<arg line="stop_jboss" />
-					</exec>
+					<exec executable="stop_jboss" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin"/>
 				</then>
 				<else>
 					<echo message="Shutting down jboss with shutdown.jar"/>
@@ -239,9 +236,7 @@
 				<isset property="jboss.bin.exists"/>
 				<then>
 					<echo message="Starting JBoss instance at @{jboss.home} with start_jboss" />
-					<exec executable="sh" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin" spawn="true">
-						<env key="NOPAUSE" value="true" />
-						<arg line="start_jboss" />
+					<exec executable="start_jboss" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin" />
 					</exec>
 				</then>
 				<else>
