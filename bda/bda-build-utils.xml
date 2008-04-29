@@ -237,7 +237,6 @@
 				<then>
 					<echo message="Starting JBoss instance at @{jboss.home} with start_jboss" />
 					<exec executable="start_jboss" os="Linux" dir="@{jboss.home}/server/@{jboss.server.name}/bin" />
-					</exec>
 				</then>
 				<else>
 					<echo message="Starting JBoss instance at @{jboss.home} with run.sh" />
