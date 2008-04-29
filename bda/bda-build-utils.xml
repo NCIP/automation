@@ -232,6 +232,7 @@
 	-->
 	<macrodef name="jboss-start-jboss" description="Starts a local JBoss instance">
 		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<sequential>
 			<available file="@{jboss.home}/server/@{jboss.server.name}/bin" property="jboss.bin.exists"/>
 			<if>
