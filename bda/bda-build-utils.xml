@@ -336,10 +336,12 @@
 				database.name="@{database.name}"
 				/>
 			<validate-properties/>
+			<!-- comment out until we add more functionality 
 			<compare-properties
 				property.template.file="@{property.template.file}"
 				envpropertyfile="@{envpropertyfile}"
 				/>
+			-->
 			<check-direct-child-directory
 				parent.dir.property="application.base.path"
 				child.dir.property="jboss.home"
