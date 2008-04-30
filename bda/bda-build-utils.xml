@@ -1289,7 +1289,7 @@
 							<and>
 								<isgreaterthan arg1="${last.execute.property}" arg2="${commit.revision.value}" />
 								<not>
-									<equals arg1="${commit.revision.value}" arg2="null" casesensitive="false"/>
+									<equals arg1="${last.execute.property}" arg2="null" casesensitive="false"/>
 								</not>
 							</and>
 						</bool>	
