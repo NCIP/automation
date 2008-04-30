@@ -21,6 +21,14 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
+software/ant/custom/propertyvalidator/.classpath -text
+software/ant/custom/propertyvalidator/.project -text
+software/ant/custom/propertyvalidator/build.xml -text
+software/ant/custom/propertyvalidator/properties/dev.properties -text
+software/ant/custom/propertyvalidator/properties/keyfile.properties -text
+software/ant/custom/propertyvalidator/src/gov/nih/nci/bda/ApplicationVersion.java -text
+software/ant/custom/propertyvalidator/src/gov/nih/nci/bda/PropertyValidator.java -text
+software/ant/custom/propertyvalidator/test/gov/nih/nci/bda/test/TestPropertyValidator.java -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
