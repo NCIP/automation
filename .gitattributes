@@ -6,6 +6,7 @@ bda/ivy/ivy-bda.xml -text
 bda/resource/template-binding.xml -text
 bda/resource/template-db-integrate.xml -text
 bda/resource/template-jboss-service.xml -text
+bda/resource/version.properties -text
 bda/sample.properties -text
 bda/test-bda-utils.xml -text
 docs/bda-gettingstarted.doc -text
