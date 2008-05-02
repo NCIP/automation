@@ -1478,7 +1478,7 @@
 							<isset property="@{prop.list.item}"/>
 						</not>
 						<then>
-							<fail message="Property @{property.list.item} is not set, it needs to be set, please set it to continue"/>
+							<fail message="Property @{prop.list.item} is not set, it needs to be set, please set it to continue"/>
 						</then>
 					</if>
 				</sequential>
