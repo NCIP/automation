@@ -9,6 +9,9 @@ bda/resource/template-jboss-service.xml -text
 bda/resource/version.properties -text
 bda/sample.properties -text
 bda/test-bda-utils.xml -text
+build-utility/build.bat -text
+build-utility/default.properties -text
+build-utility/environment.xml -text
 docs/bda-gettingstarted.doc -text
 docs/bda-gettingstarted.pdf -text svneol=unset#unset
 docs/cbiit-goals.doc -text
