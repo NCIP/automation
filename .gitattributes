@@ -13,6 +13,7 @@ build-utility/build.bat -text
 build-utility/default.properties -text
 build-utility/environment.xml -text
 docs/bda-cbiit-preso/build-system.png -text
+docs/bda-cbiit-preso/developer-practices.png -text
 docs/bda-gettingstarted.doc -text
 docs/bda-gettingstarted.pdf -text svneol=unset#unset
 docs/cbiit-goals.doc -text
