@@ -37,6 +37,7 @@ $Id:  $
 		<property name="lib.dir" value="${lib.dir}"/>
 	</ant>
 
+
 	<!-- Task definitions -->
 	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml">
 		<classpath>
@@ -87,7 +88,26 @@ $Id:  $
 		<tomcat-start tomcat.home="${tomcat.mirc.home}"/>
 	</target>
 	<target name="test:grand" >
-		<grand/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/security/api/script/build.xml"
+			output.file.dir="."
+			output.file.name="security-api-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/security/upt/build.xml"
+			output.file.dir="."
+			output.file.name="security-upt-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/logging/source/locator_webapp/scripts/build.xml"
+			output.file.dir="."
+			output.file.name="loging-locatorwebapp-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/logging/source/api/scripts/build.xml"
+			output.file.dir="."
+			output.file.name="logging-api-build.xml"
+			/>
 	</target>
 	<target name="test:chk_ds" >
 		<jboss-read-dbconfig
@@ -102,5 +122,8 @@ $Id:  $
 		<property name="ssh.port" value="22"/>
 		<property name="ssh.key.file" value="${user.home}/.ssh/id_dsa"/>
 		<remote-ssh remotesshcommand="echo 'before';ulimit -n;ulimit -n 2048;echo 'after';ulimit -n" />
+	</target>
+	<target name="install:validation:pre-build">
+		<validate-pre-build />
 	</target>
 </project>
