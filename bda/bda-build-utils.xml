@@ -1,8 +1,8 @@
 <project name="bda-utils" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
-	<!--
-	$Id$
-	$HeadURL$
-	-->
+<!--
+$Id$
+$HeadURL$
+-->
 
  	<!-- Properties -->
 	<property name="bda-utils.lib.dir" value="${basedir}/bda-utils"/>
@@ -1653,6 +1653,59 @@
 			</svn>
 			<property name="lsd.revision" value="${svn.revision}" />
 			<echo> in macrodef - @{my.path} </echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-pre-build">		
+		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-indepenent/ws-core-enum-4.0.3.zip"/>
+		<attribute name="wscore.dest.dir" default="${application.base.path}/ws-core-4.0.3"/>
+		<sequential>			
+			<check-wscore-exists
+				wscore.download.url="@{wscore.download.url}"
+				wscore.dest.dir="@{wscore.dest.dir}"
+				/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="check-wscore-exists">		
+		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-indepenent/ws-core-enum-4.0.3.zip"/>
+		<attribute name="wscore.dest.dir" default="${application.base.path}/ws-core-4.0.3"/>
+		<sequential>			
+			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
+			<property name="wscore.dest.file" value="downloads/${wscore.file.name}"/>
+			<echo message="Does basename work on urls? ${wscore.file.name}"/>
+			<mkdir dir="downloads"/>
+			<if>
+				<or>
+					<not>
+						<isset property="env.GLOBUS_LOCATION"/>
+					</not>
+					<not>
+						<available file="${env.GLOBUS_LOCATION}/build.xml"/>
+					</not>
+				</or>
+				<then>
+					<get src="@{wscore.download.url}"
+						dest="${wscore.dest.file}"/>
+					<get src="@{wscore.download.url}.MD5"
+						dest="${wscore.dest.file}.MD5"/>
+					<checksum file="${wscore.dest.file}" verifyProperty="wscore.cksum.ok"/>
+					<if>    
+						<equals arg1="${wscore.cksum.ok}" arg2="true"/>
+						<then>  
+							<echo message="Downloaded wscore sucessfully"/>
+						</then> 
+						<else>  
+							<fail message="Failed to download wscore file sucessfully."/>
+						</else> 
+					</if>   
+					<unzip dest="@{wscore.dest.dir}" src="${wscore.dest.file}"/>
+					<property name="env.GLOBUS_LOCATION" value="@{wscore.dest.dir}"/>
+					<echo message="if GL= ${env.GLOBUS_LOCATION}"/>
+
+				</then>
+			</if>
+			<echo message="else GL= ${env.GLOBUS_LOCATION}"/>
 		</sequential>
 	</macrodef>
 </project>
