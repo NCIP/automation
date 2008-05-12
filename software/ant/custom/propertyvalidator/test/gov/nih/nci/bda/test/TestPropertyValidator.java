@@ -21,10 +21,9 @@ public class TestPropertyValidator extends TestCase {
 	@Before
 	public void setUp() throws Exception {
 		this.propertyValidator = new PropertyValidator();
-		this.propertyValidator.setKeyFile(this.userdir
-				+ "/properties/keyfile.properties");
-		this.propertyValidator.setCompareFile(this.userdir
-				+ "/properties/dev.properties");
+		this.propertyValidator.setKeyFile(this.userdir + "/properties/keyfile.properties");
+		this.propertyValidator.setCompareFile(this.userdir + "/properties/dev.properties");
+		this.propertyValidator.setMatch("exactly");
 	}
 
 	/**

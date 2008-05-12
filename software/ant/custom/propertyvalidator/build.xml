@@ -17,7 +17,8 @@
 				<pathelement location="${lib.dir}/${jar.file.name}" />
 			</classpath>
 		</taskdef>
-		<propertyvalidator keyFile="${properties.dir}/${keyfile.file}" compareFile="${properties.dir}/${envproperties.file}" />
+		<propertyvalidator keyFile="${properties.dir}/${keyfile.file}" 
+			compareFile="${properties.dir}/${envproperties.file}" match="exactly"/>
 	</target>
 
 	<target name="application-version">

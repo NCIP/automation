@@ -17,6 +17,8 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 
 	private String compareFile;
 
+	private String match = "exactly";
+
 	public void setCompareFile(String pCompareFile) {
 		this.compareFile = pCompareFile;
 	}
@@ -25,29 +27,26 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 		this.keyFile = pKeyFile;
 	}
 
-	public void execute() throws BuildException {
-		Properties keyProperties = new Properties();
-		Properties compareProperties = new Properties();
-		try {
-			keyProperties.load(new FileInputStream(new File(this.keyFile)));
-			compareProperties.load(new FileInputStream(new File(
-					this.compareFile)));
+	public void setMatch(String pMatch) {
+		this.match = pMatch;
+	}
 
-			SortedSet sortedKeyProperties = new TreeSet(keyProperties.keySet());
-			SortedSet sortedCompareProperties = new TreeSet(compareProperties
-					.keySet());
+	private void matchExactly(Properties pKeyProperties, Properties pCompareProperties) {
+		try {
+			pKeyProperties.load(new FileInputStream(new File(this.keyFile)));
+			pCompareProperties.load(new FileInputStream(new File(this.compareFile)));
+
+			SortedSet sortedKeyProperties = new TreeSet(pKeyProperties.keySet());
+			SortedSet sortedCompareProperties = new TreeSet(pCompareProperties.keySet());
 
 			if (sortedKeyProperties.equals(sortedCompareProperties)) {
-				System.out.println("Task completed successfully. "
-						+ this.keyFile + " matches exactly " + this.compareFile
-						+ ".");
+				System.out.println("Task completed successfully. " + this.keyFile + " matches exactly "
+						+ this.compareFile + ".");
 			} else {
 				Iterator keyIterator = sortedKeyProperties.iterator();
 				Iterator compareIterator = sortedCompareProperties.iterator();
 
-				StringBuffer msgExcKeys = new StringBuffer(
-						"Excess key(s) in template file " + this.keyFile
-								+ ": - ");
+				StringBuffer msgExcKeys = new StringBuffer("Excess key(s) in template file " + this.keyFile + ": - ");
 				while (keyIterator.hasNext()) {
 					String key = (String) keyIterator.next();
 					if (!sortedCompareProperties.contains(key)) {
@@ -55,9 +54,8 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 					}
 				}
 
-				StringBuffer msgExcComp = new StringBuffer(
-						"Excess key(s) in environment file " + this.compareFile
-								+ ": - ");
+				StringBuffer msgExcComp = new StringBuffer("Excess key(s) in environment file " + this.compareFile
+						+ ": - ");
 				while (compareIterator.hasNext()) {
 					String key = (String) compareIterator.next();
 					if (!sortedKeyProperties.contains(key)) {
@@ -65,15 +63,72 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 					}
 				}
 
-				throw new BuildException("\n" + this.compareFile
-						+ " does not match " + this.keyFile + ". \n"
-						+ msgExcKeys.toString() + "\n" + msgExcComp.toString()
-						+ "\n" + "Operation aborted.");
+				throw new BuildException("\n" + this.compareFile + " does not match " + this.keyFile + ". \n"
+						+ msgExcKeys.toString() + "\n" + msgExcComp.toString() + "\n" + "Operation aborted.");
 			}
 		} catch (FileNotFoundException e) {
 			throw new BuildException(e);
 		} catch (IOException e) {
 			throw new BuildException(e);
+		}
+	}
+
+	private void matchAtLeast(Properties pKeyProperties, Properties pCompareProperties) {
+		try {
+			pKeyProperties.load(new FileInputStream(new File(this.keyFile)));
+			pCompareProperties.load(new FileInputStream(new File(this.compareFile)));
+
+			SortedSet sortedKeyProperties = new TreeSet(pKeyProperties.keySet());
+			SortedSet sortedCompareProperties = new TreeSet(pCompareProperties.keySet());
+
+			if (sortedKeyProperties.equals(sortedCompareProperties)) {
+				System.out.println("Task completed successfully. " + this.keyFile + " matches exactly "
+						+ this.compareFile + ".");
+			} else {
+				Iterator keyIterator = sortedKeyProperties.iterator();
+				Iterator compareIterator = sortedCompareProperties.iterator();
+
+				if (sortedKeyProperties.size() > sortedCompareProperties.size()) {
+					StringBuffer msgExcKeys = new StringBuffer("Excess key(s) in template file " + this.keyFile
+							+ ": - ");
+					while (keyIterator.hasNext()) {
+						String key = (String) keyIterator.next();
+						if (!sortedCompareProperties.contains(key)) {
+							msgExcKeys.append(key).append(" ");
+						}
+					}
+
+					throw new BuildException("\n" + this.compareFile + " does not match " + this.keyFile + ". \n"
+							+ msgExcKeys.toString() + "\n" + msgExcKeys.toString() + "\n" + "Operation aborted.");
+				} else {
+
+					StringBuffer msgExcComp = new StringBuffer("Excess key(s) in environment file " + this.compareFile
+							+ ": - ");
+					while (compareIterator.hasNext()) {
+						String key = (String) compareIterator.next();
+						if (!sortedKeyProperties.contains(key)) {
+							msgExcComp.append(key).append(" ");
+						}
+					}
+
+					System.out.println(msgExcComp.toString());
+				}
+			}
+		} catch (FileNotFoundException e) {
+			throw new BuildException(e);
+		} catch (IOException e) {
+			throw new BuildException(e);
+		}
+	}
+
+	public void execute() throws BuildException {
+		Properties keyProperties = new Properties();
+		Properties compareProperties = new Properties();
+
+		if (this.match.equalsIgnoreCase("atleast")) {
+			this.matchAtLeast(keyProperties, compareProperties);
+		} else {
+			this.matchExactly(keyProperties, compareProperties);
 		}
 
 	}
