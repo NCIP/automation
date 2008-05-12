@@ -20,6 +20,7 @@ docs/bda-gettingstarted.pdf -text svneol=unset#unset
 docs/bda-project-plan.mpp -text
 docs/bda-project-tasks.mpp -text
 docs/cbiit-goals.doc -text
+docs/csm-kickoff.ppt -text
 docs/reference-architecture/README -text
 docs/reference-architecture/WebRoot/README -text
 docs/reference-architecture/WebRoot/WEB-INF/web.xml -text
