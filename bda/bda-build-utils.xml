@@ -50,8 +50,12 @@ $HeadURL$
 		</classpath>
 	</taskdef>
 	
-	<taskdef name="ncitask" classname="gov.nih.nci.bda.PropertyValidator" classpathref="macrodef.classpath" />
-	
+	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator">
+		<classpath>
+			<pathelement location="${bda-utils.lib.dir}/propertyvalidator-0.1.5.jar" />
+		</classpath>
+	</taskdef>
+
  	<tstamp>
  		<format property="run.date" pattern="yyMMddHHmm"/>
  	</tstamp>
@@ -363,6 +367,7 @@ $HeadURL$
 				envpropertyfile="@{envpropertyfile}"
 				/>
 			-->
+
 			<check-direct-child-directory
 				parent.dir.property="application.base.path"
 				child.dir.property="jboss.home"
@@ -1493,10 +1498,21 @@ $HeadURL$
 		The envpropertyfile is the properties file to be compared to
 	-->
 	<macrodef name="compare-properties" description="validate the properties from the given files">
-		<attribute name="property.template.file" />
+		<attribute name="property.template.file" default="${property.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
 		<sequential>		
-			<ncitask keyFile="@{property.template.file}" compareFile="@{envpropertyfile}" />
+			<if>
+				<avaliable file="@{property.template.file}"/>
+				<then>
+					<propertyvalidator keyFile="@{property.template.file}"
+						compareFile="@{envpropertyfile}"
+						match="atleast"
+						/>
+				</then>
+				<else>
+					<echo message="Template file @{property.template.file} not avaliable"/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 	
