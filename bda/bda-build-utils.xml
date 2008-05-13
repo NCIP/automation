@@ -50,7 +50,7 @@ $HeadURL$
 		</classpath>
 	</taskdef>
 	
-	<taskdef name="ncitask" classname="gov.nih.ncicb.anttasks.PropertyValidator" classpathref="macrodef.classpath" />
+	<taskdef name="ncitask" classname="gov.nih.nci.bda.PropertyValidator" classpathref="macrodef.classpath" />
 	
  	<tstamp>
  		<format property="run.date" pattern="yyMMddHHmm"/>
