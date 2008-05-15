@@ -1501,7 +1501,7 @@ $HeadURL$
 		<sequential>		
 			<echo message="Checking @{envpropertyfile} against template file @{property.template.file}"/>
 			<if>
-				<avaliable file="@{property.template.file}"/>
+				<available file="@{property.template.file}"/>
 				<then>
 					<propertyvalidator keyFile="@{property.template.file}"
 						compareFile="@{envpropertyfile}"
