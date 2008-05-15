@@ -106,6 +106,7 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 	</target>
 
 	<target name="ivy-cleancache" description="Cleans ivy cache, only required if getting ivy errors.">
+		<ivy:settings file="${ivy.settings.file}" />
 		<ivy:cleancache/>
 	</target>
 
