@@ -126,4 +126,10 @@ $Id:  $
 	<target name="install:validation:pre-build">
 		<validate-pre-build />
 	</target>
+	<target name="test:compare-properties">
+		<propertyvalidator keyFile="sample-properties.template"
+			compareFile="sample.properties"
+			match="atleast"
+			/>
+	</target>
 </project>
