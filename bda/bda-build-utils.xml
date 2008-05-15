@@ -1499,6 +1499,7 @@ $HeadURL$
 		<attribute name="property.template.file" default="${property.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
 		<sequential>		
+			<echo message="Checking @{envpropertyfile} against template file @{property.template.file}"/>
 			<if>
 				<avaliable file="@{property.template.file}"/>
 				<then>
