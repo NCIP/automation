@@ -38,6 +38,15 @@ software/ant/custom/propertyvalidator/properties/keyfile.properties -text
 software/ant/custom/propertyvalidator/src/gov/nih/nci/bda/ApplicationVersion.java -text
 software/ant/custom/propertyvalidator/src/gov/nih/nci/bda/PropertyValidator.java -text
 software/ant/custom/propertyvalidator/test/gov/nih/nci/bda/test/TestPropertyValidator.java -text
+software/bda-build-template/build.xml -text
+software/bda-build-template/install-properties.template -text
+software/bda-build-template/install.properties -text
+software/bda-build-template/install.xml -text
+software/bda-build-template/linux-install.properties -text
+software/bda-build-template/linux-upgrade.properties -text
+software/bda-build-template/project.properties -text
+software/bda-build-template/upgrade-properties.template -text
+software/bda-build-template/upgrade.properties -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text

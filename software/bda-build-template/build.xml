@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+$Id: build.xml 4753 2008-05-15 18:24:16Z saksass $
+$HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
+-->
+<project name="generic-build" default="build-all" basedir="." 
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	>
+	<description>
+		This file ...
+	</description>
+
+	<!-- Property file related properties and tasks -->
+	<property name="project.name" value="generic"/>
+	<property environment="env" />
+	<property file="project.properties" />
+	<property name="properties.file" value="${basedir}/install.properties"/>
+	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2"/>
+	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2"/>
+	<property file="${properties.file}" />
+	<!-- added for remote deployments since file is copied to root of install dir -->
+	<basename property="properties.file.name" file="${properties.file}"/>
+
+	<!-- Generic build time properties -->
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="resources.dir" value="${basedir}/resources" />
+	<property name="reports.dir" value="${basedir}/reports" />
+	<property name="temp.dir" value="${basedir}/temp" />
+	<property name="global.ivy.settings.file" location="ivysettings.xml" />
+	
+	<!-- Properties that relate to how to call build targets from sub-projects-->
+	<property name="software.base.dir" value="."/>
+	<property name="generic-web.base.dir" value="${software.base.dir}/generic-web"/>
+	<property name="generic-api.base.dir" value="${software.base.dir}/generic-api" />
+
+	<property name="generic.build.file" value="build.xml"/>
+	
+	<property name="generic-query-grid.dir.target" value="wsrf.war" />
+	<property name="resource.file.jboss-globus-lib" value="jboss-globus-libs-cagrid1_1.zip" />
+	<property name="resource.file.jboss-globus-war" value="jboss-globus-wsrf-war-cagrid1_1.zip" />
+
+	<property name="generic-core-grid.build.target" value="deployJBoss"/>
+	<property name="generic-web.build.target" value="run"/>
+
+	<property name="generic.dist.dir" value="${basedir}/target" />
+	<property name="generic-core-grid.artifact.dir" value="${generic-core-grid.base.dir}/target" />
+	<property name="generic-query-grid.artifact.dir" value="${generic-query-grid.base.dir}/target" />
+	<property name="generic-resource.artifact.dir" value="resources/deploy" />
+	<property name="generic-db-install.artifact.dir" value="${generic-services-commons.base.dir}/db" />
+	<property name="generic-db-incr.artifact.dir" value="${generic-services-commons.base.dir}/db-incr" />
+
+	<!-- Properties related to creating the distribution -->
+	<property name="generic-core-grid.dist.dir" value="${generic.dist.dir}/${generic-core-grid.install.dir}"/>
+	<property name="generic-query-grid.dist.dir" value="${generic.dist.dir}/${generic-query-grid.install.dir}"/>
+	<property name="generic-db.dist.dir" value="${generic.dist.dir}/${generic-db.install.dir}" />
+	<property name="generic-db-incr.dist.dir" value="${generic.dist.dir}/${generic-db-incr.install.dir}" />
+	<property name="tools.dist.dir" value="${generic.dist.dir}/${tools.install.dir}" />
+
+	<property name="generic-install.name" value="generic_distribution" />
+	<property name="generic-upgrade.name" value="generic_upgrade" />
+	<property name="generic.version" value="3.1" />
+	<property name="generic-upgrade.zip.file" value="${generic-upgrade.name}${generic.version}.zip" />
+	<property name="generic-install.zip.file" value="${generic-install.name}${generic.version}.zip" />
+	<property name="dist.dir" value="dist"/>
+
+	<!-- locally used paths, not needed by install -->
+	<property name="tomcat.dest.file" value="${tools.dist.dir}/${tomcat.binaries.file}"/>
+	<property name="jboss.dest.file" value="${tools.dist.dir}/${jboss.binaries.file}"/>
+	<property name="release-notes.dist.dir" value="${generic.dist.dir}/release-notes"/>
+
+	<!-- Default install time targets passed by deploy targets to the installer, can be overridden by being set on the command line if different target is desitred.  -->
+	<property name="install.target" value="install"/>
+	<property name="upgrade.target" value="upgrade"/>
+
+	<!-- Paths -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<mkdir dir="lib"/>
+	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
+		target="retrieve-bda">
+		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
+		<property name="lib.dir" value="${lib.dir}"/>
+	</ant>
+
+	<!-- Task definitions -->
+	<taskdef resource="simiantask.properties" classpathref="bda-utils.classpath" />
+	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml">
+		<classpath>
+			<pathelement location="${bda-utils.dir}/antunit-1.0.jar" />
+		</classpath>
+	</taskdef>
+	<taskdef name="xmlconfig" classname="com.xmlconfig.anttask.XmlConfig" classpathref="bda-utils.classpath" />
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="bda-utils.classpath"/>
+	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
+		<classpath>
+			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar"/>
+		</classpath>
+	</taskdef>
+
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/bda-build-utils-0.1.xml" />
+
+	<!-- Start logging --> 
+	<mkdir dir="${log.dir}" />
+	<tstamp>
+		<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
+	</tstamp>
+	<record name="${log.dir}/install-${install.time}.log" action="start"/>
+
+	<!-- Targets -->
+	<target name="diagnostics" description="diagnostics">
+		<echoproperties/>
+		<diagnostics/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${dist.dir}"/>
+		<delete dir="${temp.dir}"/>
+		<delete dir="${generic-core-grid.artifact.dir}"/>
+		<delete dir="${generic-query-grid.artifact.dir}"/>
+		<delete dir="${generic.dist.dir}"/>
+	</target>
+
+	<target name="init" >
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${generic-core-grid.artifact.dir}"/>
+		<mkdir dir="${generic-query-grid.artifact.dir}"/>
+		<mkdir dir="${generic-core-grid.dist.dir}"/>
+		<mkdir dir="${generic-query-grid.dist.dir}"/>
+		<mkdir dir="${generic-mirc.dist.dir}"/>
+		<mkdir dir="${generic-web.dist.dir}"/>
+		<mkdir dir="${generic-resource.dist.dir}"/>
+		<mkdir dir="${generic-db.dist.dir}"/>
+		<mkdir dir="${generic-db-incr.dist.dir}"/>
+		<mkdir dir="${tools.dist.dir}"/>
+		<mkdir dir="${release-notes.dist.dir}"/>
+		
+		<!-- start from scratch to make sure no stale
+		     lib definitinos, esp during dev -->
+		<available file="${jboss.dest.file}" property="jboss.tools.exists"/>
+		<available file="${tomcat.dest.file}" property="tomcat.tools.exists"/>
+	</target>
+
+	<!-- I dont think this is needed
+	<target name="ivy" description="Updates Ivy repository">
+		<ivy:retrieve />
+	</target>
+	-->
+
+	<target name="ivy:clean" description="Clean">
+		<ivy:settings file="${global.ivy.settings.file}" />
+		<ivy:cleancache />
+		<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
+			target="ivy-cleancache">
+			<property name="bda-utils.dir" value="${bda-utils.dir}"/>
+			<property name="lib.dir" value="${lib.dir}"/>
+		</ant>
+		
+	</target>
+
+	<!-- Wrapper build target, call appropriate builds for sub-projects -->
+	<target name="build-all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions"
+		depends="
+		clean,
+		init,
+		build:generic-web,
+		build:generic-query-grid,
+		build:generic-mirc,
+		build:generic-core-grid,
+		static-analysis
+	        "/>
+
+	<!-- Build generic-services-grid sub-project, artifacts are inluded in generic-web -->
+	<target name="build:generic-services-grid" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
+			target="${generic-services-grid.build.target}"
+			dir="${generic-services-grid.base.dir}">
+			<property name="project.name" value="${project.name}"/>
+		</ant>
+	</target>
+
+	<!-- Build generic-services-commons sub-project artifacts are included in generic-web -->
+	<target name="build:generic-services-commons" depends="init,build:generic-services-grid">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
+			target="${generic-serives-commons.build.target}"
+			dir="${generic-services-commons.base.dir}">
+			<property name="project.name" value="${project.name}"/>
+		</ant>
+	</target>
+
+	<!-- Build generic-web sub-project produces project level artifact of generic.ear -->
+	<target name="build:generic-web" depends="init,build:generic-services-commons">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
+			target="${generic-web.build.target}"
+			dir="${generic-web.base.dir}">
+			<property name="project.name" value="${project.name}"/>
+		</ant>
+	</target>
+
+	<!-- Build generic-query-grid sub-project produces project level artifact -->
+	<target name="build:generic-query-grid" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
+			target="${generic-query-grid.build.target}"
+			dir="${generic-query-grid.base.dir}" >
+			<property name="project.name" value="${project.name}"/>
+			<property name="jboss.dir" value="target"/>
+		</ant>
+		<zip update="false" destfile="${generic-query-grid.dist.dir}/${generic-query-grid.artifact.file}">
+			<zipfileset dir="${generic-query-grid.artifact.dir}/server/default/deploy/wsrf.war/"/>
+		</zip>
+		<unzip dest="${generic-query-grid.artifact.dir}/server/default/lib" src="${generic-resource.artifact.dir}/${resource.file.jboss-globus-lib}" />
+		<unzip dest="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}" src="${generic-resource.artifact.dir}/${resource.file.jboss-globus-war}" />
+		
+		<replace dir="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}">
+			<include name="**/*.wsdl" />
+		</replace>
+		<replace file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}" />
+		<replace file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/cagrid_NCIAQueryService/jndi-config.xml" token="localhost:59080" value="${jboss.server.hostname}:${jboss.server.port}" />
+		
+		<replace file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/web.xml" token="8080" value="${jboss.server.port}" />
+				
+		<replaceregexp file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/cagrid_NciaQueryService/jndi-config.xml" match="..appservice.url." replace="http://${jboss.server.hostname}:${jboss.server.port}/generic-api/http/remoteService" flags="g" />
+		<replaceregexp file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/cagrid_NciaQueryService/NciaQueryService_registration.xml" match="(\s+.wsa:Address.).*(.\/wsa:Address.)" replace="\1${grid.index.url}\2" flags="g" />
+		
+		<zip update="false" destfile="${generic-query-grid.dist.dir}/${generic-query-grid.dist.file}">
+			<zipfileset dir="${generic-query-grid.artifact.dir}/server/default/" />
+		</zip>
+		
+		<delete dir="${generic-query-grid.artifact.dir}/server"/>
+	</target>
+
+	<!-- Build generic-mirc sub-project produces project level artifacts -->
+	<target name="build:generic-mirc" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
+			target="${generic-mirc.build.target}"
+			dir="${generic-mirc.base.dir}">
+			<property name="project.name" value="${project.name}"/>
+		</ant>
+	</target>
+
+	<!-- Build generic-core-grid sub-project produces project level artifacts -->
+	<target name="build:generic-core-grid" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
+			target="${generic-core-grid.build.target}"
+			dir="${generic-core-grid.base.dir}">
+			<property name="jboss.dir" value="target"/>
+			<property name="project.name" value="${project.name}"/>
+		</ant>
+		<zip update="false" destfile="${generic-core-grid.dist.dir}/${generic-core-grid.artifact.file}">
+			<zipfileset dir="${generic-core-grid.artifact.dir}/server/default/deploy/wsrf.war/"/>
+		</zip>
+		<copy todir="${generic-core-grid.dist.dir}">
+			<fileset dir="${generic-api.artifact.dir}">
+				<include name="*.war" />
+			</fileset>
+		</copy>
+		<delete dir="${generic-core-grid.artifact.dir}/server"/>
+	</target>
+
+	<!-- Produces all distributions: installer, upgrader and source -->
+	<target name="dist" description="Makes all distributions: installer, upgrader and source"
+		depends="
+		build-all,
+		dist:installer,
+		dist:upgrader,
+		dist:src"
+	      	/>
+
+	<target name="dist:src">
+		<!-- Add tasks here to zip up src into a distribution, may require some additoinal properties for distribution name" -->
+	</target>
+
+	<!-- Wrapper target that downloads all required binaries from Common Tools Repository -->
+	<target name="dist:tools:retrieve" description="Downloads binary support tools form common tools repository"
+		depends="
+		init,
+		dist:tools:retrieve:tomcat,
+		dist:tools:retrieve:jboss,
+		dist:tools:retrieve:release-notes" 
+		/>
+
+	<!-- Downloads the release notes for the project, not specifically a tool from the tools module, but downloaded simliar to other tools so added here -->
+	<target name="dist:tools:retrieve:release-notes">
+		<get src="${release-notes.doc.src.url}"
+			dest="${release-notes.dist.dir}/${release-notes.doc.file}"/>
+		<get src="${release-notes.txt.src.url}"
+			dest="${release-notes.dist.dir}/${release-notes.txt.file}"/>
+	</target>
+
+	<!-- Downloads tomcat from tools repository and compares checksum, based on properties set in project.properties -->
+	<target name="dist:tools:retrieve:tomcat" unless="tomcat.tools.exists">
+		<get src="${tomcat.src.url}"
+			dest="${tomcat.dest.file}"/>
+		<get src="${tomcat.src.url}.MD5"
+			dest="${tomcat.dest.file}.MD5"/>
+		<checksum file="${tomcat.dest.file}" verifyProperty="tomcat.cksum.ok"/>
+		<if>
+			<equals arg1="${tomcat.cksum.ok}" arg2="true"/>
+			<then>
+				<echo message="Downloaded tomcat sucessfully"/>
+			</then>
+			<else>
+				<fail message="Failed to download tomcat file sucessfully."/>
+			</else>
+		</if>
+	</target>
+
+	<!-- Downloads jboss from tools repository and compares checksum, based on properties set in project.properties -->
+	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists">
+		<get src="${jboss.src.url}"
+			dest="${jboss.dest.file}"/>
+		<get src="${jboss.src.url}.MD5"
+			dest="${jboss.dest.file}.MD5"/>
+		<checksum file="${jboss.dest.file}" verifyProperty="jboss.cksum.ok"/>
+		<if>
+			<equals arg1="${jboss.cksum.ok}" arg2="true"/>
+			<then>
+				<echo message="Downloaded jboss sucessfully"/>
+			</then>
+			<else>
+				<fail message="Failed to download jboss file sucessfully."/>
+			</else>
+		</if>
+	</target>
+
+	<!-- Copies install time resources into distribution tree -->
+	<target name="dist:installer:prep" depends="dist:tools:retrieve">
+		<!-- added for incremental database build -->
+		<database-build-filelist 
+			sqlfiles.list.file="${generic.dist.dir}/${db-incr.mysql.list.file}"
+			build.properties.file="${generic.dist.dir}/${db-incr.mysql.conf.file}"
+			incr.sql.dir="${generic-db-incr.artifact.dir}/mysql" />
+		<database-build-filelist 
+			sqlfiles.list.file="${generic.dist.dir}/${db-incr.oracle.list.file}"
+			build.properties.file="${generic.dist.dir}/${db-incr.oracle.conf.file}"
+			incr.sql.dir="${generic-db-incr.artifact.dir}/oracle" />
+		<!-- added for incremental database build -->
+		<copy tofile="${generic.dist.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
+		<!-- Copy install related xml and properties files -->
+		<copy todir="${generic.dist.dir}" overwrite="true">
+			<fileset dir="${basedir}">
+				<include name="install.xml" />
+				<include name="install.properties" />
+				<include name="*properties.template" />
+				<include name="project.properties" />
+			</fileset>
+		</copy> 
+		<!-- Set default target on install xml to install -->
+		<replaceregexp file="${generic.dist.dir}/install.xml" byline="true"
+			match="(.project.*default=.)\w+(.\s+.*)"
+			replace="\1upgrade\2"/>
+		<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
+		<move file="${generic.dist.dir}/install.xml" tofile="${generic.dist.dir}/build.xml"/>
+
+		<!-- Copy over BDA macrodefs and librarires -->
+		<copy todir="${generic.dist.dir}/bda-utils" overwrite="true">
+			<fileset dir="${bda-utils.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+
+		<!-- Copy over the oracle and mysql full database build scripts -->
+		<copy todir="${generic-db.dist.dir}" overwrite="true">
+			<fileset dir="${generic-db-install.artifact.dir}">
+				<include name="**/*.sql"/>
+			</fileset>
+		</copy>
+
+		<!-- Copy over the oracle and mysql incremental database build scripts -->
+		<copy todir="${generic-db-incr.dist.dir}" overwrite="true">
+			<fileset dir="${generic-db-incr.artifact.dir}">
+				<include name="**/*.sql"/>
+			</fileset>
+		</copy>
+		<!-- copy over install time resource files, like xml blocks inserted into jboss configuration files -->
+		<copy todir="${generic-resource.dist.dir}" overwrite="true">
+			<fileset dir="${generic-resource.artifact.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Creates the installer distribution used by automated or manual remote installations -->
+	<target name="dist:installer" depends="dist:installer:prep">
+		<delete file="${dist.dir}/${generic-install.zip.file}"/>
+		<zip destfile="${dist.dir}/${generic-install.zip.file}" basedir="${generic.dist.dir}"/>
+	</target>
+
+	<!-- Copies install time resources into distribution tree -->
+	<target name="dist:upgrader:prep">
+		<!-- Cleans up files copied by dist:*:prep targets to ensure only required files are present becaue this target is run after dist:installer:prep -->
+		<delete dir="${generic.dist.dir}/bda-utils"/>
+		<delete dir="${generic-db.dist.dir}"/>
+		<delete dir="${generic-resource.dist.dir}"/>
+		<delete dir="${tools.dist.dir}"/>
+		<delete>
+			<fileset dir="${generic.dist.dir}">
+				<include name="*.xml" />
+				<include name="*properties*" />
+			</fileset>
+		</delete>
+
+
+		<!-- added for incremental database build -->
+		<copy tofile="${generic.dist.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
+		<!-- added for incremental database build -->
+		<database-build-filelist 
+			sqlfiles.list.file="${generic.dist.dir}/${db-incr.mysql.list.file}"
+			build.properties.file="${generic.dist.dir}/${db-incr.mysql.conf.file}"
+			incr.sql.dir="${generic-db-incr.artifact.dir}/mysql" />
+		<database-build-filelist 
+			sqlfiles.list.file="${generic.dist.dir}/${db-incr.oracle.list.file}"
+			build.properties.file="${generic.dist.dir}/${db-incr.oracle.conf.file}"
+			incr.sql.dir="${generic-db-incr.artifact.dir}/oracle" />
+		<!-- Copy install related xml and properties files -->
+		<copy todir="${generic.dist.dir}" overwrite="true">
+			<fileset dir="${basedir}">
+				<include name="install.xml" />
+				<include name="upgrade.properties" />
+				<include name="*properties.template" />
+				<include name="project.properties" />
+			</fileset>
+		</copy> 
+		<!-- Change default target of install.xml to upgrade -->
+		<replaceregexp file="${generic.dist.dir}/install.xml" byline="true"
+			match="(.project.*default=.)\w+(.\s+.*)"
+			replace="\1install\2"/>
+		<!-- Rename install.xml to build.xml to simply install but not having to provide -f option to ant command line -->
+		<move file="${generic.dist.dir}/install.xml" tofile="${generic.dist.dir}/build.xml"/>
+
+		<!-- Copy BDA macrodefs and library files -->
+		<copy todir="${generic.dist.dir}/bda-utils" overwrite="true">
+			<fileset dir="${bda-utils.dir}">
+				<exclude name="**/*.zip"/>
+			</fileset>
+		</copy>
+
+		<!-- Copy only incremental database files -->
+		<copy todir="${generic-db-incr.dist.dir}" overwrite="true">
+			<fileset dir="${generic-db-incr.artifact.dir}">
+				<include name="**/*.sql"/>
+			</fileset>
+		</copy>
+
+		<!-- Inlcude install time resources -->
+		<copy todir="${generic-resource.dist.dir}" overwrite="true">
+			<fileset dir="${generic-resource.artifact.dir}">
+				<include name="jboss-globus*"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Creates upgrader distribution -->
+	<target name="dist:upgrader" depends="dist:upgrader:prep">
+		<delete file="${dist.dir}/${generic-upgrade.zip.file}"/>
+		<zip destfile="${dist.dir}/${generic-upgrade.zip.file}" basedir="${generic.dist.dir}"/>
+
+	</target>
+
+
+	<!-- Installs the application locally. Requires a local instance of mysql. Will use the target from install.xml specified in ${install.target} (defaults to install unless passed in on command line).  Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. This target will use differnt properties based on linux (linux-install.properties) or windows (windows-install.properties) installs. It only supports using those properties files for now, so if you want to change install time properites edit these files. -->
+	<target name="deploy:local:install" depends="dist:installer:prep" description="Installs the application and required binaries on the local machine, used for developer desktops and ci environments" >
+		<!-- deploy:local fails about basedirectory in real strange place macrodefs:319, this should fix it -->
+		<mkdir dir="${generic.dist.dir}/lib"/>
+		<copy todir="${generic.dist.dir}">
+			<fileset dir="${basedir}">
+				<include name="*.properties"/>
+			</fileset>
+		</copy>
+		<exec os="Linux, Max OS X" executable="ant" dir="${generic.dist.dir}">
+			<!-- use alternate properties file since default has replace values -->
+			<arg value="-Dproperties.file=linux-install.properties"/>
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg value="-Dforce.reinstall=true"/>
+			<arg value="${install.target}"/>
+		</exec> 
+		<exec os="Windows XP, Windows 2000, Windows 2003"
+			executable="ant.bat" dir="${generic.dist.dir}">
+			<!-- use alternate properties file since default has replace values -->
+			<arg value="-Dproperties.file=windows-install.properties"/>
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg value="-Dforce.reinstall=true"/>
+			<arg value="${install.target}"/>
+		</exec> 
+
+	</target>
+
+	<!-- Upgrades the application locally. Requires a local instance of mysql. Will use the target from install.xml specified in ${upgrade.target} (defaults to upgrade unless passed in on command line).  Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. This target will use differnt properties based on linux (linux-install.properties) or windows (windows-install.properties) upgrades. It only supports using those properties files for now, so if you want to change install time properites edit these files. -->
+	<target name="deploy:local:upgrade" depends="dist:upgrader:prep" description="Upgrades the application on the local machine, used for developer desktops and ci environments" >
+		<!-- deploy:local fails about basedirectory in real strange place macrodefs:319, this should fix it -->
+		<mkdir dir="${generic.dist.dir}/lib"/>
+		<copy todir="${generic.dist.dir}">
+			<fileset dir="${basedir}">
+				<include name="*.properties"/>
+			</fileset>
+		</copy>
+		<if>
+			<isset property="ci.server"/>
+			<then>
+				<replaceregexp file="${generic.dist.dir}/linux-upgrade.properties" byline="true"
+					match="exclude.start.servers=true"
+					replace=""/>
+				<replaceregexp file="${generic.dist.dir}/windows-upgrade.properties" byline="true"
+					match="exclude.start.servers=true"
+					replace=""/>
+			</then>
+		</if>
+		<exec os="Linux, Max OS X" executable="ant" dir="${generic.dist.dir}">
+			<!-- use alternate properties file since default has replace values -->
+			<arg value="-Dproperties.file=linux-upgrade.properties"/>
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg value="-Dforce.reinstall=true"/>
+			<arg value="-Dlocal.install=true"/>
+			<arg value="${upgrade.target}"/>
+		</exec> 
+		<exec os="Windows XP, Windows 2000, Windows 2003"
+			executable="ant.bat" dir="${generic.dist.dir}">
+			<!-- use alternate properties file since default has replace values -->
+			<arg value="-Dproperties.file=windows-upgrade.properties"/>
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg value="-Dforce.reinstall=true"/>
+			<arg value="-Dlocal.install=true"/>
+			<arg value="${upgrade.target}"/>
+		</exec> 
+		<echo message="The server is not started as part of local deployment.  You will need to run $JBOSS_HOME/bin/run.bat (or run.sh if you are linux)."/>
+	</target>
+
+	<!-- Cleans remote deployment area and ensure required directorys are created -->
+	<target name="deploy:remote:prep">
+		<property name="ssh.prop.list" value="ssh.server.username,ssh.server.hostname,ssh.port,ssh.key.file,ssh.dir.temp"/>
+		<properties-exist properties.list="${ssh.prop.list}"/>
+		<!-- add call to bad directory checker once it is a separate macro on macrodefs.xml -->
+		<remote-ssh remotesshcommand="rm -rf ${ssh.dir.temp};mkdir -p ${ssh.dir.temp}" />
+		<!-- work around for issue where basedir is required but is not currently used -->
+		<remote-ssh remotesshcommand="mkdir -p ${ssh.dir.temp}/lib" />
+	</target>
+
+	<!-- Copies the distrbution to the remote system -->
+	<target name="deploy:remote:install:copy">
+		<remote-scp remoteScpFileToCopy="${dist.dir}/${generic-install.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+	</target>
+
+	<!-- Extracts the distribution on the remote system -->
+	<target name="deploy:remote:install:extract">
+		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${generic-install.zip.file}" />
+	</target>
+
+	<!-- Install the application remotely. Depends on above targets to copy and extract distribution. Will use the target from install.xml specified in ${install.target} (defaults to install unless passed in on command line).  Calls ant from sshexec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. Requires specifying -Dproperties.file=@file@ on the command line to point installer to correct enviornment to install into -->
+	<target name="deploy:remote:install"
+		depends="
+		build-all,
+		dist:installer,
+		deploy:remote:prep,
+		deploy:remote:install:copy,
+		deploy:remote:install:extract
+		">
+		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
+	</target>
+
+	<!-- Copies distribution to remote system -->
+	<target name="deploy:remote:upgrade:copy">
+		<remote-scp remoteScpFileToCopy="${dist.dir}/${generic-upgrade.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+	</target>
+	<!-- Extracts distribution on remote system -->
+	<target name="deploy:remote:upgrade:extract">
+		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${generic-upgrade.zip.file}" />
+	</target>
+
+	<!-- Upgrades the application remotely. Depends on above targets to copy and extract distribution. Will use the target from install.xml specified in ${upgrade.target} (defaults to upgrade unless passed in on command line).  Calls ant from sshexec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. Requires specifying -Dproperties.file=@file@ on the command line to point upgrader to correct enviornment to upgrade -->
+	<target name="deploy:remote:upgrade"
+		depends="
+		build-all,
+		dist:upgrader,
+		deploy:remote:prep,
+		deploy:remote:upgrade:copy,
+		deploy:remote:upgrade:extract
+		">
+		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
+	</target>
+
+	<target name="usage" description="Explains how to use this build script">
+		<echo message="To run a remote upgrade type: ant deploy:remote:upgrade -Dproperties.file=[path to environment proeprty file]" />
+	</target>
+
+	<!-- Scorches checkout area and then checks out the generic project from svn. Serval propeties influence what is checked out.  Each of the properites have defaults, which will check out trunk.  This target uses the svn-co macro from bda -->
+	<target name="svn:co">
+		<property name="svn.project.base.url" value="http://gforge.nci.nih.gov/svnroot/generic"/>
+		<property name="svn.project.name" value="generic"/>
+		<property name="svn.tag" value="trunk"/>
+		<property name="svn.co.base.dir" value="${user.home}/tmp"/>
+
+		<svn-co
+			svn.project.base.url="${svn.project.base.url}"
+			svn.project.name="${svn.project.name}"
+			svn.tag="${svn.tag}"
+			svn.co.base.dir="${svn.co.base.dir}"
+			/>
+	</target>
+	<target name="report:grand" description="Generates grand graphs for build.xml files">
+		<report-grand
+			build.file.location="build.xml"
+			output.file.dir="."
+			output.file.name="generic-root-build.xml"
+			/>
+		<report-grand
+			build.file.location="install.xml"
+			output.file.dir="."
+			output.file.name="generic-root-install.xml"
+			/>
+		<report-grand
+			build.file.location="${generic-core-grid.base.dir}/build.xml"
+			output.file.dir="."
+			output.file.name="generic-core-grid-build.xml"
+			/>
+		<report-grand
+			build.file.location="${generic-query-grid.base.dir}/build.xml"
+			output.file.dir="."
+			output.file.name="generic-query-grid-build.xml"
+			/>
+		<report-grand
+			build.file.location="${generic-mirc.base.dir}/build.xml"
+			output.file.dir="."
+			output.file.name="generic-mirc-build.xml"
+			/>
+		<report-grand
+			build.file.location="${generic-services-commons.base.dir}/build.xml"
+			output.file.dir="."
+			output.file.name="generic-services-commons-build.xml"
+			/>
+		<report-grand
+			build.file.location="${generic-services-grid.base.dir}/build.xml"
+			output.file.dir="."
+			output.file.name="generic-services-grid-build.xml"
+			/>
+		<report-grand
+			build.file.location="${generic-web.base.dir}/build.xml"
+			output.file.dir="."
+			output.file.name="generic-web-build.xml"
+			/>
+	</target>
+	<target name="static-analysis:simian" description="Performs code duplication analysis">
+		<simian>
+			<fileset dir="${basedir}/generic-services-commons/src" includes="**/*.java"/>
+			<fileset dir="${basedir}/generic-services-grid/src" includes="**/*.java"/>
+			<fileset dir="${basedir}/generic-web/src" includes="**/*.java"/>
+			<formatter type="xml" toFile="${reports.dir}/simian-log.xml"/>
+		</simian>
+		<xslt in="${reports.dir}/simian-log.xml" out="${reports.dir}/simian-log.html" style="${resources.dir}/simian.xsl" />
+	</target>
+	<!-- Static Analysis wrapper, calls all statict analysis targets -->
+	<target name="static-analysis" depends="static-analysis:simian" description="Performs static analysis" />
+	<target name="-java-ncss" if="ci.server">
+		<taskdef name="javancss" classpathref="project.test.classpath" classname="javancss.JavancssAntTask" />
+		<javancss srcdir="${src.java.dir}"
+			includes="**/*.java"
+			generatereport="true"
+			outputfile="${reports.dir}/javancss/javancss_metrics_${ant.project.name}.xml"
+			ccnPerFuncMax="10"
+			format="xml"/>
+		<xslt taskname="javancss"
+			in="${reports.dir}/javancss/javancss_metrics_${ant.project.name}.xml"
+			out="${reports.dir}/javancss/javancss_report_${ant.project.name}.html"
+			style="../common/javancss/javancss2methodhtml.xsl"/>
+	</target>
+	<target name="-pmd" if="ci.server" depends="ivy-test-pmd">
+		<taskdef name="pmd" 
+			classname="net.sourceforge.pmd.ant.PMDTask"
+			classpathref="project.test.pmd.classpath"/>
+		<pmd shortFilenames="true" 
+			rulesetfiles="${common.dir}/common/pmd/pmd-ruleset-basic.xml">
+			<formatter type="xml"
+				toFile="${reports.dir}/pmd/pmd_out_${ant.project.name}.xml" />
+			<fileset dir="${src.java.dir}">
+				<include name="**/*.java"/>
+			</fileset>
+		</pmd>
+		<xslt taskname="pmd"
+			in="${reports.dir}/pmd/pmd_out_${ant.project.name}.xml"
+			out="${reports.dir}/pmd/pmd_report_${ant.project.name}.html"
+			style="../common/pmd/pmd-report.xslt"/>
+	</target>
+	<target name="-checkstyle" if="ci.server">
+		<taskdef resource="checkstyletask.properties"
+			uri="antlib:com.puppycrawl.tools.checkstyle"
+			classpathref="project.test.classpath"/>
+		<cs:checkstyle config="../common/checkstyle/checkstyle_minimal.xml"
+			failOnViolation="false">
+			<formatter type="xml" 
+				tofile="${reports.dir}/checkstyle/checkstyle_${ant.project.name}.xml"/>
+			<fileset dir="${src.java.dir}">
+				<include name="**/*.java"/>
+			</fileset>
+		</cs:checkstyle>
+		<xslt taskname="checkstyle"
+			in="${reports.dir}/checkstyle/checkstyle_${ant.project.name}.xml"
+			out="${reports.dir}/checkstyle/checkstyle_report_${ant.project.name}.html"
+			style="../common/checkstyle/checkstyle-simple.xsl"/>
+	</target>
+
+	<target name="-cobertura-instrument" if="ci.server" description="Instruments Cobertura test classes">
+		<!-- wait to do this until ivy has populated the directory -->
+		<taskdef classpathref="project.test.classpath" resource="tasks.properties" />
+		<cobertura-instrument todir="${instrumented.dir}" datafile="${cobertura.ser.file}">
+			<fileset dir="${classes.to.test.dir}">
+				<include name="gov/nih/nci/ncia/**" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+	<target name="-cobertura-report" if="ci.server" depends="-cobertura-instrument" description="Creates Cobertura report">
+		<cobertura-report datafile="${cobertura.ser.file}" format="html" destdir="${cobertura.reports.dir}/${ant.project.name}">
+			<fileset dir="${src.java.dir}">
+				<include name="gov/nih/nci/ncia/**" />
+			</fileset>
+		</cobertura-report>
+	</target>
+	<target name="-cobertura-check" if="ci.server" depends="-cobertura-report">
+		<cobertura-check failureproperty="cobertura.failure" datafile="${cobertura.ser.file}" haltonfailure="false" linerate="0" packagebranchrate="0" packagelinerate="0" totalbranchrate="25" totallinerate="30" />
+	</target>
+
+
+
+</project>
