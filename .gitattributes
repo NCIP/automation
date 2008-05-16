@@ -30,6 +30,7 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
+projects/csm-clm/csm-clm-project-tasks.mpp -text
 software/ant/custom/propertyvalidator/.classpath -text
 software/ant/custom/propertyvalidator/.project -text
 software/ant/custom/propertyvalidator/build.xml -text
