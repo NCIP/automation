@@ -146,12 +146,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<available file="${tomcat.dest.file}" property="tomcat.tools.exists"/>
 	</target>
 
-	<!-- I dont think this is needed
-	<target name="ivy" description="Updates Ivy repository">
-		<ivy:retrieve />
-	</target>
-	-->
-
 	<target name="ivy:clean" description="Clean">
 		<ivy:settings file="${global.ivy.settings.file}" />
 		<ivy:cleancache />
@@ -169,38 +163,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		clean,
 		init,
 		build:generic-web,
-		build:generic-query-grid,
-		build:generic-mirc,
 		build:generic-core-grid,
 		static-analysis
 	        "/>
-
-	<!-- Build generic-services-grid sub-project, artifacts are inluded in generic-web -->
-	<target name="build:generic-services-grid" depends="init">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
-			target="${generic-services-grid.build.target}"
-			dir="${generic-services-grid.base.dir}">
-			<property name="project.name" value="${project.name}"/>
-		</ant>
-	</target>
-
-	<!-- Build generic-services-commons sub-project artifacts are included in generic-web -->
-	<target name="build:generic-services-commons" depends="init,build:generic-services-grid">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
-			target="${generic-serives-commons.build.target}"
-			dir="${generic-services-commons.base.dir}">
-			<property name="project.name" value="${project.name}"/>
-		</ant>
-	</target>
-
-	<!-- Build generic-web sub-project produces project level artifact of generic.ear -->
-	<target name="build:generic-web" depends="init,build:generic-services-commons">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
-			target="${generic-web.build.target}"
-			dir="${generic-web.base.dir}">
-			<property name="project.name" value="${project.name}"/>
-		</ant>
-	</target>
 
 	<!-- Build generic-query-grid sub-project produces project level artifact -->
 	<target name="build:generic-query-grid" depends="init">
@@ -213,54 +178,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<zip update="false" destfile="${generic-query-grid.dist.dir}/${generic-query-grid.artifact.file}">
 			<zipfileset dir="${generic-query-grid.artifact.dir}/server/default/deploy/wsrf.war/"/>
 		</zip>
-		<unzip dest="${generic-query-grid.artifact.dir}/server/default/lib" src="${generic-resource.artifact.dir}/${resource.file.jboss-globus-lib}" />
-		<unzip dest="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}" src="${generic-resource.artifact.dir}/${resource.file.jboss-globus-war}" />
-		
-		<replace dir="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}">
-			<include name="**/*.wsdl" />
-		</replace>
-		<replace file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}" />
-		<replace file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/cagrid_NCIAQueryService/jndi-config.xml" token="localhost:59080" value="${jboss.server.hostname}:${jboss.server.port}" />
-		
-		<replace file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/web.xml" token="8080" value="${jboss.server.port}" />
-				
-		<replaceregexp file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/cagrid_NciaQueryService/jndi-config.xml" match="..appservice.url." replace="http://${jboss.server.hostname}:${jboss.server.port}/generic-api/http/remoteService" flags="g" />
-		<replaceregexp file="${generic-query-grid.artifact.dir}/server/default/deploy/${generic-query-grid.dir.target}/WEB-INF/etc/cagrid_NciaQueryService/NciaQueryService_registration.xml" match="(\s+.wsa:Address.).*(.\/wsa:Address.)" replace="\1${grid.index.url}\2" flags="g" />
-		
-		<zip update="false" destfile="${generic-query-grid.dist.dir}/${generic-query-grid.dist.file}">
-			<zipfileset dir="${generic-query-grid.artifact.dir}/server/default/" />
-		</zip>
-		
 		<delete dir="${generic-query-grid.artifact.dir}/server"/>
 	</target>
 
-	<!-- Build generic-mirc sub-project produces project level artifacts -->
-	<target name="build:generic-mirc" depends="init">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
-			target="${generic-mirc.build.target}"
-			dir="${generic-mirc.base.dir}">
-			<property name="project.name" value="${project.name}"/>
-		</ant>
-	</target>
-
-	<!-- Build generic-core-grid sub-project produces project level artifacts -->
-	<target name="build:generic-core-grid" depends="init">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic.build.file}"
-			target="${generic-core-grid.build.target}"
-			dir="${generic-core-grid.base.dir}">
-			<property name="jboss.dir" value="target"/>
-			<property name="project.name" value="${project.name}"/>
-		</ant>
-		<zip update="false" destfile="${generic-core-grid.dist.dir}/${generic-core-grid.artifact.file}">
-			<zipfileset dir="${generic-core-grid.artifact.dir}/server/default/deploy/wsrf.war/"/>
-		</zip>
-		<copy todir="${generic-core-grid.dist.dir}">
-			<fileset dir="${generic-api.artifact.dir}">
-				<include name="*.war" />
-			</fileset>
-		</copy>
-		<delete dir="${generic-core-grid.artifact.dir}/server"/>
-	</target>
 
 	<!-- Produces all distributions: installer, upgrader and source -->
 	<target name="dist" description="Makes all distributions: installer, upgrader and source"
@@ -609,42 +529,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			output.file.dir="."
 			output.file.name="generic-root-build.xml"
 			/>
-		<report-grand
-			build.file.location="install.xml"
-			output.file.dir="."
-			output.file.name="generic-root-install.xml"
-			/>
-		<report-grand
-			build.file.location="${generic-core-grid.base.dir}/build.xml"
-			output.file.dir="."
-			output.file.name="generic-core-grid-build.xml"
-			/>
-		<report-grand
-			build.file.location="${generic-query-grid.base.dir}/build.xml"
-			output.file.dir="."
-			output.file.name="generic-query-grid-build.xml"
-			/>
-		<report-grand
-			build.file.location="${generic-mirc.base.dir}/build.xml"
-			output.file.dir="."
-			output.file.name="generic-mirc-build.xml"
-			/>
-		<report-grand
-			build.file.location="${generic-services-commons.base.dir}/build.xml"
-			output.file.dir="."
-			output.file.name="generic-services-commons-build.xml"
-			/>
-		<report-grand
-			build.file.location="${generic-services-grid.base.dir}/build.xml"
-			output.file.dir="."
-			output.file.name="generic-services-grid-build.xml"
-			/>
-		<report-grand
-			build.file.location="${generic-web.base.dir}/build.xml"
-			output.file.dir="."
-			output.file.name="generic-web-build.xml"
-			/>
 	</target>
+	<!-- Static Analysis  & testing targets -->
 	<target name="static-analysis:simian" description="Performs code duplication analysis">
 		<simian>
 			<fileset dir="${basedir}/generic-services-commons/src" includes="**/*.java"/>
@@ -654,9 +540,97 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</simian>
 		<xslt in="${reports.dir}/simian-log.xml" out="${reports.dir}/simian-log.html" style="${resources.dir}/simian.xsl" />
 	</target>
-	<!-- Static Analysis wrapper, calls all statict analysis targets -->
-	<target name="static-analysis" depends="static-analysis:simian" description="Performs static analysis" />
-	<target name="-java-ncss" if="ci.server">
+	<!-- mostly taken from ncia unit testing script -->
+	<target name="static-analysis:init">
+		<property name="src.test.dir" value="${basedir}/test" />
+		<property name="test.classes.dir" value="${basedir}/test-classes" />
+		<property name="instrumented.dir" value="${basedir}/instrumented" />
+		<property name="cobertura.ser.file" value="${instrumented.dir}/cobertura.ser" />
+		<property name="reports.dir" value="${common.dir}reports"/>
+		<property name="junit.reports.dir" value="${reports.dir}/junit"/>
+		<property name="cobertura.reports.dir" value="${reports.dir}/cobertura"/>
+		<fail unless="classes.to.test.dir" message="must define classes.to.test.dir for unittesting.xml to work.  it's typically same as classes.dir in host build file"/>
+		<fail unless="common.dir" message="must define common.dir for unittesting.xml to work"/>
+		<path id="ivy.classpath">
+			<fileset dir="${common.dir}/lib">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<fail unless="lib.dir" message="must define lib.dir for unittesting.xml to work"/>
+		<path id="project.test.classpath">
+			<fileset dir="${lib.dir}/test">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<path id="project.test.pmd.classpath">
+			<fileset dir="${lib.dir}/test-pmd">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<echo>ci: ${ci.server}</echo>
+
+	</target>
+	<target name="ivy-test" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test" />
+	</target>
+	<target name="ivy-test-pmd" if="ci.server" depends="ivy-settings" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-pmd" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-pmd" />
+	</target>
+	<target name="post-clean-test" if="ci.server">
+		<delete dir="${instrumented.dir}" quiet="false" />
+		<delete dir="${test.classes.dir}" quiet="false" />
+	</target>
+	<target name="init-test" if="ci.server">
+		<mkdir dir="${test.classes.dir}" />
+		<mkdir dir="${instrumented.dir}" />
+		<mkdir dir="${junit.reports.dir}" />
+		<mkdir dir="${reports.dir}/javancss" />
+		<mkdir dir="${reports.dir}/checkstyle" />
+		<mkdir dir="${reports.dir}/pmd" />
+	</target>
+	<target name="compile-test" if="ci.server" depends="-pre-clean, -init, ivy-test" description="Compiles the Java source code">
+		<javac srcdir="${src.test.dir}" destdir="${test.classes.dir}" debug="true">
+			<classpath refid="project.test.classpath" />
+			<classpath path="${classes.to.test.dir}" />
+		</javac>
+	</target>
+	<target name="test" if="ci.server" depends="compile-test, -cobertura-instrument" description="Runs all unit tests">
+		<junit printsummary="on" failureproperty="junit.failure" fork="true" forkmode="once" maxmemory="256m">
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.ser.file}" />
+			<classpath location="${instrumented.dir}" />
+			<classpath location="${classes.to.test.dir}" />
+			<classpath location="${test.classes.dir}" />
+			<classpath refid="project.test.classpath" />
+			<formatter type="xml" />
+			<!-- perhaps break down by project name if there are collisions? -->
+			<batchtest todir="${junit.reports.dir}">
+				<fileset dir="${src.test.dir}">
+					<!--
+					<include name="**/*Test.java" />
+					<include name="**/Test*.java" />
+					<exclude name="**/Abstract*Test.java" />
+					<exclude name="**/Test*Impl.java" />
+					-->
+					<exclude name="**/*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<!--
+		<junitreport todir="${junit.reports.dir}">
+			<fileset dir="${junit.reports.dir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${junit.reports.dir}"/>
+		</junitreport>          
+		-->
+		<!--
+		<fail if="junit.failure" message="There were JUnit failures" />
+		-->
+	</target>
+
+	<target name="static-analysis:java-ncss" if="ci.server">
 		<taskdef name="javancss" classpathref="project.test.classpath" classname="javancss.JavancssAntTask" />
 		<javancss srcdir="${src.java.dir}"
 			includes="**/*.java"
@@ -669,7 +643,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			out="${reports.dir}/javancss/javancss_report_${ant.project.name}.html"
 			style="../common/javancss/javancss2methodhtml.xsl"/>
 	</target>
-	<target name="-pmd" if="ci.server" depends="ivy-test-pmd">
+	<target name="static-analysis:pmd" if="ci.server" depends="ivy-test-pmd">
 		<taskdef name="pmd" 
 			classname="net.sourceforge.pmd.ant.PMDTask"
 			classpathref="project.test.pmd.classpath"/>
@@ -686,7 +660,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			out="${reports.dir}/pmd/pmd_report_${ant.project.name}.html"
 			style="../common/pmd/pmd-report.xslt"/>
 	</target>
-	<target name="-checkstyle" if="ci.server">
+	<target name="static-analysis:checkstyle" if="ci.server">
 		<taskdef resource="checkstyletask.properties"
 			uri="antlib:com.puppycrawl.tools.checkstyle"
 			classpathref="project.test.classpath"/>
@@ -704,7 +678,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			style="../common/checkstyle/checkstyle-simple.xsl"/>
 	</target>
 
-	<target name="-cobertura-instrument" if="ci.server" description="Instruments Cobertura test classes">
+	<target name="static-analysis:cobertura:instrument" if="ci.server" description="Instruments Cobertura test classes">
 		<!-- wait to do this until ivy has populated the directory -->
 		<taskdef classpathref="project.test.classpath" resource="tasks.properties" />
 		<cobertura-instrument todir="${instrumented.dir}" datafile="${cobertura.ser.file}">
@@ -713,17 +687,25 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</fileset>
 		</cobertura-instrument>
 	</target>
-	<target name="-cobertura-report" if="ci.server" depends="-cobertura-instrument" description="Creates Cobertura report">
+	<target name="static-analysis:cobertura:report" if="ci.server" depends="-cobertura-instrument" description="Creates Cobertura report">
 		<cobertura-report datafile="${cobertura.ser.file}" format="html" destdir="${cobertura.reports.dir}/${ant.project.name}">
 			<fileset dir="${src.java.dir}">
 				<include name="gov/nih/nci/ncia/**" />
 			</fileset>
 		</cobertura-report>
 	</target>
-	<target name="-cobertura-check" if="ci.server" depends="-cobertura-report">
+	<target name="static-analysis:cobertura:check" if="ci.server" depends="-cobertura-report">
 		<cobertura-check failureproperty="cobertura.failure" datafile="${cobertura.ser.file}" haltonfailure="false" linerate="0" packagebranchrate="0" packagelinerate="0" totalbranchrate="25" totallinerate="30" />
 	</target>
-
-
-
+	<!-- Static Analysis wrapper, calls all statict analysis targets -->
+	<target name="static-analysis" description="Performs static analysis"
+		depends="
+		static-analysis:simian,
+		static-analysys:java-ncss
+		static-analysys:pmd,
+		static-analysys:checkstyle,
+		static-analysys:cobertura:instrument,
+		static-analysys:cobertura:report,
+		static-analysys:cobertura:check
+		"/>
 </project>
