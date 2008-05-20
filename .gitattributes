@@ -90,6 +90,7 @@ projects/csm-clm/build/linux-upgrade.properties -text
 projects/csm-clm/build/project.properties -text
 projects/csm-clm/build/upgrade-properties.template -text
 projects/csm-clm/build/upgrade.properties -text
+projects/csm-clm/build/windows-install.properties -text
 projects/csm-clm/csm-clm-project-tasks.mpp -text
 software/ant/custom/propertyvalidator/.classpath -text
 software/ant/custom/propertyvalidator/.project -text
