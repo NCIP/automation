@@ -1,0 +1,48 @@
+# You should no run this script
+echo "I told you not to run me"
+exit 1
+
+# assumes restructuring is complete
+# 
+# be in security/software
+mkdir -p common/resources
+mkdir -p common/resources/db/mysql
+mkdir -p common/resources/db/oracle
+mkdir -p common/resources/db/postgresql
+mkdir -p common/resources/db/sqlserver
+mkdir -p common/resources/db-incr/mysql
+mkdir -p common/resources/db-incr/oracle
+mkdir -p common/resources/db-incr/postgresql
+mkdir -p common/resources/db-incr/sqlserver
+mkdir -p common/resources/db-conf
+
+svn add common
+svn commit -m "Add common resource directories prior to moving common resource files here" common
+
+cd common/resources
+# Copy this whole directory from automation/projects/csm-clm/build/* .
+# copy ncia/software/resources/deploy/login-config.* jboss-conf/
+svn move ../../api/resources/AuthSchemaMySQL.sql db/mysql
+svn move ../../api/resources/DataPrimingMySQL.sql db/mysql
+
+svn move ../../api/resources/AuthSchemaOracle.sql db/oracle
+svn move ../../api/resources/DataPrimingOracle.sql db/oracle
+
+svn move ../../api/resources/AuthSchemaPostgres.sql db/postgresql
+svn move ../../api/resources/DataPrimingPostgres.sql db/postgresql
+
+svn move ../../api/resources/AuthSchemaSQLServer.sql db/sqlserver
+svn move ../../api/resources/DataPrimingSQLServer.sql db/sqlserver
+
+# We do not want to manage these incremental scripts in our process, so I am moving them here
+svn move ../../api/resources/MigrationScript3.2MySQL.sql db/mysql
+svn move ../../api/resources/MigrationScript3.2Oracle.sql db/oracle
+svn move ../../api/resources/MigrationScript4.0MySQL.sql db/mysql
+svn move ../../api/resources/MigrationScript4.0Oracle.sql db/oracle
+
+svn move ../../api/resources/ApplicationSecurityConfig.xml jboss-conf/
+svn move ../../api/resources/hibernate.cfg.xml jboss-conf/
+svn move ../../api/resources/log4jConfig.xml jboss-conf/ jboss-conf/
+svn move ../../api/resources/ObjectStateLoggerConfig.xml jboss-conf/
+svn move ../../api/resources/PasswordEncrypter.java .
+# svn commit -m "Moved files common files from api/resources" # if all steps worked above

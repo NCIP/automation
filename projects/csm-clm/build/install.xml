@@ -20,31 +20,22 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	
 	<!-- Generic properties -->
 	<property name="lib.dir" value="${basedir}/lib" />
-	<property name="temp.dir" value="${basedir}/temp" />
+	<property name="working.dir" value="${basedir}/working" />
 
 
 	<!-- Install Time properties -->
 	<!-- Source and target directories -->
-	<!--<property name="database.dir.src" value="${basedir}/${upt-db.install.dir}/${database.type}" />
-	<property name="database-incr.dir.src" value="${basedir}/${upt-db-incr.install.dir}/${database.type}" />
-	<property name="database.dir.target" value="${temp.dir}/${upt-db.install.dir}" />
-	<property name="database-incr.dir.target" value="${temp.dir}/${upt-db-incr.install.dir}" />-->
-	<property name="resource.dir.src" value="${basedir}/upt" />
-	<property name="resource.dir.target" value="${temp.dir}/upt" />
-	<property name="resource.dir.temp" value="${temp.dir}/temp" />
-	<!--
-	<property name="upt-query-grid.dir.src" value="${basedir}/${upt-query-grid.install.dir}" />
-	<property name="upt-query-grid.dir.target" value="wsrf.war" />
-	<property name="upt-core-grid.dir.src" value="${basedir}/${upt-core-grid.install.dir}" />
-	<property name="upt-core-grid.dir.target" value="wsrf.war" />
-	<property name="upt-mirc.dir.src" value="${basedir}/${upt-mirc.install.dir}" />
-	-->
+	<property name="db.dir.src" value="${basedir}/${db.dist.relative.dir}/${database.type}" />
+	<property name="db-incr.dir.src" value="${basedir}/${db.dist.relative.dir}/${database.type}"/>
+	<property name="db.dir.target" value="${working.dir}/${upt-db.install.dir}" />
+	<property name="db-incr.dir.target" value="${working.dir}/${upt-db-incr.install.dir}" />
+
 	<!-- *-ds.xml and WAR -->
-	<property name="upt.dir.src" value="${basedir}/upt" />
+	<property name="upt.dir.src" value="${basedir}/${upt.dist.relative.dir}" />
 	<property name="upt.ds.file.src" value="${database.type}-ds.xml" />
 	<property name="upt.ds.file.target" value="upt-ds.xml" />
 	<property name="upt.war.file" value="upt.war" />
-	<property name="securityws.dir.src" value="${basedir}/securityws" />
+	<property name="securityws.dir.src" value="${basedir}/${securityws.dist.relative.dir}" />
 	<property name="securityws.war.file" value="securityws.war" />
 
 	<property name="bda-utils.dir.src" value="${bda-utils.dir}" />
@@ -180,10 +171,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 
 	<!-- Does directory management and copy some files with filtering to ensure token expansion -->
 	<target name="install:init" description="Does directory management to initialize install">
-		<delete dir="${temp.dir}" quiet="false" />
-		<mkdir dir="${temp.dir}" />
-		<mkdir dir="${database.dir.target}"/>
-		<mkdir dir="${database-incr.dir.target}"/>
+		<delete dir="${working.dir}" quiet="false" />
+		<mkdir dir="${working.dir}" />
+		<mkdir dir="${db.dir.target}"/>
+		<mkdir dir="${db-incr.dir.target}"/>
 		<mkdir dir="${resource.dir.temp}"/>
 		<!-- Copy files to ensure values containing variables are expanded, such properties are stored in filterset.pre -->
 		<copy todir="${resource.dir.temp}" filtering="true">
@@ -215,12 +206,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 
 	<target name="-install:database:oracle" if="is.oracle" unless="exclude.database">
 
-		<copy todir="${database.dir.target}">
+		<copy todir="${db.dir.target}">
 			<filterset>
 				<filtersfile file="${properties.file}" />
 			</filterset>
 			<filterset refid="filterset.pre"/>
-			<fileset dir="${database.dir.src}" includes="**/*.sql" />
+			<fileset dir="${db.dir.src}" includes="**/*.sql" />
 		</copy>
 
 		<run-sql-script database.url="${database.url}"
@@ -228,7 +219,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		                database.password="${database.password}" 
 		                sql.delimiter="/" 
 		                sql.delimitertype="row"
-		                sql.file="${database.dir.target}/uptTblsOnly_a.sql"
+		                sql.file="${db.dir.target}/uptTblsOnly_a.sql"
 		                onerror="continue"/>
 
 		<run-sql-script database.url="${database.url}" 
@@ -236,7 +227,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		                database.password="${database.password}" 
 		                sql.delimiter="/" 
 		                sql.delimitertype="row"
-		                sql.file="${database.dir.target}/uptCsmTbl_b.sql"
+		                sql.file="${db.dir.target}/uptCsmTbl_b.sql"
 		                onerror="continue" />
 		                
 		<run-sql-script database.url="${database.url}" 
@@ -244,49 +235,49 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		                database.password="${database.password}" 
 		                sql.delimiter="/" 
 		                sql.delimitertype="row"
-		                sql.file="${database.dir.target}/uptIdxWConstrain_c.sql"
+		                sql.file="${db.dir.target}/uptIdxWConstrain_c.sql"
 		                onerror="continue"/>
 		<run-sql-script database.url="${database.url}" 
 		                database.user="${database.user}" 
 		                database.password="${database.password}" 
 		                sql.delimiter="/" 
 		                sql.delimitertype="row"
-		                sql.file="${database.dir.target}/uptView_d.sql" 
+		                sql.file="${db.dir.target}/uptView_d.sql" 
 		                onerror="continue"/>
 		<run-sql-script database.url="${database.url}" 
 		                database.user="${database.user}" 
 		                database.password="${database.password}" 
 		                sql.delimiter="/" 
 		                sql.delimitertype="row"
-		                sql.file="${database.dir.target}/uptDbInit_e.sql"
+		                sql.file="${db.dir.target}/uptDbInit_e.sql"
 		                onerror="continue"/>	
 		<run-sql-script database.url="${database.url}" 
 		                database.user="${database.user}" 
 		                database.password="${database.password}" 
 		                sql.delimiter="/" 
 		                sql.delimitertype="row"
-		                sql.file="${database.dir.target}/addVDateToGITbl.sql"
+		                sql.file="${db.dir.target}/addVDateToGITbl.sql"
 		                onerror="continue"/>		                
                
     		                
 	</target>
 
 	<target name="-install:database:mysql" if="is.mysql" unless="exclude.database">
-		<copy todir="${database.dir.target}">
+		<copy todir="${db.dir.target}">
 			<filterset>
 				<filtersfile file="${properties.file}" />
 			</filterset>
 			<filterset refid="filterset.pre"/>
-			<fileset dir="${database.dir.src}" includes="**/*.sql" />
+			<fileset dir="${db.dir.src}" includes="**/*.sql" />
 		</copy>
-		<!-- <run-sql-script database.url="${database.system.url}" database.user="${database.system.user}" database.password="${database.system.password}" sql.file="${database.dir.target}/create_database_and_user.sql" />  -->
+		<!-- <run-sql-script database.url="${database.system.url}" database.user="${database.system.user}" database.password="${database.system.password}" sql.file="${db.dir.target}/create_database_and_user.sql" />  -->
 		<database-create/>
-		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${database.dir.target}/uptTbl_a.sql" />
-		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${database.dir.target}/uptTbl_b.sql" />
-		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${database.dir.target}/uptCsmTbl_c.sql" />
-		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${database.dir.target}/uptView_d.sql" />
-		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${database.dir.target}/uptDbInit_e.sql" />
-		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${database.dir.target}/uptAlterTblForPrecision_f.sql" />
+		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${db.dir.target}/uptTbl_a.sql" />
+		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${db.dir.target}/uptTbl_b.sql" />
+		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${db.dir.target}/uptCsmTbl_c.sql" />
+		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${db.dir.target}/uptView_d.sql" />
+		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${db.dir.target}/uptDbInit_e.sql" />
+		<run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${db.dir.target}/uptAlterTblForPrecision_f.sql" />
 	</target>
 
 	<target name="install:jboss:binaries" description="Unzip JBoss binary" unless="exclude.jboss">
@@ -294,7 +285,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	</target>
 
 	<target name="install:jboss:upt" description="Deploy upt upt.ear, upt-api.war and common libraries" unless="exclude.jboss">
-		<!-- added to ensure temp dirs are fresh for our install -->
+		<!-- added to ensure working.dirs are fresh for our install -->
 		<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
 		<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
 
@@ -461,84 +452,84 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	    
 	    
 		<!--
-		<delete dir="${temp.dir}/upt-ear"/>
-		<delete dir="${temp.dir}/upt-war"/>
-		<delete dir="${temp.dir}/${upt-api.file.src}"/>
-		<delete dir="${temp.dir}//upt/imageZippingMDB-jar"/>
+		<delete dir="${working.dir}/upt-ear"/>
+		<delete dir="${working.dir}/upt-war"/>
+		<delete dir="${working.dir}/${upt-api.file.src}"/>
+		<delete dir="${working.dir}//upt/imageZippingMDB-jar"/>
 
 		
-		<mkdir dir="${temp.dir}/upt-ear"/>
-		<mkdir dir="${temp.dir}/upt-war"/>
-		<mkdir dir="${temp.dir}/${upt-api.file.src}"/>
-		<mkdir dir="${temp.dir}/upt/imageZippingMDB.jar"/>
+		<mkdir dir="${working.dir}/upt-ear"/>
+		<mkdir dir="${working.dir}/upt-war"/>
+		<mkdir dir="${working.dir}/${upt-api.file.src}"/>
+		<mkdir dir="${working.dir}/upt/imageZippingMDB.jar"/>
 
 		
-		<unzip src="${basedir}/upt-ear/upt.ear" dest="${temp.dir}/upt-ear"/>
-		<unzip src="${temp.dir}/upt-ear/upt.war" dest="${temp.dir}/upt-war"/>
-		<unzip src="${upt-core-grid.dir.src}/${upt-api.file.src}" dest="${temp.dir}/${upt-api.file.src}"/>
-		<unzip src="${temp.dir}/upt-ear/imageZippingMDB.jar" dest="${temp.dir}/imageZippingMDB-jar"/>
+		<unzip src="${basedir}/upt-ear/upt.ear" dest="${working.dir}/upt-ear"/>
+		<unzip src="${working.dir}/upt-ear/upt.war" dest="${working.dir}/upt-war"/>
+		<unzip src="${upt-core-grid.dir.src}/${upt-api.file.src}" dest="${working.dir}/${upt-api.file.src}"/>
+		<unzip src="${working.dir}/upt-ear/imageZippingMDB.jar" dest="${working.dir}/imageZippingMDB-jar"/>
 
 		
-		<xmlconfig in="${temp.dir}/upt-war/WEB-INF/classes/upt.csm.new.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/upt-war/WEB-INF/classes/upt.csm.new.hibernate.cfg.xml" verbose="false">
 			<update path="(//session-factory)/property[@name='dialect']" value="${database.dialect}"/>
 		</xmlconfig>
 
-		<xmlconfig in="${temp.dir}/upt-war/WEB-INF/classes/upt.csm.new.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/upt-war/WEB-INF/classes/upt.csm.new.hibernate.cfg.xml" verbose="false">
 			<update path="(//session-factory)/property[@name='dialect']" value="${database.dialect}"/>
 		</xmlconfig>
-		<xmlconfig in="${temp.dir}/upt-war/WEB-INF/classes/upt.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/upt-war/WEB-INF/classes/upt.hibernate.cfg.xml" verbose="false">
 			<update path="(//session-factory)/property[@name='dialect']" value="${database.dialect}"/>
 		</xmlconfig>
 
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.dialect.*)"
 			replace="#\1"/>
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.connection.driver_class.*)"
 			replace="#\1"/>
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.dialect ${database.dialect})"
 			replace="\1"/>
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.connection.driver_class ${database.driver})"
 			replace="\1"/>
 
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^(hibernate.dialect.*)"
 			replace="#\1"/>
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^(hibernate.connection.driver_class.*)"
 			replace="#\1"/>
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^#+(hibernate.dialect ${database.dialect})"
 			replace="\1"/>
-		<replaceregexp file="${temp.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt-war/WEB-INF/conf/hibernate.properties" byline="true"
 			match="^#+(hibernate.connection.driver_class ${database.driver})"
 			replace="\1"/>
 		
-		<replaceregexp file="${temp.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.dialect.*)"
 			replace="#\1"/>
-		<replaceregexp file="${temp.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^(hibernate.connection.driver_class.*)"
 			replace="#\1"/>
-		<replaceregexp file="${temp.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.dialect ${database.dialect})"
 			replace="\1"/>
-		<replaceregexp file="${temp.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
+		<replaceregexp file="${working.dir}/${upt-api.file.src}/WEB-INF/classes/hibernate.properties" byline="true"
 			match="^#+(hibernate.connection.driver_class ${database.driver})"
 			replace="\1"/>
 
 		
-		<replaceregexp file="${temp.dir}/upt/uptwar/WEB-INF/classes/mail.properties" byline="true"
+		<replaceregexp file="${working.dir}/upt/uptwar/WEB-INF/classes/mail.properties" byline="true"
 			match="^(host)=(.*)"
 			replace="\1=${mail.smtp.server}"/>
-		<replace dir="${temp.dir}" token="localhost:59080" value="${jboss.server.hostname}:${jboss.server.port}">
+		<replace dir="${working.dir}" token="localhost:59080" value="${jboss.server.hostname}:${jboss.server.port}">
 			<include name="**/database.properties" />
 			<include name="**/remoteService.xml" />
 		</replace>
 
-		<xmlconfig in="${temp.dir}/imageZippingMDB-jar/upt.hibernate.cfg.xml" verbose="false">
+		<xmlconfig in="${working.dir}/imageZippingMDB-jar/upt.hibernate.cfg.xml" verbose="false">
 			<update path="(//property)[@name='dialect']" value="${database.dialect}" />
 		</xmlconfig>
 
@@ -547,25 +538,25 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		<move file="${upt-core-grid.dir.src}/${upt-api.file.src}" tofile="${upt-core-grid.dir.src}/${upt-api.file.src}.orig"/>
 
 		
-		<jar jarfile="${temp.dir}/upt-ear/imageZippingMDB.jar" compress="false" manifest="${temp.dir}/imageZippingMDB-jar/META-INF/MANIFEST.MF">
-			<fileset dir="${temp.dir}/imageZippingMDB-jar">
+		<jar jarfile="${working.dir}/upt-ear/imageZippingMDB.jar" compress="false" manifest="${working.dir}/imageZippingMDB-jar/META-INF/MANIFEST.MF">
+			<fileset dir="${working.dir}/imageZippingMDB-jar">
 				<include name="*/**" />
 			</fileset>
 		</jar>
-		<war destfile="${temp.dir}/upt-ear/upt.war" compress="false" webxml="${temp.dir}/upt-war/WEB-INF/web.xml" >
-			<fileset dir="${temp.dir}/upt-war">
+		<war destfile="${working.dir}/upt-ear/upt.war" compress="false" webxml="${working.dir}/upt-war/WEB-INF/web.xml" >
+			<fileset dir="${working.dir}/upt-war">
 				<include name="*/**" />
 			</fileset>
 		</war>
 
-		<ear compress="false" destfile="${basedir}/upt-ear/upt.ear" appxml="${temp.dir}/upt-ear/META-INF/application.xml">
-			<fileset dir="${temp.dir}/upt-ear">
+		<ear compress="false" destfile="${basedir}/upt-ear/upt.ear" appxml="${working.dir}/upt-ear/META-INF/application.xml">
+			<fileset dir="${working.dir}/upt-ear">
 				<include name="*/**" />
 			</fileset>
 		</ear>
 
-		<war destfile="${upt-core-grid.dir.src}/${upt-api.file.src}" compress="false" webxml="${temp.dir}/${upt-api.file.src}/WEB-INF/web.xml" >
-			<fileset dir="${temp.dir}/${upt-api.file.src}">
+		<war destfile="${upt-core-grid.dir.src}/${upt-api.file.src}" compress="false" webxml="${working.dir}/${upt-api.file.src}/WEB-INF/web.xml" >
+			<fileset dir="${working.dir}/${upt-api.file.src}">
 				<include name="*/**" />
 			</fileset>
 		</war>
@@ -608,12 +599,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	<target name="upgrade:database:oracle" if="is.oracle" unless="exclude.database">
 
     <!-- **figure out the changes/scripts based upon current version IN the database, if any ** -->
-		<copy todir="${database-incr.dir.target}">
+		<copy todir="${db-incr.dir.target}">
 			<filterset>
 				<filtersfile file="${properties.file}" />
 			</filterset>
 			<filterset refid="filterset.pre"/>
-			<fileset dir="${database-incr.dir.src}" includes="**/*.sql" />
+			<fileset dir="${db-incr.dir.src}" includes="**/*.sql" />
 		</copy>
 
 		<database-create-control-table
@@ -626,7 +617,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 			build.properties.file="${db-incr.conf.file}"
 			sql.delimiter="/" 
 			sql.delimitertype="row"
-			database.sql.dir="${database-incr.dir.target}"/>
+			database.sql.dir="${db-incr.dir.target}"/>
 		       	
 				<!-- **make the changes to the db aka invoke the proper scripts ** -->
 		<antcall target="database-integrate" />
@@ -640,12 +631,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 	</target>
 
 	<target name="upgrade:database:mysql" if="is.mysql" unless="exclude.database">
-		<copy todir="${database-incr.dir.target}">
+		<copy todir="${db-incr.dir.target}">
 			<filterset>
 				<filtersfile file="${properties.file}" />
 			</filterset>
 			<filterset refid="filterset.pre"/>
-			<fileset dir="${database-incr.dir.src}" includes="**/*.sql" />
+			<fileset dir="${db-incr.dir.src}" includes="**/*.sql" />
 		</copy>
 		<database-create-control-table
 			database.url="${database.url}"
@@ -655,7 +646,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/upt/trunk/software/install.xml $
 		<database-identify-scripts
 			sqlfiles.list.file="${db-incr.list.file}"
 			build.properties.file="${db-incr.conf.file}"
-			database.sql.dir="${database-incr.dir.target}"/>
+			database.sql.dir="${db-incr.dir.target}"/>
 		<antcall target="database-integrate" />
 		<database-update-version-table
 			database.driver="${database.driver}"

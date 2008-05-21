@@ -13,6 +13,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Property file related properties and tasks -->
 	<property name="project.name" value="generic"/>
 	<property environment="env" />
+	<!-- The project.properties stores properties that are shared between both build.xml and install.xml. Typically properties that are related to the distribution directories, or files. -->
 	<property file="project.properties" />
 	<property name="properties.file" value="${basedir}/install.properties"/>
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2"/>
@@ -27,47 +28,59 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="reports.dir" value="${basedir}/reports" />
 	<property name="temp.dir" value="${basedir}/temp" />
 	<property name="global.ivy.settings.file" location="ivysettings.xml" />
+
+	<!-- Used by dist:*:prep to copy resource files to distribution area -->
+	<property name="common.src.dir" value="${basedir}/${common.dist.relative.dir}" />
+
+	<!-- Used by dist:*:prep to determin list of files to use for incremental build process.
+		Directory and files must be in svn to work.
+	-->
+	<property name="db.src.dir" value="${basedir}/${db.dist.relative.dir}" />
+	<property name="db-incr.src.dir" value="${basedir}/${db-incr.dist.relative.dir}" />
 	
 	<!-- Properties that relate to how to call build targets from sub-projects-->
+	<!-- Working directory passed to Ant tasks -->
 	<property name="securityws.base.dir" value="${basedir}/securityws"/>
 	<property name="csm.base.dir" value="${basedir}/api"/>
 	<property name="upt.base.dir" value="${basedir}"/>
 
+	<!-- Build file names relative working dir above, if the basedir of the sub-project ant script is ".." you should set the *.basdir to and the build file should include the dir and build file name from the *.base.dir -->
 	<property name="upt.build.file" value="upt/build.xml"/>
 	<property name="csm.build.file" value="script/build.xml"/>
 	<property name="securityws.build.file" value="script/build.xml"/>
 	
-	<property name="generic-core-grid.build.target" value="deployJBoss"/>
-	<property name="generic-web.build.target" value="run"/>
-
+	<!-- The target name that should be called from the sub-project build file -->
 	<property name="securityws.build.target" value="all"/>
 	<property name="csm.build.target" value="dist"/>
 	<property name="upt.build.target" value="all"/>
     
-	<property name="common.dist.dir" value="${basedir}/target" />
-	<property name="csm.artifact.dir" value="${common.dist.dir}/csm" />
-	<property name="upt.artifact.dir" value="${common.dist.dir}/upt" />
-	<property name="securityws.artifact.dir" value="${common.dist.dir}/securityws" />
+	<!-- Distribution Structure properties, used to copy files into the distribution area.
+       		Use project.propertie relative dir names becasue they are used by install also-->
+	<property name="target.dir" value="${basedir}/target" />
+	<property name="csm.target.dir" value="${target.dir}/${csm.dist.relative.dir}" />
+	<property name="securityws.target.dir" value="${target.dir}/${securityws.dist.relative.dir}" />
+	<property name="upt.target.dir" value="${target.dir}/${upt.dist.relative.dir}" />
+	<property name="tools.target.dir" value="${target.dir}/${tools.dist.relative.dir}" />
+	<property name="common.target.dir" value="${target.dir}/${common.dist.relative.dir}" />
+	<property name="db.target.dir" value="${target.dir}/${db.dist.relative.dir}" />
+	<property name="db-incr.target.dir" value="${target.dir}/${db-incr.dist.relative.dir}" />
+	<property name="jboss-conf.target.dir" value="${target.dir}/${jboss-conf.dist.relative.dir}" />
 
-	<property name="csm.target.dir" value="../${csm.artifact.dir}" />
-	<property name="upt.target.dir" value="${upt.artifact.dir}" />
-	<property name="securityws.target.dir" value="../${securityws.artifact.dir}" />
-	<!--End BDA edits -->
+	<!-- Where to write files retrieved by get, into the distribution area.  The file names come from project.properties  -->
+	<property name="jboss.dest.file" value="${tools.target.dir}/${jboss.binaries.file}"/>
+
+	<!-- Where the sub-projects should deploy thier artifacts.  This relative from thier *.base.dir above.  We need to use this because thier basedir is not the same as this project's basedir. -->
+	<property name="csm.target.dir" value="../${csm.target.dir}" />
+	<property name="upt.target.dir" value="${upt.target.dir}" />
+	<property name="securityws.target.dir" value="../${securityws.target.dir}" />
 
 	<!-- Properties related to creating the distribution -->
-	<property name="tools.dist.dir" value="${common.dist.dir}/${tools.install.dir}" />
-
-	<property name="generic-install.name" value="generic_distribution" />
-	<property name="generic-upgrade.name" value="generic_upgrade" />
-	<property name="generic.version" value="3.1" />
-	<property name="generic-upgrade.zip.file" value="${generic-upgrade.name}${generic.version}.zip" />
-	<property name="generic-install.zip.file" value="${generic-install.name}${generic.version}.zip" />
 	<property name="dist.dir" value="dist"/>
-
-	<!-- locally used paths, not needed by install -->
-	<property name="tomcat.dest.file" value="${tools.dist.dir}/${tomcat.binaries.file}"/>
-	<property name="jboss.dest.file" value="${tools.dist.dir}/${jboss.binaries.file}"/>
-	<property name="release-notes.dist.dir" value="${common.dist.dir}/release-notes"/>
+	<property name="csm.install.name" value="generic_distribution" />
+	<property name="csm.upgrade.name" value="generic_upgrade" />
+	<property name="csm.version" value="3.1" />
+	<property name="csm.upgrade.zip.file" value="${csm.upgrade.name}${csm.version}.zip" />
+	<property name="csm.install.zip.file" value="${csm.install.name}${csm.version}.zip" />
 
 	<!-- Default install time targets passed by deploy targets to the installer, can be overridden by being set on the command line if different target is desitred.  -->
 	<property name="install.target" value="install"/>
@@ -120,21 +133,29 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<target name="clean">
+		<mkdir dir="${target.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+		<delete>
+			<fileset dir="${target.dir}">
+				<exclude name="**/tools/*"/>
+			</fileset>
+		</delete>
 		<delete dir="${dist.dir}"/>
 		<delete dir="${temp.dir}"/>
 	</target>
 
 	<target name="init" >
 		<mkdir dir="${dist.dir}"/>
-		<mkdir dir="${tools.dist.dir}"/>
-		<mkdir dir="${upt.artifact.dir}"/>
-		<mkdir dir="${csm.artifact.dir}"/>
-		<mkdir dir="${securityws.artifact.dir}"/>
+		<mkdir dir="${target.dir}"/>
+		<mkdir dir="${csm.target.dir}"/>
+		<mkdir dir="${securiyws.target.dir}"/>
+		<mkdir dir="${upt.target.dir}"/>
+		<mkdir dir="${common.target.dir}"/>
+		<mkdir dir="${tools.target.dir}"/>
 		
 		<!-- start from scratch to make sure no stale
 		     lib definitinos, esp during dev -->
 		<available file="${jboss.dest.file}" property="jboss.tools.exists"/>
-		<available file="${tomcat.dest.file}" property="tomcat.tools.exists"/>
 	</target>
 
 	<target name="ivy:clean" description="Clean">
@@ -161,7 +182,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<ant inheritAll="false" inheritRefs="false" antfile="${csm.build.file}"
 			target="${csm.build.target}"
 			dir="${csm.base.dir}" >
-			<property name="dist" value="${csm.artifact.dir}" />
+			<property name="dist" value="${csm.target.dir}" />
 		</ant>
 	</target>
 
@@ -169,7 +190,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<ant inheritAll="false" inheritRefs="false" antfile="${upt.build.file}"
 			target="${upt.build.target}"
 			dir="${upt.base.dir}" >
-			<property name="dist.home" value="${upt.artifact.dir}" />
+			<property name="dist.home" value="${upt.target.dir}" />
 		</ant>
 	</target>
 
@@ -177,7 +198,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<ant inheritAll="false" inheritRefs="false" antfile="${securityws.build.file}"
 			target="${securityws.build.target}"
 			dir="${securityws.base.dir}" >
-			<property name="dist.home" value="${securityws.artifact.dir}" />
+			<property name="dist.home" value="${securityws.target.dir}" />
 		</ant>
 	</target>
 
@@ -199,18 +220,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="dist:tools:retrieve" description="Downloads binary support tools form common tools repository"
 		depends="
 		init,
-		dist:tools:retrieve:jboss"
-		/>
-
-	<!-- Downloads the release notes for the project, not specifically a tool from the tools module, but downloaded simliar to other tools so added here -->
-	<target name="dist:tools:retrieve:release-notes">
-		<get src="${release-notes.doc.src.url}"
-			dest="${release-notes.dist.dir}/${release-notes.doc.file}"/>
-		<get src="${release-notes.txt.src.url}"
-			dest="${release-notes.dist.dir}/${release-notes.txt.file}"/>
-	</target>
-
-
+		dist:tools:retrieve:jboss
+		" />
 
 	<!-- Downloads jboss from tools repository and compares checksum, based on properties set in project.properties -->
 	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists">
@@ -233,20 +244,22 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Copies install time resources into distribution tree -->
 	<target name="dist:installer:prep" depends="dist:tools:retrieve">
 		<!-- added for incremental database build -->
-		<!--
-		<database-build-filelist 
-			sqlfiles.list.file="${common.dist.dir}/${db-incr.mysql.list.file}"
-			build.properties.file="${common.dist.dir}/${db-incr.mysql.conf.file}"
-			incr.sql.dir="${generic-db-incr.artifact.dir}/mysql" />
-		<database-build-filelist 
-			sqlfiles.list.file="${common.dist.dir}/${db-incr.oracle.list.file}"
-			build.properties.file="${common.dist.dir}/${db-incr.oracle.conf.file}"
-			incr.sql.dir="${generic-db-incr.artifact.dir}/oracle" />
-		added for incremental database build
-		<copy tofile="${common.dist.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
-		 Copy install related xml and properties files 
+		<!-- Need to call database-build-filelist once for each type of database you support.
+			db-incr.* propertes are stored in project.properties because they are used in both
+			install.xml and build.xml
 		-->
-		<copy todir="${common.dist.dir}" overwrite="true">
+		<database-build-filelist 
+			sqlfiles.list.file="${target.dir}/${db-incr.mysql.list.file}"
+			build.properties.file="${target.dir}/${db-incr.mysql.conf.file}"
+			incr.sql.dir="${db-incr.src.dir}/mysql" />
+		<database-build-filelist 
+			sqlfiles.list.file="${target.dir}/${db-incr.oracle.list.file}"
+			build.properties.file="${target.dir}/${db-incr.oracle.conf.file}"
+			incr.sql.dir="${db-incr.src.dir}/oracle" />
+		<copy tofile="${target.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
+
+		<!-- Copy install related xml and properties files -->
+		<copy todir="${target.dir}" overwrite="true">
 			<fileset dir="${basedir}">
 				<include name="install.xml" />
 				<include name="install.properties" />
@@ -254,57 +267,64 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 				<include name="project.properties" />
 			</fileset>
 		</copy> 
-		
 		<!-- Set default target on install xml to install -->
-		<replaceregexp file="${common.dist.dir}/install.xml" byline="true"
+		<replaceregexp file="${target.dir}/install.xml" byline="true"
 			match="(.project.*default=.)\w+(.\s+.*)"
 			replace="\1upgrade\2"/>
 		<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
-		<move file="${common.dist.dir}/install.xml" tofile="${common.dist.dir}/build.xml"/>
+		<move file="${target.dir}/install.xml" tofile="${target.dir}/build.xml"/>
 
 		<!-- Copy over BDA macrodefs and librarires -->
-		<copy todir="${common.dist.dir}/bda-utils" overwrite="true">
+		<copy todir="${target.dir}/bda-utils" overwrite="true">
 			<fileset dir="${bda-utils.dir}">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
 
+		<!-- This  copies common files over, common files are currently resource files like
+			jboss configuration files and database scripts
+		-->
+		<copy todir="${common.target.dir}" overwrite="true">
+			<fileset dir="${common.src.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy> 
 	</target>
 
 	<!-- Creates the installer distribution used by automated or manual remote installations -->
 	<target name="dist:installer" depends="dist:installer:prep">
-		<delete file="${dist.dir}/${generic-install.zip.file}"/>
-		<zip destfile="${dist.dir}/${generic-install.zip.file}" basedir="${common.dist.dir}"/>
+		<delete file="${dist.dir}/${csm.install.zip.file}"/>
+		<zip destfile="${dist.dir}/${csm.install.zip.file}" basedir="${target.dir}"/>
 	</target>
 
 	<!-- Copies install time resources into distribution tree -->
 	<target name="dist:upgrader:prep">
 		<!-- Cleans up files copied by dist:*:prep targets to ensure only required files are present becaue this target is run after dist:installer:prep -->
-		<delete dir="${common.dist.dir}/bda-utils"/>
-		<delete dir="${generic-db.dist.dir}"/>
-		<delete dir="${generic-resource.dist.dir}"/>
-		<delete dir="${tools.dist.dir}"/>
+		<delete dir="${tools.target.dir}"/>
 		<delete>
-			<fileset dir="${common.dist.dir}">
+			<fileset dir="${target.dir}">
 				<include name="*.xml" />
 				<include name="*properties*" />
 			</fileset>
 		</delete>
 
+		<!-- added for incremental database build -->
+		<!-- Need to call database-build-filelist once for each type of database you support.
+			db-incr.* propertes are stored in project.properties because they are used in both
+			install.xml and build.xml
+		-->
+		<database-build-filelist 
+			sqlfiles.list.file="${target.dir}/${db-incr.mysql.list.file}"
+			build.properties.file="${target.dir}/${db-incr.mysql.conf.file}"
+			incr.sql.dir="${db-incr.src.dir}/mysql" />
+		<database-build-filelist 
+			sqlfiles.list.file="${target.dir}/${db-incr.oracle.list.file}"
+			build.properties.file="${target.dir}/${db-incr.oracle.conf.file}"
+			incr.sql.dir="${db-incr.src.dir}/oracle" />
+		<copy tofile="${target.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
 
-		<!-- added for incremental database build -->
-		<copy tofile="${common.dist.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
-		<!-- added for incremental database build -->
-		<database-build-filelist 
-			sqlfiles.list.file="${common.dist.dir}/${db-incr.mysql.list.file}"
-			build.properties.file="${common.dist.dir}/${db-incr.mysql.conf.file}"
-			incr.sql.dir="${generic-db-incr.artifact.dir}/mysql" />
-		<database-build-filelist 
-			sqlfiles.list.file="${common.dist.dir}/${db-incr.oracle.list.file}"
-			build.properties.file="${common.dist.dir}/${db-incr.oracle.conf.file}"
-			incr.sql.dir="${generic-db-incr.artifact.dir}/oracle" />
 		<!-- Copy install related xml and properties files -->
-		<copy todir="${common.dist.dir}" overwrite="true">
+		<copy todir="${target.dir}" overwrite="true">
 			<fileset dir="${basedir}">
 				<include name="install.xml" />
 				<include name="upgrade.properties" />
@@ -313,38 +333,33 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</fileset>
 		</copy> 
 		<!-- Change default target of install.xml to upgrade -->
-		<replaceregexp file="${common.dist.dir}/install.xml" byline="true"
+		<replaceregexp file="${target.dir}/install.xml" byline="true"
 			match="(.project.*default=.)\w+(.\s+.*)"
 			replace="\1install\2"/>
 		<!-- Rename install.xml to build.xml to simply install but not having to provide -f option to ant command line -->
-		<move file="${common.dist.dir}/install.xml" tofile="${common.dist.dir}/build.xml"/>
+		<move file="${target.dir}/install.xml" tofile="${target.dir}/build.xml"/>
 
 		<!-- Copy BDA macrodefs and library files -->
-		<copy todir="${common.dist.dir}/bda-utils" overwrite="true">
+		<copy todir="${target.dir}/bda-utils" overwrite="true">
 			<fileset dir="${bda-utils.dir}">
 				<exclude name="**/*.zip"/>
 			</fileset>
 		</copy>
 
-		<!-- Copy only incremental database files -->
-		<copy todir="${generic-db-incr.dist.dir}" overwrite="true">
-			<fileset dir="${generic-db-incr.artifact.dir}">
-				<include name="**/*.sql"/>
+		<!-- This  copies common files over, common files are currently resource files like
+			jboss configuration files and database scripts
+		-->
+		<copy todir="${common.target.dir}" overwrite="true">
+			<fileset dir="${common.src.dir}">
+				<include name="**/*"/>
 			</fileset>
-		</copy>
-
-		<!-- Inlcude install time resources -->
-		<copy todir="${generic-resource.dist.dir}" overwrite="true">
-			<fileset dir="${generic-resource.artifact.dir}">
-				<include name="jboss-globus*"/>
-			</fileset>
-		</copy>
+		</copy> 
 	</target>
 
 	<!-- Creates upgrader distribution -->
 	<target name="dist:upgrader" depends="dist:upgrader:prep">
-		<delete file="${dist.dir}/${generic-upgrade.zip.file}"/>
-		<zip destfile="${dist.dir}/${generic-upgrade.zip.file}" basedir="${common.dist.dir}"/>
+		<delete file="${dist.dir}/${csm.upgrade.zip.file}"/>
+		<zip destfile="${dist.dir}/${csm.upgrade.zip.file}" basedir="${target.dir}"/>
 
 	</target>
 
@@ -352,13 +367,15 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Installs the application locally. Requires a local instance of mysql. Will use the target from install.xml specified in ${install.target} (defaults to install unless passed in on command line).  Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. This target will use differnt properties based on linux (linux-install.properties) or windows (windows-install.properties) installs. It only supports using those properties files for now, so if you want to change install time properites edit these files. -->
 	<target name="deploy:local:install" depends="dist:installer:prep" description="Installs the application and required binaries on the local machine, used for developer desktops and ci environments" >
 		<!-- deploy:local fails about basedirectory in real strange place macrodefs:319, this should fix it -->
-		<mkdir dir="${common.dist.dir}/lib"/>
-		<copy todir="${common.dist.dir}">
+		<mkdir dir="${target.dir}/lib"/>
+
+		<!-- Copies over all files so linux and windows properties are present -->
+		<copy todir="${target.dir}">
 			<fileset dir="${basedir}">
 				<include name="*.properties"/>
 			</fileset>
 		</copy>
-		<exec os="Linux, Max OS X" executable="ant" dir="${common.dist.dir}">
+		<exec os="Linux, Max OS X" executable="ant" dir="${target.dir}">
 			<!-- use alternate properties file since default has replace values -->
 			<arg value="-Dproperties.file=linux-install.properties"/>
 			<!-- force reinstall of database and jboss without prompting -->
@@ -366,7 +383,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<arg value="${install.target}"/>
 		</exec> 
 		<exec os="Windows XP, Windows 2000, Windows 2003"
-			executable="ant.bat" dir="${common.dist.dir}">
+			executable="ant.bat" dir="${target.dir}">
 			<!-- use alternate properties file since default has replace values -->
 			<arg value="-Dproperties.file=windows-install.properties"/>
 			<!-- force reinstall of database and jboss without prompting -->
@@ -379,24 +396,33 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Upgrades the application locally. Requires a local instance of mysql. Will use the target from install.xml specified in ${upgrade.target} (defaults to upgrade unless passed in on command line).  Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. This target will use differnt properties based on linux (linux-install.properties) or windows (windows-install.properties) upgrades. It only supports using those properties files for now, so if you want to change install time properites edit these files. -->
 	<target name="deploy:local:upgrade" depends="dist:upgrader:prep" description="Upgrades the application on the local machine, used for developer desktops and ci environments" >
 		<!-- deploy:local fails about basedirectory in real strange place macrodefs:319, this should fix it -->
-		<mkdir dir="${common.dist.dir}/lib"/>
-		<copy todir="${common.dist.dir}">
+		<mkdir dir="${target.dir}/lib"/>
+
+		<!-- Copies over all files so linux and windows properties are present -->
+		<copy todir="${target.dir}">
 			<fileset dir="${basedir}">
 				<include name="*.properties"/>
 			</fileset>
 		</copy>
+
+		<!-- ci.server property is set at run time.  Since both the developer workstaton
+			and ci.server use the same install targets and we need to start the servers on
+			one  and not the other, this condition will remove the property from the
+			properties file.
+		-->
 		<if>
 			<isset property="ci.server"/>
 			<then>
-				<replaceregexp file="${common.dist.dir}/linux-upgrade.properties" byline="true"
+				<replaceregexp file="${target.dir}/linux-upgrade.properties" byline="true"
 					match="exclude.start.servers=true"
 					replace=""/>
-				<replaceregexp file="${common.dist.dir}/windows-upgrade.properties" byline="true"
+				<replaceregexp file="${target.dir}/windows-upgrade.properties" byline="true"
 					match="exclude.start.servers=true"
 					replace=""/>
 			</then>
 		</if>
-		<exec os="Linux, Max OS X" executable="ant" dir="${common.dist.dir}">
+
+		<exec os="Linux, Max OS X" executable="ant" dir="${target.dir}">
 			<!-- use alternate properties file since default has replace values -->
 			<arg value="-Dproperties.file=linux-upgrade.properties"/>
 			<!-- force reinstall of database and jboss without prompting -->
@@ -405,7 +431,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<arg value="${upgrade.target}"/>
 		</exec> 
 		<exec os="Windows XP, Windows 2000, Windows 2003"
-			executable="ant.bat" dir="${common.dist.dir}">
+			executable="ant.bat" dir="${target.dir}">
 			<!-- use alternate properties file since default has replace values -->
 			<arg value="-Dproperties.file=windows-upgrade.properties"/>
 			<!-- force reinstall of database and jboss without prompting -->
@@ -428,13 +454,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Copies the distrbution to the remote system -->
 	<target name="deploy:remote:install:copy">
-		<remote-scp remoteScpFileToCopy="${dist.dir}/${generic-install.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+		<remote-scp remoteScpFileToCopy="${target.dir}/${csm.install.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 	</target>
 
 	<!-- Extracts the distribution on the remote system -->
 	<target name="deploy:remote:install:extract">
-		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${generic-install.zip.file}" />
+		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${csm.install.zip.file}" />
 	</target>
 
 	<!-- Install the application remotely. Depends on above targets to copy and extract distribution. Will use the target from install.xml specified in ${install.target} (defaults to install unless passed in on command line).  Calls ant from sshexec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. Requires specifying -Dproperties.file=@file@ on the command line to point installer to correct enviornment to install into -->
@@ -451,12 +477,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Copies distribution to remote system -->
 	<target name="deploy:remote:upgrade:copy">
-		<remote-scp remoteScpFileToCopy="${dist.dir}/${generic-upgrade.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
+		<remote-scp remoteScpFileToCopy="${target.dir}/${csm.upgrade.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
 	</target>
 	<!-- Extracts distribution on remote system -->
 	<target name="deploy:remote:upgrade:extract">
-		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${generic-upgrade.zip.file}" />
+		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${csm.upgrade.zip.file}" />
 	</target>
 
 	<!-- Upgrades the application remotely. Depends on above targets to copy and extract distribution. Will use the target from install.xml specified in ${upgrade.target} (defaults to upgrade unless passed in on command line).  Calls ant from sshexec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. Requires specifying -Dproperties.file=@file@ on the command line to point upgrader to correct enviornment to upgrade -->
