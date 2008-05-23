@@ -926,23 +926,28 @@ $HeadURL$
 			</for>
 
 			<!-- For each socket port call validate:post:socket -->
-			<for list="${validation.post.http.list}" param="validate.port" >
-				<sequential>
-					<echo message="Checking if @{validate.port} is running."/>
-					<condition property="port.listening">
-						<socket server="@{hostname}" port="@{validate.port}" />
-					</condition>
-					<if>
-						<isset property="port.listening"/>
-						<then>
-							<echo message="Port is @{validate.port} RUNNNING as expected."/>
-						</then>
-						<else>
-							<echo message="Unable to reach @{hostname}:@{validate.port}. You may experience problems using the application."/>
-						</else>
-					</if>
-				</sequential>
-			</for>
+			<if>
+			<isset property="validation.post.socket.list"/>
+				<then>
+					<for list="${validation.post.socket.list}" param="validate.port" >
+						<sequential>
+							<echo message="Checking if @{validate.port} is running."/>
+							<condition property="port.listening">
+								<socket server="@{hostname}" port="@{validate.port}" />
+							</condition>
+							<if>
+								<isset property="port.listening"/>
+								<then>
+									<echo message="Port is @{validate.port} RUNNNING as expected."/>
+								</then>
+								<else>
+									<echo message="Unable to reach @{hostname}:@{validate.port}. You may experience problems using the application."/>
+								</else>
+							</if>
+						</sequential>
+					</for>
+				</then>	
+			</if>
 		</sequential>
 	</macrodef>
 
