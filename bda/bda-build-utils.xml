@@ -1068,6 +1068,7 @@ $HeadURL$
 		<attribute name="database.system.password" default="${database.system.password}" />
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
@@ -1103,7 +1104,7 @@ $HeadURL$
 							DROP DATABASE IF EXISTS @{database.name};
 							CREATE DATABASE @{database.name} DEFAULT CHARACTER SET latin1;
 							DELETE FROM mysql.user WHERE User='@{database.user}';
-							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'localhost' IDENTIFIED BY '@{database.password}' WITH GRANT OPTION;
+							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'@{database.server}' IDENTIFIED BY '@{database.password}' WITH GRANT OPTION;
 							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'%' IDENTIFIED BY '@{database.password}' WITH GRANT OPTION;
 						</transaction>
 					</sql>  
