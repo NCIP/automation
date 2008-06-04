@@ -78,6 +78,7 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
+ncicb/public-keys/id_dsa_bda.pub -text
 projects/csm-clm/build/bda-ivy-build.xml -text
 projects/csm-clm/build/build.xml -text
 projects/csm-clm/build/common/resources/PasswordEncrypter.java -text
