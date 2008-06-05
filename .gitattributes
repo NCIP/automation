@@ -143,3 +143,4 @@ software/heartbeat/src/main/webapp/WEB-INF/taglib.tld -text
 software/heartbeat/src/main/webapp/WEB-INF/web.xml -text
 software/heartbeat/src/main/webapp/index.jsp -text
 software/hudson-config/build.xml -text
+software/hudson-config/install.properties -text
