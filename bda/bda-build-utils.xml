@@ -1744,19 +1744,15 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-
 	<macrodef name="generate-UMLgraph">		
-		<attribute name="uml.dir" />
-		<attribute name="src.uml.dir" />
+		<attribute name="uml.dir" />		
 		<attribute name="src.java.dir" />
-		<attribute name="UMLGraph.jar" default="UMLGraph.jar" />
+		<attribute name="uml.source.path" />
+		<attribute name="UMLGraph.jar" default="umlgraph-5.0.jar" />
 		<sequential>				
-			<mkdir dir="${uml.dir}"/>
-			<path id="uml.source.path">
-				<pathelement path="${src.java.dir}"/>
-			</path>
-			<javadoc sourcepath="${basedir}/src" destdir="${uml.dir}" classpathref="project.class.path" access="private">
-				<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.lib.dir}\${UMLGraph.jar}">
+			<mkdir dir="@{uml.dir}"/>			
+			<javadoc sourcepath="@{src.java.dir}" destdir="@{uml.dir}" classpathref="@{uml.source.path}" access="private">				
+				<doclet name="gr.spinellis.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.lib.dir}\@{UMLGraph.jar}">
 					<param name="-attributes" />
 					<param name="-enumerations" />
 					<param name="-enumconstants" />
@@ -1765,31 +1761,33 @@ $HeadURL$
 					<param name="-types" />
 					<param name="-visibility" />
 				</doclet>
-			</javadoc>
-			<apply executable="dot" dest="${uml.dir}" parallel="false">
+			</javadoc>		
+			<apply executable="dot" dest="@{uml.dir}" parallel="false">
 				<arg value="-Tpng"/>
 				<arg value="-o"/>
 				<targetfile/>
 				<srcfile/>
-				<fileset dir="${uml.dir}" includes="*.dot"/>
+				<fileset dir="@{uml.dir}" includes="*.dot"/>
 				<mapper type="glob" from="*.dot" to="*.png"/>
-			</apply>
+			</apply>		
 		</sequential>
 	</macrodef>
 
+
 	<macrodef name="generate-Schema">		
 		<attribute name="report.dir" />
-		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5-bin.jar" />
-		<attribute name="schemaSpy.jar" default="schemaSpy_3.1.1.jar" />
+		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5.jar" />
+		<attribute name="schemaSpy.jar" default="schemaSpy-3.1.1.jar" />
 		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.port" default="${database.port}" />
+		<attribute name="database.name" default="${database.name}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.type" default="${database.type}" />
 		<sequential>
 			<java jar="${bda-utils.lib.dir}/@{schemaSpy.jar}"
-			output="${report.dir}/schemaspy-out.log"
-			error="${report.dir}/schemaspy-error.log"
+			output="@{report.dir}/schemaspy-out.log"
+			error="@{report.dir}/schemaspy-error.log"
 			fork="true">
 				<arg line="-t @{database.type}"/>
 				<arg line="-host @{database.server}"/>
@@ -1797,7 +1795,7 @@ $HeadURL$
 				<arg line="-db @{database.name}"/>
 				<arg line="-u @{database.user}"/>
 				<arg line="-p @{database.password}"/>
-				<arg line="-cp ${bda-utils.lib.dir}\@{database.driver.class}"/>
+				<arg line="-cp ${bda-utils.lib.dir}\@{database.driver.jar}"/>
 				<arg line="-o @{report.dir}"/>
 			</java>
 		</sequential>
