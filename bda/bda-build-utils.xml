@@ -63,25 +63,30 @@ $HeadURL$
 	<!-- init tasks -->
 	<mkdir dir="${basedir}/tmp"/>
 	<property name="database.type" value="mysql"/>
-	<if>
-		<equals arg1="${database.type}" arg2="oracle"/>
-		<then>  
+	<switch value="${database.type}">
+		<case value="oracle">
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="is.oracle" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar "/>
-		</then> 
-		<elseif>    
-			<equals arg1="${database.type}" arg2="mysql"/>
-			<then>  
-				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-				<property name="is.mysql" value="true"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
-			</then> 
-		</elseif> 
-		<else>  
+		</case> 
+		<case value="mysql">
+			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="is.mysql" value="true"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
+		</case> 
+		<case value="postgresql">
+			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="is.postgresql" value="true"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
+			<!-- 
+				driver = org.postgresql.Driver
+				url = jdbc:postgresql://localhost/mydatabase
+			-->
+		</case> 
+		<default>  
 			<fail message="Invalid or unsupported database type ${database.type}"/>
-		</else> 
-	</if>
+		</default> 
+	</switch>
 	
 	<!-- run-junit-tests macro runs the unit test cases  
 	usage: <run-junit-tests test.src.dir="${test.src.dir}" xml.output.dir="${target.dir}/junit" instrumented.classes="${instrumented.classes.dir}" classpath="${caarray-client.test.classes.dir};${test.data.files.dir};${test.classes.dir};${commons-lang.jar};${commons-io.jar};${caarray-client.test.files.dir};${caarray-client.classes.dir};${caarray-client.resources.dir};${junit.jar};${nci-commons-core.jar}" />
@@ -795,9 +800,8 @@ $HeadURL$
 		<attribute name="database.system.password" default="${database.system.password}" />
 		<attribute name="database.name" default="${database.name}" />
 		<sequential>
-			<if>
-				<equals arg1="${database.type}" arg2="mysql" />
-				<then>
+			<switch value="${database.type}">
+				<case value="mysql">	
 					<dbconfig property="database.exists" 
 						driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
 						<validate />
@@ -826,11 +830,11 @@ $HeadURL$
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 						</else>
 					</if>
-				</then>
-				<else>
+				</case>
+				<default>
 					<echo message="Database is ${database.type}, warning prompt not displayed."/>
-				</else>
-			</if>
+				</default>
+			</switch>
 		</sequential>
 	</macrodef>
 
@@ -1174,9 +1178,8 @@ $HeadURL$
 		<sequential>
 			<!-- Only validates connection for oracle -->
 			<echo message="Validating database connection..." />
-			<if>
-				<equals arg1="${database.type}" arg2="mysql"/>
-				<then>
+			<switch value="${database.type}">
+				<case value="mysql">
 					<dbconfig property="db.connection.success" 
 						driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
 						<validate />
@@ -1184,25 +1187,36 @@ $HeadURL$
 					</dbconfig>
 					<antunit:assertPropertyEquals message="Database connection failed for @{database.system.url}. Verify that your database.system.user and database.system.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
 					<echo message="Database Connection: PASSED" />
-				</then>
-				<elseif>
-					<equals arg1="${database.type}" arg2="oracle"/>
-					<then>
-						<dbconfig property="oracle.connection.success" 
-							driver="@{database.driver}"
-							url="@{database.url}"
-							user="@{database.user}"
-							password="@{database.password}">
+				</case>
+				<case value="oracle">
+					<dbconfig property="oracle.connection.success" 
+						driver="@{database.driver}"
+						url="@{database.url}"
+						user="@{database.user}"
+						password="@{database.password}">
 							<validate />
-						</dbconfig>
-						<antunit:assertPropertyEquals
-							message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
-							name="oracle.connection.success"
-						       	value="true" />
-						<echo message="Database Connection: PASSED" />
-					</then>
-				</elseif>
-			</if>
+					</dbconfig>
+					<antunit:assertPropertyEquals
+						message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
+						name="oracle.connection.success"
+					       	value="true" />
+					<echo message="Database Connection: PASSED" />
+				</case>
+				<case value="postgresql">
+					<dbconfig property="postgresql.connection.success" 
+						driver="@{database.driver}"
+						url="@{database.url}"
+						user="@{database.user}"
+						password="@{database.password}">
+							<validate />
+					</dbconfig>
+					<antunit:assertPropertyEquals
+						message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
+						name="postgresql.connection.success"
+					       	value="true" />
+					<echo message="Database Connection: PASSED" />
+				</case>
+			</switch>
 		</sequential>
 	</macrodef>
 
@@ -1231,18 +1245,18 @@ $HeadURL$
 			<property file="@{build.properties.file}" />
 			
 			<copy file="${template.dbintegrate.file}" tofile="${basedir}/db-integrate.xml" overwrite="true" />
-			<if>
+			<switch value="${database.type}">
 				<equals arg1="${database.type}" arg2="mysql" />
-				<then>
+				<case value="mysql">
 					<property name="sql.revision_number" value="select  ifnull(max(revision_number),0) as revision_number from build_control"/>
-				</then>
-				<elseif>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<then>
-						<property name="sql.revision_number" value="select max(nvl(revision_number,0)) as revision_number from build_control"/>
-					</then>
-				</elseif>
-			</if>
+				</case>
+				<case value="oracle">
+					<property name="sql.revision_number" value="select max(nvl(revision_number,0)) as revision_number from build_control"/>
+				</case>
+				<case value="postgresql">
+					<property name="sql.revision_number" value="select max(coalesce(revision_number, 0)) as revision_number from build_control"/>
+				</case>
+			</switch>
 
 			<sql
 				driver="${database.driver}"
@@ -1398,18 +1412,18 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<sequential>
-			<if>
+			<switch value="${database.type}">
 				<equals arg1="${database.type}" arg2="mysql" />
-				<then>
+				<case value="mysql">
 					<property name="insert.revision_number" value="insert into build_control values(${build.repository.revision},now())"/>
-				</then>
-				<elseif>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<then>
-						<property name="insert.revision_number" value="insert into build_control values(${build.repository.revision},sysdate)"/>
-					</then>
-				</elseif>
-			</if>
+				</case>
+				<case value="oracle">
+					<property name="insert.revision_number" value="insert into build_control values(${build.repository.revision},sysdate)"/>
+				</case>
+				<case value="postgresql">
+					<property name="insert.revision_number" value="insert into build_control values(${build.repository.revision},current_time)"/>
+				</case>
+			</switch>
 			<sql    
 				driver="${database.driver}"
 				url="${database.url}"
