@@ -1692,67 +1692,97 @@ $HeadURL$
 	</macrodef>
 
 	<macrodef name="validate-pre-build">		
-		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-indepenent/ws-core-enum-4.0.3.zip"/>
-		<attribute name="wscore.dest.dir" default="${application.base.path}/ws-core-4.0.3"/>
+		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
+		<attribute name="application.base.path" default="${application.base.path}"/>
 		<sequential>			
 			<check-wscore-exists
 				wscore.download.url="@{wscore.download.url}"
-				wscore.dest.dir="@{wscore.dest.dir}"
+				application.base.path="@{application.base.path}"
 				/>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="check-wscore-exists">		
-		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-indepenent/ws-core-enum-4.0.3.zip"/>
-		<attribute name="wscore.dest.dir" default="${application.base.path}/ws-core-4.0.3"/>
+		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
+		<attribute name="application.base.path" default="${application.base.path}"/>
 		<sequential>			
 			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
-			<property name="wscore.dest.file" value="downloads/${wscore.file.name}"/>
-			<echo message="Does basename work on urls? ${wscore.file.name}"/>
-			<mkdir dir="downloads"/>
+			<property name="wscore.dest.file" value="temp/${wscore.file.name}"/>
+			<propertyregex property="wscore.relative.dir"
+				input="@{wscore.download.url}"
+				regexp=".*(ws-core-enum[\d\-\.]+)\.zip"
+				select="\1"
+				/>
+			<echo message="Checking for existence of GLOBUS_LOCATION envrironment variable."/>
+			<echo message="wscore.relative.dir = ${wscore.relative.dir}"/>
+			<mkdir dir="temp"/>
 			<if>
-				<or>
-					<not>
-						<isset property="env.GLOBUS_LOCATION"/>
-					</not>
-					<not>
-						<available file="${env.GLOBUS_LOCATION}/build.xml"/>
-					</not>
-				</or>
+				<not>
+					<isset property="env.GLOBUS_LOCATION"/>
+				</not>
 				<then>
-					<get src="@{wscore.download.url}"
-						dest="${wscore.dest.file}"/>
-					<get src="@{wscore.download.url}.MD5"
-						dest="${wscore.dest.file}.MD5"/>
-					<checksum file="${wscore.dest.file}" verifyProperty="wscore.cksum.ok"/>
-					<if>    
-						<equals arg1="${wscore.cksum.ok}" arg2="true"/>
-						<then>  
-							<echo message="Downloaded wscore sucessfully"/>
-						</then> 
-						<else>  
-							<fail message="Failed to download wscore file sucessfully."/>
-						</else> 
-					</if>   
-					<unzip dest="@{wscore.dest.dir}" src="${wscore.dest.file}"/>
-					<property name="env.GLOBUS_LOCATION" value="@{wscore.dest.dir}"/>
-					<echo message="if GL= ${env.GLOBUS_LOCATION}"/>
+					<echo message="GLOBUS_LOCATION not set, downloading and installing @{wscore.download.url}"/>
+					<if>
+						<not>
+							<available file="@{wscore.dest.file}"/>
+						</not>
+						<then>
+							<get src="@{wscore.download.url}"
+								dest="${wscore.dest.file}"/>
+							<get src="@{wscore.download.url}.MD5"
+								dest="${wscore.dest.file}.MD5"/>
+							<checksum file="${wscore.dest.file}" verifyProperty="wscore.cksum.ok"/>
+							<if>    
+								<equals arg1="${wscore.cksum.ok}" arg2="true"/>
+								<then>  
+									<echo message="Downloaded wscore sucessfully"/>
+								</then> 
+								<else>  
+									<fail message="Failed to download wscore file sucessfully."/>
+								</else> 
+							</if>   
+							<unzip dest="@{application.base.path}" src="${wscore.dest.file}"/>
+							<property name="env.GLOBUS_LOCATION" value="@{application.base.path}/${wscore.relative.dir}"/>
+							<echo message="Completed install of wscore files into @{application.base.path}/${wscore.relative.dir} "/>
 
+						</then>
+					</if>
+					<osfamily property="os.family"/>
+					<echo message="os.family=${os.family}"/>
+					<switch value="${os.family}">
+						<case value="unix">
+							<echo message="Now you need configure the environment variable GLOBUS_LOCATION."/>
+							<echo message="For bash shell you can edit the $HOME/.bash_profile and add 'export GLOBUS_LOCATION=${application.base.path}/${wscore.relative.dir}'"/>
+							<echo message="For other shells refer to you operating system documentation (you can check your shell by 'echo $SHELL')"/>
+
+						</case>
+						<case value="windows">
+							<echo message="Now you need configure the environment variable GLOBUS_LOCATION."/>
+							<echo message="Right click on MyComputer, select Proeprties, select Advanced tab, click on Environment Variables, click on New under System Variables,  and set GLOBUS_LOCATION to ${application.base.path}/${wscore.relative.dir}"/>
+						</case>
+					</switch>
+					<fail message="Set GLOBUS_LOCATION and build again."/>
 				</then>
+				<else>
+					<echo message="GLOBUS_LOCATION is set to ${env.GLOBUS_LOCATION} nothing needs to be done."/>
+				</else>
 			</if>
-			<echo message="else GL= ${env.GLOBUS_LOCATION}"/>
 		</sequential>
 	</macrodef>
 
+
 	<macrodef name="generate-UMLgraph">		
-		<attribute name="uml.dir" />		
+		<attribute name="uml.dir" />
+		<attribute name="src.uml.dir" />
 		<attribute name="src.java.dir" />
-		<attribute name="uml.source.path" />
-		<attribute name="UMLGraph.jar" default="umlgraph-5.0.jar" />
+		<attribute name="UMLGraph.jar" default="UMLGraph.jar" />
 		<sequential>				
-			<mkdir dir="@{uml.dir}"/>			
-			<javadoc sourcepath="@{src.java.dir}" destdir="@{uml.dir}" classpathref="@{uml.source.path}" access="private">				
-				<doclet name="gr.spinellis.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.lib.dir}\@{UMLGraph.jar}">
+			<mkdir dir="${uml.dir}"/>
+			<path id="uml.source.path">
+				<pathelement path="${src.java.dir}"/>
+			</path>
+			<javadoc sourcepath="${basedir}/src" destdir="${uml.dir}" classpathref="project.class.path" access="private">
+				<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.lib.dir}\${UMLGraph.jar}">
 					<param name="-attributes" />
 					<param name="-enumerations" />
 					<param name="-enumconstants" />
@@ -1761,33 +1791,31 @@ $HeadURL$
 					<param name="-types" />
 					<param name="-visibility" />
 				</doclet>
-			</javadoc>		
-			<apply executable="dot" dest="@{uml.dir}" parallel="false">
+			</javadoc>
+			<apply executable="dot" dest="${uml.dir}" parallel="false">
 				<arg value="-Tpng"/>
 				<arg value="-o"/>
 				<targetfile/>
 				<srcfile/>
-				<fileset dir="@{uml.dir}" includes="*.dot"/>
+				<fileset dir="${uml.dir}" includes="*.dot"/>
 				<mapper type="glob" from="*.dot" to="*.png"/>
-			</apply>		
+			</apply>
 		</sequential>
 	</macrodef>
 
-
 	<macrodef name="generate-Schema">		
 		<attribute name="report.dir" />
-		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5.jar" />
-		<attribute name="schemaSpy.jar" default="schemaSpy-3.1.1.jar" />
+		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5-bin.jar" />
+		<attribute name="schemaSpy.jar" default="schemaSpy_3.1.1.jar" />
 		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.port" default="${database.port}" />
-		<attribute name="database.name" default="${database.name}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.type" default="${database.type}" />
 		<sequential>
 			<java jar="${bda-utils.lib.dir}/@{schemaSpy.jar}"
-			output="@{report.dir}/schemaspy-out.log"
-			error="@{report.dir}/schemaspy-error.log"
+			output="${report.dir}/schemaspy-out.log"
+			error="${report.dir}/schemaspy-error.log"
 			fork="true">
 				<arg line="-t @{database.type}"/>
 				<arg line="-host @{database.server}"/>
@@ -1795,7 +1823,7 @@ $HeadURL$
 				<arg line="-db @{database.name}"/>
 				<arg line="-u @{database.user}"/>
 				<arg line="-p @{database.password}"/>
-				<arg line="-cp ${bda-utils.lib.dir}\@{database.driver.jar}"/>
+				<arg line="-cp ${bda-utils.lib.dir}\@{database.driver.class}"/>
 				<arg line="-o @{report.dir}"/>
 			</java>
 		</sequential>
