@@ -30,7 +30,7 @@
 
 
 			<filesystem name="generic-webapp-resolver" local="true">
-				<artifact pattern="${csmgeneric-webapp.basedir}/lib/generic-webapp/[conf]/[artifact]-[revision].[ext]" />
+				<artifact pattern="${csmgeneric-webapp.basedir}/lib/[module]/[conf]/[artifact]-[revision].[ext]" />
 				<ivy pattern="${csmgeneric-webapp.basedir}/[module]/ivy.xml" />
 			</filesystem>
 

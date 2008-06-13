@@ -76,6 +76,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Where to write files retrieved by get, into the distribution area.  The file names come from project.properties  -->
 	<property name="jboss.dest.file" value="${tools.target.dir}/${jboss.binaries.file}"/>
+	<property name="tomcat.dest.file" value="${tools.target.dir}/${tomcat.binaries.file}"/>
 
 	<!-- Where the sub-projects should deploy thier artifacts.  This relative from thier *.base.dir above.  We need to use this because thier basedir is not the same as this project's basedir. -->
 	<property name="generic-api.dist.dir" value="../${generic-api.target.dir}" />
@@ -83,11 +84,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Properties related to creating the distribution -->
 	<property name="dist.dir" value="dist"/>
-	<property name="generic-api.install.name" value="generic-api_install" />
-	<property name="generic-api.upgrade.name" value="generic-api_ugprade" />
-	<property name="generic-api.version" value="3.1" />
-	<property name="generic-api.upgrade.zip.file" value="${generic-api.upgrade.name}${generic-api.version}.zip" />
-	<property name="generic-api.install.zip.file" value="${generic-api.install.name}${generic-api.version}.zip" />
 
 	<!-- Default install time targets passed by deploy targets to the installer, can be overridden by being set on the command line if different target is desitred.  -->
 	<property name="install.target" value="install"/>
@@ -284,6 +280,24 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</if>
 	</target>
 
+	<target name="dist:tools:retrieve:tomcat" unless="tomcat.tools.exists">
+		<get src="${tomcat.src.url}"
+			dest="${tomcat.dest.file}"/>
+		<get src="${tomcat.src.url}.MD5"
+			dest="${tomcat.dest.file}.MD5"/>
+		<checksum file="${tomcat.dest.file}" verifyProperty="tomcat.cksum.ok"/>
+		<if>    
+			<equals arg1="${tomcat.cksum.ok}" arg2="true"/>
+			<then>  
+				<echo message="Downloaded tomcat sucessfully"/>
+			</then> 
+			<else>  
+				<fail message="Failed to download tomcat file sucessfully."/>
+			</else> 
+		</if>   
+	</target>
+
+
 	<!-- Copies install time resources into distribution tree -->
 	<target name="dist:installer:prep" depends="dist:tools:retrieve">
 		<!-- added for incremental database build -->
@@ -336,8 +350,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Creates the installer distribution used by automated or manual remote installations -->
 	<target name="dist:installer" depends="dist:installer:prep">
-		<delete file="${dist.dir}/${generic-api.install.zip.file}"/>
-		<zip destfile="${dist.dir}/${generic-api.install.zip.file}" basedir="${target.dir}"/>
+		<delete file="${dist.dir}/${generic-webapp.install.zip.file}"/>
+		<zip destfile="${dist.dir}/${generic-webapp.install.zip.file}" basedir="${target.dir}"/>
 	</target>
 
 	<!-- Copies install time resources into distribution tree -->
@@ -401,8 +415,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Creates upgrader distribution -->
 	<target name="dist:upgrader" depends="dist:upgrader:prep">
-		<delete file="${dist.dir}/${generic-api.upgrade.zip.file}"/>
-		<zip destfile="${dist.dir}/${generic-api.upgrade.zip.file}" basedir="${target.dir}"/>
+		<delete file="${dist.dir}/${generic-webapp.upgrade.zip.file}"/>
+		<zip destfile="${dist.dir}/${generic-webapp.upgrade.zip.file}" basedir="${target.dir}"/>
 
 	</target>
 
@@ -485,58 +499,54 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<echo message="The server is not started as part of local deployment.  You will need to run $JBOSS_HOME/bin/run.bat (or run.sh if you are linux)."/>
 	</target>
 
-	<!-- Cleans remote deployment area and ensure required directorys are created -->
-	<target name="deploy:remote:prep">
-		<property name="ssh.prop.list" value="ssh.server.username,ssh.server.hostname,ssh.port,ssh.key.file,ssh.dir.temp"/>
-		<properties-exist properties.list="${ssh.prop.list}"/>
-		<!-- add call to bad directory checker once it is a separate macro on macrodefs.xml -->
-		<remote-ssh remotesshcommand="rm -rf ${ssh.dir.temp};mkdir -p ${ssh.dir.temp}" />
-		<!-- work around for issue where basedir is required but is not currently used -->
-		<remote-ssh remotesshcommand="mkdir -p ${ssh.dir.temp}/lib" />
-	</target>
+	<macrodef name="deploy-files">
+		<attribute name="ssh.user" default="${ssh.server.username}"/>
+		<attribute name="ssh.host" default="${ssh.server.hostname}"/>
+		<attribute name="remote.directory.property.name" default="ssh.dir.temp"/>
+		<attribute name="properties.file" default="${properties.file}"/>
+		<attribute name="dist.dir" default="${dist.dir}"/>
+		<attribute name="dist.file" />
+		<sequential>
+			<!-- Validate remote directory is valid -->
+			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" />
+			<check-valid-directory-name
+				directory.property="remote.dir"
+				/>
+			<!-- Delete/re-create remote directory -->
+			<remote-ssh remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
+			<!-- work around for issue where basedir is required but is not currently used -->
+			<remote-ssh remotesshcommand="mkdir -p ${remote.dir}/lib" />
 
-	<!-- Copies the distrbution to the remote system -->
-	<target name="deploy:remote:install:copy">
-		<remote-scp remoteScpFileToCopy="${dist.dir}/${generic-api.install.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
-		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
-	</target>
-
-	<!-- Extracts the distribution on the remote system -->
-	<target name="deploy:remote:install:extract">
-		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${generic-api.install.zip.file}" />
-	</target>
+			<!-- copy distribution and prop file to remote system -->
+			<remote-scp remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+			<remote-scp remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+			<!-- Extract zip file -->
+			<remote-ssh remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
+			<fail message="stop here"/>
+		</sequential>
+	</macrodef>
 
 	<!-- Install the application remotely. Depends on above targets to copy and extract distribution. Will use the target from install.xml specified in ${install.target} (defaults to install unless passed in on command line).  Calls ant from sshexec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. Requires specifying -Dproperties.file=@file@ on the command line to point installer to correct enviornment to install into -->
 	<target name="deploy:remote:install"
 		depends="
 		build:all,
-		dist:installer,
-		deploy:remote:prep,
-		deploy:remote:install:copy,
-		deploy:remote:install:extract
+		dist:installer
 		">
+		<deploy-files
+			dist.file="${generic-webapp.install.zip.file}"
+			/>
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
-	</target>
-
-	<!-- Copies distribution to remote system -->
-	<target name="deploy:remote:upgrade:copy">
-		<remote-scp remoteScpFileToCopy="${dist.dir}/${generic-api.upgrade.zip.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
-		<remote-scp remoteScpFileToCopy="${properties.file}" remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" />
-	</target>
-	<!-- Extracts distribution on remote system -->
-	<target name="deploy:remote:upgrade:extract">
-		<remote-ssh remotesshcommand="cd ${ssh.dir.temp}; unzip -q ${generic-api.upgrade.zip.file}" />
 	</target>
 
 	<!-- Upgrades the application remotely. Depends on above targets to copy and extract distribution. Will use the target from install.xml specified in ${upgrade.target} (defaults to upgrade unless passed in on command line).  Calls ant from sshexec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install. Requires specifying -Dproperties.file=@file@ on the command line to point upgrader to correct enviornment to upgrade -->
 	<target name="deploy:remote:upgrade"
 		depends="
 		build:all,
-		dist:upgrader,
-		deploy:remote:prep,
-		deploy:remote:upgrade:copy,
-		deploy:remote:upgrade:extract
+		dist:upgrader
 		">
+		<deploy-files
+			dist.file="${upgrade.zip.file}"
+			/>
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
 

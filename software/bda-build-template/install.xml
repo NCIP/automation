@@ -28,6 +28,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<property name="bda-utils.dir.src" value="${bda-utils.dir}" />
 	<property name="tools.dir.src" value="${basedir}/${tools.dist.relative.dir}" />
 	<property name="common.dir.src" value="${basedir}/${common.dist.relative.dir}" />
+	<property name="grid.resource.dir.src" value="${working.dir}/${grid.dist.relative.dir}" />
+	<property name="grid.application.dir.src" value="${working.dir}/grid-application" />
 	<property name="common.dir.target" value="${working.dir}/${common.dist.relative.dir}" />
 	<property name="db.dir.target" value="${working.dir}/${db.dist.relative.dir}" />
 	<property name="db-incr.dir.target" value="${working.dir}/${db-incr.dist.relative.dir}" />
@@ -39,6 +41,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<property name="generic-webapp.app-sec-conf.file" value="ApplicationSecurityConfig.xml" />
 	<property name="generic-webapp.hibernate.file" value="hibernate.cfg.xml" />
 	<property name="generic-webapp.war.file" value="generic-webapp.war" />
+	<property name="grid.artifact.file" value="wsrf.war.zip" />
+	<property name="tomcat.grid.dir.src" value="${basedir}/${tomcat.install.dir}" />
+	<property name="grid.dir.target" value="wsrf.war" />
+	<property name="grid.application.name" value="cagrid_APPNANE" />
+
 
 	<!-- Paths -->
 	<path id="bda-utils.classpath">
@@ -261,6 +268,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 
 	<target name="install:jboss:binaries" description="Unzip JBoss binary" unless="exclude.jboss">
 		<unzip dest="${application.base.path}" src="${tools.dir.src}/${jboss.binaries.file}" />
+		<if>    
+			<os family="unix"/>
+			<then>  
+				<chmod dir="${jboss.home}/bin" perm="ugo+rx" 
+					includes="**/*.sh"/>
+			</then>
+		</if>
 	</target>
 
 	<target name="install:jboss:generic-webapp" description="Deploy generic-webapp generic-webapp.ear, generic-webapp-api.war and common libraries" unless="exclude.jboss">
@@ -321,6 +335,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 			<insertbranch path="//policy" srcxmlfile="${login-config.block.file}" srcpath="//application-policy" />
 		</xmlconfig>
 	</target>
+
+	<!-- Configure MQ settings based on contents of ncia/software/resrouces/deploy/jbossmq-destinations-service.block.xml -->
+	<target name="-install:jboss:configure:jbossmq-dest" unless="exclude.jboss">
+		<property name="jboss-mq.block.file" value="${resource.dir.target}/jbossmq-destinations-service.block.xml"/>
+		<xmlconfig in="${jboss.home}/server/${jboss.server.name}/deploy/jms/jbossmq-destinations-service.xml" verbose="false">
+			<insertbranch path="//server" srcxmlfile="${jboss-mq.block.file}" srcpath="//mbean[1]" />
+			<insertbranch path="//server" srcxmlfile="${jboss-mq.block.file}" srcpath="//mbean[2]" />
+		</xmlconfig>
+	</target>
+
 
 	<!-- Configure log4j settings based on contents of generic-webapp/software/resrouces/deploy/log4j.block.xml -->
 	<target name="-install:jboss:configure:log4j" unless="exclude.jboss">
@@ -517,6 +541,94 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 
 	-->
 	</target>
+
+	<!-- tomcat targets -->
+	<target name="install:tomcat:binaries" description="Install tomcat for " unless="exclude.tomcat">
+		<delete dir="${tomcat.base.path}"/>
+		<unzip dest="${tomcat.base.path}" src="${tools.dir.src}/${tomcat.binaries.file}" />
+		<if>    
+			<os family="unix"/>
+			<then>  
+				<chmod dir="${tomcat.home}/bin" perm="ugo+rx" 
+					includes="**/*.sh"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="install:tomcat:configure" description="Configure tomcat for use with  (change ports)" unless="exclude.tomcat">
+		<xmlconfig in="${tomcat.home}/conf/server.xml" verbose="false">
+			<update path="(//Connector)[@port=8080]/@port" value="${tomcat.port.http}" />
+			<update path="(//Connector)[@redirectPort=8443]/@redirectPort" value="${tomcat.port.ssl}" />
+			<update path="(//Connector)[@port=8009]/@port" value="${tomcat.port.ajp}" />
+			<update path="(//Connector)[@port=8443]/@port" value="${tomcat.port.ssl}" />
+			<update path="(//Server)[@port=8005]/@port" value="${tomcat.port.shutdown}" />
+		</xmlconfig>
+	</target>
+
+	<target name="install:tomcat:stop" if="tomcat.tomcat.exists" unless="exclude.tomcat">
+		<tomcat-stop tomcat.home="${tomcat.home}"/>
+	</target>
+
+	<target name="install:tomcat:start" unless="exclude.tomcat">
+		<if>    
+			<not>   
+				<isset property="exclude.start.servers"/>
+			</not>  
+			<then>  
+				<tomcat-start tomcat.home="${tomcat.home}"/>
+			</then> 
+		</if>   
+	</target>
+
+
+	<!-- Grid Targets for jboss and tomcat -->
+
+	<target name="install:tomcat:grid" description="Deploy  to tomcat" unless="exclude.tomcat">
+		<mkdir dir="${tomcat.home}/webapps/${.dir.target}"/>
+		<unzip dest="${tomcat.home}/common/lib" src="${grid.resource.dir.src}/${resource.file.jboss-globus-lib}" />
+		<unzip dest="${tomcat.home}/webapps/${grid.dir.target}" src="${grid.resource.dir.src}/${resource.file.jboss-globus-war}" />
+		<unzip dest="${tomcat.home}/webapps/${grid.dir.target}" src="${grid.application.dir.src}/${grid.artifact.file}" />
+	</target>
+
+	<target name="install:tomcat:grid:configure" description="Configure tomcat-application" unless="exclude.tomcat">
+		<replace dir="${tomcat.home}/webapps/${grid.dir.target}" token="localhost:8080" value="${tomcat.hostname}:${tomcat.port.http}">
+			<include name="**/*.wsdl" />
+		</replace>
+		<replace file="${tomcat.home}/webapps/${grid.dir.target}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="localhost:8080" value="${tomcat.hostname}:${tomcat.port.http}"/>
+		<replace file="${tomcat.home}/webapps/${tomcat.grid.target}/WEB-INF/web.xml" token="8080" value="${tomcat.port.http}"/>
+		<replaceregexp file="${tomcat.home}/webapps/${grid.dir.target}/WEB-INF/etc/cagrid_${grid.application.name}/jndi-config.xml" 
+			match="(\s+.value.)http://.*(.\/value.)" 
+			replace="\1http://${tomcat.hostname}:${tomcat.port.http}/ncia-api/http/remoteService\2" 
+			flags="g"/>
+		<replaceregexp file="${tomcat.home}/webapps/${grid.dir.target}/WEB-INF/etc/cagrid_${grid.application.name}/${grid.application.name}_registration.xml"
+			match="(\s+.wsa:Address.).*(.\/wsa:Address.)" 
+			replace="\1${grid.index.url}\2"
+			flags="g"/>
+	</target>
+
+	<target name="install:jboss:grid" description="Deploy  to jboss" unless="exclude.jboss">
+		<mkdir dir="${jboss.home}/webapps/${.dir.target}"/>
+		<unzip dest="${jboss.home}/server/${jboss.server.name}/lib" src="${grid.resource.dir.src}/${resource.file.jboss-globus-lib}" />
+		<unzip dest="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.target}" src="${grid.resource.dir.src}/${resource.file.jboss-globus-war}" />
+		<unzip dest="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.target}" src="${grid.application.dir.src}/${grid.artifact.file}" />
+	</target>
+
+	<target name="install:jboss:grid:configure" description="Configure tomcat-application" unless="exclude.jboss">
+		<replace dir="${jboss.home}/webapps/${grid.dir.target}" token="localhost:8080" value="${jboss.hostname}:${tomcat.port.http}">
+			<include name="**/*.wsdl" />
+		</replace>
+		<replace file="${jboss.home}/webapps/${grid.dir.target}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="localhost:8080" value="${jboss.hostname}:${jboss.port.http}"/>
+		<replace file="${jboss.home}/webapps/${jboss.grid.target}/WEB-INF/web.xml" token="8080" value="${jboss.port.http}"/>
+		<replaceregexp file="${jboss.home}/webapps/${grid.dir.target}/WEB-INF/etc/cagrid_${grid.application.name}/jndi-config.xml" 
+			match="(\s+.value.)http://.*(.\/value.)" 
+			replace="\1http://${tomcat.hostname}:${tomcat.port.http}/ncia-api/http/remoteService\2" 
+			flags="g"/>
+		<replaceregexp file="${tomcat.home}/webapps/${grid.dir.target}/WEB-INF/etc/cagrid_${grid.application.name}/${grid.application.name}_registration.xml"
+			match="(\s+.wsa:Address.).*(.\/wsa:Address.)" 
+			replace="\1${grid.index.url}\2"
+			flags="g"/>
+	</target>
+
 
 	<!-- Wrapper target to upgrade jboss container. Does not install or configure binaries -->
 	<target name="upgrade:jboss" unless="exclude.jboss"
