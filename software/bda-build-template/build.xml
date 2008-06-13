@@ -522,7 +522,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<remote-scp remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 			<!-- Extract zip file -->
 			<remote-ssh remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
-			<fail message="stop here"/>
 		</sequential>
 	</macrodef>
 
