@@ -74,6 +74,14 @@ $HeadURL:  $
 		<mkdir dir="${working.dir}"/>
 		<available file="${tomcat.dest.file}" property="tomcat.tools.exists"/>
 		<available file="${tomcat.home}/conf/server.xml" property="tomcat.exists"/>
+		<if>
+			<not>
+				<isset property="env.HUDSON_HOME"/>
+			</not>
+			<then>
+				<property name="hudson.not.set" value="true"/>
+			</then>
+		</if>
 	</target>
 
 	<target name="copy2repo">
@@ -212,7 +220,7 @@ $HeadURL:  $
 	</target>
 	<target name="install:hudson:configure" description="configure hudson" unless="tomcat.exists">
 	</target>
-	<target name="start:tomcat">
+	<target name="start:tomcat" unless="hudson.not.set">
 		<tomcat-start tomcat.home="${tomcat.home}"/>
 	</target>
 	<target name="stop:tomcat">
@@ -224,5 +232,28 @@ $HeadURL:  $
 		install:tomcat,
 		install:hudson,
 		start:tomcat
-		"/>
+		">
+		<if>
+			<isset property="hudson.not.set"/>
+			<then>
+				<echo message="The environment variable HUDSON_HOME is not set. You need to set it before before starting tomcat, hence you will need to start tomcat manually."/>
+				<osfamily property="os.family"/>
+				<switch value="${os.family}">
+					<case value="unix">
+						<echo message="For bash shell you can edit the $HOME/.bash_profile and add 'export HUDSON_HOME=${hudson.dir}'"/>
+						<echo message="For other shells refer to you operating system documentation (you can check your shell by 'echo $SHELL')"/>
+					</case> 
+					<case value="windows">
+						<echo message="Right click on MyComputer, select Proeprties, select Advanced tab, click on Environment Variables, click on New under System Variables,  and set HUDSON_HOME to ${hudson.dir}"/>
+						<echo message="Don't forget to close all existing CMD windows before trying to use this variable."/>
+					</case> 
+				</switch>
+				<echo message="Once environment variable is set and tomcat is started you can access it at http://localhost:${tomcat.port.http}/hudson"/>
+			</then>
+			<else>
+				<echo message="You can access it at http://localhost:${tomcat.port.http}/hudson"/>
+			</else>
+
+		</if>
+	</target>
 </project>
