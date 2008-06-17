@@ -193,6 +193,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<property name="bda-utils.dir" value="${bda-utils.dir}"/>
 			<property name="lib.dir" value="${lib.dir}"/>
 		</ant>
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic-api.test.file}"
+			target="ivy-clean"
+			dir="${generic-api.base.dir}" />
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic-webapp.test.file}"
+			target="ivy-clean"
+			dir="${generic-webapp.base.dir}"/>
 		
 	</target>
 
