@@ -8,7 +8,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	xmlns:cs="antlib:com.puppycrawl.tools.checkstyle"
 	>
 	<description>
-		Builds the CSM/UPT application.
+		Builds the application.
 	</description>
 
 	<!-- Property file related properties and tasks -->
