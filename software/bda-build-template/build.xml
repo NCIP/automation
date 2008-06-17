@@ -630,7 +630,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		depends="
 		static-analysis:ivy-init,
 		static-analysis:init,
-		findbugs-init,
+		static-analysis:findbugs-init,
 		static-analysis:simian,
 		static-analysis:pmd,
 		static-analysis:checkstyle,
@@ -689,7 +689,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<!-- Findbugs is realy a full application that has ant support.  This target downloads the binaries for this distribution for use by ant target.  Additionaly setups a jboss installation to uses in the classpath of findbugs to cover runtime libraries -->
-	<target name="findbugs-init" depends="dist:tools:retrieve:jboss">
+	<target name="static-analysis:findbugs-init" depends="dist:tools:retrieve:jboss">
 		<property name="findbugs.home.dir" value="${lib.dir}/${findbugs.binaries.relative.dir}"/>
 		<if>
 			<not>
@@ -921,7 +921,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		depends="
 		compile:all,
 		static-analysis:ivy-init,
-		findbugs-init,
+		static-analysis:findbugs-init,
 		static-analysis:init
 		">
 		<mkdir dir="${reports.findbugs.dir}/generic-webapp"/>
