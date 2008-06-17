@@ -135,6 +135,8 @@ software/bda-build-template/common/findbugs/fancy-hist.xsl -text
 software/bda-build-template/common/findbugs/fancy.xsl -text
 software/bda-build-template/common/findbugs/plain.xsl -text
 software/bda-build-template/common/findbugs/summary.xsl -text
+software/bda-build-template/common/grand/generic-root-build.xml.pdf -text
+software/bda-build-template/common/grand/generic-root-install.xml.pdf -text svneol=unset#unset
 software/bda-build-template/common/ivysettings.xml -text
 software/bda-build-template/common/javancss/javancss2methodhtml.xsl -text
 software/bda-build-template/common/pmd/pmd-report.xslt -text
