@@ -1041,59 +1041,30 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</sequential>
 	</macrodef>
 
-	<!-- Static Analysis  & testing targets  work in progress
-		<property name="src.test.dir" value="${basedir}/test" />
-		<property name="test.classes.dir" value="${basedir}/test-classes" />
-		<property name="junit.reports.dir" value="${reports.dir}/junit"/>
-	<target name="post-clean-test" if="ci.server">
-		<delete dir="${instrumented.dir}" quiet="false" />
-		<delete dir="${test.classes.dir}" quiet="false" />
-	</target>
-	<target name="init-test" if="ci.server">
-		<mkdir dir="${test.classes.dir}" />
-		<mkdir dir="${instrumented.dir}" />
-		<mkdir dir="${junit.reports.dir}" />
-		<mkdir dir="${reports.dir}/javancss" />
-		<mkdir dir="${reports.dir}/checkstyle" />
-		<mkdir dir="${reports.dir}/pmd" />
-	</target>
-	
-	<target name="compile-test" if="ci.server" depends="-pre-clean, -init, static-analysis:ivy-init" description="Compiles the Java source code">
-		<javac srcdir="${src.test.dir}" destdir="${test.classes.dir}" debug="true">
-			<classpath refid="project.test.classpath" />
-			<classpath path="${classes.to.test.dir}" />
-		</javac>
-	</target>
-	<target name="test" if="ci.server" depends="compile-test, -cobertura-instrument" description="Runs all unit tests">
-		<junit printsummary="on" failureproperty="junit.failure" fork="true" forkmode="once" maxmemory="256m">
-			<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.ser.file}" />
-			<classpath location="${instrumented.dir}" />
-			<classpath location="${classes.to.test.dir}" />
-			<classpath location="${test.classes.dir}" />
-			<classpath refid="project.test.classpath" />
-			<formatter type="xml" />
-			perhaps break down by project name if there are collisions?
-			<batchtest todir="${junit.reports.dir}">
-				<fileset dir="${src.test.dir}">
-					
-					<include name="**/*Test.java" />
-					<include name="**/Test*.java" />
-					<exclude name="**/Abstract*Test.java" />
-					<exclude name="**/Test*Impl.java" />
+	<!-- Wrapper test target, call appropriate test for sub-projects -->
+	<target name="test:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions"
+		depends="
+		clean,
+		init,
+		test:generic-api,
+		test:generic-webapp
+		"/>
 
-					<exclude name="**/*.java" />
-				</fileset>
-			</batchtest>
-		</junit>
-		
-		<junitreport todir="${junit.reports.dir}">
-			<fileset dir="${junit.reports.dir}">
-				<include name="TEST-*.xml"/>
-			</fileset>
-			<report format="frames" todir="${junit.reports.dir}"/>
-		</junitreport>          
-				<fail if="junit.failure" message="There were JUnit failures" />
-		
+	<!-- Build generic-query-grid sub-project produces project level artifact -->
+	<target name="test:generic-api" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic-api.test.file}"
+			target="test"
+			dir="${generic-api.base.dir}" >
+			<property name="dist" value="${generic-api.dist.dir}" />
+		</ant>
 	</target>
--->
+
+	<target name="test:generic-webapp" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${generic-webapp.test.file}"
+			target="test"
+			dir="${generic-webapp.base.dir}" >
+			<property name="dist.dir" value="${generic-webapp.dist.dir}" />
+		</ant>
+	</target>
+
 </project>
