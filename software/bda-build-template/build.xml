@@ -578,42 +578,42 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Beginning static-analysis and testing section of build script -->
 
-	<!-- Wrapper target to call download ivy projects for static analysis tools.  The ivy:retrieves are done separately to ensure that there is on library conflicts among the static analysis tools.  The retrieved files are written to separate directories because the conf names are defined uniquely in projectroot/software/ivy-bda-testing.xml. -->
-	<target name="ivy-init" 
+	<!-- Wrapper target to call download ivy projects for static analysis tools.  The ivy:retrieves are done separately to ensure that there is on library conflicts among the static analysis tools.  The retrieved files are written to separate directories because the conf names are defined uniquely in projectroot/software/static-analysis:ivy-bda-testing.xml. -->
+	<target name="static-analysis:ivy-init" 
 		depends="
-		ivy-settings,
-		ivy-test-selenium,
-		ivy-test-junit,
-		ivy-test-cobertura,
-		ivy-test-javancss,
-		ivy-test-checkstyle,
-		ivy-test-pmd
+		static-analysis:ivy-settings,
+		static-analysis:ivy-test-selenium,
+		static-analysis:ivy-test-junit,
+		static-analysis:ivy-test-cobertura,
+		static-analysis:ivy-test-javancss,
+		static-analysis:ivy-test-checkstyle,
+		static-analysis:ivy-test-pmd
 		"/>
-	<target name="ivy-settings">
+	<target name="static-analysis:ivy-settings">
 		<property name="ivy.dep.file" value="${ivy.bda-testing.file}"/>
 		<ivy:settings file="${ivy.settings.file}" />
 	</target>
-	<target name="ivy-test-selenium" depends="ivy-settings" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-selenium" depends="static-analysis:ivy-settings" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-selenium" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-selenium" />
 	</target>
-	<target name="ivy-test-junit" depends="ivy-settings" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-junit" depends="static-analysis:ivy-settings" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-junit" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-junit" />
 	</target>
-	<target name="ivy-test-cobertura" depends="ivy-settings" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-cobertura" depends="static-analysis:ivy-settings" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-cobertura" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-cobertura" />
 	</target>
-	<target name="ivy-test-javancss" depends="ivy-settings" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-javancss" depends="static-analysis:ivy-settings" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-javancss" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-javancss" />
 	</target>
-	<target name="ivy-test-checkstyle" depends="ivy-settings" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-checkstyle" depends="static-analysis:ivy-settings" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-checkstyle" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-checkstyle" />
 	</target>
-	<target name="ivy-test-pmd" depends="ivy-settings" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-pmd" depends="static-analysis:ivy-settings" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-pmd" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-pmd" />
 	</target>
@@ -622,7 +622,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- This is a wrapper target for all static analysis targets -->
 	<target name="static-analysis" description="Performs static analysis"
 		depends="
-		ivy-init,
+		static-analysis:ivy-init,
 		static-analysis:init,
 		findbugs-init,
 		static-analysis:simian,
@@ -758,7 +758,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		-->
 	<target name="static-analysis:pmd"
 		depends="
-		ivy-init,
+		static-analysis:ivy-init,
 		static-analysis:init
 		">
 		<static-analysis-pmd
@@ -811,7 +811,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		-->
 	<target name="static-analysis:javancss"
 		depends="
-		ivy-init,
+		static-analysis:ivy-init,
 		static-analysis:init
 		">
 		<static-analysis-javancss
@@ -859,7 +859,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		-->
 	<target name="static-analysis:checkstyle" 
 		depends="
-		ivy-init,
+		static-analysis:ivy-init,
 		static-analysis:init
 		">
 		<static-analysis-checkstyle
@@ -914,7 +914,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="static-analysis:findbugs" 
 		depends="
 		compile:all,
-		ivy-init,
+		static-analysis:ivy-init,
 		findbugs-init,
 		static-analysis:init
 		">
@@ -990,7 +990,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="static-analysis:cobertura" 
 		depends="
 		compile:all,
-		ivy-init,
+		static-analysis:ivy-init,
 		static-analysis:init
 		">
 		<mkdir dir="${basedir}/instrumented/generic-api"/>
@@ -1058,7 +1058,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<mkdir dir="${reports.dir}/pmd" />
 	</target>
 	
-	<target name="compile-test" if="ci.server" depends="-pre-clean, -init, ivy-init" description="Compiles the Java source code">
+	<target name="compile-test" if="ci.server" depends="-pre-clean, -init, static-analysis:ivy-init" description="Compiles the Java source code">
 		<javac srcdir="${src.test.dir}" destdir="${test.classes.dir}" debug="true">
 			<classpath refid="project.test.classpath" />
 			<classpath path="${classes.to.test.dir}" />
