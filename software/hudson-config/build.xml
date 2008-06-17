@@ -93,6 +93,23 @@ $HeadURL:  $
 		</copy>
 	</target>
 	<target name="deploy2hudson">
+		<input message="This target will overwrite the current configuration of hudson.  It may also break hudson.  We will backup your existing configuration before begining.  Are you sure you want to proceed?"
+			validargs="y,n"
+			addproperty="accept.deploy2hudson" />
+		<if>    
+			<equals arg1="${accept.deploy2hudson}" arg2="n"/>
+			<then>  
+				<fail message="User tereminated the build."/>
+			</then> 
+		</if>
+		<echo message="Backing up ${hudson.dir} to ${user.home}/hudson-config-backup.zip before deploy"/>
+		<delete file="${user.home}/hudson-config-backup.zip"/>
+		<zip update="false" destfile="${user.home}/hudson-config-backup.zip">
+			<zipfileset dir="${hudson.dir}">
+				<exclude name="**/workspace/**/*"/>
+			</zipfileset>
+		</zip>  
+
 		<copy todir="${hudson.dir}">
 			<fileset dir="${svn.conf.dir}">
 				<include name="**/*"/>
