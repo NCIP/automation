@@ -65,6 +65,7 @@ docs/bda-gettingstarted.doc -text
 docs/bda-gettingstarted.pdf -text svneol=unset#unset
 docs/bda-project-plan.mpp -text
 docs/bda-project-tasks.mpp -text
+docs/bda-tasks.xls -text
 docs/cbiit-goals.doc -text
 docs/csm-kickoff.ppt -text
 docs/images/bda-agile-practices.jpg -text
