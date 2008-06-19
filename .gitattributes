@@ -165,5 +165,5 @@ software/heartbeat/src/main/java/gov/nih/nci/bda/DbValidationTag.java -text
 software/heartbeat/src/main/webapp/WEB-INF/taglib.tld -text
 software/heartbeat/src/main/webapp/WEB-INF/web.xml -text
 software/heartbeat/src/main/webapp/index.jsp -text
-software/hudson-config/build.xml -text
-software/hudson-config/install.properties -text
+software/hudson-manager/build.xml -text
+software/hudson-manager/install.properties -text
