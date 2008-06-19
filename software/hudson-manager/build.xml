@@ -22,6 +22,7 @@ $HeadURL:  $
 	<property name="lib.dir" value="lib" />
 	<property name="working.dir" value="working" />
 	<property name="tomcat.dest.file" value="${working.dir}/${tomcat.binaries.file}"/>
+	<property name="artifacts.backup.file" value="${backup.dir}/hudson-artifacts.zip"/>
 
 	<mkdir dir="${lib.dir}"/>
 	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
@@ -272,5 +273,16 @@ $HeadURL:  $
 			</else>
 
 		</if>
+	</target>
+	<target name="artifacts:backup">
+		<delete file="${artifacts.backup.file}"/>
+		<zip update="false" destfile="${artifacts.backup.file}">
+			<zipfileset dir="${hudson.dir}">
+				<include name="**/builds/**/*"/>
+			</zipfileset>
+		</zip>  
+	</target>
+	<target name="artifacts:restore">
+		<unzip dest="${hudson.dir}" src="${artifacts.backup.file}" />
 	</target>
 </project>
