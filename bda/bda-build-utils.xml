@@ -1770,19 +1770,23 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-
-	<macrodef name="generate-UMLgraph">		
+	<!-- 
+	generate-uml macro will generate the UML diagram from the checked in code. It will first create a javadoc HTML report and uses Graphviz to generate the UML graph
+	Pre-Requisites: Graphviz should be present in the Path, 	
+		usage: <generate-uml />
+		uml.dir is the directory where the UML diagram are generated.
+		src.java.dir is the source of class files. 
+		uml.source.path is the classpath for the files
+	-->
+	<macrodef name="generate-uml">		
 		<attribute name="uml.dir" />
-		<attribute name="src.uml.dir" />
 		<attribute name="src.java.dir" />
-		<attribute name="UMLGraph.jar" default="UMLGraph.jar" />
+		<attribute name="uml.source.path" />
+		<attribute name="UMLGraph.jar" default="umlgraph-4.8.jar" />
 		<sequential>				
-			<mkdir dir="${uml.dir}"/>
-			<path id="uml.source.path">
-				<pathelement path="${src.java.dir}"/>
-			</path>
-			<javadoc sourcepath="${basedir}/src" destdir="${uml.dir}" classpathref="project.class.path" access="private">
-				<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.lib.dir}\${UMLGraph.jar}">
+			<mkdir dir="@{uml.dir}"/>			
+			<javadoc sourcepath="@{src.java.dir}" destdir="@{uml.dir}" classpathref="@{uml.source.path}" access="private">				
+				<doclet name="gr.spinellis.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.lib.dir}\@{UMLGraph.jar}">
 					<param name="-attributes" />
 					<param name="-enumerations" />
 					<param name="-enumconstants" />
@@ -1791,29 +1795,34 @@ $HeadURL$
 					<param name="-types" />
 					<param name="-visibility" />
 				</doclet>
-			</javadoc>
-			<apply executable="dot" dest="${uml.dir}" parallel="false">
+			</javadoc>		
+			<apply executable="dot" dest="@{uml.dir}" parallel="false">
 				<arg value="-Tpng"/>
 				<arg value="-o"/>
 				<targetfile/>
 				<srcfile/>
-				<fileset dir="${uml.dir}" includes="*.dot"/>
+				<fileset dir="@{uml.dir}" includes="*.dot"/>
 				<mapper type="glob" from="*.dot" to="*.png"/>
-			</apply>
+			</apply>		
 		</sequential>
 	</macrodef>
-
-	<macrodef name="generate-Schema">		
-		<attribute name="report.dir" />
+	
+	<!-- 
+	generate-erd macro will generate an ERD from the Database	
+		usage: <generate-erd />
+		report.dir is the directory where the ERD is generated.
+	-->	
+	<macrodef name="generate-erd">		
+		<attribute name="report.dir" default="${target.dir}/reports/schema-spy" />
 		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5-bin.jar" />
-		<attribute name="schemaSpy.jar" default="schemaSpy_3.1.1.jar" />
+		<attribute name="schemaspy.jar" default="schemaSpy_3.1.1.jar" />
 		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.port" default="${database.port}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.type" default="${database.type}" />
 		<sequential>
-			<java jar="${bda-utils.lib.dir}/@{schemaSpy.jar}"
+			<java jar="${bda-utils.lib.dir}/@{schemaspy.jar}"
 			output="${report.dir}/schemaspy-out.log"
 			error="${report.dir}/schemaspy-error.log"
 			fork="true">
