@@ -47,8 +47,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Used by dist:*:prep to determin list of files to use for incremental build process.
 		Directory and files must be in svn to work.
 	-->
-	<property name="db.src.dir" value="${basedir}/${db.dist.relative.dir}" />
-	<property name="db-incr.src.dir" value="${basedir}/${db-incr.dist.relative.dir}" />
+	<property name="db-install.src.dir" value="${basedir}/${db-install.dist.relative.dir}" />
+	<property name="db-upgrade.src.dir" value="${basedir}/${db-upgrade.dist.relative.dir}" />
 	
 	<!-- Properties that relate to how to call build targets from sub-projects-->
 	<!-- Working directory passed to Ant tasks -->
@@ -70,8 +70,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="generic-webapp.target.dir" value="${target.dir}/${generic-webapp.dist.relative.dir}" />
 	<property name="tools.target.dir" value="${target.dir}/${tools.dist.relative.dir}" />
 	<property name="common.target.dir" value="${target.dir}/${common.dist.relative.dir}" />
-	<property name="db.target.dir" value="${target.dir}/${db.dist.relative.dir}" />
-	<property name="db-incr.target.dir" value="${target.dir}/${db-incr.dist.relative.dir}" />
+	<property name="db-install.target.dir" value="${target.dir}/${db-install.dist.relative.dir}" />
+	<property name="db-upgrade.target.dir" value="${target.dir}/${db-upgrade.dist.relative.dir}" />
 	<property name="jboss-conf.target.dir" value="${target.dir}/${jboss-conf.dist.relative.dir}" />
 
 	<!-- Where to write files retrieved by get, into the distribution area.  The file names come from project.properties  -->
@@ -308,17 +308,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="dist:installer:prep" depends="dist:tools:retrieve">
 		<!-- added for incremental database build -->
 		<!-- Need to call database-build-filelist once for each type of database you support.
-			db-incr.* propertes are stored in project.properties because they are used in both
+			db-upgrade.* propertes are stored in project.properties because they are used in both
 			install.xml and build.xml
 		-->
 		<database-build-filelist 
-			sqlfiles.list.file="${target.dir}/${db-incr.mysql.list.file}"
-			build.properties.file="${target.dir}/${db-incr.mysql.conf.file}"
-			incr.sql.dir="${db-incr.src.dir}/mysql" />
+			sqlfiles.list.file="${target.dir}/${db-upgrade.mysql.list.file}"
+			build.properties.file="${target.dir}/${db-upgrade.mysql.conf.file}"
+			incr.sql.dir="${db-upgrade.src.dir}/mysql" />
 		<database-build-filelist 
-			sqlfiles.list.file="${target.dir}/${db-incr.oracle.list.file}"
-			build.properties.file="${target.dir}/${db-incr.oracle.conf.file}"
-			incr.sql.dir="${db-incr.src.dir}/oracle" />
+			sqlfiles.list.file="${target.dir}/${db-upgrade.oracle.list.file}"
+			build.properties.file="${target.dir}/${db-upgrade.oracle.conf.file}"
+			incr.sql.dir="${db-upgrade.src.dir}/oracle" />
 		<copy tofile="${target.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
 
 		<!-- Copy install related xml and properties files -->
@@ -376,17 +376,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 		<!-- added for incremental database build -->
 		<!-- Need to call database-build-filelist once for each type of database you support.
-			db-incr.* propertes are stored in project.properties because they are used in both
+			db-upgrade.* propertes are stored in project.properties because they are used in both
 			install.xml and build.xml
 		-->
 		<database-build-filelist 
-			sqlfiles.list.file="${target.dir}/${db-incr.mysql.list.file}"
-			build.properties.file="${target.dir}/${db-incr.mysql.conf.file}"
-			incr.sql.dir="${db-incr.src.dir}/mysql" />
+			sqlfiles.list.file="${target.dir}/${db-upgrade.mysql.list.file}"
+			build.properties.file="${target.dir}/${db-upgrade.mysql.conf.file}"
+			incr.sql.dir="${db-upgrade.src.dir}/mysql" />
 		<database-build-filelist 
-			sqlfiles.list.file="${target.dir}/${db-incr.oracle.list.file}"
-			build.properties.file="${target.dir}/${db-incr.oracle.conf.file}"
-			incr.sql.dir="${db-incr.src.dir}/oracle" />
+			sqlfiles.list.file="${target.dir}/${db-upgrade.oracle.list.file}"
+			build.properties.file="${target.dir}/${db-upgrade.oracle.conf.file}"
+			incr.sql.dir="${db-upgrade.src.dir}/oracle" />
 		<copy tofile="${target.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
 
 		<!-- Copy install related xml and properties files -->

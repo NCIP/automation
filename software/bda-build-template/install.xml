@@ -31,8 +31,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<property name="grid.resource.dir.src" value="${working.dir}/${grid.dist.relative.dir}" />
 	<property name="grid.application.dir.src" value="${working.dir}/grid-application" />
 	<property name="common.dir.target" value="${working.dir}/${common.dist.relative.dir}" />
-	<property name="db.dir.target" value="${working.dir}/${db.dist.relative.dir}" />
-	<property name="db-incr.dir.target" value="${working.dir}/${db-incr.dist.relative.dir}" />
+	<property name="db-install.target.dir" value="${working.dir}/${db-install.dist.relative.dir}" />
+	<property name="db-upgrade.dir.target" value="${working.dir}/${db-upgrade.dist.relative.dir}" />
 	<property name="jboss-conf.dir.target" value="${working.dir}/${jboss-conf.dist.relative.dir}" />
 
 	<!-- *-ds.xml and WAR -->
@@ -84,24 +84,24 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 			<property name="is.oracle" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
-			<property name="db-incr.list.file" value="${db-incr.oracle.list.file}"/>
-			<property name="db-incr.conf.file" value="${db-incr.oracle.conf.file}"/>
+			<property name="db-upgrade.list.file" value="${db-upgrade.oracle.list.file}"/>
+			<property name="db-upgrade.conf.file" value="${db-upgrade.oracle.conf.file}"/>
 		</case>
 		<case value="mysql">
 			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="is.mysql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
 			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="db-incr.list.file" value="${db-incr.mysql.list.file}"/>
-			<property name="db-incr.conf.file" value="${db-incr.mysql.conf.file}"/>
+			<property name="db-upgrade.list.file" value="${db-upgrade.mysql.list.file}"/>
+			<property name="db-upgrade.conf.file" value="${db-upgrade.mysql.conf.file}"/>
 		</case>
 		<case value="postgresql">
 			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="is.postgresql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
 			<property name="database.driver" value="org.postgresql.Driver"/>
-			<property name="db-incr.list.file" value="${db-incr.postgresql.list.file}"/>
-			<property name="db-incr.conf.file" value="${db-incr.postgresql.conf.file}"/>
+			<property name="db-upgrade.list.file" value="${db-upgrade.postgresql.list.file}"/>
+			<property name="db-upgrade.conf.file" value="${db-upgrade.postgresql.conf.file}"/>
 		</case>
 		<default>
 			<fail message="Invalid database type ${database.type}"/>
@@ -222,13 +222,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 			<case value="oracle">
 				<for list="${db.install.oracle.file.list}" param="db.install.oracle.file">
 					<sequential>
-						<echo message="Running ${db.dir.target}/${database.type}/@{db.install.postgresql.file}"/>
+						<echo message="Running ${db-install.target.dir}/${database.type}/@{db.install.postgresql.file}"/>
 						<run-sql-script database.url="${database.url}"
 							database.user="${database.user}" 
 							database.password="${database.password}" 
 							sql.delimiter="/" 
 							sql.delimitertype="row"
-							sql.file="${db.dir.target}/${database.type}/@{db.install.oracle.file}"
+							sql.file="${db-install.target.dir}/${database.type}/@{db.install.oracle.file}"
 							onerror="continue"/>
 					</sequential>
 				</for>
@@ -237,12 +237,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 				<database-create/>
 				<for list="${db.install.mysql.file.list}" param="db.install.mysql.file">
 					<sequential>
-						<echo message="Running ${db.dir.target}/${database.type}/@{db.install.postgresql.file}"/>
+						<echo message="Running ${db-install.target.dir}/${database.type}/@{db.install.postgresql.file}"/>
 						<run-sql-script
 							database.url="${database.url}"
 							database.user="${database.user}"
 							database.password="${database.password}"
-							sql.file="${db.dir.target}/${database.type}/@{db.install.mysql.file}"
+							sql.file="${db-install.target.dir}/${database.type}/@{db.install.mysql.file}"
 							/>
 					</sequential>
 				</for>
@@ -250,14 +250,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 			<case value="postgresql">
 				<for list="${db.install.postgresql.file.list}" param="db.install.postgresql.file">
 					<sequential>
-						<echo message="Running ${db.dir.target}/${database.type}/@{db.install.postgresql.file}"/>
+						<echo message="Running ${db-install.target.dir}/${database.type}/@{db.install.postgresql.file}"/>
 						<run-sql-script
 							database.url="${database.url}"
 							database.user="${database.user}"
 							database.password="${database.password}"
 							sql.delimiter="/" 
 							sql.delimitertype="row"
-							sql.file="${db.dir.target}/${database.type}/@{db.install.postgresql.file}"
+							sql.file="${db-install.target.dir}/${database.type}/@{db.install.postgresql.file}"
 							/>
 					</sequential>
 				</for>
@@ -663,7 +663,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		<switch value="${database.type}">
 			<case value="oracle">
 				<if>
-					<available file="${db-incr.list.file}"/>
+					<available file="${db-upgrade.list.file}"/>
 					<then>
 						<property name="db.continue" value="true"/>
 						<database-create-control-table
@@ -673,20 +673,20 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 							/>
 						<!-- sql.delimiter=/ and sql.delimiter.type=row are required to allow jdbc to run programmatic sql like ceation of procedures or functions or triggers.  This means sql files must have all commands terminated with '/' on it's own line, not ;.	-->
 						<database-identify-scripts
-							sqlfiles.list.file="${db-incr.list.file}"
-							build.properties.file="${db-incr.conf.file}"
+							sqlfiles.list.file="${db-upgrade.list.file}"
+							build.properties.file="${db-upgrade.conf.file}"
 							sql.delimiter="/" 
 							sql.delimitertype="row"
-							database.sql.dir="${db-incr.dir.target}"/>
+							database.sql.dir="${db-upgrade.dir.target}"/>
 					</then>
 					<else>
-						<echo message="Could not find an incremental file list file ${db-incr.list.file}, there must not be any incrmental updates."/>
+						<echo message="Could not find an incremental file list file ${db-upgrade.list.file}, there must not be any incrmental updates."/>
 					</else>
 				</if>
 			</case>
 			<case value="mysql">
 				<if>
-					<available file="${db-incr.list.file}"/>
+					<available file="${db-upgrade.list.file}"/>
 					<then>
 						<property name="db.continue" value="true"/>
 						<database-create-control-table
@@ -695,19 +695,19 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 							database.password="${database.password}"
 							/>
 						<database-identify-scripts
-							sqlfiles.list.file="${db-incr.list.file}"
-							build.properties.file="${db-incr.conf.file}"
-							database.sql.dir="${db-incr.dir.target}"
+							sqlfiles.list.file="${db-upgrade.list.file}"
+							build.properties.file="${db-upgrade.conf.file}"
+							database.sql.dir="${db-upgrade.dir.target}"
 							/>
 					</then>
 					<else>
-						<echo message="Could not find an incremental file list file ${db-incr.list.file}, there must not be any incrmental updates."/>
+						<echo message="Could not find an incremental file list file ${db-upgrade.list.file}, there must not be any incrmental updates."/>
 					</else>
 				</if>
 			</case>
 			<case value="postgresql">
 				<if>
-					<available file="${db-incr.list.file}"/>
+					<available file="${db-upgrade.list.file}"/>
 					<then>
 						<property name="db.continue" value="true"/>
 						<database-create-control-table
@@ -716,14 +716,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 							database.password="${database.password}"
 							/>
 						<database-identify-scripts
-							sqlfiles.list.file="${db-incr.list.file}"
-							build.properties.file="${db-incr.conf.file}"
+							sqlfiles.list.file="${db-upgrade.list.file}"
+							build.properties.file="${db-upgrade.conf.file}"
 							sql.delimiter="/" 
 							sql.delimitertype="row"
-							database.sql.dir="${db-incr.dir.target}"/>
+							database.sql.dir="${db-upgrade.dir.target}"/>
 					</then>
 					<else>
-						<echo message="Could not find an incremental file list file ${db-incr.list.file}, there must not be any incrmental updates."/>
+						<echo message="Could not find an incremental file list file ${db-upgrade.list.file}, there must not be any incrmental updates."/>
 					</else>
 				</if>
 			</case>
