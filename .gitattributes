@@ -68,6 +68,8 @@ docs/bda-tasks.xls -text
 docs/cbiit-goals.doc -text
 docs/images/bda-agile-practices.jpg -text
 docs/images/bda-build-system.jpg -text
+docs/presentations/generic-bda-kickoff.ppt -text
+docs/presentations/generic-bda-training.ppt -text
 docs/reference-architecture/README -text
 docs/reference-architecture/WebRoot/README -text
 docs/reference-architecture/WebRoot/WEB-INF/web.xml -text
