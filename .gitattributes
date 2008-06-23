@@ -62,7 +62,6 @@ docs/bda-cbiit-preso/build-system.png -text
 docs/bda-cbiit-preso/developer-practices.png -text
 docs/bda-diagrams.vsd -text
 docs/bda-gettingstarted.doc -text
-docs/bda-gettingstarted.pdf -text svneol=unset#unset
 docs/bda-project-plan.mpp -text
 docs/bda-project-tasks.mpp -text
 docs/bda-tasks.xls -text
