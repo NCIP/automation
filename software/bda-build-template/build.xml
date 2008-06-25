@@ -93,11 +93,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="grand.rpt.dir" value="common/grand"/>
 
 	<!-- Testing & static-analysis properties -->
-	<property name="generic-webapp.java.dir" value="generic-webapp/webapp/src"/>
-	<property name="generic-api.java.dir" value="genericapi/src"/>
+	<property name="generic-webapp.java.dir" value="${generic-webapp.base.dir}/src"/>
+	<property name="generic-api.java.dir" value="${generic-api.base.dir}/src"/>
 
-	<property name="generic-webapp.classes.dir" value="generic-webapp/build/WEB-INF/classes"/>
-	<property name="generic-api.classes.dir" value="generic-api/classes"/>
+	<property name="generic-webapp.classes.dir" value="${generic-webapp.base.dir}/target/classes"/>
+	<property name="generic-api.classes.dir" value="${generic-api.base.dir}/target/classes"/>
 
 	<!-- common directory to retrieve resources used by static-analysis tools -->
 	<property name="common.dir" value="common"/>
