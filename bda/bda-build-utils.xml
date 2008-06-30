@@ -198,7 +198,7 @@ $HeadURL$
 				<isset property="jboss.bin.exists"/>
 				<then>
 					<echo message="Shutting down jboss with stop_jboss"/>
-					<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/stop_jboss" os="Linux"/>
+					<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/stop_jboss" osfamily="unix"/>
 				</then>
 				<else>
 					<echo message="Shutting down jboss with shutdown.jar"/>
@@ -245,22 +245,22 @@ $HeadURL$
 				<isset property="jboss.bin.exists"/>
 				<then>
 					<echo message="Starting JBoss instance at @{jboss.home} with start_jboss" />
-					<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/start_jboss" os="Linux" />
+					<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/start_jboss" osfamily="unix" />
 				</then>
 				<else>
 					<echo message="Starting JBoss instance at @{jboss.home} with run.sh" />
-					<exec os="Linux" executable="chmod" spawn="true">
+					<exec osfamily="unix" executable="chmod" spawn="true">
 						<arg value="+x" />
 						<arg file="@{jboss.home}/bin/run.sh" />
 						<arg file="@{jboss.home}/bin/shutdown.sh" />
 					</exec>
 		
-					<exec executable="sh" os="Linux" dir="@{jboss.home}/bin" spawn="true">
+					<exec executable="sh" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
 						<arg line="run.sh" />
 					</exec>
 
-					<exec os="Windows XP, Windows 2000, Windows 2003" executable="cmd" dir="@{jboss.home}/bin" spawn="true" >
+					<exec osfamily="windows" executable="cmd" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
 						<arg line="/c run.bat" />
 					</exec>
@@ -1452,11 +1452,11 @@ $HeadURL$
 		<attribute name="tomcat.home" />
 		<sequential>
 			<echo message="Stopping Tomcat instance at @{tomcat.home}" />
-			<exec executable="sh" os="Linux" dir="@{tomcat.home}/bin" spawn="true">
+			<exec executable="sh" osfamily="unix" dir="@{tomcat.home}/bin" spawn="true">
 				<env key="NOPAUSE" value="true" />
 				<arg line="shutdown.sh" />
 			</exec>
-			<exec os="Windows XP, Windows 2000, Windows 2003" executable="cmd" dir="@{tomcat.home}/bin" spawn="true" >
+			<exec osfamily="windows" executable="cmd" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
 				<arg line="/c shutdown.bat" />
 			</exec>
@@ -1473,11 +1473,11 @@ $HeadURL$
 		<attribute name="tomcat.home" />
 		<sequential>
 			<echo message="Starting Tomcat instance at @{tomcat.home}" />
-			<exec executable="sh" os="Linux" dir="@{tomcat.home}/bin" spawn="true">
+			<exec executable="sh" osfamily="unix" dir="@{tomcat.home}/bin" spawn="true">
 				<env key="NOPAUSE" value="true" />
 				<arg line="startup.sh" />
 			</exec>
-			<exec os="Windows XP, Windows 2000, Windows 2003" executable="cmd" dir="@{tomcat.home}/bin" spawn="true" >
+			<exec osfamily="windows" executable="cmd" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
 				<arg line="/c startup.bat" />
 			</exec>
