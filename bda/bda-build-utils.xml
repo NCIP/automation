@@ -5,54 +5,56 @@ $HeadURL$
 -->
 
  	<!-- Properties -->
-	<property name="bda-utils.lib.dir" value="${basedir}/bda-utils"/>
-	<property name="bda-utils.resource.dir" value="${basedir}/bda-utils/resource"/>	
+	<property name="software.dir" value="${basedir}"/>
+	<property name="bda-utils.dir" value="${software.dir}/bda-utils"/>
+	<property name="bda-utils.resource.dir" value="${bda-utils.dir}/resource"/>	
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" value="${bda-utils.resource.dir}/template-db-integrate.xml"/>
 
+<echoproperties prefix="bda"/>
 	<!-- PATHS -->
 	<path id="macrodef.classpath">
-		<fileset dir="bda-utils">
+		<fileset dir="${bda-utils.dir}">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
 
 	<!-- Taskdefs -->
-	<typedef resource="net/ggtools/grand/antlib.xml" classpath="${bda-utils.lib.dir}/grand-1.8.jar"/>
+	<typedef resource="net/ggtools/grand/antlib.xml" classpath="${bda-utils.dir}/grand-1.8.jar"/>
 	<taskdef name="dbconfig" classname="com.dbconfig.anttask.DbConfig" classpathref="macrodef.classpath" />
 	<taskdef name="svn" classpathref="macrodef.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
 
  	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
  		<classpath>
-			<pathelement location="${bda-utils.lib.dir}/ant-contrib-1.0b3.jar"/>
-			<pathelement location="${bda-utils.lib.dir}/bcel-5.1.jar"/>
-			<pathelement location="${bda-utils.lib.dir}/commons-httpclient-3.0.1.jar"/>
-			<pathelement location="${bda-utils.lib.dir}/commons-logging-1.0.4.jar"/>
-			<pathelement location="${bda-utils.lib.dir}/ivy-1.3.1.jar"/>
+			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar"/>
+			<pathelement location="${bda-utils.dir}/bcel-5.1.jar"/>
+			<pathelement location="${bda-utils.dir}/commons-httpclient-3.0.1.jar"/>
+			<pathelement location="${bda-utils.dir}/commons-logging-1.0.4.jar"/>
+			<pathelement location="${bda-utils.dir}/ivy-1.3.1.jar"/>
  		</classpath>
  	</taskdef>
  
  	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml">
  		<classpath>
-			<pathelement location="${bda-utils.lib.dir}/${antunit.jar}"/>
+			<pathelement location="${bda-utils.dir}/${antunit.jar}"/>
  		</classpath>
  	</taskdef>
 	
 	<taskdef name="elopeif" classname="ise.antelope.tasks.IfTask">
 		<classpath>
-			<pathelement location="${bda-utils.lib.dir}/antelope_app-3.4.1.jar"/>
+			<pathelement location="${bda-utils.dir}/antelope_app-3.4.1.jar"/>
 		</classpath>
 	</taskdef>
 	
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
 		<classpath>
-			<pathelement location="${bda-utils.lib.dir}/ant-contrib-1.0b3.jar"/>
+			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar"/>
 		</classpath>
 	</taskdef>
 	
 	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator">
 		<classpath>
-			<pathelement location="${bda-utils.lib.dir}/propertyvalidator-0.1.5.jar" />
+			<pathelement location="${bda-utils.dir}/propertyvalidator-0.1.5.jar" />
 		</classpath>
 	</taskdef>
 
@@ -1786,7 +1788,7 @@ $HeadURL$
 		<sequential>				
 			<mkdir dir="@{uml.dir}"/>			
 			<javadoc sourcepath="@{src.java.dir}" destdir="@{uml.dir}" classpathref="@{uml.source.path}" access="private">				
-				<doclet name="gr.spinellis.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.lib.dir}\@{UMLGraph.jar}">
+				<doclet name="gr.spinellis.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.dir}\@{UMLGraph.jar}">
 					<param name="-attributes" />
 					<param name="-enumerations" />
 					<param name="-enumconstants" />
@@ -1822,7 +1824,7 @@ $HeadURL$
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.type" default="${database.type}" />
 		<sequential>
-			<java jar="${bda-utils.lib.dir}/@{schemaspy.jar}"
+			<java jar="${bda-utils.dir}/@{schemaspy.jar}"
 			output="${report.dir}/schemaspy-out.log"
 			error="${report.dir}/schemaspy-error.log"
 			fork="true">
@@ -1832,7 +1834,7 @@ $HeadURL$
 				<arg line="-db @{database.name}"/>
 				<arg line="-u @{database.user}"/>
 				<arg line="-p @{database.password}"/>
-				<arg line="-cp ${bda-utils.lib.dir}\@{database.driver.class}"/>
+				<arg line="-cp ${bda-utils.dir}\@{database.driver.class}"/>
 				<arg line="-o @{report.dir}"/>
 			</java>
 		</sequential>
