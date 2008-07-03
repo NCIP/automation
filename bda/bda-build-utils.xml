@@ -6,6 +6,7 @@ $HeadURL$
 
  	<!-- Properties -->
 	<property name="software.dir" value="${basedir}"/>
+	<property name="temp.dir" value="${software.dir}/temp"/>
 	<property name="bda-utils.dir" value="${software.dir}/bda-utils"/>
 	<property name="bda-utils.resource.dir" value="${bda-utils.dir}/resource"/>	
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
@@ -63,7 +64,7 @@ $HeadURL$
  	</tstamp>
 
 	<!-- init tasks -->
-	<mkdir dir="${basedir}/tmp"/>
+	<mkdir dir="${temp.dir}"/>
 	<property name="database.type" value="mysql"/>
 	<switch value="${database.type}">
 		<case value="oracle">
