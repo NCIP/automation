@@ -6,7 +6,7 @@ $HeadURL$
 
  	<!-- Properties -->
 	<property name="software.dir" value="${basedir}"/>
-	<property name="temp.dir" value="${software.dir}/temp"/>
+	<property name="temp.dir" value="${software.dir}/target/temp"/>
 	<property name="bda-utils.dir" value="${software.dir}/bda-utils"/>
 	<property name="bda-utils.resource.dir" value="${bda-utils.dir}/resource"/>	
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
