@@ -12,6 +12,7 @@ bda/test-bda-utils.xml -text
 build-utility/build.bat -text
 build-utility/default.properties -text
 build-utility/environment.xml -text
+docs/automated-build.mm -text
 docs/bda-cbiit-preso/bda-preso.key/AudioOnlyMovie.tiff -text
 docs/bda-cbiit-preso/bda-preso.key/BDA-NEW-medium.mov -text
 docs/bda-cbiit-preso/bda-preso.key/BDA-NEW-medium.png -text
