@@ -1840,4 +1840,35 @@ $HeadURL$
 			</java>
 		</sequential>
 	</macrodef>
+	<macrodef name="pre-xmlconfig">		
+		<attribute name="search.pattern" default="^&lt;\!DOCTYPE.*" />
+		<attribute name="replace.pattern" default="&lt;\!DOCTYPE server &gt;" />
+		<attribute name="file.location" />
+		<attribute name="old-value.property.name" />
+		<sequential>
+			<loadfile
+				property="@{old-value.property.name}"
+				srcFile="@{file.location}">
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="@{search.pattern}"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
+			<replaceregexp file="@{file.location}" byline="true"
+				match="@{search.pattern}"
+				replace="@{replace.pattern}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="post-xmlconfig">		
+		<attribute name="search.pattern" default="^&lt;\!DOCTYPE.*" />
+		<attribute name="file.location" />
+		<attribute name="old-value.property.value" />
+		<sequential>
+			<echo message="Restoreing old value '@{old-value.property.value}' to @{file.location}"/>
+			<replaceregexp file="@{file.location}" byline="true"
+				match="@{search.pattern}"
+				replace="@{old-value.property.value}"/>
+		</sequential>
+	</macrodef>
 </project>
