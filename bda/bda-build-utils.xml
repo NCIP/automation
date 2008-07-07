@@ -1579,7 +1579,7 @@ $HeadURL$
 		<attribute name="output.file.name" default="build.xml"/>
 		<attribute name="file.type" default="pdf"/>
 		<sequential>		
-			<property name="grand.output.file" value="grand.dot" />
+			<property name="grand.output.file" value="${temp.dir}/grand.dot" />
 			<grand output="${grand.output.file}" buildfile="@{build.file.location}"/>
 			<exec executable="dot" >
 				<arg line="-T@{file.type} -Gsize=11.69,8.27 -Grotate=90 -o @{output.file.dir}/@{output.file.name}.@{file.type} ${grand.output.file}"/>
