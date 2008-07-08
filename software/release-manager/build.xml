@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+$Id: build.xml 4839 2008-05-21 14:45:51Z zengje $
+$HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
+-->
+<project name="caarray-build" default="relase:project" basedir="." 
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	>
+	<description>
+		This file is used to build, bundle and deploy the NCIA application.  The build targets of this file calls the appropriate targets in all the sub-projects.  The dist targets create a distribution that can be used by the local (a directory) and remote (a zip archive) deployment targets.  The deploy targets handle local and remote installation of the application.   The distribution is installed via ant.  Both install and upgrade distributions/installs are supported.
+	</description>
+
+	<!-- Property file related properties and tasks -->
+	<property name="project.name" value="bda_release"/>
+	<property environment="env" />	
+	
+	<property file="release.properties" />
+
+	
+	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
+
+
+
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="bda-utils.dir" value="${basedir}/bda-utils" />
+	
+	
+	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<mkdir dir="lib"/>
+	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
+		target="retrieve-bda">
+		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
+		<property name="lib.dir" value="${lib.dir}"/>
+	</ant>
+	
+	<!-- Paths -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="simian-2.2.24.jar" />
+			<include name="ivy-core-2.0.0-beta2.jar" />
+			<include name="ivy-2.0.0-beta2.jar" />
+		</fileset>
+	</path>
+
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+
+	<!-- Taskdefs -->
+	<taskdef name="svn" classpathref="bda-utils.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
+	<taskdef name="xmlconfig" classpathref="bda-utils.classpath" classname="com.xmlconfig.anttask.XmlConfig"  />
+
+	<!-- Targets -->
+	<target name="relase:project" depends="svn:checkout,release:copy-rename">
+		<echo message="Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. " />
+	</target>
+
+	<target name="svn:checkout" depends="svn-scorch">	
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
+		</svn>	
+	</target>
+	
+	<target name="svn-scorch">
+		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
+		<delete dir="${svn.local.checkout}" />
+	</target>
+
+	<target name="release:copy-rename">
+		<copy todir="${svn.local.checkout}/${beta.development.version}">
+			<fileset dir="${svn.local.checkout}/${beta.release.version}"/>
+		</copy>
+
+		<copy todir="${svn.local.checkout}/${release.version}" >
+			 <fileset dir="${svn.local.checkout}/${beta.release.version}"/>
+		</copy>
+
+
+		<move file="${svn.local.checkout}/${release.version}/bda-build-utils-${beta.release.version}.xml" tofile="${svn.local.checkout}/${release.version}/bda-build-utils-${release.version}.xml"/>
+		<move file="${svn.local.checkout}/${release.version}/bda-build-utils-${beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/bda-build-utils-${release.version}.zip"/>
+
+		<xmlconfig in="${svn.local.checkout}/${release.version}/ivy.xml" verbose="false">			
+			<update path="//ivy-module/info/@revision" value="${release.version}" />			
+		</xmlconfig>
+
+		
+		<move file="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.release.version}.xml" tofile="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.development.version}.xml"/>
+		<move file="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.release.version}.zip" tofile="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.development.version}.zip"/>
+		
+		<xmlconfig in="${svn.local.checkout}/${beta.development.version}/ivy.xml" verbose="false">
+			<update path="//ivy-module/info/@revision" value="${beta.development.version}" />
+		</xmlconfig>
+				
+	</target>
+
+
+	<target name="svn:checkin">		
+		<svn username="${svn.username}" password="${svn.password}">			
+			<add dir="${svn.local.checkout}/${release.version}"/>
+			<add dir="${svn.local.checkout}/${beta.development.version}"/>
+			<commit message="Latest BDA revision ${release.version} and beta revision ${beta.development.version}" dir="${svn.local.checkout}"/>
+		</svn>	
+	</target>
+
+</project>

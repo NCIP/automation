@@ -169,3 +169,5 @@ software/heartbeat/src/main/webapp/WEB-INF/web.xml -text
 software/heartbeat/src/main/webapp/index.jsp -text
 software/hudson-manager/build.xml -text
 software/hudson-manager/install.properties -text
+software/release-manager/build.xml -text
+software/release-manager/release.properties -text
