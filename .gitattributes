@@ -158,6 +158,7 @@ software/bda-build-template/ivy-bda-testing.xml -text
 software/bda-build-template/linux-install.properties -text
 software/bda-build-template/linux-upgrade.properties -text
 software/bda-build-template/project.properties -text
+software/bda-build-template/sub-project-build.xml -text
 software/bda-build-template/upgrade-properties.template -text
 software/bda-build-template/upgrade.properties -text
 software/heartbeat/.classpath -text
