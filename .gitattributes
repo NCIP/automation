@@ -151,7 +151,6 @@ software/bda-build-template/common/resources/jboss-conf/log4j.block.xml -text
 software/bda-build-template/common/resources/jboss-conf/login-config.db-block.xml -text
 software/bda-build-template/common/resources/jboss-conf/login-config.ldap-block.xml -text
 software/bda-build-template/common/simian/simian.xsl -text
-software/bda-build-template/common/t -text
 software/bda-build-template/install-properties.template -text
 software/bda-build-template/install.properties -text
 software/bda-build-template/install.xml -text
