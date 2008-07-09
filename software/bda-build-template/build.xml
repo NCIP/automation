@@ -157,8 +157,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<mkdir dir="${target.dir}"/>
 		<mkdir dir="${dist.dir}"/>
 		<mkdir dir="${dist.exploded.dir}"/>
-		<mkdir dir="${generic-api.target.dir}"/>
-		<mkdir dir="${generic-webapp.target.dir}"/>
+		<mkdir dir="${generic-api.dist.dir}"/>
+		<mkdir dir="${generic-webapp.dist.dir}"/>
 		<mkdir dir="${common.dist.dir}"/>
 		<mkdir dir="${tools.dist.dir}"/>
 		<mkdir dir="${temp.dir}"/>
@@ -385,7 +385,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<!-- This  copies common files over, common files are currently resource files like
 			jboss configuration files and database scripts
 		-->
-		<copy todir="${common.exploded.dir}" overwrite="true">
+		<copy todir="${common.dist.dir}" overwrite="true">
 			<fileset dir="${common.dir}">
 				<include name="**/*"/>
 			</fileset>
@@ -418,7 +418,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<arg value="-Dforce.reinstall=true"/>
 			<arg value="${install.target}"/>
 		</exec> 
-		<exec osfamliy="windows"
+		<exec osfamily="windows"
 			executable="ant.bat" dir="${dist.exploded.dir}" failonerror="true">
 			<!-- use alternate properties file since default has replace values -->
 			<arg value="-Dproperties.file=windows-install.properties"/>
@@ -523,7 +523,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		dist:upgrader
 		">
 		<deploy-files
-			dist.file="${upgrade.zip.file}"
+			dist.file="${generic-webapp.upgrade.zip.file}"
 			/>
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>

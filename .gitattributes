@@ -156,7 +156,6 @@ software/bda-build-template/common/simian/simian.xsl -text
 software/bda-build-template/install-properties.template -text
 software/bda-build-template/install.properties -text
 software/bda-build-template/install.xml -text
-software/bda-build-template/ivy-bda-testing.xml -text
 software/bda-build-template/linux-install.properties -text
 software/bda-build-template/linux-upgrade.properties -text
 software/bda-build-template/project.properties -text

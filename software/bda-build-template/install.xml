@@ -30,7 +30,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 
 	<!-- Install Time properties -->
 	<!-- Source and target directories -->
-	<property name="bda-utils.dir" value="${bda-utils.dir}" />
+	<property name="bda-utils.dir" value="bda-utils" />
 	<property name="tools.dir" value="${basedir}/${tools.dist.relative.dir}" />
 	<property name="common.dir.src" value="${basedir}/${common.dist.relative.dir}" />
 	<property name="grid.resource.dir" value="${working.dir}/${grid.dist.relative.dir}" />
@@ -122,7 +122,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		<case value="install">
 			<property name="properties.template.file" value="install-properties.template" />
 		</case>
-		<case value="install">
+		<case value="upgrade">
 			<property name="properties.template.file" value="upgrade-properties.template" />
 		</case>
 		<default>
@@ -188,7 +188,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<!-- Clean up destination directory -->
 	<target name="install:clean" description="Removes all files from the local filesystem">
 		<sleep seconds="5" />
-		<delete dir="${application.base.path}" quiet="false" />
+		<delete dir="${jboss.home}" quiet="false" />
+		<delete dir="${tomcat.home}" quiet="false" />
 	</target>
 
 	<!-- Does directory management and copy some files with filtering to ensure token expansion -->
@@ -468,8 +469,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		</xmlconfig>
 	</target>
 
-	<target name="install:tomcat:stop" if="tomcat.tomcat.exists" unless="exclude.tomcat">
-		<tomcat-stop tomcat.home="${tomcat.home}"/>
+	<target name="install:tomcat:stop" unless="exclude.tomcat">
+		<if>
+			<available file="${tomcat.home}/bin/shutdown.sh"/>
+			<then>
+				<tomcat-stop tomcat.home="${tomcat.home}"/>
+			</then>
+		</if>
 	</target>
 
 	<target name="install:tomcat:start" unless="exclude.tomcat">
