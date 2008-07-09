@@ -1871,4 +1871,77 @@ $HeadURL$
 				replace="@{old-value.property.value}"/>
 		</sequential>
 	</macrodef>
+	
+	
+	<!-- 
+	fusebox-matrix macro will generate graphical representation of the static analysis for the project
+		usage: <fusebox-matrix fusebox.config.file="${bda-utils.dir}/resource/fusemetrics_config.xml" fusebox.template.file="${bda-utils.dir}/resource/dashboard.tmpl" fusebox.output.dir="${basedir}/target/output" fusebox.persist.dir="${basedir}/target/persist" fusebox.search.dir="${basedir}/reports"/>
+		fusebox.config.file is the location of the config file.
+		fusebox.project.name is the name of the project and the macro configures it into the config file.
+		fusebox.search.dir is the location of the resulted XML files from the static analysis.
+		fusebox.output.file is the location of the output directory.		
+		fusebox.persist.dir is the locations of the persisted directory and the data is appended after each build
+		fusebox.template.file is the name of the file that renders data from the persistent file
+	-->	
+	<macrodef name="fusebox-matrix" description="generates the fusebox matrix">
+		<attribute name="fusebox.config.file" default="${bda-utils.resource.dir}/fusemetrics_config.xml" />
+		<attribute name="fusebox.project.name" default="Project" />
+		<attribute name="fusebox.search.dir" default="reports" />
+		<attribute name="fusebox.output.dir" default="output" />
+		<attribute name="fusebox.persist.dir" default="persist" />
+		<attribute name="fusebox.template.file" default="${bda-utils.resource.dir}/dashboard.tmpl" />
+
+		<sequential>
+			<if>								
+				<equals arg1="@{fusebox.config.file}" arg2="fusemetrics_config.xml"/>
+				<then>				
+					<property name= "fusebox.arg.value" value="fusemetrics_config.xml" />				
+				</then>
+				<else>
+					<property name= "fusebox.arg.value" value="@{fusebox.config.file}" />					
+				</else>
+			</if>
+			<if>								
+				<equals arg1="@{fusebox.config.file}" arg2="fusemetrics_config.xml"/>
+				<then>				
+					<property name= "fusebox.arg.value" value="fusemetrics_config.xml" />				
+				</then>
+				<else>
+					<property name= "fusebox.arg.value" value="@{fusebox.config.file}" />					
+				</else>
+			</if>
+
+			<mkdir dir="@{fusebox.output.dir}"/>
+			<mkdir dir="@{fusebox.persist.dir}"/>
+
+			<xmlconfig in="@{fusebox.config.file}" verbose="false">			
+				<update path="//config/@project" value="@{fusebox.project.name}" />
+				<update path="//config/@search" value="@{fusebox.search.dir}" />
+				<update path="//config/@output" value="@{fusebox.output.dir}" />
+				<update path="//config/@persist" value="@{fusebox.persist.dir}" />
+				<update path="//config/@template" value="@{fusebox.template.file}" />
+				<update path="//config/@html" value="@{fusebox.output.dir}/dashboard.html" />
+			</xmlconfig>
+
+
+			<java classname="com.stelligent.fusemetrics.FuseMetrics" >
+			<arg value="-c"/>
+			<arg value="${fusebox.arg.value}"/>
+			<arg value="-d"/>	
+			 <classpath>
+			   <pathelement location="${bda-utils.lib.dir}/fusemetrics.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/xom-1.1.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/xerces-2.3.0.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/jfreechart-1.0.9-swt.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/jfreechart-1.0.9.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/swtgraphics2d.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/jcommon-1.0.12.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/itext-2.0.6.jar"/>
+			   <pathelement location="${bda-utils.lib.dir}/groovy-all-1.6-beta-1.jar"/>
+			 </classpath>
+			</java>
+		</sequential>	
+	</macrodef>
+
+	
 </project>
