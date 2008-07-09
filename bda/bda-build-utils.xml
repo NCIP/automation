@@ -86,6 +86,11 @@ $HeadURL$
 				url = jdbc:postgresql://localhost/mydatabase
 			-->
 		</case> 
+		<case value="hsqldb">
+			<property name="database.dialect" value=""/>
+			<property name="is.mysql" value="true"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/hsqldb-1.8.0.7.jar"/>
+		</case> 
 		<default>  
 			<fail message="Invalid or unsupported database type ${database.type}"/>
 		</default> 
