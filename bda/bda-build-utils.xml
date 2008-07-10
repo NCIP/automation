@@ -1934,15 +1934,15 @@ $HeadURL$
 			<arg value="${fusebox.arg.value}"/>
 			<arg value="-d"/>	
 			 <classpath>
-			   <pathelement location="${bda-utils.lib.dir}/fusemetrics.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/xom-1.1.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/xerces-2.3.0.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/jfreechart-1.0.9-swt.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/jfreechart-1.0.9.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/swtgraphics2d.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/jcommon-1.0.12.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/itext-2.0.6.jar"/>
-			   <pathelement location="${bda-utils.lib.dir}/groovy-all-1.6-beta-1.jar"/>
+				   <pathelement location="${bda-utils.dir}/fusemetrics-1.0.jar"/>
+				   <pathelement location="${bda-utils.dir}/xom-1.1.jar"/>
+				   <pathelement location="${bda-utils.dir}/xercesImpl-2.6.2.jar"/>
+				   <pathelement location="${bda-utils.dir}/jfreechart-swt-1.0.9.jar"/>
+				   <pathelement location="${bda-utils.dir}/jfreechart-1.0.9.jar"/>
+				   <pathelement location="${bda-utils.dir}/swtgraphics2d-1.0.9.jar"/>
+				   <pathelement location="${bda-utils.dir}/jcommon-1.0.12.jar"/>
+				   <pathelement location="${bda-utils.dir}/itext-2.0.6.jar"/>
+				   <pathelement location="${bda-utils.dir}/groovy-all-1.6.jar"/>
 			 </classpath>
 			</java>
 		</sequential>	
