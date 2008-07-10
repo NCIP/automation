@@ -558,6 +558,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<property name="lib.dir" value="${lib.dir}" />
 			<property name="software.dir" value="${software.dir}" />
 		</ant>
+		<copy tofile="${software.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml"/>
 		<report-grand
 			build.file.location="build.xml"
 			output.file.dir="${grand.rpt.dir}"
@@ -571,6 +572,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<delete dir="${software.dir}/bda-utils"/>
 		<delete dir="${software.dir}/logs"/>
 		<delete dir="${software.dir}/working"/>
+		<delete file="${software.dir}/db-integrate.xml"/>
+
 	</target>
 
 	<!-- Beginning static-analysis and testing section of build script -->
