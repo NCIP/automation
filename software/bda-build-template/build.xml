@@ -548,11 +548,29 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 	<!-- this target generates visio like diagrams of the build files -->
 	<target name="report:grand" description="Generates grand graphs for build.xml files">
+		<!-- Temporary fix to make grand work for install.xml -->
+		<ant inheritAll="false" inheritRefs="false"
+			antfile="bda-ivy-build.xml"
+			target="retrieve-bda"
+			dir="${bda-download.dir}"
+			>
+			<property name="bda-utils.dir" value="${software.dir}/bda-utils" />
+			<property name="lib.dir" value="${lib.dir}" />
+			<property name="software.dir" value="${software.dir}" />
+		</ant>
 		<report-grand
 			build.file.location="build.xml"
 			output.file.dir="${grand.rpt.dir}"
 			output.file.name="generic-root-build.xml"
 			/>
+		<report-grand
+			build.file.location="install.xml"
+			output.file.dir="${grand.rpt.dir}"
+			output.file.name="generic-root-install.xml"
+			/>
+		<delete dir="${software.dir}/bda-utils"/>
+		<delete dir="${software.dir}/logs"/>
+		<delete dir="${software.dir}/working"/>
 	</target>
 
 	<!-- Beginning static-analysis and testing section of build script -->
