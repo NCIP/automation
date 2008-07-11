@@ -142,7 +142,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		<isset property="ds.exists"/>
 		<then>
 			<jboss-read-dbconfig
-				jboss.ds-xml.file="${generic-webapp.ds.file}"
+				jboss.ds-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/${generic-webapp.ds.file}"
 				/>
 		</then>
 		<else>
