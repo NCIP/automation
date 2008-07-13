@@ -18,7 +18,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 	
 	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
-
+	<property name="bda.utils.filename" value="bda-build-utils" />
+	<property name="automation.resource.dir" value="resource" />
 
 
 	<property name="lib.dir" value="${basedir}/lib" />
@@ -50,29 +51,36 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<!-- Includes- include BDA marcos -->
-	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+	<import file="${bda-utils.dir}/${bda.utils.filename}-${bda.version}.xml" />
 
 	<!-- Taskdefs -->
 	<taskdef name="svn" classpathref="bda-utils.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
 	<taskdef name="xmlconfig" classpathref="bda-utils.classpath" classname="com.xmlconfig.anttask.XmlConfig"  />
 
 	<!-- Targets -->
-	<target name="relase:project" depends="svn:checkout,release:copy-rename">
+	<target name="relase:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag">
 		<echo message="Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. " />
 	</target>
 
 	<target name="svn:checkout" depends="svn-scorch">	
 		<svn username="${svn.username}" password="${svn.password}">
 			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
+		</svn>
+	</target>
+
+	<target name="svn:automation:checkout" depends="svn-scorch">	
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.automation.url}/${svn.automation.project}" revision="${default.automation.revision}" destPath="${svn.automation.checkout}" />
 		</svn>	
 	</target>
 	
 	<target name="svn-scorch">
 		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
 		<delete dir="${svn.local.checkout}" />
+		<delete dir="${svn.automation.checkout}" />
 	</target>
 
-	<target name="release:copy-rename">
+	<target name="release:copy-rename" depends="release:get-latest-automation">
 		<copy todir="${svn.local.checkout}/${beta.development.version}">
 			<fileset dir="${svn.local.checkout}/${beta.release.version}"/>
 		</copy>
@@ -82,30 +90,65 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</copy>
 
 
-		<move file="${svn.local.checkout}/${release.version}/bda-build-utils-${beta.release.version}.xml" tofile="${svn.local.checkout}/${release.version}/bda-build-utils-${release.version}.xml"/>
-		<move file="${svn.local.checkout}/${release.version}/bda-build-utils-${beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/bda-build-utils-${release.version}.zip"/>
+		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${beta.release.version}.xml" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.xml"/>
+		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.zip"/>
 
 		<xmlconfig in="${svn.local.checkout}/${release.version}/ivy.xml" verbose="false">			
 			<update path="//ivy-module/info/@revision" value="${release.version}" />			
 		</xmlconfig>
 
 		
-		<move file="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.release.version}.xml" tofile="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.development.version}.xml"/>
-		<move file="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.release.version}.zip" tofile="${svn.local.checkout}/${beta.development.version}/bda-build-utils-${beta.development.version}.zip"/>
+		<move file="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.release.version}.xml" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml"/>
+		<move file="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.release.version}.zip" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.zip"/>
 		
 		<xmlconfig in="${svn.local.checkout}/${beta.development.version}/ivy.xml" verbose="false">
 			<update path="//ivy-module/info/@revision" value="${beta.development.version}" />
 		</xmlconfig>
+		
+		<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
 				
 	</target>
 
 
+	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
+		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.xml"/>
+		
+
+		<zip destfile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.zip">
+			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
+		</zip>
+
+	</target>
+
+
+	<target name="release:automation" depends="release:get-latest-automation,svn:automation:checkin">
+
+	</target>
+
+	<target name="release:create-branch-tag" depends="svn:automation:checkout,svn:checkout">
+		<svn javahl="false">			
+			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.branchurl}" message="create a branch for release ${release.version}" revision="${default.automation.revision}"/>
+			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.tagurl}" message="create a tag for release ${release.version}" revision="${default.automation.revision}"/>
+		</svn>
+	</target>
+
+
 	<target name="svn:checkin">		
-		<svn username="${svn.username}" password="${svn.password}">			
+		<svn javahl="false">			
 			<add dir="${svn.local.checkout}/${release.version}"/>
 			<add dir="${svn.local.checkout}/${beta.development.version}"/>
+			previous.beta.release.version
 			<commit message="Latest BDA revision ${release.version} and beta revision ${beta.development.version}" dir="${svn.local.checkout}"/>
 		</svn>	
 	</target>
+
+
+	<target name="svn:automation:checkin">	
+		<svn javahl="false">			
+			<commit message="Latest BDA revision " dir="${svn.local.checkout}/${beta.release.version}"/>
+		</svn>	
+	</target>
+
+
 
 </project>
