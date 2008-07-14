@@ -1879,7 +1879,7 @@ $HeadURL$
 	
 	
 	<!-- 
-	fusebox-matrix macro will generate graphical representation of the static analysis for the project
+	fusebox-metrics macro will generate graphical representation of the static analysis for the project
 		usage: <fusebox-matrix fusebox.config.file="${bda-utils.dir}/resource/fusemetrics_config.xml" fusebox.template.file="${bda-utils.dir}/resource/dashboard.tmpl" fusebox.output.dir="${basedir}/target/output" fusebox.persist.dir="${basedir}/target/persist" fusebox.search.dir="${basedir}/reports"/>
 		fusebox.config.file is the location of the config file.
 		fusebox.project.name is the name of the project and the macro configures it into the config file.
@@ -1888,7 +1888,7 @@ $HeadURL$
 		fusebox.persist.dir is the locations of the persisted directory and the data is appended after each build
 		fusebox.template.file is the name of the file that renders data from the persistent file
 	-->	
-	<macrodef name="fusebox-matrix" description="generates the fusebox matrix">
+	<macrodef name="fusebox-metrics" description="generates the fusebox metrics">
 		<attribute name="fusebox.config.file" default="${bda-utils.resource.dir}/fusemetrics_config.xml" />
 		<attribute name="fusebox.project.name" default="Project" />
 		<attribute name="fusebox.search.dir" default="reports" />
