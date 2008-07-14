@@ -23,8 +23,10 @@
     <property name="reports.dir" location="${software.dir}/target/reports" />
     <property name="common.dir" value="${software.dir}/common"/>
 
+    <property name="project.properties.file" value="${software.dir}/project.properties"/>
+
     <property file="${build.dir}/local.properties" />
-    <property file="${software.dir}/project.properties"/>
+    <property file="${project.properties.filer}"/>
     <property file="${envpropertyfile}" />
 
     
@@ -159,6 +161,8 @@
 		static-analysis:checkstyle,
 		static-analysis:javancss,
 		static-analysis:findbugs
+		static-analysis:diff:pmd,
+		static-analysis:diff:checkstyle
 		">
         	<fail if="checkstyle.failure" message="There were Checkstyle failures." />
         	<fail if="pmd.failure" message="There were PMD failures." />
@@ -293,6 +297,100 @@
 				style="@{pmd.report-xsl.file}"/>
 		</sequential>
 	</macrodef>
+
+
+
+
+
+
+
+
+
+	<target name="static-analysis:diff:pmd"
+		depends="
+		static-analysis:ivy-init,
+		static-analysis:init
+		">
+		<static-analysis-diff-pmd
+			property.file="${project.properties.file}"
+			differential.file.name="diff_list.txt"
+			pmd.src.dir="${generic-webapp.java.src.dir}"
+			pmd.rpt.dir="${reports.pmd.dir}"
+			pmd.root-dir.name="software"
+			pmd.sub-project.name="generic-webapp"
+			pmd.report-xsl.file="${common.dir}/pmd/pmd-report-per-class.xslt"
+			pmd.report-preprocessor.file="${common.dir}/pmd/pmd-hudson-preprocessor.xlst"
+			pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset.xml"
+			pmd.xml.name="pmd-report.xml"
+			pmd.html.name="pmd-report.html"
+			/>
+		<replaceregexp file="${project.properties.file}" byline="true" match="^(pmd.revision.number)=(.*)" replace="\1=${build.svn.revision}"/>		
+	</target>
+
+	<macrodef name="static-analysis-diff-pmd">
+		<attribute name="property.file" default="project.properties"/>
+		<attribute name="differential.file.name" default="diff_list.txt" />
+		<attribute name="pmd.src.dir"/>
+		<attribute name="pmd.rpt.dir"/>
+		<attribute name="pmd.root-dir.name"/>
+		<attribute name="pmd.sub-project.name"/>
+		<attribute name="pmd.report-preprocessor.file"/>
+		<attribute name="pmd.report-xsl.file"/>
+		<attribute name="pmd.rule-set.file"/>
+		<attribute name="pmd.xml.name" default="pmd.xml"/>
+		<attribute name="pmd.html.name" default="pmd.html"/>
+		<sequential>
+			<property name="pmd.sub-project.rpt.dir" value="@{pmd.rpt.dir}/@{pmd.sub-project.name}/target"/>			
+			<mkdir dir="${pmd.sub-project.rpt.dir}"/>
+			<taskdef name="pmd" 
+				classname="net.sourceforge.pmd.ant.PMDTask"
+				classpathref="project.test.pmd.classpath"/>
+				
+			<diffrevision envpropertyfile="@{property.file}" differential.file.name="@{differential.file.name}" />	
+			<pmd 
+				rulesetfiles="@{pmd.rule-set.file}"
+				shortFilenames="true" 
+				failonerror="false"
+				failurespropertyname="pmd.failure"
+				targetjdk="1.5"
+				>
+				<formatter type="xml"
+					toFile="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}" />
+				<fileset dir="@{pmd.src.dir}">
+					<patternset>
+						<includesfile name="@{differential.file.name}"/> 
+					</patternset>				      
+				</fileset>
+			</pmd>
+			<move file="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}" tofile="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}.bak"/>
+			<xslt taskname="pmd"
+				in="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}.bak"
+				out="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}"
+				style="@{pmd.report-preprocessor.file}">
+				<param name="relative.path" expression="@{pmd.root-dir.name}/@{pmd.sub-project.name}"/>
+			</xslt>
+
+			<xslt taskname="pmd"
+				in="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}.bak"
+				out="${pmd.sub-project.rpt.dir}/@{pmd.html.name}"
+				style="@{pmd.report-xsl.file}"/>				
+		</sequential>
+	</macrodef>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<!-- Runs JavaNCSS a tool that identifies code Cyclomatic Complexity.
 		You can find additional information about JavaNCSS at:
@@ -453,6 +551,73 @@
 
 		</sequential>
 	</macrodef>
+
+	<target name="static-analysis:diff:checkstyle" 
+		depends="
+		static-analysis:ivy-init,
+		static-analysis:init
+		">
+		<static-analysis-diff-checkstyle
+			property.file="${project.properties.file}"
+			differential.file.name="diff_list.txt"
+			checkstyle.src.dir="${generic-webapp.java.src.dir}"
+			checkstyle.rpt.dir="${reports.checkstyle.dir}"
+			checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-frames.xsl"
+			checkstyle.config.file="${checkstyle.config}"
+			checkstyle.xml.name="checkstyle.xml"
+			checkstyle.html.name="checkstyle.html"
+			checkstyle.classpath.ref.name="caintegrator2.full.classpath"
+			/>
+		<replaceregexp file="${project.properties.file}" byline="true" match="^(checkstyle.revision.number)=(.*)" replace="\1=${build.svn.revision}"/> 	
+	</target>
+	
+	<macrodef name="static-analysis-diff-checkstyle">
+		<attribute name="property.file" default="project.properties"/>
+		<attribute name="differential.file.name" default="diff_list.txt" />
+		<attribute name="checkstyle.src.dir"/>
+		<attribute name="checkstyle.rpt.dir"/>
+		<attribute name="checkstyle.report-xsl.file"/>
+		<attribute name="checkstyle.config.file"/>
+		<attribute name="checkstyle.xml.name" default="checkstyle.xml"/>
+		<attribute name="checkstyle.html.name" default="checkstyle.html"/>
+		<attribute name="checkstyle.classpath.ref.name" />
+
+		<sequential>
+			<diffrevision envpropertyfile="@{property.file}" differential.file.name="@{differential.file.name}" />
+
+			<taskdef resource="checkstyletask.properties"
+				uri="antlib:com.puppycrawl.tools.checkstyle"
+				classpathref="project.test.checkstyle.classpath"/>
+
+
+			<checkstyle config="@{checkstyle.config.file}"
+				failureProperty="checkstyle.failure" 
+				failOnViolation="false"
+				maxerrors="0" 
+				maxwarnings="0"
+				classpathref="@{checkstyle.classpath.ref.name}"
+				>
+
+				<formatter type="xml" 
+					tofile="@{checkstyle.rpt.dir}/@{checkstyle.xml.name}"/>
+
+				<fileset dir="@{checkstyle.src.dir}">
+					<patternset>
+						<includesfile name="@{differential.file.name}"/> 
+					</patternset>	    
+				</fileset>  
+			</checkstyle>
+
+			<xslt taskname="checkstyle"
+			  in="@{checkstyle.rpt.dir}/@{checkstyle.xml.name}"
+			  out="@{checkstyle.rpt.dir}/@{checkstyle.html.name}"
+			  style="@{checkstyle.report-xsl.file}"
+			  />  			 
+		</sequential>
+	</macrodef>
+
+	
+	
 	<!-- Runs Cobertura a code coveragetool.
 		You can find additional information about cobertura at:
 		http://cobertura.sourceforge.net/
@@ -510,4 +675,5 @@
 			<cobertura-check failureproperty="cobertura.failure" datafile="@{cobertura.instrumented.dir}/@{cobertura.ser.file}" haltonfailure="false" linerate="0" packagebranchrate="0" packagelinerate="0" totalbranchrate="25" totallinerate="30" />
 		</sequential>
 	</macrodef>
+	
 </project>

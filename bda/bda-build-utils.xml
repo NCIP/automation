@@ -1948,5 +1948,42 @@ $HeadURL$
 		</sequential>	
 	</macrodef>
 
-	
+	<!-- 
+	diffrevision macro will generate a file will names of the java files that were checkin from the last revision number from the project.properties
+		usage: <diffrevision envpropertyfile="project.properties" differential.file.name="diff_list.txt" />
+		envpropertyfile is the name of the properties file
+		differential.file.name is the name of the file to which the differential list is written.
+	-->	
+	<macrodef name="diffrevision">
+		<attribute name="envpropertyfile" default="project.properties"/>
+		<attribute name="differential.file.name" default="diff_list.txt" />
+		<sequential>
+			<svn javahl="false">
+				<status path="${basedir}"  revisionProperty="build.svn.revision" urlProperty="svn.source.url"/>
+			</svn>
+
+			<svn javahl="false">
+				<diff oldUrl="${svn.source.url}" oldTargetRevision="${pmd.revision.number}" newTargetRevision="${build.svn.revision}" outFile="${basedir}/patch.txt"/> 
+			</svn>
+			<loadfile
+				property="diff.file.list"
+				srcFile="${basedir}/patch.txt">
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="Index: .*\.java"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
+			<if>
+				<isset property="diff.file.list"/>
+				<then>				
+					<echo file="@{differential.file.name}" append="false" message="${diff.file.list}${line.separator}"/>
+				</then>
+			</if>
+			<replaceregexp file="@{differential.file.name}" byline="true" match="^Index: (.*)" replace="\1"/>			
+			<delete file="${basedir}/patch.txt"/>
+
+		</sequential>
+	</macrodef>
+
 </project>
