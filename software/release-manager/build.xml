@@ -7,7 +7,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
-		This file is used to release the BDA project.
+		This file is used to release the BDA project. The process include checking out automation on the given revision number and build the bda-build-uils.zip and branch and tag.
 	</description>
 
 	<!-- Property file related properties and tasks -->

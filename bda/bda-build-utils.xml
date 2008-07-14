@@ -1949,13 +1949,13 @@ $HeadURL$
 	</macrodef>
 
 	<!-- 
-	diffrevision macro will generate a file will names of the java files that were checkin from the last revision number from the project.properties
+	diffrevision macro will generate a file will names of the java files that were checked in from the last revision number till the HEAD or the current revision number
 		usage: <diffrevision envpropertyfile="project.properties" differential.file.name="diff_list.txt" />
-		envpropertyfile is the name of the properties file
+		old.revision.number is the old revision number when the static analysis is done
 		differential.file.name is the name of the file to which the differential list is written.
 	-->	
 	<macrodef name="diffrevision">
-		<attribute name="envpropertyfile" default="project.properties"/>
+		<attribute name="old.revision.number" />
 		<attribute name="differential.file.name" default="diff_list.txt" />
 		<sequential>
 			<svn javahl="false">
@@ -1963,7 +1963,7 @@ $HeadURL$
 			</svn>
 
 			<svn javahl="false">
-				<diff oldUrl="${svn.source.url}" oldTargetRevision="${pmd.revision.number}" newTargetRevision="${build.svn.revision}" outFile="${basedir}/patch.txt"/> 
+				<diff oldUrl="${svn.source.url}" oldTargetRevision="@{old.revision.number}" newTargetRevision="${build.svn.revision}" outFile="${basedir}/patch.txt"/> 
 			</svn>
 			<loadfile
 				property="diff.file.list"

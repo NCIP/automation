@@ -311,8 +311,7 @@
 		static-analysis:ivy-init,
 		static-analysis:init
 		">
-		<static-analysis-diff-pmd
-			property.file="${project.properties.file}"
+		<static-analysis-diff-pmd			
 			differential.file.name="diff_list.txt"
 			pmd.src.dir="${generic-webapp.java.src.dir}"
 			pmd.rpt.dir="${reports.pmd.dir}"
@@ -346,7 +345,7 @@
 				classname="net.sourceforge.pmd.ant.PMDTask"
 				classpathref="project.test.pmd.classpath"/>
 				
-			<diffrevision envpropertyfile="@{property.file}" differential.file.name="@{differential.file.name}" />	
+			<diffrevision old.revision.number="${pmd.revision.number}" differential.file.name="@{differential.file.name}" />	
 			<pmd 
 				rulesetfiles="@{pmd.rule-set.file}"
 				shortFilenames="true" 
@@ -558,7 +557,6 @@
 		static-analysis:init
 		">
 		<static-analysis-diff-checkstyle
-			property.file="${project.properties.file}"
 			differential.file.name="diff_list.txt"
 			checkstyle.src.dir="${generic-webapp.java.src.dir}"
 			checkstyle.rpt.dir="${reports.checkstyle.dir}"
@@ -572,7 +570,6 @@
 	</target>
 	
 	<macrodef name="static-analysis-diff-checkstyle">
-		<attribute name="property.file" default="project.properties"/>
 		<attribute name="differential.file.name" default="diff_list.txt" />
 		<attribute name="checkstyle.src.dir"/>
 		<attribute name="checkstyle.rpt.dir"/>
@@ -583,7 +580,7 @@
 		<attribute name="checkstyle.classpath.ref.name" />
 
 		<sequential>
-			<diffrevision envpropertyfile="@{property.file}" differential.file.name="@{differential.file.name}" />
+			<diffrevision old.revision.number="${checkstyle.revision.number}" differential.file.name="@{differential.file.name}" />
 
 			<taskdef resource="checkstyletask.properties"
 				uri="antlib:com.puppycrawl.tools.checkstyle"
