@@ -7,7 +7,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
-		This file is used to build, bundle and deploy the NCIA application.  The build targets of this file calls the appropriate targets in all the sub-projects.  The dist targets create a distribution that can be used by the local (a directory) and remote (a zip archive) deployment targets.  The deploy targets handle local and remote installation of the application.   The distribution is installed via ant.  Both install and upgrade distributions/installs are supported.
+		This file is used to release the BDA project.
 	</description>
 
 	<!-- Property file related properties and tasks -->
