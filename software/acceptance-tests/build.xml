@@ -1,12 +1,9 @@
 <project name="fit" default="run" basedir=".">
-
 	<property name="lib.dir" location="${basedir}/lib" />
 	<property name="src.dir" location="${basedir}/src" />
-	<property name="java.src.dir" location="${src.dir}" />
 	<property name="input.dir" location="${src.dir}/input" />
 	<property name="output.dir" location="${src.dir}/output" />
 	<property name="target.dir" location="${basedir}/target" />
-
 
 	<path id="project.path">
 		<fileset dir="${lib.dir}">
@@ -25,7 +22,6 @@
 		<path refid="fitlibrary.classpath" />
 	</path>
 
-
 	<target name="init">
 		<mkdir dir="${target.dir}" />
 	</target>
@@ -35,18 +31,11 @@
 	</target>
 
 	<target name="tests:run">
-
 		<java classname="fitlibrary.runner.FolderRunner" fork="yes" failonerror="yes">
 			<arg value="${input.dir}" />
 			<arg value="${output.dir}" />
 			<classpath refid="fit.test.classpath" />
 		</java>
-		<!--
-		<java classname="fitlibrary.runner.FolderRunner" classpathref="project.path" failonerror="true">
-			<arg line="${input.dir}" />
-			<arg line="${output.dir}" />
-		</java>
-		-->
 	</target>
 
 	<target name="post-clean">
