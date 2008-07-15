@@ -121,6 +121,17 @@ projects/csm-clm/build/upgrade-properties.template -text
 projects/csm-clm/build/upgrade.properties -text
 projects/csm-clm/build/windows-install.properties -text
 projects/csm-clm/csm-clm-project-tasks.mpp -text
+software/acceptance-tests/.classpath -text
+software/acceptance-tests/.project -text
+software/acceptance-tests/build.xml -text
+software/acceptance-tests/lib/fit-1.1.jar -text
+software/acceptance-tests/lib/fitlibrary.jar -text
+software/acceptance-tests/lib/fitnesse.jar -text
+software/acceptance-tests/src/input/calculator.html -text
+software/acceptance-tests/src/input/files/css/fitnesse.css -text
+software/acceptance-tests/src/input/files/images/collapsableClosed.gif -text
+software/acceptance-tests/src/input/files/images/collapsableOpen.gif -text
+software/acceptance-tests/src/input/files/javascript/fitnesse.js -text
 software/ant/custom/propertyvalidator/.classpath -text
 software/ant/custom/propertyvalidator/.project -text
 software/ant/custom/propertyvalidator/build.xml -text
