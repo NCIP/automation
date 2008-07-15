@@ -127,6 +127,9 @@ software/acceptance-tests/build.xml -text
 software/acceptance-tests/lib/fit-1.1.jar -text
 software/acceptance-tests/lib/fitlibrary.jar -text
 software/acceptance-tests/lib/fitnesse.jar -text
+software/acceptance-tests/src/gov/nih/nci/bda/Calculator.java -text
+software/acceptance-tests/src/gov/nih/nci/bda/CalculatorFixture.java -text
+software/acceptance-tests/src/gov/nih/nci/bda/Operation.java -text
 software/acceptance-tests/src/input/calculator.html -text
 software/acceptance-tests/src/input/files/css/fitnesse.css -text
 software/acceptance-tests/src/input/files/images/collapsableClosed.gif -text
