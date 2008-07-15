@@ -160,7 +160,7 @@
 		static-analysis:pmd,
 		static-analysis:checkstyle,
 		static-analysis:javancss,
-		static-analysis:findbugs
+		static-analysis:findbugs,
 		static-analysis:diff:pmd,
 		static-analysis:diff:checkstyle
 		">
@@ -559,12 +559,12 @@
 		<static-analysis-diff-checkstyle
 			differential.file.name="diff_list.txt"
 			checkstyle.src.dir="${generic-webapp.java.src.dir}"
-			checkstyle.rpt.dir="${reports.checkstyle.dir}"
+			checkstyle.rpt.dir="${reports.checkstyle.dir}/changeset"
 			checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-frames.xsl"
 			checkstyle.config.file="${checkstyle.config}"
 			checkstyle.xml.name="checkstyle.xml"
 			checkstyle.html.name="checkstyle.html"
-			checkstyle.classpath.ref.name="caintegrator2.full.classpath"
+			checkstyle.classpath.ref.name="project.full.classpath"
 			/>
 		<replaceregexp file="${project.properties.file}" byline="true" match="^(checkstyle.revision.number)=(.*)" replace="\1=${build.svn.revision}"/> 	
 	</target>
@@ -586,8 +586,9 @@
 				uri="antlib:com.puppycrawl.tools.checkstyle"
 				classpathref="project.test.checkstyle.classpath"/>
 
-
-			<checkstyle config="@{checkstyle.config.file}"
+			<mkdir dir="@{checkstyle.rpt.dir}"/>
+			
+			<cs:checkstyle config="@{checkstyle.config.file}"
 				failureProperty="checkstyle.failure" 
 				failOnViolation="false"
 				maxerrors="0" 
@@ -603,7 +604,7 @@
 						<includesfile name="@{differential.file.name}"/> 
 					</patternset>	    
 				</fileset>  
-			</checkstyle>
+			</cs:checkstyle>
 
 			<xslt taskname="checkstyle"
 			  in="@{checkstyle.rpt.dir}/@{checkstyle.xml.name}"
