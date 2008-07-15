@@ -26,7 +26,7 @@
     <property name="project.properties.file" value="${software.dir}/project.properties"/>
 
     <property file="${build.dir}/local.properties" />
-    <property file="${project.properties.filer}"/>
+    <property file="${project.properties.file}"/>
     <property file="${envpropertyfile}" />
 
     
