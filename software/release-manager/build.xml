@@ -105,7 +105,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			<update path="//ivy-module/info/@revision" value="${beta.development.version}" />
 		</xmlconfig>
 		
-		<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
+		<!--<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>-->
 				
 	</target>
 
@@ -137,7 +137,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<svn javahl="false">			
 			<add dir="${svn.local.checkout}/${release.version}"/>
 			<add dir="${svn.local.checkout}/${beta.development.version}"/>
-			previous.beta.release.version
+			<!--<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>-->
 			<commit message="Latest BDA revision ${release.version} and beta revision ${beta.development.version}" dir="${svn.local.checkout}"/>
 		</svn>	
 	</target>
