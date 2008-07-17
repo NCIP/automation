@@ -86,6 +86,19 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="db-upgrade.dist.dir" value="${dist.exploded.dir}/${db-upgrade.dist.relative.dir}" />
 	<property name="jboss-conf.dist.dir" value="${dist.exploded.dir}/${jboss-conf.dist.relative.dir}" />
 
+	<!-- Selenium settings -->
+	<property name="selenium.jar" value="${lib.dir}/test-selenium/selenium-server-1.0-beta-1.jar"/>
+	<property name="selenium.browser" value="*firefox"/>
+	<!--  What you would need for a ci server, recommend setting in local.properties
+	<property name="selenium.browser" value="*firefox /usr/lib64/firefox-1.5.0.12/firefox-bin"/>
+	-->
+	<property name="selenium.proxy.port" value="4444"/>
+	<property name="selenium.report.dir" value="${reports.dir}/selenium"/>
+	<property name="selenium.report.file" value="selenium-rpt.html"/>
+	<property name="selenium.test.dir" value="${software.dir}/test/selenium"/>
+	<property name="selenium.test.suite" value="${selenium.test.dir}/cai2TestSuite.html"/>
+	<property name="selenium.url" value="http://${jboss.server.hostname}:${jboss.server.port}"/>
+
 	<!-- Where to write files retrieved by get, into the distribution area.  The file names come from project.properties  -->
 	<property name="jboss.dest.file" value="${download.dir}/${jboss.binaries.file}"/>
 	<property name="tomcat.dest.file" value="${download.dir}/${tomcat.binaries.file}"/>
@@ -632,4 +645,88 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</ant>
 	</target>
 
+	<target name="continuous-integration" description="calls wrapper targets for continuous integration build"
+		depends="
+		build:all,
+		static-analysis:all,
+		test:unit:all
+		"/>
+
+
+	<target name="init:ivy">
+		<mkdir dir="${local.repo.dir}"/>
+		<property name="ivy.dep.file" value="${bda-download.dir}/ivy-bda.xml"/>
+		<ivy:settings file="${bda-download.dir}/ivy-bda-settings.xml" />
+	</target>
+
+	<target name="ivy-test-selenium" depends="init:ivy" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-selenium" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-selenium" />
+		<path id="project.test.selenium.classpath">
+			<fileset dir="${lib.dir}/test-selenium">
+				<include name="*.jar" />
+			</fileset>
+		</path> 
+	</target>
+
+	<target name="test:seleniumrc:stop">
+		<get taskname="selenium-shutdown"
+			src="http://localhost:${selenium.proxy.port}/selenium-server/driver/?cmd=shutDown"
+			dest="${temp.dir}/reslut.txt" ignoreerrors="true"/>
+	</target>
+
+	<target name="test:selenium:init">
+		<mkdir dir="${selenium.report.dir}"/>
+
+		<if>
+			<not>
+				<socket server="${jboss.server.hostname}" port="${jboss.server.port}" />
+			</not>
+			<then>
+				<jboss-start-jboss />
+			</then>
+		</if>
+	</target>
+
+	<target name="test:selenium"
+		depends="
+		ivy-test-selenium,
+		test:selenium:init,
+		test:selenium:run,
+		test:seleniumrc:stop
+		"
+		/>
+
+	<target name="test:selenium:run">
+		<!--
+		<java jar="${selenium.jar}" fork="true">
+			<arg line=" -htmlSuite &quot;${selenium.browser}&quot;"/>
+			<arg line=" &quot;${selenium.url}&quot;"/>
+			<arg line=" &quot;${selenium.test.suite}&quot;"/>
+			<arg line=" &quot;${selenium.report.dir}/${selenium.report.file}&quot;"/>
+			<arg line=" -timeout 30"/>
+			<arg line=" -log ${temp.dir}/selenium-debug.log"/>
+		</java> 
+		-->
+		<osfamily property="os.family"/>
+		<if>
+			<equals arg1="${os.family}" arg2="unix"/>
+			<then>
+				<echo message="To be able to selenium tests on Unix platforms you need to meet the following conditions."/>
+				<echo message="You need to be logged in on the console running X (developer linux or mac workstation)."/>
+				<echo message=" If you are running it from a server that does not have a console (like a CI server) you need to be running at runlevel 3, running and xframe buffer ('Xvfb :1 -screen 0 1024x768x24', should be setup on a CI server) and have your DISPLAY environment variable sto to match your frame buffer ('DISPLAY=:1.0', should be set in .bash_profile on CI server)."/>
+				<fail unless="env.DISPLAY" message="DISPLAY environment variable not set, please set it as outlined above and run again."/>
+			</then>
+		</if>
+		<taskdef resource="selenium-ant.properties"  classpathref="project.test.selenium.classpath"/>
+		<selenese 
+			suite="${selenium.test.suite}"
+			browser="${selenium.browser}"
+			results="${selenium.report.dir}/${selenium.report.file}"
+			multiWindow="falsE"
+			timeoutInSeconds="60"
+			port="${selenium.proxy.port}"
+			startURL="${selenium.url}"
+		      	/>
+	</target>
 </project>
