@@ -18,9 +18,15 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 	
 	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
-	<property name="bda.utils.filename" value="bda-build-utils" />
+
+	<property name="bda.utils.filename" value="bda-build-utils" />
 	<property name="automation.resource.dir" value="resource" />
 
+
+	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/bda-ivy-build.xml" dest="${basedir}/bda-ivy-build.xml"/>
+
+	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda.xml" dest="${basedir}/ivy-bda.xml"/>
+	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda-settings.xml" dest="${basedir}/ivy-bda-settings.xml"/>
 
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="bda-utils.dir" value="${basedir}/bda-utils" />
@@ -58,7 +64,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<taskdef name="xmlconfig" classpathref="bda-utils.classpath" classname="com.xmlconfig.anttask.XmlConfig"  />
 
 	<!-- Targets -->
-	<target name="relase:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag">
+	<target name="relase:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles">
 		<echo message="Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. " />
 	</target>
 
@@ -149,6 +155,23 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</svn>	
 	</target>
 
+	<target name="release:update-bda-ivyfiles" depends="svn:automation:checkout">	
+		<xmlconfig in="${svn.automation.checkout}/${automation.ivy}/bda-ivy-build.xml" verbose="false">
+			<update path="//project/property[@name='bda.version']/@value" value="${release.version}" />
+		</xmlconfig>
+		
+		<svn javahl="false">			
+			<commit message="Latest BDA revision " dir="${svn.automation.checkout}/${automation.ivy}"/>
+		</svn>	
+	</target>
+	
+	<target name="release:post-release">	
+		<delete dir="${bda-utils.dir}" />
+		<delete dir="${lib.dir}" />
+		<delete file="${basedir}/${automation.ivy}/bda-ivy-build.xml" />
+		<delete file="${basedir}/${automation.ivy}/ivy-bda.xml" />
+		<delete file="${basedir}/${automation.ivy}/ivy-bda-settings.xml" />
+	</target>
 
 
 </project>
