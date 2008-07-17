@@ -117,6 +117,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		target="retrieve-bda"
 		dir="${bda-download.dir}"
 		>
+		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" value="${bda-utils.dir}" />
 		<property name="lib.dir" value="${lib.dir}" />
 		<property name="software.dir" value="${software.dir}" />
