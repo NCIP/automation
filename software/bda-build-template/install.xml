@@ -22,7 +22,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<property file="${properties.file}" />
 	
 	<!-- Generic properties -->
-	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="log.dir" value="${basedir}/logs" />
 	<property name="working.dir" value="${basedir}/working" />
 	<property name="temp.dir" value="${working.dir}/temp" />
@@ -84,7 +83,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<switch value="${database.type}">
 		<case value="oracle">
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
-			<property name="is.oracle" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
 			<property name="db-upgrade.list.file" value="${db-upgrade.oracle.list.file}"/>
@@ -92,7 +90,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		</case>
 		<case value="mysql">
 			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-			<property name="is.mysql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
 			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="db-upgrade.list.file" value="${db-upgrade.mysql.list.file}"/>
@@ -100,7 +97,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		</case>
 		<case value="postgresql">
 			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-			<property name="is.postgresql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
 			<property name="database.driver" value="org.postgresql.Driver"/>
 			<property name="db-upgrade.list.file" value="${db-upgrade.postgresql.list.file}"/>

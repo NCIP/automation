@@ -12,7 +12,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</description>
 
 	<!-- Property file related properties and tasks -->
-	<property name="project.name" value="generic"/>
 	<property environment="env" />
 	<!-- The project.properties stores properties that are shared between both build.xml and install.xml. Typically properties that are related to the distribution directories, or files. -->
 	<property file="local.properties" />
@@ -546,20 +545,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<echo message="To run a remote upgrade type: ant deploy:remote:upgrade -Dproperties.file=[path to environment proeprty file]" />
 	</target>
 
-	<!-- Scorches checkout area and then checks out the generic project from svn. Serval propeties influence what is checked out.  Each of the properites have defaults, which will check out trunk.  This target uses the svn-co macro from bda -->
-	<target name="svn:co">
-		<property name="svn.project.base.url" value="http://gforge.nci.nih.gov/svnroot/generic"/>
-		<property name="svn.project.name" value="generic"/>
-		<property name="svn.tag" value="trunk"/>
-		<property name="svn.co.base.dir" value="${user.home}/tmp"/>
-
-		<svn-co
-			svn.project.base.url="${svn.project.base.url}"
-			svn.project.name="${svn.project.name}"
-			svn.tag="${svn.tag}"
-			svn.co.base.dir="${svn.co.base.dir}"
-			/>
-	</target>
 	<!-- this target generates visio like diagrams of the build files -->
 	<target name="report:grand" description="Generates grand graphs for build.xml files">
 		<!-- Temporary fix to make grand work for install.xml -->
