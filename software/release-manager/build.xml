@@ -3,7 +3,7 @@
 $Id: build.xml 4839 2008-05-21 14:45:51Z zengje $
 $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 -->
-<project name="caarray-build" default="relase:project" basedir="." 
+<project name="caarray-build" default="release:project" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
@@ -64,7 +64,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<taskdef name="xmlconfig" classpathref="bda-utils.classpath" classname="com.xmlconfig.anttask.XmlConfig"  />
 
 	<!-- Targets -->
-	<target name="relase:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles">
+	<target name="release:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles">
 		<echo message="Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. " />
 	</target>
 
