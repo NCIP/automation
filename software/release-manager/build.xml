@@ -117,10 +117,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
-		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.xml"/>
+		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml"/>
 		
 
-		<zip destfile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.zip">
+		<zip destfile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.zip">
 			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
 		</zip>
 
@@ -132,7 +132,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="release:create-branch-tag" depends="svn:automation:checkout,svn:checkout">
-		<svn javahl="false">			
+		<svn username="${svn.username}" password="${svn.password}">			
 			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.branchurl}" message="create a branch for release ${release.version}" revision="${default.automation.revision}"/>
 			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.tagurl}" message="create a tag for release ${release.version}" revision="${default.automation.revision}"/>
 		</svn>
@@ -140,7 +140,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<target name="svn:checkin">		
-		<svn javahl="false">			
+		<svn username="${svn.username}" password="${svn.password}">		
 			<add dir="${svn.local.checkout}/${release.version}"/>
 			<add dir="${svn.local.checkout}/${beta.development.version}"/>
 			<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
@@ -150,8 +150,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<target name="svn:automation:checkin">	
-		<svn javahl="false">			
-			<commit message="Latest BDA revision " dir="${svn.local.checkout}/${beta.release.version}"/>
+		<svn username="${svn.username}" password="${svn.password}">		
+			<commit message="Latest BDA revision " dir="${svn.local.checkout}/${beta.development.version}"/>
 		</svn>	
 	</target>
 
@@ -160,7 +160,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			<update path="//project/property[@name='bda.version']/@value" value="${release.version}" />
 		</xmlconfig>
 		
-		<svn javahl="false">			
+		<svn username="${svn.username}" password="${svn.password}">			
 			<commit message="Latest BDA revision " dir="${svn.automation.checkout}/${automation.ivy}"/>
 		</svn>	
 	</target>
