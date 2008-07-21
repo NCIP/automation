@@ -1,0 +1,28 @@
+<project name="build-caintegrator2" default="bda2local" basedir=".">
+	<property file="local.properties" />
+	<property name="bda.local.repo.dir" value="../../bda-local-ivy-repo"/>
+	<property name="bda.version" value="0.4.0-beta"/>
+	<property name="bda.local.dir" value="${bda.local.repo.dir}/ncicb/bda-utils/${bda.version}"/>
+	<property name="ivy.def.file" value="ivy.xml"/>
+	<property name="bda-utils.xml.file" value="bda-build-utils-${bda.version}.xml"/>
+	<property name="bda-utils.zip.file" value="bda-build-utils-${bda.version}.zip"/>
+	<tstamp>
+		<format property="run.time" pattern="yyyyMMddHHmm" />
+	</tstamp>
+
+
+	<target name="bda2local" >
+		<mkdir dir="${bda.local.dir}"/>
+		<zip destfile="${bda.local.repo.dir}/ncicb/${bda.local.dir}-${run.time}.zip" basedir="${bda.local.dir}"/>
+		<mkdir dir="${bda.local.dir}"/>
+		<zip destfile="${bda.local.dir}/${bda-utils.zip.file}" basedir="resource"/>
+		<copy tofile="${bda.local.dir}/${bda-utils.xml.file}" file="bda-build-utils.xml"/>
+		<copy todir="${bda.local.dir}" file="${ivy.def.file}"/>
+	</target>
+	<target name="local2bda" >
+		<copy file="${bda.local.dir}/${bda-utils.xml.file}" tofile="bda-build-utils.xml"/>
+		<copy file="${bda.local.dir}/${ivy.def.file}" todir="."/>
+	</target>
+</project>
+
+

@@ -12,7 +12,6 @@ $HeadURL$
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" value="${bda-utils.resource.dir}/template-db-integrate.xml"/>
 
-<echoproperties prefix="bda"/>
 	<!-- PATHS -->
 	<path id="macrodef.classpath">
 		<fileset dir="${bda-utils.dir}">
@@ -1996,4 +1995,44 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
+	<macrodef name="util-dot-on-dir">
+
+		<attribute name="dot-file.dir" />
+		<attribute name="report.type" default="pdf" />
+		<sequential>
+			<exec osfamily="unix" executable="ls" outputproperty="file.list" dir="@{dot-file.dir}">
+				<arg value="-1"/>
+			</exec>
+			<exec osfamily="windows" executable="dir" outputproperty="file.list" dir="@{dot-file.dir}">
+				<arg line="/c dir /b"/>
+			</exec>
+	
+			<for list="${file.list}" delimiter="${line.separator}" param="file.name">
+				<sequential>
+					<if>
+						<contains string="@{file.name}" substring="dot"/>
+						<then>
+							<propertyregex property="base.file.name"
+								input="@{file.name}"
+								regexp="(.*)\.dot"
+								select="\1"
+								override="true"
+								/>
+							<echo message="Running graphviz on ${base.file.name}"/>
+							<exec executable="dot" dir="@{dot-file.dir}">
+								<arg value="-T@{report.type}"/>
+								<arg value="-Gsize=11.69,8.27"/>
+								<!--
+								<arg value="-Grotate=90"/>
+								-->
+								<arg value="-o"/>
+								<arg value="${base.file.name}.@{report.type}"/>
+								<arg value="@{file.name}"/>
+							</exec> 
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
 </project>

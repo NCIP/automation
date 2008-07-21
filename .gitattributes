@@ -1,5 +1,7 @@
 * text=auto !eol
 bda/bda-build-utils.xml -text
+bda/build.xml -text
+bda/ivy.xml -text
 bda/ivy/bda-ivy-build.xml -text
 bda/ivy/ivy-bda-settings.xml -text
 bda/ivy/ivy-bda.xml -text

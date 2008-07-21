@@ -89,24 +89,24 @@ $Id:  $
 	</target>
 	<target name="test:grand" >
 		<report-grand
-			build.file.location="/home/ssaksa/src/trunk/security/api/script/build.xml"
+			build.file.location="/home/ssaksa/src/trunk/coppa/code/pa/build.xml"
 			output.file.dir="."
-			output.file.name="security-api-build.xml"
+			output.file.name="pa-root-build.xml"
 			/>
 		<report-grand
-			build.file.location="/home/ssaksa/src/trunk/security/upt/build.xml"
+			build.file.location="/home/ssaksa/src/trunk/coppa/code/pa/pa-ear/build.xml"
 			output.file.dir="."
-			output.file.name="security-upt-build.xml"
+			output.file.name="pa-ear-build.xml"
 			/>
 		<report-grand
-			build.file.location="/home/ssaksa/src/trunk/logging/source/locator_webapp/scripts/build.xml"
+			build.file.location="/home/ssaksa/src/trunk/coppa/code/pa/pa-ejb/build.xml"
 			output.file.dir="."
-			output.file.name="loging-locatorwebapp-build.xml"
+			output.file.name="pa-ejb-build.xml"
 			/>
 		<report-grand
-			build.file.location="/home/ssaksa/src/trunk/logging/source/api/scripts/build.xml"
+			build.file.location="/home/ssaksa/src/trunk/coppa/code/pa/pa-web/build.xml"
 			output.file.dir="."
-			output.file.name="logging-api-build.xml"
+			output.file.name="pa-web-build.xml"
 			/>
 	</target>
 	<target name="test:chk_ds" >
