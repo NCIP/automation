@@ -715,4 +715,26 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			startURL="${selenium.url}"
 		      	/>
 	</target>
+
+	<target name="ivy-resolve-all" depends="init:ivy" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" />
+	</target>
+
+	<target name="report:ivy"
+		depends="
+		ivy-resolve-all
+		">
+		<property name="ivy.report.dir" value="${reports.dir}/ivy"/>
+		<delete dir="${ivy.report.dir}"/>
+		<mkdir dir="${ivy.report.dir}"/>
+		<ivy:report
+			outputpattern="target/reports/ivy/[organisation]-[module]-[conf].[ext]"
+			dot="true"
+			graph="false"
+			/>
+		<util-dot-on-dir
+			dot-file.dir="target/reports/ivy"
+			/>
+	</target>
+
 </project>
