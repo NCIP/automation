@@ -16,6 +16,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	
 	<property file="release.properties" />
 
+
 	
 	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
 
@@ -58,15 +59,33 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 	<!-- Includes- include BDA marcos -->
 	<import file="${bda-utils.dir}/${bda.utils.filename}-${bda.version}.xml" />
+	
+	
+	<math result="dev.minor.release" operand1="${minor.release}" operation="+" operand2="1" datatype="int"/>
+	<if>
+		<not>
+			<equals arg1="${minor.release}" arg2="0" />
+		</not>	
+		<then>
+			
+			<math result="prev.minor.release" operand1="${minor.release}" operation="-" operand2="1" datatype="int"/>
+		</then>
+	</if>
+
+	<!-- need to work on the determining the development release and previous beta release -->
+	<property name="beta.development.version" value="${major.release}.${dev.minor.release}.${patch.release}-beta"/>
+	<property name="previous.beta.release.version" value="${major.release}.${prev.minor.release}.${patch.release}-beta"/>
 
 	<!-- Taskdefs -->
 	<taskdef name="svn" classpathref="bda-utils.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
 	<taskdef name="xmlconfig" classpathref="bda-utils.classpath" classname="com.xmlconfig.anttask.XmlConfig"  />
 
 	<!-- Targets -->
-	<target name="release:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles">
+	<target name="release:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles,release:mail-teams">
 		<echo message="Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. " />
 	</target>
+
+
 
 	<target name="svn:checkout" depends="svn-scorch">	
 		<svn username="${svn.username}" password="${svn.password}">
@@ -172,6 +191,15 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<delete file="${basedir}/${automation.ivy}/ivy-bda.xml" />
 		<delete file="${basedir}/${automation.ivy}/ivy-bda-settings.xml" />
 	</target>
+	
+
+	<target name="release:mail-teams">	
+		<mail mailhost="${mail.server.host}" mailport="${mail.server.port}"  tolist="${tolist}" subject="BDA ${release.version} released">
+			<from address="${fromaddress}"/>						
+			<message>Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. </message>
+		</mail>	
+	</target>
+
 
 
 </project>
