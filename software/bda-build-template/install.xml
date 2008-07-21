@@ -215,6 +215,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<!-- Wrapper install database target, depends on both MySQL and Oracle sub-targets, ifs should ensure only one is run.  Target path can be skipped by exlude.database also calls upgrade:database -->
 	<target name="install:database" description="Re-creates database and users from baseline and applys incremental database changes." unless="exclude.database"
 		depends="
+		install:check,
 		install:init
 		">
 		<switch value="${database.type}">
@@ -399,6 +400,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<!-- Wrapper target to deploy JBOSS container -->
 	<target name="install:jboss" unless="exclude.jboss"
 		depends="
+		install:check,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:validation:pre-install:ports,
@@ -415,6 +417,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<!-- Wrapper target to deploy all containers to one server -->
 	<target name="install" description="Installs and configures JBOSS, creates database, and deploys application" 
 		depends="
+		install:check,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:validation:pre-install:ports,
@@ -538,6 +541,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<!-- Wrapper target to upgrade jboss container. Does not install or configure binaries -->
 	<target name="upgrade:jboss" unless="exclude.jboss"
 		depends="
+		upgrade:check,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:init,
@@ -549,6 +553,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<!-- Wrapper target to upgrade all container. Does not install or configure binaries -->
 	<target name="upgrade" description="Deploys application and runs incremental database build" 
 		depends="
+		upgrade:check,
 		upgrade:init,
 		install:validation:pre-install,
 		install:jboss:stop,
@@ -653,5 +658,25 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		<echo  message="Checking if database properties exist.  If they do not on an upgrade install then ${jboss.home}/server/${jboss.server.name}/deploy/${generic-webapp.ds.file} may not exist."/>
 		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
 		<properties-exist properties.list="${db.prop.list}"/>
+	</target>
+	<target name="install:check">
+		<if>
+			<not>   
+				<contains string="${properties.file}" substring="install"/>
+			</not>  
+			<then>  
+				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'install' in the name."/>
+			</then> 
+		</if>   
+	</target>
+	<target name="upgrade:check">
+		<if>
+			<not>   
+				<contains string="${properties.file}" substring="upgrade"/>
+			</not>  
+			<then>  
+				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'upgrade' in the name."/>
+			</then> 
+		</if>   
 	</target>
 </project>
