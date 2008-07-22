@@ -523,6 +523,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		build:all,
 		dist:installer
 		">
+		<if>
+			<not>   
+				<contains string="${properties.file}" substring="install"/>
+			</not>  
+			<then>  
+				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'install' in the name."/>
+			</then> 
+		</if>   
 		<deploy-files
 			dist.file="${generic-webapp.install.zip.file}"
 			/>
@@ -535,6 +543,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		build:all,
 		dist:upgrader
 		">
+		<if>
+			<not>   
+				<contains string="${properties.file}" substring="upgrade"/>
+			</not>  
+			<then>  
+				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'upgrade' in the name."/>
+			</then> 
+		</if>   
 		<deploy-files
 			dist.file="${generic-webapp.upgrade.zip.file}"
 			/>
