@@ -215,7 +215,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<!-- Wrapper install database target, depends on both MySQL and Oracle sub-targets, ifs should ensure only one is run.  Target path can be skipped by exlude.database also calls upgrade:database -->
 	<target name="install:database" description="Re-creates database and users from baseline and applys incremental database changes." unless="exclude.database"
 		depends="
-		install:check,
 		install:init
 		">
 		<switch value="${database.type}">
@@ -547,6 +546,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		install:init,
 		install:jboss:generic-webapp:re-configure,
 		install:jboss:generic-webapp,
+		install:jboss:generic-configure,
 		install:jboss:start
 		" />
 
