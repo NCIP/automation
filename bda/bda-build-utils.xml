@@ -1107,6 +1107,22 @@ $HeadURL$
 						userid="@{database.system.user}"
 						password="@{database.system.password}"
 						expandproperties="true"
+						onerror="continue"
+						>
+						<classpath>
+							<pathelement location="${database.driver.file}" />
+						</classpath>
+						<transaction>
+							REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'@{database.server}';
+							REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'%';
+						</transaction>
+					</sql>  
+					<sql    
+						driver="@{database.driver}"
+						url="@{database.system.url}"
+						userid="@{database.system.user}"
+						password="@{database.system.password}"
+						expandproperties="true"
 						>
 						<classpath>
 							<pathelement location="${database.driver.file}" />
@@ -1114,9 +1130,8 @@ $HeadURL$
 						<transaction>
 							DROP DATABASE IF EXISTS @{database.name};
 							CREATE DATABASE @{database.name} DEFAULT CHARACTER SET latin1;
-							DELETE FROM mysql.user WHERE User='@{database.user}';
-							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'@{database.server}' IDENTIFIED BY '@{database.password}' WITH GRANT OPTION;
-							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'%' IDENTIFIED BY '@{database.password}' WITH GRANT OPTION;
+							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'@{database.server}' IDENTIFIED BY '@{database.password}';
+							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'%' IDENTIFIED BY '@{database.password}';
 						</transaction>
 					</sql>  
 				</then>
