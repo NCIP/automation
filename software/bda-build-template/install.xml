@@ -546,7 +546,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		install:init,
 		install:jboss:generic-webapp:re-configure,
 		install:jboss:generic-webapp,
-		install:jboss:generic-configure,
+		install:jboss:generic-webapp:configure,
 		install:jboss:start
 		" />
 
