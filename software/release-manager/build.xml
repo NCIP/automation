@@ -146,7 +146,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 
-	<target name="release:automation" depends="release:get-latest-automation,svn:automation:checkin">
+	<target name="release:beta" depends="release:get-latest-automation,svn:automation:checkin">
 
 	</target>
 
