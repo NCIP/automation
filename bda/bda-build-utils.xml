@@ -1084,56 +1084,79 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<sequential>
+			<echo message="Entering database-create"/>
 			<if>
-				<and>
-					<equals arg1="${database.type}" arg2="mysql"/>
-					<isset property="force.reinstall"/>
-				</and>
+				<isset property="force.reinstall"/>
 				<then>
-					<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
-					<property name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
-					<delete dir="${create.sql.dir}"/>
-					<!--
-					<copy todir="${create.sql.dir}">
-						<filterset>
-							<filtersfile file="${properties.file}" />
-						</filterset>
-						<fileset dir="${bda-utils.resource.dir}" includes="create_database_and_user.sql" />									
-					</copy>		
-					-->
-					<sql    
-						driver="@{database.driver}"
-						url="@{database.system.url}"
-						userid="@{database.system.user}"
-						password="@{database.system.password}"
-						expandproperties="true"
-						onerror="continue"
-						>
-						<classpath>
-							<pathelement location="${database.driver.file}" />
-						</classpath>
-						<transaction>
-							REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'@{database.server}';
-							REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'%';
-						</transaction>
-					</sql>  
-					<sql    
-						driver="@{database.driver}"
-						url="@{database.system.url}"
-						userid="@{database.system.user}"
-						password="@{database.system.password}"
-						expandproperties="true"
-						>
-						<classpath>
-							<pathelement location="${database.driver.file}" />
-						</classpath>
-						<transaction>
-							DROP DATABASE IF EXISTS @{database.name};
-							CREATE DATABASE @{database.name} DEFAULT CHARACTER SET latin1;
-							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'@{database.server}' IDENTIFIED BY '@{database.password}';
-							GRANT ALL ON @{database.name}.* TO '@{database.user}'@'%' IDENTIFIED BY '@{database.password}';
-						</transaction>
-					</sql>  
+					<echo message="Creating ${database.type} database named ${database.name}."/>
+					<switch value="${database.type}">
+						<case value="mysql">
+							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
+							<property name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
+							<delete dir="${create.sql.dir}"/>
+							<!--
+							<copy todir="${create.sql.dir}">
+								<filterset>
+									<filtersfile file="${properties.file}" />
+								</filterset>
+								<fileset dir="${bda-utils.resource.dir}" includes="create_database_and_user.sql" />									
+							</copy>		
+							-->
+							<sql    
+								driver="@{database.driver}"
+								url="@{database.system.url}"
+								userid="@{database.system.user}"
+								password="@{database.system.password}"
+								expandproperties="true"
+								onerror="continue"
+								>
+								<classpath>
+									<pathelement location="${database.driver.file}" />
+								</classpath>
+								<transaction>
+									REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'@{database.server}';
+									REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'%';
+								</transaction>
+							</sql>  
+							<sql    
+								driver="@{database.driver}"
+								url="@{database.system.url}"
+								userid="@{database.system.user}"
+								password="@{database.system.password}"
+								expandproperties="true"
+								>
+								<classpath>
+									<pathelement location="${database.driver.file}" />
+								</classpath>
+								<transaction>
+									DROP DATABASE IF EXISTS @{database.name};
+									CREATE DATABASE @{database.name} DEFAULT CHARACTER SET latin1;
+									GRANT ALL ON @{database.name}.* TO '@{database.user}'@'@{database.server}' IDENTIFIED BY '@{database.password}';
+									GRANT ALL ON @{database.name}.* TO '@{database.user}'@'%' IDENTIFIED BY '@{database.password}';
+								</transaction>
+							</sql>  
+						</case>
+						<case value="postgresql">
+							<sql    
+								driver="@{database.driver}"
+								url="@{database.system.url}"
+								userid="@{database.system.user}"
+								password="@{database.system.password}"
+								expandproperties="true"
+								onerror="continue"
+								autocommit="true"
+								>
+								<classpath>
+									<pathelement location="${database.driver.file}" />
+								</classpath>
+									drop database if exists ${database.name};
+									drop user if exists ${database.user};
+									create database ${database.name};
+									create user ${database.user} with password '${database.password}';
+									grant all on database ${database.name} to ${database.user};
+							</sql>  
+						</case>
+					</switch>
 				</then>
 			</if>
 			<database-create-control-table
