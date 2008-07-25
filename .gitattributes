@@ -7,6 +7,8 @@ bda/ivy/ivy-bda-settings.xml -text
 bda/ivy/ivy-bda.xml -text
 bda/resource/dashboard.tmpl -text
 bda/resource/fusemetrics_config.xml -text
+bda/resource/jboss-4.0.5.GA-jems-ejb3/bindings.xml -text
+bda/resource/jboss-4.0.5.GA-jems-ejb3/jboss-service.xml -text
 bda/resource/template-binding.xml -text
 bda/resource/template-db-integrate.xml -text
 bda/resource/template-jboss-service.xml -text

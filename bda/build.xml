@@ -14,8 +14,11 @@
 	<target name="bda2local" >
 		<mkdir dir="${bda.local.dir}"/>
 		<zip destfile="${bda.local.repo.dir}/ncicb/${bda.local.dir}-${run.time}.zip" basedir="${bda.local.dir}"/>
+		<delete dir="${bda.local.dir}"/>
 		<mkdir dir="${bda.local.dir}"/>
-		<zip destfile="${bda.local.dir}/${bda-utils.zip.file}" basedir="resource"/>
+		<zip destfile="${bda.local.dir}/${bda-utils.zip.file}">
+			<zipfileset dir="resource" prefix="resource" />
+		</zip>
 		<copy tofile="${bda.local.dir}/${bda-utils.xml.file}" file="bda-build-utils.xml"/>
 		<copy todir="${bda.local.dir}" file="${ivy.def.file}"/>
 	</target>
