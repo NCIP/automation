@@ -136,9 +136,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
-		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml"/>
+		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml"/>
+		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml" overwrite="true"/>
 		
 
+		<delete file="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.zip"/>
 		<zip destfile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.zip">
 			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
 		</zip>
