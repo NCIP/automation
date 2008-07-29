@@ -266,8 +266,8 @@ software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-i
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/drop-database.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/insert-data.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/truncate-tables.sql -text
-software/bda-build-template/bda-blueprints-webapp/software/common/simian/CodeDupReader.rb -text
-software/bda-build-template/bda-blueprints-webapp/software/common/simian/simian.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/simian_resources/CodeDupReader.rb -text
+software/bda-build-template/bda-blueprints-webapp/software/common/simian_resources/simian.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/compile.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/database-integration.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/default.properties -text
