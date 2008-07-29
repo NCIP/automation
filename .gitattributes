@@ -181,12 +181,6 @@ software/bda-build-template/bda-blueprints-webapp/config/javancss/javancss_graph
 software/bda-build-template/bda-blueprints-webapp/config/javancss/javancss_no_functions_overloading.xsl -text
 software/bda-build-template/bda-blueprints-webapp/config/javancss/wfncss.xsl -text
 software/bda-build-template/bda-blueprints-webapp/config/javancss/xmltest.xsl -text
-software/bda-build-template/bda-blueprints-webapp/config/jmeter/collapse.jpg -text
-software/bda-build-template/bda-blueprints-webapp/config/jmeter/expand.jpg -text
-software/bda-build-template/bda-blueprints-webapp/config/jmeter/jmeter-results-detail-report.xsl -text
-software/bda-build-template/bda-blueprints-webapp/config/jmeter/jmeter-results-detail-report_21.xsl -text
-software/bda-build-template/bda-blueprints-webapp/config/jmeter/jmeter-results-report.xsl -text
-software/bda-build-template/bda-blueprints-webapp/config/jmeter/jmeter-results-report_21.xsl -text
 software/bda-build-template/bda-blueprints-webapp/config/pmd/basic-jsf.xml -text
 software/bda-build-template/bda-blueprints-webapp/config/pmd/basic-jsp.xml -text
 software/bda-build-template/bda-blueprints-webapp/config/pmd/basic.xml -text
@@ -264,6 +258,12 @@ software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_
 software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_resources/lib/jakarta-oro-license.txt -text
 software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_resources/lib/log4j-1.2.9.jar -text
 software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_resources/lib/log4j-license.txt -text
+software/bda-build-template/bda-blueprints-webapp/software/common/jmeter/collapse.jpg -text
+software/bda-build-template/bda-blueprints-webapp/software/common/jmeter/expand.jpg -text
+software/bda-build-template/bda-blueprints-webapp/software/common/jmeter/jmeter-results-detail-report.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/jmeter/jmeter-results-detail-report_21.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/jmeter/jmeter-results-report.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/jmeter/jmeter-results-report_21.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/create-database-mysql.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/create-database.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/create-tables-mysql.sql -text
