@@ -274,7 +274,6 @@ software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-i
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/truncate-tables.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/simian/CodeDupReader.rb -text
 software/bda-build-template/bda-blueprints-webapp/software/common/simian/simian.xsl -text
-software/bda-build-template/bda-blueprints-webapp/software/common/xml/web.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/compile.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/database-integration.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/default.properties -text
@@ -358,6 +357,7 @@ software/bda-build-template/bda-blueprints-webapp/software/webapp/src/java/bda/b
 software/bda-build-template/bda-blueprints-webapp/software/webapp/src/java/bda/blueprints/common/Constants.java -text
 software/bda-build-template/bda-blueprints-webapp/software/webapp/src/java/bda/blueprints/common/PropertyReader.java -text
 software/bda-build-template/bda-blueprints-webapp/software/webapp/src/java/bda/blueprints/web/ServletController.java -text
+software/bda-build-template/bda-blueprints-webapp/software/webapp/src/resources/xml/web.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/webapp/src/web/editstudy.jsp -text
 software/bda-build-template/bda-blueprints-webapp/software/webapp/src/web/error.jsp -text
 software/bda-build-template/bda-blueprints-webapp/software/webapp/src/web/index.jsp -text
