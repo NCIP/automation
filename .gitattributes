@@ -222,7 +222,6 @@ software/bda-build-template/bda-blueprints-webapp/config/pmd/sunsecure.xml -text
 software/bda-build-template/bda-blueprints-webapp/config/pmd/typeresolution.xml -text
 software/bda-build-template/bda-blueprints-webapp/config/pmd/unusedcode.xml -text
 software/bda-build-template/bda-blueprints-webapp/config/properties/application.properties -text
-software/bda-build-template/bda-blueprints-webapp/config/xml/web.xml -text
 software/bda-build-template/bda-blueprints-webapp/docs/build.jpg -text
 software/bda-build-template/bda-blueprints-webapp/docs/release_notes.txt -text
 software/bda-build-template/bda-blueprints-webapp/lib/jdepend-2.9.jar -text
@@ -275,6 +274,7 @@ software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-i
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/truncate-tables.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/simian/CodeDupReader.rb -text
 software/bda-build-template/bda-blueprints-webapp/software/common/simian/simian.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/xml/web.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/compile.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/database-integration.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/default.properties -text
