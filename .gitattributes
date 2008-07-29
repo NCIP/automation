@@ -384,9 +384,9 @@ software/bda-build-template/bda-blueprints-webapp/software/webapp/test/performan
 software/bda-build-template/bda-blueprints-webapp/software/webapp/test/performance/bda/blueprints/business/service/ExampleTimedTest.java -text
 software/bda-build-template/bda-blueprints-webapp/software/webapp/test/performance/bda/blueprints/business/service/StudyServicePerformanceTest.java -text
 software/bda-build-template/bda-blueprints-webapp/software/webapp/test/unit/README.TXT -text
-software/bda-build-template/bda-blueprints-webapp/software/webapp/test/unit/bda/blueprints/business/service/RegularExpressionTest.java -text
-software/bda-build-template/bda-blueprints-webapp/software/webapp/test/unit/bda/blueprints/business/service/StudyDaoStub.java -text
-software/bda-build-template/bda-blueprints-webapp/software/webapp/test/unit/bda/blueprints/business/service/StudyServiceUnitTest.java -text
+software/bda-build-template/bda-blueprints-webapp/software/webapp/test/unit/java/bda/blueprints/business/service/RegularExpressionTest.java -text
+software/bda-build-template/bda-blueprints-webapp/software/webapp/test/unit/java/bda/blueprints/business/service/StudyDaoStub.java -text
+software/bda-build-template/bda-blueprints-webapp/software/webapp/test/unit/java/bda/blueprints/business/service/StudyServiceUnitTest.java -text
 software/bda-build-template/build.xml -text
 software/bda-build-template/common/checkstyle/checkstyle-simple.xsl -text
 software/bda-build-template/common/checkstyle/checkstyle_minimal.xml -text
