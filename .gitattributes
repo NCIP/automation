@@ -223,6 +223,7 @@ software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/tes
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/test/unit/java/bda/blueprints/business/service/RegularExpressionTest.java -text
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/test/unit/java/bda/blueprints/business/service/StudyDaoStub.java -text
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/test/unit/java/bda/blueprints/business/service/StudyServiceUnitTest.java -text
+software/bda-build-template/bda-blueprints-webapp/software/build.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/checkstyle/checkstyle-simple.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/checkstyle/checkstyle_minimal.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/checkstyle_resources/BlochEffectiveJava.xml -text
@@ -411,7 +412,6 @@ software/bda-build-template/bda-blueprints-webapp/software/tests/functional/sele
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/build-bda-blueprints.xml -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.properties -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
-software/bda-build-template/build.xml -text
 software/bda-build-template/install-properties.template -text
 software/bda-build-template/install.properties -text
 software/bda-build-template/install.xml -text
