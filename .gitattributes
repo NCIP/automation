@@ -169,11 +169,11 @@ software/bda-build-template/software/LICENSE.txt -text
 software/bda-build-template/software/Rakefile.rb -text
 software/bda-build-template/software/Readme.txt -text
 software/bda-build-template/software/_README.TXT -text
-software/bda-build-template/software/_common-configuration.xml -text
 software/bda-build-template/software/_common-environment.xml -text
 software/bda-build-template/software/_dbunit-seed.xml -text
 software/bda-build-template/software/_repository.xml -text
-software/bda-build-template/software/blueprints-webapp/_build.xml -text
+software/bda-build-template/software/blueprints-webapp/_common-configuration.xml -text
+software/bda-build-template/software/blueprints-webapp/build.xml -text
 software/bda-build-template/software/blueprints-webapp/compile.xml -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/BadUsernameException.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/InvalidLoginException.java -text
@@ -225,6 +225,7 @@ software/bda-build-template/software/blueprints-webapp/test/unit/README.TXT -tex
 software/bda-build-template/software/blueprints-webapp/test/unit/java/bda/blueprints/business/service/RegularExpressionTest.java -text
 software/bda-build-template/software/blueprints-webapp/test/unit/java/bda/blueprints/business/service/StudyDaoStub.java -text
 software/bda-build-template/software/blueprints-webapp/test/unit/java/bda/blueprints/business/service/StudyServiceUnitTest.java -text
+software/bda-build-template/software/blueprints-webapp/testing.xml -text
 software/bda-build-template/software/build.xml -text
 software/bda-build-template/software/common/checkstyle/checkstyle-simple.xsl -text
 software/bda-build-template/software/common/checkstyle/checkstyle_minimal.xml -text
@@ -413,7 +414,6 @@ software/bda-build-template/software/linux-upgrade.properties -text
 software/bda-build-template/software/project.properties -text
 software/bda-build-template/software/remote-deploy.xml -text
 software/bda-build-template/software/test-env.properties -text
-software/bda-build-template/software/testing.xml -text
 software/bda-build-template/software/tests/functional/selenium/generic-webappTestCase.html -text
 software/bda-build-template/software/tests/functional/selenium/generic-webappTestSuite.html -text
 software/bda-build-template/software/upgrade-properties.template -text
