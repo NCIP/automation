@@ -199,6 +199,7 @@ software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/src
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/src/web/index.jsp -text
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/src/web/study.jsp -text
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/src/web/stylesheets/onsq.css -text
+software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/sub-project-build.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/test/component/README.TXT -text
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/test/component/bda/blueprints/business/data/LoginDaoComponentTest.java -text
 software/bda-build-template/bda-blueprints-webapp/software/blueprints-webapp/test/component/bda/blueprints/business/data/StudyDaoComponentTest.java -text
@@ -418,7 +419,6 @@ software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml
 software/bda-build-template/linux-install.properties -text
 software/bda-build-template/linux-upgrade.properties -text
 software/bda-build-template/project.properties -text
-software/bda-build-template/sub-project-build.xml -text
 software/bda-build-template/upgrade-properties.template -text
 software/bda-build-template/upgrade.properties -text
 software/heartbeat/.classpath -text
