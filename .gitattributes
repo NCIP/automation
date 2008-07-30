@@ -321,6 +321,13 @@ software/bda-build-template/bda-blueprints-webapp/software/common/pmd_resources/
 software/bda-build-template/bda-blueprints-webapp/software/common/pmd_resources/sunsecure.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/pmd_resources/typeresolution.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/pmd_resources/unusedcode.xml -text
+software/bda-build-template/bda-blueprints-webapp/software/common/resources/grid/jboss-globus-libs-cagrid1_1.zip -text
+software/bda-build-template/bda-blueprints-webapp/software/common/resources/grid/jboss-globus-wsrf-war-cagrid1_1.zip -text
+software/bda-build-template/bda-blueprints-webapp/software/common/resources/jboss-conf/generic-ds.xml -text
+software/bda-build-template/bda-blueprints-webapp/software/common/resources/jboss-conf/jbossmq-destinations-service.block.xml -text
+software/bda-build-template/bda-blueprints-webapp/software/common/resources/jboss-conf/log4j.block.xml -text
+software/bda-build-template/bda-blueprints-webapp/software/common/resources/jboss-conf/login-config.db-block.xml -text
+software/bda-build-template/bda-blueprints-webapp/software/common/resources/jboss-conf/login-config.ldap-block.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources_blueprints_webapp/db-install/create-database-mysql.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources_blueprints_webapp/db-install/create-database.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources_blueprints_webapp/db-install/create-tables-mysql.sql -text
@@ -403,13 +410,6 @@ software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.pro
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
 software/bda-build-template/build.xml -text
 software/bda-build-template/common/ivysettings.xml -text
-software/bda-build-template/common/resources/grid/jboss-globus-libs-cagrid1_1.zip -text
-software/bda-build-template/common/resources/grid/jboss-globus-wsrf-war-cagrid1_1.zip -text
-software/bda-build-template/common/resources/jboss-conf/generic-ds.xml -text
-software/bda-build-template/common/resources/jboss-conf/jbossmq-destinations-service.block.xml -text
-software/bda-build-template/common/resources/jboss-conf/log4j.block.xml -text
-software/bda-build-template/common/resources/jboss-conf/login-config.db-block.xml -text
-software/bda-build-template/common/resources/jboss-conf/login-config.ldap-block.xml -text
 software/bda-build-template/install-properties.template -text
 software/bda-build-template/install.properties -text
 software/bda-build-template/install.xml -text
