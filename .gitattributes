@@ -416,11 +416,11 @@ software/bda-build-template/bda-blueprints-webapp/software/test-env.properties -
 software/bda-build-template/bda-blueprints-webapp/software/testing.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/tests/functional/selenium/generic-webappTestCase.html -text
 software/bda-build-template/bda-blueprints-webapp/software/tests/functional/selenium/generic-webappTestSuite.html -text
+software/bda-build-template/bda-blueprints-webapp/software/upgrade.properties -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/build-bda-blueprints.xml -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.properties -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
 software/bda-build-template/upgrade-properties.template -text
-software/bda-build-template/upgrade.properties -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
