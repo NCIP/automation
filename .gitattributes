@@ -263,6 +263,7 @@ software/bda-build-template/bda-blueprints-webapp/software/common/findbugs/plain
 software/bda-build-template/bda-blueprints-webapp/software/common/findbugs/summary.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/grand/generic-root-build.xml.pdf -text
 software/bda-build-template/bda-blueprints-webapp/software/common/grand/generic-root-install.xml.pdf -text svneol=unset#unset
+software/bda-build-template/bda-blueprints-webapp/software/common/ivysettings.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/javancss/javancss2methodhtml.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/javancss_resources/SlocThreshold.rb -text
 software/bda-build-template/bda-blueprints-webapp/software/common/javancss_resources/barchart.xsl -text
@@ -409,7 +410,6 @@ software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/build-bda-
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.properties -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
 software/bda-build-template/build.xml -text
-software/bda-build-template/common/ivysettings.xml -text
 software/bda-build-template/install-properties.template -text
 software/bda-build-template/install.properties -text
 software/bda-build-template/install.xml -text
