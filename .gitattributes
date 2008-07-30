@@ -256,6 +256,11 @@ software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_
 software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_resources/lib/jakarta-oro-license.txt -text
 software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_resources/lib/log4j-1.2.9.jar -text
 software/bda-build-template/bda-blueprints-webapp/software/common/cobertura-1.8_resources/lib/log4j-license.txt -text
+software/bda-build-template/bda-blueprints-webapp/software/common/findbugs/default.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/findbugs/fancy-hist.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/findbugs/fancy.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/findbugs/plain.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/findbugs/summary.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/javancss_resources/SlocThreshold.rb -text
 software/bda-build-template/bda-blueprints-webapp/software/common/javancss_resources/barchart.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/javancss_resources/chart_ccn.xsl -text
@@ -391,11 +396,6 @@ software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/build-bda-
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.properties -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
 software/bda-build-template/build.xml -text
-software/bda-build-template/common/findbugs/default.xsl -text
-software/bda-build-template/common/findbugs/fancy-hist.xsl -text
-software/bda-build-template/common/findbugs/fancy.xsl -text
-software/bda-build-template/common/findbugs/plain.xsl -text
-software/bda-build-template/common/findbugs/summary.xsl -text
 software/bda-build-template/common/grand/generic-root-build.xml.pdf -text
 software/bda-build-template/common/grand/generic-root-install.xml.pdf -text svneol=unset#unset
 software/bda-build-template/common/ivysettings.xml -text
