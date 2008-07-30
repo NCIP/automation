@@ -317,6 +317,7 @@ software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-i
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/drop-database.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/insert-data.sql -text
 software/bda-build-template/bda-blueprints-webapp/software/common/resources/db-install/truncate-tables.sql -text
+software/bda-build-template/bda-blueprints-webapp/software/common/simian/simian.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/simian_resources/CodeDupReader.rb -text
 software/bda-build-template/bda-blueprints-webapp/software/common/simian_resources/simian.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/compile.xml -text
@@ -409,7 +410,6 @@ software/bda-build-template/common/resources/jboss-conf/jbossmq-destinations-ser
 software/bda-build-template/common/resources/jboss-conf/log4j.block.xml -text
 software/bda-build-template/common/resources/jboss-conf/login-config.db-block.xml -text
 software/bda-build-template/common/resources/jboss-conf/login-config.ldap-block.xml -text
-software/bda-build-template/common/simian/simian.xsl -text
 software/bda-build-template/install-properties.template -text
 software/bda-build-template/install.properties -text
 software/bda-build-template/install.xml -text
