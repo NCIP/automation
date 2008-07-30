@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry excluding="performance/|component/|dependency/|unit/" kind="src" path="tests"/>
-	<classpathentry kind="src" path="tests/component"/>
-	<classpathentry kind="src" path="tests/dependency"/>
-	<classpathentry kind="src" path="tests/performance"/>
-	<classpathentry kind="src" path="tests/unit"/>
+	<classpathentry kind="src" path="software/webapp/test/unit/java"/>
+	<classpathentry kind="src" path="software/webapp/src/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v5.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="lib/jdepend-2.9.jar"/>
-	<classpathentry kind="lib" path="lib/junitperf-1.9.1.jar"/>
+	<classpathentry kind="lib" path="software/lib/jdepend-2.9.jar"/>
+	<classpathentry kind="lib" path="software/lib/junitperf-1.9.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
