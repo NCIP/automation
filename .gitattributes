@@ -284,6 +284,9 @@ software/bda-build-template/bda-blueprints-webapp/software/common/jmeter_resourc
 software/bda-build-template/bda-blueprints-webapp/software/common/jmeter_resources/jmeter-results-detail-report_21.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/jmeter_resources/jmeter-results-report.xsl -text
 software/bda-build-template/bda-blueprints-webapp/software/common/jmeter_resources/jmeter-results-report_21.xsl -text
+software/bda-build-template/bda-blueprints-webapp/software/common/pmd/pmd-hudson-preprocessor.xlst -text
+software/bda-build-template/bda-blueprints-webapp/software/common/pmd/pmd-report.xslt -text
+software/bda-build-template/bda-blueprints-webapp/software/common/pmd/pmd-ruleset-basic.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/pmd_resources/basic-jsf.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/pmd_resources/basic-jsp.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/common/pmd_resources/basic.xml -text
@@ -400,9 +403,6 @@ software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.pro
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
 software/bda-build-template/build.xml -text
 software/bda-build-template/common/ivysettings.xml -text
-software/bda-build-template/common/pmd/pmd-hudson-preprocessor.xlst -text
-software/bda-build-template/common/pmd/pmd-report.xslt -text
-software/bda-build-template/common/pmd/pmd-ruleset-basic.xml -text
 software/bda-build-template/common/resources/grid/jboss-globus-libs-cagrid1_1.zip -text
 software/bda-build-template/common/resources/grid/jboss-globus-wsrf-war-cagrid1_1.zip -text
 software/bda-build-template/common/resources/jboss-conf/generic-ds.xml -text
