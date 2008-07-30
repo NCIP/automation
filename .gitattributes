@@ -345,6 +345,7 @@ software/bda-build-template/bda-blueprints-webapp/software/database-integration.
 software/bda-build-template/bda-blueprints-webapp/software/default.properties -text
 software/bda-build-template/bda-blueprints-webapp/software/deployment.xml -text
 software/bda-build-template/bda-blueprints-webapp/software/inspections.xml -text
+software/bda-build-template/bda-blueprints-webapp/software/install.properties -text
 software/bda-build-template/bda-blueprints-webapp/software/installer/README.txt -text
 software/bda-build-template/bda-blueprints-webapp/software/installer/antinstaller-icon.ico -text
 software/bda-build-template/bda-blueprints-webapp/software/installer/antlib/ant-antlr.jar -text
@@ -413,7 +414,6 @@ software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/build-bda-
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.properties -text
 software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
 software/bda-build-template/install-properties.template -text
-software/bda-build-template/install.properties -text
 software/bda-build-template/install.xml -text
 software/bda-build-template/linux-install.properties -text
 software/bda-build-template/linux-upgrade.properties -text
