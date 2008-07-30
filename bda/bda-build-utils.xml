@@ -211,7 +211,7 @@ $HeadURL$
 					<echo message="Shutting down jboss with shutdown.jar"/>
 
 					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
-						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
+						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u admin -p admin -S" />
 						<classpath>
 							<pathelement location="@{jboss.home}/bin/shutdown.jar" />
 						</classpath>
