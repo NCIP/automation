@@ -163,9 +163,6 @@ software/ant/custom/propertyvalidator/src/gov/nih/nci/bda/PropertyValidator.java
 software/ant/custom/propertyvalidator/test/gov/nih/nci/bda/test/TestPropertyValidator.java -text
 software/bda-build-template/bda-blueprints-webapp/.classpath -text
 software/bda-build-template/bda-blueprints-webapp/.project -text
-software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/build-bda-blueprints.xml -text
-software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.properties -text
-software/bda-build-template/bda-blueprints-webapp/tools/cruisecontrol/config.xml -text
 software/bda-build-template/docs/build.jpg -text
 software/bda-build-template/docs/release_notes.txt -text
 software/bda-build-template/software/LICENSE.txt -text
@@ -421,6 +418,9 @@ software/bda-build-template/software/tests/functional/selenium/generic-webappTes
 software/bda-build-template/software/tests/functional/selenium/generic-webappTestSuite.html -text
 software/bda-build-template/software/upgrade-properties.template -text
 software/bda-build-template/software/upgrade.properties -text
+software/bda-build-template/tools/cruisecontrol/build-bda-blueprints.xml -text
+software/bda-build-template/tools/cruisecontrol/config.properties -text
+software/bda-build-template/tools/cruisecontrol/config.xml -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
