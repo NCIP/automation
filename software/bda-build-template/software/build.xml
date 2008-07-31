@@ -471,7 +471,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</then>
 		</if>
 
-		<exec osfamliy="unix" executable="ant" dir="${dist.exploded.dir}" failonerror="true">
+		<exec osfamily="unix" executable="ant" dir="${dist.exploded.dir}" failonerror="true">
 			<!-- use alternate properties file since default has replace values -->
 			<arg value="-Dproperties.file=linux-upgrade.properties"/>
 			<!-- force reinstall of database and jboss without prompting -->
