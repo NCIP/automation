@@ -19,6 +19,9 @@
   </configurations>
   
   <dependencies>
+  	
+  	 <dependency org="javax.servlet" name="servlet" rev="2.3.1" conf="compile"/>
+  
     <dependency org="openqa" name="selenium" rev="0.9.0" conf="test-selenium->master"/>
     <dependency org="junit" name="junit" rev="4.3.1" conf="test-junit->master"/>
     <dependency org="cobertura" name="cobertura" rev="1.9" conf="test-cobertura->runtime"/>  
@@ -50,17 +53,10 @@
     <dependency org="org.bouncycastle" name="bcprov" rev="1.38" conf="compile"/>
     <dependency org="ucar" name="netcdf" rev="2.2.22" conf="runtime"/>
     <dependency org="opencsv" name="opencsv" rev="1.8" conf="runtime"/>
-    <dependency org="ognl" name="ognl" rev="2.6.11" conf="runtime"/>
     <dependency org="springsource" name="spring" rev="2.0.3" conf="runtime"/>
     <dependency org="springsource" name="spring-mock" rev="2.0.3" conf="test-junit->master"/>
     <dependency org="apache" name="xmlsec" rev="1.2.1" conf="compile"/>
     <dependency org="apache" name="tiles-jsp" rev="2.0.6" conf="runtime"/>
-    <dependency org="apache" name="struts2-core" rev="2.0.11" conf="runtime"/>
-    <dependency org="apache" name="struts2-spring-plugin" rev="2.0.11" conf="runtime"/>
-    <dependency org="apache" name="struts2-tiles-plugin" rev="2.0.11" conf="runtime"/>
-    <dependency org="opensymphony" name="xwork" rev="2.0.4" conf="runtime" force="true"/>
-    <dependency org="affymetrix" name="AffxFusion" rev="1.0.10b" conf="runtime" force="true"/>
-
 
     <!-- These exist in the repository -->
     <dependency org="javax.activation" name="activation" rev="1.0.2" conf="compile"/>
