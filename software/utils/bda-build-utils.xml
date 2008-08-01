@@ -831,6 +831,9 @@ $HeadURL$
 								<then>
 									<fail message="User tereminated the build."/>
 								</then>
+								<else>
+									<property name="force.reinstall" value="true"/>
+								</else>
 							</if>
 						</then>
 						<else>
@@ -1094,14 +1097,6 @@ $HeadURL$
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 							<property name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
 							<delete dir="${create.sql.dir}"/>
-							<!--
-							<copy todir="${create.sql.dir}">
-								<filterset>
-									<filtersfile file="${properties.file}" />
-								</filterset>
-								<fileset dir="${bda-utils.resource.dir}" includes="create_database_and_user.sql" />									
-							</copy>		
-							-->
 							<sql    
 								driver="@{database.driver}"
 								url="@{database.system.url}"
