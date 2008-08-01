@@ -81,7 +81,7 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
-ncicb/public-keys/id_dsa_bda.pub -text
+resources/public-keys/id_dsa_bda.pub -text
 software/acceptance-tests/.classpath -text
 software/acceptance-tests/.project -text
 software/acceptance-tests/build.xml -text
