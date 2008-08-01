@@ -99,9 +99,6 @@ docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
 ncicb/public-keys/id_dsa_bda.pub -text
-single-command-build/build.bat -text
-single-command-build/default.properties -text
-single-command-build/environment.xml -text
 software/acceptance-tests/.classpath -text
 software/acceptance-tests/.project -text
 software/acceptance-tests/build.xml -text
@@ -396,3 +393,6 @@ software/hudson-manager/build.xml -text
 software/hudson-manager/install.properties -text
 software/release-manager/build.xml -text
 software/release-manager/release.properties -text
+software/single-command-build/build.bat -text
+software/single-command-build/default.properties -text
+software/single-command-build/environment.xml -text
