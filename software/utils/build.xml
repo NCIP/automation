@@ -1,6 +1,6 @@
 <project name="build-caintegrator2" default="bda2local" basedir=".">
 	<property file="local.properties" />
-	<property name="bda.local.repo.dir" value="../../bda-local-ivy-repo"/>
+	<property name="bda.local.repo.dir" value="../../../bda-local-ivy-repo"/>
 	<property name="bda.version" value="0.4.0-beta"/>
 	<property name="bda.local.dir" value="${bda.local.repo.dir}/ncicb/bda-utils/${bda.version}"/>
 	<property name="ivy.def.file" value="ivy.xml"/>
@@ -23,8 +23,8 @@
 		<copy todir="${bda.local.dir}" file="${ivy.def.file}"/>
 	</target>
 	<target name="local2bda" >
-		<copy file="${bda.local.dir}/${bda-utils.xml.file}" tofile="bda-build-utils.xml"/>
-		<copy file="${bda.local.dir}/${ivy.def.file}" todir="."/>
+		<copy file="${bda.local.dir}/${bda-utils.xml.file}" tofile="bda-build-utils.xml" overwrite="true"/>
+		<copy file="${bda.local.dir}/${ivy.def.file}" todir="." overwrite="true"/>
 	</target>
 </project>
 
