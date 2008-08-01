@@ -380,12 +380,12 @@ software/single-command-build/build.bat -text
 software/single-command-build/default.properties -text
 software/single-command-build/environment.xml -text
 software/utils/bda-build-utils.xml -text
+software/utils/bda-download/bda-ivy-build.xml -text
+software/utils/bda-download/ivy-bda-settings.xml -text
+software/utils/bda-download/ivy-bda.xml -text
 software/utils/build.xml -text
 software/utils/eclipse/bda-plugins.xml -text
 software/utils/ivy.xml -text
-software/utils/ivy/bda-ivy-build.xml -text
-software/utils/ivy/ivy-bda-settings.xml -text
-software/utils/ivy/ivy-bda.xml -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
 software/utils/resource/jboss-4.0.5.GA-jems-ejb3/bindings.xml -text
