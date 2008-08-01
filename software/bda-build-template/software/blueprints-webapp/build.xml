@@ -14,14 +14,16 @@
 	<property name="software.dir" location="${root.dir}/software" />
 	<property name="build.dir" location="." />
 	<property name="lib.dir" location="${software.dir}/target/lib" />
+	<property name="runtime.lib.dir" location="${lib.dir}/runtime" />
+	<property name="compile.lib.dir" location="${lib.dir}/compile" />
 	<property name="resource.dir" location="${software.dir}/common/resources" />
 	<property name="target.dir" value="${software.dir}/target" />
 	<property name="reports.dir" location="${software.dir}/target/reports" />
 	<property name="common.dir" value="${software.dir}/common" />
 	<property name="bda-download.dir" value="${common.dir}/bda-download" />
-	
+
 	<property name="war.name" value="bda-blueprints-webapp.war" />
-	
+
 	<property name="project.properties.file" value="${software.dir}/project.properties" />
 
 	<property file="${build.dir}/local.properties" />
@@ -37,13 +39,14 @@
 	<property name="bda-utils.dir" location="${software.dir}/target/bda-utils" />
 
 	<property name="blueprints-webapp.java.dir" value="${build.dir}/src" />
+	<property name="blueprints-webapp.web.src.dir" location="${blueprints-webapp.java.dir}/web" />
 	<property name="blueprints-webapp.classes.dir" value="${build.dir}/target/classes" />
 
 	<!-- Get the three BDA files needed to set the Ivy environment up -->
-	<get src="${build.bda.src.url}" dest="${bda-download.dir}/bda-ivy-build.xml"/>
-	<get src="${ivy.bda.settings.src.url}" dest="${bda-download.dir}/ivy-bda-settings.xml"/>
-	<get src="${ivy.bda.src.url}" dest="${bda-download.dir}/ivy-bda.xml"/>
-	
+	<get src="${build.bda.src.url}" dest="${bda-download.dir}/bda-ivy-build.xml" />
+	<get src="${ivy.bda.settings.src.url}" dest="${bda-download.dir}/ivy-bda-settings.xml" />
+	<get src="${ivy.bda.src.url}" dest="${bda-download.dir}/ivy-bda.xml" />
+
 	<!-- Run the DBA build script to get the remaining Ivy dependencies needed for BDA -->
 	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.dir}/bda-ivy-build.xml" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
@@ -82,9 +85,6 @@
 
 	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpath="${ivy.jar}" />
 
-	<property name="war.compile.lib.dir" location="${lib.dir}/compile" />
-	<property name="war.runtime.lib.dir" location="${lib.dir}/runtime" />
-
 	<property name="acceptance.lib.dir" location="${lib.dir}/test-acceptance" />
 	<property name="checkstyle.lib.dir" location="${lib.dir}/test-checkstyle" />
 	<property name="cobertura.lib.dir" location="${lib.dir}/test-cobertura" />
@@ -106,8 +106,8 @@
 	</target>
 
 	<target name="clean:dependencies">
-		<delete dir="${war.compile.lib.dir}" />
-		<delete dir="${war.runtime.lib.dir}" />
+		<delete dir="${compile.lib.dir}" />
+		<delete dir="${runtime.lib.dir}" />
 		<delete dir="${acceptance.lib.dir}" />
 		<delete dir="${checkstyle.lib.dir}" />
 		<delete dir="${cobertura.lib.dir}" />
@@ -213,7 +213,7 @@
 		<ivy:settings file="${ivy.settings.file}" />
 	</target>
 
-	<target name="build:all" depends="-pre-clean, -init, compile:all, post-clean" description="Default target" />
+	<target name="build:all" depends="-pre-clean, -init, compile:all, war, post-clean" description="Default target" />
 
 	<!-- This will delete all of the files created by the build process -->
 	<target name="-pre-clean">
@@ -233,7 +233,19 @@
 	</target>
 
 	<target name="war" depends="compile:all, ivy:setup-runtime">
-		<war destfile="${target.dir}/${war.name}" webxml="${webapp.dir}/WEB-INF/web.xml" basedir="${webapp.dir}" compress="false" excludes="*.war" />
+		<war destfile="${target.dir}/${war.name}" webxml="${blueprints-webapp.web.src.dir}/WEB-INF/web.xml">
+			<fileset dir="${blueprints-webapp.web.src.dir}">
+				<exclude name="WEB-INF/**" />
+			</fileset>
+
+			<lib dir="${runtime.lib.dir}" includes="*.jar" />
+
+			<classes dir="${blueprints-webapp.classes.dir}" />
+
+			<webinf dir="${blueprints-webapp.web.src.dir}/WEB-INF">
+				<exclude name="web.xml" />
+			</webinf>
+		</war>
 	</target>
 
 	<target name="ear" depends="war">
