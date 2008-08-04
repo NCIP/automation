@@ -142,6 +142,8 @@ software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/c
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/web/ServletController.java -text
 software/bda-build-template/software/blueprints-webapp/src/resources/properties/application.properties -text
 software/bda-build-template/software/blueprints-webapp/src/resources/xml/web.xml -text
+software/bda-build-template/software/blueprints-webapp/src/web/META-INF/MANIFEST.MF -text
+software/bda-build-template/software/blueprints-webapp/src/web/WEB-INF/web.xml -text
 software/bda-build-template/software/blueprints-webapp/src/web/editstudy.jsp -text
 software/bda-build-template/software/blueprints-webapp/src/web/error.jsp -text
 software/bda-build-template/software/blueprints-webapp/src/web/index.jsp -text
