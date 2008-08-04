@@ -24,10 +24,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<property name="automation.resource.dir" value="resource" />
 
 
-	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/bda-ivy-build.xml" dest="${basedir}/bda-ivy-build.xml"/>
+	<get src="${svn.automation.url}/${automation.ivy}/bda-ivy-build.xml" dest="${basedir}/bda-ivy-build.xml"/>
 
+	<!--
 	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda.xml" dest="${basedir}/ivy-bda.xml"/>
 	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda-settings.xml" dest="${basedir}/ivy-bda-settings.xml"/>
+	-->
 
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="bda-utils.dir" value="${basedir}/bda-utils" />
