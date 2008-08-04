@@ -17,17 +17,18 @@ $HeadURL:  $
 	<!-- added for remote deployments since file is copied to root of install dir -->
 	<basename property="properties.file.name" file="${properties.file}"/>
 
-	<property name="svn.conf.dir" value="conf" />
-	<property name="bda-utils.dir" value="bda-utils" />
-	<property name="bda-download.dir" value="bda-download" />
-	<property name="bda.version" value="0.3.0"/>
+	<property name="svn.conf.dir" location="conf" />
+	<property name="target.dir" location="target" />
+	<property name="bda-utils.dir" location="${target.dir}/bda-utils" />
+	<property name="bda-download.dir" location="${target.dir}/bda-download" />
 	<!-- trick out repo dir -->
-	<property name="software.dir" value="temp/temp/temp"/>
-	<property name="lib.dir" value="lib" />
-	<property name="working.dir" value="working" />
-	<property name="tomcat.dest.file" value="${working.dir}/${tomcat.binaries.file}"/>
-	<property name="artifacts.backup.file" value="${backup.dir}/hudson-artifacts.zip"/>
+	<property name="software.dir" location="${target.dir}/temp/temp/temp"/>
+	<property name="lib.dir" location="${target.dir}/lib" />
+	<property name="working.dir" location="${target.dir}/working" />
+	<property name="tomcat.dest.file" location="${working.dir}/${tomcat.binaries.file}"/>
+	<property name="artifacts.backup.file" location="${backup.dir}/hudson-artifacts.zip"/>
 
+	<property name="bda.version" value="0.3.0"/>
 	<mkdir dir="${bda-download.dir}" />
 	<mkdir dir="${software.dir}" />
 	<property name="bda-download.file" value="bda-ivy-build.xml"/>
@@ -46,7 +47,7 @@ $HeadURL:  $
 	</ant>
 
 	<path id="bda-utils.classpath">
-		<fileset dir="bda-utils">
+		<fileset dir="${bda-utils.dir}">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
@@ -67,7 +68,7 @@ $HeadURL:  $
 	</taskdef>
 	  <taskdef name="xmlconfig" classname="com.xmlconfig.anttask.XmlConfig" classpathref="bda-utils.classpath" />
 
-	<import file="${bda-utils.dir}/bda-build-utils-0.1.xml" />
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
 	<target name="validate:svn:props">
 		<property name="prop.list" value="svn.user.name,svn.user.pass"/>
