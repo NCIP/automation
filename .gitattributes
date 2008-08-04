@@ -367,6 +367,8 @@ software/bda-build-template/software/tests/functional/selenium/generic-webappTes
 software/bda-build-template/software/tests/functional/selenium/generic-webappTestSuite.html -text
 software/bda-build-template/software/upgrade-properties.template -text
 software/bda-build-template/software/upgrade.properties -text
+software/bda-build-template/software/windows-install.properties -text
+software/bda-build-template/software/windows-upgrade.properties -text
 software/bda-build-template/tools/cruisecontrol/build-bda-blueprints.xml -text
 software/bda-build-template/tools/cruisecontrol/config.properties -text
 software/bda-build-template/tools/cruisecontrol/config.xml -text

@@ -3,7 +3,7 @@
 $Id: build.xml 4753 2008-05-15 18:24:16Z saksass $
 $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 -->
-<project name="build-generic-api-generic-webapp" default="build:all" basedir="." 
+<project name="build-bda-template" default="build:all" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	xmlns:cs="antlib:com.puppycrawl.tools.checkstyle"
 	>
@@ -63,7 +63,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	
 	<!-- Properties that relate to how to call build targets from sub-projects-->
 	<!-- Working directory passed to Ant tasks -->
-	<property name="generic-api.base.dir" value="${software.dir}/api"/>
+	<property name="generic-api.base.dir" value="${software.dir}/blueprints-webapp"/>
 	<property name="generic-webapp.base.dir" value="${software.dir}/generic-webapp"/>
 
 	<!-- Build file names relative working dir above, if the basedir of the sub-project ant script is ".." you should set the *.basdir to and the build file should include the dir and build file name from the *.base.dir -->
@@ -71,7 +71,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="generic-api.build.file" value="build.xml"/>
 	
 	<!-- The target name that should be called from the sub-project build file -->
-	<property name="generic-api.build.target" value="dist"/>
+	<property name="generic-api.build.target" value="build:all"/>
 	<property name="generic-webapp.build.target" value="all"/>
     
 	<!-- Distribution Structure properties, used to copy files into the distribution area.
@@ -201,7 +201,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		depends="
 		clean,
 		init,
-		build:generic-webapp
+		build:generic-api
 		"/>
 
 	<!-- Build generic-query-grid sub-project produces project level artifact -->
@@ -650,8 +650,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="continuous-integration" description="calls wrapper targets for continuous integration build"
 		depends="
 		build:all,
-		static-analysis:all,
-		test:unit:all
+		static-analysis:all
 		"/>
 
 
