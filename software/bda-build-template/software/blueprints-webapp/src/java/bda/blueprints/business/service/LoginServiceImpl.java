@@ -7,8 +7,7 @@ import bda.blueprints.business.data.LoginDaoImpl;
 public class LoginServiceImpl implements LoginService {
 
 	public void login(String username, String password) throws UserException {
-		System.out.println("Username is: " + username + " Password is: "
-				+ password);
+		System.out.println("Username is: " + username + " Password is: " + password);
 		LoginDao loginData = new LoginDaoImpl();
 		try {
 			loginData.login(LoginDao.VERIFY_LOGIN, username, password);

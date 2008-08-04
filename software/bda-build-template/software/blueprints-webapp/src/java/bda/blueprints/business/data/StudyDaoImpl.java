@@ -19,6 +19,31 @@ public class StudyDaoImpl extends BaseDao implements StudyDao {
 		// impl.runThis();
 	}
 
+	public int create(String sql, Study study) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		System.out.println("study.getName()=" + study.getName());
+		System.out.println("study.getResearcher()=" + study.getResearcher());
+		Random generator = new Random();
+		int r = generator.nextInt();
+		String s = Integer.toString(r);
+		try {
+			conn = this.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, s);
+			stmt.setString(2, study.getName());
+			stmt.setString(3, study.getResearcher());
+			stmt.executeUpdate();
+			conn.commit();
+		} catch (SQLException se) {
+			throw new RuntimeException(se);
+		} finally {
+			closeDbConnection(rs, stmt, conn);
+		}
+		return 0;
+	}
+
 	public Collection findAll(String sql) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -66,31 +91,6 @@ public class StudyDaoImpl extends BaseDao implements StudyDao {
 			closeDbConnection(rs, stmt, conn);
 		}
 		return states;
-	}
-
-	public int create(String sql, Study study) {
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		System.out.println("study.getName()=" + study.getName());
-		System.out.println("study.getResearcher()=" + study.getResearcher());
-		Random generator = new Random();
-		int r = generator.nextInt();
-		String s = Integer.toString(r);
-		try {
-			conn = this.getConnection();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, s);
-			stmt.setString(2, study.getName());
-			stmt.setString(3, study.getResearcher());
-			stmt.executeUpdate();
-			conn.commit();
-		} catch (SQLException se) {
-			throw new RuntimeException(se);
-		} finally {
-			closeDbConnection(rs, stmt, conn);
-		}
-		return 0;
 	}
 
 }

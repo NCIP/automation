@@ -6,10 +6,10 @@ import bda.blueprints.business.domain.Study;
 
 public interface StudyService {
 
+	int create(Study study);
+
 	Collection findAll();
 
 	Collection findAllStates();
-
-	int create(Study study);
 
 }

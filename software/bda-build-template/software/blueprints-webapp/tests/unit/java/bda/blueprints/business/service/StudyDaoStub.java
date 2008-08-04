@@ -9,10 +9,6 @@ public class StudyDaoStub {
 
 	public static List FIND_ALL = createList();
 
-	public List findAll() {
-		return FIND_ALL;
-	}
-
 	private static ArrayList createList() {
 		ArrayList list = new ArrayList();
 		list.add(createStudy());
@@ -25,5 +21,9 @@ public class StudyDaoStub {
 		study.setName("John Doe");
 		study.setDateReceived("2006-08-24");
 		return study;
+	}
+
+	public List findAll() {
+		return FIND_ALL;
 	}
 }

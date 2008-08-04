@@ -1,14 +1,19 @@
 package bda.blueprints.business.domain;
 
-
 public class State {
 
 	private String state;
 
 	private String description;
 
-	public void setState(String state) {
-		this.state = state;
+	public String getDescription() {
+		return description;
+
+	}
+
+	public String getState() {
+		return state;
+
 	}
 
 	public void setDescription(String description) {
@@ -18,14 +23,8 @@ public class State {
 
 	}
 
-	public String getState() {
-		return state;
-
-	}
-
-	public String getDescription() {
-		return description;
-
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

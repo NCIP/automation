@@ -12,6 +12,10 @@ import java.util.Properties;
  */
 public class PropertyReader {
 
+	protected static String convertName(String propertiesName) {
+		return propertiesName.replace('.', '/') + ".properties";
+	}
+
 	private Properties properties = new Properties();
 
 	public PropertyReader(final String name) {
@@ -25,8 +29,7 @@ public class PropertyReader {
 				properties.load(is);
 				is.close();
 			} else {
-				throw new IOException("Couldn't find property file: "
-						+ convertName(name));
+				throw new IOException("Couldn't find property file: " + convertName(name));
 			}
 		} catch (IOException problem) {
 			System.out.println("Property Reader: problem initializing");
@@ -34,20 +37,43 @@ public class PropertyReader {
 
 	}
 
-	protected static String convertName(String propertiesName) {
-		return propertiesName.replace('.', '/') + ".properties";
+	/**
+	 * Returns a boolean value for a key but will return a default value if
+	 * unable to find or convert found value to a boolean.
+	 */
+	public boolean getBooleanProperty(String key, boolean defaultValue) {
+		try {
+			String valueRead = getProperty(key);
+			return Boolean.valueOf(valueRead.trim()).booleanValue();
+		} catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
-	public String getProperty(String name) {
-		return properties.getProperty(name);
+	/**
+	 * Returns a double value for a key but will return a default value if
+	 * unable to find or convert found value to a double.
+	 */
+	public double getDoubleProperty(String key, double defaultValue) {
+		try {
+			String valueRead = getProperty(key);
+			return Double.parseDouble(valueRead.trim());
+		} catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
-	public String getProperty(String name, String defaultValue) {
-		return properties.getProperty(name, defaultValue);
-	}
-
-	public String getStringProperty(String string) {
-		return getProperty(string);
+	/**
+	 * Returns a float value for a key but will return a default value if unable
+	 * to find or convert found value to a float.
+	 */
+	public float getFloatProperty(String key, float defaultValue) {
+		try {
+			String valueRead = getProperty(key);
+			return Float.parseFloat(valueRead.trim());
+		} catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
 	/**
@@ -76,51 +102,24 @@ public class PropertyReader {
 		}
 	}
 
-	/**
-	 * Returns a float value for a key but will return a default value if unable
-	 * to find or convert found value to a float.
-	 */
-	public float getFloatProperty(String key, float defaultValue) {
-		try {
-			String valueRead = getProperty(key);
-			return Float.parseFloat(valueRead.trim());
-		} catch (Exception e) {
-			return defaultValue;
-		}
+	public Properties getProperties() {
+		return (Properties) properties.clone();
 	}
 
-	/**
-	 * Returns a double value for a key but will return a default value if
-	 * unable to find or convert found value to a double.
-	 */
-	public double getDoubleProperty(String key, double defaultValue) {
-		try {
-			String valueRead = getProperty(key);
-			return Double.parseDouble(valueRead.trim());
-		} catch (Exception e) {
-			return defaultValue;
-		}
+	public String getProperty(String name) {
+		return properties.getProperty(name);
 	}
 
-	/**
-	 * Returns a boolean value for a key but will return a default value if
-	 * unable to find or convert found value to a boolean.
-	 */
-	public boolean getBooleanProperty(String key, boolean defaultValue) {
-		try {
-			String valueRead = getProperty(key);
-			return Boolean.valueOf(valueRead.trim()).booleanValue();
-		} catch (Exception e) {
-			return defaultValue;
-		}
+	public String getProperty(String name, String defaultValue) {
+		return properties.getProperty(name, defaultValue);
 	}
 
 	public Enumeration getPropertyNames() {
 		return properties.propertyNames();
 	}
 
-	public Properties getProperties() {
-		return (Properties) properties.clone();
+	public String getStringProperty(String string) {
+		return getProperty(string);
 	}
 
 }

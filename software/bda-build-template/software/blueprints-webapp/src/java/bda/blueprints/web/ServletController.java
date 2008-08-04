@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bda.blueprints.business.domain.Study;
-import bda.blueprints.business.service.StudyService;
-import bda.blueprints.business.service.StudyServiceImpl;
 import bda.blueprints.business.service.LoginService;
 import bda.blueprints.business.service.LoginServiceImpl;
+import bda.blueprints.business.service.StudyService;
+import bda.blueprints.business.service.StudyServiceImpl;
 import bda.blueprints.business.service.UserException;
 
 public class ServletController extends HttpServlet {
@@ -33,14 +33,12 @@ public class ServletController extends HttpServlet {
 	private static final String ERROR_PAGE = "error";
 
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
-			throws IOException, ServletException {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		doPost(req, res);
 	}
 
 	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse res)
-			throws IOException, ServletException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		// getParameter is an example of getting a parameter from an HTML form
 		String fromPage = req.getParameter("FROM_PAGE");
 		String toPage = req.getParameter("TO_PAGE");
@@ -51,8 +49,7 @@ public class ServletController extends HttpServlet {
 		if (fromPage != null && fromPage.equalsIgnoreCase(LOGIN_PAGE)) {
 			LoginService loginService = new LoginServiceImpl();
 			try {
-				loginService.login(req.getParameter("username"), req
-						.getParameter("password"));
+				loginService.login(req.getParameter("username"), req.getParameter("password"));
 			} catch (UserException e) {
 				toPage = ERROR_PAGE;
 			}
@@ -67,8 +64,7 @@ public class ServletController extends HttpServlet {
 				studyBuffer.append("</br>");
 			}
 			req.setAttribute("study", studyBuffer.toString());
-			req.setAttribute("userMessage", "Logged in as "
-					+ req.getParameter("username"));
+			req.setAttribute("userMessage", "Logged in as " + req.getParameter("username"));
 		}
 
 		if (fromPage != null && fromPage.equalsIgnoreCase(EDIT_STUDY_PAGE)) {

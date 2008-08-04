@@ -9,8 +9,7 @@ import bda.blueprints.common.BaseDao;
 
 public class LoginDaoImpl extends BaseDao implements LoginDao {
 
-	public void login(String sql, String username, String password)
-			throws InvalidLoginException {
+	public void login(String sql, String username, String password) throws InvalidLoginException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

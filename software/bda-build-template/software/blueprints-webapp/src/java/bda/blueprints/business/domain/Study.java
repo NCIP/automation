@@ -8,28 +8,10 @@ public class Study {
 
 	private String researcher;
 
-	public String getResearcher() {
-		return researcher;
-	}
-
-	public void setResearcher(String researcher) {
-		this.researcher = researcher;
-	}
-
 	private String dateReceived;
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public void setDateReceived(String dateReceived) {
-		this.dateReceived = dateReceived;
-
+	public String getDateReceived() {
+		return dateReceived;
 	}
 
 	public String getId() {
@@ -42,8 +24,25 @@ public class Study {
 
 	}
 
-	public String getDateReceived() {
-		return dateReceived;
+	public String getResearcher() {
+		return researcher;
+	}
+
+	public void setDateReceived(String dateReceived) {
+		this.dateReceived = dateReceived;
+
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
 	}
 
 }
