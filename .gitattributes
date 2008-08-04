@@ -81,6 +81,8 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
+docs/wiki/flash/bda-wiki-home.fla -text
+docs/wiki/flash/bda-wiki-home.swf -text
 resources/eclipse/bda-plugins.xml -text
 resources/public-keys/id_dsa_bda.pub -text
 software/acceptance-tests/.classpath -text
