@@ -64,21 +64,21 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Properties that relate to how to call build targets from sub-projects-->
 	<!-- Working directory passed to Ant tasks -->
 	<property name="generic-api.base.dir" value="${software.dir}/blueprints-webapp"/>
-	<property name="generic-webapp.base.dir" value="${software.dir}/generic-webapp"/>
+	<property name="bda-blueprints-webapp.base.dir" value="${software.dir}/blueprints-webapp"/>
 
 	<!-- Build file names relative working dir above, if the basedir of the sub-project ant script is ".." you should set the *.basdir to and the build file should include the dir and build file name from the *.base.dir -->
-	<property name="generic-webapp.build.file" value="build.xml"/>
+	<property name="bda-blueprints-webapp.build.file" value="build.xml"/>
 	<property name="generic-api.build.file" value="build.xml"/>
 	
 	<!-- The target name that should be called from the sub-project build file -->
 	<property name="generic-api.build.target" value="build:all"/>
-	<property name="generic-webapp.build.target" value="all"/>
+	<property name="bda-blueprints-webapp.build.target" value="dist"/>
     
 	<!-- Distribution Structure properties, used to copy files into the distribution area.
        		Use project.propertie relative dir names becasue they are used by install also-->
 	<property name="dist.exploded.dir" value="${dist.dir}/exploded" />
 	<property name="generic-api.dist.dir" value="${dist.exploded.dir}/${generic-api.dist.relative.dir}" />
-	<property name="generic-webapp.dist.dir" value="${dist.exploded.dir}/${generic-webapp.dist.relative.dir}" />
+	<property name="bda-blueprints-webapp.dist.dir" value="${dist.exploded.dir}/${bda-blueprints-webapp.dist.relative.dir}" />
 	<property name="tools.dist.dir" value="${dist.exploded.dir}/${tools.dist.relative.dir}" />
 	<property name="common.dist.dir" value="${dist.exploded.dir}/${common.dist.relative.dir}" />
 	<property name="db-install.dist.dir" value="${dist.exploded.dir}/${db-install.dist.relative.dir}" />
@@ -95,7 +95,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="selenium.report.dir" value="${reports.dir}/selenium"/>
 	<property name="selenium.report.file" value="selenium-rpt.html"/>
 	<property name="selenium.test.dir" value="${software.dir}/test/selenium"/>
-	<property name="selenium.test.suite" value="${selenium.test.dir}/cai2TestSuite.html"/>
+	<property name="selenium.test.suite" value="${selenium.test.dir}/bdaTestSuite.html"/>
 	<property name="selenium.url" value="http://${jboss.server.hostname}:${jboss.server.port}"/>
 
 	<!-- Where to write files retrieved by get, into the distribution area.  The file names come from project.properties  -->
@@ -171,7 +171,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<mkdir dir="${dist.dir}"/>
 		<mkdir dir="${dist.exploded.dir}"/>
 		<mkdir dir="${generic-api.dist.dir}"/>
-		<mkdir dir="${generic-webapp.dist.dir}"/>
+		<mkdir dir="${bda-blueprints-webapp.dist.dir}"/>
 		<mkdir dir="${common.dist.dir}"/>
 		<mkdir dir="${tools.dist.dir}"/>
 		<mkdir dir="${temp.dir}"/>
@@ -191,9 +191,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<property name="software.dir" value="${software.dir}" />
 		</ant>
 		<ant inheritAll="false" inheritRefs="false" 
-			antfile="${generic-webapp.build.file}" 
+			antfile="${bda-blueprints-webapp.build.file}" 
 			target="ivy-clean" 
-			dir="${generic-webapp.base.dir}" />
+			dir="${bda-blueprints-webapp.base.dir}" />
 	</target>
 
 	<!-- Wrapper build target, call appropriate builds for sub-projects -->
@@ -201,7 +201,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		depends="
 		clean,
 		init,
-		build:generic-api
+		build:bda-blueprints-webapp
 		"/>
 
 	<!-- Build generic-query-grid sub-project produces project level artifact -->
@@ -215,11 +215,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</ant>
 	</target>
 
-	<target name="build:generic-webapp" depends="init, build:generic-api">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic-webapp.build.file}"
-			target="${generic-webapp.build.target}"
-			dir="${generic-webapp.base.dir}" >
-			<property name="dist.dir" value="${generic-webapp.dist.dir}" />
+	<target name="build:bda-blueprints-webapp" depends="init, build:generic-api">
+		<ant inheritAll="false" inheritRefs="false" antfile="${bda-blueprints-webapp.build.file}"
+			target="${bda-blueprints-webapp.build.target}"
+			dir="${bda-blueprints-webapp.base.dir}" >
+			<property name="dist.dir" value="${bda-blueprints-webapp.dist.dir}" />
 		</ant>
 	</target>
 
@@ -304,7 +304,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 				<include name="*properties.template" />
 				<include name="project.properties" />
 			</fileset>
-		</copy> 
+		</copy>
+		
 		<!-- Set default target on install xml to install -->
 		<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true"
 			match="(.project.*default=.)\w+(.\s+.*)"
@@ -312,6 +313,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true"
 			match="(.*property name=.\$\{properties.file\} value=.)[\w\.\d\-\_]+(.\s+.*)"
 			replace="\1install.properties\2"/>
+		
 		<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
 		<move file="${dist.exploded.dir}/install.xml" tofile="${dist.exploded.dir}/build.xml"/>
 
@@ -329,7 +331,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<fileset dir="${common.dir}">
 				<include name="**/*"/>
 			</fileset>
-		</copy> 
+		</copy>
+		
 		<copy todir="${tools.dist.dir}" overwrite="true">
 			<fileset dir="${download.dir}">
 				<include name="**/*" />
@@ -339,8 +342,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Creates the installer distribution used by automated or manual remote installations -->
 	<target name="dist:installer" depends="dist:installer:prep">
-		<delete file="${dist.dir}/${generic-webapp.install.zip.file}"/>
-		<zip destfile="${dist.dir}/${generic-webapp.install.zip.file}" basedir="${dist.exploded.dir}"/>
+		<delete file="${dist.dir}/${bda-blueprints-webapp.install.zip.file}"/>
+		<zip destfile="${dist.dir}/${bda-blueprints-webapp.install.zip.file}" basedir="${dist.exploded.dir}"/>
 	</target>
 
 	<!-- Copies install time resources into distribution tree -->
@@ -407,8 +410,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Creates upgrader distribution -->
 	<target name="dist:upgrader" depends="dist:upgrader:prep">
-		<delete file="${dist.dir}/${generic-webapp.upgrade.zip.file}"/>
-		<zip destfile="${dist.dir}/${generic-webapp.upgrade.zip.file}" basedir="${dist.exploded.dir}"/>
+		<delete file="${dist.dir}/${bda-blueprints-webapp.upgrade.zip.file}"/>
+		<zip destfile="${dist.dir}/${bda-blueprints-webapp.upgrade.zip.file}" basedir="${dist.exploded.dir}"/>
 
 	</target>
 
@@ -532,7 +535,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</then> 
 		</if>   
 		<deploy-files
-			dist.file="${generic-webapp.install.zip.file}"
+			dist.file="${bda-blueprints-webapp.install.zip.file}"
 			/>
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
 	</target>
@@ -552,7 +555,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</then> 
 		</if>   
 		<deploy-files
-			dist.file="${generic-webapp.upgrade.zip.file}"
+			dist.file="${bda-blueprints-webapp.upgrade.zip.file}"
 			/>
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
@@ -601,7 +604,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		clean,
 		init,
 		test:generic-api,
-		test:generic-webapp
+		test:bda-blueprints-webapp
 		"/>
 
 	<!-- Build generic-query-grid sub-project produces project level artifact -->
@@ -613,11 +616,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</ant>
 	</target>
 
-	<target name="test:generic-webapp" depends="init">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic-webapp.test.file}"
+	<target name="test:bda-blueprints-webapp" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${bda-blueprints-webapp.test.file}"
 			target="test"
-			dir="${generic-webapp.base.dir}" >
-			<property name="dist.dir" value="${generic-webapp.dist.dir}" />
+			dir="${bda-blueprints-webapp.base.dir}" >
+			<property name="dist.dir" value="${bda-blueprints-webapp.dist.dir}" />
 		</ant>
 	</target>
 
@@ -627,7 +630,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		clean,
 		init,
 		static-analysis:generic-api,
-		static-analysis:generic-webapp
+		static-analysis:bda-blueprints-webapp
 		"/>
 
 	<!-- Build generic-query-grid sub-project produces project level artifact -->
@@ -639,11 +642,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</ant>
 	</target>
 
-	<target name="static-analysis:generic-webapp" depends="init">
-		<ant inheritAll="false" inheritRefs="false" antfile="${generic-webapp.build.file}"
+	<target name="static-analysis:bda-blueprints-webapp" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${bda-blueprints-webapp.build.file}"
 			target="static-analysis"
-			dir="${generic-webapp.base.dir}" >
-			<property name="dist.dir" value="${generic-webapp.dist.dir}" />
+			dir="${bda-blueprints-webapp.base.dir}" >
+			<property name="dist.dir" value="${bda-blueprints-webapp.dist.dir}" />
 		</ant>
 	</target>
 

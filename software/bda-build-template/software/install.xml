@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
 $Id: install.xml 4757 2008-05-15 20:43:31Z zengje $
-$HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/install.xml $
+$HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software/install.xml $
 -->
-<project name="generic-api-generic-webapp-installer" default="upgrade" basedir="." 
+<project name="generic-api-bda-blueprints-webapp-installer" default="upgrade" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
@@ -40,11 +40,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<property name="jboss-conf.dir.dest" value="${working.dir}/${jboss-conf.dist.relative.dir}" />
 
 	<!-- *-ds.xml and WAR -->
-	<property name="generic-webapp.dir.dist" value="${basedir}/${generic-webapp.dist.relative.dir}" />
-	<property name="generic-webapp.ds.file" value="generic-webapp-ds.xml" />
-	<property name="generic-webapp.app-sec-conf.file" value="ApplicationSecurityConfig.xml" />
-	<property name="generic-webapp.hibernate.file" value="hibernate.cfg.xml" />
-	<property name="generic-webapp.war.file" value="generic-webapp.war" />
+	<property name="bda-blueprints-webapp.dir.dist" value="${basedir}/${bda-blueprints-webapp.dist.relative.dir}" />
+	<property name="bda-blueprints-webapp.ds.file" value="bda-blueprints-ds.xml" />
+	<property name="bda-blueprints-webapp.app-sec-conf.file" value="ApplicationSecurityConfig.xml" />
+	<property name="bda-blueprints-webapp.hibernate.file" value="hibernate.cfg.xml" />
+	<property name="bda-blueprints-webapp.war.file" value="bda-blueprints-webapp.war" />
 	<property name="grid.artifact.file" value="wsrf.war.zip" />
 	<property name="grid.dir.dest" value="wsrf.war" />
 	<property name="grid.application.name" value="cagrid_APPNANE" />
@@ -79,7 +79,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 
 	<!-- Conditionals -->
 	<available file="${jboss.home}/server/${jboss.server.name}/conf/jboss-service.xml" property="jboss.exists"/>
-	<!-- generic-webapp can use either Oracle or MySQL or PostgreSQL as its database platform, this is controled by the database.type property.  Based on the value of this property sent several variables for use during install -->
+	<!-- bda-blueprints-webapp can use either Oracle or MySQL or PostgreSQL as its database platform, this is controled by the database.type property.  Based on the value of this property sent several variables for use during install -->
 	<switch value="${database.type}">
 		<case value="oracle">
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
@@ -133,16 +133,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	<import file="db-integrate.xml" />
 
 	<!-- Read db configs from existing ds.xml if it exists for use in upgrade installs, if already set in properties file values from properties file will be used -->
-	<available file="${jboss.home}/server/${jboss.server.name}/deploy/${generic-webapp.ds.file}" property="ds.exists"/>
+	<available file="${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file}" property="ds.exists"/>
 	<if>
 		<isset property="ds.exists"/>
 		<then>
 			<jboss-read-dbconfig
-				jboss.ds-xml.file="${generic-webapp.ds.file}"
+				jboss.ds-xml.file="${bda-blueprints-webapp.ds.file}"
 				/>
 		</then>
 		<else>
-			<echo message="Warning- could not find ${jboss.home}/server/${jboss.server.name}/deploy/${generic-webapp.ds.file}"/>
+			<echo message="Warning- could not find ${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file}"/>
 		</else>
 	</if>
 
@@ -273,26 +273,30 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		</if>
 	</target>
 
-	<target name="install:jboss:generic-webapp" description="Deploy generic-webapp generic-webapp.ear, generic-webapp-api.war and common libraries" unless="exclude.jboss">
+	<target name="install:jboss:bda-blueprints-webapp" description="Deploy bda-blueprints-webapp bda-blueprints-webapp.ear, bda-blueprints-webapp-api.war and common libraries" unless="exclude.jboss">
 		<!-- added to ensure working.dirs are fresh for our install -->
 		<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
 		<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
 
-		<copy file="${generic-webapp.dir.dist}/${generic-webapp.war.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		<copy file="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 		<copy file="${bda-utils.dir}/clm-3.2.jar" todir="${jboss.home}/server/${jboss.server.name}/lib" overwrite="true" />
 		<copy file="${database.driver.file}" todir="${jboss.home}/server/${jboss.server.name}/lib" overwrite="true" />
 		
 		<!-- Replace this with file from ivy when project is ivy'fied -->
 	</target>
 
-	<target name="install:jboss:generic-webapp:configure" description="Configure generic-webapp application" unless="exclude.jboss">
-		<copy file="${jboss-conf.dir.dest}/${generic-webapp.ds.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
-		<copy file="${jboss-conf.dir.dest}/${generic-webapp.app-sec-conf.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
-		<copy file="${jboss-conf.dir.dest}/${generic-webapp.hibernate.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+	<target name="install:jboss:bda-blueprints-webapp:configure" description="Configure bda-blueprints-webapp application" unless="exclude.jboss">
+		<copy file="${jboss-conf.dir.dest}/${bda-blueprints-webapp.ds.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		
+		<!-- Uncomment the following files if your web application needs them -->
+		<!--
+		<copy file="${jboss-conf.dir.dest}/${bda-blueprints-webapp.app-sec-conf.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		<copy file="${jboss-conf.dir.dest}/${bda-blueprints-webapp.hibernate.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		-->
 	</target>
 
 	<!-- Wrapper target to configure jboss container, not deployed application -->
-	<target name="install:jboss:configure" description="Configure generic-webapp" unless="exclude.jboss"
+	<target name="install:jboss:configure" description="Configure bda-blueprints-webapp" unless="exclude.jboss"
 		depends="install:jboss:binaries,
 		-install:jboss:configure:ports,
 		-install:jboss:configure:login-conf,
@@ -301,13 +305,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		"/>
 
 	<!-- Configure ports used by JBOSS (either bindings or editing jboss config.files) -->
-	<target name="-install:jboss:configure:ports" description="Configure generic-webapp" unless="exclude.jboss">
+	<target name="-install:jboss:configure:ports" description="Configure bda-blueprints-webapp" unless="exclude.jboss">
 		<jboss-bindings
 			jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"
 			/>
 	</target>
 
-	<!-- Add custom login-config.xml content from snippet from generic-webapp/software/resources/deploy/login-config.${auth.type}-block.xml -->
+	<!-- Add custom login-config.xml content from snippet from bda-blueprints-webapp/software/resources/deploy/login-config.${auth.type}-block.xml -->
 	<target name="-install:jboss:configure:login-conf" unless="exclude.jboss">
 		<if>    
 			<equals arg1="${authentication.type}" arg2="ldap"/>
@@ -342,7 +346,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	</target>
 
 
-	<!-- Configure log4j settings based on contents of generic-webapp/software/resrouces/deploy/log4j.block.xml -->
+	<!-- Configure log4j settings based on contents of bda-blueprints-webapp/software/resrouces/deploy/log4j.block.xml -->
 	<target name="-install:jboss:configure:log4j" unless="exclude.jboss">
         <!--
 		<property name="log4j.block.file" value="${resource.dir.target}/log4j.block.xml"/>
@@ -406,9 +410,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		install:clean,
 		install:init,
 		install:jboss:binaries,
-		install:jboss:generic-webapp:re-configure,
-		install:jboss:generic-webapp,
-		install:jboss:generic-webapp:configure,
+		install:jboss:bda-blueprints-webapp:re-configure,
+		install:jboss:bda-blueprints-webapp,
+		install:jboss:bda-blueprints-webapp:configure,
 		install:jboss:configure,
 		install:jboss:start
 		" />
@@ -429,15 +433,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		"/>
 
 	<!-- Fixes hibernate dialect and other configurations in code generated at build time.  This is requred because the properties/options selected at build time can be different than those used at install time. -->
-	<target name="install:jboss:generic-webapp:re-configure" unless="exclude.jboss">
+	<target name="install:jboss:bda-blueprints-webapp:re-configure" unless="exclude.jboss">
 	    
-		<delete dir="${working.dir}/generic-webapp"/>
-		<unzip src="${generic-webapp.dir.dist}/${generic-webapp.war.file}" dest="${working.dir}/generic-webapp"/>
-		<copy todir="${working.dir}/generic-webapp/WEB-INF/classes" file="${jboss-conf.dir.dest}/hibernate.cfg.xml"/>
-
-		<move file="${generic-webapp.dir.dist}/${generic-webapp.war.file}" tofile="${generic-webapp.dir.dist}/${generic-webapp.war.file}.orig"/>
-		<war destfile="${generic-webapp.dir.dist}/${generic-webapp.war.file}" compress="false" webxml="${working.dir}/generic-webapp/WEB-INF/web.xml" >
-			<fileset dir="${working.dir}/generic-webapp">
+		<delete dir="${working.dir}/bda-blueprints-webapp"/>
+		<unzip src="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" dest="${working.dir}/bda-blueprints-webapp"/>
+		<!--
+		<copy todir="${working.dir}/bda-blueprints-webapp/WEB-INF/classes" file="${jboss-conf.dir.dest}/hibernate.cfg.xml"/>
+		-->
+		
+		<move file="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" tofile="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}.orig"/>
+		<war destfile="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" compress="false" webxml="${working.dir}/bda-blueprints-webapp/WEB-INF/web.xml" >
+			<fileset dir="${working.dir}/bda-blueprints-webapp">
 				<include name="*/**" />
 			</fileset>
 		</war>  
@@ -544,9 +550,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:init,
-		install:jboss:generic-webapp:re-configure,
-		install:jboss:generic-webapp,
-		install:jboss:generic-webapp:configure,
+		install:jboss:bda-blueprints-webapp:re-configure,
+		install:jboss:bda-blueprints-webapp,
+		install:jboss:bda-blueprints-webapp:configure,
 		install:jboss:start
 		" />
 
@@ -655,7 +661,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic-webapp/trunk/software/instal
 	</target>
 
 	<target name="upgrade:init">
-		<echo  message="Checking if database properties exist.  If they do not on an upgrade install then ${jboss.home}/server/${jboss.server.name}/deploy/${generic-webapp.ds.file} may not exist."/>
+		<echo  message="Checking if database properties exist.  If they do not on an upgrade install then ${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file} may not exist."/>
 		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
 		<properties-exist properties.list="${db.prop.list}"/>
 	</target>

@@ -1,8 +1,8 @@
 <!-- *********************************************************************** -->
-<!-- ** PROJECT:   caIntegrator 2                                         ** -->
+<!-- ** PROJECT:   BDA Blueprints Web Application                         ** -->
 <!-- *********************************************************************** -->
 
-<project name="generic-sub-project" default="build" basedir="." 
+<project name="generic-sub-project" default="static-analysis" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	xmlns="antlib:org.apache.tools.ant"
 	xmlns:cs="antlib:com.puppycrawl.tools.checkstyle"
@@ -153,7 +153,6 @@
 	<target name="static-analysis" description="Performs static analysis"
 		depends="
 		static-analysis:ivy-init,
-		init:dynamic.properties,
 		static-analysis:init,
 		static-analysis:findbugs-init,
 		static-analysis:simian,
@@ -439,20 +438,19 @@
 		-->
 	<target name="static-analysis:findbugs" 
 		depends="
-		generic-webapp,
 		static-analysis:ivy-init,
 		static-analysis:findbugs-init,
 		static-analysis:init
 		">
-		<mkdir dir="${reports.findbugs.dir}/caintegrator2"/>
+		<mkdir dir="${reports.findbugs.dir}/bda-blueprints-webapp"/>
 
 		<static-analysis-findbugs
 			findbugs.home.dir="${findbugs.home.dir}"
 			findbugs.src.dir="${generic-webapp.java.src.dir}"
 			findbugs.classes.dir="${generic-webapp.java.classes.dir}"
-			findbugs.rpt.dir="${reports.findbugs.dir}/caintegrator2"
+			findbugs.rpt.dir="${reports.findbugs.dir}/bda-blueprints-webapp"
 			findbugs.report-xsl.file="${findbugs.home.dir}/src/xsl/fancy.xsl"
-			findbugs.app.classpath.ref="caintegrator2.full.classpath" 
+			findbugs.app.classpath.ref="bda-blueprints-webapp.full.classpath" 
 			findbugs.xml.name="findbugs.xml"
 			findbugs.html.name="findbugs.html"
 			/>
@@ -511,7 +509,7 @@
 			checkstyle.config.file="${checkstyle.config}"
 			checkstyle.xml.name="checkstyle.xml"
 			checkstyle.html.name="checkstyle.html"
-			checkstyle.classpath.ref.name="caintegrator2.full.classpath"
+			checkstyle.classpath.ref.name="bda-blueprints-webapp.full.classpath"
 			/>
 	</target>
 
@@ -622,7 +620,6 @@
 		-->
 	<target name="static-analysis:cobertura" 
 		depends="
-		compile:all,
 		static-analysis:ivy-init,
 		static-analysis:init
 		">

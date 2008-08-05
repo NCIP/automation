@@ -1,5 +1,5 @@
 <!-- *********************************************************************** -->
-<!-- ** PROJECT:   caIntegrator 2                                         ** -->
+<!-- ** PROJECT:   BDA Blueprints Web Application                         ** -->
 <!-- *********************************************************************** -->
 
 <project name="bda-blueprints-webapp" default="build:all" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" xmlns="antlib:org.apache.tools.ant" xmlns:cs="antlib:com.puppycrawl.tools.checkstyle">
@@ -226,7 +226,7 @@
 		<mkdir dir="${blueprints-webapp.classes.dir}" />
 	</target>
 
-	<target name="compile:all" depends="ivy:setup-compile" description="Compiles all subproject code">
+	<target name="compile:all" depends="-init, ivy:setup-compile" description="Compiles all subproject code">
 		<javac srcdir="${blueprints-webapp.java.dir}" destdir="${blueprints-webapp.classes.dir}" debug="true">
 			<classpath refid="project.compile.classpath" />
 		</javac>
@@ -248,13 +248,8 @@
 		</war>
 	</target>
 
-	<target name="ear" depends="war">
-		<ear compress="false" destfile="${target.dir}/${ear.name}" appxml="${web.j2ee.resources.dir}/application.xml">
-			<fileset dir="${target.dir}" includes="${war.name}" />
-			<fileset dir="${commons.target.dir}" includes="imageZippingMDB.jar" />
-
-		</ear>
-		<ivy:report todir="${reports.dir}/ivy/" graph="false" />
+	<target name="dist" depends="war" description="Copies WAR file to distribution folder">
+		<copy todir="${dist.dir}" file="${target.dir}/${war.name}" />
 	</target>
 
 	<target name="post-clean">
