@@ -5,7 +5,7 @@
 </head>
 
 <BODY BGCOLOR="White" LINK="#FFAA00" VLINK="#FFAA00" ALINK="#330066" LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH="0" MARGINHEIGHT="0">
-<FORM action="/bda-blueprints/Controller" method="post">
+<FORM action="/bda-blueprints-webapp/Controller" method="post">
 <INPUT TYPE="hidden" NAME="FROM_PAGE" VALUE="index">
 <INPUT TYPE="hidden" NAME="TO_PAGE" VALUE="study">
 <h3> Online Research Manager </h3>
