@@ -24,7 +24,7 @@
 
 	<property name="war.name" value="bda-blueprints-webapp.war" />
 
-	<property name="project.properties.file" value="${software.dir}/project.properties" />
+	<property name="project.properties.file" value="${software.dir}/build/project.properties" />
 
 	<property file="${build.dir}/local.properties" />
 	<property file="${project.properties.file}" />
