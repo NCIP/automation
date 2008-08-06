@@ -1,8 +1,3 @@
-DROP TABLE study IF EXISTS;
-DROP TABLE state IF EXISTS;
-DROP TABLE user IF EXISTS;
-
-
 CREATE TABLE study (
   ID bigint default '0' NOT NULL,
   STUDY_NAME varchar(50) default ''  NOT NULL,

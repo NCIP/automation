@@ -1,2 +1,3 @@
-DROP DATABASE IF EXISTS bda-blueprints
-
+drop table study;
+drop table state;
+drop table user;
