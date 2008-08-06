@@ -121,7 +121,13 @@ software/bda-build-template/software/_repository.xml -text
 software/bda-build-template/software/blueprints-webapp/_common-configuration.xml -text
 software/bda-build-template/software/blueprints-webapp/build.xml -text
 software/bda-build-template/software/blueprints-webapp/compile.xml -text
+software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/create-database-mysql.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/create-database.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/create-tables-mysql.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/create-tables.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/drop-database.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/insert-data.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/truncate-tables.sql -text
 software/bda-build-template/software/blueprints-webapp/ivy-blueprints.xml -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/BadUsernameException.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/InvalidLoginException.java -text
