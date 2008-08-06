@@ -111,13 +111,7 @@ software/bda-build-template/.classpath -text
 software/bda-build-template/.project -text
 software/bda-build-template/docs/build.jpg -text
 software/bda-build-template/docs/release_notes.txt -text
-software/bda-build-template/software/LICENSE.txt -text
-software/bda-build-template/software/Rakefile.rb -text
 software/bda-build-template/software/Readme.txt -text
-software/bda-build-template/software/_README.TXT -text
-software/bda-build-template/software/_common-environment.xml -text
-software/bda-build-template/software/_dbunit-seed.xml -text
-software/bda-build-template/software/_repository.xml -text
 software/bda-build-template/software/blueprints-webapp/_common-configuration.xml -text
 software/bda-build-template/software/blueprints-webapp/build.xml -text
 software/bda-build-template/software/blueprints-webapp/compile.xml -text
@@ -205,10 +199,6 @@ software/bda-build-template/software/common/resources/jboss-conf/log4j.block.xml
 software/bda-build-template/software/common/resources/jboss-conf/login-config.db-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/login-config.ldap-block.xml -text
 software/bda-build-template/software/common/simian/simian.xsl -text
-software/bda-build-template/software/database-integration.xml -text
-software/bda-build-template/software/default.properties -text
-software/bda-build-template/software/deployment.xml -text
-software/bda-build-template/software/inspections.xml -text
 software/bda-build-template/software/install-properties.template -text
 software/bda-build-template/software/install.properties -text
 software/bda-build-template/software/install.xml -text
@@ -217,8 +207,6 @@ software/bda-build-template/software/lib/junitperf-1.9.1.jar -text
 software/bda-build-template/software/linux-install.properties -text
 software/bda-build-template/software/linux-upgrade.properties -text
 software/bda-build-template/software/project.properties -text
-software/bda-build-template/software/remote-deploy.xml -text
-software/bda-build-template/software/test-env.properties -text
 software/bda-build-template/software/tests/functional/selenium/generic-webappTestCase.html -text
 software/bda-build-template/software/tests/functional/selenium/generic-webappTestSuite.html -text
 software/bda-build-template/software/upgrade-properties.template -text

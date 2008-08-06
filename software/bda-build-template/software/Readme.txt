@@ -13,11 +13,11 @@ tar cvf - . --wildcards --exclude .svn --exclude "*~" | (cd $projectdir; tar xvf
 
 # 
 cd $projectdir
-perl -i -pe 's/generic-api/yoursubproject/g' *.*
-perl -i -pe 's/generic-webapp/yoursubproject/g' *.*
+perl -i -pe 's/bda-blueprints-api/yoursubproject/g' *.*
+perl -i -pe 's/bda-blueprints-webapp/yoursubproject/g' *.*
 
 
 
 cd $projectdir
-perl -i -pe 's/generic-api/pa-ear/g' *.*
-perl -i -pe 's/generic-webapp/pa-web/g' *.*
+perl -i -pe 's/bda-blueprints-api/pa-ear/g' *.*
+perl -i -pe 's/bda-blueprints-webapp/pa-web/g' *.*
