@@ -275,7 +275,6 @@ software/bda-build-template/software/common/pmd_resources/strings.xml -text
 software/bda-build-template/software/common/pmd_resources/sunsecure.xml -text
 software/bda-build-template/software/common/pmd_resources/typeresolution.xml -text
 software/bda-build-template/software/common/pmd_resources/unusedcode.xml -text
-software/bda-build-template/software/common/resources/db-install/mysql/create-tables.sql -text
 software/bda-build-template/software/common/resources/grid/jboss-globus-libs-cagrid1_1.zip -text
 software/bda-build-template/software/common/resources/grid/jboss-globus-wsrf-war-cagrid1_1.zip -text
 software/bda-build-template/software/common/resources/jboss-conf/bda-blueprints-ds.xml -text
