@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+import javax.naming.NamingException;
+
 import bda.blueprints.business.domain.State;
 import bda.blueprints.business.domain.Study;
 import bda.blueprints.common.BaseDao;
@@ -37,9 +39,13 @@ public class StudyDaoImpl extends BaseDao implements StudyDao {
 			stmt.executeUpdate();
 			conn.commit();
 		} catch (SQLException se) {
+			// TODO: Clean this
 			throw new RuntimeException(se);
+		} catch (NamingException e) {
+			// TODO: Clean this
+			throw new RuntimeException(e);
 		} finally {
-			closeDbConnection(rs, stmt, conn);
+			closeConnection(rs, stmt, conn);
 		}
 		return 0;
 	}
@@ -60,11 +66,14 @@ public class StudyDaoImpl extends BaseDao implements StudyDao {
 				study.setDateReceived(rs.getString("date_received"));
 				results.add(study);
 			}
-
 		} catch (SQLException se) {
+			// TODO: Clean this
 			throw new RuntimeException(se);
+		} catch (NamingException e) {
+			// TODO: Clean this
+			throw new RuntimeException(e);
 		} finally {
-			closeDbConnection(rs, stmt, conn);
+			closeConnection(rs, stmt, conn);
 		}
 		return results;
 	}
@@ -84,11 +93,14 @@ public class StudyDaoImpl extends BaseDao implements StudyDao {
 				state.setDescription(rs.getString("description"));
 				states.add(state);
 			}
-
 		} catch (SQLException se) {
-			se.printStackTrace();
+			// TODO: Clean this
+			throw new RuntimeException(se);
+		} catch (NamingException e) {
+			// TODO: Clean this
+			throw new RuntimeException(e);
 		} finally {
-			closeDbConnection(rs, stmt, conn);
+			closeConnection(rs, stmt, conn);
 		}
 		return states;
 	}

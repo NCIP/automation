@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.naming.NamingException;
+
 import bda.blueprints.common.BaseDao;
 
 public class LoginDaoImpl extends BaseDao implements LoginDao {
@@ -28,8 +30,10 @@ public class LoginDaoImpl extends BaseDao implements LoginDao {
 			}
 		} catch (SQLException se) {
 			throw new InvalidLoginException();
+		} catch (NamingException e) {
+			throw new InvalidLoginException();
 		} finally {
-			closeDbConnection(rs, stmt, conn);
+			closeConnection(rs, stmt, conn);
 		}
 
 	}

@@ -1,14 +1,20 @@
 package bda.blueprints.common;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public abstract class BaseDao {
 
-	protected void closeDbConnection(ResultSet resultSet, PreparedStatement stmt, Connection conn) {
+	private String jndiName = "bda";
+
+	protected void closeConnection(ResultSet resultSet, PreparedStatement stmt, Connection conn) {
 		try {
 			if (resultSet != null) {
 				resultSet.close();
@@ -25,35 +31,11 @@ public abstract class BaseDao {
 		}
 	}
 
-	protected Connection getConnection() {
-		Connection connection = getConnection(Constants.DRIVER, Constants.URL, Constants.USERNAME, Constants.PASSWORD);
-		return connection;
+	protected Connection getConnection() throws NamingException, SQLException {
+
+		Context cxt = new InitialContext();
+		DataSource ds = (DataSource) cxt.lookup("java:/" + jndiName);
+
+		return ds.getConnection();
 	}
-
-	protected Connection getConnection(String url) {
-		return getConnection(Constants.DRIVER, url, Constants.USERNAME, Constants.PASSWORD);
-	}
-
-	Connection getConnection(String driver, String url, String username, String password) {
-		Connection conn = null;
-		System.out.println("driver=" + driver + " url=" + url + " username=" + username + " password=" + password);
-
-		try {
-			System.out.println("Constants.DRIVER=" + Constants.DRIVER + " Constants.URL=" + Constants.URL + " Constants.USERNAME="
-					+ Constants.USERNAME + " Constants.PASSWORD=" + Constants.PASSWORD);
-
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, username, password);
-			conn.setAutoCommit(false);
-		} catch (SQLException se) {
-			System.out.println("Constants.DRIVER=" + Constants.DRIVER + " Constants.URL=" + Constants.URL + " Constants.USERNAME="
-					+ Constants.USERNAME + " Constants.PASSWORD=" + Constants.PASSWORD);
-			se.printStackTrace();
-			throw new RuntimeException(se);
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException(ce);
-		}
-		return conn;
-	}
-
 }
