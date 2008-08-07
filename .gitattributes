@@ -143,7 +143,6 @@ software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/b
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/service/StudyServiceImpl.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/service/UserException.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/common/BaseDao.java -text
-software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/common/Constants.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/common/PropertyReader.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/web/ServletController.java -text
 software/bda-build-template/software/blueprints-webapp/src/resources/properties/application.properties -text

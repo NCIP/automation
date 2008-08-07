@@ -32,10 +32,8 @@ public abstract class BaseDao {
 	}
 
 	protected Connection getConnection() throws NamingException, SQLException {
-
-		Context cxt = new InitialContext();
-		DataSource ds = (DataSource) cxt.lookup("java:/" + jndiName);
-
+		InitialContext ctx = new InitialContext();
+		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/" + jndiName);
 		return ds.getConnection();
 	}
 }
