@@ -243,18 +243,10 @@
 	</target>
 
 	<target name="war" depends="compile:all, ivy:setup-runtime">
-		<war destfile="${target.dir}/${war.name}" webxml="${blueprints-webapp.web.src.dir}/WEB-INF/web.xml">
-			<fileset dir="${blueprints-webapp.web.src.dir}">
-				<exclude name="WEB-INF/**" />
-			</fileset>
-
+		<war destfile="${target.dir}/${war.name}">
+			<fileset dir="${blueprints-webapp.web.src.dir}"/>
 			<lib dir="${runtime.lib.dir}" includes="*.jar" />
-
 			<classes dir="${blueprints-webapp.classes.dir}" />
-
-			<webinf dir="${blueprints-webapp.web.src.dir}/WEB-INF">
-				<exclude name="web.xml" />
-			</webinf>
 		</war>
 	</target>
 

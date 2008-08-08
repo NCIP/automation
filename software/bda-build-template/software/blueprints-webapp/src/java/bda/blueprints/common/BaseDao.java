@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 public abstract class BaseDao {
 
@@ -32,8 +29,6 @@ public abstract class BaseDao {
 	}
 
 	protected Connection getConnection() throws NamingException, SQLException {
-		InitialContext ctx = new InitialContext();
-		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/" + jndiName);
-		return ds.getConnection();
+		return ServiceLocator.getDataSource(jndiName).getConnection();
 	}
 }

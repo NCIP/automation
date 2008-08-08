@@ -551,7 +551,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<arg value="-Dforce.reinstall=true"/>
 			<arg value="-Dlocal.install=true"/>
 			<arg value="${upgrade.target}"/>
-		</exec> 
+		</exec>
+		
 		<exec osfamily="windows"
 			executable="ant.bat" dir="${dist.exploded.dir}" failonerror="true">
 			<!-- use alternate properties file since default has replace values -->
@@ -560,8 +561,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<arg value="-Dforce.reinstall=true"/>
 			<arg value="-Dlocal.install=true"/>
 			<arg value="${upgrade.target}"/>
-		</exec> 
-		<echo message="The server is not started as part of local deployment.  You will need to run $JBOSS_HOME/bin/run.bat (or run.sh if you are linux)."/>
+		</exec>
+		
+		<echo message="The JBoss server will not be started as part of the local deployment. You will need to run $JBOSS_HOME/bin/run.bat (run.sh for Linux)."/>
 	</target>
 
 	<macrodef name="deploy-files" description="Macro for deploying and extracting distrution to server">

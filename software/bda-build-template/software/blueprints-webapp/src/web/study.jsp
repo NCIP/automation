@@ -1,5 +1,5 @@
 <html>
-<title>bda-blueprints</title>
+<title>bda-blueprints-webapp</title>
 <head>
 <link href="stylesheets/onsq.css" rel="stylesheet" type="text/css" />
 </head>
@@ -14,7 +14,7 @@ String dateReceived = null;
 %>
 
 <BODY BGCOLOR="White" LINK="#FFAA00" VLINK="#FFAA00" ALINK="#330066" LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH="0" MARGINHEIGHT="0">
-<FORM action="/bda-blueprints/Controller" method="post">
+<FORM action="/bda-blueprints-webapp/Controller" method="post">
 <INPUT TYPE="hidden" NAME="FROM_PAGE" VALUE="study">
 <INPUT TYPE="hidden" NAME="TO_PAGE" VALUE="editstudy">
 <table align="center">

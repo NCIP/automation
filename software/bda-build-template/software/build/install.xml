@@ -435,7 +435,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<target name="install:jboss:bda-blueprints-webapp:configure" description="Configure bda-blueprints-webapp application, copies over externalized properties or configurations that are not part of the jboss configuration" unless="exclude.jboss">
 		<!-- copy over any other files you may need to configure your application -->
+		
+		<!-- copy datasource file -->
 		<copy file="${jboss-conf.dir.dest}/${bda-blueprints-webapp.ds.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		<!-- copy JBoss-web.xml file -->
+		<!--
+		<copy file="${jboss-conf.dir.dest}/${jboss.web.xml.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
+		-->
 	</target>
 
 	<target name="install:jboss:configure" description="Configure JBoss (bindings, login-config.xml, ect)" unless="exclude.jboss"
