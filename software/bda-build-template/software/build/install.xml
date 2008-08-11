@@ -242,6 +242,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<!-- Wrapper install database target, depends on both MySQL and Oracle sub-targets, ifs should ensure only one is run.  Target path can be skipped by exlude.database also calls upgrade:database -->
 
 	<target name="install:database:prep" description="Copies db files with filtering" unless="exclude.database" depends="install:init">
+		<echoproperties prefix="database"/>
 		<property name="db.dir.temp" value="${working.dir}/tmp"/>
 		<mkdir dir="${db.dir.temp}"/>
 		<copy todir="${db.dir.temp}" filtering="true">
@@ -525,6 +526,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			</not>
 			<then>
 				<jboss-start-jboss />
+				<sleep seconds="15"/>
 			</then>
 		</if>
 	</target>
