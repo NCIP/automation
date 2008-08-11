@@ -290,7 +290,7 @@ $HeadURL$
 		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}" />
 		<sequential>
 			<delete dir="${temp.dir}/shutdown"/>
-			<unzip src="${jboss.home}/bin/shutdown.jar" dest="${temp.dir}/shutdown" />
+			<unzip src="@{jboss.home}/bin/shutdown.jar" dest="${temp.dir}/shutdown" />
 			<replaceregexp file="${temp.dir}/shutdown/jndi.properties" byline="true"
 				match="^(java.naming.provider.url)=(.*)"
 				replace="\1=jnp://@{jboss.server.hostname}:@{jboss.server.jndi.port}"/>
@@ -300,7 +300,7 @@ $HeadURL$
 					<include name="*/**" />
 				</fileset>
 			</jar>
-			<copy file="${temp.dir}/shutdown/shutdown.jar" todir="${jboss.home}/bin" overwrite="true"/>
+			<copy file="${temp.dir}/shutdown/shutdown.jar" todir="@{jboss.home}/bin" overwrite="true"/>
 		</sequential>
 	</macrodef>
 	
