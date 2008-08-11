@@ -197,20 +197,26 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 					<isset property="rt.jboss.exists"/>
 					<then>  
 						<property name="local.jboss.home" location="${jboss.home}"/>
+						<echo message="JBOSS_HOME exists ${jboss.home}"/>
 					</then> 
 					<else>  
 						<property name="local.jboss.home" location="${pt.dir}/${jboss.binaries.relative.dir}"/>
 						<available file="${local.jboss.home}/lib/commons-httpclient.jar" property="local.jboss.exists"/>
+						 <echo message="JBOSS_HOME does not exist checking for LOCAL_JBOSS_HOME ${local.jboss.home}"/>
 						<if>    
 							<not>   
 								<isset property="local.jboss.exists"/>
 							</not>  
 							<then>  
+								<echo message="LOCAL_JBOSS_HOME not found downloading."/>
 								<antcall target="dist:tools:retrieve:jboss"/>
 								<java jar="${tools.dir}/${jboss.binaries.file}" fork="true">
 									<arg line="-installGroup ejb3 installpath=${local.jboss.home}"/>
 								</java> 
 							</then> 
+							<else>
+								<echo message="LOCAL_JBOSS_HOME found ${local.jboss.home}"/>
+							</else>
 						</if>   
 					</else> 
 				</if>   
