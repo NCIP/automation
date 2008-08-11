@@ -32,6 +32,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<!-- Properties file related properties and tasks -->
 	<property environment="env" />
+	<property file="local.properties"/>
 	<property file="project.properties"/>
 	<property name="properties.file" value="${basedir}/install.properties"/>
 	<echo message="Using properties file of ${properties.file}."/>
