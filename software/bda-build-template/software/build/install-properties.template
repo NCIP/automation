@@ -19,13 +19,10 @@ database.url=
 ########################
 ###  JBOSS SETTINGS  ###
 ########################
-jboss.cluster.port=
-jboss.cluster.rmi.port=
 jboss.ejbinvoker.port=
 jboss.hajndi.port=
 jboss.home=
 jboss.jms.port=
-jboss.server.ajp.port=
 jboss.server.bind.port=
 jboss.server.hostname=
 jboss.server.jndi.port=
@@ -50,17 +47,6 @@ jboss.messaging.port=
 ##############
 ldap.url=
 ldap.basedn=
-
-##################################
-#  Grid Service registration URL #
-##################################
-# Production Grid
-#    grid.index.url=
-# QA Grid
-#    grid.index.url=
-# Training Grid
-grid.index.url=
-
 
 ########################
 ###  MAIL  SETTINGS  ###
