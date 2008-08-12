@@ -29,7 +29,7 @@ docs/jboss-ports/59280.properties -text
 docs/jboss-ports/59380.properties -text
 docs/jboss-ports/59480.properties -text
 docs/jboss-ports/59580.properties -text
-docs/jboss-ports/jboss-default-ports.properties -text
+docs/jboss-ports/jboss-default-ports.txt -text
 docs/knowledge-center/kc-code-management-process.docx -text
 docs/knowledge-center/knowledge-center.vsd -text
 docs/presentations/bda-cbiit-preso/AC_RunActiveContent.js -text
