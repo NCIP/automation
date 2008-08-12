@@ -12,7 +12,6 @@ docs/images/kc-branch.jpg -text
 docs/images/kc-trunk.jpg -text
 docs/knowledge-center/kc-code-management-process.docx -text
 docs/knowledge-center/knowledge-center.vsd -text
-docs/presentations/BDA[!!-~]Templates.pptx -text
 docs/presentations/I[!!-~]want[!!-~]to.pptx -text
 docs/presentations/bda-cbiit-preso/AC_RunActiveContent.js -text
 docs/presentations/bda-cbiit-preso/SkinUnderAll.swf -text
@@ -70,6 +69,7 @@ docs/presentations/bda-cbiit-preso/build-system.png -text
 docs/presentations/bda-cbiit-preso/developer-practices.png -text
 docs/presentations/bda-iterations.jpg -text
 docs/presentations/bda-screencasts.pptx -text
+docs/presentations/bda-templates.pptx -text
 docs/presentations/code-quality-eclipse/code-quality-eclipse-plugins.xml -text
 docs/presentations/code-quality-eclipse/code-quality-eclipse-project.zip -text
 docs/presentations/code-quality-eclipse/flash/SkinUnderAll.swf -text
