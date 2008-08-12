@@ -12,7 +12,6 @@ docs/images/kc-branch.jpg -text
 docs/images/kc-trunk.jpg -text
 docs/knowledge-center/kc-code-management-process.docx -text
 docs/knowledge-center/knowledge-center.vsd -text
-docs/presentations/I[!!-~]want[!!-~]to.pptx -text
 docs/presentations/bda-cbiit-preso/AC_RunActiveContent.js -text
 docs/presentations/bda-cbiit-preso/SkinUnderAll.swf -text
 docs/presentations/bda-cbiit-preso/bda-flash-converted.flv -text
@@ -81,6 +80,7 @@ docs/presentations/code-quality-eclipse/flash/code-quality-eclipse.swc -text
 docs/presentations/code-quality-eclipse/flash/code-quality-eclipse.swf -text
 docs/presentations/generic-bda-kickoff.ppt -text
 docs/presentations/generic-bda-training.ppt -text
+docs/presentations/i-want-to.pptx -text
 docs/presentations/systems-workshop/systems-bda-workshop.ppt -text
 docs/reference-architecture/README -text
 docs/reference-architecture/WebRoot/README -text
