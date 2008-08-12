@@ -1,99 +1,100 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=18084
+=18085
 # binding port = is assumed after service-config
-
-#### jboss-service.xml
-#jboss:service=Naming atribute name="RmiPort"
-jboss.server.rmi.port=1098
-#jboss:service=Naming
-jboss.server.jndi.port=1099
-#jboss:service=WebService
-jboss.web.service.port=8083
-#jboss:service=invoker,type=jrmp
-jboss.service.rmiobject.port=4444
-#jboss:service=invoker,type=pooled
-jboss.server.bind.port=4445
-
 #### cluster-service.xml
-#jboss:service=HAJNDI attribute name="RmiPort"
-jboss.hajrmi.port=1101
-#jboss:service=HAJNDI binding port=
-jboss.hajndi.port=1100
-#jboss:service=invoker,type=jrmpha
-jboss.service.rmiobject.port=4444
-#jboss:service=invoker,type=pooledha
-jboss.pooledha.port=4446
-
+#****** Diff between sample and our template
+#### EJB3 Remoting Connector ejb3.deployer/META-INF/jboss-service.xml
+#### hajndi-jms-ds.xml
+#### hsqldb-ds.xml (commented out)
+#### httpha-invoker.sar
+####  http-invoker.sar & httpha-invoker.sar
 #### iiop-service.xml
-#jboss:service=CorbaORB
 jboss.cobraorb.port=3528
-
-#### jmx-rmi-adaptor.sar
-#jboss.jmx:type=Connector,name=RMI
-jboss.jmx-rmi.port=19001
-
-#### snmp-adaptor.sar
-#jboss.jmx:name=SnmpAgent,service=trapd,type=logger
-jboss.snmp-trapd.port=1162
-#jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor
-jboss.snmp.port=1161
-
-#### jbossmq-service.xml
-#jboss.mq:service=InvocationLayer,type=UIL2
+jboss.ejbinvoker.port=
+jboss.ejbinvoker.port=3873
+jboss.hajndi.port=1100
+jboss.hajndi.port=1100
+jboss.hajrmi.port=1101
 jboss.jms.port=8093
-
+#jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor
+#jboss.jmx:name=SnmpAgent,service=trapd,type=logger
+jboss.jmx-rmi.port=19001
+#jboss.jmx:type=Connector,name=RMI
+#### jboss messaging
+jboss.messaging.port=4457
+#jboss.messaging:service=Connector,transport=bisocket in template
+#jboss.messaging:service=Connector,transport=socket
+#jboss.messaging:service=Connector,transport=socket in sample
 #### jbossmq-httpil.sar
 #jboss.mq:service=InvocationLayer,type=HTTP
-jboss.server.port=8080
-
-#### hajndi-jms-ds.xml
+#jboss.mq:service=InvocationLayer,type=UIL2
 #jboss.mq:service=JMSProviderLoader,name=HAJNDIJMSProvider
-jboss.hajndi.port=1100
-
-####  http-invoker.sar & httpha-invoker.sar
-#jboss:service=invoker,type=http EJBInvoker
-jboss.server.port=8080
-
-#### EJB3 Remoting Connector ejb3.deployer/META-INF/jboss-service.xml
+#### jbossmq-service.xml
+jboss.pooledha.port=4446
+#jboss.remoting:service=Connector,transport=Async
+#jboss.remoting:service=Connector,transport=Socket
 #jboss.remoting:type=Connector,name=DefaultEjb3Connector,handler=ejb3
-jboss.ejbinvoker.port=3873
-
-#jboss:service=invoker,type=http,target=Naming JMXInvoker
+jboss.server.bind.port=4445
+jboss.server.jndi.port=1099
 jboss.server.port=8080
-
-#jboss:service=invoker,type=http,target=Naming,readonly=true
 jboss.server.port=8080
-
-#### httpha-invoker.sar
+jboss.server.port=8080
+jboss.server.port=8080
+jboss.server.port=8080
+jboss.server.port=8080
+jboss.server.port=8080
+jboss.server.port=8080
+jboss.server.rmi.port=1098
+#jboss:service=CorbaORB
+#jboss:service=HAJNDI attribute name="RmiPort"
+#jboss:service=HAJNDI binding port=
+#jboss:service=invoker,type=http EJBInvoker
 #jboss:service=invoker,type=httpHA EJBInvokerHA
-jboss.server.port=8080
-
 #jboss:service=invoker,type=http,target=HAJNDI JMXInvokerHA
-jboss.server.port=8080
-
+#jboss:service=invoker,type=http,target=Naming JMXInvoker
+#jboss:service=invoker,type=http,target=Naming,readonly=true
+#jboss:service=invoker,type=jrmp
+#jboss:service=invoker,type=jrmpha
+#jboss:service=invoker,type=pooled
+#jboss:service=invoker,type=pooledha
+#jboss:service=Naming
+#jboss:service=Naming atribute name="RmiPort"
+jboss.service.rmiobject.port=4444
+jboss.service.rmiobject.port=4444
+#jboss:service=WebService
+#### jboss-service.xml
+jboss.snmp.port=1161
+jboss.snmp-trapd.port=1162
+jboss.web.service.port=8083
+#jboss.web:service=WebServer
 #### jboss-ws4ee.sar
 #jboss.ws4ee:service=AxisService
-jboss.server.port=8080
-
-# remoting in ours
-#### hsqldb-ds.xml (commented out)
-#jboss.web:service=WebServer
-jboss.server.port=8080
-
-#### jboss messaging
-#jboss.messaging:service=Connector,transport=socket
-jboss.messaging.port=4457
-
-
-
-
+#### jmx-rmi-adaptor.sar
 #****** Missing in Base Templage from nci
+# remoting in ours
 #### remoting-service.xml
-#jboss.remoting:service=Connector,transport=Socket
-=18084
-#jboss.remoting:service=Connector,transport=Async
-=18085
-
-#****** Diff between sample and our template
-#jboss.messaging:service=Connector,transport=socket in sample
-#jboss.messaging:service=Connector,transport=bisocket in template
-
-
+#### snmp-adaptor.sar
