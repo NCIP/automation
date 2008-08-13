@@ -45,7 +45,7 @@
 	  <dependency org="umlgraph" name="umlgraph" rev="4.8" force="true" conf="runtime->master" />
 	  <dependency org="schemaspy" name="schemaspy" rev="3.1.1" force="true" conf="runtime->master" />		  
 	  <dependency org="postgresql" name="postgresql-jdbc3" rev="8.3-603" force="true" conf="runtime->master" />	
-          <dependency org="fusemetrics" name="fusemetrics" rev="1.0" force="true" conf="runtime->master" />
+	  <dependency org="fusemetrics" name="fusemetrics" rev="1.0" force="true" conf="runtime->master" />
 	  <dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" force="true" conf="runtime->master" />		  
 	  <dependency org="liquibase" name="liquibase" rev="1.7.0" force="true" conf="runtime->master" />		  
 	  <!--
