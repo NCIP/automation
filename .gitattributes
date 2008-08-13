@@ -236,8 +236,8 @@ software/bda-build-template/software/common/resources/jboss-conf/login-config.ld
 software/bda-build-template/software/common/simian/simian.xsl -text
 software/bda-build-template/software/lib/jdepend-2.9.jar -text
 software/bda-build-template/software/lib/junitperf-1.9.1.jar -text
-software/bda-build-template/software/tests/functional/selenium/generic-webappTestCase.html -text
-software/bda-build-template/software/tests/functional/selenium/generic-webappTestSuite.html -text
+software/bda-build-template/software/tests/functional/selenium/bdaTestCase.html -text
+software/bda-build-template/software/tests/functional/selenium/bdaTestSuite.html -text
 software/bda-build-template/tools/cruisecontrol/build-bda-blueprints.xml -text
 software/bda-build-template/tools/cruisecontrol/config.properties -text
 software/bda-build-template/tools/cruisecontrol/config.xml -text
