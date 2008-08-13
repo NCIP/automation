@@ -24,8 +24,8 @@
 	<property name="tests.acceptance.classes.dir" value="${basedir}/target/tests-acceptance/classes" />
 	<property name="tests.acceptance.jar.name" value="bda-blueprints-acceptance-tests.jar" />
 
-	<property name="test.acceptance.input.dir" value="${tests.dir}/acceptance/input" />
-	<property name="test.acceptance.output.dir" value="${tests.dir}/acceptance/output" />
+	<property name="tests.acceptance.input.dir" value="${tests.dir}/acceptance/input" />
+	<property name="tests.acceptance.output.dir" value="${reports.dir}/acceptance" />
 
 
 	<property name="war.name" value="bda-blueprints-webapp.war" />
@@ -177,6 +177,7 @@
 	<target name="-init" depends="-pre-clean">
 		<mkdir dir="${blueprints-webapp.classes.dir}" />
 		<mkdir dir="${tests.acceptance.classes.dir}" />
+		<mkdir dir="${tests.acceptance.output.dir}" />
 	</target>
 
 	<target name="compile:application-code" depends="-init, ivy:setup-compile" description="Compiles all subproject code">
@@ -222,8 +223,8 @@
 	<target name="test:acceptance" depends="test:ivy-init, test:jar-acceptance-tests" description="Runs acceptance tests">
 		<echo message="Starting FIT tests..." />
 		<java classname="fitlibrary.runner.FolderRunner" fork="yes" failonerror="yes">
-			<arg value="${test.acceptance.input.dir}" />
-			<arg value="${test.acceptance.output.dir}" />
+			<arg value="${tests.acceptance.input.dir}" />
+			<arg value="${tests.acceptance.output.dir}" />
 			<classpath refid="project.test.acceptance.classpath" />
 		</java>
 	</target>
