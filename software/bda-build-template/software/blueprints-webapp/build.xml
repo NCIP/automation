@@ -12,7 +12,6 @@
 	<property name="root.dir" location="${basedir}/../.." />
 	<property name="docs.dir" location="${root.dir}/docs" />
 	<property name="software.dir" location="${root.dir}/software" />
-	<property name="build.dir" location="." />
 	<property name="lib.dir" location="${software.dir}/target/lib" />
 	<property name="runtime.lib.dir" location="${lib.dir}/runtime" />
 	<property name="compile.lib.dir" location="${lib.dir}/compile" />
@@ -21,12 +20,19 @@
 	<property name="reports.dir" location="${software.dir}/target/reports" />
 	<property name="common.dir" value="${software.dir}/common" />
 	<property name="bda-download.dir" value="${target.dir}/bda-download" />
+	<property name="tests.dir" value="${basedir}/tests" />
+	<property name="tests.acceptance.classes.dir" value="${basedir}/target/tests-acceptance/classes" />
+	<property name="tests.acceptance.jar.name" value="bda-blueprints-acceptance-tests.jar" />
+
+	<property name="test.acceptance.input.dir" value="${tests.dir}/acceptance/input" />
+	<property name="test.acceptance.output.dir" value="${tests.dir}/acceptance/output" />
+
 
 	<property name="war.name" value="bda-blueprints-webapp.war" />
 
 	<property name="project.properties.file" value="${software.dir}/build/project.properties" />
 
-	<property file="${build.dir}/local.properties" />
+	<property file="${basedir}/local.properties" />
 	<property file="${project.properties.file}" />
 	<property file="${envpropertyfile}" />
 
@@ -38,9 +44,9 @@
 	<property name="local.repo.dir" location="${software.dir}/local-ivy-repo" />
 	<property name="bda-utils.dir" location="${software.dir}/target/bda-utils" />
 
-	<property name="blueprints-webapp.java.dir" value="${build.dir}/src" />
+	<property name="blueprints-webapp.java.dir" value="${basedir}/src" />
 	<property name="blueprints-webapp.web.src.dir" location="${blueprints-webapp.java.dir}/web" />
-	<property name="blueprints-webapp.classes.dir" value="${build.dir}/target/classes" />
+	<property name="blueprints-webapp.classes.dir" value="${basedir}/target/classes" />
 
 	<!-- Get the three BDA files needed to set the Ivy environment up -->
 	<get src="${build.bda.src.url}" dest="${bda-download.dir}/bda-ivy-build.xml" />
@@ -49,15 +55,11 @@
 
 	<!-- Run the DBA build script to get the remaining Ivy dependencies needed for BDA -->
 	<mkdir dir="${bda-download.dir}" />
-	<property name="bda-download.file" value="bda-ivy-build.xml"/>
-	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}"/>
-	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}"/>
+	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
 
-	<ant inheritAll="false" inheritRefs="false"
-		antfile="${bda-download.file}"
-		target="retrieve-bda"
-		dir="${bda-download.dir}"
-		>
+	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" location="${bda-utils.dir}" />
 		<property name="lib.dir" location="${lib.dir}" />
@@ -129,29 +131,193 @@
 		<delete dir="${simian.lib.dir}" />
 	</target>
 
-	<target name="ivy:setup-test" depends="ivy:init">
-		<ivy:resolve refresh="true" conf="test-selenium" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-selenium" />
-		<path id="selenium.classpath">
-			<fileset dir="${selenium.lib.dir}">
-				<include name="*.jar" />
-			</fileset>
-		</path>
+
+
+
+
+	<!-- ******************************************************************* -->
+	<!-- ** MAIN TARGETS                                                  ** -->
+	<!-- ******************************************************************* -->
+
+	<target name="init:ivy">
+		<mkdir dir="${local.repo.dir}" />
+		<property name="ivy.dep.file" value="${ivy.def.file}" />
+		<ivy:settings file="${ivy.settings.file}" />
+	</target>
+
+	<target name="ivy:setup" depends="ivy:setup-runtime, 
+	        ivy:setup-compile,
+			test:ivy-init,
+	        ivy:setup-static-analysis" description="Updates the local ivy repository for all build and test dependencies." />
+
+	<target name="ivy:setup-runtime" depends="ivy:init">
+		<ivy:resolve refresh="true" conf="runtime" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="runtime" />
+	</target>
+
+	<target name="ivy:setup-compile" depends="ivy:init">
+		<ivy:resolve refresh="true" conf="compile" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="compile" />
+	</target>
+
+
+	<target name="ivy-settings">
+		<ivy:settings file="${ivy.settings.file}" />
+	</target>
+
+	<target name="build:all" depends="-pre-clean, -init, war, test, post-clean" description="Default target" />
+
+	<!-- This will delete all of the files created by the build process -->
+	<target name="-pre-clean">
+		<delete dir="${classes.dir}" quiet="true" />
+		<delete file="${target.dir}/${war.name}" quiet="false" />
+	</target>
+
+	<!-- This sets up all of the neccessary directories -->
+	<target name="-init" depends="-pre-clean">
+		<mkdir dir="${blueprints-webapp.classes.dir}" />
+		<mkdir dir="${tests.acceptance.classes.dir}" />
+	</target>
+
+	<target name="compile:application-code" depends="-init, ivy:setup-compile" description="Compiles all subproject code">
+		<javac srcdir="${blueprints-webapp.java.dir}" destdir="${blueprints-webapp.classes.dir}" debug="true">
+			<classpath refid="project.compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="war" depends="compile:application-code, ivy:setup-runtime">
+		<war destfile="${target.dir}/${war.name}">
+			<fileset dir="${blueprints-webapp.web.src.dir}" />
+			<lib dir="${runtime.lib.dir}" includes="*.jar" />
+			<classes dir="${blueprints-webapp.classes.dir}" />
+		</war>
+	</target>
+
+	<target name="dist" depends="war" description="Copies WAR file to distribution folder">
+		<copy todir="${dist.dir}" file="${target.dir}/${war.name}" />
+	</target>
+
+	<target name="post-clean">
+		<delete dir="${blueprints-webapp.classes.dir}" quiet="false" />
+	</target>
+
+
+
+
+
+
+
+	<!-- ******************************************************************* -->
+	<!-- ** TESTING TARGETS                                               ** -->
+	<!-- ******************************************************************* -->
+
+	<!-- This is a wrapper target for all test targets. TODO: Add unit, functional tests! -->
+	<target name="test" description="Runs all tests" depends="
+				-init,
+				test:ivy-init,
+				test:acceptance
+				">
+	</target>
+
+	<target name="test:acceptance" depends="test:ivy-init, test:jar-acceptance-tests" description="Runs acceptance tests">
+		<echo message="Starting FIT tests..." />
+		<java classname="fitlibrary.runner.FolderRunner" fork="yes" failonerror="yes">
+			<arg value="${test.acceptance.input.dir}" />
+			<arg value="${test.acceptance.output.dir}" />
+			<classpath refid="project.test.acceptance.classpath" />
+		</java>
+	</target>
+
+	<target name="test:compile-acceptance-tests" description="Compiles acceptance tests">
+		<echo message="Compiling acceptance tests..." />
+		<javac srcdir="${tests.dir}/acceptance/java" destdir="${tests.acceptance.classes.dir}" debug="true">
+			<classpath refid="project.test.acceptance.classpath" />
+		</javac>
+	</target>
+
+	<target name="test:jar-acceptance-tests" depends="test:compile-acceptance-tests" description="Packages acceptance tests into a JAR">
+		<echo message="Packaging acceptance tests..." />
+		<jar basedir="${tests.acceptance.classes.dir}" destfile="${lib.dir}/test-acceptance/${tests.acceptance.jar.name}" />
+	</target>
+
+	<target name="test:ivy-init" depends="
+			init:ivy,
+			test:ivy-test-junit,
+			test:ivy-test-selenium,
+			test:ivy-test-acceptance,
+			test:ivy-test-cobertura
+			" />
+
+	<target name="test:ivy-test-junit" depends="init:ivy" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-junit" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-junit" />
-		<path id="junit.classpath">
-			<fileset dir="${junit.lib.dir}">
+		<path id="project.test.junit.classpath">
+			<fileset dir="${lib.dir}/test-junit">
 				<include name="*.jar" />
 			</fileset>
 		</path>
+	</target>
+
+	<target name="test:ivy-test-selenium" depends="init:ivy" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-selenium" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-selenium" />
+		<path id="project.test.selenium.classpath">
+			<fileset dir="${lib.dir}/test-selenium">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<target name="test:ivy-test-acceptance" depends="init:ivy" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-acceptance" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-acceptance" />
+		<path id="project.test.acceptance.classpath">
+			<fileset dir="${lib.dir}/test-acceptance">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<target name="test:ivy-test-cobertura" depends="init:ivy" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-cobertura" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-cobertura" />
 		<path id="cobertura.classpath">
-			<fileset dir="${cobertura.lib.dir}">
+			<fileset dir="${lib.dir}/test-cobertura">
 				<include name="*.jar" />
 			</fileset>
 		</path>
 		<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+	</target>
+
+
+
+
+
+
+
+
+
+
+
+	<!-- ******************************************************************* -->
+	<!-- ** STATIC ANALYSIS                                               ** -->
+	<!-- ******************************************************************* -->
+
+	<!-- This is a wrapper target for all static analysis targets -->
+	<target name="static-analysis" description="Performs static analysis" depends="
+			static-analysis:ivy-init,
+			static-analysis:init,
+			static-analysis:findbugs-init,
+			static-analysis:simian,
+			static-analysis:pmd,
+			static-analysis:checkstyle,
+			static-analysis:javancss,
+			static-analysis:findbugs,
+			static-analysis:diff:pmd,
+			static-analysis:diff:checkstyle
+			">
+		<fail if="checkstyle.failure" message="There were Checkstyle failures." />
+		<fail if="pmd.failure" message="There were PMD failures." />
 	</target>
 
 	<target name="ivy:setup-static-analysis" depends="ivy:init">
@@ -185,109 +351,6 @@
 		</path>
 	</target>
 
-	<!-- ******************************************************************* -->
-	<!-- ** MAIN TARGETS                                                  ** -->
-	<!-- ******************************************************************* -->
-
-	<target name="init:ivy">
-		<mkdir dir="${local.repo.dir}" />
-		<property name="ivy.dep.file" value="${ivy.def.file}" />
-		<ivy:settings file="${ivy.settings.file}" />
-	</target>
-
-	<target name="test:ivy-init" depends="
-		init:ivy,
-		test:ivy-test-selenium,
-		test:ivy-test-junit,
-		test:ivy-test-cobertura
-		" />
-
-
-	<target name="ivy:setup" depends="ivy:setup-runtime, 
-	        ivy:setup-compile,
-	        ivy:setup-test,
-	        ivy:setup-static-analysis" description="Updates the local ivy repository for all build and test dependencies." />
-
-	<target name="ivy:setup-runtime" depends="ivy:init">
-		<ivy:resolve refresh="true" conf="runtime" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="runtime" />
-	</target>
-
-	<target name="ivy:setup-compile" depends="ivy:init">
-		<ivy:resolve refresh="true" conf="compile" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="compile" />
-	</target>
-
-
-	<target name="ivy-settings">
-		<ivy:settings file="${ivy.settings.file}" />
-	</target>
-
-	<target name="build:all" depends="-pre-clean, -init, compile:all, war, post-clean" description="Default target" />
-
-	<!-- This will delete all of the files created by the build process -->
-	<target name="-pre-clean">
-		<delete dir="${classes.dir}" quiet="true" />
-		<delete file="${target.dir}/${war.name}" quiet="false" />
-	</target>
-
-	<!-- This sets up all of the neccessary directories -->
-	<target name="-init" depends="-pre-clean">
-		<mkdir dir="${blueprints-webapp.classes.dir}" />
-	</target>
-
-	<target name="compile:all" depends="-init, ivy:setup-compile" description="Compiles all subproject code">
-		<javac srcdir="${blueprints-webapp.java.dir}" destdir="${blueprints-webapp.classes.dir}" debug="true">
-			<classpath refid="project.compile.classpath" />
-		</javac>
-	</target>
-
-	<target name="war" depends="compile:all, ivy:setup-runtime">
-		<war destfile="${target.dir}/${war.name}">
-			<fileset dir="${blueprints-webapp.web.src.dir}"/>
-			<lib dir="${runtime.lib.dir}" includes="*.jar" />
-			<classes dir="${blueprints-webapp.classes.dir}" />
-		</war>
-	</target>
-
-	<target name="dist" depends="war" description="Copies WAR file to distribution folder">
-		<copy todir="${dist.dir}" file="${target.dir}/${war.name}" />
-	</target>
-
-	<target name="post-clean">
-		<delete dir="${blueprints-webapp.classes.dir}" quiet="false" />
-	</target>
-
-	<target name="test:ivy-test-selenium" depends="init:ivy" description="Updates the local ivy repository">
-		<ivy:resolve refresh="true" conf="test-selenium" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-selenium" />
-		<path id="project.test.selenium.classpath">
-			<fileset dir="${lib.dir}/test-selenium">
-				<include name="*.jar" />
-			</fileset>
-		</path>
-	</target>
-
-	<target name="test:ivy-test-junit" depends="init:ivy" description="Updates the local ivy repository">
-		<ivy:resolve refresh="true" conf="test-junit" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-junit" />
-		<path id="project.test.junit.classpath">
-			<fileset dir="${lib.dir}/test-junit">
-				<include name="*.jar" />
-			</fileset>
-		</path>
-	</target>
-	<target name="test:ivy-test-cobertura" depends="init:ivy" description="Updates the local ivy repository">
-		<ivy:resolve refresh="true" conf="test-cobertura" />
-		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-cobertura" />
-		<path id="cobertura.classpath">
-			<fileset dir="${lib.dir}/test-cobertura">
-				<include name="*.jar" />
-			</fileset>
-		</path>
-		<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
-	</target>
-
 	<target name="static-analysis:ivy-init" depends="
 		init:ivy,
 		static-analysis:ivy-test-javancss,
@@ -304,6 +367,7 @@
 			</fileset>
 		</path>
 	</target>
+
 	<target name="static-analysis:ivy-test-checkstyle" depends="init:ivy" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-checkstyle" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-checkstyle" />
@@ -313,6 +377,7 @@
 			</fileset>
 		</path>
 	</target>
+
 	<target name="static-analysis:ivy-test-pmd" depends="init:ivy" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-pmd" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-pmd" />
@@ -322,6 +387,7 @@
 			</fileset>
 		</path>
 	</target>
+
 	<target name="static-analysis:ivy-test-simian" depends="init:ivy" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-simian" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-simian" />
@@ -333,22 +399,7 @@
 	</target>
 
 
-	<!-- This is a wrapper target for all static analysis targets -->
-	<target name="static-analysis" description="Performs static analysis" depends="
-		static-analysis:ivy-init,
-		static-analysis:init,
-		static-analysis:findbugs-init,
-		static-analysis:simian,
-		static-analysis:pmd,
-		static-analysis:checkstyle,
-		static-analysis:javancss,
-		static-analysis:findbugs,
-		static-analysis:diff:pmd,
-		static-analysis:diff:checkstyle
-		">
-		<fail if="checkstyle.failure" message="There were Checkstyle failures." />
-		<fail if="pmd.failure" message="There were PMD failures." />
-	</target>
+
 
 	<!-- Creates paths and  directories -->
 	<target name="static-analysis:init">
@@ -486,20 +537,6 @@
 			<xslt taskname="pmd" in="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}.bak" out="${pmd.sub-project.rpt.dir}/@{pmd.html.name}" style="@{pmd.report-xsl.file}" />
 		</sequential>
 	</macrodef>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	<!-- Runs JavaNCSS a tool that identifies code Cyclomatic Complexity.
@@ -651,7 +688,7 @@
 		http://cobertura.sourceforge.net/
 		-->
 	<target name="static-analysis:cobertura" depends="
-		compile:all,
+		compile:application-code,
 		static-analysis:ivy-init,
 		static-analysis:init
 		">
