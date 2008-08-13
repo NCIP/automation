@@ -190,12 +190,6 @@ software/bda-build-template/software/blueprints-webapp/tests/acceptance/input/fi
 software/bda-build-template/software/blueprints-webapp/tests/acceptance/java/gov/nih/nci/bda/Calculator.java -text
 software/bda-build-template/software/blueprints-webapp/tests/acceptance/java/gov/nih/nci/bda/CalculatorFixture.java -text
 software/bda-build-template/software/blueprints-webapp/tests/acceptance/java/gov/nih/nci/bda/Operation.java -text
-software/bda-build-template/software/blueprints-webapp/tests/acceptance/output/calculator.html -text
-software/bda-build-template/software/blueprints-webapp/tests/acceptance/output/files/css/fitnesse.css -text
-software/bda-build-template/software/blueprints-webapp/tests/acceptance/output/files/images/collapsableClosed.gif -text
-software/bda-build-template/software/blueprints-webapp/tests/acceptance/output/files/images/collapsableOpen.gif -text
-software/bda-build-template/software/blueprints-webapp/tests/acceptance/output/files/javascript/fitnesse.js -text
-software/bda-build-template/software/blueprints-webapp/tests/acceptance/output/reportIndex.html -text
 software/bda-build-template/software/blueprints-webapp/tests/component/README.TXT -text
 software/bda-build-template/software/blueprints-webapp/tests/component/bda/blueprints/business/data/LoginDaoComponentTest.java -text
 software/bda-build-template/software/blueprints-webapp/tests/component/bda/blueprints/business/data/StudyDaoComponentTest.java -text
