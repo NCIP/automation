@@ -90,14 +90,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Selenium settings -->
 	<property name="selenium.jar" value="${lib.dir}/test-selenium/selenium-server-1.0-beta-1.jar"/>
-	<property name="selenium.browser" value="*firefox"/>
+	<property name="selenium.browser" value="*iexplore"/>
 	<!--  What you would need for a ci server, recommend setting in local.properties
 	<property name="selenium.browser" value="*firefox /usr/lib64/firefox-1.5.0.12/firefox-bin"/>
 	-->
 	<property name="selenium.proxy.port" value="4444"/>
 	<property name="selenium.report.dir" value="${reports.dir}/selenium"/>
 	<property name="selenium.report.file" value="selenium-rpt.html"/>
-	<property name="selenium.test.dir" value="${software.dir}/test/selenium"/>
+	<property name="selenium.test.dir" value="${software.dir}/tests/functional/selenium"/>
 	<property name="selenium.test.suite" value="${selenium.test.dir}/bdaTestSuite.html"/>
 	<property name="selenium.url" value="http://${jboss.server.hostname}:${jboss.server.port}"/>
 
@@ -813,7 +813,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 				<fail unless="env.DISPLAY" message="DISPLAY environment variable not set, please set it as outlined above and run again."/>
 			</then>
 		</if>
-		<taskdef resource="selenium-ant.properties"  classpathref="project.test.selenium.classpath"/>
+		<taskdef resource="selenium-ant.properties" classpathref="project.test.selenium.classpath"/>
 		<selenese 
 			suite="${selenium.test.suite}"
 			browser="${selenium.browser}"

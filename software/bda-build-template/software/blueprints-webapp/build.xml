@@ -27,6 +27,11 @@
 	<property name="tests.acceptance.input.dir" value="${tests.dir}/acceptance/resources/input" />
 	<property name="tests.acceptance.output.dir" value="${reports.dir}/acceptance" />
 
+	<property name="tests.acceptance.fitnesse.dir" value="${tests.dir}/acceptance" />
+	<property name="fitnesse.output.file" value="${tests.acceptance.output.dir}/fitnesse-test-results" />
+	<property name="fitnesse.port" value="8085" />
+	<property name="Fitnesse.Test.Page.Path" value="JavaExamples.WebTest.AlertTest" />
+
 
 	<property name="war.name" value="bda-blueprints-webapp.war" />
 
@@ -133,8 +138,8 @@
 
 
 
-	
-	
+
+
 
 
 	<!-- ******************************************************************* -->
@@ -207,12 +212,14 @@
 	<target name="test" description="Runs all tests" depends="
 				-init,
 				test:ivy-init,
-				test:acceptance
+				test:acceptance:fit,
+				test:acceptance:fitnesse
 				">
 	</target>
-
-	<target name="test:acceptance" depends="test:ivy-init, test:jar-acceptance-tests" description="Runs acceptance tests">
-		<echo message="Starting FIT tests..." />
+	
+	<!-- Fit:Begin -->
+	<target name="test:acceptance:fit" depends="test:ivy-init, test:jar-acceptance-tests" description="Runs acceptance tests">
+		<echo message="Running FIT tests..." />
 		<java classname="fitlibrary.runner.FolderRunner" fork="yes" failonerror="yes">
 			<arg value="${tests.acceptance.input.dir}" />
 			<arg value="${tests.acceptance.output.dir}" />
@@ -231,6 +238,60 @@
 		<echo message="Packaging acceptance tests..." />
 		<jar basedir="${tests.acceptance.classes.dir}" destfile="${lib.dir}/test-acceptance/${tests.acceptance.jar.name}" />
 	</target>
+	<!-- Fit:End -->
+	
+	
+	<!-- Fitnesse:Begin -->
+	<target name="test:acceptance:fitnesse" description="Runs fitnesse acceptance tests">
+		<echo message="Starting FitNesse server..."/>
+
+		<parallel>
+
+			<daemons>
+				<java classname="fitnesse.FitNesse" classpathref="project.test.acceptance.classpath">
+					<arg value="-l" />
+					<arg value="${tests.acceptance.output.dir}" />
+					<arg value="-p" />
+					<arg value="${fitnesse.port}" />
+					<arg value="-e" />
+					<arg value="0" />
+					<arg value="-d" />
+					<arg value="${tests.acceptance.fitnesse.dir}" />
+				</java>
+			</daemons>
+
+			<sequential>
+				<echo message="Starting ${Fitnesse.Test.Page.Path} test suite..." level="info" />
+				<sleep seconds="5" />
+				<java classpathref="project.test.acceptance.classpath" classname="fitnesse.runner.TestRunner" fork="true" resultproperty="fit.test.failures">
+					<arg value="-debug" />
+					<arg value="-xml" />
+					<arg value="${fitnesse.output.file}.xml" />
+					<arg value="-html" />
+					<arg value="${fitnesse.output.file}.html" />
+					<arg value="-nopath" />
+					<arg value="localhost" />
+					<arg value="${fitnesse.port}" />
+					<arg value="${Fitnesse.Test.Page.Path}" />
+				</java>
+				<!--
+				<replace file="${fitnesse.output.file}.html" token="localhost:${fitnesse.port}" />
+				-->
+
+				<echo message="Finished FitNesse tests: ${fit.test.failures} failures/exceptions" level="info" />
+				<fail message="FIT test failures/exceptions: ${fit.test.failures}">
+					<condition>
+						<not>
+							<equals arg1="${fit.test.failures}" arg2="0" />
+						</not>
+					</condition>
+				</fail>
+				<!-- This will fail the build if the return code was not Zero, which means there were errors or exceptions -->
+			</sequential>
+
+		</parallel>
+	</target>
+	<!-- Fitnesse:End -->
 
 	<target name="test:ivy-init" depends="
 			ivy:init,
