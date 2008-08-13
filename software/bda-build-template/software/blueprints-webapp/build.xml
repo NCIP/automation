@@ -24,7 +24,7 @@
 	<property name="tests.acceptance.classes.dir" value="${basedir}/target/tests-acceptance/classes" />
 	<property name="tests.acceptance.jar.name" value="bda-blueprints-acceptance-tests.jar" />
 
-	<property name="tests.acceptance.input.dir" value="${tests.dir}/acceptance/input" />
+	<property name="tests.acceptance.input.dir" value="${tests.dir}/acceptance/resources/input" />
 	<property name="tests.acceptance.output.dir" value="${reports.dir}/acceptance" />
 
 
