@@ -133,17 +133,13 @@
 
 
 
+	
+	
 
 
 	<!-- ******************************************************************* -->
 	<!-- ** MAIN TARGETS                                                  ** -->
 	<!-- ******************************************************************* -->
-
-	<target name="init:ivy">
-		<mkdir dir="${local.repo.dir}" />
-		<property name="ivy.dep.file" value="${ivy.def.file}" />
-		<ivy:settings file="${ivy.settings.file}" />
-	</target>
 
 	<target name="ivy:setup" depends="ivy:setup-runtime, 
 	        ivy:setup-compile,
@@ -158,11 +154,6 @@
 	<target name="ivy:setup-compile" depends="ivy:init">
 		<ivy:resolve refresh="true" conf="compile" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="compile" />
-	</target>
-
-
-	<target name="ivy-settings">
-		<ivy:settings file="${ivy.settings.file}" />
 	</target>
 
 	<target name="build:all" depends="-pre-clean, -init, war, test, post-clean" description="Default target" />
@@ -194,7 +185,7 @@
 		</war>
 	</target>
 
-	<target name="dist" depends="war" description="Copies WAR file to distribution folder">
+	<target name="dist" depends="war, test" description="Copies WAR file to distribution folder">
 		<copy todir="${dist.dir}" file="${target.dir}/${war.name}" />
 	</target>
 
@@ -242,14 +233,14 @@
 	</target>
 
 	<target name="test:ivy-init" depends="
-			init:ivy,
+			ivy:init,
 			test:ivy-test-junit,
 			test:ivy-test-selenium,
 			test:ivy-test-acceptance,
 			test:ivy-test-cobertura
 			" />
 
-	<target name="test:ivy-test-junit" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="test:ivy-test-junit" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-junit" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-junit" />
 		<path id="project.test.junit.classpath">
@@ -259,7 +250,7 @@
 		</path>
 	</target>
 
-	<target name="test:ivy-test-selenium" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="test:ivy-test-selenium" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-selenium" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-selenium" />
 		<path id="project.test.selenium.classpath">
@@ -269,7 +260,7 @@
 		</path>
 	</target>
 
-	<target name="test:ivy-test-acceptance" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="test:ivy-test-acceptance" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-acceptance" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-acceptance" />
 		<path id="project.test.acceptance.classpath">
@@ -279,7 +270,7 @@
 		</path>
 	</target>
 
-	<target name="test:ivy-test-cobertura" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="test:ivy-test-cobertura" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-cobertura" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-cobertura" />
 		<path id="cobertura.classpath">
@@ -353,13 +344,13 @@
 	</target>
 
 	<target name="static-analysis:ivy-init" depends="
-		init:ivy,
+		ivy:init,
 		static-analysis:ivy-test-javancss,
 		static-analysis:ivy-test-checkstyle,
 		static-analysis:ivy-test-simian,
 		static-analysis:ivy-test-pmd
 		" />
-	<target name="static-analysis:ivy-test-javancss" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-javancss" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-javancss" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-javancss" />
 		<path id="project.test.javancss.classpath">
@@ -369,7 +360,7 @@
 		</path>
 	</target>
 
-	<target name="static-analysis:ivy-test-checkstyle" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-checkstyle" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-checkstyle" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-checkstyle" />
 		<path id="project.test.checkstyle.classpath">
@@ -379,7 +370,7 @@
 		</path>
 	</target>
 
-	<target name="static-analysis:ivy-test-pmd" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-pmd" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-pmd" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-pmd" />
 		<path id="project.test.pmd.classpath">
@@ -389,7 +380,7 @@
 		</path>
 	</target>
 
-	<target name="static-analysis:ivy-test-simian" depends="init:ivy" description="Updates the local ivy repository">
+	<target name="static-analysis:ivy-test-simian" depends="ivy:init" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-simian" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-simian" />
 		<path id="project.test.simian.classpath">
