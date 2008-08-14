@@ -30,7 +30,7 @@
 	<property name="tests.acceptance.fitnesse.dir" value="${tests.dir}/acceptance" />
 	<property name="fitnesse.output.file" value="${tests.acceptance.output.dir}/fitnesse-test-results" />
 	<property name="fitnesse.port" value="8085" />
-	<property name="Fitnesse.Test.Page.Path" value="JavaExamples.WebTest.ButtonTests" />
+	<property name="Fitnesse.Test.Page.Path" value="BdaBlueprints.TestBdaBlueprintsHome" />
 
 
 	<property name="war.name" value="bda-blueprints-webapp.war" />
