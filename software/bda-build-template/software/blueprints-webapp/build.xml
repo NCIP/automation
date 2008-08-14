@@ -216,7 +216,7 @@
 				test:acceptance:fitnesse
 				">
 	</target>
-	
+
 	<!-- Fit:Begin -->
 	<target name="test:acceptance:fit" depends="test:ivy-init, test:jar-acceptance-tests" description="Runs acceptance tests">
 		<echo message="Running FIT tests..." />
@@ -239,11 +239,11 @@
 		<jar basedir="${tests.acceptance.classes.dir}" destfile="${lib.dir}/test-acceptance/${tests.acceptance.jar.name}" />
 	</target>
 	<!-- Fit:End -->
-	
-	
+
+
 	<!-- Fitnesse:Begin -->
 	<target name="test:acceptance:fitnesse" description="Runs fitnesse acceptance tests">
-		<echo message="Starting FitNesse server..."/>
+		<echo message="Starting FitNesse server..." />
 
 		<parallel>
 
@@ -262,8 +262,9 @@
 
 			<sequential>
 				<echo message="Starting ${Fitnesse.Test.Page.Path} test suite..." level="info" />
+
 				<sleep seconds="5" />
-				<java classpathref="project.test.acceptance.classpath" classname="fitnesse.runner.TestRunner" fork="true" resultproperty="fit.test.failures">
+				<java classpath="${lib.dir}/test-acceptance/fitnesse.jar" classname="fitnesse.runner.TestRunner" fork="true" resultproperty="fit.test.failures">
 					<arg value="-debug" />
 					<arg value="-xml" />
 					<arg value="${fitnesse.output.file}.xml" />
@@ -274,12 +275,13 @@
 					<arg value="${fitnesse.port}" />
 					<arg value="${Fitnesse.Test.Page.Path}" />
 				</java>
+
 				<!--
 				<replace file="${fitnesse.output.file}.html" token="localhost:${fitnesse.port}" />
 				-->
 
 				<echo message="Finished FitNesse tests: ${fit.test.failures} failures/exceptions" level="info" />
-				<fail message="FIT test failures/exceptions: ${fit.test.failures}">
+				<fail message="Fitnesse test failures/exceptions: ${fit.test.failures}">
 					<condition>
 						<not>
 							<equals arg1="${fit.test.failures}" arg2="0" />
