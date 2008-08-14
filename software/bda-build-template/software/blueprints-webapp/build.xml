@@ -242,7 +242,7 @@
 
 
 	<!-- Fitnesse:Begin -->
-	<target name="test:acceptance:fitnesse" description="Runs fitnesse acceptance tests">
+	<target name="test:acceptance:fitnesse" depends="-init, test:ivy-init"  description="Runs fitnesse acceptance tests">
 		<echo message="Starting FitNesse server..." />
 
 		<parallel>

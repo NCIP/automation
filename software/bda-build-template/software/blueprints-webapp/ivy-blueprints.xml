@@ -28,6 +28,7 @@
 		<dependency org="redhillconsulting" name="simian" rev="2.2.24" conf="test-simian->runtime" />
 		<dependency org="pmd" name="pmd" rev="4.2.1" conf="test-pmd->runtime" />
 		<dependency org="fitnesse" name="fitnesse" rev="20080812" conf="test-acceptance->master" />
+		<dependency org="fitnesse" name="webfixture" rev="1.0" conf="test-acceptance->master" />
 		<dependency org="fitlibrary" name="fitrunner" rev="1.0" conf="test-acceptance->master" />
 		<dependency org="apache" name="xerces" rev="2.6.2" conf="test-acceptance->master" />
 	</dependencies>
