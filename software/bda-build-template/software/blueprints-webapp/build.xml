@@ -264,7 +264,7 @@
 				<echo message="Starting ${Fitnesse.Test.Page.Path} test suite..." level="info" />
 
 				<sleep seconds="5" />
-				<java classpath="${lib.dir}/test-acceptance/fitnesse.jar" classname="fitnesse.runner.TestRunner" fork="true" resultproperty="fit.test.failures">
+				<java classpathref="project.test.acceptance.classpath" classname="fitnesse.runner.TestRunner" fork="true" resultproperty="fit.test.failures">
 					<arg value="-debug" />
 					<arg value="-xml" />
 					<arg value="${fitnesse.output.file}.xml" />
