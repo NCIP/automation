@@ -75,6 +75,7 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 
 	private void matchAtLeast(Properties pKeyProperties, Properties pCompareProperties) {
 		try {
+			StringBuffer msgExcKeys = new StringBuffer("");
 			pKeyProperties.load(new FileInputStream(new File(this.keyFile)));
 			pCompareProperties.load(new FileInputStream(new File(this.compareFile)));
 
@@ -88,31 +89,27 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 				Iterator keyIterator = sortedKeyProperties.iterator();
 				Iterator compareIterator = sortedCompareProperties.iterator();
 
-				if (sortedKeyProperties.size() > sortedCompareProperties.size()) {
-					StringBuffer msgExcKeys = new StringBuffer("Excess key(s) in template file " + this.keyFile
-							+ ": - ");
-					while (keyIterator.hasNext()) {
-						String key = (String) keyIterator.next();
-						if (!sortedCompareProperties.contains(key)) {
-							msgExcKeys.append(key).append(" ");
-						}
+				while (keyIterator.hasNext()) {
+					String key = (String) keyIterator.next();
+					if (!sortedCompareProperties.contains(key)) {						
+						msgExcKeys.append(key).append(" ");
 					}
-
+				
+				if (msgExcKeys.length() != 0)
 					throw new BuildException("\n" + this.compareFile + " does not match " + this.keyFile + ". \n"
-							+ msgExcKeys.toString() + "\n" + msgExcKeys.toString() + "\n" + "Operation aborted.");
-				} else {
-
-					StringBuffer msgExcComp = new StringBuffer("Excess key(s) in environment file " + this.compareFile
-							+ ": - ");
-					while (compareIterator.hasNext()) {
-						String key = (String) compareIterator.next();
-						if (!sortedKeyProperties.contains(key)) {
-							msgExcComp.append(key).append(" ");
-						}
-					}
-
-					System.out.println(msgExcComp.toString());
+							+"Excess key(s) in template file " + this.keyFile +"\n" + msgExcKeys.toString() + "\n" + "Operation aborted.");					
 				}
+
+				while (compareIterator.hasNext()) {
+					String key = (String) compareIterator.next();
+					if (!sortedKeyProperties.contains(key)) {
+						msgExcKeys.append(key).append(" ");
+					}
+				}
+				
+				if (msgExcKeys.length() != 0){
+					System.out.println("Excess key(s) in environment file " + this.compareFile +"\n" + msgExcKeys.toString());
+				}								
 			}
 		} catch (FileNotFoundException e) {
 			throw new BuildException(e);
