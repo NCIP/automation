@@ -1,6 +1,7 @@
 to change fitnesse server port, edit this line
 
 !define server {http://localhost:8085}
+!define bdaserver {http://localhost:46210}
 
 to change browser, edit this line
 

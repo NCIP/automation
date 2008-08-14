@@ -1,9 +1,11 @@
-|'''Date: '''|!-10:26:13 PM (GMT) on Wednesday, February 13, 2008-!|
-|'''Command: '''|!-java -cp D:\paket\out\webtest-complete-20080213\java\selenium-server.jar;D:\paket\out\webtest-complete-20080213\java\fitlibrary.jar;D:\paket\out\webtest-complete-20080213\java\fitnesse.jar;D:\paket\out\webtest-complete-20080213\java\selenium-java-client-driver.jar;D:\paket\out\webtest-complete-20080213\java\webfixture.jar;impl/java/bin;impl/java/lib/*.jar;../bin fit.FitServer mali 8085 1-!|
-|'''Exit code: '''|!-21-!|
-|'''Time elapsed: '''|!-206.047 seconds-!|
+|'''Date: '''|!-10:45:38 AM (EDT) on Thursday, August 14, 2008-!|
+|'''Command: '''|!-java -cp C:\tools\webtest-complete-20080213\java\fitlibrary.jar;C:\tools\webtest-complete-20080213\java\fitnesse.jar;C:\tools\webtest-complete-20080213\java\selenium-java-client-driver.jar;C:\tools\webtest-complete-20080213\java\selenium-server.jar;C:\tools\webtest-complete-20080213\java\webfixture.jar;impl/java/bin;impl/java/lib/*.jar;../bin fit.FitServer lenovo 8085 3-!|
+|'''Exit code: '''|!-0-!|
+|'''Time elapsed: '''|!-143.125 seconds-!|
 ----'''Standard Output:'''
-{{{Selected label for sel1=Mr
+{{{Value of  text1=button1
+Value of  text1=Hello world
+Selected label for sel1=Mr
 Selected label for sel1=Mrs
 Checking:identifier=altbutton
 Checking:identifier=button1
