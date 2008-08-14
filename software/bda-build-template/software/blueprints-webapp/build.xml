@@ -171,6 +171,12 @@
 
 	<!-- This sets up all of the neccessary directories -->
 	<target name="-init" depends="-pre-clean">
+		<echo message=" ______   _       _     _  _______  ______  ______   _  _______  _______  ______    _  _  _  _______  ______   _______  ______  ______  " />
+		<echo message="(____  \ (_)     (_)   (_)(_______)(_____ \(_____ \ | |(_______)(_______)/ _____)  (_)(_)(_)(_______)(____  \ (_______)(_____ \(_____ \ " />
+		<echo message=" ____)  ) _       _     _  _____    _____) )_____) )| | _     _     _   ( (____     _  _  _  _____    ____)  ) _______  _____) )_____) )" />
+		<echo message="|  __  ( | |     | |   | ||  ___)  |  ____/|  __  / | || |   | |   | |   \____ \   | || || ||  ___)  |  __  ( |  ___  ||  ____/|  ____/" />
+		<echo message="| |__)  )| |_____| |___| || |_____ | |     | |  \ \ | || |   | |   | |   _____) )  | || || || |_____ | |__)  )| |   | || |     | |" />
+		<echo message="|______/ |_______)\_____/ |_______)|_|     |_|   |_||_||_|   |_|   |_|  (______/    \_____/ |_______)|______/ |_|   |_||_|     |_|" />
 		<mkdir dir="${blueprints-webapp.classes.dir}" />
 		<mkdir dir="${tests.acceptance.classes.dir}" />
 		<mkdir dir="${tests.acceptance.output.dir}" />
@@ -190,7 +196,7 @@
 		</war>
 	</target>
 
-	<target name="dist" depends="war, test" description="Copies WAR file to distribution folder">
+	<target name="dist" depends="war" description="Copies WAR file to distribution folder">
 		<copy todir="${dist.dir}" file="${target.dir}/${war.name}" />
 	</target>
 
@@ -242,7 +248,7 @@
 
 
 	<!-- Fitnesse:Begin -->
-	<target name="test:acceptance:fitnesse" depends="-init, test:ivy-init"  description="Runs fitnesse acceptance tests">
+	<target name="test:acceptance:fitnesse" depends="-init, test:ivy-init" description="Runs fitnesse acceptance tests">
 		<echo message="Starting FitNesse server..." />
 
 		<parallel>
