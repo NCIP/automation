@@ -347,6 +347,8 @@ software/bda-build-template/software/common/findbugs/plain.xsl -text
 software/bda-build-template/software/common/findbugs/summary.xsl -text
 software/bda-build-template/software/common/grand/generic-root-build.xml.pdf -text
 software/bda-build-template/software/common/grand/generic-root-install.xml.pdf -text svneol=unset#unset
+software/bda-build-template/software/common/ivy/ivy-settings.xml -text
+software/bda-build-template/software/common/ivy/ivy-test.xml -text
 software/bda-build-template/software/common/ivysettings.xml -text
 software/bda-build-template/software/common/javancss/javancss2methodhtml.xsl -text
 software/bda-build-template/software/common/maven/profiles.xml -text
