@@ -39,7 +39,7 @@
 	  <dependency org="org.tigris" name="svnClientAdapter" rev="1.0" force="true" conf="runtime->master" />
 	  <dependency org="org.tigris" name="svnjavahl" rev="1.0" force="true" conf="runtime->master" />
 	  <dependency org="xmlconfig" name="xmlconfig" rev="0.1.9" force="true" conf="runtime->master" />
-	  <dependency org="ncicb" name="propertyvalidator" rev="0.1.5" force="true" conf="runtime->master" />		  
+	  <dependency org="ncicb" name="propertyvalidator" rev="0.1.6" force="true" conf="runtime->master" />		  
 	  <dependency org="redhillconsulting" name="simian" rev="2.2.24" force="true" conf="runtime->master" />		  
 	  <dependency org="ggtools" name="grand" rev="1.8" force="true" conf="runtime->master" />
 	  <dependency org="umlgraph" name="umlgraph" rev="4.8" force="true" conf="runtime->master" />
