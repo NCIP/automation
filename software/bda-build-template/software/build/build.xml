@@ -41,7 +41,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="common.dir" value="${software.dir}/common" />
 	<property name="local.repo.dir" value="${software.dir}/local-ivy-repo" />
 	<property name="target.dir" value="${software.dir}/target" />
-	<property name="bda-download.dir" value="${target.dir}/bda-download" />
+	<property name="bda-download.dir" value="${common.dir}/bda-download" />
+	<property name="ivy.settings.dir" value="${common.dir}/ivy" />
 	<property name="lib.dir" value="${target.dir}/lib" />
 	<property name="temp.dir" value="${target.dir}/temp" />
 	<property name="reports.dir" value="${target.dir}/reports" />
@@ -53,8 +54,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 
 	<!-- Ivy Related props -->
-	<property name="ivy.bda.definition.file" location="ivy-bda.xml" />
-	<property name="ivy.bda.settings.file" location="ivy-bda-settings.xml" />
+	<property name="ivy.settings.file" value="ivy.settings.xml" />
 	<property name="ivy.file" value="ivy-2.0.0-beta2.jar" />
 	<property name="ivy-cacore.file" value="ivy-cacore-2.0.0-beta2.jar" />
 
@@ -70,6 +70,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- The target name that should be called from the sub-project build file -->
 	<property name="bda-blueprints-api.build.target" value="build:all" />
 	<property name="bda-blueprints-webapp.build.target" value="dist" />
+
+	<!-- Maven comamnd line arguments, bda profile is inside profiles.xml that gets copied to ear folder before build to override exiting properties -->
+	<property name="bda-blueprints-webapp.maven.profile.list" value="local,bda" />
+	<property name="bda-blueprints-webapp.maven.goal.list" value="clean install" />
+	<property name="bda-blueprints-api.maven.goal.list" value="clean install" />
 
 	<!-- Used by dist:*:prep to determin list of files to use for incremental build process.
 		Directory and files must be in svn to work.
@@ -111,12 +116,19 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Where grand stores it's outputed pdf reports of build files -->
 	<property name="grand.rpt.dir" value="${common.dir}/grand" />
+	<!-- Hot deploy variables -->
+	<property name="jboss.deploy.dir"  value="${jboss.home}/server/${jboss.server.name}/deploy"/>
+	<property name="bda-blueprints-webapp.file.name"  value="bda-blueprints-webapp"/>
+	<property name="bda-blueprints-webapp.src.dir" value="${bda-blueprints-webapp.base.dir}/src/web"/>
+
 
 	<!-- retrive ivy files then retrieve bda files and librarires -->
-	<mkdir dir="${bda-download.dir}" />
 	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<!-- Use the snippet below if you want these to be transcient files
+	<mkdir dir="${bda-download.dir}" />
 	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
 	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	-->
 
 	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
@@ -228,7 +240,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<target name="ivy:clean" description="Cleans up the ivy cache of this project and all sub-projects">
-		<ivy:settings file="${ivy.bda.settings.file}" />
+		<ivy:settings file="${ivy.settings.dir}/${ivy.settings.file}" />
 		<ivy:cleancache />
 		<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml" target="ivy-cleancache" dir="${bda-download.dir}">
 			<property name="bda-utils.dir" value="${bda-utils.dir}" />
@@ -435,7 +447,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 
-	<target name="deploy:local:install" depends="dist:installer:prep" description="Installs and configures the application and required binaries and re-creates the datbase  on the local machine. Used for developer desktops and ci environments.">
+	<target name="deploy:local:install" depends="build:all,dist:installer:prep" description="Installs and configures the application and required binaries and re-creates the datbase  on the local machine. Used for developer desktops and ci environments.">
 		<!--
 		  * Requires a database installation.
 		  * Will use the target from install.xml specified in ${install.target} (defaults to install unless passed in on command line).
@@ -470,7 +482,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	</target>
 
-	<target name="deploy:local:upgrade" depends="dist:upgrader:prep" description="Upgrades and configures the application and database  on the local machine. Used for developer desktops and ci environments.">
+	<target name="deploy:local:upgrade" depends="build:all,dist:upgrader:prep" description="Upgrades and configures the application and database  on the local machine. Used for developer desktops and ci environments.">
 		<!--
 		  * Requires a database installation.
 		  * Will use the target from install.xml specified in ${upgrade.target} (defaults to install unless passed in on command line).
@@ -671,8 +683,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<target name="init:ivy" description="Initializes ivy based on ivy definition file and ivy settings file">
 		<mkdir dir="${local.repo.dir}" />
-		<property name="ivy.dep.file" value="${bda-download.dir}/ivy-bda.xml" />
-		<ivy:settings file="${bda-download.dir}/ivy-bda-settings.xml" />
+		<property name="ivy.dep.file" value="${ivy.settings.dir}/ivy-test.xml" />
+		<ivy:settings file="${ivy.settings.dir}/ivy.settings.xml" />
 	</target>
 
 	<target name="ivy-test-selenium" depends="init:ivy" description="Downloads selenium libraries from ivy into library directory">
@@ -765,5 +777,109 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<ivy:report outputpattern="target/reports/ivy/[organisation]-[module]-[conf].[ext]" dot="true" graph="false" />
 		<util-dot-on-dir dot-file.dir="target/reports/ivy" />
 	</target>
+
+	<!--  Though the general rule was that all install tasks happen as part of the install.xml we did decide to add hot deploys of the ear and web content as part of build.xml to increase the developer "friendlyness" of the build :) -->
+	<target name="deploy:hot" depends="build:all" description="Hot deploys the deployment artifact">
+		<copy file="${bda-blueprints-webapp.dist.dir}/${bda-blueprints-webapp.file.name}" todir="${jboss.deploy.dir}" />
+	</target>
+
+	<target name="deploy:hot:jsp" description="Copies all current JSP code to the deployed application for quick update">
+		<for param="toDir">
+			<path>
+				<dirset dir="${jboss.deploy.dir}/../tmp/deploy" includes="tmp*${bda-blueprints-webapp.file.name}*" />
+			</path>
+			<sequential>
+				<copy todir="@{toDir}">
+					<fileset dir="${bda-blueprints-webapp.src.dir}">
+						<include name="**/*.jsp" />
+						<include name="**/*.jspf" />
+						<include name="**/*.css" />
+						<include name="**/*.js" />
+						<include name="**/*.jpg" />
+						<include name="**/*.gif" />
+						<include name="**/*.png" />
+						<include name="**/*.faces" />
+						<include name="**/*.tag" />
+						<include name="**/*.tagf" />
+					</fileset>
+				</copy>
+			</sequential>
+		</for>
+	</target>
+
+	<!-- Sample targets to use against a maven project -->
+	<macrodef name="maven">
+		<attribute name="maven.profile.list"/>
+		<attribute name="maven.goal.list"/>
+		<attribute name="maven.dir"/>
+		<sequential>
+			<condition property="mvn.cmd" value="mvn">
+				<or>
+					<os family="unix" />
+					<os family="mac" />
+				</or>
+			</condition>
+			<condition property="mvn.cmd" value="mvn.bat">
+				<os family="windows" />
+			</condition>
+			<exec executable="${mvn.cmd}" dir="@{maven.dir}" failonerror="true">
+				<arg line="@{maven.profile.list} @{maven.goal.list}"/>
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="maven-build:bda-blueprints-webapp" depends="init, maven-build:bda-blueprints-api">
+		<delete>
+			<fileset dir="${bda-blueprints-webapp.base.dir}">
+				<include name="**/profiles.xml" />
+			</fileset>
+		</delete>
+		<copy todir="${bda-blueprints-webapp-ear.base.dir}" file="${common.dir}/maven/profiles.xml" overwrite="true">
+			<filterset>
+				<filter token="jboss.home" value="${local.jboss.home}"/>
+				<filter token="db.bda-blueprints-webapp.file.name" value="${db.bda-blueprints-webapp.create-schema.file}"/>
+				<filter token="db.bda-blueprints-webapp.generate.drop" value="false"/>
+				<filter token="db.bda-blueprints-webapp.generate.create" value="true"/>
+			</filterset>
+		</copy>
+		<copy todir="${bda-blueprints-webapp-services.base.dir}" file="${common.dir}/maven/profiles.xml" overwrite="true">
+			<filterset>
+				<filter token="jboss.home" value="${local.jboss.home}"/>
+				<filter token="db.bda-blueprints-webapp.file.name" value="${db.bda-blueprints-webapp.create-schema.file}"/>
+				<filter token="db.bda-blueprints-webapp.generate.drop" value="false"/>
+				<filter token="db.bda-blueprints-webapp.generate.create" value="true"/>
+			</filterset>
+		</copy>
+
+		<maven
+			maven.profile.list="-P ${bda-blueprints-webapp.maven.profile.list}"
+			maven.goal.list="${bda-blueprints-webapp.maven.goal.list}"
+			maven.dir="${bda-blueprints-webapp.base.dir}"
+			/>
+		<copy todir="${bda-blueprints-webapp-ear.dist.dir}" file="${bda-blueprints-webapp-ear.base.dir}/target/bda-blueprints-webapp.ear"/>
+		<copy todir="${db-install.dist.dir}/bda-blueprints-webapp" overwrite="true">
+			<fileset dir="${db-install-dynamic.src.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="maven-build:bda-blueprints-api" depends="init">
+		<maven
+			maven.profile.list=""
+			maven.goal.list="${iso-datatypes.maven.goal.list}"
+			maven.dir="${iso-datatypes.base.dir}"
+			/>
+	</target>
+
+	<target name="maven-test:all" depends="init" description="Runs test targets on all sub-projects">
+		<maven
+			maven.profile.list="-P local"
+			maven.goal.list="stie verify"
+			maven.dir="${bda-blueprints-webapp.base.dir}"
+			/>
+	</target>
+
+	<!-- Since static-analysis and testing cannot be called separately , just have SA depend on test. -->
+	<target name="maven-static-analysis:all" description="Runs static-analysis target for all sub-projects" depends="maven-test:all" />
 
 </project>
