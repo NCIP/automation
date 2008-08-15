@@ -335,6 +335,9 @@ software/bda-build-template/software/build/upgrade-properties.template -text
 software/bda-build-template/software/build/upgrade.properties -text
 software/bda-build-template/software/build/windows-install.properties -text
 software/bda-build-template/software/build/windows-upgrade.properties -text
+software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
+software/bda-build-template/software/common/bda-download/ivy-bda-settings.xml -text
+software/bda-build-template/software/common/bda-download/ivy-bda.xml -text
 software/bda-build-template/software/common/checkstyle/checkstyle-simple.xsl -text
 software/bda-build-template/software/common/checkstyle/checkstyle_minimal.xml -text
 software/bda-build-template/software/common/findbugs/default.xsl -text
