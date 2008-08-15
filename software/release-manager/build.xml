@@ -24,7 +24,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<property name="automation.resource.dir" value="resource" />
 
 
-	<get src="${svn.automation.url}/${automation.ivy}/bda-ivy-build.xml" dest="${basedir}/bda-ivy-build.xml"/>
+	<get src="${svn.automation.url}/${svn.ivy.project}/bda-ivy-build.xml" dest="${basedir}/bda-ivy-build.xml"/>
 
 	<!--
 	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda.xml" dest="${basedir}/ivy-bda.xml"/>
@@ -32,11 +32,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	-->
 
 	<property name="lib.dir" value="${basedir}/lib" />
-	<property name="bda-utils.dir" value="${basedir}/bda-utils" />
+	<property name="bda-utils.dir" value="${basedir}/working/bda-utils" />
 	
 	
 	<!-- retrive ivy files then retrieve bda files and librarires -->
-	<mkdir dir="lib"/>
+	<mkdir dir="working"/>
 	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
 		target="retrieve-bda">
 		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
@@ -95,9 +95,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</svn>
 	</target>
 
-	<target name="svn:automation:checkout" depends="svn-scorch">	
+	<target name="svn:automation:checkout" depends="svn-scorch,svn:ivy:checkout">	
 		<svn username="${svn.username}" password="${svn.password}">
 			<checkout url="${svn.automation.url}/${svn.automation.project}" revision="${default.automation.revision}" destPath="${svn.automation.checkout}" />
+		</svn>	
+	</target>
+	<target name="svn:ivy:checkout" depends="svn-scorch">	
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.automation.url}/${svn.ivy.project}" revision="${default.automation.revision}" destPath="${svn.ivy.checkout}" />
 		</svn>	
 	</target>
 	
@@ -105,6 +110,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
 		<delete dir="${svn.local.checkout}" />
 		<delete dir="${svn.automation.checkout}" />
+		<delete dir="${svn.ivy.checkout}" />
+		<mkdir dir="working"/>
 	</target>
 
 	<target name="release:copy-rename" depends="release:get-latest-automation">
@@ -179,7 +186,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="release:update-bda-ivyfiles" depends="svn:automation:checkout">	
-		<xmlconfig in="${svn.automation.checkout}/${automation.ivy}/bda-ivy-build.xml" verbose="false">
+		<xmlconfig in="${svn.ivy.checkout}/bda-ivy-build.xml" verbose="false">
 			<update path="//project/property[@name='bda.version']/@value" value="${release.version}" />
 		</xmlconfig>
 		
