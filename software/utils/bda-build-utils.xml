@@ -54,7 +54,7 @@ $HeadURL$
 	
 	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator">
 		<classpath>
-			<pathelement location="${bda-utils.dir}/propertyvalidator-0.1.5.jar" />
+			<pathelement location="${bda-utils.dir}/propertyvalidator-0.1.6.jar" />
 		</classpath>
 	</taskdef>
 
