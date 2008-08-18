@@ -118,7 +118,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="grand.rpt.dir" value="${common.dir}/grand" />
 	<!-- Hot deploy variables -->
 	<property name="jboss.deploy.dir"  value="${jboss.home}/server/${jboss.server.name}/deploy"/>
-	<property name="bda-blueprints-webapp.file.name"  value="bda-blueprints-webapp"/>
+	<property name="bda-blueprints-webapp.name"  value="bda-blueprints-webapp"/>
+	<property name="bda-blueprints-webapp.file.name"  value="${bda-blueprints-webapp.name}.war"/>
 	<property name="bda-blueprints-webapp.src.dir" value="${bda-blueprints-webapp.base.dir}/src/web"/>
 
 
@@ -786,10 +787,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="deploy:hot:jsp" description="Copies all current JSP code to the deployed application for quick update">
 		<for param="toDir">
 			<path>
-				<dirset dir="${jboss.deploy.dir}/../tmp/deploy" includes="tmp*${bda-blueprints-webapp.file.name}*" />
+				<dirset dir="${jboss.deploy.dir}/../tmp/deploy" includes="tmp*${bda-blueprints-webapp.name}*" />
 			</path>
 			<sequential>
-				<copy todir="@{toDir}">
+				<copy todir="@{toDir}" overwrite="true">
 					<fileset dir="${bda-blueprints-webapp.src.dir}">
 						<include name="**/*.jsp" />
 						<include name="**/*.jspf" />

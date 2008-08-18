@@ -19,39 +19,27 @@ database.url=
 ########################
 ###  JBOSS SETTINGS  ###
 ########################
+jboss.home=
+jboss.server.hostname=
+jboss.server.name=
+
+jboss.cobraorb.port=
 jboss.ejbinvoker.port=
 jboss.hajndi.port=
-jboss.home=
+jboss.hajrmi.port=
 jboss.jms.port=
+jboss.jmx-rmi.port=
+jboss.messaging.port=
+jboss.pooledha.port=
+jboss.remoting.port=
 jboss.server.bind.port=
-jboss.server.hostname=
 jboss.server.jndi.port=
-jboss.server.name=
 jboss.server.port=
-jboss.server.redirect.port=
 jboss.server.rmi.port=
 jboss.service.rmiobject.port=
-jboss.web.service.port=
-jboss.hajrmi.port=
-jboss.pooledha.port=
-jboss.cobraorb.port=
-jboss.jmx-rmi.port=
-jboss.snmp-trapd.port=
 jboss.snmp.port=
-jboss.remoting.port=
-jboss.messaging.port=
-
-
-##############
-###  LDAP  ###
-##############
-ldap.url=
-ldap.basedn=
-
-########################
-###  MAIL  SETTINGS  ###
-########################
-mail.smtp.server=
+jboss.snmp-trapd.port=
+jboss.web.service.port=
 
 ###################################
 #  PRE-POST VALIDATION PROPERTIES #

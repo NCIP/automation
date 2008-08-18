@@ -590,7 +590,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		"/>
 
 	<target name="install:jboss:bda-blueprints-webapp:re-configure" description="Update contents of artifacts if not all properties have been externalized, by extracting artifact, modify it as needed and re-archive it." unless="exclude.jboss">
-		<!-- This is only required if configuration files are not externalized
+		<!-- This is only required if configuration files are not externalized, below is a sample of what you may do.
 		<delete dir="${working.dir}/bda-blueprints-webapp"/>
 		<unzip src="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" dest="${working.dir}/bda-blueprints-webapp"/>
 		<copy todir="${working.dir}/bda-blueprints-webapp/WEB-INF/classes" file="${jboss-conf.dir.dest}/hibernate.cfg.xml"/>
