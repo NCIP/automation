@@ -57,6 +57,7 @@ $HeadURL$
 			<pathelement location="${bda-utils.dir}/propertyvalidator-0.1.6.jar" />
 		</classpath>
 	</taskdef>
+	<taskdef resource="liquibasetasks.properties" classpathref="macrodef.classpath"/>
 
  	<tstamp>
  		<format property="run.date" pattern="yyMMddHHmm"/>
@@ -70,16 +71,22 @@ $HeadURL$
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="is.oracle" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar "/>
+			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="database.schema" value="${database.name}"/>
 		</case> 
 		<case value="mysql">
 			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="is.mysql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
+			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="database.schema" value="${database.name}"/>
 		</case> 
 		<case value="postgresql">
 			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="is.postgresql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
+			<property name="database.driver" value="org.postgresql.Driver"/>
+			<property name="database.schema" value="public"/>
 			<!-- 
 				driver = org.postgresql.Driver
 				url = jdbc:postgresql://localhost/mydatabase
@@ -94,6 +101,10 @@ $HeadURL$
 			<fail message="Invalid or unsupported database type ${database.type}"/>
 		</default> 
 	</switch>
+	<path id="jdbc.driver.classpath">
+		<pathelement location="${database.driver.file}"/>
+	</path>
+
 	
 	<!-- run-junit-tests macro runs the unit test cases  
 	usage: <run-junit-tests test.src.dir="${test.src.dir}" xml.output.dir="${target.dir}/junit" instrumented.classes="${instrumented.classes.dir}" classpath="${caarray-client.test.classes.dir};${test.data.files.dir};${test.classes.dir};${commons-lang.jar};${commons-io.jar};${caarray-client.test.files.dir};${caarray-client.classes.dir};${caarray-client.resources.dir};${junit.jar};${nci-commons-core.jar}" />
@@ -2070,4 +2081,275 @@ $HeadURL$
 			</for>
 		</sequential>
 	</macrodef>
+	<macrodef name="database-clean">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.system.url" default="${database.system.url}" />
+		<attribute name="database.system.user" default="${database.system.user}" />
+		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.version" default="5.0.27" />
+		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.server" default="${database.server}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.re-create" default="${database.re-create}" />
+		<attribute name="database.drop-schema" default="${database.drop-schema}" />
+		<sequential>
+			<if>
+				<and>
+					<equals arg1="@{database.re-create}" arg2="true"/>
+					<equals arg1="@{database.drop-schema}" arg2="true"/>
+				</and>
+				<then>
+					<fail message="You cannot set both database.re-create and database.drop-schema at the same time.  database.re-create is used in local installs.  database.drop-schema is used in remote installs.  Either one can be set for external (Cancer Center) installs."/>
+				</then>
+			</if>
+			<if>
+				<equals arg1="@{database.re-create}" arg2="true"/>
+				<then>
+					<switch value="${database.type}">
+						<case value="postgresql">
+							<database-create/>
+						</case>
+						<case value="mysql">
+							<database-create/>
+						</case>
+						<default>
+							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
+						</default>
+					</switch>
+				</then>
+				<else>
+					<echo message="Database.recreate flag not set, database not re-created."/>
+				</else>
+			</if>
+			<if>
+				<equals arg1="@{database.drop-schema}" arg2="true"/>
+				<then>
+					<echo message="Dropping database objects"/>
+					<dropAllDatabaseObjects
+						driver="@{database.driver}"
+						url="@{database.url}"
+						username="@{database.user}"
+						password="@{database.password}"
+						promptOnNonLocalDatabase="@{prompt.user.if.not.local.database}"
+						classpathref="bda-utils.classpath"
+						defaultSchemaName="@{database.schema}"
+						/>
+					<!-- Sequences don't seem to drop in first run second run cleans them up -->
+					<dropAllDatabaseObjects
+						driver="@{database.driver}"
+						url="@{database.url}"
+						username="@{database.user}"
+						password="@{database.password}"
+						promptOnNonLocalDatabase="@{prompt.user.if.not.local.database}"
+						classpathref="bda-utils.classpath"
+						defaultSchemaName="@{database.schema}"
+						/>
+					<sleep seconds="5"/>
+				</then>
+				<else>
+					<echo message="Database.drop-schema flag not set, database schema not dropped."/>
+				</else>
+			</if>
+
+		</sequential>
+	</macrodef>
+	<macrodef name="database-install">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.system.url" default="${database.system.url}" />
+		<attribute name="database.system.user" default="${database.system.user}" />
+		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.version" default="5.0.27" />
+		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.server" default="${database.server}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="sql.delimiter" default=";" />
+		<attribute name="sql.delimitertype" default="normal" />
+		<attribute name="onerror" default="abort" />
+		<attribute name="db-install.dir" default="${db-install.dir.dest}" />
+		<attribute name="db.install.create.file.list" />
+		<sequential>
+			<for list="@{db.install.create.file.list}" param="db.install.oracle.file">
+				<sequential>
+					<run-sql-script database.url="@{database.url}"
+						database.user="@{database.user}" 
+						database.password="@{database.password}" 
+						sql.delimiter="@{sql.delimiter}" 
+						sql.delimitertype="@{sql.delimitertype}"
+						sql.file="@{db-install.dir}/${database.type}/@{db.install.oracle.file}"
+						onerror="@{onerror}"/>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+	<macrodef name="database-upgrade">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.schema" default="${database.schema}" />
+		<attribute name="database.changelog.file" default="${db-upgrade.dir.dest}/db-upgrade.xml" />
+		<sequential>
+			<updateDatabase
+				driver="@{database.driver}"
+				url="@{database.url}"
+				username="@{database.user}"
+				password="@{database.password}"
+				classpathref="jdbc.driver.classpath"
+				defaultSchemaName="@{database.schema}"
+				changeLogFile="@{database.changelog.file}"
+				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="database-genchangelog">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.schema" default="${database.schema}" />
+		<attribute name="database.changelog.file" default="generated-change-log.xml" />
+		<sequential>
+			<generateChangeLog
+				driver="${database.driver}"
+				url="${database.url}"
+				username="${database.user}"
+				password="${database.password}"
+				classpathref="jdbc.driver.classpath"
+				defaultSchemaName="${database.schema}"
+				outputFile="${database.changelog.file}"
+				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="database-tag">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.schema" default="${database.schema}" />
+		<sequential>
+			<if>
+				<isset property="database.release.version"/>
+				<then>
+					<tagDatabase
+						driver="@{database.driver}"
+						url="@{database.url}"
+						username="@{database.user}"
+						password="@{database.password}"
+						classpathref="jdbc.driver.classpath"
+						defaultSchemaName="@{database.schema}"
+						tag="${database.release.version}"
+						>
+					</tagDatabase>
+				</then>
+				<else>
+					<fail message="Variable database.release.version must be set to call upgrade:database:tag target."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="database-rollback">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.schema" default="${database.schema}" />
+		<attribute name="database.changelog.file" default="${db-upgrade.dir.dest}/db-upgrade.xml" />
+		<sequential>
+			<if>
+				<isset property="database.rollback.version"/>
+				<then>
+					<echo message="Rolling datbase back to version ${database.rollback.version}."/>
+					<rollbackDatabase
+						driver="@{database.driver}"
+						url="@{database.url}"
+						username="@{database.user}"
+						password="@{database.password}"
+						classpathref="jdbc.driver.classpath"
+						defaultSchemaName="@{database.schema}"
+						changeLogFile="@{database.changelog.file}"
+						rollbackTag="${database.rollback.version}"
+						>
+					</rollbackDatabase>
+				</then>
+				<else>
+					<fail message="Variable database.rollback.version must be set to call upgrade:database:rollback target."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="database-diff">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="compare1.database.url" default="${compare1.database.url}" />
+		<attribute name="compare1.database.user" default="${compare1.database.user}" />
+		<attribute name="compare1.database.password" default="${compare1.database.password}" />
+		<attribute name="compare1.database.schema" default="${compare1.database.schema}" />
+		<attribute name="compare2.database.url" default="${compare2.database.url}" />
+		<attribute name="compare2.database.user" default="${compare2.database.user}" />
+		<attribute name="compare2.database.password" default="${compare2.database.password}" />
+		<attribute name="compare2.database.schema" default="${compare2.database.schema}" />
+		<attribute name="output.file.txt" default="generated-diff-log.txt"/>
+		<attribute name="output.file.xml" default="generated-diff-log.xml"/>
+		<sequential>
+			<echo message="Generating diff report ${compare1.database.url} to ${compare2.database.url}."/>
+			<diffDatabase
+				driver="${database.driver}"
+				outputFile="@{output.file.txt}"
+				classpathref="jdbc.driver.classpath"
+
+				baseUrl="${compare1.database.url}"
+				baseUsername="${compare1.database.user}"
+				basePassword="${compare1.database.password}"
+				baseDefaultSchemaName="${compare1.database.schema}"
+
+				url="${compare2.database.url}"
+				username="${compare2.database.user}"
+				password="${compare2.database.password}"
+				defaultSchemaName="${compare2.database.schema}"
+
+				/>
+			<diffDatabaseToChangeLog
+				driver="${database.driver}"
+				outputFile="@{output.file.xml}"
+				classpathref="jdbc.driver.classpath"
+
+				baseUrl="${compare1.database.url}"
+				baseUsername="${compare1.database.user}"
+				basePassword="${compare1.database.password}"
+				baseDefaultSchemaName="${compare1.database.schema}"
+
+				url="${compare2.database.url}"
+				username="${compare2.database.user}"
+				password="${compare2.database.password}"
+				defaultSchemaName="${compare2.database.schema}"
+
+				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="database-doc">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.schema" default="${database.schema}" />
+		<attribute name="output.dir" default="${temp.dir}/dbDoc" />
+		<attribute name="database.changelog.file" default="${db-upgrade.dir.dest}/db-upgrade.xml" />
+		<sequential>
+			<mkdir dir="@{output.dir}"/>
+			<dbDoc
+				driver="@{database.driver}"
+				url="@{database.url}"
+				username="@{database.user}"
+				password="@{database.password}"
+				classpathref="jdbc.driver.classpath"
+				defaultSchemaName="@{database.schema}"
+				outputDirectory="@{output.dir}"
+				changeLogFile="@{database.changelog.file}"
+				/>
+		</sequential>
+	</macrodef>
+
+
 </project>
