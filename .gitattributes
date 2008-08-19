@@ -139,6 +139,7 @@ software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/creat
 software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/drop-database.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/insert-data.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/truncate-tables.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/db-upgrade-tpl.xml -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/db-upgrade.xml -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_five.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_four.sql -text
