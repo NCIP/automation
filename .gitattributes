@@ -562,6 +562,7 @@ software/single-command-build/build.bat -text
 software/single-command-build/default.properties -text
 software/single-command-build/environment.xml -text
 software/utils/bda-build-utils.xml -text
+software/utils/build.properties -text
 software/utils/build.xml -text
 software/utils/ivy.xml -text
 software/utils/resource/dashboard.tmpl -text
