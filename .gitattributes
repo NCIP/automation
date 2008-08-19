@@ -139,6 +139,16 @@ software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/creat
 software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/drop-database.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/insert-data.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-install/mysql/truncate-tables.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_five.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_four.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_one.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_three.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_two.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_five.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_four.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_one.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_three.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_two.sql -text
 software/bda-build-template/software/blueprints-webapp/ivy-blueprints.xml -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/BadUsernameException.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/InvalidLoginException.java -text
