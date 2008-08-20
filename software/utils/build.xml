@@ -1,7 +1,8 @@
 <project name="build-caintegrator2" default="bda2local" basedir=".">
 	<property file="build.properties" />
-	<property name="bda.local.repo.dir" value="../../../bda-local-ivy-repo"/>
-	<property name="bda.local.dir" value="${bda.local.repo.dir}/ncicb/bda-utils/${bda.version}"/>
+	<property name="bda.local.repo.dir" location="../../../bda-local-ivy-repo"/>
+	<property name="bda.local.org.dir" location="${bda.local.repo.dir}/ncicb"/>
+	<property name="bda.local.version.dir" location="${bda.local.repo.dir}/ncicb/bda-utils/${bda.version}"/>
 	<property name="ivy.def.file" value="ivy.xml"/>
 	<property name="bda-utils.xml.file" value="bda-build-utils-${bda.version}.xml"/>
 	<property name="bda-utils.zip.file" value="bda-build-utils-${bda.version}.zip"/>
@@ -11,19 +12,19 @@
 
 
 	<target name="bda2local" >
-		<mkdir dir="${bda.local.dir}"/>
-		<zip destfile="${bda.local.repo.dir}/ncicb/${bda.local.dir}-${run.time}.zip" basedir="${bda.local.dir}"/>
-		<delete dir="${bda.local.dir}"/>
-		<mkdir dir="${bda.local.dir}"/>
-		<zip destfile="${bda.local.dir}/${bda-utils.zip.file}">
+		<mkdir dir="${bda.local.version.dir}"/>
+		<mkdir dir="${bda.local.version.dir}"/>
+		<zip destfile="${bda.local.version.dir}/${bda-utils.zip.file}">
 			<zipfileset dir="resource" prefix="resource" />
 		</zip>
-		<copy tofile="${bda.local.dir}/${bda-utils.xml.file}" file="bda-build-utils.xml"/>
-		<copy todir="${bda.local.dir}" file="${ivy.def.file}"/>
+		<copy tofile="${bda.local.version.dir}/${bda-utils.xml.file}" file="bda-build-utils.xml"/>
+		<copy todir="${bda.local.version.dir}" file="${ivy.def.file}"/>
 	</target>
 	<target name="local2bda" >
-		<copy file="${bda.local.dir}/${bda-utils.xml.file}" tofile="bda-build-utils.xml" overwrite="true"/>
-		<copy file="${bda.local.dir}/${ivy.def.file}" todir="." overwrite="true"/>
+		<copy file="${bda.local.version.dir}/${bda-utils.xml.file}" tofile="bda-build-utils.xml" overwrite="true"/>
+		<copy file="${bda.local.version.dir}/${ivy.def.file}" todir="." overwrite="true"/>
+		<zip destfile="${bda.local.repo.dir}/ncicb-${run.time}.zip" basedir="${bda.local.org.dir}"/>
+		<delete dir="${bda.local.org.dir}"/>
 	</target>
 </project>
 

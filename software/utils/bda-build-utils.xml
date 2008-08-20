@@ -20,43 +20,14 @@ $HeadURL$
 	</path>
 
 	<!-- Taskdefs -->
-	<typedef resource="net/ggtools/grand/antlib.xml" classpath="${bda-utils.dir}/grand-1.8.jar"/>
+	<typedef resource="net/ggtools/grand/antlib.xml" classpathref="macrodef.classpath" />
 	<taskdef name="dbconfig" classname="com.dbconfig.anttask.DbConfig" classpathref="macrodef.classpath" />
 	<taskdef name="svn" classpathref="macrodef.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
-
- 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
- 		<classpath>
-			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar"/>
-			<pathelement location="${bda-utils.dir}/bcel-5.1.jar"/>
-			<pathelement location="${bda-utils.dir}/commons-httpclient-3.0.1.jar"/>
-			<pathelement location="${bda-utils.dir}/commons-logging-1.0.4.jar"/>
-			<pathelement location="${bda-utils.dir}/ivy-1.3.1.jar"/>
- 		</classpath>
- 	</taskdef>
- 
- 	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml">
- 		<classpath>
-			<pathelement location="${bda-utils.dir}/${antunit.jar}"/>
- 		</classpath>
- 	</taskdef>
-	
-	<taskdef name="elopeif" classname="ise.antelope.tasks.IfTask">
-		<classpath>
-			<pathelement location="${bda-utils.dir}/antelope_app-3.4.1.jar"/>
-		</classpath>
-	</taskdef>
-	
-	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
-		<classpath>
-			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar"/>
-		</classpath>
-	</taskdef>
-	
-	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator">
-		<classpath>
-			<pathelement location="${bda-utils.dir}/propertyvalidator-0.1.6.jar" />
-		</classpath>
-	</taskdef>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="macrodef.classpath"/>
+	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml" classpathref="macrodef.classpath"/>
+	<taskdef name="elopeif" classname="ise.antelope.tasks.IfTask" classpathref="macrodef.classpath"/>
+	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="macrodef.classpath"/>
+	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator" classpathref="macrodef.classpath"/>
 	<taskdef resource="liquibasetasks.properties" classpathref="macrodef.classpath"/>
 
  	<tstamp>
@@ -1605,28 +1576,51 @@ $HeadURL$
 		The svn.tag is the tag of the build ex. trunk
 		The svn.co.base.dir is the local directory to the checkout
 	-->	
+
 	<macrodef name="svn-co" description="based on properties passed to macro, clean the destination directory, then check out the tag specified into the destination directory.">
-		<attribute name="svn.project.base.url" default="${svn.project.base.url}" />
-		<attribute name="svn.project.name" default="${svn.project.name}"/>
-		<attribute name="svn.tag" default="trunk"/>
-		<attribute name="svn.co.base.dir" default="${user.home}/tmp/" />
+		<attribute name="svn.checkout.url" />
+		<attribute name="svn.checkout.dir"/>
+		<attribute name="svn.checkout.user" default="anonymous"/>
+		<attribute name="svn.checkout.pass" default=""/>
 		<sequential>		
-			<if>
-				<equals arg1="@{svn.tag}" arg2="trunk"/>
-				<then>
-					<property name="svn.url" value="@{svn.project.base.url}/trunk/software"/>
-				</then>
-				<else>
-					<property name="svn.url" value="@{svn.project.base.url}/tags/@{svn.tag}/software"/>
-				</else>
-			</if>
-			<property name="svn.co.dir" value="@{svn.co.base.dir}/svn/@{svn.tag}/@{svn.project.name}"/>
-			<echo message="Scorching temporary checkout directory ${svn.co.dir}."/>
-			<delete dir="${svn.co.dir}" failonerror="false"/>
-			<mkdir dir="${svn.co.dir}"/>
-			<echo message="Checking out @{svn.tag} from ${svn.url} to ${svn.co.dir}."/>
-			<svn username="anonymous" password="">
-				<checkout url="${svn.url}" revision="HEAD" destPath="${svn.co.dir}" />
+			<echo message="Scorching temporary checkout directory @{svn.checkout.dir}."/>
+			<delete dir="@{svn.checkout.dir}" failonerror="false"/>
+			<mkdir dir="@{svn.checkout.dir}"/>
+			<echo message="Checking out @{svn.checkout.url} to @{svn.checkout.dir}."/>
+			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}">
+				<checkout url="@{svn.checkout.url}" revision="HEAD" destPath="@{svn.checkout.dir}" />
+			</svn> 
+		</sequential>
+	</macrodef>
+
+	<macrodef name="svn-add" description="">
+		<attribute name="svn.add.dir"/>
+		<sequential>		
+			<echo message="Adding @{svn.add.dir} to svn."/>
+			<svn failonerror="false">
+				<add dir="@{svn.add.dir}" force="true"/>
+			</svn> 
+		</sequential>
+	</macrodef>
+	<macrodef name="svn-update" description="">
+		<attribute name="svn.update.dir"/>
+		<sequential>		
+			<echo message="Adding @{svn.update.dir} to svn."/>
+			<svn failonerror="false">
+				<update dir="@{svn.update.dir}"/>
+			</svn> 
+		</sequential>
+	</macrodef>
+
+	<macrodef name="svn-commit" description="">
+		<attribute name="svn.commit.dir"/>
+		<attribute name="svn.commit.user" default="anonymous"/>
+		<attribute name="svn.commit.pass" default=""/>
+		<attribute name="svn.commit.message" default="Added by build process"/>
+		<sequential>		
+			<echo message="Commiting @{svn.commit.dir} to svn."/>
+			<svn username="@{svn.commit.user}" password="@{svn.commit.pass}">
+				<commit dir="@{svn.commit.dir}" message="@{svn.commit.message}"/>
 			</svn> 
 		</sequential>
 	</macrodef>
