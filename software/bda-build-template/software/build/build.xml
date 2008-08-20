@@ -684,7 +684,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		" />
 
 
-	<target name="init:ivy" description="Initializes ivy based on ivy definition file and ivy settings file">
+	<target name="init:ivy" description="Initializes ivy-repo.based on ivy definition file and ivy settings file">
 		<mkdir dir="${local.repo.dir}" />
 		<property name="ivy.dep.file" value="${ivy.settings.dir}/ivy-test.xml" />
 		<ivy:settings file="${ivy.settings.dir}/ivy.settings.xml" />
@@ -884,5 +884,121 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- Since static-analysis and testing cannot be called separately , just have SA depend on test. -->
 	<target name="maven-static-analysis:all" description="Runs static-analysis target for all sub-projects" depends="maven-test:all" />
+
+	<!-- These targets are for adding files to ivy -->
+	<target name="ivy:module:init">
+		<property name="ivy-repo.base.url" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo"/>
+		<!-- you would want to use this value instead and you can get rid of the mkdir below
+		<property name="ivy-repo.base.dir" location="${software.dir}/../../ivy-repo"/>
+		-->
+		<mkdir dir="${user.home}/tmp"/>
+		<property name="ivy-repo.base.dir" location="${user.home}/tmp/ivy-repo"/>
+		<property name="ivy.add.org" value="ncicb"/>
+		<property name="ivy.add.module" value="ssaksa-test-module"/>
+		<property name="ivy.add.version" value="0.1.0"/>
+		<property name="ivy.org.dir" value="${ivy-repo.base.dir}/${ivy.add.org}"/>
+		<property name="ivy.module.dir" value="${ivy-repo.base.dir}/${ivy.add.org}/${ivy.add.module}"/>
+		<property name="ivy.version.dir" value="${ivy-repo.base.dir}/${ivy.add.org}/${ivy.add.module}/${ivy.add.version}"/>
+		<property name="ivy.add.module.src.location" value="${build.dir}/build.xml"/>
+		<property name="ivy.add.xml.src.location" value="${build.dir}/install.xml"/>
+
+		<property name="prop.list" value="svn.user.name,svn.user.pass"/>
+		<for list="${prop.list}" param="prop.list.item" delimiter=",">
+			<sequential>
+				<echo message="Checking for existence of @{prop.list.item}"/>
+				<if>
+					<not>
+						<isset property="@{prop.list.item}"/>
+					</not>
+					<then>
+						<fail message="svn.user.name svn.user.pass must be set to add files to ivy so add them to a properties file (like local.properties) or pass them in on the command line."/>
+					</then>
+				</if>
+			</sequential>
+		</for>
+		<available file="${ivy-repo.base.dir}" property="ivy-repo.base.dir.exists" />
+		<available file="${ivy.org.dir}" property="org.dir.exists" />
+		<available file="${ivy.module.dir}" property="module.dir.exists" />
+	</target>
+
+	<target name="ivy:module:co">
+		<if>
+			<isset property="ivy-repo.base.dir.exists"/>
+			<then>
+				<echo message="Found ${ivy-repo.base.dir}, doing svn update."/>
+				<svn-update
+					svn.update.dir="${ivy-repo.base.dir}"
+					/>
+			</then>
+			<else>
+				<svn-co
+					svn.checkout.url="${ivy-repo.base.url}"
+					svn.checkout.dir="${ivy-repo.base.dir}"
+					/>
+			</else>
+		</if>
+	</target>
+	<target name="ivy:module:copy">
+		<copy todir="${ivy.version.dir}" file="${ivy.add.module.src.location}"/>
+		<copy todir="${ivy.version.dir}" file="${ivy.add.xml.src.location}"/>
+	</target>
+
+	<target name="ivy:module:add">
+		<if>
+			<not>
+				<isset property="org.dir.exists"/>
+			</not>
+			<then>
+				<echo message="Adding org ${ivy.add.org}."/>
+				<svn-add
+					svn.add.dir="${ivy.org.dir}"
+					/>
+				<svn-commit
+					svn.commit.dir="${ivy.org.dir}"
+					svn.commit.user="${svn.user.name}"
+					svn.commit.pass="${svn.user.pass}"
+					svn.commit.message="Files added by build process as part of ivy deploy process"
+			/>
+			</then>
+			<elseif>
+				<not>
+					<isset property="module.dir.exists"/>
+				</not>
+				<then>
+					<echo message="Adding module ${ivy.add.org}/${ivy.add.module}."/>
+					<svn-add
+						svn.add.dir="${ivy.module.dir}"
+						/>
+					<svn-commit
+						svn.commit.dir="${ivy.module.dir}"
+						svn.commit.user="${svn.user.name}"
+						svn.commit.pass="${svn.user.pass}"
+						svn.commit.message="Files added by build process as part of ivy deploy process"
+						/>
+				</then>
+			</elseif>
+			<else>
+				<echo message="Adding version ${ivy.add.org}/${ivy.add.module}/${ivy.add.version}."/>
+				<svn-add
+					svn.add.dir="${ivy.version.dir}"
+					/>
+					<svn-commit
+						svn.commit.dir="${ivy.version.dir}"
+						svn.commit.user="${svn.user.name}"
+						svn.commit.pass="${svn.user.pass}"
+						svn.commit.message="Files added by build process as part of ivy deploy process"
+						/>
+			</else>
+		</if>
+	</target>
+
+	<target name="ivy:module:add2repo"
+		depends="
+		ivy:module:init,
+		ivy:module:co,
+		ivy:module:copy,
+		ivy:module:add
+		">
+	</target>
 
 </project>
