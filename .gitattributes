@@ -548,6 +548,7 @@ software/bda-build-template/tools/cruisecontrol/config.xml -text
 software/bda-download/bda-ivy-build.xml -text
 software/bda-download/ivy-bda-settings.xml -text
 software/bda-download/ivy-bda.xml -text
+software/bda-installer/installer-config-sample.xml -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
