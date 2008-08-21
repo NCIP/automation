@@ -2207,13 +2207,13 @@ $HeadURL$
 		<attribute name="database.changelog.file" default="generated-change-log.xml" />
 		<sequential>
 			<generateChangeLog
-				driver="${database.driver}"
-				url="${database.url}"
-				username="${database.user}"
-				password="${database.password}"
+				driver="@{database.driver}"
+				url="@{database.url}"
+				username="@{database.user}"
+				password="@{database.password}"
 				classpathref="jdbc.driver.classpath"
-				defaultSchemaName="${database.schema}"
-				outputFile="${database.changelog.file}"
+				defaultSchemaName="@{database.schema}"
+				outputFile="@{database.changelog.file}"
 				/>
 		</sequential>
 	</macrodef>
@@ -2287,37 +2287,37 @@ $HeadURL$
 		<attribute name="output.file.txt" default="generated-diff-log.txt"/>
 		<attribute name="output.file.xml" default="generated-diff-log.xml"/>
 		<sequential>
-			<echo message="Generating diff report ${compare1.database.url} to ${compare2.database.url}."/>
+			<echo message="Generating diff report @{compare1.database.url} to @{compare2.database.url}."/>
 			<diffDatabase
-				driver="${database.driver}"
+				driver="@{database.driver}"
 				outputFile="@{output.file.txt}"
 				classpathref="jdbc.driver.classpath"
 
-				baseUrl="${compare1.database.url}"
-				baseUsername="${compare1.database.user}"
-				basePassword="${compare1.database.password}"
-				baseDefaultSchemaName="${compare1.database.schema}"
+				baseUrl="@{compare1.database.url}"
+				baseUsername="@{compare1.database.user}"
+				basePassword="@{compare1.database.password}"
+				baseDefaultSchemaName="@{compare1.database.schema}"
 
-				url="${compare2.database.url}"
-				username="${compare2.database.user}"
-				password="${compare2.database.password}"
-				defaultSchemaName="${compare2.database.schema}"
+				url="@{compare2.database.url}"
+				username="@{compare2.database.user}"
+				password="@{compare2.database.password}"
+				defaultSchemaName="@{compare2.database.schema}"
 
 				/>
 			<diffDatabaseToChangeLog
-				driver="${database.driver}"
+				driver="@{database.driver}"
 				outputFile="@{output.file.xml}"
 				classpathref="jdbc.driver.classpath"
 
-				baseUrl="${compare1.database.url}"
-				baseUsername="${compare1.database.user}"
-				basePassword="${compare1.database.password}"
-				baseDefaultSchemaName="${compare1.database.schema}"
+				baseUrl="@{compare1.database.url}"
+				baseUsername="@{compare1.database.user}"
+				basePassword="@{compare1.database.password}"
+				baseDefaultSchemaName="@{compare1.database.schema}"
 
-				url="${compare2.database.url}"
-				username="${compare2.database.user}"
-				password="${compare2.database.password}"
-				defaultSchemaName="${compare2.database.schema}"
+				url="@{compare2.database.url}"
+				username="@{compare2.database.user}"
+				password="@{compare2.database.password}"
+				defaultSchemaName="@{compare2.database.schema}"
 
 				/>
 		</sequential>
