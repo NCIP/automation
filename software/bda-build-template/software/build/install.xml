@@ -528,7 +528,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:validation:post-install
 		"/>
 
-
 	<target name="upgrade:database" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
 		depends="
 		install:init,
@@ -536,17 +535,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		upgrade:init
 		">
 		<database-upgrade/>
+		<database-tag/>
 	</target>
 
-
-	<target name="upgrade:database:gencl" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
-		depends="
-		install:init,
-		install:database:prep,
-		upgrade:init
-		">
-		<database-genchangelog/>
-	</target>
 
 	<target name="upgrade:database:tag" description="Tags current state of database with a tag to allow for rollback of database to previous versions." unless="exclude.database"
 		depends="
@@ -564,24 +555,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		upgrade:init
 		">
 		<database-rollback/>
-	</target>
-
-	<target name="database:diff" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
-		depends="
-		install:init,
-		install:database:prep,
-		upgrade:init
-		">
-		<database-diff/>
-	</target>
-
-	<target name="database:doc" description="Generates database documentation." unless="exclude.database"
-		depends="
-		install:init,
-		install:database:prep,
-		upgrade:init
-		">
-		<database-doc/>
 	</target>
 
 	<target name="upgrade:init">
