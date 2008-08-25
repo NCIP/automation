@@ -146,6 +146,7 @@ software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-s
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_one.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_three.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/add-ssaksa_two.sql -text
+software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/alter-ssaksa_five.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_five.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_four.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_one.sql -text

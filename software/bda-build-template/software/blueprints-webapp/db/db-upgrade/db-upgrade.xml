@@ -43,5 +43,9 @@
 			<sqlFile path="@db-upgrade.run.dir@/drop-ssaksa_five.sql"/>
 		</rollback>
 	</changeSet>                                                                                                           
+	<changeSet id="5" author="ssaksa">                            
+		<comment>execute add-ssaksa_five.sql </comment>
+		<sqlFile path="@db-upgrade.run.dir@/alter-ssaksa_five.sql"/>
+	</changeSet>                                                                                                           
 </databaseChangeLog>
 
