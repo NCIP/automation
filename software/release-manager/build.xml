@@ -3,7 +3,7 @@
 $Id: build.xml 4839 2008-05-21 14:45:51Z zengje $
 $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 -->
-<project name="caarray-build" default="release:project" basedir="." 
+<project name="releasemanager-build" default="release:project" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
@@ -39,6 +39,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<mkdir dir="working"/>
 	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
 		target="retrieve-bda">
+		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
 		<property name="lib.dir" value="${lib.dir}"/>
 	</ant>
@@ -114,7 +115,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<mkdir dir="working"/>
 	</target>
 
-	<target name="release:copy-rename" depends="release:get-latest-automation">
+	<target name="release:copy-rename" depends="release-manager:get-latest-automation">
 		<copy todir="${svn.local.checkout}/${beta.development.version}">
 			<fileset dir="${svn.local.checkout}/${beta.release.version}"/>
 		</copy>
@@ -143,6 +144,19 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				
 	</target>
 
+	<target name="release-manager:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
+		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.xml"/>
+		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.xml" overwrite="true"/>
+		
+
+		<delete file="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.zip"/>
+		<zip destfile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.zip">
+			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
+		</zip>
+
+		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${beta.release.version}/ivy.xml" overwrite="true"/>
+
+	</target>
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
 		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml"/>
@@ -155,11 +169,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</zip>
 
 		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${beta.development.version}/ivy.xml" overwrite="true"/>
-
-		<zip destfile="${basedir}/working/bda-download.zip">
-			<zipfileset dir="${svn.ivy.checkout}" />
-		</zip>
-
 	</target>
 
 
@@ -195,9 +204,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<xmlconfig in="${svn.ivy.checkout}/bda-ivy-build.xml" verbose="false">
 			<update path="//project/property[@name='bda.version']/@value" value="${release.version}" />
 		</xmlconfig>
-		
+
+		<zip destfile="${basedir}/working/bda-download.zip">
+			<zipfileset dir="${svn.ivy.checkout}" />
+		</zip>
+
 		<svn username="${svn.username}" password="${svn.password}">			
-			<commit message="Latest BDA revision " dir="${svn.automation.checkout}/${automation.ivy}"/>
+			<commit message="Latest BDA released revision " dir="${svn.ivy.checkout}"/>
 		</svn>	
 	</target>
 	
