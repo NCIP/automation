@@ -1582,10 +1582,16 @@ $HeadURL$
 		<attribute name="svn.checkout.dir"/>
 		<attribute name="svn.checkout.user" default="anonymous"/>
 		<attribute name="svn.checkout.pass" default=""/>
+		<attribute name="delete" default="true"/>
 		<sequential>		
-			<echo message="Scorching temporary checkout directory @{svn.checkout.dir}."/>
-			<delete dir="@{svn.checkout.dir}" failonerror="false"/>
-			<mkdir dir="@{svn.checkout.dir}"/>
+			<if>
+				<equals arg1="@{delete}" arg2="true" />
+				<then>
+					<echo message="Scorching temporary checkout directory @{svn.checkout.dir}."/>
+					<delete dir="@{svn.checkout.dir}" failonerror="false"/>
+					<mkdir dir="@{svn.checkout.dir}"/>
+				</then>
+			</if>
 			<echo message="Checking out @{svn.checkout.url} to @{svn.checkout.dir}."/>
 			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}">
 				<checkout url="@{svn.checkout.url}" revision="HEAD" destPath="@{svn.checkout.dir}" />
@@ -2337,6 +2343,117 @@ $HeadURL$
 				/>
 		</sequential>
 	</macrodef>
+	<macrodef name="ivy-module-add2repo">
+		<attribute name="ivy-repo.base.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo"/>
+		<attribute name="ivy-repo.base.dir"/>
+		<attribute name="ivy.add.org" />
+		<attribute name="ivy.add.module" />
+		<attribute name="ivy.add.version" />
+		<attribute name="ivy.add.module.src.dir" />
+		<attribute name="ivy.add.module.src.file.list" />
+		<attribute name="ivy.add.xml.src.location" />
 
+		<sequential>
+			<property name="ivy.org.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}"/>
+			<property name="ivy.module.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}/@{ivy.add.module}"/>
+			<property name="ivy.version.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}/@{ivy.add.module}/@{ivy.add.version}"/>
+			<available file="${ivy.org.dir}" property="org.dir.exists" />
+			<available file="${ivy.module.dir}" property="module.dir.exists" />
+
+			<check-svnuser/>
+			<!-- Conditionally checkout or update -->
+			<if>
+				<available file="@{ivy-repo.base.dir}"/>
+				<then>
+					<echo message="Found @{ivy-repo.base.dir}, doing svn update."/>
+					<svn-update
+						svn.update.dir="@{ivy-repo.base.dir}"
+						/>
+				</then>
+				<else>
+					<svn-co
+						svn.checkout.url="@{ivy-repo.base.url}"
+						svn.checkout.dir="@{ivy-repo.base.dir}"
+						delete="false"
+						/>
+				</else>
+			</if>
+			<!-- Copy artifacts to directory -->
+			<copy todir="${ivy.version.dir}" file="@{ivy.add.xml.src.location}"/>
+
+			<for list="@{ivy.add.module.src.file.list}" param="ivy.add.module.src.file" delimiter=",">
+				<sequential>
+					<copy todir="${ivy.version.dir}" file="@{ivy.add.module.src.dir}/@{ivy.add.module.src.file}"/>
+				</sequential>
+			</for>
+			<!-- Add and commit to svn, only the directory level that does not exist -->
+			<if>
+				<not>
+					<isset property="org.dir.exists"/>
+				</not>
+				<then>
+					<echo message="Adding org @{ivy.add.org}."/>
+					<svn-add
+						svn.add.dir="${ivy.org.dir}"
+						/>
+					<svn-commit
+						svn.commit.dir="${ivy.org.dir}"
+						svn.commit.user="${svn.user.name}"
+						svn.commit.pass="${svn.user.pass}"
+						svn.commit.message="Files added by build process as part of ivy deploy process"
+						/>
+				</then>
+				<elseif>
+					<not>
+						<isset property="module.dir.exists"/>
+					</not>
+					<then>
+						<echo message="Adding module @{ivy.add.org}/@{ivy.add.module}."/>
+						<svn-add
+							svn.add.dir="${ivy.module.dir}"
+							/>
+						<svn-commit
+							svn.commit.dir="${ivy.module.dir}"
+							svn.commit.user="${svn.user.name}"
+							svn.commit.pass="${svn.user.pass}"
+							svn.commit.message="Files added by build process as part of ivy deploy process"
+							/>
+					</then>
+				</elseif>
+				<else>
+					<echo message="Adding version @{ivy.add.org}/@{ivy.add.module}/@{ivy.add.version}."/>
+					<svn-add
+						svn.add.dir="${ivy.version.dir}"
+						/>
+					<svn-commit
+						svn.commit.dir="${ivy.version.dir}"
+						svn.commit.user="${svn.user.name}"
+						svn.commit.pass="${svn.user.pass}"
+						svn.commit.message="Files added by build process as part of ivy deploy process"
+						/>
+				</else>
+			</if>
+		</sequential>
+
+	</macrodef>
+
+	<macrodef name="check-svnuser">
+		<sequential>
+			<property name="prop.list" value="svn.user.name,svn.user.pass"/>
+			<for list="${prop.list}" param="prop.list.item" delimiter=",">
+				<sequential>
+					<echo message="Checking for existence of @{prop.list.item}"/>
+					<if>
+						<not>
+							<isset property="@{prop.list.item}"/>
+						</not>
+						<then>
+							<fail message="svn.user.name svn.user.pass must be set to add files to ivy so add them to a properties file (like local.properties) or pass them in on the command line."/>
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
 
 </project>
