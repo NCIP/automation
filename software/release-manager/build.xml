@@ -154,6 +154,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
 		</zip>
 
+		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${beta.development.version}/ivy.xml" overwrite="true"/>
+
+		<zip destfile="${basedir}/working/bda-download.zip">
+			<zipfileset dir="${svn.ivy.checkout}" />
+		</zip>
+
 	</target>
 
 
