@@ -12,8 +12,6 @@
 		private var docoUrl:String = "https://wiki.nci.nih.gov/x/MJx8";
 		public function WikiHome() {
 
-			buttonAbout.addEventListener(MouseEvent.MOUSE_OVER, aboutOver);
-			buttonAbout.addEventListener(MouseEvent.CLICK, aboutClick);
 
 			buttonNews.addEventListener(MouseEvent.MOUSE_OVER, newsOver);
 			buttonNews.addEventListener(MouseEvent.CLICK, newsClick);
@@ -21,11 +19,11 @@
 			buttonDoco.addEventListener(MouseEvent.MOUSE_OVER, docoOver);
 			buttonDoco.addEventListener(MouseEvent.CLICK, docoClick);
 			
-			var buttonDynamic:WikiButton = new WikiButton('images/amor.png', aboutUrl);
+			var aboutButtonDynamic:WikiButton = new WikiButton('images/amor.png', "https://wiki.nci.nih.gov/x/mQ6Z", 'About');
 
-			addChild(buttonDynamic);
-			buttonDynamic.x = 300;
-			buttonDynamic.y = 300;
+			addChild(aboutButtonDynamic);
+			aboutButtonDynamic.x = 60;
+			aboutButtonDynamic.y = 60;
 		}
 		
 		// About button over
