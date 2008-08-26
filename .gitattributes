@@ -116,7 +116,12 @@ docs/wiki/flash/WikiButton.as -text
 docs/wiki/flash/WikiHome.as -text
 docs/wiki/flash/bda-wiki-home.fla -text
 docs/wiki/flash/bda-wiki-home.swf -text
+docs/wiki/flash/images/Community_Help.png -text
 docs/wiki/flash/images/amor.png -text
+docs/wiki/flash/images/bookcase.png -text
+docs/wiki/flash/images/internet.png -text
+docs/wiki/flash/images/kdf.png -text
+docs/wiki/flash/images/kservices.png -text
 docs/wiki/flash/sliding_intros.swf -text
 resources/eclipse/bda-plugins.xml -text
 resources/public-keys/id_dsa_bda.pub -text
