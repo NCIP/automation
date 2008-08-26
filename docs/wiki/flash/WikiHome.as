@@ -20,10 +20,16 @@
 			buttonDoco.addEventListener(MouseEvent.CLICK, docoClick);
 			
 			var aboutButtonDynamic:WikiButton = new WikiButton('images/amor.png', "https://wiki.nci.nih.gov/x/mQ6Z", 'About');
+			var newsButtonDynamic:WikiButton = new WikiButton('images/internet.png', "https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation", 'News');
 
 			addChild(aboutButtonDynamic);
+			addChild(newsButtonDynamic);
+			
 			aboutButtonDynamic.x = 60;
 			aboutButtonDynamic.y = 60;
+			
+			newsButtonDynamic.x = 180;
+			newsButtonDynamic.y = 60;
 		}
 		
 		// About button over
