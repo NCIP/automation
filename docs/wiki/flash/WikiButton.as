@@ -1,4 +1,5 @@
 ﻿package {
+	import flash.display.Stage;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
@@ -10,23 +11,27 @@
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.geom.Rectangle;
+	import WikiHome;
 
 	public class WikiButton extends MovieClip {
-
+		private var wikiHome:WikiHome;
 		private var thumbnail:String;
 		private var navigationUrl:String;
 		private var buttonLabelString:String;
 		private var buttonLabel:TextField = new TextField();
 		private var buttonFormat:TextFormat = new TextFormat();
+		private var teaserText:String;
 		private var imgLoader:Loader = new Loader();
 		private var imgDisplay:MovieClip = new MovieClip();
 		private var color:Color = new Color();
 
-		public function WikiButton(pThumbnail:String, pUrl:String, pButtonLabelString:String) {
+		public function WikiButton(pStage:WikiHome, pThumbnail:String, pUrl:String, pButtonLabelString:String, pTeaserText) {
+			this.wikiHome = pStage;
 			this.buttonMode = true;
 			this.thumbnail = pThumbnail;
 			this.navigationUrl = pUrl;
 			this.buttonLabelString = pButtonLabelString;
+			this.teaserText = pTeaserText;
 			this.addThumbnail();
 			this.addButtonLabel();
 
@@ -39,10 +44,11 @@
 		private function playCircles(event:MouseEvent):void {
 			this.play();
 			this.imgDisplay.transform.colorTransform = this.color;
+			this.wikiHome.setTeaserText(this.teaserText);
 		}
 
 		private function stopCircles(event:MouseEvent):void {
-
+			
 		}
 		private function clickWikiButton(event:MouseEvent):void {
 			var request:URLRequest = new URLRequest(this.navigationUrl);

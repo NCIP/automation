@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<wiki>
+	<welcome><![CDATA[<H1>Welcome to BDA</H1><P>Remember to check out the latest BDA Release 0.5.0 in the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/>Tip of the month: Reduce resource duplication and ease dependency management through Ivy. <a href='https://wiki.nci.nih.gov/x/xKN8'>Read more...</a>]]></welcome>
+
+	<button>
+		<name>News</name>
+		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
+		<image>images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Announcements</LI><LI>Status updates</LI><LI>Events Calendar</LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>FAQ</name>
+		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
+		<image>images/flag.png</image>
+		<teaser><![CDATA[<H1>Frequently Asked Questions (FAQ)</H1><UL><LI>Frequently Asked Questions (FAQ)</LI><LI>Development Practices</LI><LI>BDA API</LI><LI>BDA Tools</LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>Documentation</name>
+		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
+		<image>images/Community_Help.png</image>
+		<teaser><![CDATA[<H1>Documentation</H1><UL><LI>Frequently Asked Questions (FAQ)</LI><LI>Development Practices</LI><LI>BDA API</LI><LI>BDA Tools</LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>Downloads</name>
+		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
+		<image>images/ark2.png</image>
+		<teaser><![CDATA[<H1>Downloads</H1><UL><LI>Current project: LSD Installer 1.1</LI><LI>Past Projects</LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>Projects</name>
+		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
+		<image>images/kservices.png</image>
+		<teaser><![CDATA[<H1>Projects</H1><UL><LI>Current project: LSD Installer 1.1</LI><LI>Past Projects</LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>About</name>
+		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
+		<image>images/amor.png</image>
+		<teaser><![CDATA[<H1>About BDA</H1><UL><LI>Build and Deployment Automation Goals</LI><LI>Policies and Procedures</LI><LI>Technology the BDA team uses</LI><LI>Learn How we Operate</LI><LI>The Team</LI></UL>]]></teaser>
+	</button>
+	
+</wiki>
