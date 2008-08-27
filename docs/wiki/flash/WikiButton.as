@@ -53,7 +53,7 @@
 		private function clickWikiButton(event:MouseEvent):void {
 			var request:URLRequest = new URLRequest(this.navigationUrl);
 			try {
-				navigateToURL(request, '_self');
+				navigateToURL(request, "_self");
 			} catch (e:Error) {
 				trace("Error occurred!");
 			}

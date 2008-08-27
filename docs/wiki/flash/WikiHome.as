@@ -12,6 +12,7 @@
 	import WikiButton;
 
 	public class WikiHome extends MovieClip {
+		
 		//Variables
 		private var wikiXML:XML = new XML();
 		private var xmRequest:URLRequest = new URLRequest('https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/resources/bda-wiki-home.xml');
@@ -20,14 +21,10 @@
 		private var cssLoader:URLLoader = new URLLoader(cssRequest);
 		private var defaultTeaserText:String;
 		private var styles:StyleSheet = new StyleSheet();
-		
 
 		//Functions
 		public function WikiHome() {
-
 			this.xmlLoader.addEventListener(Event.COMPLETE, xmlLoadComplete);
-			
-
 			this.teaserTxt.multiline = true;
 			this.teaserTxt.wordWrap = true;
 		}
@@ -40,7 +37,6 @@
 		
 		private function parseWikiXML(pWikiXML:XML):void {
 			this.defaultTeaserText = pWikiXML.welcome.toString();
-			
 			var buttonX:Number = 100;
 			var buttonY:Number = 60;
 			
