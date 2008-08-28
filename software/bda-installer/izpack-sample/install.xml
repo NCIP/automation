@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<!-- 
+    A sample installation file.
+    Use it as a base for your own installers :-)
+    
+    To compile it :
+    - go in the bin directory where you installed IzPack
+    - call "compile ../sample/install.xml -b ../sample"
+-->
+
+<installation version="1.0">
+
+	<!-- 
+	The info section.
+	The meaning of the tags should be natural ...
+	-->
+	<info>
+		<appname>Sample Installation</appname>
+		<appversion>1.4 beta 666</appversion>
+		<authors>
+		    <author name="JPz" email="jpz@superman.org"/>
+		    <author name="Hidden Man" email="hidden@hisdomain.com"/>
+		</authors>
+		<url>http://www.anotherworld-inspace-website.net/</url>
+	</info>
+
+	<!-- 
+	The gui preferences indication.
+	Sets the installer window to 640x480. It will not be able to change the size.
+	-->
+	<guiprefs width="640" height="480" resizable="no"/>
+
+	<!-- 
+	The locale section.
+	Asks here to include the English and French langpacks.
+	-->
+	<locale>
+		<langpack iso3="eng"/>
+		<langpack iso3="fra"/>
+	</locale>
+
+	<conditions>
+		<condition type="variable" id="standardinstallation">
+			<name>setup.type</name>
+			<value>standard</value>
+		</condition>
+		<condition type="variable" id="expertinstallation">
+			<name>setup.type</name>
+			<value>expert</value>
+		</condition>
+		<condition type="java" id="installonwindows">
+			<java>
+				<class>com.izforge.izpack.util.OsVersion</class>
+				<field>IS_WINDOWS</field>
+			</java>
+			<returnvalue type="boolean">true</returnvalue>
+		</condition>
+		<condition type="and" id="standardinstallation.onwindows">
+			<condition type="ref" refid="standardinstallation"/>
+			<condition type="ref" refid="installonwindows" />
+		</condition>
+	</conditions>
+
+	<!-- 
+	The resources section.
+	The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+	-->
+	<resources>
+		<res id="AntActionsSpec.xml" src="antActionSpec.xml" />
+		<res id="LicencePanel.licence" src="Licence.txt"/>
+		<res id="InfoPanel.info" src="Readme.txt"/>
+		<res id="userInputSpec.xml" src="userInputSpec.xml" />	
+	</resources>
+
+	<!-- 
+	The panels section.
+	We indicate here which panels we want to use. The order will be respected.
+	<panel classname="PacksPanel" id="myuserinput" condition="pack2selected" />
+	-->
+	<panels>
+		<panel classname="HelloPanel"/>
+		<panel classname="InfoPanel"/>
+		<panel classname="LicencePanel"/>
+		<panel classname="TargetPanel"/>
+		<panel classname="UserInputPanel"  id="UserInputPanel.0" />        
+		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="standardinstallation.onwindows"/> 
+		<panel classname="SummaryPanel"/>
+		<panel classname="ExtendedInstallPanel"/>
+		<panel classname="FinishPanel"/>
+	</panels>
+
+	<listeners>
+		<listener installer="SummaryLoggerInstallerListener">
+			<os family="windows"/>
+		</listener>
+
+		<listener installer="AntActionInstallerListener" uninstaller="AntActionUninstallerListener" />
+	</listeners>
+
+
+
+
+	<!-- 
+	The packs section.
+	We specify here our packs.
+	-->
+	<packs>
+
+		<pack name="core" id="core" required="yes">
+		    <description>The base files</description>
+		    <file src="build.xml" targetdir="$INSTALL_PATH"/>
+		    <file src="mahi" targetdir="$INSTALL_PATH"/>            
+		    <!-- The file will be parsed -->
+		</pack>
+		<!--
+		<pack name="Docs" required="no">
+		    <description>The documentation</description>
+		    <file src="doc" targetdir="$INSTALL_PATH"/>           
+		</pack>
+		<pack name="Sources" required="no">
+		    <description>The sources</description>
+		    <file src="src" targetdir="$INSTALL_PATH"/>
+		</pack>
+		-->
+	</packs>
+	<jar src="jar/ant/ant.jar" stage="both" />
+	<jar src="jar/ant/ant-launcher.jar" stage="both"/>
+</installation>

@@ -1,0 +1,13 @@
+<antactions> 
+	<pack name="core">
+		<antcall buildfile="$INSTALL_PATH/build.xml"
+			order="afterpack"
+			verbose="yes"
+			logfile="$INSTALL_PATH/antlog_installer.txt"
+			inheritall="false"
+			>
+			<target name="install"/>
+			<property name="install.path" value="$INSTALL_PATH"/>   
+		</antcall>
+	</pack>
+</antactions>   

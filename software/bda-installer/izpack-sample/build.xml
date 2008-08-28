@@ -1,0 +1,8 @@
+<project name="Installer" default="install" basedir="." >
+
+	<!-- TARGETS -->
+	<target name="install" >
+		<echo message="CALL THE INSTALL TARGET"/> 
+		<delete dir="C:\mahi"/>
+	</target>	
+</project>
