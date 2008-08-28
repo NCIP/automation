@@ -12,7 +12,7 @@
 		<name>FAQ</name>
 		<link>https://wiki.nci.nih.gov/x/UZx8</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/flag.png</image>
-		<teaser><![CDATA[<H1>Frequently Asked Questions (FAQ)</H1><UL><LI>Frequently Asked Questions (FAQ)</LI><LI>Development Practices</LI><LI>BDA API</LI><LI>BDA Tools</LI></UL>]]></teaser>
+		<teaser><![CDATA[<H1>Frequently Asked Questions (FAQ)</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/UZx8">How do I convert a project to use Ivy as a dependency manager?</a></LI><LI>Development Practices</LI><LI>BDA API</LI><LI>BDA Tools</LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>Documentation</name>
