@@ -3,7 +3,14 @@
 	<panel order="0">
 		<field type="title" txt="Test User Input Details" bold="true" size="1" />
 		<field type="divider" align="top"/>
-		<variable name="setup.type" value="expert" />
+		<field type="radio" variable="setup.type">
+			<description align="left" txt="Select the type of installation"
+			id="installation.radio"/>
+			<spec>
+				<choice txt="Standard" id="setup.type.stand" value="standard" />
+				<choice txt="Expert" id="setup.type.expert" value="expert" />
+			</spec>
+		</field>		
 	</panel>
 	<!-- Install -->
 	<panel order="1">
