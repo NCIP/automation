@@ -289,7 +289,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 					sql.delimitertype="row"
 					/>
 			</case>
-			<case value="postgesql">
+			<case value="postgresql">
 				<database-install
 					db.install.create.file.list="${db.install.create.postgresql.file.list}"
 					sql.delimiter="/"
