@@ -6,7 +6,7 @@
 		<name>News</name>
 		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/internet.png</image>
-		<teaser><![CDATA[<H1>News</H1><UL><LI>Announcements</LI><LI>Status updates</LI><LI>Events Calendar</LI></UL>]]></teaser>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://wiki.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://wiki.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://wiki.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://wiki.nci.nih.gov/x/AgmZ">workshop WIKI page</a></LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>FAQ</name>
