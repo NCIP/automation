@@ -2092,6 +2092,7 @@ $HeadURL$
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.schema" default="${database.schema}" />
 		<attribute name="database.re-create" default="${database.re-create}" />
 		<attribute name="database.drop-schema" default="${database.drop-schema}" />
 		<sequential>
