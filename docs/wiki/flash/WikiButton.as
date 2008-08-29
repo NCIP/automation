@@ -4,6 +4,7 @@
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import flash.display.Loader;
+	import flash.filters.DropShadowFilter;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import fl.motion.Color;
@@ -48,7 +49,7 @@
 		}
 
 		private function stopCircles(event:MouseEvent):void {
-			
+			//Do nothing for now
 		}
 		private function clickWikiButton(event:MouseEvent):void {
 			var request:URLRequest = new URLRequest(this.navigationUrl);
@@ -58,17 +59,14 @@
 				trace("Error occurred!");
 			}
 		}
-		
 		private function downWikiButton(event:MouseEvent):void {
 			this.imgDisplay.scaleX = 1.0;
 			this.imgDisplay.scaleY = 0.95;
 		}
-		
 		private function upWikiButton(event:MouseEvent):void {
 			this.imgDisplay.scaleX = 1.0;
 			this.imgDisplay.scaleY = 1.0;
 		}
-		
 		private function addThumbnail():void {
 			var image:URLRequest = new URLRequest(this.thumbnail);
 			this.imgLoader.load(image);
@@ -76,8 +74,19 @@
 			addChild(imgDisplay);
 			this.imgDisplay.x = -24;
 			this.imgDisplay.y = -24;
+
+			// Add drop shadow filter
+			var imgShadow:DropShadowFilter = new DropShadowFilter();
+			imgShadow.color = 0x000000;
+			imgShadow.blurY = 5;
+			imgShadow.blurX = 5;
+			imgShadow.angle = 60;
+			imgShadow.alpha = .5;
+			imgShadow.distance = 6;
+			var filtersArray:Array = new Array(imgShadow);
+
+			imgDisplay.filters = filtersArray;
 		}
-		
 		private function addButtonLabel():void {
 			this.buttonLabelTxt.text = this.buttonLabelString;
 		}
