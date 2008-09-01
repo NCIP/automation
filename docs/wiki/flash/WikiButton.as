@@ -2,6 +2,7 @@
 	import flash.display.Stage;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.display.Loader;
 	import flash.filters.DropShadowFilter;
@@ -22,7 +23,7 @@
 		private var buttonLabel:TextField = new TextField();
 		private var buttonFormat:TextFormat = new TextFormat();
 		private var teaserText:String;
-		private var imgLoader:Loader = new Loader();
+		private var imageLoader:Loader = new Loader();
 		private var imgDisplay:MovieClip = new MovieClip();
 		private var color:Color = new Color();
 
@@ -33,14 +34,13 @@
 			this.navigationUrl = pUrl;
 			this.buttonLabelString = pButtonLabelString;
 			this.teaserText = pTeaserText;
+
 			this.addThumbnail();
 			this.addButtonLabel();
 
-			this.addEventListener(MouseEvent.ROLL_OVER, playCircles);
-			this.addEventListener(MouseEvent.ROLL_OUT, stopCircles);
-			this.addEventListener(MouseEvent.CLICK, clickWikiButton);
-			this.addEventListener(MouseEvent.MOUSE_DOWN, downWikiButton);
-			this.addEventListener(MouseEvent.MOUSE_UP, upWikiButton);
+
+
+
 		}
 		private function playCircles(event:MouseEvent):void {
 			this.play();
@@ -67,11 +67,21 @@
 			this.imgDisplay.scaleX = 1.0;
 			this.imgDisplay.scaleY = 1.0;
 		}
+		private function imageLoadComplete(event:Event):void {
+			this.loading_mc.visible = false;
+			this.addEventListener(MouseEvent.ROLL_OVER, playCircles);
+			this.addEventListener(MouseEvent.ROLL_OUT, stopCircles);
+			this.addEventListener(MouseEvent.CLICK, clickWikiButton);
+			this.addEventListener(MouseEvent.MOUSE_DOWN, downWikiButton);
+			this.addEventListener(MouseEvent.MOUSE_UP, upWikiButton);
+		}
 		private function addThumbnail():void {
-			var image:URLRequest = new URLRequest(this.thumbnail);
-			this.imgLoader.load(image);
-			this.imgDisplay.addChild(imgLoader);
+			var imageRequest:URLRequest = new URLRequest(this.thumbnail);
+			this.imageLoader.load(imageRequest);
+			this.imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, imageLoadComplete);
+			this.imgDisplay.addChild(imageLoader);
 			addChild(imgDisplay);
+
 			this.imgDisplay.x = -24;
 			this.imgDisplay.y = -24;
 
