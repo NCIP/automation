@@ -187,4 +187,55 @@
 		</project>
 	</projectgroup>
 	
+	<!-- Apache Software Foundation -->
+	<projectgroup>
+		<name>Apache Software Foundation</name>
+		<description>This is a public build and test server for various Apache Projects. All times on this server are UTC.</description>
+		<link>http://hudson.zones.apache.org/hudson/</link>
+		<rsslink>http://hudson.zones.apache.org/hudson/rssAll</rsslink>
+		<image>http://www.apache.org/images/asf_logo_wide.gif</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>JMeter Trunk</name>
+			<description>Build JMeter from SVN trunk. Creates a "nightly" build, i.e. version number is the SVN revision, and runs full test suite (headless)</description>
+			<link>http://hudson.zones.apache.org/hudson/job/JMeter-trunk</link>
+			<rsslink>http://hudson.zones.apache.org/hudson/job/JMeter-trunk/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>Lucene Trunk</name>
+			<description>This project has these characteristics: * Builds: starts at 2:03 AM UTC; if not complete, build will be terminated after 45 minutes * Tests: JUnit * OS: Solaris 10 x86</description>
+			<link>http://hudson.zones.apache.org/hudson/job/Lucene-trunk</link>
+			<rsslink>http://hudson.zones.apache.org/hudson/job/Lucene-trunk/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>Hadoop Trunk</name>
+			<description>This project builds the Hadoop trunk code base and has these characteristics: * Builds: starts at 11:00 AM UTC * Tests: JUnit * OS: Solaris 10 x86</description>
+			<link>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk</link>
+			<rsslink>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk/rssAll</rsslink>
+		</project>
+		<project>
+			<name>JMeter Trunk</name>
+			<description>Build JMeter from SVN trunk. Creates a "nightly" build, i.e. version number is the SVN revision, and runs full test suite (headless)</description>
+			<link>http://hudson.zones.apache.org/hudson/job/JMeter-trunk</link>
+			<rsslink>http://hudson.zones.apache.org/hudson/job/JMeter-trunk/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>Lucene Trunk</name>
+			<description>This project has these characteristics: * Builds: starts at 2:03 AM UTC; if not complete, build will be terminated after 45 minutes * Tests: JUnit * OS: Solaris 10 x86</description>
+			<link>http://hudson.zones.apache.org/hudson/job/Lucene-trunk</link>
+			<rsslink>http://hudson.zones.apache.org/hudson/job/Lucene-trunk/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>Hadoop Trunk</name>
+			<description>This project builds the Hadoop trunk code base and has these characteristics: * Builds: starts at 11:00 AM UTC * Tests: JUnit * OS: Solaris 10 x86</description>
+			<link>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk</link>
+			<rsslink>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk/rssAll</rsslink>
+		</project>
+	</projectgroup>
+	
 </dashboard>
