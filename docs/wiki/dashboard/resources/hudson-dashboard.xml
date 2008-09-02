@@ -216,26 +216,6 @@
 			<link>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk</link>
 			<rsslink>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk/rssAll</rsslink>
 		</project>
-		<project>
-			<name>JMeter Trunk</name>
-			<description>Build JMeter from SVN trunk. Creates a "nightly" build, i.e. version number is the SVN revision, and runs full test suite (headless)</description>
-			<link>http://hudson.zones.apache.org/hudson/job/JMeter-trunk</link>
-			<rsslink>http://hudson.zones.apache.org/hudson/job/JMeter-trunk/rssAll</rsslink>
-		</project>
-		
-		<project>
-			<name>Lucene Trunk</name>
-			<description>This project has these characteristics: * Builds: starts at 2:03 AM UTC; if not complete, build will be terminated after 45 minutes * Tests: JUnit * OS: Solaris 10 x86</description>
-			<link>http://hudson.zones.apache.org/hudson/job/Lucene-trunk</link>
-			<rsslink>http://hudson.zones.apache.org/hudson/job/Lucene-trunk/rssAll</rsslink>
-		</project>
-		
-		<project>
-			<name>Hadoop Trunk</name>
-			<description>This project builds the Hadoop trunk code base and has these characteristics: * Builds: starts at 11:00 AM UTC * Tests: JUnit * OS: Solaris 10 x86</description>
-			<link>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk</link>
-			<rsslink>http://hudson.zones.apache.org/hudson/job/Hadoop-trunk/rssAll</rsslink>
-		</project>
 	</projectgroup>
 	
 </dashboard>
