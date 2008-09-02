@@ -112,6 +112,7 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
+docs/wiki/dashboard/dashboard.swf -text
 docs/wiki/dashboard/resources/hudson-dashboard.xml -text
 docs/wiki/flash/WikiButton.as -text
 docs/wiki/flash/WikiHome.as -text
