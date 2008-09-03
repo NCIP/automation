@@ -10,4 +10,18 @@
 			<property name="install.path" value="$INSTALL_PATH"/>   
 		</antcall>
 	</pack>
+	
+	<pack name="install">
+		<antcall buildfile="$INSTALL_PATH/carray_installer/build.xml"
+			order="afterpack"
+			verbose="yes"
+			logfile="$INSTALL_PATH/carray_installer/antlog_installer.txt"
+			inheritall="false"
+			>
+			<target name="install"/>			
+			<property name="install.path" value="$INSTALL_PATH"/>   
+			<property name="basedir" value="$INSTALL_PATH/carray_installer"/>   
+		</antcall>
+	</pack>	
+	
 </antactions>   

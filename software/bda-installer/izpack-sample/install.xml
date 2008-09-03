@@ -85,6 +85,8 @@
 		<panel classname="TargetPanel"/>
 		<panel classname="UserInputPanel"  id="UserInputPanel.0" />        
 		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="standardinstallation.onwindows"/> 
+		<panel classname="UserInputPanel"  id="UserInputPanel.2" />
+		<panel classname="UserInputPanel"  id="UserInputPanel.3" />
 		<panel classname="SummaryPanel"/>
 		<panel classname="ExtendedInstallPanel"/>
 		<panel classname="FinishPanel"/>
@@ -110,20 +112,22 @@
 		<pack name="core" id="core" required="yes">
 		    <description>The base files</description>
 		    <file src="build.xml" targetdir="$INSTALL_PATH"/>
-		    <file src="mahi" targetdir="$INSTALL_PATH"/>            
+		    <file src="mahi" targetdir="$INSTALL_PATH"/>   		    
+		    
+		</pack>	
+
+		<pack name="parse" required="yes">
+		    <description>parse the input values</description>
 		    <!-- The file will be parsed -->
+		    <parsable targetfile="$INSTALL_PATH/carray_installer/install.properties" type="plain" />		    
 		</pack>
-		<!--
-		<pack name="Docs" required="no">
-		    <description>The documentation</description>
-		    <file src="doc" targetdir="$INSTALL_PATH"/>           
+
+		<pack name="install" required="yes">
+		    <description>The sources</description>		    
 		</pack>
-		<pack name="Sources" required="no">
-		    <description>The sources</description>
-		    <file src="src" targetdir="$INSTALL_PATH"/>
-		</pack>
-		-->
+
 	</packs>
 	<jar src="jar/ant/ant.jar" stage="both" />
 	<jar src="jar/ant/ant-launcher.jar" stage="both"/>
+	<jar src="jar/ant/ant-nodeps.jar" stage="both"/>	
 </installation>

@@ -3,6 +3,13 @@
 	<!-- TARGETS -->
 	<target name="install" >
 		<echo message="CALL THE INSTALL TARGET"/> 
-		<delete dir="C:\mahi"/>
+		<echo message="${install.path}"/> 
+		
+		<get src="http://gforge.nci.nih.gov/frs/download.php/4619/caarray_distribution_2_1_0.zip" dest="${install.path}/caarray_distribution_2_1_0.zip"/>
+		
+		<unzip src="${install.path}/caarray_distribution_2_1_0.zip" dest="${install.path}/carray_installer" />
+		
+		<copy file="C:/dev/automat/trunk/software/bda-installer/izpack-sample/installer.template.properties" tofile="${install.path}/carray_installer/install.properties" />
+		
 	</target>	
 </project>

@@ -17,4 +17,64 @@
 		<field type="title" txt="Test User Input Details2" bold="true" size="1" />
 		<field type="divider" align="top"/>
 	</panel>
+	<!-- Install -->
+	<panel order="2">
+		<field type="title" txt="Project Details" bold="true" size="1" />
+		<field type="divider" align="top"/>
+		<field type="text" variable="jboss.server.port">			
+			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="18080"/>
+			<validator
+				class="com.izforge.izpack.util.PortValidator" txt="The http port number is already in use" id="error.label">
+			</validator>
+		</field>		
+		<field type="text" variable="jboss.server.jndi.port">						
+			<spec txt="Enter the jndi port number for the installation:" id="text.label" size="15" set="11099"/>
+			<validator
+				class="com.izforge.izpack.util.PortValidator" txt="The jndi port number is already in use" id="error.label">
+			</validator>			
+		</field>
+		<field type="text" variable="domain.name">						
+			<spec txt="Enter the domain name for the installation:" id="text.label" size="15" set="http://array.nci.nih.gov"/>
+		</field>
+		<field type="text" variable="mail.smtp.host">						
+			<spec txt="Enter the mail server hostname:" id="text.label" size="15" set="localhost"/>
+		</field>
+		<field type="text" variable="mail.smtp.port">						
+			<spec txt="Enter the mail server portnumber:" id="text.label" size="15" set="25"/>
+		</field>		
+	</panel>
+	<!-- Install -->
+	<panel order="3">
+		<variable name="database.system.user" value="root"/>
+		<variable name="database.system.password" value="mysql"/>
+		<field type="text" variable="database.server">
+			<spec txt="Enter the Database Server:"
+				id="text.label" size="25" set="localhost"/>
+		</field>
+		<field type="text" variable="database.port">
+			<spec txt="Enter the Database Port:"
+				id="text.label" size="25" set="3306"/>
+		</field>		
+		<field type="text" variable="database.name">
+			<spec txt="Enter the Database Name:"
+				id="text.label" size="25" set="carrdb"/>
+		</field>		
+		<field type="text" variable="db.user">
+			<spec txt="Enter User Name:" id="text.label"
+				size="25" set="carruser"/>
+		</field>		
+		<field type="password" allign="left" variable="db.password">
+			<spec>
+				 <pwd txt="Enter the password for the connection:" id="pwd.label" size="25" set=""/>				 
+			</spec>
+			<validator
+				class="com.izforge.izpack.util.DBConnectionValidator" txt="The password did not match" id="error.label">
+		<!--		
+				<param name="dbUrl" value="$db.url" />
+				<param name="dbUser" value="$db.user" />		
+		-->		
+			</validator>
+		</field>		
+	</panel>
+
 </userInput>
