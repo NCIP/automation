@@ -186,4 +186,21 @@
 			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/po-bda-nightly/rssAll</rsslink>
 		</project>
 	</projectgroup>
+	
+	<!-- COPPA -->
+	<projectgroup>
+		<name>JBOSS</name>
+		<description>JBOSS CI Server</description>
+		<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/</link>
+		<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/rssAll</rsslink>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/dashboard/flash/images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>jbosstools-docs-nightly</name>
+			<description>jbosstools-docs-nightly</description>
+			<link>http://hudson.jboss.org/hudson/view/JBossTools/job/jbosstools-docs-nightly/</link>
+			<rsslink>http://hudson.jboss.org/hudson/view/JBossTools/job/jbosstools-docs-nightly/rssAll</rsslink>
+		</project>
+	</projectgroup>
 </dashboard>
