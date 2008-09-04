@@ -36,7 +36,10 @@
 	Asks here to include the English and French langpacks.
 	-->
 	<locale>
-		<langpack iso3="eng"/>
+		<langpack iso3="eng">		
+		    <str id="AntAction.core" txt="Proceeding of ANT-activities"/>
+		    <str id="AntAction.install" txt="Revision of archives"/>
+		</langpack>
 		<langpack iso3="fra"/>
 	</locale>
 
@@ -71,6 +74,7 @@
 		<res id="LicencePanel.licence" src="Licence.txt"/>
 		<res id="InfoPanel.info" src="Readme.txt"/>
 		<res id="userInputSpec.xml" src="userInputSpec.xml" />	
+		<res id="CustomActionsLang.xml_eng" src="custom_eng.xml"/>
 	</resources>
 
 	<!-- 
@@ -86,7 +90,9 @@
 		<panel classname="UserInputPanel"  id="UserInputPanel.0" />        
 		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="standardinstallation.onwindows"/> 
 		<panel classname="UserInputPanel"  id="UserInputPanel.2" />
-		<panel classname="UserInputPanel"  id="UserInputPanel.3" />
+		<panel classname="UserInputPanel"  id="UserInputPanel.3" />		
+		<panel classname="InstallationGroupPanel"/>
+		<panel classname="PacksPanel"/>
 		<panel classname="SummaryPanel"/>
 		<panel classname="ExtendedInstallPanel"/>
 		<panel classname="FinishPanel"/>
@@ -109,21 +115,22 @@
 	-->
 	<packs>
 
-		<pack name="core" id="core" required="yes">
+		<pack name="core" id="core" required="yes" installGroups="caarray">
 		    <description>The base files</description>
 		    <file src="build.xml" targetdir="$INSTALL_PATH"/>
-		    <file src="mahi" targetdir="$INSTALL_PATH"/>   		    
 		    
 		</pack>	
-
+<!--
 		<pack name="parse" required="yes">
 		    <description>parse the input values</description>
+		    
+		    
+		</pack>
+-->
+		<pack name="install" required="yes" depends="core">
+		    <description>The sources</description>
 		    <!-- The file will be parsed -->
 		    <parsable targetfile="$INSTALL_PATH/carray_installer/install.properties" type="plain" />		    
-		</pack>
-
-		<pack name="install" required="yes">
-		    <description>The sources</description>		    
 		</pack>
 
 	</packs>

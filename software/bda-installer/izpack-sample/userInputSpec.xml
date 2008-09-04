@@ -47,6 +47,9 @@
 	<panel order="3">
 		<variable name="database.system.user" value="root"/>
 		<variable name="database.system.password" value="mysql"/>
+		<variable name="install.path" value="$INSTALL_PATH"/>
+		<variable name="baseDir" value="$INSTALL_PATH"/>
+		
 		<field type="text" variable="database.server">
 			<spec txt="Enter the Database Server:"
 				id="text.label" size="25" set="localhost"/>
@@ -59,11 +62,11 @@
 			<spec txt="Enter the Database Name:"
 				id="text.label" size="25" set="carrdb"/>
 		</field>		
-		<field type="text" variable="db.user">
+		<field type="text" variable="database.user">
 			<spec txt="Enter User Name:" id="text.label"
 				size="25" set="carruser"/>
 		</field>		
-		<field type="password" allign="left" variable="db.password">
+		<field type="password" allign="left" variable="database.password">
 			<spec>
 				 <pwd txt="Enter the password for the connection:" id="pwd.label" size="25" set=""/>				 
 			</spec>
