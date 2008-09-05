@@ -1,4 +1,4 @@
-<project name="build-caintegrator2" default="bda2local" basedir=".">
+<project name="build-cai2" default="bda2local" basedir=".">
 	<property file="build.properties" />
 	<property name="bda.local.repo.dir" location="../../../bda-local-ivy-repo"/>
 	<property name="bda.local.org.dir" location="${bda.local.repo.dir}/ncicb"/>
