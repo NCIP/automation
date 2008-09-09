@@ -158,5 +158,6 @@
 	</packs>
 	<jar src="jar/ant/ant.jar" stage="both" />
 	<jar src="jar/ant/ant-launcher.jar" stage="both"/>
-	<jar src="jar/ant/ant-nodeps.jar" stage="both"/>	
+	<jar src="jar/ant/ant-nodeps.jar" stage="both"/>
+	<jar src="jar/drivers/mysql-connector-java-5.1.5.jar" stage="both"/>
 </installation>
