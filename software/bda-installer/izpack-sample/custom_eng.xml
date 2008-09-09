@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<!-- The English langpack -->
+
+<langpack>
+    <str id="CustomActions.tip" txt="Custom Action log:"/>
+    <str id="CustomActions.progress" txt="Custom Action Progress:"/>
+    <str id="AntAction.pack" txt="Action Action Pack: "/>
+    <str id="AntAction.core" txt="Please wait while the we download the installer"/>
+    <str id="AntAction.install" txt="Please wait while your application is being configured"/>
+</langpack>

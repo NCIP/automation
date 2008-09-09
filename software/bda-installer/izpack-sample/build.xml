@@ -1,5 +1,9 @@
 <project name="Installer" default="install" basedir="." >
 
+	<!-- Generic properties -->
+	<property name="application_installer" value="caarray_installer" />
+	<property name="application_upgrader" value="caarray_upgrader" />
+	
 	<!-- TARGETS -->
 	<target name="install" >
 		<echo message="CALL THE INSTALL TARGET"/> 
@@ -8,23 +12,68 @@
 
 		<get src="http://gforge.nci.nih.gov/frs/download.php/4619/caarray_distribution_2_1_0.zip" dest="${install.path}/caarray_distribution_2_1_0.zip"/>
 		
-		<unzip src="${install.path}/caarray_distribution_2_1_0.zip" dest="${install.path}/carray_installer" />
+		<unzip src="${install.path}/caarray_distribution_2_1_0.zip" dest="${install.path}/${application_installer}" />
 		
-		<copy file="C:/dev/automat/trunk/software/bda-installer/izpack-sample/installer.template.properties" tofile="${install.path}/carray_installer/install.properties" />
+		<copy file="${install.path}/templates/installer.template.properties" tofile="${install.path}/${application_installer}/install.properties" />
 
 <!-- try to eliminate all these replaces from the install-->
 
-		<replace dir="${install.path}/carray_installer" token="basedir}" value="install.path}/carray_installer">
+		<replace dir="${install.path}/${application_installer}" token="basedir}" value="install.path}/${application_installer}">
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />
 		</replace>
 
+		<replace file="${install.path}/${application_installer}/build.xml" token="project.properties" value="${install.path}/${application_installer}/project.properties"/>
+		<replace file="${install.path}/${application_installer}/build.xml" token="${properties.file}" value="${install.path}/${application_installer}/${properties.file}"/>
+		<replace file="${install.path}/${application_installer}/bda-utils/bda-build-utils-0.2.0.xml" token="${properties.file}" value="${install.path}/${application_installer}/${properties.file}"/>
+		<replace file="${install.path}/${application_installer}/bda-utils/bda-build-utils-0.2.0.xml" token="bda-utils&quot;&gt;" value="${bda-utils.lib.dir}&quot;&gt;"/>
+		
+	</target>
 
-		<replace file="${install.path}/carray_installer/build.xml" token="project.properties" value="${install.path}/carray_installer/project.properties"/>
-		<replace file="${install.path}/carray_installer/build.xml" token="${properties.file}" value="${install.path}/carray_installer/${properties.file}"/>
-		<replace file="${install.path}/carray_installer/bda-utils/bda-build-utils-0.2.0.xml" token="${properties.file}" value="${install.path}/carray_installer/${properties.file}"/>
-		<replace file="${install.path}/carray_installer/bda-utils/bda-build-utils-0.2.0.xml" token="bda-utils&quot;&gt;" value="${bda-utils.lib.dir}&quot;&gt;"/>
+
+	<target name="update" >
+		<echo message="CALL THE UPDATE TARGET"/> 
 		
+		<echo message="${install.path}"/> 
+
+		<get src="http://gforge.nci.nih.gov/frs/download.php/4620/caarray_upgrade_2_1_0.zip" dest="${install.path}/caarray_upgrade_2_1_0.zip"/>
 		
+		<unzip src="${install.path}/caarray_upgrade_2_1_0.zip" dest="${install.path}/${application_upgrader}" />		
+
+		<copy file="${install.path}/templates/upgrade.template.properties" tofile="${install.path}/${application_upgrader}/upgrade.properties" />
+
+		<replace dir="${install.path}/${application_upgrader}" token="basedir}" value="install.path}/${application_upgrader}">
+			<include name="**/*.xml" />
+			<include name="**/*.properties" />
+		</replace>
+
+		<replace file="${install.path}/${application_upgrader}/build.xml" token="project.properties" value="${install.path}/${application_upgrader}/project.properties"/>
+		<replace file="${install.path}/${application_upgrader}/build.xml" token="${properties.file}" value="${install.path}/${application_upgrader}/${properties.file}"/>
+		<replace file="${install.path}/${application_upgrader}/bda-utils/bda-build-utils-0.2.0.xml" token="${properties.file}" value="${install.path}/${application_upgrader}/${properties.file}"/>
+		<replace file="${install.path}/${application_upgrader}/bda-utils/bda-build-utils-0.2.0.xml" token="bda-utils&quot;&gt;" value="${bda-utils.lib.dir}&quot;&gt;"/>
+	</target>
+	
+	
+	<target name="convert-install-path" >
+	
+		<pathconvert targetos="unix" property="application.base.path.convert">
+			 <path location="${install.path}"/>
+		</pathconvert>
+
+		<replaceregexp file="${install.path}/${application_installer}/install.properties" byline="true"
+				match="^(application.base.path)=(.*)"
+				replace="\1=${application.base.path.convert}/caarray"/>		
 	</target>	
+	
+	<target name="convert-upgrade-path" >
+	
+		<pathconvert targetos="unix" property="application.base.path.convert">
+			 <path location="${install.path}"/>
+		</pathconvert>
+
+		<replaceregexp file="${install.path}/${application_installer}/upgrade.properties" byline="true"
+				match="^(application.base.path)=(.*)"
+				replace="\1=${application.base.path.convert}/caarray"/>		
+	</target>		
+	
 </project>

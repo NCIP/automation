@@ -1,13 +1,39 @@
 <antactions> 
-	<pack name="core">
+	<pack name="download_install">
 		<antcall buildfile="$INSTALL_PATH/build.xml"
 			order="afterpack"
 			verbose="yes"
 			logfile="$INSTALL_PATH/antlog_installer.txt"
 			inheritall="false"
-			messageid="AntAction.core"			
+			messageid="AntAction.download-install"			
 			>
 			<target name="install"/>
+			<property name="install.path" value="$INSTALL_PATH"/>   
+		</antcall>
+	</pack>
+
+	<pack name="download_update">
+		<antcall buildfile="$INSTALL_PATH/build.xml"
+			order="afterpack"
+			verbose="yes"
+			logfile="$INSTALL_PATH/antlog_installer.txt"
+			inheritall="false"
+			messageid="AntAction.download-update"			
+			>
+			<target name="update"/>
+			<property name="install.path" value="$INSTALL_PATH"/>   
+		</antcall>
+	</pack>
+	
+	<pack name="convert">
+		<antcall buildfile="$INSTALL_PATH/build.xml"
+			order="afterpack"
+			verbose="yes"
+			logfile="$INSTALL_PATH/antlog_installer.txt"
+			inheritall="false"
+			messageid="AntAction.convert"			
+			>
+			<target name="convert-install-path"/>
 			<property name="install.path" value="$INSTALL_PATH"/>   
 		</antcall>
 	</pack>
@@ -18,13 +44,26 @@
 			verbose="yes"
 			logfile="$INSTALL_PATH/carray_installer/antlog_installer.txt"
 			inheritall="false"
-			messageid="AntAction.install"			
+			messageid="AntAction.install"		
 			>
 			<target name="install"/>
 			<property name="install.path" value="$INSTALL_PATH"/>   
 			<property name="basedir" value="$INSTALL_PATH/carray_installer"/>
-			<property name="database.exists" value="false"/>
 		</antcall>
 	</pack>	
+	
+	<pack name="update">
+		<antcall buildfile="$INSTALL_PATH/carray_installer/build.xml"
+			order="afterpacks"
+			verbose="yes"
+			logfile="$INSTALL_PATH/carray_installer/antlog_installer.txt"
+			inheritall="false"
+			messageid="AntAction.update"		
+			>
+			<target name="update"/>
+			<property name="install.path" value="$INSTALL_PATH"/>   
+			<property name="basedir" value="$INSTALL_PATH/carray_installer"/>
+		</antcall>
+	</pack>		
 	
 </antactions>   

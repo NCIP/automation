@@ -16,7 +16,7 @@
 	The meaning of the tags should be natural ...
 	-->
 	<info>
-		<appname>Sample Installation</appname>
+		<appname>caArray</appname>
 		<appversion>1.4 beta 666</appversion>
 		<authors>
 		    <author name="JPz" email="jpz@superman.org"/>
@@ -44,13 +44,13 @@
 	</locale>
 
 	<conditions>
-		<condition type="variable" id="standardinstallation">
+		<condition type="variable" id="install">
 			<name>setup.type</name>
-			<value>standard</value>
+			<value>install</value>
 		</condition>
-		<condition type="variable" id="expertinstallation">
+		<condition type="variable" id="update">
 			<name>setup.type</name>
-			<value>expert</value>
+			<value>update</value>
 		</condition>
 		<condition type="java" id="installonwindows">
 			<java>
@@ -59,10 +59,17 @@
 			</java>
 			<returnvalue type="boolean">true</returnvalue>
 		</condition>
-		<condition type="and" id="standardinstallation.onwindows">
-			<condition type="ref" refid="standardinstallation"/>
+		<condition type="and" id="install.onwindows">
+			<condition type="ref" refid="install"/>
 			<condition type="ref" refid="installonwindows" />
 		</condition>
+		<condition type="and" id="update.onwindows">
+			<condition type="ref" refid="update"/>
+			<condition type="ref" refid="installonwindows" />
+		</condition>
+
+
+		
 	</conditions>
 
 	<!-- 
@@ -87,14 +94,15 @@
 		<panel classname="InfoPanel"/>
 		<panel classname="LicencePanel"/>
 		<panel classname="TargetPanel"/>
+		<panel classname="UserPathPanel" />
 		<panel classname="UserInputPanel"  id="UserInputPanel.0" />        
-		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="standardinstallation.onwindows"/> 
-		<panel classname="UserInputPanel"  id="UserInputPanel.2" />
-		<panel classname="UserInputPanel"  id="UserInputPanel.3" />		
+		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="update.onwindows"/> 
+		<panel classname="UserInputPanel"  id="UserInputPanel.2" condition="install.onwindows"/>
+		<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="install.onwindows"/>		
 		<panel classname="InstallationGroupPanel"/>
 		<panel classname="PacksPanel"/>
 		<panel classname="SummaryPanel"/>
-		<panel classname="ExtendedInstallPanel"/>
+		<panel classname="ExtendedInstallPanel"/>		
 		<panel classname="FinishPanel"/>
 	</panels>
 
@@ -102,6 +110,8 @@
 		<listener installer="SummaryLoggerInstallerListener">
 			<os family="windows"/>
 		</listener>
+		
+		<listener installer="ProgressBarInstallerListener"/>		
 
 		<listener installer="AntActionInstallerListener" uninstaller="AntActionUninstallerListener" />
 	</listeners>
@@ -114,24 +124,36 @@
 	We specify here our packs.
 	-->
 	<packs>
-
-		<pack name="core" id="core" required="yes" installGroups="caarray">
+	
+		<pack name="download_install" id="download_install" required="no" installGroups="caarray"  condition="install.onwindows">
 		    <description>The base files</description>
 		    <file src="build.xml" targetdir="$INSTALL_PATH"/>
-		    
+		    <file src="template" targetdir="$INSTALL_PATH"/>
 		</pack>	
-<!--
-		<pack name="parse" required="yes">
+
+		<pack name="download_update" id="download_update" required="no" installGroups="caarray"  condition="update.onwindows">
+		    <description>The base files</description>
+		    <file src="template" targetdir="$INSTALL_PATH"/>
+		    <file src="build.xml" targetdir="$INSTALL_PATH"/>		    
+		</pack>	
+
+
+		<pack name="parse" required="no" preselected="no">
 		    <description>parse the input values</description>
-		    
-		    
-		</pack>
--->
-		<pack name="install" required="yes" depends="core">
-		    <description>The sources</description>
-		    <!-- The file will be parsed -->
 		    <parsable targetfile="$INSTALL_PATH/carray_installer/install.properties" type="plain" />		    
 		</pack>
+
+		<pack name="convert" required="no" preselected="no">
+		    <description>cover the installation</description> 
+		</pack>
+
+		<pack name="install" required="yes" condition="install.onwindows">
+		    <description>The sources</description>		    
+		</pack>
+
+		<pack name="update" required="yes" condition="update.onwindows">
+		    <description>The sources</description>		    
+		</pack>		
 
 	</packs>
 	<jar src="jar/ant/ant.jar" stage="both" />
