@@ -105,7 +105,6 @@
 		<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="update.onwindows"/>
 		<panel classname="UserInputPanel"  id="UserInputPanel.7" />
 		<panel classname="InstallationGroupPanel"/>
-		<panel classname="PacksPanel"/>
 		<panel classname="SummaryPanel"/>
 		<panel classname="ExtendedInstallPanel"/>
 		<panel classname="FinishPanel"/>

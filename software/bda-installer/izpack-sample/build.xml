@@ -9,7 +9,8 @@
 		<echo message="CALL THE INSTALL TARGET"/> 
 		
 		<echo message="${install.path}"/> 
-
+		<delete dir="${install.path}/${application_installer}" />
+		
 		<get src="http://gforge.nci.nih.gov/frs/download.php/4619/caarray_distribution_2_1_0.zip" dest="${install.path}/caarray_distribution_2_1_0.zip"/>
 		
 		<unzip src="${install.path}/caarray_distribution_2_1_0.zip" dest="${install.path}/${application_installer}" />
@@ -35,6 +36,8 @@
 		<echo message="CALL THE UPDATE TARGET"/> 
 		
 		<echo message="${install.path}"/> 
+
+		<delete dir="${install.path}/${application_installer}" />
 
 		<get src="http://gforge.nci.nih.gov/frs/download.php/4620/caarray_upgrade_2_1_0.zip" dest="${install.path}/caarray_upgrade_2_1_0.zip"/>
 		
