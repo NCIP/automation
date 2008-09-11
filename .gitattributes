@@ -586,12 +586,6 @@ software/bda-installer/izpack-sample/listener/install.xml -text
 software/bda-installer/izpack-sample/listener/test1/ShouldNotSeenWith_ls.txt -text
 software/bda-installer/izpack-sample/listener/test2/ShouldSeenWith_ls.txt -text
 software/bda-installer/izpack-sample/script.bat -text
-software/bda-installer/izpack-sample/src/IPValidator.java -text
-software/bda-installer/izpack-sample/src/PWDEncryptor.java -text
-software/bda-installer/izpack-sample/src/PWDValidator.java -text
-software/bda-installer/izpack-sample/src/Scrambler.java -text
-software/bda-installer/izpack-sample/src/myCompany/tools/install/listener/ChmodCompilerListener.java -text
-software/bda-installer/izpack-sample/src/myCompany/tools/install/listener/ChmodInstallerListener.java -text
 software/bda-installer/izpack-sample/template/installer.template.properties -text
 software/bda-installer/izpack-sample/template/upgrade.template.properties -text
 software/bda-installer/izpack-sample/userInputSpec.xml -text
