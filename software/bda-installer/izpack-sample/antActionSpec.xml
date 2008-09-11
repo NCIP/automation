@@ -25,45 +25,46 @@
 		</antcall>
 	</pack>
 	
-	<pack name="convert">
+	<pack name="convert-install-path">
 		<antcall buildfile="$INSTALL_PATH/build.xml"
 			order="afterpack"
 			verbose="yes"
 			logfile="$INSTALL_PATH/antlog_installer.txt"
 			inheritall="false"
-			messageid="AntAction.convert"			
+			messageid="AntAction.convert-install-path"			
 			>
 			<target name="convert-install-path"/>
-			<property name="install.path" value="$INSTALL_PATH"/>   
+			<property name="install.base.path" value="$UserPathPanelVariable"/>
+			<property name="install.path" value="$INSTALL_PATH"/>
 		</antcall>
 	</pack>
+
+	<pack name="convert-update-path">
+		<antcall buildfile="$INSTALL_PATH/build.xml"
+			order="afterpack"
+			verbose="yes"
+			logfile="$INSTALL_PATH/antlog_installer.txt"
+			inheritall="false"
+			messageid="AntAction.convert-update-path"			
+			>
+			<target name="convert-upgrade-path"/>
+			<property name="upgrade.base.path" value="${existing.installation.home}"/>
+			<property name="install.path" value="$INSTALL_PATH"/>
+		</antcall>		
+	</pack>
 	
-	<pack name="install">
-		<antcall buildfile="$INSTALL_PATH/carray_installer/build.xml"
+	<pack name="install-application">
+		<antcall buildfile="$INSTALL_PATH/build.xml"
 			order="afterpacks"
 			verbose="yes"
-			logfile="$INSTALL_PATH/carray_installer/antlog_installer.txt"
+			logfile="$INSTALL_PATH/antlog_installer.txt"
 			inheritall="false"
-			messageid="AntAction.install"		
+			messageid="AntAction.install-application"		
 			>
-			<target name="install"/>
+			<target name="install-application"/>
 			<property name="install.path" value="$INSTALL_PATH"/>   
-			<property name="basedir" value="$INSTALL_PATH/carray_installer"/>
 		</antcall>
 	</pack>	
 	
-	<pack name="update">
-		<antcall buildfile="$INSTALL_PATH/carray_installer/build.xml"
-			order="afterpacks"
-			verbose="yes"
-			logfile="$INSTALL_PATH/carray_installer/antlog_installer.txt"
-			inheritall="false"
-			messageid="AntAction.update"		
-			>
-			<target name="update"/>
-			<property name="install.path" value="$INSTALL_PATH"/>   
-			<property name="basedir" value="$INSTALL_PATH/carray_installer"/>
-		</antcall>
-	</pack>		
-	
+		
 </antactions>   

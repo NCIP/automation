@@ -82,6 +82,7 @@
 		<res id="InfoPanel.info" src="Readme.txt"/>
 		<res id="userInputSpec.xml" src="userInputSpec.xml" />	
 		<res id="CustomActionsLang.xml_eng" src="custom_eng.xml"/>
+		<res id="UserPathPanel.dir" src="windir.txt"/>
 	</resources>
 
 	<!-- 
@@ -94,15 +95,19 @@
 		<panel classname="InfoPanel"/>
 		<panel classname="LicencePanel"/>
 		<panel classname="TargetPanel"/>
-		<panel classname="UserPathPanel" />
-		<panel classname="UserInputPanel"  id="UserInputPanel.0" />        
-		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="update.onwindows"/> 
+		<panel classname="UserInputPanel"  id="UserInputPanel.0" />
+		<panel classname="UserPathPanel" id="UserPathPanelInstallation" condition="install.onwindows"/>		
+		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="install.onwindows"/>
 		<panel classname="UserInputPanel"  id="UserInputPanel.2" condition="install.onwindows"/>
-		<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="install.onwindows"/>		
+		<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="install.onwindows"/>
+		<panel classname="UserInputPanel"  id="UserInputPanel.4" condition="install.onwindows"/>
+		<panel classname="UserInputPanel"  id="UserInputPanel.5" condition="install.onwindows"/>
+		<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="update.onwindows"/>
+		<panel classname="UserInputPanel"  id="UserInputPanel.7" />
 		<panel classname="InstallationGroupPanel"/>
 		<panel classname="PacksPanel"/>
 		<panel classname="SummaryPanel"/>
-		<panel classname="ExtendedInstallPanel"/>		
+		<panel classname="ExtendedInstallPanel"/>
 		<panel classname="FinishPanel"/>
 	</panels>
 
@@ -124,7 +129,6 @@
 	We specify here our packs.
 	-->
 	<packs>
-	
 		<pack name="download_install" id="download_install" required="no" installGroups="caarray"  condition="install.onwindows">
 		    <description>The base files</description>
 		    <file src="build.xml" targetdir="$INSTALL_PATH"/>
@@ -137,23 +141,27 @@
 		    <file src="build.xml" targetdir="$INSTALL_PATH"/>		    
 		</pack>	
 
-
-		<pack name="parse" required="no" preselected="no">
+		<pack name="parse-install" required="no" preselected="no" condition="install.onwindows">
 		    <description>parse the input values</description>
-		    <parsable targetfile="$INSTALL_PATH/carray_installer/install.properties" type="plain" />		    
+		    <parsable targetfile="$INSTALL_PATH/caarray_installer/install.properties" type="plain" />		    
 		</pack>
 
-		<pack name="convert" required="no" preselected="no">
-		    <description>cover the installation</description> 
+		<pack name="parse-update" required="no" preselected="no" condition="update.onwindows">
+		    <description>parse the input values</description>
+		    <parsable targetfile="$INSTALL_PATH/caarray_installer/upgrade.properties" type="plain" />		    
 		</pack>
 
-		<pack name="install" required="yes" condition="install.onwindows">
-		    <description>The sources</description>		    
+		<pack name="convert-install-path" required="no" preselected="no" condition="install.onwindows">
+		    <description>installation base path</description> 		    
 		</pack>
 
-		<pack name="update" required="yes" condition="update.onwindows">
-		    <description>The sources</description>		    
-		</pack>		
+		<pack name="convert-update-path" required="no" preselected="no" condition="update.onwindows">
+		    <description>Upgrade base path</description> 
+		</pack>
+				
+		<pack name="install-application" required="no" preselected="no" >
+		    <description>install the application</description>	
+		</pack>
 
 	</packs>
 	<jar src="jar/ant/ant.jar" stage="both" />
