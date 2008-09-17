@@ -93,8 +93,7 @@
 	<panels>
 		<panel classname="HelloPanel"/>
 		<panel classname="InfoPanel"/>
-		<panel classname="LicencePanel"/>
-		<panel classname="TargetPanel"/>
+		<panel classname="LicencePanel"/>		
 		<panel classname="UserInputPanel"  id="UserInputPanel.0" />
 		<panel classname="UserPathPanel" id="UserPathPanelInstallation" condition="install.onwindows"/>		
 		<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="install.onwindows"/>
@@ -130,24 +129,24 @@
 	<packs>
 		<pack name="download_install" id="download_install" required="no" installGroups="caarray"  condition="install.onwindows">
 		    <description>The base files</description>
-		    <file src="build.xml" targetdir="$INSTALL_PATH"/>
-		    <file src="template" targetdir="$INSTALL_PATH"/>
+		    <file src="build.xml" targetdir="$SYSTEM_user_home/.installer"/>
+		    <file src="template" targetdir="$SYSTEM_user_home/.installer"/>
 		</pack>	
 
 		<pack name="download_update" id="download_update" required="no" installGroups="caarray"  condition="update.onwindows">
 		    <description>The base files</description>
-		    <file src="template" targetdir="$INSTALL_PATH"/>
-		    <file src="build.xml" targetdir="$INSTALL_PATH"/>		    
+		    <file src="template" targetdir="$SYSTEM_user_home/.installer"/>
+		    <file src="build.xml" targetdir="$SYSTEM_user_home/.installer"/>		    
 		</pack>	
 
 		<pack name="parse-install" required="no" preselected="no" condition="install.onwindows">
 		    <description>parse the input values</description>
-		    <parsable targetfile="$INSTALL_PATH/caarray_installer/install.properties" type="plain" />		    
+		    <parsable targetfile="$SYSTEM_user_home/.installer/caarray_installer/install.properties" type="plain" />		    
 		</pack>
 
 		<pack name="parse-update" required="no" preselected="no" condition="update.onwindows">
 		    <description>parse the input values</description>
-		    <parsable targetfile="$INSTALL_PATH/caarray_installer/upgrade.properties" type="plain" />		    
+		    <parsable targetfile="$SYSTEM_user_home/.installer/caarray_installer/upgrade.properties" type="plain" />		    
 		</pack>
 
 		<pack name="convert-install-path" required="no" preselected="no" condition="install.onwindows">
