@@ -116,6 +116,7 @@ docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
 docs/wiki/dashboard/dashboard.swf -text
 docs/wiki/dashboard/resources/hudson-dashboard.xml -text
+docs/wiki/drt-demo/drt-demo-screencast.mov -text
 docs/wiki/drt/WikiButton.as -text
 docs/wiki/drt/WikiHome.as -text
 docs/wiki/drt/bda-wiki-home.fla -text
