@@ -295,8 +295,10 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
         parent.install(this);
       
  //       String[] files = {"C:\\Documents and Settings\\narram\\.installer\\antlog_installer.txt"};
- //       JTailer frame = new JTailer( files );     
-        tailer = new LogFileTailer( new File( "C:\\Documents and Settings\\narram\\.installer\\antlog_installer.txt" ), 1000, false );
+ //       JTailer frame = new JTailer( files );
+        
+        
+        tailer = new LogFileTailer( new File( idata.getVariable("SYSTEM_user_home")+"/.installer/antlog_installer.txt" ), 1000, false );
         tailer.addLogFileTailerListener( this );
         tailer.start();
 
