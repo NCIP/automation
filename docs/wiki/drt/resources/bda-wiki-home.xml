@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
-	<welcome><![CDATA[<H1>Welcome to DRT </H1><P>Remember to check out the latest BDA Release 0.5.0 in the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Tip of the month</b>: Reduce resource duplication and ease dependency management through Ivy. <a href='https://wiki.nci.nih.gov/x/xKN8'>Read more...</a>]]></welcome>
+	<welcome><![CDATA[<H1>Welcome to DRT </H1></welcome>
 
 	<button>
 		<name>DRT</name>
