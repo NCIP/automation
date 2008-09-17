@@ -17,7 +17,6 @@
 		<name>Listserv</name>
 		<link>https://list.nih.gov/archives/drtlist.html</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/flag.png</image>
-		<teaser><![CDATA[<H1>Documentation</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/LwCG">BDA Build Script Standards</a></LI><LI><a href="https://wiki.nci.nih.gov/x/Tpx8">BDA Technology</a></LI><LI><a href="https://wiki.nci.nih.gov/x/yqN8">BDA Utilities (BDA API)</a></LI><LI><a href="https://wiki.nci.nih.gov/x/wqN8">BDA Templates</a></LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>Screencast</name>
