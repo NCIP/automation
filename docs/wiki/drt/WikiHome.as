@@ -15,10 +15,10 @@
 		
 		//Variables
 		private var wikiXML:XML = new XML();
-		private var xmRequest:URLRequest = new URLRequest('https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/resources/bda-wiki-home.xml');
+		private var xmRequest:URLRequest = new URLRequest('https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/drt/resources/bda-wiki-home.xml');
 		private var xmlLoader:URLLoader = new URLLoader(xmRequest);
 		private var xmlLoaded:Boolean = false;
-		private var cssRequest:URLRequest = new URLRequest("https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/resources/bda-wiki-home.css");
+		private var cssRequest:URLRequest = new URLRequest("https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/drt/resources/bda-wiki-home.css");
 		private var cssLoader:URLLoader = new URLLoader(cssRequest);
 		private var css:StyleSheet = new StyleSheet();
 		private var defaultTeaserText:String;
