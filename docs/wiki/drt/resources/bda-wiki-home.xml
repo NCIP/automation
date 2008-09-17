@@ -4,24 +4,24 @@
 
 	<button>
 		<name>DRT</name>
-		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
+		<link>https://system-requests-dev.nci.nih.gov:8443/jira/secure/Dashboard.jspa</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/internet.png</image>
 		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://wiki.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://wiki.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses hosted a workshop on <a href="https://wiki.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://wiki.nci.nih.gov/x/AgmZ">workshop WIKI page</a> and a screencast of the presentation will be released shortly.</LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>Users</name>
-		<link>https://wiki.nci.nih.gov/x/UZx8</link>
-		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/flag.png</image>
+		<link> 	 https://wiki.nci.nih.gov/x/PpKl</link>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/Community_Help.png</image>
 	</button>
 	<button>
 		<name>Listserv</name>
-		<link>https://wiki.nci.nih.gov/x/-ROZ</link>
-		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/Community_Help.png</image>
+		<link>https://list.nih.gov/archives/drtlist.html</link>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/flag.png</image>
 		<teaser><![CDATA[<H1>Documentation</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/LwCG">BDA Build Script Standards</a></LI><LI><a href="https://wiki.nci.nih.gov/x/Tpx8">BDA Technology</a></LI><LI><a href="https://wiki.nci.nih.gov/x/yqN8">BDA Utilities (BDA API)</a></LI><LI><a href="https://wiki.nci.nih.gov/x/wqN8">BDA Templates</a></LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>Screencast</name>
-		<link>https://wiki.nci.nih.gov/x/HRSZ</link>
+		<link>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/drt-demo/drt-demo-screencast.mov</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/ark2.png</image>
 		<teaser><![CDATA[<H1>Downloads</H1><UL><LI>Download the <a href="https://gforge.nci.nih.gov/frs/download.php/4688/bda-download.zip">latest BDA release</a> from GForge</LI><LI>Change <a href="https://wiki.nci.nih.gov/x/LQCG">project directory layout</a></LI><LI>Add <a href="https://wiki.nci.nih.gov/x/HRSZ">several lines</a> to your <b>build.xml</b></LI><LI>Start using the <a href="https://wiki.nci.nih.gov/x/rAWG">BDA macros</a></LI></UL>]]></teaser>
 	</button>
