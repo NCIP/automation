@@ -116,6 +116,7 @@ docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
 docs/wiki/dashboard/dashboard.swf -text
 docs/wiki/dashboard/resources/hudson-dashboard.xml -text
+docs/wiki/drt-demo/AC_RunActiveContent.js -text
 docs/wiki/drt-demo/SkinUnderPlayMute.swf -text
 docs/wiki/drt-demo/alok-drt-screencast.flv -text
 docs/wiki/drt-demo/drt-demo-screencast.mov -text
