@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="custom/izpack"/>
+	<classpathentry kind="lib" path="izpack-sample/jar/ant/ant-launcher.jar"/>
+	<classpathentry kind="lib" path="izpack-sample/jar/ant/ant-nodeps.jar"/>
+	<classpathentry kind="lib" path="izpack-sample/jar/ant/ant.jar"/>
+	<classpathentry kind="lib" path="izpack-sample/jar/drivers/mysql-connector-java-5.1.5.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IZPACK_LIB"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

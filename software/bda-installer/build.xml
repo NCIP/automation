@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project name="bda-installer" default="build:all" basedir=".">
+	<description>
+		Creates an LSD Product Installer
+	</description>
+
+	<!-- basedir placeholder property -->
+	<property name="cbasedir" value="${basedir}" />
+
+	<property file="local.properties" />
+	<property file="default.properties" />
+	<property name="src.dir" value="${cbasedir}/custom/izpack" />
+
+	<target name="build:prepare" description="Prepares before build">
+		<copy todir="${izpack.home}/src">
+			<fileset includes="${src.dir}/*.*" />
+		</copy>
+	</target>
+
+	<target name="build:all" depends="build:prepare" description="Default target">
+
+	</target>
+</project>
