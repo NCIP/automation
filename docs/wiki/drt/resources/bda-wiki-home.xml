@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
 	<welcome><![CDATA[Welcome to DRT]]></welcome>
-	<teaser>Welcome to DRT</teaser>
+	<teaser>Welcome to the Deployment Request Tracker pilot project page</teaser>
 	<button>
 		<name>DRT</name>
 		<link>https://system-requests-dev.nci.nih.gov:8443/jira/secure/Dashboard.jspa</link>
