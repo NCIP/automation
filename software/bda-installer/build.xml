@@ -14,7 +14,7 @@
 
 	<target name="build:prepare" description="Prepares before build">
 		<copy todir="${izpack.home}/src">
-			<fileset includes="${src.dir}/*.*" />
+			<fileset dir="${src.dir}" includes="*.*" />
 		</copy>
 	</target>
 
