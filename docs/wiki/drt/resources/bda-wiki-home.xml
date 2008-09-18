@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
-	<welcome><![CDATA[Welcome to DRT]]></welcome>
+	<welcome><![CDATA[Welcome to the Deployment Request Tracker pilot project page]]></welcome>
 	<teaser>Welcome to the Deployment Request Tracker pilot project page</teaser>
 	<button>
 		<name>DRT</name>
