@@ -603,6 +603,7 @@ software/bda-installer/.project -text
 software/bda-installer/build.xml -text
 software/bda-installer/custom/izpack/com/izforge/izpack/panels/ExtendedInstallPanel.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/panels/InstallPanel.java -text
+software/bda-installer/custom/izpack/com/izforge/izpack/util/DBConnectionValidator.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/InstallPannelTailProcessor.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/JTailer.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/LogFileTailer.java -text
