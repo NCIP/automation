@@ -24,7 +24,7 @@
 		<name>Screencast</name>
 		<link>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/drt-demo/drt-demo-screencast.mov</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/ark2.png</image>
-		<teaser><![CDATA[<H1>A screencast demonstrating how to use the DRT system</H1><a href="http://www.apple.com/quicktime/download/"><img width="96" height="96" src="http://developer.apple.com/softwarelicensing/agreements/images/logo_qtlogo.gif"></a><P/><P/><P/><P>Apple Quicktime is needed to play this screencast. You can <a href="http://www.apple.com/quicktime/download/">download</a> Apple Quicktime from <a href="http://www.apple.com/quicktime/download/">this link</a>.]]></teaser>
+		<teaser><![CDATA[<H1>A screencast demonstrating how to use the DRT system</H1><a href="http://www.apple.com/quicktime/download/"><img src="http://developer.apple.com/softwarelicensing/agreements/images/logo_qtlogo.gif"></a><BR><BR><P/><P>Apple Quicktime is needed to play this screencast. You can <a href="http://www.apple.com/quicktime/download/">download</a> Apple Quicktime from <a href="http://www.apple.com/quicktime/download/">this link</a>.]]></teaser>
 	</button>
 
 </wiki>
