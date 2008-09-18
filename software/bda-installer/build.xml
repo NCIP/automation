@@ -13,12 +13,16 @@
 	<property name="src.dir" value="${cbasedir}/custom/izpack" />
 
 	<target name="build:prepare" description="Prepares before build">
-		<copy todir="${izpack.home}/src">
-			<fileset dir="${src.dir}" includes="*.*" />
+		<copy todir="${izpack.home}/src/lib" overwrite="true">
+			<fileset dir="${src.dir}" />
 		</copy>
 	</target>
 
-	<target name="build:all" depends="build:prepare" description="Default target">
+	<target name="build:izpack" description="Builds IzPack">
+		<ant inheritall="false" antfile="${izpack.home}/src/build.xml" />
+	</target>
+
+	<target name="build:all" depends="build:prepare, build:izpack" description="Default target">
 
 	</target>
 </project>
