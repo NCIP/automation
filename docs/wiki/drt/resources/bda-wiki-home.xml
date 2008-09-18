@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
-	<welcome><![CDATA[]]></welcome>
-
+	<welcome><![CDATA[Welcome to DRT]]></welcome>
+	<teaser>Welcome to DRT</teaser>
 	<button>
 		<name>DRT</name>
 		<link>https://system-requests-dev.nci.nih.gov:8443/jira/secure/Dashboard.jspa</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/internet.png</image>
+		<teaser>Access the DRT pilot system</teaser>
 	</button>
 	<button>
 		<name>Users</name>
-		<link> 	 https://wiki.nci.nih.gov/x/PpKl</link>
+		<link>https://wiki.nci.nih.gov/x/PpKl</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/Community_Help.png</image>
+		<teaser>A list of users and roles that will access the DRT pilot system</teaser>
 	</button>
 	<button>
 		<name>Listserv</name>
 		<link>https://list.nih.gov/archives/drtlist.html</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/flag.png</image>
+		<teaser>A listserv to log issues and requests</teaser>
 	</button>
 	<button>
 		<name>Screencast</name>
 		<link>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/drt-demo/drt-demo-screencast.mov</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/ark2.png</image>
+		<teaser>A screencast demonstrating how to use the DRT system</teaser>
 	</button>
 
 </wiki>
