@@ -9,7 +9,7 @@ export projectdir="$HOME/src/trunk/yourporjecthere/software"
 
 export projectdir="$HOME/src/trunk/coppa/code"
 
-tar cvf - . --wildcards --exclude .svn --exclude "*~" | (cd $projectdir; tar xvf -)
+tar cvf - build common --wildcards --exclude .svn --exclude "*~" | (cd $projectdir; tar xvf -)
 
 # 
 cd $projectdir

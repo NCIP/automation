@@ -663,16 +663,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<target name="install:jboss:grid:configure" description="Configure tomcat-application" unless="exclude.jboss">
-		<replace dir="${jboss.home}/webapps/${grid.dir.dest}" token="localhost:8080" value="${jboss.hostname}:${tomcat.port.http}">
+		<replace dir="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}">
 			<include name="**/*.wsdl" />
 		</replace>
-		<replace file="${jboss.home}/webapps/${grid.dir.dest}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="localhost:8080" value="${jboss.hostname}:${jboss.port.http}"/>
-		<replace file="${jboss.home}/webapps/${jboss.grid.target}/WEB-INF/web.xml" token="8080" value="${jboss.port.http}"/>
-		<replaceregexp file="${jboss.home}/webapps/${grid.dir.dest}/WEB-INF/etc/cagrid_${grid.application.name}/jndi-config.xml" 
+		<replace file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}"/>
+		<replace file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/web.xml" token="8080" value="${jboss.server.port}"/>
+		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/etc/cagrid_${grid.application.name}/jndi-config.xml" 
 			match="(\s+.value.)http://.*(.\/value.)" 
-			replace="\1http://${tomcat.hostname}:${tomcat.port.http}/ncia-api/http/remoteService\2" 
+			replace="\1http://${jboss.server.hostname}:${jboss.server.port}/ctods-api/http/remoteService\2" 
 			flags="g"/>
-		<replaceregexp file="${tomcat.home}/webapps/${grid.dir.dest}/WEB-INF/etc/cagrid_${grid.application.name}/${grid.application.name}_registration.xml"
+		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/etc/cagrid_${grid.application.name}/${grid.application.name}_registration.xml"
 			match="(\s+.wsa:Address.).*(.\/wsa:Address.)" 
 			replace="\1${grid.index.url}\2"
 			flags="g"/>

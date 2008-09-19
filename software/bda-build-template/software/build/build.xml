@@ -37,19 +37,19 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<!-- BDA standard structure -->
 	<property name="build.dir" location="." />
-	<property name="software.dir" value=".." />
-	<property name="common.dir" value="${software.dir}/common" />
-	<property name="local.repo.dir" value="${software.dir}/local-ivy-repo" />
-	<property name="target.dir" value="${software.dir}/target" />
-	<property name="bda-download.dir" value="${common.dir}/bda-download" />
-	<property name="ivy.settings.dir" value="${common.dir}/ivy" />
-	<property name="lib.dir" value="${target.dir}/lib" />
-	<property name="temp.dir" value="${target.dir}/temp" />
-	<property name="reports.dir" value="${target.dir}/reports" />
-	<property name="bda-utils.dir" value="${target.dir}/bda-utils" />
-	<property name="log.dir" value="${target.dir}/logs" />
-	<property name="dist.dir" value="${target.dir}/dist" />
-	<property name="download.dir" value="${target.dir}/download" />
+	<property name="software.dir" location=".." />
+	<property name="common.dir" location="${software.dir}/common" />
+	<property name="local.repo.dir" location="${software.dir}/local-ivy-repo" />
+	<property name="target.dir" location="${software.dir}/target" />
+	<property name="bda-download.dir" location="${common.dir}/bda-download" />
+	<property name="ivy.settings.dir" location="${common.dir}/ivy" />
+	<property name="lib.dir" location="${target.dir}/lib" />
+	<property name="temp.dir" location="${target.dir}/temp" />
+	<property name="reports.dir" location="${target.dir}/reports" />
+	<property name="bda-utils.dir" location="${target.dir}/bda-utils" />
+	<property name="log.dir" location="${target.dir}/logs" />
+	<property name="dist.dir" location="${target.dir}/dist" />
+	<property name="download.dir" location="${target.dir}/download" />
 	<property name="pt.dir" location="${target.dir}/persistent-transient" />
 	<property name="working.dir" location="${target.dir}/working" />
 
@@ -373,14 +373,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</fileset>
 		</copy>
 
-		<!-- Need to call database-build-filelist once for each type of database you support.
-			db-upgrade.* propertes are stored in project.properties because they are used in both
-			install.xml and build.xml
-		<database-build-filelist sqlfiles.list.file="${dist.exploded.dir}/${db-upgrade.mysql.list.file}" build.properties.file="${dist.exploded.dir}/${db-upgrade.mysql.conf.file}" incr.sql.dir="${db-upgrade.src.dir}/mysql" />
-		<database-build-filelist sqlfiles.list.file="${dist.exploded.dir}/${db-upgrade.oracle.list.file}" build.properties.file="${dist.exploded.dir}/${db-upgrade.oracle.conf.file}" incr.sql.dir="${db-upgrade.src.dir}/oracle" />
-		<copy tofile="${dist.exploded.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml" />
-		-->
-
 		<!-- Copy install related xml and properties files -->
 		<copy todir="${dist.exploded.dir}" overwrite="true">
 			<fileset dir="${build.dir}">
@@ -440,14 +432,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 				<include name="**/*" />
 			</fileset>
 		</copy>
-
-		<!-- Need to call database-build-filelist once for each type of database you support.
-			db-upgrade.* propertes are stored in project.properties because they are used in both
-			install.xml and build.xml
-		<database-build-filelist sqlfiles.list.file="${dist.exploded.dir}/${db-upgrade.mysql.list.file}" build.properties.file="${dist.exploded.dir}/${db-upgrade.mysql.conf.file}" incr.sql.dir="${db-upgrade.src.dir}/mysql" />
-		<database-build-filelist sqlfiles.list.file="${dist.exploded.dir}/${db-upgrade.oracle.list.file}" build.properties.file="${dist.exploded.dir}/${db-upgrade.oracle.conf.file}" incr.sql.dir="${db-upgrade.src.dir}/oracle" />
-		<copy tofile="${dist.exploded.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml" />
-		-->
 
 		<!-- Copy install related xml and properties files -->
 		<copy todir="${dist.exploded.dir}" overwrite="true">
@@ -650,22 +634,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<echo message="To run a remote upgrade type: ant deploy:remote:upgrade -Dproperties.file=[path to environment proeprty file]" />
 	</target>
 
-	<target name="report:grand" description="Generates target flow diagrams for build files">
+	<target name="report:grand" depends="dist:installer:prep" description="Generates target flow diagrams for build files">
 		<!-- Temporary fix to make grand work for install.xml -->
-		<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml" target="retrieve-bda" dir="${bda-download.dir}">
-			<property name="bda-utils.dir" value="${build.dir}/bda-utils" />
-			<property name="lib.dir" value="${lib.dir}" />
-			<property name="software.dir" value="${build.dir}" />
-		</ant>
-		<copy tofile="${build.dir}/db-integrate.xml" file="${bda-utils.dir}/resource/template-db-integrate.xml" />
-		<report-grand build.file.location="build.xml" output.file.dir="${grand.rpt.dir}" output.file.name="generic-root-build.xml" />
-		<report-grand build.file.location="install.xml" output.file.dir="${grand.rpt.dir}" output.file.name="generic-root-install.xml" />
-		<!-- Temporary fix to make grand work for install.xml -->
-		<delete dir="${build.dir}/bda-utils" />
-		<delete dir="${build.dir}/logs" />
-		<delete dir="${build.dir}/working" />
-		<delete file="${build.dir}/db-integrate.xml" />
 
+		<report-grand 
+			build.file.location="build.xml" 
+			output.file.dir="${grand.rpt.dir}" 
+			output.file.name="generic-root-build.xml" />
+		<report-grand 
+			build.file.location="${dist.exploded.dir}/install.xml" 
+			output.file.dir="${grand.rpt.dir}" 
+			output.file.name="generic-root-install.xml" />
 	</target>
 
 	<target name="test:all" description="Runs test target for all sub-projects" depends="
