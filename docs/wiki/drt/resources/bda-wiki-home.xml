@@ -4,7 +4,7 @@
 	<teaser>Welcome to the Deployment Request Tracker pilot project page</teaser>
 	<button>
 		<name>DRT</name>
-		<link>https://system-requests-dev.nci.nih.gov:8443/jira/secure/Dashboard.jspa</link>
+		<link>https://system-requests-test.nci.nih.gov:7443/jira/secure/Dashboard.jspa</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/internet.png</image>
 		<teaser>Access the DRT pilot system</teaser>
 	</button>
