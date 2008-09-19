@@ -35,12 +35,28 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<property file="local.properties"/>
 	<property file="project.properties"/>
 	<property name="properties.file" value="${basedir}/install.properties"/>
+	<property name="properties.template.file" value="properties.template"/>
 	<echo message="Using properties file of ${properties.file}."/>
 	<available file="${properties.file}" property="properties.file.exists" />
 	<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail."/>
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2"/>
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2"/>
 	<property file="${properties.file}" />
+	<!-- Set application.base.path based on platform -->
+	<condition property="application.base.path" value="${application.base.path.linux}">
+		<or>
+			<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="application.base.path" value="${application.base.path.windows}">
+		<os family="windows" />
+	</condition>
+	<echo message="application.base.path=${application.base.path}"/>
+	<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
+	<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
+
 	
 	<!-- Generic properties -->
 	<property name="log.dir" value="${basedir}/logs" />
@@ -142,31 +158,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<pathelement location="${database.driver.file}"/>
 	</path>
 
-	<!-- figure out whether to use install-properties.template or upgrade-proprties.template based on the name of the properties file -->
-	<propertyregex property="properties.file.type"
-		input="${properties.file}"
-		regexp=".*(install|upgrade).*"
-		select="\1"
-		/>
-	<echo message="Properties file type = ${properties.file.type}"/>
-	<switch value="${properties.file.type}">
-		<case value="install">
-			<property name="properties.template.file" value="install-properties.template" />
-		</case>
-		<case value="upgrade">
-			<property name="properties.template.file" value="upgrade-properties.template" />
-		</case>
-		<default>
-			<fail message="Property file name must include 'install' or 'upgrade' so it can be determined which properties template should be used. If you are not certain include 'upgrade' in the name of your proeprties file."/>
-		</default>
-	</switch>
-
 	<!-- Includes-->
 	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
-
-	<!-- Generated and used by database incremental build process, copied deploy:*:prep of build.xml
-	<import file="db-integrate.xml" />
-	-->
 
 	<!-- Read db configs from existing ds.xml if it exists for use in upgrade installs, if already set in properties file values from properties file will be used -->
 	<available file="${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file}" property="ds.exists"/>
@@ -187,16 +180,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		value).  I have defined a filter set below for these properties, I then two two copies
 		one to the resource.dir.temp using the filterset and then one to the desired directory 
 		with the filter file.  If you add new properties that refer to other properties in the
-		properties file please add them to the filterset-pre below.
+		properties file please add them to the embedded.filterset below.
 	     Also you should include properties that are declared in this file, like database info below.
 	-->
 	<property name="resource.dir.temp" value="${working.dir}/tmp" />
-	<filterset id="filterset.pre">
+	<filterset id="embedded.filterset">
 		<filter token="application.base.path" value="${application.base.path}"/>
 		<filter token="application.url" value="${application.url}"/>
 		<filter token="database.url" value="${database.url}"/>
 		<filter token="database.system.url" value="${database.system.url}"/>
 		<filter token="jboss.home" value="${jboss.home}"/>
+		<filter token="tomcat.home" value="${jboss.home}"/>
 		<!-- added internal properties that may be used in a filtered copy -->
 		<filter token="database.driver" value="${database.driver}"/>
 		<filter token="database.dialect" value="${database.dialect}"/>
@@ -232,17 +226,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<delete dir="${working.dir}"/>
 		<mkdir dir="${working.dir}" />
 		<mkdir dir="${resource.dir.temp}"/>
-		<!-- Copy files to ensure values containing variables are expanded, such properties are stored in filterset.pre and then copy with filter files -->
-		<copy todir="${resource.dir.temp}" filtering="true">
+		<!-- Copy files to ensure values containing variables are expanded, such properties are stored in embedded.filterset and then copy with filter files -->
+		<copy todir="${common.dir.dest}" filtering="true">
 			<fileset dir="${common.dir.src}">
 				<include name="**/*"/>
 			</fileset>
-			<filterset refid="filterset.pre"/>
-		</copy> 
-		<copy todir="${common.dir.dest}" filtering="true">
-			<fileset dir="${resource.dir.temp}">
-				<include name="**/*"/>
-			</fileset>
+			<filterset refid="embedded.filterset"/>
 			<filterset>
 				<filtersfile file="${properties.file}"/>
 				<filtersfile file="project.properties"/>
@@ -260,7 +249,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			<fileset dir="${db.dir.src}">
 				<include name="**/*"/>
 			</fileset>
-			<filterset refid="filterset.pre"/>
+			<filterset refid="embedded.filterset"/>
 		</copy>
 		<copy todir="${db.dir.dest}" filtering="true">
 			<fileset dir="${db.dir.temp}">
@@ -461,7 +450,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<!-- Wrapper target to deploy JBOSS container -->
 	<target name="install:jboss" description="Wrapper scripts that calls all required targets to install the jboss container" unless="exclude.jboss"
 		depends="
-		install:check,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:validation:pre-install:ports,
@@ -477,7 +465,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<target name="install" description="Installs and configures JBOSS, creates database, and deploys application" 
 		depends="
-		install:check,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:validation:pre-install:ports,
@@ -507,7 +494,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<!-- Wrapper target to upgrade jboss container. Does not install or configure binaries -->
 	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
 		depends="
-		upgrade:check,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:init,
@@ -519,7 +505,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<target name="upgrade" description="Upgrades JBoss and Database"
 		depends="
-		upgrade:check,
 		upgrade:init,
 		install:validation:pre-install,
 		install:jboss:stop,
@@ -562,26 +547,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<echo  message="Checking if database properties exist.  If they do not on an upgrade install then ${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file} may not exist."/>
 		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
 		<properties-exist properties.list="${db.prop.list}"/>
-	</target>
-	<target name="install:check">
-		<if>
-			<not>   
-				<contains string="${properties.file}" substring="install"/>
-			</not>  
-			<then>  
-				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'install' in the name."/>
-			</then> 
-		</if>   
-	</target>
-	<target name="upgrade:check">
-		<if>
-			<not>   
-				<contains string="${properties.file}" substring="upgrade"/>
-			</not>  
-			<then>  
-				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'upgrade' in the name."/>
-			</then> 
-		</if>   
 	</target>
 
 	<!-- Targets below are provided to handle tomcat and grid installations, however many projects do not use either of these so they have been moved to the end of the script. -->

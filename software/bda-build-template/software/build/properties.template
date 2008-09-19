@@ -1,7 +1,8 @@
 ##############################
 ###  APPLICATION SETTINGS  ###
 ##############################
-application.base.path=
+application.base.path.linux=
+application.base.path.windows=
 authentication.type=
 application.url=
 
@@ -11,15 +12,35 @@ application.url=
 database.type=
 database.server=
 database.port=
+database.name=
+database.user=
+database.password=
+database.url=
 
 ########################
 ###  JBOSS SETTINGS  ###
 ########################
-jboss.home=
+jboss.relative.path=
 jboss.server.hostname=
-jboss.server.jndi.port=
 jboss.server.name=
+
+jboss.cobraorb.port=
+jboss.ejbinvoker.port=
+jboss.hajndi.port=
+jboss.hajrmi.port=
+jboss.jms.port=
+jboss.jmx-rmi.port=
+jboss.messaging.port=
+jboss.pooledha.port=
+jboss.remoting.port=
+jboss.server.bind.port=
+jboss.server.jndi.port=
 jboss.server.port=
+jboss.server.rmi.port=
+jboss.service.rmiobject.port=
+jboss.snmp.port=
+jboss.snmp-trapd.port=
+jboss.web.service.port=
 
 ###################################
 #  PRE-POST VALIDATION PROPERTIES #

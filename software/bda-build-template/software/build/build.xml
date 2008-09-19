@@ -13,18 +13,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- The project.properties stores properties that are shared between both build.xml and install.xml. Typically properties that are related to the distribution directories, or files. -->
 	<property file="local.properties" />
 	<property file="project.properties" />
-
-	<condition property="properties.file" value="linux-install.properties">
-		<or>
-			<os family="unix" />
-			<os family="mac" />
-		</or>
-	</condition>
-
-	<condition property="properties.file" value="windows-install.properties">
-		<os family="windows" />
-	</condition>
-
+	<property name="properties.file" value="install.properties"/>
 	<echo message="Using properties file of ${properties.file}." />
 	<available file="${properties.file}" property="properties.file.exists" />
 	<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail." />
@@ -32,6 +21,22 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2" />
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2" />
 	<property file="${properties.file}" />
+
+	<!-- Set application.base.path based on platform -->
+	<condition property="application.base.path" value="${application.base.path.linux}">
+		<or>
+			<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="application.base.path" value="${application.base.path.windows}">
+		<os family="windows" />
+	</condition>
+	<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
+	<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
+
+
 	<!-- added for remote deployments since file is copied to root of install dir -->
 	<basename property="properties.file.name" file="${properties.file}" />
 
@@ -385,7 +390,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 		<!-- Set default target and properyties.file to install and install.properties -->
 		<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.project.*default=.)\w+(.\s+.*)" replace="\1install\2" />
-		<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.*property name=.\$\{properties.file\} value=.)[\w\.\d\-\_]+(.\s+.*)" replace="\1install.properties\2" />
 
 		<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
 		<move file="${dist.exploded.dir}/install.xml" tofile="${dist.exploded.dir}/build.xml" />
@@ -437,14 +441,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<copy todir="${dist.exploded.dir}" overwrite="true">
 			<fileset dir="${build.dir}">
 				<include name="install.xml" />
-				<include name="upgrade.properties" />
+				<include name="install.properties" />
 				<include name="*properties.template" />
 				<include name="project.properties" />
 			</fileset>
 		</copy>
 		<!-- Change default target and properties.file to upgrade and upgrade.properties -->
 		<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.project.*default=.)\w+(.\s+.*)" replace="\1upgrade\2" />
-		<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.*property name=.properties.file. value=.)[\w\.\d\-\_\$\{\}\/]+(.\s*\/.*)" replace="\1upgrade.properties\2" />
 
 		<!-- Rename install.xml to build.xml to simply install but not having to provide -f option to ant command line -->
 		<move file="${dist.exploded.dir}/install.xml" tofile="${dist.exploded.dir}/build.xml" />
@@ -491,14 +494,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</copy>
 		<exec osfamily="unix" executable="ant" dir="${dist.exploded.dir}" failonerror="true">
 			<!-- use alternate properties file since default has replace values -->
-			<arg value="-Dproperties.file=linux-install.properties" />
+			<arg value="-Dproperties.file=${properties.file}" />
 			<!-- force reinstall of database and jboss without prompting -->
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="${install.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${dist.exploded.dir}" failonerror="true">
 			<!-- use alternate properties file since default has replace values -->
-			<arg value="-Dproperties.file=windows-install.properties" />
+			<arg value="-Dproperties.file=${properties.file}" />
 			<!-- force reinstall of database and jboss without prompting -->
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="${install.target}" />
@@ -524,22 +527,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</fileset>
 		</copy>
 
-		<!-- ci.server property is set at run time.  Since both the developer workstaton
-			and ci.server use the same install targets and we need to start the servers on
-			one  and not the other, this condition will remove the property from the
-			properties file.
-		-->
-		<if>
-			<isset property="ci.server" />
-			<then>
-				<replaceregexp file="${dist.exploded.dir}/linux-upgrade.properties" byline="true" match="exclude.start.servers=true" replace="" />
-				<replaceregexp file="${dist.exploded.dir}/windows-upgrade.properties" byline="true" match="exclude.start.servers=true" replace="" />
-			</then>
-		</if>
-
 		<exec osfamily="unix" executable="ant" dir="${dist.exploded.dir}" failonerror="true">
 			<!-- use alternate properties file since default has replace values -->
-			<arg value="-Dproperties.file=linux-upgrade.properties" />
+			<arg value="-Dproperties.file=${properties.file}" />
 			<!-- force reinstall of database and jboss without prompting -->
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="-Dlocal.install=true" />
@@ -548,7 +538,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 		<exec osfamily="windows" executable="ant.bat" dir="${dist.exploded.dir}" failonerror="true">
 			<!-- use alternate properties file since default has replace values -->
-			<arg value="-Dproperties.file=windows-upgrade.properties" />
+			<arg value="-Dproperties.file=${properties.file}" />
 			<!-- force reinstall of database and jboss without prompting -->
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="-Dlocal.install=true" />
@@ -591,15 +581,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		  * Requires specifying -Dproperties.file=@file@ on the command line to point installer to correct enviornment to install into.
 		  * Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install, if you want properties to be used at install time they must be included in a proeprties file.
 		-->
-		<!-- Check that properties file name includes install, otherwise fail -->
-		<if>
-			<not>
-				<contains string="${properties.file}" substring="install" />
-			</not>
-			<then>
-				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'install' in the name." />
-			</then>
-		</if>
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${bda-blueprints-webapp.install.zip.file}" />
 		<!-- SSH to machine ant run ant command line to install application -->
@@ -615,15 +596,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		  * Requires specifying -Dproperties.file=@file@ on the command line to point installer to correct enviornment to install into.
 		  * Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install, if you want properties to be used at install time they must be included in a proeprties file.
 		-->
-		<!-- Check that properties file name includes upgrade, otherwise fail -->
-		<if>
-			<not>
-				<contains string="${properties.file}" substring="upgrade" />
-			</not>
-			<then>
-				<fail message="When calling install targets the properties.file property, '${properties.file}', must contain 'upgrade' in the name." />
-			</then>
-		</if>
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${bda-blueprints-webapp.upgrade.zip.file}" />
 		<!-- SSH to machine ant run ant command line to install application -->
@@ -642,7 +614,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			output.file.dir="${grand.rpt.dir}" 
 			output.file.name="generic-root-build.xml" />
 		<report-grand 
-			build.file.location="${dist.exploded.dir}/install.xml" 
+			build.file.location="${dist.exploded.dir}/build.xml" 
 			output.file.dir="${grand.rpt.dir}" 
 			output.file.name="generic-root-install.xml" />
 	</target>
