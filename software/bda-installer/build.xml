@@ -66,4 +66,8 @@
 
 	<target name="build:all" depends="-pre:clean, download:izpack, unzip:izpack, build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Default target" />
 
+	<target name="run:installer" depends="build:all" description="Test installer">
+		<java fork="true" jar="${target.dir}/${product.name}-${product.version}.jar" />
+	</target>
+
 </project>
