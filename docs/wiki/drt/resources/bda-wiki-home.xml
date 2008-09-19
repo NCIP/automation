@@ -18,7 +18,11 @@
 		<name>Listserv</name>
 		<link>https://list.nih.gov/archives/drtlist.html</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/flag.png</image>
-		<teaser>A listserv to log issues and requests</teaser>
+		<teaser><![CDATA[<h1>A listserv to log issues and requests</h1><ul>
+<li><a href="/cgi-bin/wa?S1=drtlist&amp;X=-">Search the archives</a>
+</li><li><a href="/cgi-bin/wa?P1&amp;L=drtlist">Post to the list</a>
+</li><li><a href="/cgi-bin/wa?SUBED1=drtlist&amp;A=1">Join or leave the list, or update options</a>
+</li></ul>]]></teaser>
 	</button>
 	<button>
 		<name>Screencast</name>
