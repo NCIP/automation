@@ -351,6 +351,9 @@
 		</field>
 		<field type="text" variable="upt.url">						
 			<spec txt="Enter the upt url:" id="text.label" size="25" set="http://localhost"/>
+			<validator
+				class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid URL" id="upturl.label">
+			</validator>
 		</field>
 		<field type="text" variable="min.pool.size">						
 			<spec txt="Enter the minimum pool size:" id="text.label" size="25" set="5"/>
@@ -394,23 +397,38 @@
 		<field type="title" txt="Application Database Details " bold="true" size="1" />
 		<field type="divider" align="top"/>
 	
-		<variable name="database.system.user" value="root"/>
-		<variable name="database.system.password" value="mysql"/>
 		<variable name="install.path" value="$INSTALL_PATH"/>
 		<variable name="baseDir" value="$INSTALL_PATH"/>
 	
 		<field type="text" variable="database.server">
 			<spec txt="Enter the Database Server:"
-				id="text.label" size="25" set="localhost"/>
+				id="dbhostname.label" size="25" set="localhost"/>
+			<validator
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Host name or the Host is not reachable" id="dbhostname.label">
+			</validator>				
 		</field>
 		<field type="text" variable="database.port">
 			<spec txt="Enter the Database Port:"
-				id="text.label" size="25" set="3306"/>
+				id="dbport.label" size="25" set="3306"/>
+		
 		</field>		
 		<field type="text" variable="database.name">
 			<spec txt="Enter the Database Name:"
 				id="text.label" size="25" set="carrdb"/>
 		</field>		
+		<field type="text" variable="database.system.user">
+			<spec txt="Enter User Name:" id="text.label"
+				size="25" set="root"/>
+		</field>		
+		<field type="password" allign="left" variable="database.system.password">
+			<spec>
+				 <pwd txt="Enter the root password for the installation:" id="pwd.label" size="25" set=""/>				 
+			</spec>
+			<validator
+				class="com.izforge.izpack.util.DBConnectionValidator" txt="The root password did not match" id="error.label">
+				<param name="systemUser" value="true" />
+			</validator>
+		</field>
 		<field type="text" variable="database.user">
 			<spec txt="Enter User Name:" id="text.label"
 				size="25" set="carruser"/>
@@ -420,13 +438,11 @@
 				 <pwd txt="Enter the password for the connection:" id="pwd.label" size="25" set=""/>				 
 			</spec>
 			<validator
-				class="com.izforge.izpack.util.DBConnectionValidator" txt="The password did not match" id="error.label">
-		<!--		
-				<param name="dbUrl" value="$db.url" />
-				<param name="dbUser" value="$db.user" />		
-		-->		
+				class="com.izforge.izpack.util.DBConnectionValidator" txt="The database user and password did not match" id="error.label">
 			</validator>
-		</field>		
+		</field>
+
+		
 	</panel>
 
 </userInput>

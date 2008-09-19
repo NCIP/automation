@@ -599,11 +599,13 @@ software/bda-installer/build.xml -text
 software/bda-installer/custom/izpack/com/izforge/izpack/panels/ExtendedInstallPanel.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/panels/InstallPanel.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/DBConnectionValidator.java -text
+software/bda-installer/custom/izpack/com/izforge/izpack/util/HostNameValidator.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/InstallPannelTailProcessor.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/JTailer.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/LogFileTailer.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/LogFileTailerListener.java -text
 software/bda-installer/custom/izpack/com/izforge/izpack/util/TailerFrame.java -text
+software/bda-installer/custom/izpack/com/izforge/izpack/util/URLCheckValidator.java -text
 software/bda-installer/default.properties -text
 software/bda-installer/installer-config-sample.xml -text
 software/bda-installer/izpack-sample/Licence.txt -text

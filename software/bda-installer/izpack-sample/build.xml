@@ -86,6 +86,7 @@
 			dir="${install.path}/${application_installer}"
 			>
 			<property name="install.path" value="${install.path}"/>
+			<property name="force.reinstall" value="true"/>
 		</ant>
 	</target>
 	
