@@ -11,18 +11,36 @@
 	<property file="local.properties" />
 	<property file="default.properties" />
 	<property name="src.dir" value="${cbasedir}/custom/izpack" />
+	<property name="target.dir" value="${cbasedir}/target" />
+	<property name="izpack.binary.name" value="izpack-4.0.1" />
+	<property name="izpack.binary.file" value="${izpack.binary.name}.zip" />
+	<property name="izpack.binary.uri" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2008/os-independent" />
 
-	<target name="build:prepare" description="Prepares before build">
-		<copy todir="${izpack.home}/src/lib" overwrite="true">
+	<available file="${target.dir}/${izpack.binary.file}" property="izpack.binary.exists" />
+
+	<target name="-pre:clean" description="Prepares before build">
+		<delete dir="${target.dir}/${izpack.binary.name}" />
+	</target>
+
+	<target name="download:izpack" description="Downloads IzPack binaries" unless="izpack.binary.exists">
+		<get src="${izpack.binary.uri}/${izpack.binary.file}" dest="${target.dir}/${izpack.binary.file}" />
+	</target>
+
+	<target name="unzip:izpack" description="Unzipa IzPack binaries">
+		<unzip dest="${target.dir}" src="${target.dir}/${izpack.binary.file}" />
+	</target>
+
+	<target name="build:copy-custom-code" description="Prepares before build">
+		<copy todir="${target.dir}/${izpack.binary.name}/src/lib" overwrite="true">
 			<fileset dir="${src.dir}" />
 		</copy>
 	</target>
 
 	<target name="build:izpack" description="Builds IzPack">
-		<ant inheritall="false" antfile="${izpack.home}/src/build.xml" />
+		<ant inheritall="false" antfile="${target.dir}/${izpack.binary.name}/src/build.xml" />
 	</target>
 
-	<target name="build:all" depends="build:prepare, build:izpack" description="Default target">
+	<target name="build:all" depends="-pre:clean, download:izpack, unzip:izpack, build:copy-custom-code, build:izpack" description="Default target">
 
 	</target>
 </project>
