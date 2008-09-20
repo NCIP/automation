@@ -26,14 +26,14 @@
 		<name>Watch Demo</name>
 		<link>https://wiki.nci.nih.gov/x/ipWl</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/drt/images/multimedia2.png</image>
-		<teaser><![CDATA[<H1>Watch a demo screencast of DRT from your PC</H1>]]></teaser>
+		<teaser><![CDATA[<H1>Watch a demo screencast of DRT from your workstation</H1>]]></teaser>
 	</button>
 	
 	<button>
 		<name>Download Demo</name>
 		<link>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/drt-demo/drt-demo-screencast.mov</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/ark2.png</image>
-		<teaser><![CDATA[<H1>Download a <a href="https://wiki.nci.nih.gov/x/ipWl">screencast</a> movie demonstrating how to use the DRT system</H1>]]></teaser>
+		<teaser><![CDATA[<H1>Download a <a href="https://wiki.nci.nih.gov/x/ipWl">screencast</a> movie demonstrating how to use the DRT system</H1>. You must use Apple QuickTime - which can be downloaded from www.apple.com/quicktime/download/]]></teaser>
 	</button>
 
 </wiki>
