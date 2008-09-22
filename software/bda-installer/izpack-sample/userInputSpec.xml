@@ -330,6 +330,9 @@
 
 		<field type="text" variable="domain.name">						
 			<spec txt="Enter the domain name for the installation:" id="text.label" size="25" set="http://array.nci.nih.gov"/>
+			<validator
+				class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid Domain Name" id="domain.label">
+			</validator>
 		</field>
 		<field type="text" variable="mail.smtp.host">						
 			<spec txt="Enter the mail server hostname:" id="text.label" size="25" set="localhost"/>
@@ -352,7 +355,7 @@
 		<field type="text" variable="upt.url">						
 			<spec txt="Enter the upt url:" id="text.label" size="25" set="http://localhost"/>
 			<validator
-				class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid URL" id="upturl.label">
+				class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid UPT URL" id="upturl.label">
 			</validator>
 		</field>
 		<field type="text" variable="min.pool.size">						
