@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingTop="16" paddingBottom="16" paddingLeft="16" paddingRight="16" verticalAlign="middle" horizontalAlign="center">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import flash.net.navigateToURL;
+		
+			import gov.nih.nci.bda.wiki.vo.WikiButtonVO;
+		
+			[Bindable]
+			public var button:WikiButtonVO;
+			
+			private function dispatchToWikiPage(event:MouseEvent):void {
+				var wikiRequest:URLRequest = new URLRequest(button.buttonLink);
+				navigateToURL(wikiRequest, "_self");
+			}
+			
+			private function onMouseOver(event:MouseEvent):void {
+				expand.end(); 
+				expand.play();
+				Application.application.teaser = button.teaser;
+			}
+			
+			private function onMouseOut(event:MouseEvent):void {
+				contract.end(); 
+				contract.play();
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Resize id="expand" target="{img}" widthTo="50" heightTo="50" />
+    <mx:Resize id="contract" target="{img}" widthTo="44" heightTo="44" />
+    
+     <mx:Glow id="glowImage" duration="400" 
+        alphaFrom="0.8" alphaTo="0.3" 
+        blurXFrom="0.0" blurXTo="16.0" 
+        blurYFrom="0.0" blurYTo="16.0" 
+        color="0x9966FF"/>
+        
+    <mx:Glow id="unglowImage" duration="400" 
+        alphaFrom="0.3" alphaTo="0.8" 
+        blurXFrom="16.0" blurXTo="0.0" 
+        blurYFrom="16.0" blurYTo="0.0" 
+        color="0x9966FF"/>
+	
+	<mx:Image id="img" source="{button.buttonImage}" buttonMode="true"
+			click="dispatchToWikiPage(event)" 
+			scaleX=".8" 
+			scaleY=".8"
+            rollOver="onMouseOver(event)"
+            rollOut="onMouseOut(event)" 
+            mouseDownEffect="glowImage" />
+            
+	<mx:LinkButton rollOver="onMouseOver(event)" rollOut="onMouseOut(event)" label="{button.buttonText}" click="dispatchToWikiPage(event)" fontSize="14" fontWeight="bold" />
+
+</mx:VBox>

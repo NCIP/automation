@@ -146,6 +146,10 @@ docs/wiki/drt/images/map_loading.gif -text
 docs/wiki/drt/images/multimedia2.png -text
 docs/wiki/drt/resources/bda-wiki-home.css -text
 docs/wiki/drt/resources/bda-wiki-home.xml -text
+docs/wiki/flash/.actionScriptProperties -text
+docs/wiki/flash/.flexProperties -text
+docs/wiki/flash/.project -text
+docs/wiki/flash/.settings/org.eclipse.core.resources.prefs -text
 docs/wiki/flash/WikiButton.as -text
 docs/wiki/flash/WikiHome.as -text
 docs/wiki/flash/bda-wiki-home.fla -text
@@ -167,6 +171,11 @@ docs/wiki/flash/images/loading_48x48.gif -text
 docs/wiki/flash/images/map_loading.gif -text
 docs/wiki/flash/resources/bda-wiki-home.css -text
 docs/wiki/flash/resources/bda-wiki-home.xml -text
+docs/wiki/flash/src/BDAHome.mxml -text
+docs/wiki/flash/src/gov/nih/nci/bda/wiki/Constants.as -text
+docs/wiki/flash/src/gov/nih/nci/bda/wiki/controller/WikiDataManager.mxml -text
+docs/wiki/flash/src/gov/nih/nci/bda/wiki/view/WikiButton.mxml -text
+docs/wiki/flash/src/gov/nih/nci/bda/wiki/vo/WikiButtonVO.as -text
 resources/eclipse/bda-plugins.xml -text
 resources/public-keys/id_dsa_bda.pub -text
 software/ant/custom/propertyvalidator/.classpath -text
