@@ -3,7 +3,7 @@
 				xmlns:wiki-controller="gov.nih.nci.bda.wiki.controller.*"
 				xmlns:wiki-view="gov.nih.nci.bda.wiki.view.*"
 				layout="absolute" xmlns:controller="gov.nih.nci.bda.wiki.controller.*"
-				width="800" height="400" backgroundColor="#FFFFFF" backgroundGradientColors="[#FFFFFF, #FFFFFF]"
+				width="800" height="300" backgroundColor="#FFFFFF" backgroundGradientColors="[#FFFFFF, #FFFFFF]"
 				creationComplete="init()">
 				
 	<mx:Script>
