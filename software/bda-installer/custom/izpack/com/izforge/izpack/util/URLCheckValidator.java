@@ -24,6 +24,7 @@ package com.izforge.izpack.util;
 import com.izforge.izpack.panels.ProcessingClient;
 import com.izforge.izpack.panels.Validator;
 
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 
@@ -42,10 +43,8 @@ public class URLCheckValidator implements Validator
 
     public boolean validate(ProcessingClient client)
     {
-    	String urlInput = null;    	
-         
+    	String urlInput = null;         
        	urlInput = client.getFieldContents(0);
-   System.out.println("urlInput::" + urlInput);
    
         if ((urlInput == null) || (urlInput.length() == 0))
         {
@@ -54,10 +53,17 @@ public class URLCheckValidator implements Validator
        	
       try
         {
-    	  URL url = new URL(urlInput);
-    	   System.out.println("urlInput1::" + urlInput);
-    	  java.net.URLConnection connection = url.openConnection();
-    	   System.out.println("urlInput2::" + urlInput);
+    	  URL url = new URL(urlInput);    	  
+          System.out.println("Testing to see if URL connects::"+ urlInput);
+          HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+          System.out.println("Created HttpURLConnection object");
+          conn.connect();
+          System.out.println("connecting..");
+          boolean isConnected = (conn.getContentLength() > 0);
+          System.out.println("disconnecting..");
+          conn.disconnect();
+          System.out.println("disconnected");
+          return isConnected;
         }
         catch (Exception ex)
         {
@@ -65,6 +71,5 @@ public class URLCheckValidator implements Validator
         	return false;
         	 
         }
-        return true;
     }
 }
