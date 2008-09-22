@@ -2,6 +2,8 @@
 
 	<!-- Generic properties -->
 	<property name="application_installer" value="caarray_installer" />
+	<property name="application_installer_src" value="http://gforge.nci.nih.gov/frs/download.php/4619/caarray_distribution_2_1_0.zip" />
+	<property name="application_upgrader_src" value="http://gforge.nci.nih.gov/frs/download.php/4620/caarray_upgrade_2_1_0.zip" />
 	
 	
 	<!-- TARGETS -->
@@ -11,7 +13,7 @@
 		<echo message="${install.path}"/> 
 		<delete dir="${install.path}/${application_installer}" />
 		
-		<get src="http://gforge.nci.nih.gov/frs/download.php/4619/caarray_distribution_2_1_0.zip" dest="${install.path}/caarray_distribution_2_1_0.zip"/>
+		<get src="${application_installer_src}" dest="${install.path}/caarray_distribution_2_1_0.zip"/>
 		
 		<unzip src="${install.path}/caarray_distribution_2_1_0.zip" dest="${install.path}/${application_installer}" />
 		
@@ -39,7 +41,7 @@
 
 		<delete dir="${install.path}/${application_installer}" />
 
-		<get src="http://gforge.nci.nih.gov/frs/download.php/4620/caarray_upgrade_2_1_0.zip" dest="${install.path}/caarray_upgrade_2_1_0.zip"/>
+		<get src="${application_upgrader_src}" dest="${install.path}/caarray_upgrade_2_1_0.zip"/>
 		
 		<unzip src="${install.path}/caarray_upgrade_2_1_0.zip" dest="${install.path}/${application_installer}" />		
 
