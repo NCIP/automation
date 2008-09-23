@@ -12,9 +12,9 @@
 		
 		<echo message="${install.path}"/> 
 		<delete dir="${install.path}/${application_installer}" />
-		
+	<!--	bundle along with the installer
 		<get src="${application_installer_src}" dest="${install.path}/caarray_distribution_2_1_0.zip"/>
-		
+	-->	
 		<unzip src="${install.path}/caarray_distribution_2_1_0.zip" dest="${install.path}/${application_installer}" />
 		
 		<copy file="${install.path}/template/installer.template.properties" tofile="${install.path}/${application_installer}/install.properties" />
@@ -40,9 +40,9 @@
 		<echo message="${install.path}"/> 
 
 		<delete dir="${install.path}/${application_installer}" />
-
+	<!--     bundle along with the installer
 		<get src="${application_upgrader_src}" dest="${install.path}/caarray_upgrade_2_1_0.zip"/>
-		
+	-->		
 		<unzip src="${install.path}/caarray_upgrade_2_1_0.zip" dest="${install.path}/${application_installer}" />		
 
 		<copy file="${install.path}/template/upgrade.template.properties" tofile="${install.path}/${application_installer}/upgrade.properties" />

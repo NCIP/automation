@@ -639,6 +639,8 @@ software/bda-installer/izpack-sample/antActionSpec.xml -text
 software/bda-installer/izpack-sample/build.xml -text
 software/bda-installer/izpack-sample/custom_eng.xml -text
 software/bda-installer/izpack-sample/install.xml -text
+software/bda-installer/izpack-sample/installer/caarray_distribution_2_1_0.zip -text
+software/bda-installer/izpack-sample/installer/caarray_upgrade_2_1_0.zip -text
 software/bda-installer/izpack-sample/jar/ant/ant-launcher.jar -text
 software/bda-installer/izpack-sample/jar/ant/ant-nodeps.jar -text
 software/bda-installer/izpack-sample/jar/ant/ant.jar -text
