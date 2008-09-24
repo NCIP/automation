@@ -142,35 +142,35 @@
 	We specify here our packs.
 	-->
 	<packs>
-		<pack name="download_install" id="download_install" required="no" installGroups="caarray"  condition="install.onwindows">
+		<pack name="download_install" id="download_install" required="no" installGroups="caarray"  condition="install">
 		    <description>The base files</description>
 		    <file src="installer/caarray_distribution_2_1_0.zip" targetdir="$SYSTEM_user_home/.installer"/>
 		    <file src="build.xml" targetdir="$SYSTEM_user_home/.installer"/>
 		    <file src="template" targetdir="$SYSTEM_user_home/.installer"/>
 		</pack>	
 
-		<pack name="download_update" id="download_update" required="no" installGroups="caarray"  condition="update.onwindows">
+		<pack name="download_update" id="download_update" required="no" installGroups="caarray"  condition="update">
 		    <description>The base files</description>
 		    <file src="installer/caarray_upgrade_2_1_0.zip" targetdir="$SYSTEM_user_home/.installer"/>
 		    <file src="template" targetdir="$SYSTEM_user_home/.installer"/>
 		    <file src="build.xml" targetdir="$SYSTEM_user_home/.installer"/>		    
 		</pack>	
 
-		<pack name="parse-install" required="no" preselected="no" condition="install.onwindows">
+		<pack name="parse-install" required="no" preselected="no" condition="install">
 		    <description>parse the input values</description>
 		    <parsable targetfile="$SYSTEM_user_home/.installer/caarray_installer/install.properties" type="plain" />		    
 		</pack>
 
-		<pack name="parse-update" required="no" preselected="no" condition="update.onwindows">
+		<pack name="parse-update" required="no" preselected="no" condition="update">
 		    <description>parse the input values</description>
 		    <parsable targetfile="$SYSTEM_user_home/.installer/caarray_installer/upgrade.properties" type="plain" />		    
 		</pack>
 
-		<pack name="convert-install-path" required="no" preselected="no" condition="install.onwindows">
+		<pack name="convert-install-path" required="no" preselected="no" condition="install">
 		    <description>installation base path</description> 		    
 		</pack>
 
-		<pack name="convert-update-path" required="no" preselected="no" condition="update.onwindows">
+		<pack name="convert-update-path" required="no" preselected="no" condition="update">
 		    <description>Upgrade base path</description> 
 		</pack>
 				
