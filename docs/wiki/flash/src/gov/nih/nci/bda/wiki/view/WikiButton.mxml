@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingTop="16" paddingBottom="16" paddingLeft="16" paddingRight="16" verticalAlign="middle" horizontalAlign="center">
+
+	<mx:Metadata>
+		[Event(name="wikiTeaserEvent", type="gov.nih.nci.bda.wiki.events.WikiTeaserEvent")]
+	</mx:Metadata>
+
 	<mx:Script>
 		<![CDATA[
+			import gov.nih.nci.bda.wiki.events.WikiTeaserEvent;
 			import mx.core.Application;
 			import flash.net.navigateToURL;
 		
@@ -18,7 +24,10 @@
 			private function onMouseOver(event:MouseEvent):void {
 				expand.end(); 
 				expand.play();
-				Application.application.teaser = button.teaser;
+				
+				// Dispatch a new WikiTeaserEvent
+				var wte:WikiTeaserEvent = new WikiTeaserEvent(button.teaser, "wikiTeaserEvent");
+				this.dispatchEvent(wte);
 			}
 			
 			private function onMouseOut(event:MouseEvent):void {
@@ -28,8 +37,8 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Resize id="expand" target="{img}" widthTo="50" heightTo="50" />
-    <mx:Resize id="contract" target="{img}" widthTo="44" heightTo="44" />
+	<mx:Resize id="expand" target="{img}" widthTo="56" heightTo="56" />
+    <mx:Resize id="contract" target="{img}" widthTo="48" heightTo="48" />
     
      <mx:Glow id="glowImage" duration="400" 
         alphaFrom="0.8" alphaTo="0.3" 
@@ -45,12 +54,12 @@
 	
 	<mx:Image id="img" source="{button.buttonImage}" buttonMode="true"
 			click="dispatchToWikiPage(event)" 
-			scaleX=".8" 
-			scaleY=".8"
+			scaleX="1" 
+			scaleY="1"
             rollOver="onMouseOver(event)"
             rollOut="onMouseOut(event)" 
             mouseDownEffect="glowImage" />
             
-	<mx:LinkButton rollOver="onMouseOver(event)" rollOut="onMouseOut(event)" label="{button.buttonText}" click="dispatchToWikiPage(event)" fontSize="14" fontWeight="bold" />
+	<mx:LinkButton label="{button.buttonText}" click="dispatchToWikiPage(event)" fontSize="14" fontWeight="bold" />
 
 </mx:VBox>

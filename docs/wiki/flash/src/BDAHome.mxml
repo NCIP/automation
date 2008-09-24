@@ -8,6 +8,8 @@
 				
 	<mx:Script>
 		<![CDATA[
+			import gov.nih.nci.bda.wiki.events.WikiTeaserEvent;
+			import gov.nih.nci.bda.wiki.events.WikiButtonEvent;
 			import mx.collections.ArrayCollection;
 			import gov.nih.nci.bda.wiki.Constants;
 			
@@ -35,12 +37,20 @@
                 // Set the style sheet.
                 teaserText.styleSheet = styleSheet;
 			}
+			
+			private function teaserChange(event:WikiTeaserEvent):void {
+				this.teaser = event.welcomeTeaser;
+			}
+			
+			private function buttonArrayChange(event:WikiButtonEvent):void {
+				this.buttonArray = new ArrayCollection(event.buttonArray);
+			}
 		]]>
 	</mx:Script>
 	
 	<mx:HBox x="0" y="0" width="100%">
 		<mx:Repeater id="buttonRepeater" dataProvider="{buttonArray}">
-			<wiki-view:WikiButton button="{buttonRepeater.currentItem}" />
+			<wiki-view:WikiButton button="{buttonRepeater.currentItem}" wikiTeaserEvent="teaserChange(event)" />
 		</mx:Repeater>
 	</mx:HBox>
 	
@@ -51,5 +61,5 @@
 			x="0" y="120" height="100%" width="100%"
 			paddingBottom="20" paddingLeft="20" paddingRight="20" paddingTop="10" wordWrap="true"/>
 	
-	<controller:WikiDataManager />
+	<controller:WikiDataManager wikiTeaserEvent="teaserChange(event)" wikiButtonEvent="buttonArrayChange(event)" />
 </mx:Application>
