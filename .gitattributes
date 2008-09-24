@@ -162,6 +162,10 @@ docs/wiki/flash/bin-debug/history/history.css -text
 docs/wiki/flash/bin-debug/history/history.js -text
 docs/wiki/flash/bin-debug/history/historyFrame.html -text
 docs/wiki/flash/bin-debug/playerProductInstall.swf -text
+docs/wiki/flash/bin-release/AC_OETags.js -text
+docs/wiki/flash/bin-release/BDAHome.html -text
+docs/wiki/flash/bin-release/BDAHome.swf -text
+docs/wiki/flash/bin-release/playerProductInstall.swf -text
 docs/wiki/flash/html-template/AC_OETags.js -text
 docs/wiki/flash/html-template/Thumbs.db -text
 docs/wiki/flash/html-template/history/history.css -text
