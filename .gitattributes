@@ -155,13 +155,6 @@ docs/wiki/flash/WikiHome.as -text
 docs/wiki/flash/bda-wiki-home.fla -text
 docs/wiki/flash/bda-wiki-home.flp -text
 docs/wiki/flash/bda-wiki-home.swf -text
-docs/wiki/flash/bin-debug/AC_OETags.js -text
-docs/wiki/flash/bin-debug/BDAHome.html -text
-docs/wiki/flash/bin-debug/BDAHome.swf -text
-docs/wiki/flash/bin-debug/history/history.css -text
-docs/wiki/flash/bin-debug/history/history.js -text
-docs/wiki/flash/bin-debug/history/historyFrame.html -text
-docs/wiki/flash/bin-debug/playerProductInstall.swf -text
 docs/wiki/flash/bin-release/AC_OETags.js -text
 docs/wiki/flash/bin-release/BDAHome.html -text
 docs/wiki/flash/bin-release/BDAHome.swf -text
@@ -192,6 +185,8 @@ docs/wiki/flash/resources/bda-wiki-home.xml -text
 docs/wiki/flash/src/BDAHome.mxml -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/Constants.as -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/controller/WikiDataManager.mxml -text
+docs/wiki/flash/src/gov/nih/nci/bda/wiki/events/WikiButtonEvent.as -text
+docs/wiki/flash/src/gov/nih/nci/bda/wiki/events/WikiTeaserEvent.as -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/view/WikiButton.mxml -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/vo/WikiButtonVO.as -text
 resources/eclipse/bda-plugins.xml -text
