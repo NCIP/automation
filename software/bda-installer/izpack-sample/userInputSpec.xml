@@ -112,7 +112,13 @@
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The hajrmi port number is already in use" id="error.label">
 			</validator>			
-		</field>
+		</field>	
+	</panel>
+
+
+	<panel order="2">	
+		<field type="title" txt="Application Installation Jboss Port Details Cont.." bold="true" size="1" />
+		<field type="divider" align="top"/>
 
 		<field type="text" variable="jboss.pooledha.port">						
 			<spec txt="Enter the pooledha port number for the installation:" id="text.label" size="15" set="34448"/>
@@ -120,27 +126,18 @@
 				class="com.izforge.izpack.util.PortValidator" txt="The pooledha port number is already in use" id="error.label">
 			</validator>			
 		</field>
-
 		<field type="text" variable="jboss.cobraorb.port">						
 			<spec txt="Enter the cobraorb port number for the installation:" id="text.label" size="15" set="33528"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The cobraorb port number is already in use" id="error.label">
 			</validator>			
 		</field>
-
 		<field type="text" variable="jboss.jmx-rmi.port">						
 			<spec txt="Enter the jmx-rmi port number for the installation:" id="text.label" size="15" set="39001"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The jmx-rmi port number is already in use" id="error.label">
 			</validator>			
-		</field>	
-	</panel>
-
-
-	<panel order="2">
-		<field type="title" txt="Application Installation Jboss Port Details Cont.." bold="true" size="1" />
-		<field type="divider" align="top"/>
-
+		</field>
 		<field type="text" variable="jboss.snmp-trapd.port">						
 			<spec txt="Enter the snmp-trapd port number for the installation:" id="text.label" size="15" set="31162"/>
 			<validator
@@ -268,6 +265,14 @@
 				class="com.izforge.izpack.util.PortValidator" txt="The hajrmi port number is already in use" id="error.label">
 			</validator>			
 		</field>
+	
+	</panel>
+	
+
+	<panel order="4">	
+		<field type="title" txt="Application Installation Grid Port Details Cont.." bold="true" size="1" />
+		<field type="divider" align="top"/>
+
 
 		<field type="text" variable="grid.pooledha.port">						
 			<spec txt="Enter the pooledha port number for the installation:" id="text.label" size="15" set="14448"/>
@@ -275,27 +280,18 @@
 				class="com.izforge.izpack.util.PortValidator" txt="The pooledha port number is already in use" id="error.label">
 			</validator>			
 		</field>
-
 		<field type="text" variable="grid.cobraorb.port">						
 			<spec txt="Enter the cobraorb port number for the installation:" id="text.label" size="15" set="13528"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The cobraorb port number is already in use" id="error.label">
 			</validator>			
 		</field>
-
 		<field type="text" variable="grid.jmx-rmi.port">						
 			<spec txt="Enter the jmx-rmi port number for the installation:" id="text.label" size="15" set="19001"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The jmx-rmi port number is already in use" id="error.label">
 			</validator>			
-		</field>	
-	</panel>
-	
-
-	<panel order="4">
-		<field type="title" txt="Application Installation Grid Port Details Cont.." bold="true" size="1" />
-		<field type="divider" align="top"/>
-
+		</field>
 		<field type="text" variable="grid.snmp-trapd.port">						
 			<spec txt="Enter the snmp-trapd port number for the installation:" id="text.label" size="15" set="11162"/>
 			<validator
