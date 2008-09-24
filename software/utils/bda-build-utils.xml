@@ -359,6 +359,9 @@ $HeadURL$
 				property.template.file="@{property.template.file}"
 				envpropertyfile="@{envpropertyfile}"
 				/>
+			<check-absolute-directory
+				directory.property="application.base.path"
+				/>
 
 			<check-direct-child-directory
 				parent.dir.property="application.base.path"
@@ -820,11 +823,13 @@ $HeadURL$
 						</then>
 						<else>
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
+							<property name="force.reinstall" value="true"/>
 						</else>
 					</if>
 				</case>
 				<default>
 					<echo message="Database is ${database.type}, warning prompt not displayed."/>
+					<property name="force.reinstall" value="true"/>
 				</default>
 			</switch>
 		</sequential>
@@ -843,12 +848,17 @@ $HeadURL$
  		<attribute name="validation.post.socket.list" default="${validation.post.socket.list}" />
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="application.url" default="${application.url}" />
 		<sequential>
 
 			<!-- Echo the properties for diagnostic purposes -->
 			<echoproperties/>
 
 			<!-- Give JBOSS another couple of seconds to come up -->
+			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
+				<http url="${application.url}"/>
+			</waitfor>
+
 			<validate-ports-postinstall  
 				validation.post.http.list="@{validation.post.http.list}"
 				validation.post.socket.list="@{validation.post.socket.list}"
@@ -1640,7 +1650,7 @@ $HeadURL$
 			<property name="grand.output.file" value="${temp.dir}/grand.dot" />
 			<grand output="${grand.output.file}" buildfile="@{build.file.location}"/>
 			<exec executable="dot" >
-				<arg line="-T@{file.type} -Gsize=11.69,8.27 -Grotate=90 -o @{output.file.dir}/@{output.file.name}.@{file.type} ${grand.output.file}"/>
+				<arg line="-T@{file.type} -Gsize=11.69,8.27 -o @{output.file.dir}/@{output.file.name}.@{file.type} ${grand.output.file}"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -2166,14 +2176,14 @@ $HeadURL$
 		<attribute name="db-install.dir" default="${db-install.dir.dest}" />
 		<attribute name="db.install.create.file.list" />
 		<sequential>
-			<for list="@{db.install.create.file.list}" param="db.install.oracle.file">
+			<for list="@{db.install.create.file.list}" param="db.install.file">
 				<sequential>
 					<run-sql-script database.url="@{database.url}"
 						database.user="@{database.user}" 
 						database.password="@{database.password}" 
 						sql.delimiter="@{sql.delimiter}" 
 						sql.delimitertype="@{sql.delimitertype}"
-						sql.file="@{db-install.dir}/${database.type}/@{db.install.oracle.file}"
+						sql.file="@{db-install.dir}/${database.type}/@{db.install.file}"
 						onerror="@{onerror}"/>
 				</sequential>
 			</for>
@@ -2456,5 +2466,155 @@ $HeadURL$
 			</for>
 		</sequential>
 	</macrodef>
+	<macrodef name="jboss-backup">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="backup.base.dir" default="${user.home}/tmp/jboss-backup"/>
+		<attribute name="backup.copies" default="3"/>
+		<sequential>
+			<!-- will add later -->
+		</sequential>
+	</macrodef>
+	<macrodef name="grid-jboss-configure">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
+		<attribute name="jboss.server.host" default="${jboss.server.host}"/>
+		<attribute name="search.host" default="localhost"/>
+		<attribute name="search.port" default="8080"/>
+		<attribute name="grid.application.name" default="${grid.application.name}"/>
+		<attribute name="grid.application.relative.dir" default="${grid.dir.dest}"/>
+		<attribute name="grid.index.url" default="${grid.index.url}"/>
+		<attribute name="grid.poc.science.affiliation" default="${grid.poc.science.affiliation}"/>
+		<attribute name="grid.poc.science.name.last" default="${grid.poc.science.name.last}"/>
+		<attribute name="grid.poc.science.name.first" default="${grid.poc.science.name.first}" />
+		<attribute name="grid.poc.science.phone" default="${grid.poc.science.phone}"/>
+		<attribute name="grid.poc.science.role" default="${grid.poc.science.role}" />
+		<attribute name="grid.poc.science.email" default="${grid.poc.science.email}" />
+		<attribute name="grid.poc.tech.researchCenter.displayname" default="${grid.poc.tech.researchCenter.displayname}"/>
+		<attribute name="grid.poc.tech.researchCenter.shortname" default="${grid.poc.tech.researchCenter.shortname}"/>
+		<attribute name="grid.poc.tech.addr.country" default="${grid.poc.tech.addr.country}"/>
+		<attribute name="grid.poc.tech.addr.locality" default="${grid.poc.tech.addr.locality}"/>
+		<attribute name="grid.poc.tech.addr.postalCode" default="${grid.poc.tech.addr.postalCode}"/>
+		<attribute name="grid.poc.tech.addr.stateProvince" default="${grid.poc.tech.addr.stateProvince}"/>
+		<attribute name="grid.poc.tech.addr.street1" default="${grid.poc.tech.addr.street1}"/>
+		<attribute name="grid.poc.tech.addr.street2" default="${grid.poc.tech.addr.street2}"/>
+		<attribute name="grid.poc.tech.affiliation" default="${grid.poc.tech.affiliation}"/>
+		<attribute name="grid.poc.tech.name.last" default="${grid.poc.tech.name.last}"/>
+		<attribute name="grid.poc.tech.name.first" default="${grid.poc.tech.name.first}"/>
+		<attribute name="grid.poc.tech.phone" default="${grid.poc.tech.phone}"/>
+		<attribute name="grid.poc.tech.email" default="${grid.poc.tech.email}"/>
+		<attribute name="grid.poc.tech.role" default="${grid.poc.tech.role}"/>
+		<attribute name="grid.external.host" default="${grid.external.host}"/>
+		<attribute name="grid.external.port" default="${grid.external.port}"/>
+		<sequential>
+			<!-- Fix all wsdl files that refer to statically defined host and port -->
+			<replace dir="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{jboss.server.host}:@{jboss.server.port}">
+				<include name="**/*.wsdl" />
+			</replace>
+			<!-- Fix default jndi-config -->
+			<replace file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{jboss.server.host}:@{jboss.server.port}"/>
+			<!-- fix web.xml -->
+			<replace file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/web.xml" token="@{search.port}" value="@{jboss.server.port}"/>
 
+			<!-- Fix service specific jndi-config -->
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
+				match="(\s+.value.)http://.*\:\d+(\/.*)" 
+				replace="\1http://@{jboss.server.host}:@{jboss.server.port}\2" 
+				flags="g" byline="true"/>
+			<!-- Change pointer to index service based on property -->
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/@{grid.application.name}_registration.xml"
+				match="(\s+.wsa:Address.).*(.\/wsa:Address.)" 
+				replace="\1@{grid.index.url}\2"
+				flags="g" byline="true"/>
+			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
+			<propertyregex property="external.has.value"
+				input="@{grid.external.host}"
+				regexp="\S+"
+				select="true"
+				/>
+			<if>
+				<isset  property="external.has.value"/>
+				<then>
+					<property name="external.xml.block" value="${line.separator}
+	&lt;parameter name=&quot;logicalHost&quot; value=&quot;@{grid.external.host}&quot;/&gt;${line.separator}
+	&lt;parameter name=&quot;publishHostName&quot; value=&quot;true&quot;/&gt;${line.separator}
+	&lt;parameter name=&quot;disableDNS&quot; value=&quot;true&quot;/&gt;${line.separator}
+					"/>
+	<!-- don't need this one
+	&lt;parameter name=&quot;sendXsiTypes&quot; value=&quot;true&quot;/&gt;${line.separator}
+	-->
+
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/server-config.wsdd"
+						match="^(\s+&lt;globalConfiguration&gt;)"
+						replace="\1${external.xml.block}"
+						flags="g" byline="true"/>
+				</then>
+			</if>
+					
+			<!-- POC stuff -->
+			<property name="poc.science.string" value="affiliation=&quot;@{grid.poc.science.affiliation}&quot; email=&quot;@{grid.poc.science.email}&quot;; firstName=&quot;@{grid.poc.science.name.first}&quot;; lastName=&quot;@{grid.poc.science.name.last}&quot;; phoneNumber=&quot;@{grid.poc.science.phone}&quot;; role=&quot;@{grid.poc.science.role}&quot;;"/>
+
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
+				match="^(\s+&lt;ns3:).*(xmlns:ns3.*&gt;)"
+				replace="\1${poc.science.string}\2"
+				flags="g" byline="true"/>
+			<!-- Research Center info -->
+			<property name="poc.tech.string" value="${line.separator}
+&lt;ns9:ResearchCenter displayName=&quot;@{grid.poc.tech.researchCenter.displayname}&quot; shortName=&quot;@{grid.poc.tech.researchCenter.shortname}&quot; xmlns:ns9=&quot;gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common&quot;&gt;${line.separator}
+&lt;ns9:Address country=&quot;@{grid.poc.tech.addr.country}&quot; locality=&quot;@{grid.poc.tech.addr.locality}&quot; postalCode=&quot;@{grid.poc.tech.addr.postalCode}&quot; stateProvince=&quot;@{grid.poc.tech.addr.stateProvince}&quot; street1=&quot;@{grid.poc.tech.addr.street1}&quot; street2=&quot;@{grid.poc.tech.addr.street2}&quot;/&gt;${line.separator}
+&lt;ns9:pointOfContactCollection&gt;${line.separator}
+&lt;ns9:PointOfContact affiliation=&quot;@{grid.poc.tech.affiliation}&quot; email=&quot;@{grid.poc.tech.email}&quot; firstName=&quot;@{grid.poc.tech.name.first}&quot; lastName=&quot;@{grid.poc.tech.name.last}&quot; phoneNumber=&quot;@{grid.poc.tech.phone}&quot; role=&quot;@{grid.poc.tech.role}&quot;/&gt;${line.separator}
+&lt;/ns9:pointOfContactCollection&gt;${line.separator}
+&lt;/ns9:ResearchCenter&gt;${line.separator}
+"/>
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
+				match="&lt;ns1:hostingResearchCenter&gt;.*&lt;\/ns1:hostingResearchCenter&gt;"
+				replace="&lt;ns1:hostingResearchCenter&gt;${poc.tech.string}&lt;\/ns1:hostingResearchCenter&gt;"
+				flags="sg"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="check-absolute-directory" description="Diagnose the host system before the installation">
+		<attribute name="directory.property" />
+		<sequential>
+			<!-- Application.base.path check for bad directory -->
+			<propertycopy name="directory.value" from="@{directory.property}" />
+			<propertyregex property="is.absolute.dir"
+				regexp="^(\w*[:]*[\/\\])"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<if>
+				<isset property="is.absolute.dir"/>
+				<then>
+					<echo message="@{directory.property} is an absolute path."/>
+				</then>
+				<else>
+					<fail message="@{directory.property} needs to be an absolute path, please correct this and build again."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="obfuscate-properties-file" description="Diagnose the host system before the installation">
+		<attribute name="properties.file"/>
+		<attribute name="required.property.list"/>
+		<attribute name="optional.property.list"/>
+		<sequential>
+			<for list="@{required.property.list}" param="property.name" delimiter=",">
+				<sequential>
+					<replaceregexp file="@{properties.file}"
+						match="^(@{property.name})=.*"
+						replace="\1=REPLACE_VALUE"
+						flags="g" byline="true"/>
+				</sequential>
+			</for>
+			<for list="@{optional.property.list}" param="property.name" delimiter=",">
+				<sequential>
+					<replaceregexp file="@{properties.file}"
+						match="^(@{property.name})=.*"
+						replace="\1=replace_value"
+						flags="g" byline="true"/>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
 </project>
