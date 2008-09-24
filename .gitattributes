@@ -644,6 +644,7 @@ software/bda-installer/izpack-sample/jar/ant/ant-launcher.jar -text
 software/bda-installer/izpack-sample/jar/ant/ant-nodeps.jar -text
 software/bda-installer/izpack-sample/jar/ant/ant.jar -text
 software/bda-installer/izpack-sample/jar/drivers/mysql-connector-java-5.1.5.jar -text
+software/bda-installer/izpack-sample/linuxdir.txt -text
 software/bda-installer/izpack-sample/logotype.png -text
 software/bda-installer/izpack-sample/template/installer.template.properties -text
 software/bda-installer/izpack-sample/template/upgrade.template.properties -text
