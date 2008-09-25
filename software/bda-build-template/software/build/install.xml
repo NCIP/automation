@@ -90,7 +90,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<!-- Grid related properties -->
 	<property name="grid.artifact.file" value="wsrf.war.zip" />
 	<property name="grid.dir.dest" value="wsrf.war" />
-	<property name="grid.application.name" value="cagrid_APPNANE" />
+	<property name="grid.application.name" value="APPNANE" />
 
 	<!-- Paths -->
 	<path id="bda-utils.classpath">
@@ -628,18 +628,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<target name="install:jboss:grid:configure" description="Configure tomcat-application" unless="exclude.jboss">
-		<replace dir="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}">
-			<include name="**/*.wsdl" />
-		</replace>
-		<replace file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="localhost:8080" value="${jboss.server.hostname}:${jboss.server.port}"/>
-		<replace file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/web.xml" token="8080" value="${jboss.server.port}"/>
-		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/etc/cagrid_${grid.application.name}/jndi-config.xml" 
-			match="(\s+.value.)http://.*(.\/value.)" 
-			replace="\1http://${jboss.server.hostname}:${jboss.server.port}/ctods-api/http/remoteService\2" 
-			flags="g"/>
-		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}/WEB-INF/etc/cagrid_${grid.application.name}/${grid.application.name}_registration.xml"
-			match="(\s+.wsa:Address.).*(.\/wsa:Address.)" 
-			replace="\1${grid.index.url}\2"
-			flags="g"/>
+		<grid-jboss-configure
+			
+			/>
 	</target>
 </project>
