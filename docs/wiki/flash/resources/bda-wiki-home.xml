@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
-	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P>Remember to check out the latest BDA Release 0.5.0 in the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Flash news</b>: The latest <a href='http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/xmlconfig/xmlconfig/0.2.0/xmlconfig-0.2.0.jar'>XmlConfig 0.2.0</a> is out! It adds the following features: <UL><LI>Beautiful output file formatting</LI><LI>Support for inserting a branch from an Ant property</LI><LI>The JAR file now includes a manifest file with date and version of the JAR</LI></UL><BR/><a href='https://wiki.nci.nih.gov/x/zKN8'>Read more...</a>]]></welcome>
+	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P>Remember to check out the latest BDA Release 0.5.0 in the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Flash news</b>: The latest <a href='http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/xmlconfig/xmlconfig/0.2.0/xmlconfig-0.2.0.jar'>XmlConfig 0.2.0</a> is out! It adds the following features: <UL><LI>Beautiful output file formatting</LI><LI>Support for inserting a branch from an Ant property</LI><LI>The JAR file now includes a manifest file with date and version of the JAR</LI></UL><a href='https://wiki.nci.nih.gov/x/zKN8'>Read more...</a>]]></welcome>
 
 	<button>
 		<name>News</name>
