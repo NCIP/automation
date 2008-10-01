@@ -413,9 +413,10 @@ software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/bluep
 software/bda-build-template/software/build/Readme.txt -text
 software/bda-build-template/software/build/build.xml -text
 software/bda-build-template/software/build/install.properties -text
+software/bda-build-template/software/build/install.properties.template -text
 software/bda-build-template/software/build/install.xml -text
 software/bda-build-template/software/build/project.properties -text
-software/bda-build-template/software/build/properties.template -text
+software/bda-build-template/software/build/upgrade-properties.template -text
 software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
 software/bda-build-template/software/common/bda-download/ivy-bda-settings.xml -text
 software/bda-build-template/software/common/bda-download/ivy-bda.xml -text
