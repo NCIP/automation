@@ -69,6 +69,8 @@
 		<xmlconfig in="${target.dir}/${izpack.binary.name}/src/build.xml" verbose="false">
 			<insertbranch path="//target[@name='build.listeners']" srcxmlfile="${resources.dir}/ProgressBarInstallerListener.xml" srcpath="//build-installer-listener" />
 		</xmlconfig>
+
+		<copy file="${resources.dir}/eng.xml" todir="${target.dir}/${izpack.binary.name}/bin/langpacks/installer" overwrite="true" />
 	</target>
 
 	<target name="build:izpack" description="Build IzPack">
@@ -95,7 +97,7 @@
 
 	<target name="build:all" depends="-pre:clean, download:izpack, unzip:izpack, build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Default target" />
 
-	<target name="run:installer" depends="build:all" description="Test installer">
+	<target name="run:all" depends="build:all" description="Runs the installer by building it first">
 		<java fork="true" jar="${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar" />
 	</target>
 
