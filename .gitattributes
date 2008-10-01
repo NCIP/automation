@@ -412,8 +412,8 @@ software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/bluep
 software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/blueprints/business/service/StudyServiceUnitTest.java -text
 software/bda-build-template/software/build/Readme.txt -text
 software/bda-build-template/software/build/build.xml -text
+software/bda-build-template/software/build/install-properties.template -text
 software/bda-build-template/software/build/install.properties -text
-software/bda-build-template/software/build/install.properties.template -text
 software/bda-build-template/software/build/install.xml -text
 software/bda-build-template/software/build/project.properties -text
 software/bda-build-template/software/build/upgrade-properties.template -text

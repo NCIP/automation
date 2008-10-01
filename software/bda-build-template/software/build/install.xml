@@ -35,7 +35,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<property file="local.properties"/>
 	<property file="project.properties"/>
 	<property name="properties.file" value="${basedir}/install.properties"/>
-	<property name="properties.template.file" value="properties.template"/>
 	<echo message="Using properties file of ${properties.file}."/>
 	<available file="${properties.file}" property="properties.file.exists" />
 	<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail."/>
@@ -174,6 +173,25 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			<echo message="Warning- could not find ${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file}"/>
 		</else>
 	</if>
+	<!-- figure out whether to use install-properties.template or upgrade-proprties.template based on the name of the properties file -->
+	<propertyregex property="properties.file.type"
+		input="${properties.file}"
+		regexp=".*(install|upgrade).*"
+		select="\1"     
+		/>              
+	<echo message="Properties file type = ${properties.file.type}"/>
+	<switch value="${properties.file.type}">
+		<case value="install">
+			<property name="properties.template.file" value="install-properties.template" />
+		</case>         
+		<case value="upgrade">
+			<property name="properties.template.file" value="upgrade-properties.template" />
+		</case>         
+		<default>       
+			<fail message="Property file name must include 'install' or 'upgrade' so it can be determined which properties template should be used. If you are not certain include 'upgrade' in the name of your proeprties file."/>
+		</default>      
+	</switch>
+
 
 	<!-- There is any issue with copying files with a filtersfile, any properties with a value of
 		another property do not get expanded (xx=${yy} @xx@ will be replaced with ${yy} not the
