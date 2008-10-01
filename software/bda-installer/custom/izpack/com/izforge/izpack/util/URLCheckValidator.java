@@ -24,7 +24,9 @@ package com.izforge.izpack.util;
 import com.izforge.izpack.panels.ProcessingClient;
 import com.izforge.izpack.panels.Validator;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -59,11 +61,15 @@ public class URLCheckValidator implements Validator
           System.out.println("Created HttpURLConnection object");
           conn.connect();
           System.out.println("connecting..");
-          boolean isConnected = (conn.getContentLength() > 0);
+	      int code  =conn.getResponseCode();
+	      if (code >= 400)
+	      {
+	    	  return false;
+	      }
           System.out.println("disconnecting..");
           conn.disconnect();
           System.out.println("disconnected");
-          return isConnected;
+          return true;
         }
         catch (Exception ex)
         {
@@ -73,3 +79,4 @@ public class URLCheckValidator implements Validator
         }
     }
 }
+    	
