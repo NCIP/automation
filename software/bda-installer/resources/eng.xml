@@ -14,7 +14,7 @@
     <str id="HTMLInfoPanel.headline" txt="Release Notes"/>
     <str id="HTMLLicencePanel.headline" txt="Licensing Agreements"/>
     <str id="ImgPacksPanel.headline" txt="Select Installation Packages"/>
-    <str id="InfoPanel.headline" txt="Information"/>
+    <str id="InfoPanel.headline" txt="Release Notes"/>
     <str id="InstallPanel.headline" txt="Installation"/>
     <str id="JDKPathPanel.headline" txt="JDK Path"/>
     <str id="LicencePanel.headline" txt="Licensing Agreement"/>
