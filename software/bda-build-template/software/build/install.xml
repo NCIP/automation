@@ -261,18 +261,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<target name="install:database:prep" description="Copies db files with filtering" unless="exclude.database" depends="install:init">
 		<echoproperties prefix="database"/>
-		<property name="db.dir.temp" value="${working.dir}/tmp"/>
-		<mkdir dir="${db.dir.temp}"/>
-		<copy todir="${db.dir.temp}" filtering="true">
+		<copy todir="${db.dir.dest}" filtering="true">
 			<fileset dir="${db.dir.src}">
 				<include name="**/*"/>
 			</fileset>
 			<filterset refid="embedded.filterset"/>
-		</copy>
-		<copy todir="${db.dir.dest}" filtering="true">
-			<fileset dir="${db.dir.temp}">
-				<include name="**/*"/>
-			</fileset>
 			<filterset>
 				<filtersfile file="${properties.file}"/>
 				<filtersfile file="project.properties"/>
