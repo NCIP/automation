@@ -20,6 +20,10 @@
 	<property name="product.name" value="caArray-installer" />
 	<property name="product.version" value="2.1.0" />
 
+	<tstamp>
+		<format property="JAR_STAMP" pattern="MMddyyyyhhmmss" unit="millisecond" />
+	</tstamp>
+
 	<available file="${target.dir}/${izpack.binary.file}" property="izpack.binary.exists" />
 
 	<path id="project.classpath">
@@ -39,6 +43,12 @@
 
 	<target name="-pre:clean" description="Clean before build">
 		<delete dir="${target.dir}/${izpack.binary.name}" />
+		<delete>
+			<fileset dir="${target.dir}">
+				<include name="${product.name}*.*" />
+				<exclude name="*.zip" />
+			</fileset>
+		</delete>
 	</target>
 
 	<target name="download:izpack" description="Download IzPack binaries" unless="izpack.binary.exists">
@@ -67,7 +77,7 @@
 
 	<target name="build:installer" description="Build product installer">
 		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile.bat" osfamily="windows">
-			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}.jar -k standard" />
+			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
 		</exec>
 
 		<if>
@@ -78,7 +88,7 @@
 		</if>
 
 		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile" osfamily="unix">
-			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}.jar -k standard" />
+			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
 		</exec>
 
 	</target>
@@ -86,7 +96,7 @@
 	<target name="build:all" depends="-pre:clean, download:izpack, unzip:izpack, build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Default target" />
 
 	<target name="run:installer" depends="build:all" description="Test installer">
-		<java fork="true" jar="${target.dir}/${product.name}-${product.version}.jar" />
+		<java fork="true" jar="${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar" />
 	</target>
 
 </project>
