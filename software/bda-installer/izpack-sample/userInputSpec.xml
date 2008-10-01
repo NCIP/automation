@@ -366,13 +366,13 @@
 	<panel order="7">
 			<field type="title" txt="LDAP Configuration" bold="true" size="1" />
 			<field type="divider" align="top"/>
-			<field type="text" variable="ldap.host">						
+			<field type="text" variable="ldap.hostname">						
 				<spec txt="Enter the ldap host name:" id="text.label" size="25" set="localhost"/>
 			</field>
-			<field type="text" variable="ldap.searchbase">						
+			<field type="text" variable="ldap.search.base">						
 				<spec txt="Enter the ldap search base:" id="text.label" size="25" set="25"/>
 			</field>
-			<field type="text" variable="ldap.searchprefix">						
+			<field type="text" variable="ldap.search.prefix">						
 				<spec txt="Enter the ldap searchprefix:" id="text.label" size="25" set="25"/>
 			</field>						
 	</panel>
@@ -386,7 +386,7 @@
 		<field type="divider" align="top"/>
 		
 		<field type="dir" align="left" variable="existing.installation.home">
-			<spec txt="Select the location of the application base directory" size="25" set="$INSTALL_PATH"/>
+			<spec txt="Select the location of the caarray application" size="15" set="$INSTALL_PATH"/>
 		</field>
 		
 		<field type="text" variable="jboss.server.port">			
