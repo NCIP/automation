@@ -650,6 +650,7 @@ software/bda-installer/izpack-sample/template/installer.template.properties -tex
 software/bda-installer/izpack-sample/template/upgrade.template.properties -text
 software/bda-installer/izpack-sample/userInputSpec.xml -text
 software/bda-installer/izpack-sample/windir.txt -text
+software/bda-installer/lib/ant-contrib-1.0b3.jar -text
 software/bda-installer/lib/jaxen-1.1.1.jar -text
 software/bda-installer/lib/jdom-1.1.jar -text
 software/bda-installer/lib/xmlconfig-0.1.9.jar -text

@@ -26,9 +26,16 @@
 		<pathelement location="${lib.dir}/xmlconfig-0.1.9.jar" />
 		<pathelement location="${lib.dir}/jdom-1.1.jar" />
 		<pathelement location="${lib.dir}/jaxen-1.1.1.jar" />
+		<pathelement location="${lib.dir}/ant-contrib-1.0b3.jar" />
 	</path>
 
 	<taskdef name="xmlconfig" classname="com.xmlconfig.anttask.XmlConfig" classpathref="project.classpath" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${lib.dir}/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
 
 	<target name="-pre:clean" description="Clean before build">
 		<delete dir="${target.dir}/${izpack.binary.name}" />
@@ -63,9 +70,17 @@
 			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}.jar -k standard" />
 		</exec>
 
+		<if>
+			<os family="unix" />
+			<then>
+				<chmod dir="${target.dir}/${izpack.binary.name}/bin" perm="ugo+rx" includes="compile" />
+			</then>
+		</if>
+
 		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile" osfamily="unix">
 			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}.jar -k standard" />
 		</exec>
+
 	</target>
 
 	<target name="build:all" depends="-pre:clean, download:izpack, unzip:izpack, build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Default target" />
