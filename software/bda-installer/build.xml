@@ -17,7 +17,7 @@
 	<property name="izpack.binary.name" value="izpack-4.0.1" />
 	<property name="izpack.binary.file" value="${izpack.binary.name}.zip" />
 	<property name="izpack.binary.uri" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2008/os-independent" />
-	<property name="product.name" value="caArray" />
+	<property name="product.name" value="caArray-installer" />
 	<property name="product.version" value="2.1.0" />
 
 	<available file="${target.dir}/${izpack.binary.file}" property="izpack.binary.exists" />
@@ -60,6 +60,10 @@
 
 	<target name="build:installer" description="Build product installer">
 		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile.bat" osfamily="windows">
+			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}.jar -k standard" />
+		</exec>
+
+		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile" osfamily="unix">
 			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}.jar -k standard" />
 		</exec>
 	</target>
