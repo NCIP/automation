@@ -79,7 +79,7 @@
 
 	<target name="build:installer" description="Build product installer">
 		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile.bat" osfamily="windows">
-			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
+			<arg line="src-installer/install.xml -b src-installer -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
 		</exec>
 
 		<if>
@@ -90,7 +90,7 @@
 		</if>
 
 		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile" osfamily="unix">
-			<arg line="izpack-sample/install.xml -b izpack-sample -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
+			<arg line="src-installer/install.xml -b src-installer -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
 		</exec>
 
 	</target>
