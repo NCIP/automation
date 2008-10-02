@@ -490,12 +490,12 @@
 				id="text.label" size="25" set="carrdb"/>
 		</field>		
 		<field type="text" variable="database.system.user">
-			<spec txt="Enter User Name:" id="text.label"
+			<spec txt="Enter the Database User Name with administative privileges:" id="text.label"
 				size="25" set="root"/>
 		</field>		
 		<field type="password" allign="left" variable="database.system.password">
 			<spec>
-				 <pwd txt="Enter the root password for the installation:" id="pwd.label" size="25" set=""/>				 
+				 <pwd txt="Enter the password for the above-named user:" id="pwd.label" size="25" set=""/>				 
 			</spec>
 			<validator
 				class="com.izforge.izpack.util.DBConnectionValidator" txt="The root password did not match" id="error.label">
@@ -503,12 +503,12 @@
 			</validator>
 		</field>
 		<field type="text" variable="database.user">
-			<spec txt="Enter User Name:" id="text.label"
+			<spec txt="Enter the Database User Name for the caArray application:" id="text.label"
 				size="25" set="carruser"/>
 		</field>		
 		<field type="password" allign="left" variable="database.password">
 			<spec>
-				 <pwd txt="Enter the password for the connection:" id="pwd.label" size="25" set=""/>				 
+				 <pwd txt="Enter the password for the above-named user:" id="pwd.label" size="25" set=""/>				 
 			</spec>
 			<validator
 				class="com.izforge.izpack.util.DBConnectionValidator" txt="The database user and password did not match" id="error.label">
