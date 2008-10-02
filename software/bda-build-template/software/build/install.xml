@@ -351,8 +351,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		-install:jboss:configure:ports,
 		-install:jboss:configure:login-conf,
 		-install:jboss:configure:log4j,
+		-install:jboss:configure:secure-console,
 		-install:jboss:configure:update-shutdown
 		"/>
+
+	<target name="-install:jboss:configure:secure-console" description="Configure JBoss ports using bindings files" unless="exclude.jboss">
+		<secure-jboss-console/>
+	</target>
 
 	<!-- Configure ports used by JBOSS (either bindings or editing jboss config.files) -->
 	<target name="-install:jboss:configure:ports" description="Configure JBoss ports using bindings files" unless="exclude.jboss">
