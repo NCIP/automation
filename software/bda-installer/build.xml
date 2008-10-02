@@ -10,7 +10,7 @@
 
 	<property file="local.properties" />
 	<property file="default.properties" />
-	<property name="src.dir" value="${cbasedir}/custom/izpack" />
+	<property name="src.dir" value="${cbasedir}/src-custom" />
 	<property name="lib.dir" value="${cbasedir}/lib" />
 	<property name="resources.dir" value="${cbasedir}/resources" />
 	<property name="target.dir" value="${cbasedir}/target" />
