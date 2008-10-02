@@ -8,8 +8,6 @@
 	<!-- basedir placeholder property -->
 	<property name="cbasedir" value="${basedir}" />
 
-	<property file="local.properties" />
-	<property file="default.properties" />
 	<property name="src.dir" value="${cbasedir}/src-custom" />
 	<property name="lib.dir" value="${cbasedir}/lib" />
 	<property name="resources.dir" value="${cbasedir}/resources" />

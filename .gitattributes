@@ -621,7 +621,6 @@ software/bda-download/ivy-bda.xml -text
 software/bda-installer/.classpath -text
 software/bda-installer/.project -text
 software/bda-installer/build.xml -text
-software/bda-installer/default.properties -text
 software/bda-installer/installer-config-sample.xml -text
 software/bda-installer/lib/ant-contrib-1.0b3.jar -text
 software/bda-installer/lib/jaxen-1.1.1.jar -text
