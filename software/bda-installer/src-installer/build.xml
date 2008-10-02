@@ -17,7 +17,7 @@
 	-->	
 		<unzip src="${install.path}/caarray_distribution_2_1_0.zip" dest="${install.path}/${application_installer}" />
 		
-		<copy file="${install.path}/template/installer.template.properties" tofile="${install.path}/${application_installer}/install.properties" />
+		<copy file="${install.path}/property-template/installer.template.properties" tofile="${install.path}/${application_installer}/install.properties" />
 
 <!-- try to eliminate all these replaces from the install-->
 
@@ -45,7 +45,7 @@
 	-->		
 		<unzip src="${install.path}/caarray_upgrade_2_1_0.zip" dest="${install.path}/${application_installer}" />		
 
-		<copy file="${install.path}/template/upgrade.template.properties" tofile="${install.path}/${application_installer}/upgrade.properties" />
+		<copy file="${install.path}/property-template/upgrade.template.properties" tofile="${install.path}/${application_installer}/upgrade.properties" />
 
 		<replace dir="${install.path}/${application_installer}" token="basedir}" value="install.path}/${application_installer}">
 			<include name="**/*.xml" />
