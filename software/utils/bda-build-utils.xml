@@ -2552,10 +2552,10 @@ $HeadURL$
 			</if>
 					
 			<!-- POC stuff -->
-			<property name="poc.science.string" value="affiliation=&quot;@{grid.poc.science.affiliation}&quot; email=&quot;@{grid.poc.science.email}&quot;; firstName=&quot;@{grid.poc.science.name.first}&quot;; lastName=&quot;@{grid.poc.science.name.last}&quot;; phoneNumber=&quot;@{grid.poc.science.phone}&quot;; role=&quot;@{grid.poc.science.role}&quot;;"/>
+			<property name="poc.science.string" value=" affiliation=&quot;@{grid.poc.science.affiliation}&quot; email=&quot;@{grid.poc.science.email}&quot; firstName=&quot;@{grid.poc.science.name.first}&quot; lastName=&quot;@{grid.poc.science.name.last}&quot; phoneNumber=&quot;@{grid.poc.science.phone}&quot; role=&quot;@{grid.poc.science.role}&quot; "/>
 
 			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
-				match="^(\s+&lt;ns3:).*(xmlns:ns3.*&gt;)"
+				match="^(\s+&lt;ns3:PointOfContact).*(xmlns:ns3.*&gt;)"
 				replace="\1${poc.science.string}\2"
 				flags="g" byline="true"/>
 			<!-- Research Center info -->
@@ -2571,6 +2571,18 @@ $HeadURL$
 				match="&lt;ns1:hostingResearchCenter&gt;.*&lt;\/ns1:hostingResearchCenter&gt;"
 				replace="&lt;ns1:hostingResearchCenter&gt;${poc.tech.string}&lt;\/ns1:hostingResearchCenter&gt;"
 				flags="sg"/>
+			<property name="grid.conf.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/wsrf.war/WEB-INF/etc/"/>
+			<echo message="Updating grid registration.xml"/>
+
+			<replaceregexp 
+				match="(&lt;agg:PollIntervalMillis&gt;).*(&lt;\/agg:PollIntervalMillis&gt;)"
+				replace="\13600000\2"
+				flags="sg">
+				<fileset dir="${grid.conf.dir}">
+					<include name="**/*_registration.xml"/>
+				</fileset>
+			</replaceregexp>
+
 		</sequential>
 	</macrodef>
 	<macrodef name="check-absolute-directory" description="Diagnose the host system before the installation">
@@ -2579,7 +2591,12 @@ $HeadURL$
 			<!-- Application.base.path check for bad directory -->
 			<propertycopy name="directory.value" from="@{directory.property}" />
 			<propertyregex property="is.absolute.dir"
-				regexp="^(\w*[:]*[\/\\])"
+				regexp="^(\w:\/)"
+				input="${directory.value}"
+				select="\1"
+				/>
+			<propertyregex property="is.absolute.dir"
+				regexp="^(\/)"
 				input="${directory.value}"
 				select="\1"
 				/>
@@ -2615,6 +2632,84 @@ $HeadURL$
 						flags="g" byline="true"/>
 				</sequential>
 			</for>
+		</sequential>
+	</macrodef>
+	<macrodef name="secure-jboss-console" description="Diagnose the host system before the installation">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
+		<sequential>
+			<property name="jmx-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml"/>
+			<echo message="Updating ${jmx-console.web-xml.file}"/>
+
+			<replaceregexp file="${jmx-console.web-xml.file}"
+				match="(&lt;!-- A security.*console\.)"
+				replace="\1 --&gt;"
+				flags="sg"/>
+			<replaceregexp file="${jmx-console.web-xml.file}"
+				match="(&lt;\/security-constraint&gt;.*)--&gt;"
+				replace="\1"
+				flags="sg"/>
+			<property name="jmx-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml"/>
+			<echo message="Updating ${jmx-console.jboss-web-xml.file}"/>
+
+			<replaceregexp file="${jmx-console.jboss-web-xml.file}"
+				match="(&lt;!-- Uncomment.*)(&lt;security-domain)"
+				replace="\1 --&gt; \2"
+				flags="sg"/>
+			<replaceregexp file="${jmx-console.jboss-web-xml.file}"
+				match="(&lt;\/security-domain.*)--&gt;"
+				replace="\1"
+				flags="sg"/>
+			<property name="jmx-console.password.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-users.properties"/>
+			<echo message="Updating ${jmx-console.password.file}"/>
+
+			<replaceregexp file="${jmx-console.password.file}"
+				match="^(admin)=.*"
+				replace="\1=@{jboss.web.password}"
+				flags="g" byline="true"/>
+			<property name="web-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml"/>
+			<echo message="Updating ${web-console.web-xml.file}"/>
+
+			<replaceregexp file="${web-console.web-xml.file}"
+				match="(&lt;!-- A security.*console\.)"
+				replace="\1 --&gt;"
+				flags="sg"/>
+			<replaceregexp file="${web-console.web-xml.file}"
+				match="(&lt;\/security-constraint&gt;.*)--&gt;"
+				replace="\1"
+				flags="sg"/>
+			<property name="web-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml"/>
+			<echo message="Updating ${web-console.jboss-web-xml.file}"/>
+
+			<replaceregexp file="${web-console.jboss-web-xml.file}"
+				match="(&lt;!-- Uncomment.*)(&lt;security-domain)"
+				replace="\1 --&gt; \2"
+				flags="sg"/>
+			<replaceregexp file="${web-console.jboss-web-xml.file}"
+				match="(&lt;\/security-domain&gt;)\s+--&gt;"
+				replace="\1"
+				flags="sg"/>
+			<echo message="Updating ${login-config.xml}"/>
+
+			<replaceregexp file="${login-config.xml}"
+				match="web-console-"
+				replace="props\/web-console-"
+				flags="g" byline="true"/>
+			<property name="web-console.classes.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes"/>
+			<property name="jboss.props.dir" value="@{jboss.home}/server/@{jboss.server.name}/conf/props"/>
+			<copy todir="${jboss.props.dir}">
+				<fileset dir="${web-console.classes.dir}">
+					<include name="web-console-*.properties"/>
+				</fileset>
+			</copy>
+			<property name="web-console.password.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-users.properties"/>
+			<echo message="Updating ${web-console.password.file}"/>
+
+			<replaceregexp file="${web-console.password.file}"
+				match="^(admin)=.*"
+				replace="\1=@{jboss.web.password}"
+				flags="g" byline="true"/>
 		</sequential>
 	</macrodef>
 </project>
