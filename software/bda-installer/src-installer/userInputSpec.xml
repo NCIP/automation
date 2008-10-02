@@ -17,6 +17,13 @@
 	<panel order="1">
 		<field type="title" txt="Application Installation Jboss Port Details" bold="true" size="1" />
 		<field type="divider" align="top"/>
+		<field type="text" align="left" variable="jboss.server.hostname">
+			<spec txt="Enter the host name of the installation" size="15" set="localhost"/>
+			<validator
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Jboss Host name or the Host is not reachable" id="jbosshostname.label">
+			</validator>
+		</field>	
+	
 		<field type="text" variable="jboss.server.port">			
 			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="38080"/>
 			<validator
@@ -169,6 +176,13 @@
 	<panel order="3">
 		<field type="title" txt="Application Installation Grid Port Details" bold="true" size="1" />
 		<field type="divider" align="top"/>
+		
+		<field type="text" align="left" variable="grid.server.hostname">
+			<spec txt="Enter the grid server host name of the installation" size="15" set="localhost"/>
+			<validator
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Grid Host name or the Host is not reachable" id="gridhostname.label">
+			</validator>
+		</field>		
 		<field type="text" variable="grid.server.port">			
 			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="18080"/>
 			<validator
@@ -323,7 +337,12 @@
 
 		<field type="title" txt="Application Configuration Details Cont.." bold="true" size="1" />
 		<field type="divider" align="top"/>
-
+		<field type="text" variable="grid.index.url">						
+			<spec txt="Enter the Index Url:" id="text.label" size="25" set="http://training03.cagrid.org:6080/wsrf/services/DefaultIndexService"/>
+			<validator
+				class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid Grid URL" id="indexurl.label">
+			</validator>
+		</field>		
 		<field type="text" variable="domain.name">						
 			<spec txt="Enter the domain name for the installation:" id="text.label" size="25" set="http://array.nci.nih.gov"/>
 		</field>
@@ -388,22 +407,61 @@
 		<field type="dir" align="left" variable="existing.installation.home">
 			<spec txt="Select the location of the caarray application" size="15" set="$INSTALL_PATH"/>
 		</field>
-		
+		<field type="text" align="left" variable="jboss.server.hostname">
+			<spec txt="Enter the host name of the installation" size="15" set="localhost"/>
+			<validator
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Jboss Host name or the Host is not reachable" id="jbosshostname.label">
+			</validator>
+		</field>		
 		<field type="text" variable="jboss.server.port">			
-			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="18080"/>
+			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="38080"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The http port number is already in use" id="error.label">
 			</validator>
 		</field>		
 		<field type="text" variable="jboss.server.jndi.port">						
-			<spec txt="Enter the jndi port number for the installation:" id="text.label" size="15" set="11099"/>
+			<spec txt="Enter the jndi port number for the installation:" id="text.label" size="15" set="31099"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The jndi port number is already in use" id="error.label">
 			</validator>			
 		</field>
+		<field type="text" align="left" variable="jboss.server.name">
+			<spec txt="Enter the application server name for the installation" size="15" set="default"/>
+		</field>
+		
+		
+		<field type="text" align="left" variable="grid.server.hostname">
+			<spec txt="Enter the grid server host name of the installation" size="15" set="localhost"/>
+			<validator
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Grid Host name or the Host is not reachable" id="gridhostname.label">
+			</validator>
+		</field>		
+		<field type="text" variable="grid.server.port">			
+			<spec txt="Enter the grid server http port number for the installation:" id="text.label" size="15" set="18080"/>
+			<validator
+				class="com.izforge.izpack.util.PortValidator" txt="The grid http port number is already in use" id="error.label">
+			</validator>
+		</field>		
+		<field type="text" variable="grid.server.jndi.port">						
+			<spec txt="Enter the grid server jndi port number for the installation:" id="text.label" size="15" set="11099"/>
+			<validator
+				class="com.izforge.izpack.util.PortValidator" txt="The grid jndi port number is already in use" id="error.label">
+			</validator>			
+		</field>
+		<field type="text" align="left" variable="grid.server.name">
+			<spec txt="Enter the application server name for the installation" size="15" set="default"/>
+		</field>		
+		
+		
 		<field type="text" variable="domain.name">						
 			<spec txt="Enter the domain name for the installation:" id="text.label" size="15" set="http://array.nci.nih.gov"/>
-		</field>		
+		</field>
+		<field type="text" variable="grid.index.url">						
+			<spec txt="Enter the Index Url:" id="text.label" size="25" set="http://training03.cagrid.org:6080/wsrf/services/DefaultIndexService"/>
+			<validator
+				class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid Grid URL" id="indexurl.label">
+			</validator>
+		</field>	
 	</panel>
 	
 	<!-- Install -->
