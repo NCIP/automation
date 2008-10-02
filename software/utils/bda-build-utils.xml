@@ -2642,14 +2642,37 @@ $HeadURL$
 			<property name="jmx-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml"/>
 			<echo message="Updating ${jmx-console.web-xml.file}"/>
 
+
 			<replaceregexp file="${jmx-console.web-xml.file}"
-				match="(&lt;!-- A security.*console\.)"
-				replace="\1 --&gt;"
+				match="(&lt;!-- A security[^&lt;]+)(&lt;security-constraint&gt;)"
+				replace="\1 --&gt;\2"
 				flags="sg"/>
 			<replaceregexp file="${jmx-console.web-xml.file}"
 				match="(&lt;\/security-constraint&gt;.*)--&gt;"
 				replace="\1"
 				flags="sg"/>
+			<loadfile
+				property="jmx-web.login.config.found"
+				srcFile="${jmx-console.web-xml.file}">
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="login-config"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
+			<property name="jmx-web-xml.login-config.block" value="${line.separator}  &lt;login-config&gt;${line.separator}    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;${line.separator}    &lt;realm-name&gt;JBoss JMX Console&lt;/realm-name&gt;${line.separator}  &lt;/login-config&gt;${line.separator}"/>
+			<if>
+				<not>
+					<isset property="jmx-web.login.config.found"/>
+				</not>
+				<then>
+					<replaceregexp file="${jmx-console.web-xml.file}"
+						match="(&lt;\/security-constraint&gt;).*(&lt;security-role&gt;)"
+						replace="\1${jmx-web-xml.login-config.block}\2"
+						flags="sg"/>
+				</then>
+			</if>
+
 			<property name="jmx-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${jmx-console.jboss-web-xml.file}"/>
 
@@ -2672,13 +2695,35 @@ $HeadURL$
 			<echo message="Updating ${web-console.web-xml.file}"/>
 
 			<replaceregexp file="${web-console.web-xml.file}"
-				match="(&lt;!-- A security.*console\.)"
-				replace="\1 --&gt;"
+				match="(&lt;!-- A security.*)(&lt;security-constraint&gt;)"
+				replace="\1 --&gt;\2"
 				flags="sg"/>
 			<replaceregexp file="${web-console.web-xml.file}"
 				match="(&lt;\/security-constraint&gt;.*)--&gt;"
 				replace="\1"
 				flags="sg"/>
+			<loadfile
+				property="web.login.config.found"
+				srcFile="${web-console.web-xml.file}">
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="login-config"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
+			<property name="web-xml.login-config.block" value="${line.separator}  &lt;login-config&gt;${line.separator}    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;${line.separator}    &lt;realm-name&gt;JBoss Web Console&lt;/realm-name&gt;${line.separator}  &lt;/login-config&gt;${line.separator}"/>
+			<if>
+				<not>
+					<isset property="web.login.config.found"/>
+				</not>
+				<then>
+					<replaceregexp file="${web-console.web-xml.file}"
+						match="(&lt;\/security-constraint&gt;).*(&lt;security-role&gt;)"
+						replace="\1${jmx-web-xml.login-config.block}\2"
+						flags="sg"/>
+				</then>
+			</if>
+
 			<property name="web-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${web-console.jboss-web-xml.file}"/>
 
@@ -2690,6 +2735,7 @@ $HeadURL$
 				match="(&lt;\/security-domain&gt;)\s+--&gt;"
 				replace="\1"
 				flags="sg"/>
+			<property name="login-config.xml" value="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
 			<echo message="Updating ${login-config.xml}"/>
 
 			<replaceregexp file="${login-config.xml}"
