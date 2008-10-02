@@ -152,15 +152,15 @@
 	<packs>
 		<pack name="download_install" id="download_install" required="no" installGroups="caarray"  condition="install">
 		    <description>The base files</description>
-		    <file src="installer/caarray_distribution_2_1_0.zip" targetdir="$SYSTEM_user_home/.installer"/>
+		    <file src="product-dist/caarray_distribution_2_1_0.zip" targetdir="$SYSTEM_user_home/.installer"/>
 		    <file src="build.xml" targetdir="$SYSTEM_user_home/.installer"/>
-		    <file src="template" defaultexcludes="yes" targetdir="$SYSTEM_user_home/.installer"/>		    
+		    <file src="property-template" defaultexcludes="yes" targetdir="$SYSTEM_user_home/.installer"/>		    
 		</pack>	
 
 		<pack name="download_update" id="download_update" required="no" installGroups="caarray"  condition="update">
 		    <description>The base files</description>
-		    <file src="installer/caarray_upgrade_2_1_0.zip" targetdir="$SYSTEM_user_home/.installer"/>
-		    <file src="template" targetdir="$SYSTEM_user_home/.installer"/>
+		    <file src="product-dist/caarray_upgrade_2_1_0.zip" targetdir="$SYSTEM_user_home/.installer"/>
+		    <file src="property-template" targetdir="$SYSTEM_user_home/.installer"/>
 		    <file src="build.xml" defaultexcludes="yes" targetdir="$SYSTEM_user_home/.installer"/>
 		</pack>	
 
@@ -187,8 +187,8 @@
 		</pack>
 
 	</packs>
-	<jar src="jar/ant/ant.jar" stage="both" />
-	<jar src="jar/ant/ant-launcher.jar" stage="both"/>
-	<jar src="jar/ant/ant-nodeps.jar" stage="both"/>
-	<jar src="jar/drivers/mysql-connector-java-5.1.5.jar" stage="both"/>
+	<jar src="lib/ant.jar" stage="both" />
+	<jar src="lib/ant-launcher.jar" stage="both"/>
+	<jar src="lib/ant-nodeps.jar" stage="both"/>
+	<jar src="lib/mysql-connector-java-5.1.5.jar" stage="both"/>
 </installation>
