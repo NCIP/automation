@@ -2474,11 +2474,10 @@ $HeadURL$
 			<!-- will add later -->
 		</sequential>
 	</macrodef>
-	<macrodef name="grid-jboss-configure">
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
-		<attribute name="jboss.server.host" default="${jboss.server.host}"/>
+	<macrodef name="grid-appserver-configure">
+		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy"/>
+		<attribute name="appserver.port" default="${jboss.server.port}"/>
+		<attribute name="appserver.hostname" default="${jboss.server.hostname}"/>
 		<attribute name="search.host" default="localhost"/>
 		<attribute name="search.port" default="8080"/>
 		<attribute name="grid.application.name" default="${grid.application.name}"/>
@@ -2508,23 +2507,18 @@ $HeadURL$
 		<attribute name="grid.external.port" default="${grid.external.port}"/>
 		<sequential>
 			<!-- Fix all wsdl files that refer to statically defined host and port -->
-			<replace dir="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{jboss.server.host}:@{jboss.server.port}">
+			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port}">
 				<include name="**/*.wsdl" />
 			</replace>
 			<!-- Fix default jndi-config -->
-			<replace file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{jboss.server.host}:@{jboss.server.port}"/>
+			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port}"/>
 			<!-- fix web.xml -->
-			<replace file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/web.xml" token="@{search.port}" value="@{jboss.server.port}"/>
+			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/web.xml" token="@{search.port}" value="@{appserver.port}"/>
 
 			<!-- Fix service specific jndi-config -->
-			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
+			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
 				match="(\s+.value.)http://.*\:\d+(\/.*)" 
-				replace="\1http://@{jboss.server.host}:@{jboss.server.port}\2" 
-				flags="g" byline="true"/>
-			<!-- Change pointer to index service based on property -->
-			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/@{grid.application.name}_registration.xml"
-				match="(\s+.wsa:Address.).*(.\/wsa:Address.)" 
-				replace="\1@{grid.index.url}\2"
+				replace="\1http://@{appserver.hostname}:@{appserver.port}\2" 
 				flags="g" byline="true"/>
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
 			<propertyregex property="external.has.value"
@@ -2544,7 +2538,7 @@ $HeadURL$
 	&lt;parameter name=&quot;sendXsiTypes&quot; value=&quot;true&quot;/&gt;${line.separator}
 	-->
 
-					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/server-config.wsdd"
+	<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/server-config.wsdd"
 						match="^(\s+&lt;globalConfiguration&gt;)"
 						replace="\1${external.xml.block}"
 						flags="g" byline="true"/>
@@ -2554,7 +2548,7 @@ $HeadURL$
 			<!-- POC stuff -->
 			<property name="poc.science.string" value=" affiliation=&quot;@{grid.poc.science.affiliation}&quot; email=&quot;@{grid.poc.science.email}&quot; firstName=&quot;@{grid.poc.science.name.first}&quot; lastName=&quot;@{grid.poc.science.name.last}&quot; phoneNumber=&quot;@{grid.poc.science.phone}&quot; role=&quot;@{grid.poc.science.role}&quot; "/>
 
-			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
+			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
 				match="^(\s+&lt;ns3:PointOfContact).*(xmlns:ns3.*&gt;)"
 				replace="\1${poc.science.string}\2"
 				flags="g" byline="true"/>
@@ -2567,18 +2561,26 @@ $HeadURL$
 &lt;/ns9:pointOfContactCollection&gt;${line.separator}
 &lt;/ns9:ResearchCenter&gt;${line.separator}
 "/>
-			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
+			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
 				match="&lt;ns1:hostingResearchCenter&gt;.*&lt;\/ns1:hostingResearchCenter&gt;"
 				replace="&lt;ns1:hostingResearchCenter&gt;${poc.tech.string}&lt;\/ns1:hostingResearchCenter&gt;"
 				flags="sg"/>
-			<property name="grid.conf.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/wsrf.war/WEB-INF/etc/"/>
 			<echo message="Updating grid registration.xml"/>
 
 			<replaceregexp 
 				match="(&lt;agg:PollIntervalMillis&gt;).*(&lt;\/agg:PollIntervalMillis&gt;)"
 				replace="\13600000\2"
 				flags="sg">
-				<fileset dir="${grid.conf.dir}">
+				<fileset dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc">
+					<include name="**/*_registration.xml"/>
+				</fileset>
+			</replaceregexp>
+			<!-- Change pointer to index service based on property -->
+			<replaceregexp 
+				match="(&lt;wsa:Address&gt;).*(&lt;\/wsa:Address&gt;)"
+				replace="\1@{grid.index.url}\2"
+				flags="sg">
+				<fileset dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc">
 					<include name="**/*_registration.xml"/>
 				</fileset>
 			</replaceregexp>
