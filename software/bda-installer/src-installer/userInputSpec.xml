@@ -7,8 +7,8 @@
 			<description align="left" txt="Select the type of installation"
 			id="installation.radio"/>
 			<spec>
-				<choice txt="install" id="setup.type.install" value="install" set="true" />
-				<choice txt="update" id="setup.type.update" value="update" />
+				<choice txt="New Installation" id="setup.type.install" value="install" set="true" />
+				<choice txt="Upgrade" id="setup.type.upgrade" value="upgrade" />
 			</spec>
 		</field>		
 	</panel>
@@ -25,13 +25,13 @@
 		</field>	
 	
 		<field type="text" variable="jboss.server.port">			
-			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="38080"/>
+			<spec txt="Enter the http port for the installation:" id="text.label" size="15" set="38080"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The http port is already in use. Please select a different port." id="error.label">
 			</validator>
 		</field>		
 		<field type="text" variable="jboss.server.jndi.port">						
-			<spec txt="Enter the jndi port number for the installation:" id="text.label" size="15" set="31099"/>
+			<spec txt="Enter the jndi port for the installation:" id="text.label" size="15" set="31099"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The jndi port is already in use. Please select a different port." id="error.label">
 			</validator>			
@@ -40,84 +40,84 @@
 			<spec txt="Enter the application server name for the installation:" id="text.label" size="15" set="default"/>
 		</field>
 		<field type="text" variable="jboss.server.rmi.port">						
-			<spec txt="Enter the rmi port number for the installation:" id="text.label" size="15" set="31098"/>
+			<spec txt="Enter the rmi port for the installation:" id="text.label" size="15" set="31098"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jndi port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.server.rmi.port">						
-			<spec txt="Enter the rmi port number for the installation:" id="text.label" size="15" set="31098"/>
+			<spec txt="Enter the rmi port for the installation:" id="text.label" size="15" set="31098"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The rmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The rmi port is already in use" id="error.label">
 			</validator>			
 		</field>		
 		<field type="text" variable="jboss.server.bind.port">						
-			<spec txt="Enter the bind port number for the installation:" id="text.label" size="15" set="34445"/>
+			<spec txt="Enter the bind port for the installation:" id="text.label" size="15" set="34445"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The bind port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The bind port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.server.redirect.port">						
-			<spec txt="Enter the redirect port number for the installation:" id="text.label" size="15" set="38443"/>
+			<spec txt="Enter the redirect port for the installation:" id="text.label" size="15" set="38443"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The redirect port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The redirect port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="jboss.server.ajp.port">
-			<spec txt="Enter the ajp port number for the installation:" id="text.label" size="15" set="38009"/>
+			<spec txt="Enter the ajp port for the installation:" id="text.label" size="15" set="38009"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The ajp port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The ajp port is already in use" id="error.label">
 			</validator>			
 		</field>
 
 		<field type="text" variable="jboss.web.service.port">						
-			<spec txt="Enter the web service port number for the installation:" id="text.label" size="15" set="38083"/>
+			<spec txt="Enter the web service port for the installation:" id="text.label" size="15" set="38083"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The web service port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The web service port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="jboss.service.rmiobject.port">						
-			<spec txt="Enter the rmiobject port number for the installation:" id="text.label" size="15" set="34444"/>
+			<spec txt="Enter the rmiobject port for the installation:" id="text.label" size="15" set="34444"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The rmiobject port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The rmiobject port is already in use" id="error.label">
 			</validator>			
 		</field>
 		
 		<field type="text" variable="jboss.hajndi.port">						
-			<spec txt="Enter the hajndi port number for the installation:" id="text.label" size="15" set="31100"/>
+			<spec txt="Enter the hajndi port for the installation:" id="text.label" size="15" set="31100"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The hajndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The hajndi port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="jboss.cluster.rmi.port">						
-			<spec txt="Enter the cluster rmi port number for the installation:" id="text.label" size="15" set="39000"/>
+			<spec txt="Enter the cluster rmi port for the installation:" id="text.label" size="15" set="39000"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The cluster rmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The cluster rmi port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="jboss.jms.port">						
-			<spec txt="Enter the jms port number for the installation:" id="text.label" size="15" set="38093"/>
+			<spec txt="Enter the jms port for the installation:" id="text.label" size="15" set="38093"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jms port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jms port is already in use" id="error.label">
 			</validator>			
 		</field>
 		
 
 		<field type="text" variable="jboss.ejbinvoker.port">						
-			<spec txt="Enter the ejbinvoker port number for the installation:" id="text.label" size="15" set="13873"/>
+			<spec txt="Enter the ejbinvoker port for the installation:" id="text.label" size="15" set="13873"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The ejbinvoker port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The ejbinvoker port is already in use" id="error.label">
 			</validator>			
 		</field>
 
 		<field type="text" variable="jboss.hajrmi.port">						
-			<spec txt="Enter the hajrmi port number for the installation:" id="text.label" size="15" set="31101"/>
+			<spec txt="Enter the hajrmi port for the installation:" id="text.label" size="15" set="31101"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The hajrmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The hajrmi port is already in use" id="error.label">
 			</validator>			
 		</field>	
 	</panel>
@@ -128,45 +128,45 @@
 		<field type="divider" align="top"/>
 
 		<field type="text" variable="jboss.pooledha.port">						
-			<spec txt="Enter the pooledha port number for the installation:" id="text.label" size="15" set="34448"/>
+			<spec txt="Enter the pooledha port for the installation:" id="text.label" size="15" set="34448"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The pooledha port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The pooledha port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.cobraorb.port">						
-			<spec txt="Enter the cobraorb port number for the installation:" id="text.label" size="15" set="33528"/>
+			<spec txt="Enter the cobraorb port for the installation:" id="text.label" size="15" set="33528"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The cobraorb port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The cobraorb port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.jmx-rmi.port">						
-			<spec txt="Enter the jmx-rmi port number for the installation:" id="text.label" size="15" set="39001"/>
+			<spec txt="Enter the jmx-rmi port for the installation:" id="text.label" size="15" set="39001"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jmx-rmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jmx-rmi port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.snmp-trapd.port">						
-			<spec txt="Enter the snmp-trapd port number for the installation:" id="text.label" size="15" set="31162"/>
+			<spec txt="Enter the snmp-trapd port for the installation:" id="text.label" size="15" set="31162"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The snmp-trapd port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The snmp-trapd port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.snmp.port">						
-			<spec txt="Enter the snmp port number for the installation:" id="text.label" size="15" set="31161"/>
+			<spec txt="Enter the snmp port for the installation:" id="text.label" size="15" set="31161"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The snmp port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The snmp port is already in use" id="error.label">
 			</validator>			
 		</field>		
 		<field type="text" variable="jboss.remoting.port">						
-			<spec txt="Enter the remoting port number for the installation:" id="text.label" size="15" set="34446"/>
+			<spec txt="Enter the remoting port for the installation:" id="text.label" size="15" set="34446"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The remoting port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The remoting port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.messaging.port">						
-			<spec txt="Enter the messaging port number for the installation:" id="text.label" size="15" set="34457"/>
+			<spec txt="Enter the messaging port for the installation:" id="text.label" size="15" set="34457"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The messaging port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The messaging port is already in use" id="error.label">
 			</validator>			
 		</field>
 				
@@ -184,99 +184,99 @@
 			</validator>
 		</field>		
 		<field type="text" variable="grid.server.port">			
-			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="18080"/>
+			<spec txt="Enter the http port for the installation:" id="text.label" size="15" set="18080"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The http port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The http port is already in use" id="error.label">
 			</validator>
 		</field>		
 		<field type="text" variable="grid.server.jndi.port">						
-			<spec txt="Enter the jndi port number for the installation:" id="text.label" size="15" set="11099"/>
+			<spec txt="Enter the jndi port for the installation:" id="text.label" size="15" set="11099"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jndi port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.server.name">						
 			<spec txt="Enter the application server name for the installation:" id="text.label" size="15" set="default"/>
 		</field>
 		<field type="text" variable="grid.server.rmi.port">						
-			<spec txt="Enter the rmi port number for the installation:" id="text.label" size="15" set="11098"/>
+			<spec txt="Enter the rmi port for the installation:" id="text.label" size="15" set="11098"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jndi port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.server.rmi.port">						
-			<spec txt="Enter the rmi port number for the installation:" id="text.label" size="15" set="11098"/>
+			<spec txt="Enter the rmi port for the installation:" id="text.label" size="15" set="11098"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The rmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The rmi port is already in use" id="error.label">
 			</validator>			
 		</field>		
 		<field type="text" variable="grid.server.bind.port">						
-			<spec txt="Enter the bind port number for the installation:" id="text.label" size="15" set="14445"/>
+			<spec txt="Enter the bind port for the installation:" id="text.label" size="15" set="14445"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The bind port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The bind port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.server.redirect.port">						
-			<spec txt="Enter the redirect port number for the installation:" id="text.label" size="15" set="18443"/>
+			<spec txt="Enter the redirect port for the installation:" id="text.label" size="15" set="18443"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The redirect port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The redirect port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="grid.server.ajp.port">
-			<spec txt="Enter the ajp port number for the installation:" id="text.label" size="15" set="18009"/>
+			<spec txt="Enter the ajp port for the installation:" id="text.label" size="15" set="18009"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The ajp port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The ajp port is already in use" id="error.label">
 			</validator>			
 		</field>
 
 		<field type="text" variable="grid.web.service.port">						
-			<spec txt="Enter the web service port number for the installation:" id="text.label" size="15" set="18083"/>
+			<spec txt="Enter the web service port for the installation:" id="text.label" size="15" set="18083"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The web service port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The web service port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="grid.service.rmiobject.port">						
-			<spec txt="Enter the rmiobject port number for the installation:" id="text.label" size="15" set="14444"/>
+			<spec txt="Enter the rmiobject port for the installation:" id="text.label" size="15" set="14444"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The rmiobject port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The rmiobject port is already in use" id="error.label">
 			</validator>			
 		</field>
 		
 		<field type="text" variable="grid.hajndi.port">						
-			<spec txt="Enter the hajndi port number for the installation:" id="text.label" size="15" set="11100"/>
+			<spec txt="Enter the hajndi port for the installation:" id="text.label" size="15" set="11100"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The hajndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The hajndi port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="grid.cluster.rmi.port">						
-			<spec txt="Enter the cluster rmi port number for the installation:" id="text.label" size="15" set="19000"/>
+			<spec txt="Enter the cluster rmi port for the installation:" id="text.label" size="15" set="19000"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The cluster rmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The cluster rmi port is already in use" id="error.label">
 			</validator>			
 		</field>		
 
 		<field type="text" variable="grid.jms.port">						
-			<spec txt="Enter the jms port number for the installation:" id="text.label" size="15" set="18093"/>
+			<spec txt="Enter the jms port for the installation:" id="text.label" size="15" set="18093"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jms port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jms port is already in use" id="error.label">
 			</validator>			
 		</field>
 		
 
 		<field type="text" variable="grid.ejbinvoker.port">						
-			<spec txt="Enter the ejbinvoker port number for the installation:" id="text.label" size="15" set="13873"/>
+			<spec txt="Enter the ejbinvoker port for the installation:" id="text.label" size="15" set="13873"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The ejbinvoker port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The ejbinvoker port is already in use" id="error.label">
 			</validator>			
 		</field>
 
 		<field type="text" variable="grid.hajrmi.port">						
-			<spec txt="Enter the hajrmi port number for the installation:" id="text.label" size="15" set="11101"/>
+			<spec txt="Enter the hajrmi port for the installation:" id="text.label" size="15" set="11101"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The hajrmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The hajrmi port is already in use" id="error.label">
 			</validator>			
 		</field>
 	
@@ -289,45 +289,45 @@
 
 
 		<field type="text" variable="grid.pooledha.port">						
-			<spec txt="Enter the pooledha port number for the installation:" id="text.label" size="15" set="14448"/>
+			<spec txt="Enter the pooledha port for the installation:" id="text.label" size="15" set="14448"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The pooledha port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The pooledha port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.cobraorb.port">						
-			<spec txt="Enter the cobraorb port number for the installation:" id="text.label" size="15" set="13528"/>
+			<spec txt="Enter the cobraorb port for the installation:" id="text.label" size="15" set="13528"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The cobraorb port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The cobraorb port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.jmx-rmi.port">						
-			<spec txt="Enter the jmx-rmi port number for the installation:" id="text.label" size="15" set="19001"/>
+			<spec txt="Enter the jmx-rmi port for the installation:" id="text.label" size="15" set="19001"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jmx-rmi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jmx-rmi port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.snmp-trapd.port">						
-			<spec txt="Enter the snmp-trapd port number for the installation:" id="text.label" size="15" set="11162"/>
+			<spec txt="Enter the snmp-trapd port for the installation:" id="text.label" size="15" set="11162"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The snmp-trapd port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The snmp-trapd port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.snmp.port">						
-			<spec txt="Enter the snmp port number for the installation:" id="text.label" size="15" set="11161"/>
+			<spec txt="Enter the snmp port for the installation:" id="text.label" size="15" set="11161"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The snmp port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The snmp port is already in use" id="error.label">
 			</validator>			
 		</field>		
 		<field type="text" variable="grid.remoting.port">						
-			<spec txt="Enter the remoting port number for the installation:" id="text.label" size="15" set="14446"/>
+			<spec txt="Enter the remoting port for the installation:" id="text.label" size="15" set="14446"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The remoting port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The remoting port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="grid.messaging.port">						
-			<spec txt="Enter the messaging port number for the installation:" id="text.label" size="15" set="14457"/>
+			<spec txt="Enter the messaging port for the installation:" id="text.label" size="15" set="14457"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The messaging port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The messaging port is already in use" id="error.label">
 			</validator>			
 		</field>
 				
@@ -414,15 +414,15 @@
 			</validator>
 		</field>		
 		<field type="text" variable="jboss.server.port">			
-			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="38080"/>
+			<spec txt="Enter the http port for the installation:" id="text.label" size="15" set="38080"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The http port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The http port is already in use" id="error.label">
 			</validator>
 		</field>		
 		<field type="text" variable="jboss.server.jndi.port">						
-			<spec txt="Enter the jndi port number for the installation:" id="text.label" size="15" set="31099"/>
+			<spec txt="Enter the jndi port for the installation:" id="text.label" size="15" set="31099"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jndi port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" align="left" variable="jboss.server.name">
@@ -437,15 +437,15 @@
 			</validator>
 		</field>		
 		<field type="text" variable="grid.server.port">			
-			<spec txt="Enter the grid server http port number for the installation:" id="text.label" size="15" set="18080"/>
+			<spec txt="Enter the grid server http port for the installation:" id="text.label" size="15" set="18080"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The grid http port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The grid http port is already in use" id="error.label">
 			</validator>
 		</field>		
 		<field type="text" variable="grid.server.jndi.port">						
-			<spec txt="Enter the grid server jndi port number for the installation:" id="text.label" size="15" set="11099"/>
+			<spec txt="Enter the grid server jndi port for the installation:" id="text.label" size="15" set="11099"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The grid jndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The grid jndi port is already in use" id="error.label">
 			</validator>			
 		</field>
 		<field type="text" align="left" variable="grid.server.name">

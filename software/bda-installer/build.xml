@@ -94,8 +94,13 @@
 	</target>
 
 	<target name="build:all" depends="-pre:clean, download:izpack, unzip:izpack, build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Default target" />
+	<target name="build:hot" depends="build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Builds everything without cleaning. Used for faster hot development." />
 
 	<target name="run:all" depends="build:all" description="Runs the installer by building it first">
+		<java fork="true" jar="${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar" />
+	</target>
+
+	<target name="run:hot" depends="build:hot" description="Similar to hot-deploy. Runs the installer by building it first">
 		<java fork="true" jar="${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar" />
 	</target>
 

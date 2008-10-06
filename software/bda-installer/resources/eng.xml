@@ -71,8 +71,8 @@
     <str id="LicencePanel.no" txt="No"/>
 
     <str id="InstallationTypePanel.info" txt="Please choose the type of installation:"/>
-    <str id="InstallationTypePanel.normal" txt="New installation"/>
-    <str id="InstallationTypePanel.modify" txt="Modify installation"/>
+    <str id="InstallationTypePanel.normal" txt="New Installation"/>
+    <str id="InstallationTypePanel.modify" txt="Upgrade"/>
 
     <str id="InfoPanel.info" txt="Please read the following release notes: "/>
 

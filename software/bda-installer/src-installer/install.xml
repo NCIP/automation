@@ -57,11 +57,11 @@
 	<conditions>
 		<condition type="variable" id="install">
 			<name>setup.type</name>
-			<value>Install</value>
+			<value>install</value>
 		</condition>
 		<condition type="variable" id="update">
 			<name>setup.type</name>
-			<value>Upgrade</value>
+			<value>upgrade</value>
 		</condition>
 		<condition type="java" id="installonwindows">
 			<java>
@@ -78,11 +78,11 @@
 			<returnvalue type="boolean">true</returnvalue>
 		</condition>		
 		<condition type="and" id="install.onwindows">
-			<condition type="ref" refid="Install"/>
+			<condition type="ref" refid="install"/>
 			<condition type="ref" refid="installonwindows" />
 		</condition>
 		<condition type="and" id="update.onwindows">
-			<condition type="ref" refid="Upgrade"/>
+			<condition type="ref" refid="upgrade"/>
 			<condition type="ref" refid="installonwindows" />
 		</condition>
 		<condition type="variable" id="ldap.setup">
