@@ -7,9 +7,23 @@
 	<str id="setup.type.install" txt="New Install (*)"/>
     <str id="setup.type.upgrade" txt="Upgrade (*)"/>
     
+
+	<!-- Panel 0 -->
+	<str id="panel0.title" txt="Select Installation Type"/>
+	<str id="installation.radio" txt="Please select the type of installation you would like to perform:"/>
+	<str id="setup.type.install" txt="New Install"/>
+	<str id="setup.type.upgrade" txt="Upgrade"/>
+	
+	
+	    
+    <!-- Panel 1 -->
+    <str id="jboss.details.text.label" txt="Application Installation JBoss Port Details"/>
+    <str id="jboss.server.hostname.text.label" txt="Enter the HTTP port for the installation:"/>
     <str id="jboss.server.port.text.label" txt="Enter the HTTP port for the installation:"/>
     <str id="jboss.server.jndi.port.text.label" txt="Enter the JNDI port for the installation:"/>
     
+    
+    <str id="com.izforge.izpack.util.PortValidator.error.label" txt="The jndi port is already in use. Please select a different port."/>
 
 	
 
