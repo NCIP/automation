@@ -17,6 +17,9 @@
 	
 	    
     <!-- Panel 1 -->
+    <str id="com.izforge.izpack.util.PortValidator.error.label" txt="The HTTP port you entered is already in use. Please select a different HTTP port."/>
+    <str id="com.izforge.izpack.util.HostNameValidator.error.label" txt="The JBoss hostname you entered is invalid or the host is unreachable. Please enter a different JBoss hostname."/>
+    
     <str id="jboss.details.text.label" txt="Application Installation JBoss Port Details"/>
     <str id="jboss.server.hostname.text.label" txt="Enter the HTTP port for the installation:"/>
     <str id="jboss.server.port.text.label" txt="Enter the HTTP port for the installation:"/>

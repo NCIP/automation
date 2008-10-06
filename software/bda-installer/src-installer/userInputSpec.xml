@@ -11,23 +11,23 @@
 			</spec>
 		</field>
 	</panel>
+	
 		
-	<!-- Install -->
+	<!-- Panel 1 -->
 	<panel order="1">
 		<field type="title" txt="" bold="true" size="1" id="jboss.details.text.label" />
 		<field type="divider" align="top" />
+
 		<field type="text" align="left" variable="jboss.server.hostname">
 			<spec size="15" set="localhost" id="jboss.server.hostname.text.label" />
-			<validator class="com.izforge.izpack.util.HostNameValidator" txt="The JBoss hostname is invalid or the host is unreachable"
-				id="jbosshostname.label">
-			</validator>
+			<validator class="com.izforge.izpack.util.HostNameValidator" id="com.izforge.izpack.util.HostNameValidator.error.label" />
 		</field>
+		
 		<field type="text" variable="jboss.server.port">
 			<spec id="jboss.server.port.text.label" size="15" set="38080" />
-			<validator class="com.izforge.izpack.util.PortValidator" txt="The http port is already in use. Please select a different port."
-				id="error.label">
-			</validator>
+			<validator class="com.izforge.izpack.util.PortValidator" id="com.izforge.izpack.util.PortValidator.error.label" />
 		</field>
+		
 		<field type="text" variable="jboss.server.jndi.port">
 			<spec id="jboss.server.jndi.port.text.label" size="15" set="31099" />
 			<validator class="com.izforge.izpack.util.PortValidator" id="com.izforge.izpack.util.PortValidator.error.label">
@@ -97,6 +97,8 @@
 			</validator>
 		</field>
 	</panel>
+	
+	
 	<panel order="2">
 		<field type="title" txt="Application Installation JBoss Port Details Cont.." bold="true" size="1" />
 		<field type="divider" align="top" />
