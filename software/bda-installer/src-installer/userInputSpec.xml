@@ -25,13 +25,13 @@
 		</field>	
 	
 		<field type="text" variable="jboss.server.port">			
-			<spec txt="Enter the http port for the installation:" id="text.label" size="15" set="38080"/>
+			<spec txt="" id="jboss.server.port.text.label" size="15" set="38080"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The http port is already in use. Please select a different port." id="error.label">
 			</validator>
 		</field>		
 		<field type="text" variable="jboss.server.jndi.port">						
-			<spec txt="Enter the jndi port for the installation:" id="text.label" size="15" set="31099"/>
+			<spec txt="" id="jboss.server.jndi.port.text.label" size="15" set="31099"/>
 			<validator
 				class="com.izforge.izpack.util.PortValidator" txt="The jndi port is already in use. Please select a different port." id="error.label">
 			</validator>			

@@ -653,6 +653,7 @@ software/bda-installer/src-installer/product-dist/caarray_distribution_2_1_0.zip
 software/bda-installer/src-installer/product-dist/caarray_upgrade_2_1_0.zip -text
 software/bda-installer/src-installer/property-template/installer.template.properties -text
 software/bda-installer/src-installer/property-template/upgrade.template.properties -text
+software/bda-installer/src-installer/userInputLang.xml_eng -text
 software/bda-installer/src-installer/userInputSpec.xml -text
 software/bda-installer/src-installer/windir.txt -text
 software/heartbeat/.classpath -text

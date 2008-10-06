@@ -3,12 +3,10 @@
 <!-- The English langpack -->
 
 <langpack>
-    <str id="CustomActions.tip" txt="Custom Action log:"/>
+   <str id="CustomActions.tip" txt="Custom Action log:"/>
     <str id="CustomActions.progress" txt="Custom Action Progress:"/>
     <str id="AntAction.pack" txt="Action Pack: "/>
     <str id="AntAction.download-install" txt="Please wait while the we download the installer"/>
     <str id="AntAction.install-application" txt="Please wait while your application is being configured"/>
     <str id="UserPathPanel.headline.UserPathPanelInstallation" txt="Select the path for the installation of the application: "/>
-    <str id="setup.type.install" txt="New Install (*)"/>
-    <str id="setup.type.upgrade" txt="Upgrade (*)"/>
 </langpack>

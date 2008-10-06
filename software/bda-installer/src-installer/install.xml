@@ -100,7 +100,8 @@
 		<res id="AntActionsSpec.xml" src="antActionSpec.xml" />
 		<res id="LicencePanel.licence" src="Licence.txt"/>
 		<res id="InfoPanel.info" src="Readme.txt"/>
-		<res id="userInputSpec.xml" src="userInputSpec.xml" />	
+		<res id="userInputSpec.xml" src="userInputSpec.xml" />
+		<res id="userInputLang.xml_eng" src="userInputLang.xml_eng" />
 		<res id="CustomActionsLang.xml_eng" src="custom_eng.xml"/>
 		<res id="UserPathPanel.dir.windows" src="windir.txt"/>
 		<res id="UserPathPanel.dir.linux" src="linuxdir.txt" />
