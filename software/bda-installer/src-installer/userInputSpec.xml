@@ -15,25 +15,25 @@
 		
 	<!-- Install -->
 	<panel order="1">
-		<field type="title" txt="Application Installation Jboss Port Details" bold="true" size="1" />
+		<field type="title" txt="Application Installation JBoss Port Details" bold="true" size="1" />
 		<field type="divider" align="top"/>
 		<field type="text" align="left" variable="jboss.server.hostname">
-			<spec txt="Enter the host name of the installation" size="15" set="localhost"/>
+			<spec txt="Enter the hostname of the installation" size="15" set="localhost"/>
 			<validator
-				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Jboss Host name or the Host is not reachable" id="jbosshostname.label">
+				class="com.izforge.izpack.util.HostNameValidator" txt="The JBoss hostname is invalid or the host is unreachable" id="jbosshostname.label">
 			</validator>
 		</field>	
 	
 		<field type="text" variable="jboss.server.port">			
 			<spec txt="Enter the http port number for the installation:" id="text.label" size="15" set="38080"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The http port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The http port is already in use. Please select a different port." id="error.label">
 			</validator>
 		</field>		
 		<field type="text" variable="jboss.server.jndi.port">						
 			<spec txt="Enter the jndi port number for the installation:" id="text.label" size="15" set="31099"/>
 			<validator
-				class="com.izforge.izpack.util.PortValidator" txt="The jndi port number is already in use" id="error.label">
+				class="com.izforge.izpack.util.PortValidator" txt="The jndi port is already in use. Please select a different port." id="error.label">
 			</validator>			
 		</field>
 		<field type="text" variable="jboss.server.name">						
@@ -124,7 +124,7 @@
 
 
 	<panel order="2">	
-		<field type="title" txt="Application Installation Jboss Port Details Cont.." bold="true" size="1" />
+		<field type="title" txt="Application Installation JBoss Port Details Cont.." bold="true" size="1" />
 		<field type="divider" align="top"/>
 
 		<field type="text" variable="jboss.pooledha.port">						
@@ -178,9 +178,9 @@
 		<field type="divider" align="top"/>
 		
 		<field type="text" align="left" variable="grid.server.hostname">
-			<spec txt="Enter the grid server host name of the installation" size="15" set="localhost"/>
+			<spec txt="Enter the grid server hostname of the installation" size="15" set="localhost"/>
 			<validator
-				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Grid Host name or the Host is not reachable" id="gridhostname.label">
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Grid hostname or the Host is not reachable" id="gridhostname.label">
 			</validator>
 		</field>		
 		<field type="text" variable="grid.server.port">			
@@ -386,7 +386,7 @@
 			<field type="title" txt="LDAP Configuration" bold="true" size="1" />
 			<field type="divider" align="top"/>
 			<field type="text" variable="ldap.hostname">						
-				<spec txt="Enter the ldap host name:" id="text.label" size="25" set="localhost"/>
+				<spec txt="Enter the ldap hostname:" id="text.label" size="25" set="localhost"/>
 			</field>
 			<field type="text" variable="ldap.search.base">						
 				<spec txt="Enter the ldap search base:" id="text.label" size="25" set="25"/>
@@ -408,9 +408,9 @@
 			<spec txt="Select the location of the caarray application" size="15" set="$INSTALL_PATH"/>
 		</field>
 		<field type="text" align="left" variable="jboss.server.hostname">
-			<spec txt="Enter the host name of the installation" size="15" set="localhost"/>
+			<spec txt="Enter the hostname of the installation" size="15" set="localhost"/>
 			<validator
-				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Jboss Host name or the Host is not reachable" id="jbosshostname.label">
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid JBoss hostname or the Host is not reachable" id="jbosshostname.label">
 			</validator>
 		</field>		
 		<field type="text" variable="jboss.server.port">			
@@ -431,9 +431,9 @@
 		
 		
 		<field type="text" align="left" variable="grid.server.hostname">
-			<spec txt="Enter the grid server host name of the installation" size="15" set="localhost"/>
+			<spec txt="Enter the grid server hostname of the installation" size="15" set="localhost"/>
 			<validator
-				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Grid Host name or the Host is not reachable" id="gridhostname.label">
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Grid hostname or the Host is not reachable" id="gridhostname.label">
 			</validator>
 		</field>		
 		<field type="text" variable="grid.server.port">			
@@ -477,7 +477,7 @@
 			<spec txt="Enter the Database Server:"
 				id="dbhostname.label" size="25" set="localhost"/>
 			<validator
-				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Host name or the Host is not reachable" id="dbhostname.label">
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid hostname or the Host is not reachable" id="dbhostname.label">
 			</validator>				
 		</field>
 		<field type="text" variable="database.port">
