@@ -10,7 +10,7 @@
 
 	<!-- Panel 0 -->
 	<str id="panel0.title" txt="Select Installation Type"/>
-	<str id="installation.radio" txt="Please select the type of installation you would like to perform:"/>
+	<str id="installation.radio" txt="Please enter the type of installation you would like to perform:"/>
 	<str id="setup.type.install" txt="New Install"/>
 	<str id="setup.type.upgrade" txt="Upgrade"/>
 	
@@ -23,38 +23,47 @@
     <str id="jboss.server.hostname.error.label" txt="The JBoss hostname you entered is invalid or the host is unreachable. Please enter a different JBoss hostname."/>
     
     <str id="jboss.server.port.text.label" txt="Enter the HTTP port for the installation:"/>
-    <str id="jboss.server.port.error.label" txt="The HTTP port you entered is invalid or is already in use. Please select a different HTTP port."/>
+    <str id="jboss.server.port.error.label" txt="The HTTP port you entered is invalid or is already in use. Please enter a different HTTP port."/>
     
     <str id="jboss.server.jndi.port.text.label" txt="Enter the JNDI port for the installation:"/>
-    <str id="jboss.server.jndi.port.error.label" txt="The JNDI port you entered is invalid or is already in use. Please select a different JNDI port."/>
+    <str id="jboss.server.jndi.port.error.label" txt="The JNDI port you entered is invalid or is already in use. Please enter a different JNDI port."/>
     
     <str id="jboss.server.name.text.label" txt="Enter the JBoss server name for the installation:"/>
     
 	<str id="jboss.server.rmi.port.text.label" txt="Enter the RMI port for the installation:" />
-	<str id="jboss.server.rmi.port.error.label" txt="The RMI port you entered is invalid or is already in use. Please select a different RMI port."/>
+	<str id="jboss.server.rmi.port.error.label" txt="The RMI port you entered is invalid or is already in use. Please enter a different RMI port."/>
 	
 	<str id="jboss.server.bind.port.text.label" txt="Enter the JBoss bind port for the installation:" />
-	<str id="jboss.server.bind.port.error.label" txt="The JBoss bind port you entered is invalid or is already in use. Please select a different JBoss bind port."/>
+	<str id="jboss.server.bind.port.error.label" txt="The JBoss bind port you entered is invalid or is already in use. Please enter a different JBoss bind port."/>
 	
 	<str id="jboss.server.redirect.port.text.label" txt="Enter the JBoss redirect port for the installation:" />
-	<str id="jboss.server.redirect.port.error.label" txt="The JBoss redirect port you entered is invalid or is already in use. Please select a different JBoss redirect port."/>
+	<str id="jboss.server.redirect.port.error.label" txt="The JBoss redirect port you entered is invalid or is already in use. Please enter a different JBoss redirect port."/>
 
 	<str id="jboss.server.ajp.port.text.label" txt="Enter the JBoss AJP port for the installation:" />
-	<str id="jboss.server.ajp.port.error.label" txt="The JBoss AJP port you entered is invalid or is already in use. Please select a different JBoss AJP port."/>
+	<str id="jboss.server.ajp.port.error.label" txt="The JBoss AJP port you entered is invalid or is already in use. Please enter a different JBoss AJP port."/>
 
 	<str id="jboss.web.service.port.text.label" txt="Enter the JBoss web service port for the installation:" />
-	<str id="jboss.web.service.port.error.label" txt="The JBoss web service port you entered is invalid or is already in use. Please select a different JBoss web service port."/>
+	<str id="jboss.web.service.port.error.label" txt="The JBoss web service port you entered is invalid or is already in use. Please enter a different JBoss web service port."/>
 	
 	<str id="jboss.service.rmiobject.port.text.label" txt="Enter the JBoss RMI object port for the installation:" />
-	<str id="jboss.service.rmiobject.port.error.label" txt="The JBoss RMI object port you entered is invalid or is already in use. Please select a different JBoss RMI object port."/>
+	<str id="jboss.service.rmiobject.port.error.label" txt="The JBoss RMI object port you entered is invalid or is already in use. Please enter a different JBoss RMI object port."/>
 	
-	<str id="" txt=""/>
-	<str id="" txt=""/>
-	<str id="" txt=""/>
-	<str id="" txt=""/>
-	<str id="" txt=""/>
-	<str id="" txt=""/>
+	<str id="jboss.hajndi.port.text.label" txt="Enter the JBoss HAJNDI port for the installation:" />
+	<str id="jboss.hajndi.port.error.label" txt="The JBoss HAJNDI port you entered is invalid or is already in use. Please enter a different JBoss HAJNDI port."/>
+
+	<str id="jboss.cluster.rmi.port.text.label" txt="Enter the JBoss cluster RMI port for the installation:" />
+	<str id="jboss.cluster.rmi.port.error.label" txt="The JBoss cluster RMI port you entered is invalid or is already in use. Please enter a different JBoss cluster RMI port."/>
+
+	<str id="jboss.jms.port.text.label" txt="Enter the JBoss JMS port for the installation:" />
+	<str id="jboss.jms.port.error.label" txt="The JBoss JMS port you entered is invalid or is already in use. Please enter a different JBoss JMS port."/>
+
+	<str id="jboss.ejbinvoker.port.text.label" txt="Enter the JBoss ejbinvoker port for the installation:" />
+	<str id="jboss.ejbinvoker.port.error.label" txt="The JBoss ejbinvoker port you entered is invalid or is already in use. Please enter a different JBoss ejbinvoker port."/>
+
+	<str id="jboss.hajrmi.port.text.label" txt="Enter the JBoss hajrmi port for the installation:" />
+	<str id="jboss.hajrmi.port.error.label" txt="The JBoss hajrmi port you entered is invalid or is already in use. Please enter a different JBoss hajrmi port."/>
 	
+	<!-- Panel 2 -->
 
     <!-- Heading messages START -->
     <str id="CheckedHelloPanel.headline" txt="Welcome to LSD 1.1"/>
