@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<!-- 
+    A sample installation file.
+    Use it as a base for your own installers :-)
+    
+    To compile it :
+    - go in the bin directory where you installed IzPack
+    - call "compile ../sample/install.xml -b ../sample"
+-->
+<project name="ncia-gui-installer" default="build:installer" basedir=".">
+
+	<property name="this.dir" value="${basedir}" />	
+	<property file="../project.properties" />
+	<property name="software.location" value="${this.dir}/../.." />
+	<property name="dist.location" value="${software.location}/target/dist" />
+
+<echo message="compile.jar.dir ::: ${compile.jar.dir}"/>
+<echo message="this.dir ::: ${this.dir}"/>
+
+	<taskdef name="IzPack" classpath="${compile.jar.dir}/lib/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask"/>
+
+	<target name="prepare:installer">
+		<replaceregexp file="${this.dir}/build.xml" byline="true"
+				match="^(.*property name=.*application_installer_zip.*)(value=.)(.*)(.zip.*)"
+				replace="\1\2${ncia-install.name}${ncia.version}\4"/>	
+		<replaceregexp file="${this.dir}/build.xml" byline="true"
+				match="^(.*property name=.*application_upgrader_zip.*)(value=.)(.*)(.zip.*)"
+				replace="\1\2${ncia-upgrade.name}${ncia.version}\4"/>	
+	</target>
+	
+	<target name="build:installer" depends="prepare:installer">
+		<IzPack output="${dist.location}/${ncia-install.name}${ncia.version}.jar"
+			installerType="standard"
+			basedir="."
+			IzPackDir="${compile.jar.dir}/">
+			<config><![CDATA[
+			<installation version="1.0">
+
+				<!-- 
+				The info section.
+				The meaning of the tags should be natural ...
+				-->
+				<info>
+					<appname>ncia</appname>
+					<appversion>@{ncia.version}</appversion>
+					<authors>
+					    <author name="NCI" email=""/>		    
+					</authors>
+					<url>http://www.cancer.org/</url>
+					<javaversion>1.5</javaversion>
+				</info>
+
+				<!-- 
+				The gui preferences indication.
+				Sets the installer window to 640x480. It will not be able to change the size.
+				-->
+				<guiprefs width="640" height="480" resizable="no">
+					<modifier key="useButtonIcons" value="no"/>
+					<modifier key="useLabelIcons" value="no"/>
+					<modifier key="allYGap" value="3"/>
+					<modifier key="layoutAnchor" value="NORTHWEST"/>    
+					<modifier key="useHeadingPanel" value="yes"/>
+					<modifier key="headingLineCount" value="1"/>
+					<modifier key="headingFontSize" value="1.5"/>
+					<modifier key="headingBackgroundColor" value="0x00ffffff"/>
+					<modifier key="headingPanelCounter" value="text"/>
+					<modifier key="headingPanelCounterPos" value="inHeading"/>
+				</guiprefs>
+
+				<!-- Need to define ant properties we want to use during install as variables -->
+				<variables>
+					<variable name="app.name" value="@{app.name}"/>
+				</variables>
+
+				<!-- 
+				The locale section.
+				Asks here to include the English and French langpacks.
+				-->
+				<locale>
+					<langpack iso3="eng">		
+					    <str id="AntAction.core" txt="Proceeding of ANT-activities"/>
+					    <str id="AntAction.install" txt="Revision of archives"/>
+					</langpack>		
+				</locale>
+
+				<conditions>
+					<condition type="variable" id="install">
+						<name>setup.type</name>
+						<value>install</value>
+					</condition>
+					<condition type="variable" id="update">
+						<name>setup.type</name>
+						<value>update</value>
+					</condition>
+					<condition type="java" id="installonwindows">
+						<java>
+							<class>com.izforge.izpack.util.OsVersion</class>
+							<field>IS_WINDOWS</field>
+						</java>
+						<returnvalue type="boolean">true</returnvalue>
+					</condition>
+					<condition type="java" id="installonlinux">
+						<java>
+							<class>com.izforge.izpack.util.OsVersion</class>
+							<field>IS_LINUX</field>
+						</java>
+						<returnvalue type="boolean">true</returnvalue>
+					</condition>		
+					<condition type="and" id="install.onwindows">
+						<condition type="ref" refid="install"/>
+						<condition type="ref" refid="installonwindows" />
+					</condition>
+					<condition type="and" id="update.onwindows">
+						<condition type="ref" refid="update"/>
+						<condition type="ref" refid="installonwindows" />
+					</condition>
+					<condition type="variable" id="ldap.setup">
+						<name>authentication.type</name>
+						<value>ldap</value>
+					</condition>
+				</conditions>
+
+				<!-- 
+				The resources section.
+				The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+				-->
+				<resources>
+					<res id="Installer.image"  src="@{this.dir}/logotype.png"/>
+					<res id="AntActionsSpec.xml" src="@{this.dir}/antActionSpec.xml" />
+					<res id="LicencePanel.licence" src="@{this.dir}/Licence.txt"/>
+					<res id="InfoPanel.info" src="@{this.dir}/Readme.txt"/>
+					<res id="userInputSpec.xml" src="@{this.dir}/userInputSpec.xml" />	
+					<res id="CustomActionsLang.xml_eng" src="@{this.dir}/custom_eng.xml"/>
+					<res id="UserPathPanel.dir.windows" src="@{this.dir}/windir.txt"/>
+					<res id="UserPathPanel.dir.linux" src="@{this.dir}/linuxdir.txt" />
+				</resources>
+
+				<!-- 
+				The panels section.
+				We indicate here which panels we want to use. The order will be respected.
+				<panel classname="PacksPanel" id="myuserinput" condition="pack2selected" />
+				-->
+				<panels>
+					<panel classname="HelloPanel"/>
+					<panel classname="InfoPanel"/>
+					<panel classname="LicencePanel"/>		
+					<panel classname="UserInputPanel"  id="UserInputPanel.0" />
+					<panel classname="UserPathPanel" id="UserPathPanelInstallation" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.2" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.4" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.5" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.7" condition="ldap.setup"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.8" condition="update"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.9" />
+					<panel classname="InstallationGroupPanel"/>
+					<panel classname="SummaryPanel"/>
+					<panel classname="ExtendedInstallPanel"/>
+					<panel classname="FinishPanel"/>
+				</panels>
+
+				<listeners>
+					<listener installer="SummaryLoggerInstallerListener">
+						<os family="windows"/>
+					</listener>
+
+					<listener installer="ProgressBarInstallerListener"/>		
+
+					<listener installer="AntActionInstallerListener" uninstaller="AntActionUninstallerListener" />
+				</listeners>
+
+
+
+
+				<!-- 
+				The packs section.
+				We specify here our packs.
+				-->
+				<packs>
+					<pack name="download_install" id="download_install" required="no" installGroups="ncia"  condition="install">
+					    <description>The base files</description>
+					    <file src="@{dist.location}/@{ncia-install.name}@{ncia.version}.zip" targetdir="$SYSTEM_user_home/.installer"/>
+					    <file src="@{this.dir}/build.xml" targetdir="$SYSTEM_user_home/.installer"/>
+					    <file src="@{this.dir}/property-template" ="yes" targetdir="$SYSTEM_user_home/.installer">
+						<excludes>**/.svn/**</excludes>
+					    </file>	
+					</pack>	
+
+					<pack name="download_update" id="download_update" required="no" installGroups="caarray"  condition="update">
+					    <description>The base files</description>
+					    <file src="@{dist.location}/@{ncia-upgrade.name}@{ncia.version}.zip" targetdir="$SYSTEM_user_home/.installer"/>
+					    <file src="@{this.dir}/property-template" targetdir="$SYSTEM_user_home/.installer"/>
+					    <file src="@{this.dir}/build.xml" defaultexcludes="yes" targetdir="$SYSTEM_user_home/.installer">
+						<excludes>**/.svn/**</excludes>
+					    </file>	
+					</pack>	
+
+					<pack name="parse-install" required="no" preselected="no" condition="install">
+					    <description>parse the input values</description>
+					    <parsable targetfile="$SYSTEM_user_home/.installer/caarray_installer/install.properties" type="plain" />		    
+					</pack>
+
+					<pack name="parse-update" required="no" preselected="no" condition="update">
+					    <description>parse the input values</description>
+					    <parsable targetfile="$SYSTEM_user_home/.installer/caarray_installer/upgrade.properties" type="plain" />		    
+					</pack>
+
+					<pack name="convert-install-path" required="no" preselected="no" condition="install">
+					    <description>installation base path</description> 		    
+					</pack>
+
+					<pack name="convert-update-path" required="no" preselected="no" condition="update">
+					    <description>Upgrade base path</description> 
+					</pack>
+
+					<pack name="install-application" required="no" preselected="no" >
+					    <description>install the application</description>	
+					</pack>
+
+				</packs>
+				<jar src="@{this.dir}/lib/ant.jar" stage="both" />
+				<jar src="@{this.dir}/lib/ant-launcher.jar" stage="both"/>
+				<jar src="@{this.dir}/lib/ant-nodeps.jar" stage="both"/>
+				<jar src="@{this.dir}/lib/mysql-connector-java-5.1.5.jar" stage="both"/>
+			</installation>
+		]]></config>
+		</IzPack>
+	</target>
+</project>
