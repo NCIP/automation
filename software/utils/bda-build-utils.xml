@@ -2760,4 +2760,66 @@ $HeadURL$
 				flags="g" byline="true"/>
 		</sequential>
 	</macrodef>
+	<macrodef name="gui-installer-prep">
+		<attribute name="bda-utils.dir" default="${bda-download.dir}" />
+		<attribute name="gui-installer.dir" default="${gui-installer.dir}" />
+		<attribute name="target.dir" default="${target.dir}"/>
+		<attribute name="download.dir" default="${download.dir}" />
+		<attribute name="dist.dir" default="${dist.dir}"/>
+		<attribute name="izpack.binary.name" default="izpack-4.0.1" />
+		<attribute name="izpack.binary.file" default="izpack-4.0.1.zip" />
+		<attribute name="izpack.binary.uri" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2008/os-independent" />
+		<attribute name="izpack-custom.svn.url" default="https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-installer/src-custom"/>
+		<attribute name="izpack-custom.svn.dir" default="${target.dir}/izpack-custom"/>
+		<attribute name="product.name" default="caArray-installer" />
+		<attribute name="product.version" default="2.1.0" />
+		<sequential>
+			<tstamp>
+				<format property="JAR_STAMP" pattern="MMddyyyyhhmmss" unit="millisecond" />
+			</tstamp>
+		
+			<!-- Cleanup target area -->
+			<delete dir="@{target.dir}/@{izpack.binary.name}" />
+			
+			<!-- Extract izpack -->
+			<get src="@{izpack.binary.uri}/@{izpack.binary.file}" dest="@{download.dir}/@{izpack.binary.file}" usetimestamp="true"/>
+			<unzip dest="@{target.dir}" src="@{download.dir}/@{izpack.binary.file}" />
+
+			<!-- Check out izpack custom code and copy into extracted izpack dist -->
+			<svn-co
+				svn.checkout.url="@{izpack-custom.svn.url}"
+				svn.checkout.dir="@{izpack-custom.svn.dir}"
+				/>
+
+			<copy todir="@{target.dir}/@{izpack.binary.name}/src/lib" overwrite="true">
+				<fileset dir="@{izpack-custom.svn.dir}" />
+			</copy>
+
+			<!-- customize izpack -->
+			<xmlconfig in="@{target.dir}/@{izpack.binary.name}/src/build.xml" verbose="false">
+				<insertbranch path="//target[@name='build.listeners']" srcxmlfile="@{izpack-custom.svn.dir}/resources/ProgressBarInstallerListener.xml" srcpath="//build-installer-listener" />
+			</xmlconfig>
+			<copy file="@{izpack-custom.svn.dir}/resources/eng.xml" todir="@{target.dir}/@{izpack.binary.name}/bin/langpacks/installer" overwrite="true" />
+
+			<!-- Copy over library files -->
+			<mkdir dir="@{target.dir}/@{izpack.binary.name}/lib"/>
+			<copy todir="@{target.dir}/@{izpack.binary.name}/lib">
+				<fileset dir="@{bda-utils.dir}">
+					<include name="ant-1.7.0.jar"/>
+					<include name="ant-launcher-1.7.0.jar"/>
+					<include name="ant-nodeps-1.7.0.jar"/>
+				</fileset>
+			</copy>
+
+			<!-- Compile the izpack with custom code -->
+			<ant inheritall="false" antfile="@{target.dir}/@{izpack.binary.name}/src/build.xml" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<chmod dir="@{target.dir}/@{izpack.binary.name}/bin" perm="ugo+rx" includes="compile" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
 </project>
