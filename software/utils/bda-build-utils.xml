@@ -1740,53 +1740,55 @@ $HeadURL$
 							<fail message="Some or all required database properties are not set and @{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file} is not found.   Ensure arguments passed to this macro are correct or set required database properties in your property file."/>
 						</then>
 						<else>
-					<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
-						<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
-						<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
-						<read path="//datasources/local-tx-datasource/password" property="read.database.password" />
-					</xmlconfig>
-					<dbconfig property="db.appuser.works" 
-						driver="${read.database.driver}"
-						url="${read.database.url}"
-						user="${read.database.user}"
-						password="${read.database.password}">
-						<validate />
-					</dbconfig>
-					<propertyregex property="read.database.name"
-						input="${read.database.url}"
-						regexp=".*[\/](.*)"
-						select="\1"
-						/>
-					<propertyregex property="read.database.host"
-						input="${read.database.server}"
-						regexp=".*\/\/(.*):.*"
-						select="\1"
-						/>
-					<propertyregex property="read.database.port"
-						input="${read.database.url}"
-						regexp=".*:(.*)\/.*"
-						select="\1"
-						/>
+							<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
+								<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
+								<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
+								<read path="//datasources/local-tx-datasource/password" property="read.database.password" />
+							</xmlconfig>
+							<dbconfig property="db.appuser.works" 
+										driver="${read.database.driver}"
+								url="${read.database.url}"
+								user="${read.database.user}"
+								password="${read.database.password}">
+								<validate />
+							</dbconfig>
+							<propertyregex property="read.database.name"
+								input="${read.database.url}"
+								regexp=".*[\/](.*)"
+								select="\1"
+								/>
+							<propertyregex property="read.database.host"
+								input="${read.database.server}"
+								regexp=".*\/\/(.*):.*"
+								select="\1"
+								/>
+							<propertyregex property="read.database.port"
+								input="${read.database.url}"
+								regexp=".*:(.*)\/.*"
+								select="\1"
+								/>
 				
-					<property name="@{database.url.property.name}" value="${read.database.url}" />
-					<property name="@{database.user.property.name}" value="${read.database.user}" />
-					<property name="@{database.password.property.name}" value="${read.database.password}" />
-					<property name="@{database.name.property.name}" value="${read.database.name}" />
-					<property name="@{database.name.property.name}" value="${read.database.name}" />
-					<property name="@{database.name.property.name}" value="${read.database.name}" />
-				</else>
-			</if>
+							<property name="@{database.url.property.name}" value="${read.database.url}" />
+							<property name="@{database.user.property.name}" value="${read.database.user}" />
+							<property name="@{database.password.property.name}" value="${read.database.password}" />
+							<property name="@{database.name.property.name}" value="${read.database.name}" />
+							<property name="@{database.name.property.name}" value="${read.database.name}" />
+							<property name="@{database.name.property.name}" value="${read.database.name}" />
 
-			<if>    
-				<isset property="db.appuser.works"/>
-				<then>  
-					<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-					<echo  message="Value after read of *-ds.xml: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
-				</then> 
-				<else>  
-					<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
-				</else> 
-			</if>   
+							<if>    
+								<isset property="db.appuser.works"/>
+								<then>  
+									<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
+									<echo  message="Value after read of *-ds.xml: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+								</then> 
+								<else>  
+									<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+								</else>
+							</if>
+						</else> 
+					</if>   
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 	
