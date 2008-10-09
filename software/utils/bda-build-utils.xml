@@ -2159,10 +2159,12 @@ $HeadURL$
 				</then>
 			</if>
 			<if>
-				<or>
-					<equals arg1="@{database.re-create}" arg2="true"/>
-					<equals arg1="@{database.drop-schema}" arg2="true"/>
-				</or>
+				<not>
+					<or>
+						<equals arg1="@{database.re-create}" arg2="true"/>
+						<equals arg1="@{database.drop-schema}" arg2="true"/>
+					</or>
+				</not>
 				<then>
 					<fail message="Either database.re-create or database.drop-schema must be set to call the database install target.  Please set one in the properties file and build again, or if you don't want databases targets to run you can set exclude.database in the properties file."/>
 				</then>
