@@ -1730,17 +1730,16 @@ $HeadURL$
 			</for>
 			<available file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" property="ds.exists"/>
 			<if>
-				<not>
-					<isset property="ds.exists" />
-				</not>
-				<then>
-					<fail message="Some or all required database properties are not set and ds file is not found.   Ensure arguments passed to this macro are correct or set required database properties in your property file."/>
-				</then>
-			</if>
-
-			<if>
 				<isset property="read.ds.flag"/>
 				<then>
+					<if>
+						<not>
+							<isset property="ds.exists" />
+						</not>
+						<then>
+							<fail message="Some or all required database properties are not set and @{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file} is not found.   Ensure arguments passed to this macro are correct or set required database properties in your property file."/>
+						</then>
+						<else>
 					<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
 						<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
 						<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
@@ -1775,7 +1774,7 @@ $HeadURL$
 					<property name="@{database.name.property.name}" value="${read.database.name}" />
 					<property name="@{database.name.property.name}" value="${read.database.name}" />
 					<property name="@{database.name.property.name}" value="${read.database.name}" />
-				</then>
+				</else>
 			</if>
 
 			<if>    
