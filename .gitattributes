@@ -661,14 +661,8 @@ software/bda-installer/src-installer/antActionSpec.xml -text
 software/bda-installer/src-installer/build.xml -text
 software/bda-installer/src-installer/custom_eng.xml -text
 software/bda-installer/src-installer/install.xml -text
-software/bda-installer/src-installer/lib/ant-launcher.jar -text
-software/bda-installer/src-installer/lib/ant-nodeps.jar -text
-software/bda-installer/src-installer/lib/ant.jar -text
-software/bda-installer/src-installer/lib/mysql-connector-java-5.1.5.jar -text
 software/bda-installer/src-installer/linuxdir.txt -text
 software/bda-installer/src-installer/logotype.png -text
-software/bda-installer/src-installer/product-dist/caarray_distribution_2_1_0.zip -text
-software/bda-installer/src-installer/product-dist/caarray_upgrade_2_1_0.zip -text
 software/bda-installer/src-installer/property-template/installer.template.properties -text
 software/bda-installer/src-installer/property-template/upgrade.template.properties -text
 software/bda-installer/src-installer/userInputLang.xml_eng -text
