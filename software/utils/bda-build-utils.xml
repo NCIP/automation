@@ -1715,7 +1715,7 @@ $HeadURL$
 		<sequential>
 			<property name="db.property.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name}"/>
 			<echo message="Checking required database properties: ${db.property.list}"/>
-			<for list="@{db.property.list}" param="prop.list.item" delimiter=",">
+			<for list="${db.property.list}" param="prop.list.item" delimiter=",">
 				<sequential>
 					<echo message="checking for existance of property @{prop.list.item}"/>
 					<if>
