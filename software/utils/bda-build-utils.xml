@@ -1701,50 +1701,93 @@ $HeadURL$
 			The jboss.home is the location where Jboss is installed
 			The jboss.server.name is the name of the deployed Jboss server 
 			The jboss.ds-xml.file is the name of the ds.xml file	
-		-->
-		<macrodef name="jboss-read-dbconfig" description="check if the application is installed">
-			<attribute name="jboss.home" default="${jboss.home}"/>
-			<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-			<attribute name="jboss.ds-xml.file"/>
-			<attribute name="database.url.property.name" default="database.url" />
-			<attribute name="database.name.property.name" default="database.name" />
-			<attribute name="database.user.property.name" default="database.user" />
-			<attribute name="database.password.property.name" default="database.password" />
-			<sequential>
-				<echo  message="Value of properites before reading existing *-ds.xml file: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name}"/>
-				<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
-					<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
-					<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
-					<read path="//datasources/local-tx-datasource/password" property="read.database.password" />
-				</xmlconfig>
-				<dbconfig property="db.appuser.works" 
-					driver="${read.database.driver}"
-					url="${read.database.url}"
-					user="${read.database.user}"
-					password="${read.database.password}">
-					<validate />
-				</dbconfig>
-				<propertyregex property="read.database.name"
-					input="${read.database.url}"
-					regexp=".*[\/\:](.*)"
-					select="\1"
-					/>
-				
-				<property name="@{database.url.property.name}" value="${read.database.url}" />
-				<property name="@{database.user.property.name}" value="${read.database.user}" />
-				<property name="@{database.password.property.name}" value="${read.database.password}" />
-				<property name="@{database.name.property.name}" value="${read.database.name}" />
+	-->
+	<macrodef name="jboss-read-dbconfig" description="check if the application is installed">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.ds-xml.file"/>
+		<attribute name="database.url.property.name" default="database.url" />
+		<attribute name="database.name.property.name" default="database.name" />
+		<attribute name="database.user.property.name" default="database.user" />
+		<attribute name="database.password.property.name" default="database.password" />
+		<attribute name="database.server.property.name" default="database.server" />
+		<attribute name="database.port.property.name" default="database.port" />
+		<sequential>
+			<property name="db.property.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name}"/>
+			<echo message="Checking required database properties: ${db.property.list}"/>
+			<for list="@{db.property.list}" param="prop.list.item" delimiter=",">
+				<sequential>
+					<echo message="checking for existance of property @{prop.list.item}"/>
+					<if>
+						<not>
+							<isset property="@{prop.list.item}"/>
+						</not>
+						<then>
+							<property name="read.ds.flag" value="true"/>	
+						</then>
+					</if>
+				</sequential>
+			</for>
+			<available file="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" property="ds.exists"/>
+			<if>
+				<not>
+					<isset property="ds.exists" />
+				</not>
+				<then>
+					<fail message="Some or all required database properties are not set and ds file is not found.   Ensure arguments passed to this macro are correct or set required database properties in your property file."/>
+				</then>
+			</if>
 
-				<if>    
-					<isset property="db.appuser.works"/>
-					<then>  
-						<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-						<echo  message="Value after read of *-ds.xml: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name}"/>
-					</then> 
-					<else>  
-						<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password}"/>
-					</else> 
-				</if>   
+			<if>
+				<isset property="read.ds.flag"/>
+				<then>
+					<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
+						<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
+						<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
+						<read path="//datasources/local-tx-datasource/password" property="read.database.password" />
+					</xmlconfig>
+					<dbconfig property="db.appuser.works" 
+						driver="${read.database.driver}"
+						url="${read.database.url}"
+						user="${read.database.user}"
+						password="${read.database.password}">
+						<validate />
+					</dbconfig>
+					<propertyregex property="read.database.name"
+						input="${read.database.url}"
+						regexp=".*[\/](.*)"
+						select="\1"
+						/>
+					<propertyregex property="read.database.host"
+						input="${read.database.server}"
+						regexp=".*\/\/(.*):.*"
+						select="\1"
+						/>
+					<propertyregex property="read.database.port"
+						input="${read.database.url}"
+						regexp=".*:(.*)\/.*"
+						select="\1"
+						/>
+				
+					<property name="@{database.url.property.name}" value="${read.database.url}" />
+					<property name="@{database.user.property.name}" value="${read.database.user}" />
+					<property name="@{database.password.property.name}" value="${read.database.password}" />
+					<property name="@{database.name.property.name}" value="${read.database.name}" />
+					<property name="@{database.name.property.name}" value="${read.database.name}" />
+					<property name="@{database.name.property.name}" value="${read.database.name}" />
+				</then>
+			</if>
+
+			<if>    
+				<isset property="db.appuser.works"/>
+				<then>  
+					<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
+					<echo  message="Value after read of *-ds.xml: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+				</then> 
+				<else>  
+					<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+				</else> 
+			</if>   
 		</sequential>
 	</macrodef>
 	
@@ -2113,6 +2156,15 @@ $HeadURL$
 				</and>
 				<then>
 					<fail message="You cannot set both database.re-create and database.drop-schema at the same time.  database.re-create is used in local installs.  database.drop-schema is used in remote installs.  Either one can be set for external (Cancer Center) installs."/>
+				</then>
+			</if>
+			<if>
+				<or>
+					<equals arg1="@{database.re-create}" arg2="true"/>
+					<equals arg1="@{database.drop-schema}" arg2="true"/>
+				</or>
+				<then>
+					<fail message="Either database.re-create or database.drop-schema must be set to call the database install target.  Please set one in the properties file and build again, or if you don't want databases targets to run you can set exclude.database in the properties file."/>
 				</then>
 			</if>
 			<if>
@@ -2820,6 +2872,11 @@ $HeadURL$
 					<chmod dir="@{target.dir}/@{izpack.binary.name}/bin" perm="ugo+rx" includes="compile" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="read">
+		<attribute name="bda-utils.dir" default="${bda-download.dir}" />
+		<sequential>
 		</sequential>
 	</macrodef>
 </project>
