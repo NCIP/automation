@@ -165,9 +165,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<if>
 		<isset property="ds.exists"/>
 		<then>
-			<jboss-read-dbconfig
-				jboss.ds-xml.file="${bda-blueprints-webapp.ds.file}"
-				/>
 		</then>
 		<else>
 			<echo message="Warning- could not find ${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file}"/>
@@ -240,6 +237,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<!-- Does directory management and copy some files with filtering to ensure token expansion -->
 	<target name="install:init" description="Does directory management to initialize install">
+		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
+		<echo  message="Checking if database properties exist: ${db.prop.list}"/>
+		<properties-exist properties.list="${db.prop.list}"/>
 		<mkdir dir="${working.dir}" />
 		<delete dir="${working.dir}"/>
 		<mkdir dir="${working.dir}" />
@@ -532,9 +532,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<target name="upgrade:database" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
 		depends="
+		upgrade:init,
 		install:init,
-		install:database:prep,
-		upgrade:init
+		install:database:prep
 		">
 		<database-upgrade/>
 		<database-tag/>
@@ -543,26 +543,26 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<target name="upgrade:database:tag" description="Tags current state of database with a tag to allow for rollback of database to previous versions." unless="exclude.database"
 		depends="
+		upgrade:init,
 		install:init,
-		install:database:prep,
-		upgrade:init
+		install:database:prep
 		">
 		<database-tag/>
 	</target>
 
 	<target name="upgrade:database:rollback" description="Rolls back database to previous tagged version using rollback scripts." unless="exclude.database"
 		depends="
+		upgrade:init,
 		install:init,
-		install:database:prep,
-		upgrade:init
+		install:database:prep
 		">
 		<database-rollback/>
 	</target>
 
 	<target name="upgrade:init">
-		<echo  message="Checking if database properties exist.  If they do not on an upgrade install then ${jboss.home}/server/${jboss.server.name}/deploy/${bda-blueprints-webapp.ds.file} may not exist."/>
-		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
-		<properties-exist properties.list="${db.prop.list}"/>
+		<jboss-read-dbconfig
+			jboss.ds-xml.file="${bda-blueprints-webapp.ds.file}"
+			/>
 	</target>
 
 	<!-- Targets below are provided to handle tomcat and grid installations, however many projects do not use either of these so they have been moved to the end of the script. -->
