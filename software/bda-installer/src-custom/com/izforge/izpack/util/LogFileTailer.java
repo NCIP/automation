@@ -10,10 +10,10 @@ import java.util.*;
  * strategy similar to a SAX parser: implement the LogFileTailerListener interface,
  * create a LogFileTailer to tail your log file, add yourself as a listener, and
  * start the LogFileTailer. It is your job to interpret the results, build meaningful
- * sets of data, etc. This tailer simply fires notifications containing new log file lines, 
+ * sets of data, etc. This tailer simply fires notifications containing new log file lines,
  * one at a time.
  */
-public class LogFileTailer extends Thread 
+public class LogFileTailer extends Thread
 {
   /**
    * How frequently to check for file changes; defaults to 5 seconds
@@ -52,11 +52,11 @@ public class LogFileTailer extends Thread
 
   /**
    * Creates a new log file tailer
-   * 
+   *
    * @param file         The file to tail
    * @param sampleInterval    How often to check for updates to the log file (default = 5000ms)
    * @param startAtBeginning   Should the tailer simply tail or should it process the entire
-   *               file and continue tailing (true) or simply start tailing from the 
+   *               file and continue tailing (true) or simply start tailing from the
    *               end of the file
    */
   public LogFileTailer( File file, long sampleInterval, boolean startAtBeginning )
@@ -92,52 +92,45 @@ public class LogFileTailer extends Thread
   public void run()
   {
     // The file pointer keeps track of where we are in the file
-    long filePointer = 0;
 
-    // Determine start point
-    if( this.startAtBeginning )
-    {
-      filePointer = 0;
-    }
-    else
-    {
-      filePointer = this.logfile.length();
-    }
+	ArrayList lastNlines = new ArrayList();
+	long curPos;
+	long fromPos;
+	long nowPos;
+	byte[] bytearray;
+	int chunkSize =2000;
 
     try
     {
       // Start tailing
       this.tailing = true;
-      RandomAccessFile file = new RandomAccessFile( logfile, "r" );
+      RandomAccessFile raf = new RandomAccessFile( logfile, "r" );
       while( this.tailing )
       {
         try
-        {  
-          // Compare the length of the file to the file pointer
-          long fileLength = this.logfile.length();
-          if( fileLength < filePointer ) 
-          {
-            // Log file must have been rotated or deleted; 
-            // reopen the file and reset the file pointer
-            file = new RandomAccessFile( logfile, "r" );
-            filePointer = 0;
-          }
+        {
+ 				curPos=raf.length();
+ 				fromPos = curPos - chunkSize;
 
-          if( fileLength > filePointer ) 
-          {
-            // There is data to read
-            file.seek( filePointer );
-            String line = file.readLine();
-            while( line != null )
-            {
-              this.fireNewLogFileLine( line );
-              line = file.readLine();
-            }
-            filePointer = file.getFilePointer();
-          }
+ 					if(fromPos <= 0)
+ 					{
+ 						raf.seek(0);
+ 						bytearray = new byte[(int)curPos];
+ 						raf.readFully(bytearray);
+ 						String lastNChars = new String (bytearray);
+						this.fireNewLogFileLine(lastNChars);
+ 					}
+ 					else
+ 					{
+ 						raf.seek(fromPos);
+ 						bytearray = new byte[chunkSize];
+ 						raf.readFully(bytearray);
+ 						String lastNChars = new String (bytearray);
+						this.fireNewLogFileLine(lastNChars);
+ 					}
 
-          // Sleep for the specified interval
-          sleep( this.sampleInterval );
+ 				nowPos=raf.length();
+				sleep( this.sampleInterval );
         }
         catch( Exception e )
         {
@@ -145,7 +138,7 @@ public class LogFileTailer extends Thread
       }
 
       // Close the file that we are tailing
-      file.close();
+      raf.close();
     }
     catch( Exception e )
     {
