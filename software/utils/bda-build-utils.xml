@@ -794,11 +794,13 @@ $HeadURL$
 		<sequential>
 			<switch value="${database.type}">
 				<case value="mysql">	
+					<!--
 					<dbconfig property="database.exists" 
 						driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
 						<validate />
 						<checkdatabaseexists exactly="${database.name}" />
 					</dbconfig>
+					-->
 					<echo message="Does @{database.name} exist = ${database.exists} "/>
 					<if>
 						<and>
