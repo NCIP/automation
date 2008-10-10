@@ -1218,7 +1218,7 @@ $HeadURL$
 					<switch value="${database.type}">
 						<case value="mysql">
 							<dbconfig property="db.connection.success" 
-								driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+								driver="@{database.driver}" url="@{database..url}"  user="@{database..user}" password="@{database..password}">
 								<validate />
 								<checkversion atleast="@{database.version}" />
 							</dbconfig>
