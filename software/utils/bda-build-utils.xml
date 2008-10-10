@@ -2889,8 +2889,6 @@ $HeadURL$
 		<attribute name="ldap.url.property" default="ldap.url" />
 		<attribute name="ldap.basedn.property" default="ldap.basedn" />
 		<attribute name="ldap.searchprefix.property" default="ldap.searchprefix" />
-		<attribute name="" default="" />
-
 		<sequential>
 			<if>
 				<not>
