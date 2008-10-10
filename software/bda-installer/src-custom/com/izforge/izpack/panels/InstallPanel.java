@@ -1,15 +1,15 @@
 /*
  * IzPack - Copyright 2001-2008 Julien Ponge, All Rights Reserved.
- * 
+ *
  * http://izpack.org/
  * http://izpack.codehaus.org/
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *     
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -91,7 +91,7 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
     private int noOfPacks = 0;
 
     protected JEditorPane textArea;
-    
+
     private LogFileTailer tailer;
     /**
      * The constructor.
@@ -118,24 +118,32 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
         //add(IzPanelLayout.createParagraphGap());
 
 
-    
+//		TailerFrame frame = new TailerFrame( filename );
+
         textArea = new JEditorPane();
         textArea.setContentType("text/plain");
         textArea.setEditable(false);
         JScrollPane scroller = new JScrollPane(textArea);
-        add(scroller, NEXT_LINE);
+        add(scroller, BorderLayout.CENTER);
 
-        
+//    this.getContentPane().setLayout( new BorderLayout() );
+//    this.getContentPane().add( new JScrollPane( text ), BorderLayout.CENTER );
+    //this.setVisible( true );
+
+
+
+
+
         overallOpLabel = LabelFactory.create(parent.langpack.getString("InstallPanel.progress"),
                 parent.icons.getImageIcon(iconName), LEADING);
         add(this.overallOpLabel, IzPanelLayout.getDefaultConstraint(FULL_LINE_CONTROL_CONSTRAINT));
-        
+
         overallProgressBar = new JProgressBar();
         overallProgressBar.setStringPainted(true);
         overallProgressBar.setString("");
         overallProgressBar.setValue(0);
         add(this.overallProgressBar, IzPanelLayout.getDefaultConstraint(FULL_LINE_CONTROL_CONSTRAINT));
-        getLayoutHelper().completeLayout();        
+        getLayoutHelper().completeLayout();
     }
 
     /**
@@ -291,29 +299,33 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
         setMaximumSize(dim);
         setPreferredSize(dim);
         parent.lockNextButton();
-                
-        parent.install(this);
-      
- //       String[] files = {"C:\\Documents and Settings\\narram\\.installer\\antlog_installer.txt"};
- //       JTailer frame = new JTailer( files );
-       
-        File logDir = new File( idata.getVariable("SYSTEM_user_home")+"/.installer/" );
-        if (!logDir.exists())
-        	 new File( idata.getVariable("SYSTEM_user_home")+"/.installer" ).mkdirs();
 
-        File logFile = new File( idata.getVariable("SYSTEM_user_home")+"/.installer/antlog_installer.txt" );
+        parent.install(this);
+
+
+        File logDir = new File( idata.getVariable("SYSTEM_user_home")+"/"+idata.getVariable("installer.dir")+"/" );
+        if (!logDir.exists())
+        	 new File( idata.getVariable("SYSTEM_user_home")+"/"+idata.getVariable("installer.dir")).mkdirs();
+
+		String fileName = new String(idata.getVariable("SYSTEM_user_home")+"/"+idata.getVariable("installer.dir")+"/antlog_installer.txt");
+        File logFile = new File(fileName);
         if (!logFile.exists())
         {
-			try {
+			try
+			{
 				logFile.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
+
         tailer = new LogFileTailer( logFile, 1000, false );
         tailer.addLogFileTailerListener( this );
         tailer.start();
+
+// 		Will tail the log in new frame
+//		JTailer frame = new JTailer(fileName);
 
     }
 
@@ -327,7 +339,7 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
 	      this.textArea.setText( this.textArea.getText() + "\n" + line );
 	    }
 	    int length = this.textArea.getText().length();
-	    this.textArea.select( length - 1, length - 1 );		
+	    this.textArea.select( length - 1, length - 1 );
 	}
 
 }
