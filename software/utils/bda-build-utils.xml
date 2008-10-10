@@ -1759,8 +1759,8 @@ $HeadURL$
 								regexp=".*[\/](.*)"
 								select="\1"
 								/>
-							<propertyregex property="read.database.host"
-								input="${read.database.server}"
+							<propertyregex property="read.database.server"
+								input="${read.database.url}"
 								regexp=".*\/\/(.*):.*"
 								select="\1"
 								/>
