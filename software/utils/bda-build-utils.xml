@@ -2930,6 +2930,9 @@ $HeadURL$
 						</else> 
 					</if>   
 				</then>
+				<else>
+					<property name="authentictaion.type" value="db"/>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
