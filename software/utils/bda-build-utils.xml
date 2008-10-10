@@ -2921,7 +2921,11 @@ $HeadURL$
 									<property name="@{ldap.url.property}" value="${read.ldap.url}" />
 									<property name="@{ldap.basedn.property}" value="${read.ldap.basedn}" />
 									<property name="@{ldap.searchprefix.property}" value="${read.ldap.searchprefix}" />
+									<property name="authentictaion.type" value="ldap"/>
 								</then>
+								<else>
+									<property name="authentictaion.type" value="db"/>
+								</else>
 							</if>
 						</else> 
 					</if>   
