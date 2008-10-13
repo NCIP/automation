@@ -1,1 +1,1 @@
-${user.home}\apps\ctods-app
+${APPLICATIONS_DEFAULT_ROOT}/apps/bda-blueprints-lsd

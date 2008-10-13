@@ -1,7 +1,7 @@
 <project name="Installer" default="install" basedir="." >
 
 	<!-- Generic properties -->
-	<property name="application_installer" value="ctods_installer" />
+	<property name="application_installer" value="ncia_installer" />
 	<property name="application_installer_zip" value="ncia_distribution4.0.zip" />
 	<property name="application_upgrader_zip" value="ncia_upgrade4.0.zip" />
 	
@@ -13,15 +13,15 @@
 	
 		<unzip src="${install.path}/${application_installer_zip}" dest="${install.path}/${application_installer}" />
 		
-		<copy file="${install.path}/property-template/installer.template.properties" tofile="${install.path}/${application_installer}/install.properties" />
+		<copy file="${install.path}/property-template/installer.template.properties" tofile="${install.path}/${application_installer}/install.properties" overwrite="true"/>
+		<copy file="${install.path}/property-template/upgrade.template.properties" tofile="${install.path}/${application_installer}/upgrade.properties" />
 
-<!-- try to eliminate all these replaces from the install-->
+<!-- try to eliminate all these replaces from the install
 
 		<replace dir="${install.path}/${application_installer}" token="basedir}" value="install.path}/${application_installer}">
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />
 		</replace>
-<!--
 		<replace file="${install.path}/${application_installer}/build.xml" token="project.properties" value="${install.path}/${application_installer}/project.properties"/>
 		<replace file="${install.path}/${application_installer}/build.xml" token="${properties.file}" value="${install.path}/${application_installer}/${properties.file}"/>
 		<replace dir="${install.path}/${application_installer}/bda-utils" token="${properties.file}" value="${install.path}/${application_installer}/${properties.file}">
@@ -34,7 +34,7 @@
 	</target>
 
 
-	<target name="update" >
+	<target name="upgrade" >
 		
 		<echo message="${install.path}"/> 
 
@@ -43,11 +43,11 @@
 
 		<copy file="${install.path}/property-template/upgrade.template.properties" tofile="${install.path}/${application_installer}/upgrade.properties" />
 
+		<!--
 		<replace dir="${install.path}/${application_installer}" token="basedir}" value="install.path}/${application_installer}">
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />
 		</replace>
-<!--
 		<replace file="${install.path}/${application_installer}/build.xml" token="project.properties" value="${install.path}/${application_installer}/project.properties"/>
 		<replace file="${install.path}/${application_installer}/build.xml" token="${properties.file}" value="${install.path}/${application_installer}/${properties.file}"/>
 		<replace dir="${install.path}/${application_installer}/bda-utils" token="${properties.file}" value="${install.path}/${application_installer}/${properties.file}">
@@ -73,18 +73,28 @@
 	
 	<target name="convert-upgrade-path" >
 	<echo message="${upgrade.base.path}"/>
+		<dirname file="${upgrade.base.path}" property="upgrade.application.base.path"/>
 		<pathconvert targetos="unix" property="application.base.path.convert">
-			 <path location="${upgrade.base.path}"/>
+			 <path location="${upgrade.application.base.path}"/>
 		</pathconvert>
 
 		<replaceregexp file="${install.path}/${application_installer}/upgrade.properties" byline="true"
 				match="^(application.base.path.*)=(.*)"
 				replace="\1=${application.base.path.convert}"/>
+		<replaceregexp file="${install.path}/${application_installer}/build.xml" byline="true"
+			match="(&lt;property name=&quot;properties.file.*)install.properties(.*)"
+			replace="\1upgrade.properties\2"
+				/>
+		<replaceregexp file="${install.path}/${application_installer}/build.xml" byline="true"
+			match="(.project.*default=.)\w+(.\s+.*)"
+			replace="\1upgrade\2"
+			/>
 	</target>		
 	
 
 	<target name="install-application" >
-	<echo message="${install.path}"/>
+		<echo message="${install.path}"/>
+		<!--
 		<ant inheritAll="false" inheritRefs="false"
 			antfile="build.xml"			
 			dir="${install.path}/${application_installer}"
@@ -92,6 +102,22 @@
 			<property name="install.path" value="${install.path}"/>
 			<property name="force.reinstall" value="true"/>
 		</ant>
+		-->
+		<echo message="Properties file is ${properties.file}"/>
+		<exec osfamily="unix"
+			executable="ant" 
+			dir="${install.path}/${application_installer}"
+			failonerror="true">
+			<arg value="-Dforce.reinstall=true"/>
+		</exec>
+		<exec osfamily="windows"
+			executable="ant.bat" 
+			dir="${install.path}/${application_installer}"
+			failonerror="true">
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg value="-Dforce.reinstall=true"/>
+		</exec>
+
 	</target>
 	
 </project>
