@@ -1606,7 +1606,8 @@ $HeadURL$
 			</if>
 			<echo message="Checking out @{svn.checkout.url} to @{svn.checkout.dir}."/>
 			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}">
-				<checkout url="@{svn.checkout.url}" revision="HEAD" destPath="@{svn.checkout.dir}" />
+				<!-- <checkout url="@{svn.checkout.url}" revision="HEAD" destPath="@{svn.checkout.dir}" />-->
+				<checkout url="@{svn.checkout.url}"  destPath="@{svn.checkout.dir}" />
 			</svn> 
 		</sequential>
 	</macrodef>
