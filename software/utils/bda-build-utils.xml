@@ -2843,10 +2843,26 @@ $HeadURL$
 			<unzip dest="@{target.dir}" src="@{download.dir}/@{izpack.binary.file}" />
 
 			<!-- Check out izpack custom code and copy into extracted izpack dist -->
-			<svn-co
-				svn.checkout.url="@{izpack-custom.svn.url}"
-				svn.checkout.dir="@{izpack-custom.svn.dir}"
-				/>
+			<osfamily property="os.family"/>
+			<switch value="${os.family}">
+				<case value="windows">
+					<echo message="Retreiving izpack custom code from svn task."/>
+					<svn-co
+						svn.checkout.url="@{izpack-custom.svn.url}"
+						svn.checkout.dir="@{izpack-custom.svn.dir}"
+						/>
+				</case>
+				<case value="unix">
+					<echo message="Retreiving izpack custom code from svn command line."/>
+					<mkdir dir="@{izpack-custom.svn.dir}"/>
+					<exec osfamily="unix" executable="svn" spawn="true">
+						<arg line="co @{izpack-custom.svn.url} @{izpack-custom.svn.dir}" />
+					</exec>
+				</case>
+				<default>
+					<fail message="Unexpected OS type ${os.family}"/>
+				</default>
+			</switch>
 
 			<copy todir="@{target.dir}/@{izpack.binary.name}/src/lib" overwrite="true">
 				<fileset dir="@{izpack-custom.svn.dir}" />
