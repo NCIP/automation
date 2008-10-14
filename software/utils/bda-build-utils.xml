@@ -2825,7 +2825,7 @@ $HeadURL$
 		<attribute name="izpack.binary.name" default="izpack-4.0.1" />
 		<attribute name="izpack.binary.file" default="izpack-4.0.1.zip" />
 		<attribute name="izpack.binary.uri" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2008/os-independent" />
-		<attribute name="izpack-custom.svn.url" default="https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-installer/src-custom"/>
+		<attribute name="izpack-custom.svn.url" default="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-installer/src-custom"/>
 		<attribute name="izpack-custom.svn.dir" default="${target.dir}/izpack-custom"/>
 		<attribute name="product.name" default="caArray-installer" />
 		<attribute name="product.version" default="2.1.0" />
