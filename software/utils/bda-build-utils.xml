@@ -1219,13 +1219,27 @@ $HeadURL$
 					<echo message="Validating database connection..." />
 					<switch value="${database.type}">
 						<case value="mysql">
-							<dbconfig property="db.connection.success" 
-								driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
-								<validate />
-								<!--<checkversion atleast="@{database.version}" />-->
-							</dbconfig>
-							<antunit:assertPropertyEquals message="Database connection failed for @{database.system.url}. Verify that your database.system.user and database.system.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
-							<echo message="Database Connection: PASSED" />
+							<if>
+								<isset property="database.re-create"/> 
+								<then>
+									<dbconfig property="db.connection.success" 
+										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+										<validate />
+										<!--<checkversion atleast="@{database.version}" />-->
+									</dbconfig>
+									<antunit:assertPropertyEquals message="Database connection failed for @{database.system.url}. Verify that your database.system.user and database.system.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+									<echo message="Database Connection: PASSED" />
+								</then>
+								<else>
+									<dbconfig property="db.connection.success" 
+										driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
+										<validate />
+										<!--<checkversion atleast="@{database.version}" />-->
+									</dbconfig>
+									<antunit:assertPropertyEquals message="Database connection failed for @{database.url}. Verify that your database.user and database.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+									<echo message="Database Connection: PASSED" />
+								</else>
+							</if>
 						</case>
 						<case value="oracle">
 							<dbconfig property="oracle.connection.success" 
