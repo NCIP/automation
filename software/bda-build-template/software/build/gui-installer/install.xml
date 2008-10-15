@@ -26,14 +26,23 @@
 	<target name="prepare:installer">
 		<replaceregexp file="${this.dir}/build.xml" byline="true"
 				match="^(.*property name=.*application_installer_zip.*)(value=.)(.*)(.zip.*)"
-				replace="\1\2${bda-blueprints-install.name}${bda-blueprints.version}\4"/>	
+				replace="\1\2${bda-blueprints-webapp.install.name}${bda-blueprints-webapp.version}\4"/>	
 		<replaceregexp file="${this.dir}/build.xml" byline="true"
 				match="^(.*property name=.*application_upgrader_zip.*)(value=.)(.*)(.zip.*)"
-				replace="\1\2${bda-blueprints-upgrade.name}${bda-blueprints.version}\4"/>	
+				replace="\1\2${bda-blueprints-webapp.upgrade.name}${bda-blueprints-webapp.version}\4"/>	
 	</target>
 	
 	<target name="build:installer" depends="prepare:installer">
-		<IzPack output="${dist.location}/${bda-blueprints-install.name}${bda-blueprints.version}.jar"
+		<delete>
+			<fileset dir="${dist.location}">
+				<include name="${bda-blueprints-webapp.install.name}${bda-blueprints-webapp.version}*.jar"/>
+			</fileset>
+		</delete>
+		<tstamp>
+			<format property="build.time" pattern="yyyyMMddHHmm" />
+		</tstamp>
+
+		<IzPack output="${dist.location}/${bda-blueprints-webapp.install.name}${bda-blueprints-webapp.version}-${build.time}.jar"
 			installerType="standard"
 			basedir="."
 			IzPackDir="${compile.jar.dir}/">
@@ -46,7 +55,7 @@
 				-->
 				<info>
 					<appname>bda-blueprints</appname>
-					<appversion>@{bda-blueprints.version}</appversion>
+					<appversion>@{bda-blueprints-webapp.version}</appversion>
 					<authors>
 					    <author name="NCI" email=""/>		    
 					</authors>
@@ -226,7 +235,7 @@
 				<packs>
 					<pack name="download_install" id="download_install" installGroups="bda-blueprints" required="no">
 					    <description>The base files</description>
-					    <file src="@{dist.location}/@{bda-blueprints-install.name}@{bda-blueprints.version}.zip" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
+					    <file src="@{dist.location}/@{bda-blueprints-webapp.install.name}@{bda-blueprints-webapp.version}.zip" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
 					    <file src="@{this.dir}/build.xml" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
 					    <file src="@{this.dir}/property-template" ="yes" targetdir="$SYSTEM_user_home/@{installer.dir}">
 						<excludes>**/.svn/**</excludes>

@@ -2,8 +2,8 @@
 
 	<!-- Generic properties -->
 	<property name="application_installer" value="ncia_installer" />
-	<property name="application_installer_zip" value="ncia_distribution4.0.zip" />
-	<property name="application_upgrader_zip" value="ncia_upgrade4.0.zip" />
+	<property name="application_installer_zip" value="bda-blueprints-webapp_install0.1.0.zip" />
+	<property name="application_upgrader_zip" value="bda-blueprints-webapp_ugprade0.1.0.zip" />
 	
 	
 	<!-- TARGETS -->

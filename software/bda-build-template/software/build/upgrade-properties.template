@@ -9,10 +9,7 @@
 ##############################
 ###  APPLICATION SETTINGS  ###
 ##############################
-# install/build.xml set application.base.path to correct path based on os type
-application.base.path.linux=
-application.base.path.windows=
-authentication.type=
+application.base.path=
 application.url=
 ###########################
 ###  DATABASE SETTINGS  ###
@@ -20,8 +17,6 @@ application.url=
 # Required for local installs
 # Require for all installs
 database.type=
-database.server=
-database.port=
 ########################
 ###  JBOSS SETTINGS  ###
 ########################
@@ -29,24 +24,17 @@ database.port=
 jboss.relative.path=
 jboss.server.hostname=
 jboss.server.name=
-jboss.web.password=
 jboss.server.port=
 jboss.server.jndi.port=
 ##############
 ### TOMCAT ###
 ##############
-# tomcat.home will be generated as ${application.base.path}/${tomcat.relateive.path}
-tomcat.relative.path=
+tomcat.home=
 tomcat.hostname=
 tomcat.port.http=
 tomcat.port.ajp=
 tomcat.port.ssl=
 tomcat.port.shutdown=
-##############
-###  LDAP  ###
-##############
-ldap.url=
-ldap.basedn=
 ##################################
 #  Grid Service registration URL #
 ##################################
