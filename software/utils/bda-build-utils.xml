@@ -794,13 +794,10 @@ $HeadURL$
 		<sequential>
 			<switch value="${database.type}">
 				<case value="mysql">	
-					<!--
 					<dbconfig property="database.exists" 
 						driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
 						<validate />
-						<checkdatabaseexists exactly="${database.name}" />
 					</dbconfig>
-					-->
 					<echo message="Does @{database.name} exist = ${database.exists} "/>
 					<if>
 						<and>
@@ -1223,7 +1220,7 @@ $HeadURL$
 								<isset property="database.re-create"/> 
 								<then>
 									<dbconfig property="db.connection.success" 
-										driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
+										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
 										<validate />
 										<!--<checkversion atleast="@{database.version}" />-->
 									</dbconfig>
@@ -2877,6 +2874,7 @@ $HeadURL$
 					<fail message="Unexpected OS type ${os.family}"/>
 				</default>
 			</switch>
+			<sleep seconds="10"/>
 
 			<copy todir="@{target.dir}/@{izpack.binary.name}/src/lib" overwrite="true">
 				<fileset dir="@{izpack-custom.svn.dir}" />
