@@ -896,6 +896,12 @@ $HeadURL$
 			-->
 			<echo message="******* INSTALLATION COMPLETED SUCESSFULLY *******"/>
 			<echo message="${line.separator}To view your application goto ${application.url}."/>
+			<tstamp>
+				<format property="run.date" pattern="yyMMddHHmm"/>
+			</tstamp>
+			<property name="backup.properties.file" value="${properties.file}-${run.date}"/>
+			<copy tofile="${jboss.home}/${backup.properties.file}" file="${properties.file}"/>
+
 		</sequential>
 	</macrodef>
 
