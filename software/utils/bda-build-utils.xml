@@ -901,7 +901,7 @@ $HeadURL$
 			</tstamp>
 			<basename file="${properties.file}" property="properties.file.name"/>
 			<property name="backup.properties.file" value="${properties.file.name}-${run.date}"/>
-			<copy tofile="${jboss.home}/${backup.properties.file}" file="${properties.file.name}"/>
+			<copy tofile="${jboss.home}/${backup.properties.file}" file="${properties.file}"/>
 
 		</sequential>
 	</macrodef>
