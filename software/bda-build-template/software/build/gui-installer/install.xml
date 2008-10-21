@@ -8,14 +8,14 @@
     - go in the bin directory where you installed IzPack
     - call "compile ../sample/install.xml -b ../sample"
 -->
-<project name="bda-blueprints-gui-installer" default="build:installer" basedir=".">
+<project name="cagwas-gui-installer" default="build:installer" basedir=".">
 
 	<property name="this.dir" value="${basedir}" />	
 	<property file="../project.properties" />
 	<property name="software.location" value="${this.dir}/../.." />
 	<property name="dist.location" value="${software.location}/target/dist" />
 	<property name="bda-utils.dir" value="${software.location}/target/bda-utils" />
-	<property name="project.name" value="bda-blueprints"/>
+	<property name="project.name" value="cagwas"/>
 	<property name="installer.dir" value=".installer-${project.name}"/>
 
 <echo message="compile.jar.dir ::: ${compile.jar.dir}"/>
@@ -26,23 +26,23 @@
 	<target name="prepare:installer">
 		<replaceregexp file="${this.dir}/build.xml" byline="true"
 				match="^(.*property name=.*application_installer_zip.*)(value=.)(.*)(.zip.*)"
-				replace="\1\2${bda-blueprints-webapp.install.name}${bda-blueprints-webapp.version}\4"/>	
+				replace="\1\2${cagwas.install.name}${cagwas.version}\4"/>	
 		<replaceregexp file="${this.dir}/build.xml" byline="true"
 				match="^(.*property name=.*application_upgrader_zip.*)(value=.)(.*)(.zip.*)"
-				replace="\1\2${bda-blueprints-webapp.upgrade.name}${bda-blueprints-webapp.version}\4"/>	
+				replace="\1\2${cagwas.upgrade.name}${cagwas.version}\4"/>	
 	</target>
 	
 	<target name="build:installer" depends="prepare:installer">
 		<delete>
 			<fileset dir="${dist.location}">
-				<include name="${bda-blueprints-webapp.install.name}${bda-blueprints-webapp.version}*.jar"/>
+				<include name="${cagwas.install.name}${cagwas.version}*.jar"/>
 			</fileset>
 		</delete>
-		<tstamp>
+	        <tstamp>
 			<format property="build.time" pattern="yyyyMMddHHmm" />
 		</tstamp>
 
-		<IzPack output="${dist.location}/${bda-blueprints-webapp.install.name}${bda-blueprints-webapp.version}-${build.time}.jar"
+		<IzPack output="${dist.location}/${cagwas.install.name}${cagwas.version}-${build.time}.jar"
 			installerType="standard"
 			basedir="."
 			IzPackDir="${compile.jar.dir}/">
@@ -54,8 +54,8 @@
 				The meaning of the tags should be natural ...
 				-->
 				<info>
-					<appname>bda-blueprints</appname>
-					<appversion>@{bda-blueprints-webapp.version}</appversion>
+					<appname>cagwas</appname>
+					<appversion>@{cagwas.version}</appversion>
 					<authors>
 					    <author name="NCI" email=""/>		    
 					</authors>
@@ -84,7 +84,6 @@
 				<variables>
 					<variable name="app.name" value="@{app.name}"/>
 					<variable name="installer.dir" value="@{installer.dir}"/>
-					<variable name="bda-blueprints-core-grid.tomcat.binaries.relative.dir" value="@{bda-blueprints-core-grid.tomcat.binaries.relative.dir}"/>
 					<variable name="tomcat.binaries.relative.dir" value="@{tomcat.binaries.relative.dir}"/>
 					<variable name="jboss.binaries.relative.dir" value="@{jboss.binaries.relative.dir}"/>
 				</variables>
@@ -182,7 +181,7 @@
 					<panel classname="UserInputPanel"  id="UserInputPanel.0" />
 					<!-- Typical or Custom -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="install"/>
-					<panel classname="UserPathPanel" id="UserPathPanelInstallation"/>
+					<panel classname="UserPathPanel" id="UserPathPanelInstallation" condition="install"/>
 					<!-- Typical Install passwords and set -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.2" condition="install.typical"/>
 					<!-- Jboss Configuration -->
@@ -200,15 +199,13 @@
 					<!-- Global Configuraiton Options -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.9" condition="install.custom|upgrade"/>
 					<!-- Grid Global Configuration -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.10" condition="install.custom|upgrade"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.10" condition="never"/>
 					<!-- Grid Research Center -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.11" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.11" condition="never" />
 					<!-- Grid Tech Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.12" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.12" condition="never" />
 					<!-- Grid Science Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.13" />
-					<!-- MIRC Properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="install.custom" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="never" />
 					<panel classname="InstallationGroupPanel"/>
 					<panel classname="SummaryPanel"/>
 					<panel classname="ExtendedInstallPanel"/>
@@ -233,9 +230,9 @@
 				We specify here our packs.
 				-->
 				<packs>
-					<pack name="download_install" id="download_install" installGroups="bda-blueprints" required="no">
+					<pack name="download_install" id="download_install" installGroups="cagwas" required="no">
 					    <description>The base files</description>
-					    <file src="@{dist.location}/@{bda-blueprints-webapp.install.name}@{bda-blueprints-webapp.version}.zip" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
+					    <file src="@{dist.location}/@{cagwas.install.name}@{cagwas.version}.zip" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
 					    <file src="@{this.dir}/build.xml" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
 					    <file src="@{this.dir}/property-template" ="yes" targetdir="$SYSTEM_user_home/@{installer.dir}">
 						<excludes>**/.svn/**</excludes>
@@ -244,12 +241,12 @@
 
 					<pack name="parse-install" required="no" preselected="no" condition="install">
 					    <description>parse the input values</description>
-					    <parsable targetfile="$SYSTEM_user_home/@{installer.dir}/bda-blueprints_installer/install.properties" type="plain" />		    
+					    <parsable targetfile="$SYSTEM_user_home/@{installer.dir}/cagwas_installer/install.properties" type="plain" />		    
 					</pack>
 
 					<pack name="parse-upgrade" required="no" preselected="no" condition="upgrade">
 					    <description>parse the input values</description>
-					    <parsable targetfile="$SYSTEM_user_home/@{installer.dir}/bda-blueprints_installer/upgrade.properties" type="plain" />		    
+					    <parsable targetfile="$SYSTEM_user_home/@{installer.dir}/cagwas_installer/upgrade.properties" type="plain" />		    
 					</pack>
 
 					<pack name="convert-install-path" required="no" preselected="no" condition="install">
