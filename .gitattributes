@@ -643,6 +643,7 @@ software/bda-installer/resources/ProgressBarInstallerListener.xml -text
 software/bda-installer/resources/eng.xml -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/ExtendedInstallPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/InstallPanel.java -text
+software/bda-installer/src-custom/com/izforge/izpack/util/AntLogListener.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/DBConnectionValidator.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/HostNameValidator.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/InstallPannelTailProcessor.java -text
