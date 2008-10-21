@@ -206,6 +206,8 @@
 					<panel classname="UserInputPanel"  id="UserInputPanel.12" condition="never" />
 					<!-- Grid Science Contact -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="never" />
+					<!-- Application Specific Panel -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="never" />
 					<panel classname="InstallationGroupPanel"/>
 					<panel classname="SummaryPanel"/>
 					<panel classname="ExtendedInstallPanel"/>

@@ -422,4 +422,12 @@
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt=" Role: is a required field" />
 		</field>
 	</panel>
+	<panel order="14">
+		<field type="title" txt="Application Specific Properties" bold="true" size="1" />
+		<field type="divider" align="top"/>
+		<field type="text" variable="property.one">
+			<spec txt="Property One :" id="text.label" size="25" set=""/>
+			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Property One is a required field" />
+		</field>
+	</panel>
 </userInput>
