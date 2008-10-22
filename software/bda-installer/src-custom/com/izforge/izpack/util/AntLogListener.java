@@ -21,8 +21,12 @@ public class AntLogListener implements BuildListener {
 	}
 
 	public void targetFinished(BuildEvent arg0) {
-		System.out.println("Target " + arg0.getTarget().getName() +  " finished!");
-
+		String targetName=arg0.getTarget().getName();
+		System.out.println("Target " + targetName +  " finished!");
+	    if(targetName != null && targetName.equals("install-application"))
+		{
+			LogFileTailer.tailing=false;
+		}
 	}
 
 	public void targetStarted(BuildEvent arg0) {

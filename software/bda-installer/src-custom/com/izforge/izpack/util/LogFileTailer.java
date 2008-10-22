@@ -34,7 +34,7 @@ public class LogFileTailer extends Thread
   /**
    * Is the tailer currently tailing?
    */
-  private boolean tailing = false;
+  public static boolean tailing = false;
 
   /**
    * Set of listeners
@@ -96,16 +96,15 @@ public class LogFileTailer extends Thread
 	ArrayList lastNlines = new ArrayList();
 	long curPos;
 	long fromPos;
-	long nowPos;
 	byte[] bytearray;
-	int chunkSize =2000;
+	int chunkSize =1000;
 
     try
     {
       // Start tailing
-      this.tailing = true;
+      tailing = true;
       RandomAccessFile raf = new RandomAccessFile( logfile, "r" );
-      while( this.tailing )
+      while( tailing )
       {
         try
         {
@@ -129,7 +128,6 @@ public class LogFileTailer extends Thread
 						this.fireNewLogFileLine(lastNChars);
  					}
 
- 				nowPos=raf.length();
 				sleep( this.sampleInterval );
         }
         catch( Exception e )

@@ -118,19 +118,12 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
         //add(IzPanelLayout.createParagraphGap());
 
 
-//		TailerFrame frame = new TailerFrame( filename );
-
         textArea = new JEditorPane();
         textArea.setContentType("text/plain");
         textArea.setEditable(false);
         JScrollPane scroller = new JScrollPane(textArea);
+        scroller.getVerticalScrollBar().setEnabled(false);
         add(scroller, BorderLayout.CENTER);
-
-//    this.getContentPane().setLayout( new BorderLayout() );
-//    this.getContentPane().add( new JScrollPane( text ), BorderLayout.CENTER );
-    //this.setVisible( true );
-
-
 
 
 
