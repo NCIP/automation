@@ -122,7 +122,7 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
         textArea.setContentType("text/plain");
         textArea.setEditable(false);
         JScrollPane scroller = new JScrollPane(textArea);
-        scroller.getVerticalScrollBar().setEnabled(false);
+      //  scroller.getVerticalScrollBar().setEnabled(false);
         add(scroller, BorderLayout.CENTER);
 
 
