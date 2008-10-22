@@ -165,6 +165,7 @@ public class AntAction extends ActionBase
             antProj.addTarget(target);
             System.setOut(new PrintStream(new DemuxOutputStream(antProj, false)));
             System.setErr(new PrintStream(new DemuxOutputStream(antProj, true)));
+            antProj.executeTarget("calltarget");
         }
         finally
         {
