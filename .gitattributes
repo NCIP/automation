@@ -641,6 +641,7 @@ software/bda-installer/lib/jdom-1.1.jar -text
 software/bda-installer/lib/xmlconfig-0.1.9.jar -text
 software/bda-installer/resources/ProgressBarInstallerListener.xml -text
 software/bda-installer/resources/eng.xml -text
+software/bda-installer/src-custom/com/izforge/izpack/event/AntAction.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/ExtendedInstallPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/InstallPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/AntLogListener.java -text
