@@ -181,6 +181,8 @@ $HeadURL$
 		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
 		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="jboss.web.user" default="admin" />
+		<attribute name="jboss.web.password" default="admin" />
 		<sequential>
 			<available file="@{jboss.home}/server/@{jboss.server.name}/bin" property="jboss.bin.exists"/>
 			<if>
@@ -193,7 +195,7 @@ $HeadURL$
 					<echo message="Shutting down jboss with shutdown.jar"/>
 
 					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
-						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u admin -p admin -S" />
+						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
 						<classpath>
 							<pathelement location="@{jboss.home}/bin/shutdown.jar" />
 						</classpath>
