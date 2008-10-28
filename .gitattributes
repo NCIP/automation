@@ -653,6 +653,7 @@ software/bda-installer/src-custom/com/izforge/izpack/util/LogFileTailer.java -te
 software/bda-installer/src-custom/com/izforge/izpack/util/LogFileTailerListener.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/TailerFrame.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/URLCheckValidator.java -text
+software/bda-installer/src-custom/resources/Licence.html -text
 software/bda-installer/src-custom/resources/ProgressBarInstallerListener.xml -text
 software/bda-installer/src-custom/resources/eng.xml -text
 software/bda-installer/src-installer/Licence.txt -text
