@@ -414,6 +414,7 @@ software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/bluep
 software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/blueprints/business/service/StudyServiceUnitTest.java -text
 software/bda-build-template/software/build/Readme.txt -text
 software/bda-build-template/software/build/build.xml -text
+software/bda-build-template/software/build/gui-installer/Licence.html -text
 software/bda-build-template/software/build/gui-installer/Licence.txt -text
 software/bda-build-template/software/build/gui-installer/Readme.txt -text
 software/bda-build-template/software/build/gui-installer/antActionSpec.xml -text
