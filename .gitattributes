@@ -33,6 +33,7 @@ docs/jboss-ports/jboss-default-ports.txt -text
 docs/jboss-ports/readme.txt -text
 docs/knowledge-center/kc-code-management-process.doc -text
 docs/knowledge-center/knowledge-center.vsd -text
+docs/knowledge-center/svn-migration-howto.pdf -text
 docs/presentations/bda-cbiit-preso/AC_RunActiveContent.js -text
 docs/presentations/bda-cbiit-preso/SkinUnderAll.swf -text
 docs/presentations/bda-cbiit-preso/bda-flash-converted.flv -text
