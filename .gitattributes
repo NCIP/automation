@@ -683,6 +683,8 @@ software/heartbeat/src/main/webapp/index.jsp -text
 software/hudson-manager/bash_profile -text
 software/hudson-manager/build.xml -text
 software/hudson-manager/install.properties -text
+software/lsd-build-utilities/build.xml -text
+software/lsd-build-utilities/project.properties -text
 software/release-manager/build.xml -text
 software/release-manager/release.properties -text
 software/single-command-build/build.bat -text

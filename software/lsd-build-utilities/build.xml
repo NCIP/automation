@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+$Id: build.xml 2008-10-29 14:45:51Z narram $
+-->
+<project name="lsd-build-utility" default="tag-branch:projects" basedir="." 
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	>
+	<description>
+		This file is used to release the BDA project. The process include checking out automation on the given revision number and build the bda-build-uils.zip and branch and tag.
+	</description>
+
+	<property environment="env" />	
+	
+	<property file="project.properties" />
+	
+	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
+	<get src="${svn.automation.url}/${svn.ivy.project}/bda-ivy-build.xml" dest="${basedir}/bda-ivy-build.xml"/>
+
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="working.dir" value="${basedir}/working" />
+	<property name="bda-utils.dir" value="${working.dir}/bda-utils" />
+	
+	
+	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<mkdir dir="working"/>
+	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
+		target="retrieve-bda">
+		<property name="bda.version" value="${bda.version}" />
+		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
+		<property name="lib.dir" value="${lib.dir}"/>
+	</ant>
+	
+	<!-- Paths -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="simian-2.2.24.jar" />
+			<include name="ivy-core-2.0.0-beta2.jar" />
+			<include name="ivy-2.0.0-beta2.jar" />
+		</fileset>
+	</path>
+
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+	
+
+	<!-- Targets -->
+	<target name="tag-branch:projects" >
+		<echo message="Tag branch and Release for development" />		
+		<for list="${lsd.project.names}" param="lsd.project">
+			<sequential>
+				<propertycopy name="project.source.branch" from="@{lsd.project}.source.branch" />
+				<propertycopy name="project.tag.name" from="@{lsd.project}.tag.name" />
+				<propertycopy name="project.branch.name" from="@{lsd.project}.branch.name" />
+				<propertycopy name="project.revision.number" from="@{lsd.project}.revision.number" />
+				<echo message="${gforge.base.url}/@{lsd.project}/${project.source.branch}"/>
+				<condition property="project.exists">
+					<http url="${gforge.base.url}/@{lsd.project}/${project.source.branch}" />
+				</condition>
+				<if>
+					<isset property="project.exists"/>
+					<then>
+						<echo message="Project @{lsd.project} exists in GFORGE."/>
+						<svn username="${svn.username}" password="${svn.password}">			
+							<copy srcUrl="${gforge.base.url}/@{lsd.project}/${project.source.branch}" destUrl="${gforge.base.url}/@{lsd.project}/${project.tag.name}" message="create a tag ${project.tag.name}" revision="${project.revision.number}"/>
+							<copy srcUrl="${gforge.base.url}/@{lsd.project}/${project.source.branch}" destUrl="${gforge.base.url}/@{lsd.project}/${project.branch.name}" message="create a branch for release ${project.branch.name}" revision="${project.revision.number}"/>
+						</svn>
+					</then>
+					<else>
+						<echo message="Project @{lsd.project} does not exist in GFORGE."/>
+					</else>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
+
+	<target name="merge:projects" >
+		<echo message="Merge Utility for development" />
+		<if>
+			<isset property="${env.SVN_HOME}"/>
+			<then>
+				<echo message="Using SVN from ${env.SVN_HOME}"/>
+			</then>
+			<else>
+				<fail message="svn has to be in the path. Please set SVN_HOME variable to continue "/>
+			</else>
+		</if>
+		<for list="${lsd.project.names}" param="lsd.project">
+			<sequential>
+				<propertycopy name="project.source.branch" from="@{lsd.project}.source.branch" />
+				<propertycopy name="project.tag.name" from="@{lsd.project}.tag.name" />
+				<propertycopy name="project.branch.name" from="@{lsd.project}.branch.name" />
+				<propertycopy name="project.revision.number" from="@{lsd.project}.revision.number" />
+				<echo message="${gforge.base.url}/@{lsd.project}/${project.source.branch}"/>
+				<condition property="project.exists">
+					<http url="${gforge.base.url}/@{lsd.project}/${project.source.branch}" />
+				</condition>
+				<if>
+					<isset property="project.exists"/>
+					<then>
+					
+						<echo message="Project @{lsd.project} exists in GFORGE."/>
+						
+						<svn-co
+							svn.checkout.url="${gforge.base.url}/@{lsd.project}/${project.source.branch}"
+							svn.checkout.dir="${working.dir}/@{lsd.project}"
+						/>
+						
+						<osfamily property="os.family"/>
+						<switch value="${os.family}">
+							<case value="windows">
+								<exec osfamily="windows" executable="svn" spawn="true">
+									<arg line="merge ${gforge.base.url}/@{lsd.project}/${project.source.branch} ${gforge.base.url}/@{lsd.project}/${project.branch.name} ${working.dir}/@{lsd.project}" />
+								</exec>
+							</case>
+							<case value="unix">
+								<exec osfamily="unix" executable="svn" spawn="true">
+									<arg line="merge ${gforge.base.url}/@{lsd.project}/${project.source.branch} ${gforge.base.url}/@{lsd.project}/${project.branch.name} ${working.dir}/@{lsd.project}" />
+								</exec>
+							</case>
+						</switch>	
+					</then>
+					<else>
+						<echo message="Project @{lsd.project} does not exist in GFORGE."/>
+					</else>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
+
+
+</project>
