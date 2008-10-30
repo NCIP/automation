@@ -116,7 +116,7 @@ docs/reference-architecture/db-sql/README -text
 docs/reference-architecture/doc/README -text
 docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
-docs/requirements/install_use_case_specification.doc -text
+docs/requirements/installer_use_case_specification.doc -text
 docs/tasks/bda-tasks.doc -text
 docs/wiki/dashboard/dashboard.swf -text
 docs/wiki/dashboard/resources/hudson-dashboard.xml -text
