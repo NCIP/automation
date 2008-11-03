@@ -2,7 +2,7 @@
 <!--
 $Id: build.xml 2008-10-29 14:45:51Z narram $
 -->
-<project name="build-utility" default="tag-branch:projects" basedir="." 
+<project name="svn-utilities" default="tag-branch:projects" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
