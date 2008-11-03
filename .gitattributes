@@ -631,9 +631,6 @@ software/bda-build-template/temp/resources_blueprints_webapp/db-install/truncate
 software/bda-build-template/temp/simian_resources/CodeDupReader.rb -text
 software/bda-build-template/temp/simian_resources/simian.xsl -text
 software/bda-build-template/temp/test-env.properties -text
-software/bda-build-template/tools/cruisecontrol/build-bda-blueprints.xml -text
-software/bda-build-template/tools/cruisecontrol/config.properties -text
-software/bda-build-template/tools/cruisecontrol/config.xml -text
 software/bda-download/bda-ivy-build.xml -text
 software/bda-download/ivy-bda-settings.xml -text
 software/bda-download/ivy-bda.xml -text
