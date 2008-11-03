@@ -674,8 +674,6 @@ software/bda-installer/src-installer/property-template/upgrade.template.properti
 software/bda-installer/src-installer/userInputLang.xml_eng -text
 software/bda-installer/src-installer/userInputSpec.xml -text
 software/bda-installer/src-installer/windir.txt -text
-software/build-utilities/build.xml -text
-software/build-utilities/project.properties -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
@@ -691,6 +689,8 @@ software/release-manager/release.properties -text
 software/single-command-build/build.bat -text
 software/single-command-build/default.properties -text
 software/single-command-build/environment.xml -text
+software/svn-utilities/build.xml -text
+software/svn-utilities/project.properties -text
 software/utils/bda-build-utils.xml -text
 software/utils/build.properties -text
 software/utils/build.xml -text
