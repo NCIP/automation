@@ -2,11 +2,11 @@
 <!--
 $Id: build.xml 2008-10-29 14:45:51Z narram $
 -->
-<project name="lsd-build-utility" default="tag-branch:projects" basedir="." 
+<project name="build-utility" default="tag-branch:projects" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
 	<description>
-		This file is used to release the BDA project. The process include checking out automation on the given revision number and build the bda-build-uils.zip and branch and tag.
+		This file provides an automated way to manage Subversion projects: branching, tagging and merging.
 	</description>
 
 	<property environment="env" />	
@@ -53,27 +53,27 @@ $Id: build.xml 2008-10-29 14:45:51Z narram $
 	<!-- Targets -->
 	<target name="tag-branch:projects" >
 		<echo message="Tag branch and Release for development" />		
-		<for list="${lsd.project.names}" param="lsd.project">
+		<for list="${project.names}" param="project">
 			<sequential>
-				<propertycopy name="project.source.branch" from="@{lsd.project}.source.branch" />
-				<propertycopy name="project.tag.name" from="@{lsd.project}.tag.name" />
-				<propertycopy name="project.branch.name" from="@{lsd.project}.branch.name" />
-				<propertycopy name="project.revision.number" from="@{lsd.project}.revision.number" />
-				<echo message="${gforge.base.url}/@{lsd.project}/${project.source.branch}"/>
+				<propertycopy name="project.source.branch" from="@{project}.source.branch" />
+				<propertycopy name="project.tag.name" from="@{project}.tag.name" />
+				<propertycopy name="project.branch.name" from="@{project}.branch.name" />
+				<propertycopy name="project.revision.number" from="@{project}.revision.number" />
+				<echo message="${gforge.base.url}/@{project}/${project.source.branch}"/>
 				<condition property="project.exists">
-					<http url="${gforge.base.url}/@{lsd.project}/${project.source.branch}" />
+					<http url="${gforge.base.url}/@{project}/${project.source.branch}" />
 				</condition>
 				<if>
 					<isset property="project.exists"/>
 					<then>
-						<echo message="Project @{lsd.project} exists in GFORGE."/>
+						<echo message="Project @{project} exists in GFORGE."/>
 						<svn username="${svn.username}" password="${svn.password}">			
-							<copy srcUrl="${gforge.base.url}/@{lsd.project}/${project.source.branch}" destUrl="${gforge.base.url}/@{lsd.project}/${project.tag.name}" message="create a tag ${project.tag.name}" revision="${project.revision.number}"/>
-							<copy srcUrl="${gforge.base.url}/@{lsd.project}/${project.source.branch}" destUrl="${gforge.base.url}/@{lsd.project}/${project.branch.name}" message="create a branch for release ${project.branch.name}" revision="${project.revision.number}"/>
+							<copy srcUrl="${gforge.base.url}/@{project}/${project.source.branch}" destUrl="${gforge.base.url}/@{project}/${project.tag.name}" message="create a tag ${project.tag.name}" revision="${project.revision.number}"/>
+							<copy srcUrl="${gforge.base.url}/@{project}/${project.source.branch}" destUrl="${gforge.base.url}/@{project}/${project.branch.name}" message="create a branch for release ${project.branch.name}" revision="${project.revision.number}"/>
 						</svn>
 					</then>
 					<else>
-						<echo message="Project @{lsd.project} does not exist in GFORGE."/>
+						<echo message="Project @{project} does not exist in GFORGE."/>
 					</else>
 				</if>
 			</sequential>
@@ -92,43 +92,43 @@ $Id: build.xml 2008-10-29 14:45:51Z narram $
 				<fail message="svn has to be in the path. Please set SVN_HOME variable to continue "/>
 			</else>
 		</if>
-		<for list="${lsd.project.names}" param="lsd.project">
+		<for list="${project.names}" param="project">
 			<sequential>
-				<propertycopy name="project.source.branch" from="@{lsd.project}.source.branch" />
-				<propertycopy name="project.tag.name" from="@{lsd.project}.tag.name" />
-				<propertycopy name="project.branch.name" from="@{lsd.project}.branch.name" />
-				<propertycopy name="project.revision.number" from="@{lsd.project}.revision.number" />
-				<echo message="${gforge.base.url}/@{lsd.project}/${project.source.branch}"/>
+				<propertycopy name="project.source.branch" from="@{project}.source.branch" />
+				<propertycopy name="project.tag.name" from="@{project}.tag.name" />
+				<propertycopy name="project.branch.name" from="@{project}.branch.name" />
+				<propertycopy name="project.revision.number" from="@{project}.revision.number" />
+				<echo message="${gforge.base.url}/@{project}/${project.source.branch}"/>
 				<condition property="project.exists">
-					<http url="${gforge.base.url}/@{lsd.project}/${project.source.branch}" />
+					<http url="${gforge.base.url}/@{project}/${project.source.branch}" />
 				</condition>
 				<if>
 					<isset property="project.exists"/>
 					<then>
 					
-						<echo message="Project @{lsd.project} exists in GFORGE."/>
+						<echo message="Project @{project} exists in GFORGE."/>
 						
 						<svn-co
-							svn.checkout.url="${gforge.base.url}/@{lsd.project}/${project.source.branch}"
-							svn.checkout.dir="${working.dir}/@{lsd.project}"
+							svn.checkout.url="${gforge.base.url}/@{project}/${project.source.branch}"
+							svn.checkout.dir="${working.dir}/@{project}"
 						/>
 						
 						<osfamily property="os.family"/>
 						<switch value="${os.family}">
 							<case value="windows">
 								<exec osfamily="windows" executable="svn" spawn="true">
-									<arg line="merge ${gforge.base.url}/@{lsd.project}/${project.source.branch} ${gforge.base.url}/@{lsd.project}/${project.branch.name} ${working.dir}/@{lsd.project}" />
+									<arg line="merge ${gforge.base.url}/@{project}/${project.source.branch} ${gforge.base.url}/@{project}/${project.branch.name} ${working.dir}/@{project}" />
 								</exec>
 							</case>
 							<case value="unix">
 								<exec osfamily="unix" executable="svn" spawn="true">
-									<arg line="merge ${gforge.base.url}/@{lsd.project}/${project.source.branch} ${gforge.base.url}/@{lsd.project}/${project.branch.name} ${working.dir}/@{lsd.project}" />
+									<arg line="merge ${gforge.base.url}/@{project}/${project.source.branch} ${gforge.base.url}/@{project}/${project.branch.name} ${working.dir}/@{project}" />
 								</exec>
 							</case>
 						</switch>	
 					</then>
 					<else>
-						<echo message="Project @{lsd.project} does not exist in GFORGE."/>
+						<echo message="Project @{project} does not exist in GFORGE."/>
 					</else>
 				</if>
 			</sequential>
