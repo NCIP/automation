@@ -24,7 +24,7 @@
 		<name>Downloads</name>
 		<link>https://wiki.nci.nih.gov/x/HRSZ</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/ark2.png</image>
-		<teaser><![CDATA[<H1>Downloads</H1><UL><LI>Download the <a href="https://gforge.nci.nih.gov/frs/download.php/4688/bda-download.zip">latest BDA release</a> from GForge</LI><LI>Change <a href="https://wiki.nci.nih.gov/x/LQCG">project directory layout</a></LI><LI>Add <a href="https://wiki.nci.nih.gov/x/HRSZ">several lines</a> to your <b>build.xml</b></LI><LI>Start using the <a href="https://wiki.nci.nih.gov/x/rAWG">BDA macros</a></LI></UL>]]></teaser>
+		<teaser><![CDATA[<H1>Downloads</H1><UL><LI>Download the <a href="https://gforge.nci.nih.gov/frs/download.php/5233/bda-download.zip">latest BDA release</a> from GForge</LI><LI>Change <a href="https://wiki.nci.nih.gov/x/LQCG">project directory layout</a></LI><LI>Add <a href="https://wiki.nci.nih.gov/x/HRSZ">several lines</a> to your <b>build.xml</b></LI><LI>Start using the <a href="https://wiki.nci.nih.gov/x/rAWG">BDA macros</a></LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>Projects</name>
