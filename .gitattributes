@@ -5,11 +5,16 @@ docs/bda-gettingstarted.doc -text
 docs/bda-project-plan.mpp -text
 docs/bda-project-tasks.mpp -text
 docs/cbiit-goals.doc -text
+docs/images/ant-logo.gif -text
 docs/images/bda-agile-practices.jpg -text
 docs/images/bda-build-system.jpg -text
+docs/images/jads-compliant.jpg -text
+docs/images/java.png -text
 docs/images/kc-apps.jpg -text
 docs/images/kc-branch.jpg -text
 docs/images/kc-trunk.jpg -text
+docs/images/konsole.png -text
+docs/images/subversion-logo.jpg -text
 docs/jboss-ports/19080.properties -text
 docs/jboss-ports/19180.properties -text
 docs/jboss-ports/19280.properties -text
