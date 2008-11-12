@@ -306,6 +306,18 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			<arg line="-installGroup ejb3 installpath=${jboss.home}"/>
 		</java> 
 		-->
+		<!-- make sure default server is renamed if applicable -->
+		<if>            
+			<not>                   
+				<equals arg1="${jboss.server.name}" arg2="default"/>
+			</not>                  
+			<then>                  
+				<move todir="${jboss.home}/server/${jboss.server.name}">
+					<fileset dir="${jboss.home}/server/default"/>
+				</move>                   
+			</then>                                                       
+		</if>           
+
 		<if>    
 			<os family="unix"/>
 			<then>  
