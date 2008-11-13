@@ -2936,7 +2936,7 @@ $HeadURL$
 					<property name="read.login-config.flag" value="true"/>
 				</then>
 			</if>
-			<available file="@{jboss.home}/server/@{jboss.server.name}/config/login-config.xml" property="login-config.exists"/>
+			<available file="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" property="login-config.exists"/>
 			<if>
 				<isset property="read.login.flag"/>
 				<then>
@@ -2948,7 +2948,7 @@ $HeadURL$
 							<echo message="LDAP properties not set and can't open login-config.xml to see if JBoss is setup to use LDAP for authentication."/>
 						</then>
 						<else>
-							<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/config/login-config.xml" verbose="true">
+							<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" verbose="true">
 								<read path="//module-optio[@name]='ldapHost'" property="read.ldap.url" />
 								<read path="//module-optio[@name]='ldapSearchableBase'" property="read.ldap.basedn" />
 								<read path="//module-optio[@name]='ldapUserIdLabel'" property="read.ldap.searchprefix" />
