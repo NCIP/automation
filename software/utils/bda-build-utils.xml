@@ -850,6 +850,7 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<attribute name="application.url" default="${application.url}" />
+		<attribute name="propertyfile.backup.location" default="${jboss.home}" />		
 		<sequential>
 
 			<!-- Echo the properties for diagnostic purposes -->
@@ -903,7 +904,7 @@ $HeadURL$
 			</tstamp>
 			<basename file="${properties.file}" property="properties.file.name"/>
 			<property name="backup.properties.file" value="${properties.file.name}-${run.date}"/>
-			<copy tofile="${jboss.home}/${backup.properties.file}" file="${properties.file}"/>
+			<copy tofile="@{propertyfile.backup.location}/${backup.properties.file}" file="${properties.file}"/>
 
 		</sequential>
 	</macrodef>
