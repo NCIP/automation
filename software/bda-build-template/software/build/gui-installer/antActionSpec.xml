@@ -56,7 +56,7 @@
 	<pack name="install-application">
 		<antcall buildfile="$SYSTEM_user_home/${installer.dir}/build.xml"
 			order="afterpacks"
-			verbose="no"
+			verbose="yes"
 			logfile="$SYSTEM_user_home/${installer.dir}/antlog_installer.txt"
 			inheritall="false"
 			messageid="AntAction.install-application"		
