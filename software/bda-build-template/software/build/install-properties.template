@@ -63,13 +63,13 @@ jboss.web.service.port=
 ### TOMCAT ###
 ##############
 # tomcat.home will be generated as ${application.base.path}/${tomcat.relative.path}.
-tomcat.relative.path=This is the part of the path after applicatoin.base.path which will form the tomcat.home. Example: ${tomcat.binaries.relative.dir}
-tomcat.hostname=The server name where tomcat will be running. Example: localhost
+#tomcat.relative.path=This is the part of the path after applicatoin.base.path which will form the tomcat.home. Example: ${tomcat.binaries.relative.dir}
+#tomcat.hostname=The server name where tomcat will be running. Example: localhost
 # Ports used by JBoss. Must not conflict with other LSD applications. Check with BDA or Systems teamsf for acceptable values.
-tomcat.port.http=The port used to connect to the tomcat instance via http.
-tomcat.port.ajp=
-tomcat.port.ssl=
-tomcat.port.shutdown=
+#tomcat.port.http=The port used to connect to the tomcat instance via http.
+#tomcat.port.ajp=
+#tomcat.port.ssl=
+#tomcat.port.shutdown=
 ##############
 ###  LDAP  ###
 ##############
