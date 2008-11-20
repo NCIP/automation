@@ -641,6 +641,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<!-- Grid Targets for jboss and tomcat -->
 
+	<target name="install:bda-blueprints-grid" description="Wrapper target for Grid application targets"
+		depends="install:jboss:grid,
+		install:jboss:grid:configure
+	"/>
+
 	<target name="install:tomcat:grid" description="Deploy grid to tomcat" unless="exclude.tomcat">
 		<mkdir dir="${tomcat.home}/webapps/${.dir.target}"/>
 		<unzip dest="${tomcat.home}/common/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" />
