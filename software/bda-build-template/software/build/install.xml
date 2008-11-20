@@ -554,6 +554,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:validation:post-install
 		"/>
 
+	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database"
+		depends="
+		upgrade:init,
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:init,
+		install:database,
+		upgrade:jboss,
+		install:validation:post-install
+		"/>
+
 	<target name="upgrade:database" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
 		depends="
 		upgrade:init,
