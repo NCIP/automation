@@ -130,6 +130,7 @@ docs/release_management/cbiit-releases.xls -text
 docs/requirements/installer_use_case_specification.doc -text
 docs/roadmap/bda-roadmap.doc -text
 docs/roadmap/bda-roadmap.ppt -text
+docs/roadmap/bda-rollout.ppt -text
 docs/wiki/dashboard/dashboard.swf -text
 docs/wiki/dashboard/resources/hudson-dashboard.xml -text
 docs/wiki/drt-demo/AC_RunActiveContent.js -text
