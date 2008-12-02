@@ -29,6 +29,8 @@ $HeadURL$
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="macrodef.classpath"/>
 	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator" classpathref="macrodef.classpath"/>
 	<taskdef resource="liquibasetasks.properties" classpathref="macrodef.classpath"/>
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="macrodef.classpath"/>
+
 
  	<tstamp>
  		<format property="run.date" pattern="yyMMddHHmm"/>
@@ -2973,6 +2975,129 @@ $HeadURL$
 					<property name="authentication.type" value="db"/>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="dirDiffReport">
+		<attribute name="dir1"/>
+		<attribute name="dir2"/>
+		<attribute name="reportFile"/>
+		<sequential>
+			<groovy>
+				<arg line="@{dir1} @{dir2} @{reportFile}"/>
+				dir1 = new File(args[0]).getAbsoluteFile()
+				dir2 = new File(args[1]).getAbsoluteFile()
+				reportFile = new File(args[2]).getAbsoluteFile()
+				Integer dir1Length = dir1.toString().length()
+				Integer dir2Length = dir2.toString().length()
+
+				println "Command line args are "
+				println "\t dir1 -\t\t" + dir1
+				println "\t dir2 -\t\t" + dir2
+				println "\t reportFile -\t" + reportFile
+
+				reportText = ""
+
+				println "## Comparing files in " + dir1 + " to files in " + dir2
+				dir1.eachFileRecurse
+				{ file1 ->
+				if (file1.isFile())
+				{
+				// println file1.toString() + " is a file"
+				file1Name = file1.getName() 
+				file1Path = file1.getParent()
+				file2Str = dir2.toString() + "/" + file1.toString().substring(dir1Length)
+				file2 = new File(file2Str)
+				// println file2.toString() + " debug"
+				if (!file2.isFile() &amp;&amp; !file2.isDirectory()) 
+				{
+				println file2.toString() + " is a new file."
+				reportText += "## " + file2.toString() + " is a new file.\n"
+				}
+				if (file2.isFile())
+				{
+				// println file2.toString() + " is a file"
+				diffCmd = "diff --ignore-all-space --ignore-blank-lines " + file1 + " " + file2
+				String diffText = diffCmd.execute().text
+				if (diffText.length() > 0)
+				{
+				println file2.toString() + " differences found"
+				reportText += "## Differences found between " + file1 + " " + file2 + "\n"
+				diffText.eachLine {reportText += "\t" + it + "\n"}
+				}
+				}
+				}
+				}
+				println "## Looking for new files in " + dir2 + " ..."
+				dir2.eachFileRecurse
+				{ file2 ->
+				if (file2.isFile())
+				{
+				file1Str = dir1.toString() + "/" + file2.toString().substring(dir2Length)
+				file1 = new File(file1Str)
+				//println file2.toString() + " debug"
+				if (!file1.isFile() &amp;&amp; !file1.isDirectory()) 
+				{
+				println file2.toString() + " is missing in new installation."
+				reportText += "## " + file2.toString() + " is a new file.\n"
+				}
+				}
+				}
+
+				reportFile.write(reportText)
+			</groovy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="backupRoll">
+		<attribute name="backupDir"/>
+		<attribute name="backupCount"/>
+		<sequential>
+			<groovy>
+				<arg line="@{backupDir} @{backupCount}"/>
+
+				String backupDir = args[0]
+				Integer backupCount = new Integer(0).valueOf(args[1])
+
+				println "Command Line Arguments:"
+				println "\tbackupDir -\t" + backupDir
+				println "\tbackupCount -\t" + backupCount
+
+				ant = new AntBuilder()
+				i = 1..backupCount.minus(1)
+
+				File rmdir= new File(backupDir + "/backup" + backupCount)
+
+				if (rmdir.exists()) {ant.delete(dir:rmdir)}
+
+				i.reverse().each
+				{
+				File mv_src_dir= new File(backupDir + "/backup" + it)
+				File mv_dest_dir= new File(backupDir + "/backup" + (it+1))
+				if (mv_src_dir.exists())
+				{
+				println "move ${mv_src_dir} ${mv_dest_dir}"
+				ant.move(file: mv_src_dir, tofile: mv_dest_dir);
+				}
+				}
+			</groovy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="backupAndClean">
+		<attribute name="src.dir"/>
+		<attribute name="backup.base.dir"/>
+		<attribute name="backup.count" default="5" />
+		<sequential>
+			<backupRoll
+				backupDir="@{backup.base.dir}"
+				backupCount="@{backup.count}"
+				/>                      
+			<delete dir="@{backup.base.dir}/backup"/>
+			<mkdir dir="@{backup.base.dir}/backup"/>
+			<mkdir dir="@{src.dir}"/>
+			<move file="@{src.dir}" todir="@{backup.base.dir}/backup"/>
+			<delete dir="@{src.dir}" quiet="false" />
 		</sequential>
 	</macrodef>
 </project>
