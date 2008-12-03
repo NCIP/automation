@@ -41,24 +41,24 @@ jboss.server.hostname=The server name where jboss will be running. Example: loca
 jboss.server.name=The jboss server instance name, $JBOSS_HOME/server/${jboss.server.name}. Example: default
 jboss.web.password=The password to the access the jboss web console and jmx console. Example: blueprint123!. The user is admin. 
 # Ports used by JBoss. Must not conflict with other LSD applications. Check with BDA or Systems teams.
-jboss.cobraorb.port=
-jboss.ejbinvoker.port=
-jboss.hajndi.port=
-jboss.hajrmi.port=
-jboss.jms.port=
-jboss.jmx-rmi.port=
-jboss.messaging.port=
-jboss.pooledha.port=
-jboss.remoting.port=
-jboss.server.bind.port=
-jboss.server.jndi.port=
-jboss.server.port=The port used to connect to the jboss instance via http.
-jboss.server.rmi.port=
-jboss.service.rmiobject.port=
-jboss.service.rmiobject.port=
-jboss.snmp.port=
-jboss.snmp-trapd.port=
-jboss.web.service.port=
+#jboss.cobraorb.port=
+#jboss.ejbinvoker.port=
+#jboss.hajndi.port=
+#jboss.hajrmi.port=
+#jboss.jms.port=
+#jboss.jmx-rmi.port=
+#jboss.messaging.port=
+#jboss.pooledha.port=
+#jboss.remoting.port=
+#jboss.server.bind.port=
+#jboss.server.jndi.port=
+#jboss.server.port=The port used to connect to the jboss instance via http.
+#jboss.server.rmi.port=
+#jboss.service.rmiobject.port=
+#jboss.service.rmiobject.port=
+#jboss.snmp.port=
+#jboss.snmp-trapd.port=
+#jboss.web.service.port=
 ##############
 ### TOMCAT ###
 ##############

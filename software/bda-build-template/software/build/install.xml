@@ -384,41 +384,31 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<!-- Configure ports used by JBOSS (either bindings or editing jboss config.files) -->
+	<!-- You now have the option of using a comlete list of ports or a port configuration provided by systems, if jboss.port.configuration is set the configuration is used if not individual ports are used. -->
 	<target name="-install:jboss:configure:ports" description="Configure JBoss ports using bindings files" unless="exclude.jboss">
-		<jboss-bindings
-			jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"
-			/>
-		<!-- If you need to pass in custom binding file use the following
-		<jboss-bindings
-			jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"
-			jboss.server.binding.template.location="${jboss.binding.template.location}"
-			jboss.server.service.template.location="${jboss.service.template.location}"
-			/>
-		-->
+		<echo message="before ${jboss.home}/server/${jboss.server.name}/conf/${jboss-bindings.file}"/>
+		<if>
+			<isset property="jboss.port.configuration"/>
+			<then>
+				<jboss-bindings
+					jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/${jboss-bindings.file}"
+					jboss.server.binding.template.location="${basedir}/${jboss-bindings.file}"
+					jboss.server.ports.name="${jboss.port.configuration}"
+					/>
+			</then>
+			<else>
+				<jboss-bindings
+					jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"
+					/>
+			</else>
+		</if>
 	</target>
 
 	<target name="-install:jboss:configure:login-conf" description="Add custom login-config.xml content from snippet from software/resources/deploy/jboss-config/login-config.${auth.type}-block.xml" unless="exclude.jboss">
-		<if>    
-			<equals arg1="${authentication.type}" arg2="ldap"/>
-			<then>  
-				<property name="login-config.block.file" value="${jboss-conf.dir.dest}/login-config.ldap-block.xml"/>
-			</then> 
-			<else>  
-				<if>    
-					<equals arg1="${authentication.type}" arg2="db"/>
-					<then>  
-						<property name="login-config.block.file" value="${jboss-conf.dir.dest}/login-config.db-block.xml"/>
-					</then> 
-					<else>  
-						<fail message="${authentication.type} is not a valid authentiation type, please change to db or ldap and re-run the build."/>
-					</else> 
-				</if>   
-			</else> 
-		</if>   
-		<echo message="Inserting ${login-config.block.file} into ${jboss.home}/server/${jboss.server.name}/conf/login-config.xml"/>
-		<xmlconfig in="${jboss.home}/server/${jboss.server.name}/conf/login-config.xml" verbose="false">
-			<insertbranch path="//policy" srcxmlfile="${login-config.block.file}" srcpath="//application-policy" />
-		</xmlconfig>
+		<jboss-login-config
+			login-config.ldap.file="${jboss-conf.dir.dest}/login-config.ldap-block.xml"
+			login-config.db.file="${jboss-conf.dir.dest}/login-config.db-block.xml"
+			/>
 	</target>
 
 	<!-- Configure MQ settings based on contents of ncia/software/resrouces/deploy/jbossmq-destinations-service.block.xml -->
@@ -435,7 +425,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<!-- Configure log4j settings based on contents of bda-blueprints-webapp/software/resrouces/deploy/log4j.block.xml -->
 	<target name="-install:jboss:configure:log4j" unless="exclude.jboss">
-		<!-- Fill in content here -->
+		<jboss-log4j-config
+			log4j.template.file="${jboss-conf.dir.dest}/template-log4j.xml"
+			/>
 	</target>
 
 	<!-- Calls to bda macros for basic functionality -->
