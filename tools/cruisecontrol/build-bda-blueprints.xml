@@ -1,0 +1,16 @@
+<project name="build-bda-blueprints" default="build" basedir="projects">
+  <target name="build" depends="clean">
+    <echo message="Before calling SVN" />
+	<exec executable="cmd">
+      <arg value="/c"/>
+      <arg value="svn checkout http://bda-blueprints-ci.googlecode.com/svn/trunk/ bda-blueprints"/>
+    </exec>
+    <ant antfile="${basedir}/bda-blueprints/build.xml" target="all" inheritAll="false" inheritRefs="false"/>
+  </target>
+  <target name="clean" description="Deletes all build files">
+    <echo message="Cleaning for project" />
+    <delete defaultexcludes="false">
+      <fileset dir="${basedir}/bda-blueprints" includes="**/*"/>
+    </delete>
+  </target>
+</project>
