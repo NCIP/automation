@@ -207,7 +207,7 @@ docs/wiki/flash/src/gov/nih/nci/bda/wiki/events/WikiTeaserEvent.as -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/view/WikiButton.mxml -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/vo/WikiButtonVO.as -text
 resources/eclipse/bda-plugins.xml -text
-resources/jboss-bindings/ncicb-bindings.xml -text
+resources/jboss-bindings/ncicb-jboss4.0.x-bindings.xml -text
 resources/jboss/security_config.dtd -text
 resources/lsdb/installed-products.xml -text
 resources/public-keys/id_dsa_bda.pub -text
