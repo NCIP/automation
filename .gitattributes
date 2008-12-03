@@ -37,6 +37,7 @@ docs/jboss-ports/59280.properties -text
 docs/jboss-ports/59380.properties -text
 docs/jboss-ports/59480.properties -text
 docs/jboss-ports/59580.properties -text
+docs/jboss-ports/gen_table.pl -text
 docs/jboss-ports/jboss-default-ports.txt -text
 docs/jboss-ports/readme.txt -text
 docs/knowledge-center/SVN-Migration-HowTo.doc -text
