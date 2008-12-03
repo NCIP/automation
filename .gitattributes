@@ -474,9 +474,9 @@ software/bda-build-template/software/common/resources/grid/jboss-globus-libs-cag
 software/bda-build-template/software/common/resources/grid/jboss-globus-wsrf-war-cagrid1_1.zip -text
 software/bda-build-template/software/common/resources/jboss-conf/bda-blueprints-ds.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/jbossmq-destinations-service.block.xml -text
-software/bda-build-template/software/common/resources/jboss-conf/log4j.block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/login-config.db-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/login-config.ldap-block.xml -text
+software/bda-build-template/software/common/resources/jboss-conf/template-log4j.xml -text
 software/bda-build-template/software/common/simian/simian.xsl -text
 software/bda-build-template/software/lib/jdepend-2.9.jar -text
 software/bda-build-template/software/lib/junitperf-1.9.1.jar -text
