@@ -1697,6 +1697,7 @@ $HeadURL$
 		<attribute name="jboss.server.binding.template.location" default="${bda-utils.resource.dir}/template-binding.xml"/>
 		<attribute name="jboss.server.service.template.location" default="${bda-utils.resource.dir}/template-jboss-service.xml"/>
 		<sequential>						
+			<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
 			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}">
 				<filterset>
 					<filtersfile file="${properties.file}" />
@@ -3098,6 +3099,200 @@ $HeadURL$
 			<mkdir dir="@{src.dir}"/>
 			<move file="@{src.dir}" todir="@{backup.base.dir}/backup"/>
 			<delete dir="@{src.dir}" quiet="false" />
+		</sequential>
+	</macrodef>
+	<macrodef name="installJBossBinaries">
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="jboss.binaries.file" default="${tools.dir}/${jboss.binaries.file}" />
+		<sequential>
+			<propertyregex property="jboss.file.is.zip"
+				input="@{jboss.binaries.file}"
+				regexp=".*.zip"
+				select="true"
+				/>
+			<propertyregex property="jboss.file.is.jar"
+				input="@{jboss.binaries.file}"
+				regexp=".*.jar"
+				select="true"
+				/>
+			<if>
+				<isset property="jboss.file.is.zip"/>
+				<then>
+					<unzip dest="${application.base.path}" src="${tools.dir}/${jboss.binaries.file}" />
+				</then>
+			</if>
+			<if>
+				<isset property="jboss.file.is.jar"/>
+				<then>
+					<java jar="${tools.dir}/${jboss.binaries.file}" fork="true">
+						<arg line="-installGroup ejb3 installpath=${jboss.home}"/>
+					</java>         
+				</then>
+			</if>
+
+			<!-- make sure default server is renamed if applicable -->
+			<if>            
+				<not>                   
+					<equals arg1="${jboss.server.name}" arg2="default"/>
+				</not>                  
+				<then>                  
+					<move todir="${jboss.home}/server/${jboss.server.name}">
+						<fileset dir="${jboss.home}/server/default"/>
+					</move>                         
+				</then>                 
+			</if>           
+
+			<if>            
+				<os family="unix"/>     
+				<then>                  
+					<chmod dir="${jboss.home}/bin" perm="ugo+rx" 
+						includes="**/*.sh"/>                    
+				</then>                 
+			</if>           
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss-login-config">
+		<attribute name="authentication.type" default="${authentication.type}"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="login-config.ldap.file"/>
+		<attribute name="login-config.db.file"/>
+		<sequential>
+			<if>                            
+				<equals arg1="@{authentication.type}" arg2="ldap"/>
+				<then>                  
+					<property name="login-config.block.file" value="@{login-config.ldap.file}"/>
+				</then>                                 
+				<else>                                  
+					<if>                                            
+						<equals arg1="@{authentication.type}" arg2="db"/>
+						<then>                                  
+							<property name="login-config.block.file" value="@{login-config.db.file}"/>
+						</then>                                         
+						<else>
+							<fail message="@{authentication.type} is not a valid authentiation type, please change to db or ldap and re-run the build."/>
+						</else>                         
+					</if>                   
+				</else>         
+			</if>           
+			<echo message="Inserting ${login-config.block.file} into @{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
+			<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" verbose="false">
+				<insertbranch path="//policy" srcxmlfile="${login-config.block.file}" srcpath="//application-policy" />
+			</xmlconfig>    
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss-log4j-config">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="log4j.template.file"/>
+		<sequential>
+			<validate-log4j
+				log4j.template.file="@{log4j.template.file}"
+				/>
+
+			<copy file="@{jboss.home}/server/@{jboss.server.name}/conf/log4j.xml" tofile="@{jboss.home}/server/@{jboss.server.name}/conf/log4j.xml.bak" overwrite="true"/>
+			<copy file="@{log4j.template.file}" tofile="@{jboss.home}/server/@{jboss.server.name}/conf/log4j.xml" overwrite="true">
+				<filterset>
+					<filtersfile file="${properties.file}"/>
+					<filtersfile file="project.properties"/>
+				</filterset>
+			</copy>
+		</sequential>
+	</macrodef>
+	<macrodef name="validate-log4j">
+		<attribute name="log4j.template.file"/>
+		<sequential>
+			<groovy>
+				<arg line="@{log4j.template.file}"/>
+				import java.util.regex.Matcher
+				import java.util.regex.Pattern
+
+				sizeMap = [
+				KB: 1024,
+				MB: (1024*1024),
+				GB: (1024*1024*1024),
+				]
+
+				Integer thresholdFileNum = 15
+				Integer thresholdFileSize = (1 * sizeMap["GB"])
+				Integer exitCode = 2
+				String errorMsg = '''
+				There was an violation with your log4j configuraiton, see the rules below.
+				All appenders except "console" should be a rolling type appender
+				All appenders must have a MaxFileSize and be less than 1TB
+				All appenders must have a MaxBackupIndex and be less than 15
+				'''
+
+				log4jFile = new File(args[0]).getAbsoluteFile()
+				log4j = new XmlParser().parse(log4jFile)
+
+				// Test Appenders
+				println log4j.appender."@name"
+				log4j.appender."@name".each{name ->
+				if (name != "CONSOLE")
+				{
+				appenderClass = log4j.appender.find{it.'@name'==name}."@class"
+				println "Appender Name-\t${name}"
+				println "Appender Class-\t${appenderClass}"
+				if (appenderClass.indexOf("Roll") &lt; 1)
+				{
+				println errorMsg
+				System.exit(exitCode)
+				}
+				// Test Thresholds
+				String fileSize="" 
+				if (log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxFileSize'})
+				{
+				fileSize = log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxFileSize'}."@value"
+				}
+				else
+				{
+				println "Max Size is not set."
+				println errorMsg
+				System.exit(exitCode)
+				}
+				Integer numFiles=0 
+				if ( log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxBackupIndex'})
+				{
+				numFiles =  log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxBackupIndex'}."@value".toInteger()
+				}
+				else
+				{
+				println "Max Files is not set." 
+				println errorMsg
+				System.exit(exitCode)
+				}
+
+				println "Appender MaxSize-\t${fileSize}"
+				println "Appender MaxFiles-\t${numFiles}"
+
+
+				numMatcher =  java.util.regex.Pattern.compile(/(\d+)(\D*)/).matcher(fileSize)
+				numMatches = numMatcher.matches()
+				Integer numUnits = numMatcher.group(1).toInteger()
+				String unit = numMatcher.group(2)
+
+
+				Integer maxSize = numUnits 
+				if (unit.length() > 0 ) 
+				{
+				maxSize = numUnits * sizeMap[unit]
+				}
+				if (maxSize > thresholdFileSize)
+				{
+				println errorMsg
+				System.exit(exitCode)
+				}
+
+				if (numFiles > thresholdFileNum)
+				{
+				println errorMsg
+				System.exit(exitCode)
+				}
+				println "Appender Processed Sucessfully.\n"
+				}
+				}
+			</groovy>
 		</sequential>
 	</macrodef>
 </project>
