@@ -3295,4 +3295,123 @@ $HeadURL$
 			</groovy>
 		</sequential>
 	</macrodef>
+	<macrodef name="deploy-local">
+		<attribute name="build.dir" default="${build.dir}"/>
+		<attribute name="install.dir" default="${dist.exploded.dir}" />
+		<attribute name="properties.file" default="${properties.file}" />
+		<attribute name="target.name" />
+		<sequential>
+			<!-- Copies over all files so linux and windows properties are present --> 
+			<copy todir="@{install.dir}">
+				<fileset dir="@{build.dir}">
+					<include name="*.properties" /> 
+				</fileset>              
+			</copy>         
+			<exec osfamily="unix" executable="ant" dir="@{install.dir}" failonerror="true">
+				<!-- use alternate properties file since default has replace values -->
+				<arg value="-Dproperties.file=@{properties.file}" />
+				<!-- force reinstall of database and jboss without prompting -->
+				<arg value="-Dforce.reinstall=true" />
+				<arg value="@{target.name}" />
+			</exec>         
+			<exec osfamily="windows" executable="ant.bat" dir="@{install.dir}" failonerror="true">
+				<!-- use alternate properties file since default has replace values -->
+				<arg value="-Dproperties.file=@{properties.file}" />
+				<!-- force reinstall of database and jboss without prompting -->
+				<arg value="-Dforce.reinstall=true" />
+				<arg value="@{install.target}" />
+			</exec>         
+		</sequential>
+	</macrodef>
+	<macrodef name="deploy-files" description="Macro for deploying and extracting distrution to server">
+		<attribute name="ssh.user" default="${ssh.server.username}" />
+		<attribute name="ssh.host" default="${ssh.server.hostname}" />
+		<attribute name="remote.directory.property.name" default="ssh.dir.temp" />
+		<attribute name="properties.file" default="${properties.file}" />
+		<attribute name="dist.dir" default="${dist.dir}" />
+		<attribute name="dist.file" />
+		<sequential>
+			<!-- Validate remote directory is valid -->
+			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" />
+			<check-valid-directory-name directory.property="remote.dir" />
+			<!-- Delete/re-create remote directory -->
+			<remote-ssh remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
+			<!-- work around for issue where basedir is required but is not currently used -->
+			<remote-ssh remotesshcommand="mkdir -p ${remote.dir}/lib" /> 
+
+			<!-- copy distribution and prop file to remote system -->
+			<remote-scp remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+			<remote-scp remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+			<!-- Extract zip file -->
+			<remote-ssh remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
+		</sequential>
+	</macrodef>
+	<macrodef name="dist-prep" description="Macro for copying files to dist area">
+		<attribute name="dist.exploded.dir" default="${dist.exploded.dir}" />
+		<attribute name="build.dir" default="${build.dir}" />
+		<attribute name="bda-utils.dir" default="${bda-utils.dir}" />
+		<attribute name="common.dir" default="${common.dir}" />
+		<attribute name="download.dir" default="${download.dir}" />
+		<attribute name="copy.tools.flag" default="Y" />
+		<sequential>
+			<!-- Do some cleanup -->
+			<delete dir="@{distexploded.dir}" />
+			<delete>
+				<fileset dir="@{dist.exploded.dir}">
+					<include name="build.xml" />
+					<include name="*properties*" />
+				</fileset>
+			</delete>
+
+			<!-- Copy install related xml and properties files -->
+			<echo message="Copying build and property files"/>
+			<copy todir="@{dist.exploded.dir}" overwrite="true">
+				<fileset dir="@{build.dir}">
+					<include name="install.xml" />
+					<include name="install.properties" />
+					<include name="*properties.template" />
+					<include name="project.properties" />
+				</fileset>
+			</copy>
+
+			<!-- Set default target and properyties.file to install and install.properties -->
+			<replaceregexp file="@{dist.exploded.dir}/install.xml" byline="true" match="(.project.*default=.)\w+(.\s+.*)" replace="\1install\2" />
+
+			<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
+			<move file="@{dist.exploded.dir}/install.xml" tofile="@{dist.exploded.dir}/build.xml" />
+
+			<!-- Copy over BDA macrodefs and librarires -->
+			<echo message="Copying bda-utils dir"/>
+			<copy todir="@{dist.exploded.dir}/bda-utils" overwrite="true">
+				<fileset dir="@{bda-utils.dir}"> 
+					<include name="**/*" />
+				</fileset>
+			</copy>
+
+			<!-- This  copies common files over, common files are currently resource files like jboss configuration files and database scripts -->
+			<echo message="Copying common dir"/>
+			<copy todir="@{dist.exploded.dir}/common" overwrite="true">
+				<fileset dir="@{common.dir}">
+					<include name="**/*" />
+				</fileset>
+			</copy>
+
+			<if>
+				<equals arg1="@{copy.tools.flag}" arg2="Y"/>
+				<then>
+					<echo message="Copying tools dir"/>
+					<!-- Copy over binary distributions downloaded earlier -->
+					<copy todir="@{dist.exploded.dir}/tools" overwrite="true">
+						<fileset dir="@{download.dir}">
+							<include name="**/*" />
+						</fileset>
+					</copy>
+				</then>
+				<else>
+					<echo message="Not copying tools based on flag"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 </project>
