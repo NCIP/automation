@@ -1957,17 +1957,18 @@ $HeadURL$
 	-->	
 	<macrodef name="generate-erd">		
 		<attribute name="report.dir" default="${target.dir}/reports/schema-spy" />
-		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5-bin.jar" />
-		<attribute name="schemaspy.jar" default="schemaSpy_3.1.1.jar" />
+		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5.jar" />
+		<attribute name="schemaspy.jar" default="schemaspy_3.1.1.jar" />
 		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.port" default="${database.port}" />
+		<attribute name="database.name" default="${database.name}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.type" default="${database.type}" />
 		<sequential>
 			<java jar="${bda-utils.dir}/@{schemaspy.jar}"
-			output="${report.dir}/schemaspy-out.log"
-			error="${report.dir}/schemaspy-error.log"
+			output="@{report.dir}/schemaspy-out.log"
+			error="@{report.dir}/schemaspy-error.log"
 			fork="true">
 				<arg line="-t @{database.type}"/>
 				<arg line="-host @{database.server}"/>
@@ -1975,7 +1976,7 @@ $HeadURL$
 				<arg line="-db @{database.name}"/>
 				<arg line="-u @{database.user}"/>
 				<arg line="-p @{database.password}"/>
-				<arg line="-cp ${bda-utils.dir}\@{database.driver.class}"/>
+				<arg line="-cp ${bda-utils.dir}/@{database.driver.jar}"/>
 				<arg line="-o @{report.dir}"/>
 			</java>
 		</sequential>
@@ -3353,6 +3354,7 @@ $HeadURL$
 		<attribute name="common.dir" default="${common.dir}" />
 		<attribute name="download.dir" default="${download.dir}" />
 		<attribute name="copy.tools.flag" default="Y" />
+		<attribute name="default.target" default="install" />
 		<sequential>
 			<!-- Do some cleanup -->
 			<delete dir="@{distexploded.dir}" />
@@ -3375,7 +3377,7 @@ $HeadURL$
 			</copy>
 
 			<!-- Set default target and properyties.file to install and install.properties -->
-			<replaceregexp file="@{dist.exploded.dir}/install.xml" byline="true" match="(.project.*default=.)\w+(.\s+.*)" replace="\1install\2" />
+			<replaceregexp file="@{dist.exploded.dir}/install.xml" byline="true" match="(.project.*default=.)\w+(.\s+.*)" replace="\1@{default.target}\2" />
 
 			<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
 			<move file="@{dist.exploded.dir}/install.xml" tofile="@{dist.exploded.dir}/build.xml" />
