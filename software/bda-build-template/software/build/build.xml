@@ -413,6 +413,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</copy>
 		<dist-prep
 			copy.tools.flag="N"
+			default.target="upgrade"
 			/>
 
 	</target>
