@@ -211,6 +211,8 @@ resources/eclipse/bda-plugins.xml -text
 resources/jboss-bindings/ncicb-jboss4.0.x-bindings.xml -text
 resources/jboss/security_config.dtd -text
 resources/lsdb/installed-products.xml -text
+resources/ncia-schema-spy.zip -text
+resources/ncia-uml.zip -text
 resources/public-keys/id_dsa_bda.pub -text
 software/ant/custom/propertyvalidator/.classpath -text
 software/ant/custom/propertyvalidator/.project -text
