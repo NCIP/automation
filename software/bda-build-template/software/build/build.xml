@@ -822,4 +822,25 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			database.changelog.file="${working.dir}/db-upgrade/db-upgrade.xml"
 			/>
 	</target>
+	<target name="report:erd">
+		<generate-erd   
+			schemaspy.jar="schemaspy-3.1.1.jar"
+			database.driver.jar="mysql-connector-java-5.0.5.jar"
+			/>                      
+	</target>
+
+	<target name="report:uml">
+		<property name="uml.dir" value="${reports.dir}/uml"/>
+		<path id="bda-blueprints.classpath.ref">
+			<fileset dir="${lib.dir}/runtime">
+				<include name="**/*.jar" />     
+			</fileset>              
+		</path>         
+		<generate-uml   
+			uml.dir="${uml.dir}"    
+			src.java.dir="${bda-blueprints-webapp.base.dir}/src/java"
+			uml.source.path="bda-blueprints.classpath.ref"
+			/>                      
+	</target>
+
 </project>
