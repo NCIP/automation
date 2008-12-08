@@ -40,6 +40,7 @@ jboss.relative.path=This is the part of the path after application.base.path whi
 jboss.server.hostname=The server name where jboss will be running. Example: localhost
 jboss.server.name=The jboss server instance name, $JBOSS_HOME/server/${jboss.server.name}. Example: default
 jboss.web.password=The password to the access the jboss web console and jmx console. Example: blueprint123!. The user is admin. 
+#jboss.port.config=This is the NCICB port configuration scheme used by this application server.  If this is set the other ports except for jboss.server.port and jboss.server.jndi.port are igored (those are used by the install process). Having this set also causes pre and post installation validation to not check ports.
 # Ports used by JBoss. Must not conflict with other LSD applications. Check with BDA or Systems teams.
 #jboss.cobraorb.port=
 #jboss.ejbinvoker.port=
@@ -51,7 +52,7 @@ jboss.web.password=The password to the access the jboss web console and jmx cons
 #jboss.pooledha.port=
 #jboss.remoting.port=
 #jboss.server.bind.port=
-#jboss.server.jndi.port=
+#jboss.server.jndi.port=Port used to connect when shutting down jboss.
 #jboss.server.port=The port used to connect to the jboss instance via http.
 #jboss.server.rmi.port=
 #jboss.service.rmiobject.port=
@@ -75,6 +76,13 @@ jboss.web.password=The password to the access the jboss web console and jmx cons
 ##############
 ldap.url=The fully qulified url to the ldap instance. Example: ldaps://ncids4a.nci.nih.gov:636
 ldap.basedn=The base DN to search for records. Example: ldap.basedn=ou=nci,o=nih
+###############
+###  Log4J  ###
+###############
+#These properties are used in a template file included in projectname/software/common/resources/jboss.  The filtered file is then checked by a macro to ensure that the maxFileSize and maxDays are set and not to large. This macro also ensures that all appenders (except console are rolling appenders).
+#log4j.maxFileSize=Size of log file before it is roled, should it grow to this size before being roled by the daily roll appender.
+#log4j.maxDays=Number of days of files to keep.
+#log4j.level=Log4j log level, set for gov.nih.nci and hibernate messages.
 ##################################
 #  Grid Service registration URL #
 ##################################
