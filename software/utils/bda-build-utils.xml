@@ -2995,7 +2995,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<macrodef name="dirDiffReport">
+	<macrodef name="report-dir-diff">
 		<attribute name="dir1"/>
 		<attribute name="dir2"/>
 		<attribute name="reportFile"/>
@@ -3066,7 +3066,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<macrodef name="backupRoll">
+	<macrodef name="backup-roll">
 		<attribute name="backupDir"/>
 		<attribute name="backupCount"/>
 		<sequential>
@@ -3101,12 +3101,12 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<macrodef name="backupAndClean">
+	<macrodef name="backup-and-clean">
 		<attribute name="src.dir"/>
 		<attribute name="backup.base.dir"/>
 		<attribute name="backup.count" default="5" />
 		<sequential>
-			<backupRoll
+			<backup-roll
 				backupDir="@{backup.base.dir}"
 				backupCount="@{backup.count}"
 				/>                      
@@ -3117,7 +3117,7 @@ $HeadURL$
 			<delete dir="@{src.dir}" quiet="false" />
 		</sequential>
 	</macrodef>
-	<macrodef name="installJBossBinaries">
+	<macrodef name="jboss-install-binaries">
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="jboss.binaries.file" default="${tools.dir}/${jboss.binaries.file}" />
 		<sequential>
