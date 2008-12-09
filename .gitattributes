@@ -795,6 +795,7 @@ software/utils/bda-build-utils.xml -text
 software/utils/build.properties -text
 software/utils/build.xml -text
 software/utils/ivy.xml -text
+software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
 software/utils/resource/jboss-4.0.5.GA-jems-ejb3/bindings.xml -text
