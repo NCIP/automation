@@ -695,8 +695,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<target name="install:post:jboss" unless="exclude.jboss">
 		<property name="changelogFile" location="${install-logs.dir}/chagneLog-${install.time}.txt"/>
-		<property name="compare1.dir" location="${jboss.home}"/>
-		<property name="compare2.dir" location="${backup.jboss.base.dir}/backup/${jboss.relative.path}"/>
+		<property name="compare1.dir" location="${backup.jboss.base.dir}/backup/${jboss.relative.path}"/>
+		<property name="compare2.dir" location="${jboss.home}"/>
 		<report-dir-diff
 			dir1="${compare1.dir}"
 			dir2="${compare2.dir}"
@@ -722,8 +722,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<target name="install:post:tomcat" unless="exclude.tomcat">
 		<!-- Tomcat
 		<property name="changelogFile" location="${install-logs.dir}/changeLog-${install.time}.txt"/>
-		<property name="compare1.dir" location="${tomcat.home}"/>
-		<property name="compare2.dir" location="${backup.tomcat.dir}/backup/${tomcat.relative.path}"/>
+		<property name="compare1.dir" location="${backup.tomcat.dir}/backup/${tomcat.relative.path}"/>
+		<property name="compare2.dir" location="${tomcat.home}"/>
 		<report-dir-diff
 			dir1="${compare1.dir}"
 			dir2="${compare2.dir}"
