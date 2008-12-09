@@ -23,11 +23,15 @@ macroXml.macrodef."@name".each
 	macroXml.macrodef.find{it.'@name'==mName}.attribute."@name".each
 	{ attrName ->
 		attrVal = macroXml.macrodef.find{it.'@name'==mName}.attribute.find{it.'@name'==attrName}."@default"
-		attributeDoc += "${attrName} (${attrVal}) - \n"
-		if (attrName.toString().length() == 0)
+		if (attrVal == null)
 		{
 			attributeCode +="\t\t${attrName}=\"somevalue\"\n"
+			attrVal = " "
+		} else
+		{
+			attrVal = attrVal.toString().replace('{','\\{').replace('}','\\}')
 		}
+		attributeDoc += "${attrName} (${attrVal}) - \n"
 	}
 		
 	print """
@@ -49,5 +53,3 @@ ${attributeCode}
 {code}
 """
 }
-
-
