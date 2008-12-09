@@ -232,7 +232,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
 		<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
 
-		<backupAndClean
+		<backup-and-clean
 			src.dir="${jboss.home}"
 			backup.base.dir="${backup.jboss.base.dir}"
 			backup.count="${backup.count}"
@@ -243,7 +243,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<!--
 		<sleep seconds="5" />
 		<property name="backup.count" value="5"/>
-		<backupAndClean
+		<backup-and-clean
 			src.dir="${tomcat.home}"
 			backup.base.dir="${backup.tomcat.base.dir}"
 			backup.count="${backup.count}"
@@ -347,7 +347,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<target name="install:jboss:binaries" description="Install JBoss binaries" unless="exclude.jboss">
-		<installJBossBinaries
+		<jboss-install-binaries
 			/>
 	</target>
 
@@ -697,7 +697,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<property name="changelogFile" location="${install-logs.dir}/chagneLog-${install.time}.txt"/>
 		<property name="compare1.dir" location="${jboss.home}"/>
 		<property name="compare2.dir" location="${backup.jboss.base.dir}/backup/${jboss.relative.path}"/>
-		<dirDiffReport
+		<report-dir-diff
 			dir1="${compare1.dir}"
 			dir2="${compare2.dir}"
 			reportFile="${changelogFile}"
@@ -724,7 +724,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<property name="changelogFile" location="${install-logs.dir}/changeLog-${install.time}.txt"/>
 		<property name="compare1.dir" location="${tomcat.home}"/>
 		<property name="compare2.dir" location="${backup.tomcat.dir}/backup/${tomcat.relative.path}"/>
-		<dirDiffReport
+		<report-dir-diff
 			dir1="${compare1.dir}"
 			dir2="${compare2.dir}"
 			reportFile="${changelogFile}"
