@@ -1,4 +1,4 @@
-<project name="bda-utils" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+<project name="bda-utils" xmlns:antunit="antlib:org.apache.ant.antunit">
 <!--
 $Id$
 $HeadURL$
