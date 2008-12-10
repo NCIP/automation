@@ -87,6 +87,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<property name="db.dir.dest" value="${working.dir}/${db.dist.relative.dir}" />
 	<property name="db-install.dir.dest" value="${working.dir}/${db-install.dist.relative.dir}" />
 	<property name="db-upgrade.dir.dest" value="${working.dir}/${db-upgrade.dist.relative.dir}" />
+	<property name="jboss-conf.dir.src" value="${basedir}/${jboss-conf.dist.relative.dir}" />
 	<property name="jboss-conf.dir.dest" value="${working.dir}/${jboss-conf.dist.relative.dir}" />
 
 	<!-- Jboss binding configurtion related properties -->
@@ -224,30 +225,47 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<sleep seconds="5" />
 		<property name="backup.count" value="5"/>
 
-		<!-- Jboss backup, do not compress until install is finished -->
-		<property name="backup.jboss.base.dir" location="${application.base.path}/backup/jboss"/>
-		<property name="backup.tomcat.base.dir" location="${application.base.path}/backup/tomcat"/>
-
-		<!-- So these directories won't be included in the backup, they are not needed to use jboss -->
-		<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
-		<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
-
-		<backup-and-clean
-			src.dir="${jboss.home}"
-			backup.base.dir="${backup.jboss.base.dir}"
-			backup.count="${backup.count}"
-			/>
+		<if>
+			<not>
+				<equals arg1="${exclude.jboss.backup}" arg2="true"/>
+			</not>
+			<then>
+				<!-- Jboss backup, do not compress until install is finished -->
+				<property name="backup.jboss.base.dir" location="${application.base.path}/backup/jboss"/>
+		
+				<!-- So these directories won't be included in the backup, they are not needed to use jboss -->
+				<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
+				<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
+		
+				<backup-dir
+					src.dir="${jboss.home}"
+					backup.base.dir="${backup.jboss.base.dir}"
+					backup.count="${backup.count}"
+					/>
+			</then>
+		</if>
+		<delete dir="${jboss.home}"/>
 	</target>
 
 	<target name="install:clean:tomcat" unless="exclude.tomcat">
 		<!--
 		<sleep seconds="5" />
 		<property name="backup.count" value="5"/>
-		<backup-and-clean
-			src.dir="${tomcat.home}"
-			backup.base.dir="${backup.tomcat.base.dir}"
-			backup.count="${backup.count}"
-			/>
+		<if>
+			<not>
+				<equals arg1="${exclude.tomcat.backup}" arg2="true"/>
+			</not>
+			<then>
+				<property name="backup.tomcat.base.dir" location="${application.base.path}/backup/tomcat"/>
+		
+				<backup-dir
+					src.dir="${tomcat.home}"
+					backup.base.dir="${backup.tomcat.base.dir}"
+					backup.count="${backup.count}"
+					/>
+			</then>
+		</if>
+		<delete dir="${tomcat.home}"/>
 		-->
 	</target>
 
@@ -380,7 +398,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		-install:jboss:configure:login-conf,
 		-install:jboss:configure:log4j,
 		-install:jboss:configure:secure-console,
-		-install:jboss:configure:update-shutdown
+		-install:jboss:configure:update-shutdown,
+		-install:jboss:configure:enable-ssl
 		"/>
 
 	<target name="-install:jboss:configure:secure-console" description="Configure JBoss ports using bindings files" unless="exclude.jboss">
@@ -694,28 +713,37 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<target name="install:post" depends="install:post:jboss, install:post:tomcat"/>
 
 	<target name="install:post:jboss" unless="exclude.jboss">
-		<property name="changelogFile" location="${install-logs.dir}/chagneLog-${install.time}.txt"/>
-		<property name="compare1.dir" location="${backup.jboss.base.dir}/backup/${jboss.relative.path}"/>
-		<property name="compare2.dir" location="${jboss.home}"/>
-		<report-dir-diff
-			dir1="${compare1.dir}"
-			dir2="${compare2.dir}"
-			reportFile="${changelogFile}"
-			/>
-		<!-- Copy app server logs -->
-		<mkdir dir="${jboss.home}/server/${jboss.server.name}/log"/>
-		<mkdir dir="${backup.jboss.base.dir}/backup/${jboss.relative.path}/server/${jboss.server.name}/log"/>
-		<!-- so the logs wont be included in the zip -->
-		<move todir="${jboss.home}/server/${jboss.server.name}/log">
-			<fileset dir="${backup.jboss.base.dir}/backup/${jboss.relative.path}/server/${jboss.server.name}/log">
-				<include name="*"/>
-			</fileset>
-		</move>
 
-		<!-- Compress backup and cleanup -->
-		<mkdir dir="${backup.jboss.base.dir}/backup1"/>
-		<zip destfile="${backup.jboss.base.dir}/backup1/${jboss.relative.path}.zip" basedir="${backup.jboss.base.dir}/backup" />
-		<delete dir="${backup.jboss.base.dir}/backup"/>
+
+		<if>
+			<not>
+				<equals arg1="${exclude.jboss.backup}" arg2="true"/>
+			</not>
+			<then>
+				<property name="changelogFile" location="${install-logs.dir}/chagneLog-${install.time}.txt"/>
+				<property name="compare1.dir" location="${backup.jboss.base.dir}/backup/${jboss.relative.path}"/>
+				<property name="compare2.dir" location="${jboss.home}"/>
+				<report-dir-diff
+					dir1="${compare1.dir}"
+					dir2="${compare2.dir}"
+					reportFile="${changelogFile}"
+					/>
+				<!-- Copy app server logs -->
+				<mkdir dir="${jboss.home}/server/${jboss.server.name}/log"/>
+				<mkdir dir="${backup.jboss.base.dir}/backup/${jboss.relative.path}/server/${jboss.server.name}/log"/>
+				<!-- so the logs wont be included in the zip -->
+				<move todir="${jboss.home}/server/${jboss.server.name}/log">
+					<fileset dir="${backup.jboss.base.dir}/backup/${jboss.relative.path}/server/${jboss.server.name}/log">
+						<include name="*"/>
+					</fileset>
+				</move>
+		
+				<!-- Compress backup and cleanup -->
+				<mkdir dir="${backup.jboss.base.dir}/backup1"/>
+				<zip destfile="${backup.jboss.base.dir}/backup1/${jboss.relative.path}.zip" basedir="${backup.jboss.base.dir}/backup" />
+				<delete dir="${backup.jboss.base.dir}/backup"/>
+			</then>
+		</if>
 
 	</target>
 
@@ -739,5 +767,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		</copy>
 		-->
 
+	</target>
+	<target name="-install:jboss:configure:enable-ssl">
+		<if>
+			<equals arg1="${jboss.ssl.enable}" arg2="true"/>
+			<then>
+				<jboss-ssl-enable
+					/>
+			</then>
+		</if>
 	</target>
 </project>
