@@ -769,12 +769,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	</target>
 	<target name="-install:jboss:configure:enable-ssl">
-		<if>
-			<equals arg1="${jboss.ssl.enable}" arg2="true"/>
-			<then>
-				<jboss-ssl-enable
-					/>
-			</then>
-		</if>
+		<jboss-ssl-enable
+			/>
 	</target>
 </project>
