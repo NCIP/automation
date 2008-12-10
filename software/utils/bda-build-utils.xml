@@ -341,6 +341,7 @@ $HeadURL$
 		<attribute name="java.check.version.minor" default="1.5.0_10" />
 		<attribute name="property.template.file" default="${properties.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
+		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
 		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
 		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
 		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
@@ -394,6 +395,7 @@ $HeadURL$
 				database.name="@{database.name}"
 				/>
 			<jboss-ssl-verify-keystore
+				jboss.ssl.enable="@{jboss.ssl.enable}"
 				jboss.ssl.keystore.file="@{jboss.ssl.keystore.file}"
 				jboss.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
 				jboss.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
@@ -3217,6 +3219,7 @@ $HeadURL$
 	</macrodef>
 
 	<macrodef name="jboss-ssl-enable" description="macro for enabling ssl in jboss">
+		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
@@ -3229,45 +3232,49 @@ $HeadURL$
 			If you connect to http will it automatically redirect you to https?
 			Will bindnings work?
 			-->
+			<if>
+				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
+				<then>
+					<echo message="Install JBoss SSL configurations"/>
 
-			<!-- verify keystore, moved to validate-pre-install
-			<jboss-ssl-verify-keystore
-				jboss.ssl.keystore.file="@{jboss.ssl.keystore.file}"
-				jboss.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
-				jboss.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
-				jboss.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
-				jboss.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
-				/>
-			-->
+					<!-- copy keystore to ${jboss.home}/server/${jboss.server.name}/conf -->
+					<copy todir="@{jboss.home}/server/@{jboss.server.name}/conf" file="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file}"/>
 
-			<!-- copy keystore to ${jboss.home}/server/${jboss.server.name}/conf -->
-			<copy todir="@{jboss.home}/server/@{jboss.server.name}/conf" file="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file}"/>
-
-			<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
-			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-				match="(&lt;\!-- SSL.TLS Connector.*)(${line.separator}\s+&lt;Connector port=&quot;8443&quot;)"
-				replace="\1 (Connector block un commented by BDA build script) --&gt;\2"
-				flags="sg"
-				/>
-			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-				match="(sslProtocol = &quot;TLS&quot; /&gt;${line.separator}).*(${line.separator}\s+&lt;Engine name=&quot;jboss.web&quot;)"
-				replace="\1\2"
-				flags="sg"
-				/>
-			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
-				<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystoreFile" withText="@{jboss.home}/server/@{jboss.server.name}/conf/@{jboss.ssl.keystore.file}" />
-				<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystorePass" withText="@{jboss.ssl.keystore.pass}" />
-			</xmltask>
+					<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
+						match="(&lt;\!-- SSL.TLS Connector.*)(${line.separator}\s+&lt;Connector port=&quot;8443&quot;)"
+						replace="\1 (Connector block un commented by BDA build script) --&gt;\2"
+						flags="sg"
+						/>
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
+						match="(sslProtocol = &quot;TLS&quot; /&gt;${line.separator}).*(${line.separator}\s+&lt;Engine name=&quot;jboss.web&quot;)"
+						replace="\1\2"
+						flags="sg"
+						/>
+					<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
+						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystoreFile" withText="@{jboss.home}/server/@{jboss.server.name}/conf/@{jboss.ssl.keystore.file}" />
+						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystorePass" withText="@{jboss.ssl.keystore.pass}" />
+					</xmltask>
+				</then>
+				<else>
+					<echo message="jboss.ssl.enable not set or true so skipping install of JBoss SSL configuration"/>
+				</else>
+			</if>
 
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-ssl-verify-keystore" description="macro for verifying a keystore">
+		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
 		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
 		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
 		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
 		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<sequential>
+			<if>
+				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
+				<then>
+					<echo message="Validating JBoss SSL configurations"/>
 			<groovy>
 				<arg line="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file} @{jboss.ssl.keystore.pass} @{jboss.ssl.keystore.alias} @{jboss.ssl.fullyqualified.hostname}"/>
 				import java.util.regex.Matcher
@@ -3324,6 +3331,11 @@ $HeadURL$
 				}
 
 			</groovy>
+				</then>
+				<else>
+					<echo message="jboss.ssl.enable not set or true so skipping ssl validation"/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 </project>
