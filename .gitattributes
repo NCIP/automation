@@ -701,6 +701,7 @@ software/bda-installer/src-custom/com/izforge/izpack/event/AntAction.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/ExtendedInstallPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/InstallPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/AntLogListener.java -text
+software/bda-installer/src-custom/com/izforge/izpack/util/ArtifactExistsValidator.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/DBConnectionValidator.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/HostNameValidator.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/InstallPannelTailProcessor.java -text
