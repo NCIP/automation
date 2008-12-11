@@ -25,12 +25,15 @@ public class ArtifactExistsValidator implements Validator
         }
 		Map<String, String> paramMap = client.getValidatorParams();
 		String artifactPath = paramMap.get(ARTIFACT_PATH_PARAM);
+		System.out.println("artifactPath =" + artifactPath + "=");
 		boolean isDir = Boolean.valueOf(paramMap.get(IS_DIR_PARAM)).booleanValue();
+		System.out.println("isDir =" + isDir + "=");
 		File artifactFile = new File(artifactPath);
 		boolean artifactExists = artifactFile.exists();
 		if(artifactExists && isDir) {
 			artifactExists = artifactFile.isDirectory();
 		}
+		System.out.println("exiting: artifactExists =" + artifactExists + "=");
         return artifactExists;
     }
 
