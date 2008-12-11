@@ -14,7 +14,6 @@ public class ArtifactExistsValidator implements com.izforge.izpack.panels.Valida
 {
 
 	static {
-		// this is a test comment
 		System.out.println("ArtifactExistsValidator class is loaded!");
 	}
 
