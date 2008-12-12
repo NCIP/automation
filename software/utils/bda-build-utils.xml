@@ -3220,4 +3220,125 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
+
+	<macrodef name="jboss-ssl-enable" description="macro for enabling ssl in jboss">
+		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
+		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<sequential>
+			<!-- Questions
+			If you connect to http will it automatically redirect you to https?
+			Will bindnings work?
+			-->
+			<if>
+				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
+				<then>
+					<echo message="Install JBoss SSL configurations"/>
+
+					<!-- copy keystore to ${jboss.home}/server/${jboss.server.name}/conf -->
+					<copy todir="@{jboss.home}/server/@{jboss.server.name}/conf" file="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file}"/>
+
+					<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
+						match="(&lt;\!-- SSL.TLS Connector.*)(${line.separator}\s+&lt;Connector port=&quot;8443&quot;)"
+						replace="\1 (Connector block un commented by BDA build script) --&gt;\2"
+						flags="sg"
+						/>
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
+						match="(sslProtocol = &quot;TLS&quot; /&gt;${line.separator}).*(${line.separator}\s+&lt;Engine name=&quot;jboss.web&quot;)"
+						replace="\1\2"
+						flags="sg"
+						/>
+					<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
+						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystoreFile" withText="@{jboss.home}/server/@{jboss.server.name}/conf/@{jboss.ssl.keystore.file}" />
+						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystorePass" withText="@{jboss.ssl.keystore.pass}" />
+					</xmltask>
+				</then>
+				<else>
+					<echo message="jboss.ssl.enable not set or true so skipping install of JBoss SSL configuration"/>
+				</else>
+			</if>
+
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss-ssl-verify-keystore" description="macro for verifying a keystore">
+		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
+		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<sequential>
+			<if>
+				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
+				<then>
+					<echo message="Validating JBoss SSL configurations"/>
+			<groovy>
+				<arg line="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file} @{jboss.ssl.keystore.pass} @{jboss.ssl.keystore.alias} @{jboss.ssl.fullyqualified.hostname}"/>
+				import java.util.regex.Matcher
+				import java.util.regex.Pattern
+
+				String certFile = args[0]
+				String certPass = args[1]
+				String certAlias = args[2]
+				String fqhn = args[3]
+
+				certFile = new File(certFile)
+				results = "keytool -list -keystore ${certFile} -storepass ${certPass} -alias ${certAlias} -v".execute()
+				results.waitFor()
+				if (results.exitValue() > 0)
+				{
+				System.err.println "keytool command failed with following results:"
+				System.err.println results.text
+				System.exit(1)
+				}
+
+				results.text.eachLine
+				{ cline ->
+				//Owner: CN=*.nci.nih.gov, OU=National Cancer Institute, O=National Institute of Health, L=Rockville, ST=Maryland, C=US
+				//m = java.util.regex.Pattern.compile(/^Owner:\s+CN=([\w\d\-\_\.\*]+).*/).matcher(cline)
+				m = cline =~ /^Owner:\s+CN=([^\.]+)([\w\d\-\_\.]+).*/
+				if (m.matches())
+				{
+				host = m.group(1)
+				domain = m.group(2)
+				certfqhn = host + domain
+				println "Found host = '${host}' domain = '${domain}' in - ${cline}"
+				if (host.equals('*'))
+				{
+				if (fqhn.indexOf(domain) > 0)
+				{
+				println "${fqhn} matches ${domain}"
+				} else
+				{
+				System.err.println "${fqhn} FAILED MATCH ${domain}"
+				System.exit(2)
+				}
+				} else
+				{
+				if (fqhn.equals(certfqhn))
+				{
+				println "${fqhn} matches ${certfqhn}"
+				} else
+				{
+				System.err.println "${fqhn} FAILED MATCH ${certfqhn}"
+				System.exit(2)
+				}
+				}
+				}
+				}
+
+			</groovy>
+				</then>
+				<else>
+					<echo message="jboss.ssl.enable not set or true so skipping ssl validation"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
 </project>
