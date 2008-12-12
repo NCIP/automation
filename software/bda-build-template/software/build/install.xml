@@ -80,8 +80,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<property name="bda-utils.dir" value="bda-utils" />
 	<property name="tools.dir" value="${basedir}/${tools.dist.relative.dir}" />
 	<property name="common.dir.src" value="${basedir}/${common.dist.relative.dir}" />
-	<property name="grid.resource.dir" value="${working.dir}/${grid.dist.relative.dir}" />
-	<property name="grid.application.dir" value="${working.dir}/grid-application" />
 	<property name="common.dir.dest" value="${working.dir}/${common.dist.relative.dir}" />
 	<property name="db.dir.src" value="${basedir}/${db.dist.relative.dir}" />
 	<property name="db.dir.dest" value="${working.dir}/${db.dist.relative.dir}" />
@@ -100,9 +98,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<property name="bda-blueprints-webapp.war.file" value="bda-blueprints-webapp.war" />
 
 	<!-- Grid related properties -->
-	<property name="grid.artifact.file" value="wsrf.war.zip" />
+	<property name="grid.resource.dir" value="${basedir}/${grid.dist.relative.dir}" />
+	<property name="grid.application.dir" value="${basedir}/${grid-sample.dist.relative.dir}" />
+	<property name="grid.artifact.file" value="sample-wsrf-war.zip" />
 	<property name="grid.dir.dest" value="wsrf.war" />
-	<property name="grid.application.name" value="APPNANE" />
+	<property name="grid.application.name" value="Sample" />
+	<property name="resource.file.jboss-globus-lib" value="jboss-globus-libs-cagrid1_1.zip" />
+	<property name="resource.file.jboss-globus-war" value="jboss-globus-wsrf-war-cagrid1_1.zip" />
 
 	<!-- Paths -->
 	<path id="bda-utils.classpath">
@@ -516,6 +518,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:jboss:bda-blueprints-webapp:configure,
 		install:jboss:configure,
 		install:post,
+		install:bda-blueprints-grid,
 		install:jboss:start
 		" />
 
@@ -529,6 +532,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:database,
 		install:jboss,
 		install:post,
+		install:bda-blueprints-grid,
 		install:jboss:start,
 		install:validation:post-install
 		"/>
@@ -675,7 +679,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	"/>
 
 	<target name="install:tomcat:grid" description="Deploy grid to tomcat" unless="exclude.tomcat">
-		<mkdir dir="${tomcat.home}/webapps/${.dir.target}"/>
+		<mkdir dir="${tomcat.home}/webapps/${grid.dir.dest}"/>
 		<unzip dest="${tomcat.home}/common/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" />
 		<unzip dest="${tomcat.home}/webapps/${grid.dir.dest}" src="${grid.resource.dir}/${resource.file.jboss-globus-war}" />
 		<unzip dest="${tomcat.home}/webapps/${grid.dir.dest}" src="${grid.application.dir}/${grid.artifact.file}" />
@@ -698,14 +702,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<target name="install:jboss:grid" description="Deploy  to jboss" unless="exclude.jboss">
-		<mkdir dir="${jboss.home}/webapps/${.dir.target}"/>
+		<mkdir dir="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}"/>
 		<unzip dest="${jboss.home}/server/${jboss.server.name}/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" />
 		<unzip dest="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}" src="${grid.resource.dir}/${resource.file.jboss-globus-war}" />
 		<unzip dest="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest}" src="${grid.application.dir}/${grid.artifact.file}" />
 	</target>
 
 	<target name="install:jboss:grid:configure" description="Configure tomcat-application" unless="exclude.jboss">
-		<grid-jboss-configure
+		<grid-appserver-configure
 			
 			/>
 	</target>
@@ -769,7 +773,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	</target>
 	<target name="-install:jboss:configure:enable-ssl">
+		<!--
 		<jboss-ssl-enable
 			/>
+		-->
 	</target>
 </project>

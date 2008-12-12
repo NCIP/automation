@@ -68,6 +68,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Working directory passed to Ant tasks -->
 	<property name="bda-blueprints-api.base.dir" value="${software.dir}/blueprints-webapp" />
 	<property name="bda-blueprints-webapp.base.dir" value="${software.dir}/blueprints-webapp" />
+	<property name="grid-sample.base.dir" value="${software.dir}/grid-sample" />
 
 	<!-- Build file names relative working dir above, if the basedir of the sub-project ant script is ".." you should set the *.basdir to and the build file should include the dir and build file name from the *.base.dir -->
 	<property name="bda-blueprints-webapp.build.file" value="build.xml" />
@@ -94,6 +95,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="dist.exploded.dir" value="${dist.dir}/exploded" />
 	<property name="bda-blueprints-api.dist.dir" value="${dist.exploded.dir}/${bda-blueprints-api.dist.relative.dir}" />
 	<property name="bda-blueprints-webapp.dist.dir" value="${dist.exploded.dir}/${bda-blueprints-webapp.dist.relative.dir}" />
+	<property name="grid-sample.dist.dir" value="${dist.exploded.dir}/${grid-sample.dist.relative.dir}"/>
 	<property name="tools.dist.dir" value="${dist.exploded.dir}/${tools.dist.relative.dir}" />
 	<property name="common.dist.dir" value="${dist.exploded.dir}/${common.dist.relative.dir}" />
 	<property name="db-install.dist.dir" value="${dist.exploded.dir}/${db-install.dist.relative.dir}" />
@@ -235,6 +237,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<mkdir dir="${dist.exploded.dir}" />
 		<mkdir dir="${bda-blueprints-api.dist.dir}" />
 		<mkdir dir="${bda-blueprints-webapp.dist.dir}" />
+		<mkdir dir="${grid-sample.dist.dir}"/>
 		<mkdir dir="${common.dist.dir}" />
 		<mkdir dir="${tools.dist.dir}" />
 		<mkdir dir="${temp.dir}" />
@@ -295,7 +298,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends="
 		clean,
 		init,
-		build:bda-blueprints-webapp
+		build:bda-blueprints-webapp,
+		build:grid-sample
 		" />
 
 	<target name="build:bda-blueprints-api" depends="init" description="Call api sub-projects build target to produce artifiacts">
@@ -305,6 +309,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			dir="${bda-blueprints-api.base.dir}" >
 		</ant>
 		-->
+	</target>
+	<target name="build:grid-sample">
+		<copy todir="${grid-sample.dist.dir}">
+			<fileset dir="${grid-sample.base.dir}">
+				<include name="sample-wsrf-war.zip"/>
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="build:bda-blueprints-webapp" depends="init, build:bda-blueprints-api" description="Call webapp sub-projects build target to produce artifiacts">
