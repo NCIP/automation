@@ -28,7 +28,7 @@ public class ArtifactExistsRelativeToDirValidator implements
 		System.out.println("starting validate(com.izforge.izpack.panels.ProcessingClient)...");
 		boolean artifactExists = false;
 		try {
-			if (!client.hasParams()) {
+			if (!processingClient.hasParams()) {
 				throw new RuntimeException("Required params missing: 'artifactPath', 'isDir'.");
 			}
 			Map<String, String> paramMap = processingClient.getValidatorParams();
