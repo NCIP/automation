@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl"
+                 href="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-xsl/ivy.xsl"?><ivy-module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">  
+
+  <info organisation="ncicb" module="bda-utils" revision="0.7.0-beta" />
+        
+  <configurations>
+    <conf name="master" />
+    <conf name="compile" />
+    <conf name="runtime" />
+  </configurations>
+  
+  <publications>
+	  <artifact name="bda-build-utils" type="xml" conf="master, compile, runtime" />
+	  <artifact name="bda-build-utils" type="zip" conf="master, compile, runtime" />
+  </publications>
+  
+  <dependencies>               
+	  <dependency org="javax.activation" name="activation" rev="1.0.2" conf="runtime" />
+	  <dependency org="apache" name="antunit" rev="1.0" conf="runtime" />
+	  <dependency org="apache" name="ant-contrib" rev="1.0b3" conf="runtime" />
+	  <dependency org="jakarta" name="bcel" rev="5.1" conf="runtime" />
+	  <dependency org="ncicb" name="clm" rev="3.2" conf="runtime" />
+	  <dependency org="jakarta" name="commons-httpclient" rev="3.0.1" conf="runtime" />
+	  <dependency org="jakarta" name="commons-logging" rev="1.0.4" conf="runtime" />
+	  <dependency org="dbconfig" name="dbconfig" rev="0.1.8" conf="runtime" />
+	  <dependency org="apache" name="ivy" rev="1.3.1" conf="runtime" />
+	  <dependency org="jaxen" name="jaxen-core" rev="1.0" conf="runtime" />
+	  <dependency org="jaxen" name="jaxen-jdom" rev="1.0" conf="runtime" />
+	  <dependency org="jaxen" name="saxpath" rev="1.0" conf="runtime" />
+	  <dependency org="oracle" name="ojdbc14" rev="10.2.0.3.0" conf="runtime" />
+	  <dependency org="mysql" name="mysql-connector-java" rev="5.0.5" conf="runtime" />
+	  <dependency org="org.jdom" name="jdom" rev="1.1" conf="runtime" />
+	  <dependency org="javax.mail" name="mail" rev="1.3" conf="runtime" />
+	  <dependency org="jcraft" name="jsch" rev="0.1.34" conf="runtime" />
+	  <dependency org="org.tigris" name="antelope_app" rev="3.4.1" conf="runtime" />
+	  <dependency org="org.tigris" name="AntelopeApp" rev="3.4.1" conf="runtime" />
+	  <dependency org="org.tigris" name="svnant" rev="1.2.0-rc1" conf="runtime" />
+	  <dependency org="xmlconfig" name="xmlconfig" rev="0.1.9" conf="runtime" />
+	  <dependency org="ncicb" name="propertyvalidator" rev="0.1.6" conf="runtime" />		  
+	  <dependency org="redhillconsulting" name="simian" rev="2.2.24" conf="runtime" />		  
+	  <dependency org="ggtools" name="grand" rev="1.8" conf="runtime" />
+	  <dependency org="umlgraph" name="umlgraph" rev="4.8" conf="runtime" />
+	  <dependency org="schemaspy" name="schemaspy" rev="3.1.1" conf="runtime" />		  
+	  <dependency org="postgresql" name="postgresql-jdbc3" rev="8.3-603" conf="runtime" />	
+	  <dependency org="fusemetrics" name="fusemetrics" rev="1.0" conf="runtime" />
+	  <dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" conf="runtime" />		  
+	  <dependency org="liquibase" name="liquibase" rev="1.7.0" conf="runtime" />		  
+	  <dependency org="codehaus" name="groovy" rev="1.5.6" conf="runtime" />		  
+	  <dependency org="apache" name="ant" rev="1.7.0" conf="runtime" >		  
+		  <include name="ant-nodeps" type="jar" conf="runtime"/>
+		  <include name="ant-launcher" type="jar" conf="runtime"/>
+		  <include name="ant" type="jar" conf="runtime"/>
+	  </dependency>
+	  <dependency org="jakarta" name="commons-codec" rev="1.3" conf="runtime" />
+	  <dependency org="com.oopsconsultancy" name="xmltask" rev="1.15.1" conf="runtime" />
+
+	  <!--
+	  <dependency org="jaxen" name="jaxen" rev="1.1.1" conf="runtime" />
+	  -->
+  </dependencies>
+  
+</ivy-module>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+$Id:  $
+-->
+<project name="ncia-wrapper" default="build-all" basedir="." 
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	>
+
+	<property environment="env" />
+	<property name="properties.file" value="${basedir}/sample.properties"/>
+	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2"/>
+	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2"/>
+	<property file="${properties.file}" />
+
+	<property name="bda.version" value="0.5.0"/>
+	<property name="software.dir" location="."/>
+	<property name="target.dir" location="${software.dir}/target"/>
+	<property name="bda-download.dir" location="${target.dir}/bda-downloads"/>
+	<property name="bda-utils.dir" location="${target.dir}/bda-utils" />
+	<property name="lib.dir" location="${target.dir}/lib" />
+	<property name="bda-download.file" value="bda-ivy-build.xml" />
+
+	<!-- Paths -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="simian-2.2.24.jar" />
+			<include name="ivy-core-2.0.0-beta2.jar" />
+			<include name="ivy-2.0.0-beta2.jar" />
+		</fileset>
+	</path>
+
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<mkdir dir="${bda-download.dir}" />
+	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+
+	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
+		<property name="bda.version" value="${bda.version}" />
+		<property name="bda-utils.dir" location="${bda-utils.dir}" />
+		<property name="lib.dir" location="${lib.dir}" />
+		<property name="software.dir" location="${software.dir}" />
+	</ant>
+
+	<!-- Task definitions -->
+	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml">
+		<classpath>
+			<pathelement location="${bda-utils.dir}/antunit-1.0.jar" />
+		</classpath>
+	</taskdef>
+	<taskdef name="xmlconfig" classname="com.xmlconfig.anttask.XmlConfig" classpathref="bda-utils.classpath" />
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="project.classpath"/>
+	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
+		<classpath>
+			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar"/>
+		</classpath>
+	</taskdef>
+	<typedef resource="net/ggtools/grand/antlib.xml" classpath="${bda-utils.dir}/grand-1.8.jar"/>
+
+	<!-- Includes-->
+	<import file="bda-build-utils.xml" />
+
+	<!-- Targets -->
+	<target name="install:jboss:stop" if="jboss.exists">
+		<xmlconfig in="${jboss.home}/server/default/conf/jboss-service.xml" verbose="false">
+			<read path="(//mbean)[@code='org.jboss.naming.NamingService']/attribute[@name='Port']" property="jboss.server.jndi.port.existing" />
+		</xmlconfig>
+		<jboss-stop-jboss jboss.server.jndi.port="${jboss.server.jndi.port.existing}"/>
+	</target>
+	<target name="install:jboss:start" unless="local.install">
+		<jboss-start-jboss />
+	</target>
+	<target name="install:validation:pre-install">
+		<validate-pre-install />
+	</target>
+	<target name="install:validation:post-install" unless="local.install">
+		<validate-post-install />
+	</target>
+	<target name="-install:jboss:configure:update-shutdown">
+		<jboss-update-shutdown />
+	</target>
+	<target name="install:ncia-query-grid:tomcat:stop" if="tomcat.ncia-query-grid.exists">
+		<tomcat-stop tomcat.home="${tomcat.ncia-query-grid.home}"/>
+	</target>
+	<target name="install:ncia-query-grid:tomcat:start" >
+		<tomcat-start tomcat.home="${tomcat.ncia-query-grid.home}"/>
+	</target>
+	<target name="install:mirc:tomcat:stop" if="tomcat.mirc.exists">
+		<tomcat-stop tomcat.home="${tomcat.mirc.home}"/>
+	</target>
+	<target name="install:mirc:tomcat:start" >
+		<tomcat-start tomcat.home="${tomcat.mirc.home}"/>
+	</target>
+	<target name="test:grand" >
+		<mkdir dir="${target.dir}/grand"/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-api-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctodsdataloader/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-dataloader-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctodsViewer/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-viewer-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/cagwas/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="cagwas-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/build.demo.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-demo.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/build.common.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-common.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/demo/codegen-demo/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-demo-codegen.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/build.install.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-install.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/conf/demo/client/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-demo-client.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/conf/demo/thick-client/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-demo-client-thick.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/build-custom.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-custom.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/cacoresdk/junit/build.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-junit.xml"
+			/>
+		<report-grand
+			build.file.location="/home/ssaksa/src/trunk/ctods/ctods-api/sdk-custom/build-custom.xml"
+			output.file.dir="${target.dir}/grand"
+			output.file.name="ctods-cacore-build-custom-sdk.xml"
+			/>
+	</target>
+	<target name="test:chk_ds" >
+		<jboss-read-dbconfig
+			jboss.home="${user.home}/apps/ncia/jboss-4.0.4.GA"
+			jboss.server.name="default"
+			jboss.ds-xml.file="ncia-ds.xml"
+			/>
+	</target>
+	<target name="test:ssh:ulimit">
+		<property name="ssh.server.username" value="ssaksa"/>
+		<property name="ssh.server.hostname" value="localhost"/>
+		<property name="ssh.port" value="22"/>
+		<property name="ssh.key.file" value="${user.home}/.ssh/id_dsa"/>
+		<remote-ssh remotesshcommand="echo 'before';ulimit -n;ulimit -n 2048;echo 'after';ulimit -n" />
+	</target>
+	<target name="install:validation:pre-build">
+		<validate-pre-build />
+	</target>
+	<target name="test:compare-properties">
+		<propertyvalidator keyFile="sample-properties.template"
+			compareFile="sample.properties"
+			match="atleast"
+			/>
+	</target>
+</project>
