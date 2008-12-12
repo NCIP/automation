@@ -32,6 +32,14 @@ $HeadURL$
 	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="macrodef.classpath"/>
 	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="macrodef.classpath"/>
 
+	<xmlcatalog id="installer.catalog">
+		<!--
+		<dtd 
+			publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+			location="./resources/web-app_2_3.dtd"/>
+		-->
+	</xmlcatalog>
+
  	<tstamp>
  		<format property="run.date" pattern="yyMMddHHmm"/>
  	</tstamp>
@@ -394,6 +402,7 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.name="@{database.name}"
 				/>
+			<!--
 			<jboss-ssl-verify-keystore
 				jboss.ssl.enable="@{jboss.ssl.enable}"
 				jboss.ssl.keystore.file="@{jboss.ssl.keystore.file}"
@@ -402,6 +411,7 @@ $HeadURL$
 				jboss.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
 				jboss.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
 				/>
+			-->
 		</sequential>
 	</macrodef>
 
@@ -618,13 +628,15 @@ $HeadURL$
  					<for list="@{validation.pre.port.list}" param="validate.port">
 						<sequential>
 				 			<echo message="Checking if @{validate.port} is running."/>
-				 			<condition property="port.listening">
+							<if>
 				 				<socket server="@{hostname}" port="@{validate.port}" />
-							</condition>
-				 			<antunit:assertFalse message="${line.separator}${line.separator}    Port is listening at @{hostname}:@{validate.port}.${line.separator}Verify the JBoss server is not running at @{hostname}:@{validate.port}. If it is not, there may be a different process or application using this port (@{validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing.">
-				 				<isset property="port.listening"/>
-				 			</antunit:assertFalse>
- 							<echo message="Ports check: PASSED" /> 
+								<then>
+									<fail message="${line.separator}${line.separator}    Port is listening at @{hostname}:@{validate.port}.${line.separator}Verify the JBoss server is not running at @{hostname}:@{validate.port}. If it is not, there may be a different process or application using this port (@{validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing."/>
+ 								</then>
+								<else>
+									<echo message="Ports check: PASSED" /> 
+								</else>
+							</if>
 						</sequential>
 					</for>
 				</then>
@@ -647,7 +659,7 @@ $HeadURL$
 			<propertycopy name="parent.dir" from="@{parent.dir.property}" />
 			<propertyregex property="child.good"
 				input="${child.dir}"
-				regexp="${parent.dir}/[\d\w\.\-\_]+"
+				regexp="${parent.dir}[\\/][\d\w\.\-\_]+"
 				select="true"
 				/>
 			<if>
@@ -956,11 +968,8 @@ $HeadURL$
 			<for list="${validation.post.http.list}" param="validate.port">
 				<sequential>
 					<echo message="Checking if @{validate.port} is running."/>
-					<condition property="port.listening">
-						<http url="http://@{hostname}:@{validate.port}" />
-					</condition>
 					<if>
-						<isset property="port.listening"/>
+						<http url="http://@{hostname}:@{validate.port}" />
 						<then>
 							<echo message="Port is @{validate.port} RUNNNING as expected."/>
 						</then>
@@ -978,11 +987,8 @@ $HeadURL$
 					<for list="${validation.post.socket.list}" param="validate.port" >
 						<sequential>
 							<echo message="Checking if @{validate.port} is running."/>
-							<condition property="port.listening">
-								<socket server="@{hostname}" port="@{validate.port}" />
-							</condition>
 							<if>
-								<isset property="port.listening"/>
+								<socket server="@{hostname}" port="@{validate.port}" />
 								<then>
 									<echo message="Port is @{validate.port} RUNNNING as expected."/>
 								</then>
@@ -2392,23 +2398,25 @@ $HeadURL$
 			<if>
 				<isset  property="external.has.value"/>
 				<then>
-					<property name="external.xml.block" value="${line.separator}
-	&lt;parameter name=&quot;logicalHost&quot; value=&quot;@{grid.external.host}&quot;/&gt;${line.separator}
-	&lt;parameter name=&quot;publishHostName&quot; value=&quot;true&quot;/&gt;${line.separator}
-	&lt;parameter name=&quot;disableDNS&quot; value=&quot;true&quot;/&gt;${line.separator}
-					"/>
-	<!-- don't need this one
-	&lt;parameter name=&quot;sendXsiTypes&quot; value=&quot;true&quot;/&gt;${line.separator}
-	-->
-
-	<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/server-config.wsdd"
-						match="^(\s+&lt;globalConfiguration&gt;)"
-						replace="\1${external.xml.block}"
-						flags="g" byline="true"/>
+					<securegrid-configure-server-config
+						service.hostname="grid.external.host"
+						use.secure.container="jboss.grid.secure.enable"
+						/>
 				</then>
 			</if>
 					
 			<!-- POC stuff -->
+			<echo message="Updateing POC info @{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"/>
+			<!--
+			<xmltask source="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml" dest="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml">
+				<remove path="/:ServiceMetadata/:serviceDescription/:Service/:pointOfContactCollection/:PointOfContact" />
+				<insert path="/:ServiceMetadata/:serviceDescription/:Service/:pointOfContactCollection">
+					<![CDATA[
+						<ns3:PointOfContact affiliation="@{grid.poc.science.affiliation}" email="@{grid.poc.science.email}" firstName="@{grid.poc.science.name.first}" lastName="@{grid.poc.science.name.last}" phoneNumber="@{grid.poc.science.phone}" role="@{grid.poc.science.role}" "/>
+					]]>
+				</insert>
+			</xmltask>
+			-->
 			<property name="poc.science.string" value=" affiliation=&quot;@{grid.poc.science.affiliation}&quot; email=&quot;@{grid.poc.science.email}&quot; firstName=&quot;@{grid.poc.science.name.first}&quot; lastName=&quot;@{grid.poc.science.name.last}&quot; phoneNumber=&quot;@{grid.poc.science.phone}&quot; role=&quot;@{grid.poc.science.role}&quot; "/>
 
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
@@ -2709,11 +2717,6 @@ $HeadURL$
 					<chmod dir="@{target.dir}/@{izpack.binary.name}/bin" perm="ugo+rx" includes="compile" />
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-	<macrodef name="read">
-		<attribute name="bda-utils.dir" default="${bda-download.dir}" />
-		<sequential>
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-read-ldapconfig" description="check if the application is installed">
@@ -3213,127 +3216,6 @@ $HeadURL$
 				</then>
 				<else>
 					<echo message="Not copying tools based on flag"/>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="jboss-ssl-enable" description="macro for enabling ssl in jboss">
-		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
-		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
-		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
-		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
-		<sequential>
-			<!-- Questions
-			If you connect to http will it automatically redirect you to https?
-			Will bindnings work?
-			-->
-			<if>
-				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
-				<then>
-					<echo message="Install JBoss SSL configurations"/>
-
-					<!-- copy keystore to ${jboss.home}/server/${jboss.server.name}/conf -->
-					<copy todir="@{jboss.home}/server/@{jboss.server.name}/conf" file="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file}"/>
-
-					<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
-					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-						match="(&lt;\!-- SSL.TLS Connector.*)(${line.separator}\s+&lt;Connector port=&quot;8443&quot;)"
-						replace="\1 (Connector block un commented by BDA build script) --&gt;\2"
-						flags="sg"
-						/>
-					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-						match="(sslProtocol = &quot;TLS&quot; /&gt;${line.separator}).*(${line.separator}\s+&lt;Engine name=&quot;jboss.web&quot;)"
-						replace="\1\2"
-						flags="sg"
-						/>
-					<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
-						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystoreFile" withText="@{jboss.home}/server/@{jboss.server.name}/conf/@{jboss.ssl.keystore.file}" />
-						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystorePass" withText="@{jboss.ssl.keystore.pass}" />
-					</xmltask>
-				</then>
-				<else>
-					<echo message="jboss.ssl.enable not set or true so skipping install of JBoss SSL configuration"/>
-				</else>
-			</if>
-
-		</sequential>
-	</macrodef>
-	<macrodef name="jboss-ssl-verify-keystore" description="macro for verifying a keystore">
-		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
-		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
-		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
-		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
-		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
-		<sequential>
-			<if>
-				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
-				<then>
-					<echo message="Validating JBoss SSL configurations"/>
-			<groovy>
-				<arg line="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file} @{jboss.ssl.keystore.pass} @{jboss.ssl.keystore.alias} @{jboss.ssl.fullyqualified.hostname}"/>
-				import java.util.regex.Matcher
-				import java.util.regex.Pattern
-
-				String certFile = args[0]
-				String certPass = args[1]
-				String certAlias = args[2]
-				String fqhn = args[3]
-
-				certFile = new File(certFile)
-				results = "keytool -list -keystore ${certFile} -storepass ${certPass} -alias ${certAlias} -v".execute()
-				results.waitFor()
-				if (results.exitValue() > 0)
-				{
-				System.err.println "keytool command failed with following results:"
-				System.err.println results.text
-				System.exit(1)
-				}
-
-				results.text.eachLine
-				{ cline ->
-				//Owner: CN=*.nci.nih.gov, OU=National Cancer Institute, O=National Institute of Health, L=Rockville, ST=Maryland, C=US
-				//m = java.util.regex.Pattern.compile(/^Owner:\s+CN=([\w\d\-\_\.\*]+).*/).matcher(cline)
-				m = cline =~ /^Owner:\s+CN=([^\.]+)([\w\d\-\_\.]+).*/
-				if (m.matches())
-				{
-				host = m.group(1)
-				domain = m.group(2)
-				certfqhn = host + domain
-				println "Found host = '${host}' domain = '${domain}' in - ${cline}"
-				if (host.equals('*'))
-				{
-				if (fqhn.indexOf(domain) > 0)
-				{
-				println "${fqhn} matches ${domain}"
-				} else
-				{
-				System.err.println "${fqhn} FAILED MATCH ${domain}"
-				System.exit(2)
-				}
-				} else
-				{
-				if (fqhn.equals(certfqhn))
-				{
-				println "${fqhn} matches ${certfqhn}"
-				} else
-				{
-				System.err.println "${fqhn} FAILED MATCH ${certfqhn}"
-				System.exit(2)
-				}
-				}
-				}
-				}
-
-			</groovy>
-				</then>
-				<else>
-					<echo message="jboss.ssl.enable not set or true so skipping ssl validation"/>
 				</else>
 			</if>
 		</sequential>
