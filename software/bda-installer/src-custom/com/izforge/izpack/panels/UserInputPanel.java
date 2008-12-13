@@ -91,7 +91,7 @@ import java.util.List;
  * To Do: ------ * make sure all header documentation is complete and correct
  * --------------------------------------------------------------------------
  */
-public class EnhancedValidationUserInputPanel extends IzPanel implements ActionListener
+public class UserInputPanel extends IzPanel implements ActionListener
 {
 
     // ------------------------------------------------------------------------
@@ -382,13 +382,13 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
     // }
     /*--------------------------------------------------------------------------*/
     /**
-     * Constructs a <code>EnhancedValidationUserInputPanel</code>.
+     * Constructs a <code>UserInputPanel</code>.
      *
      * @param parent      reference to the application frame
      * @param installData shared information about the installation
      */
     /*--------------------------------------------------------------------------*/
-    public EnhancedValidationUserInputPanel(InstallerFrame parent, InstallData installData)
+    public UserInputPanel(InstallerFrame parent, InstallData installData)
     {
         super(parent, installData);
         instanceNumber = instanceCount++;
@@ -662,7 +662,7 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
         constraints2.position = TwoColumnConstraints.EAST;
 
         // TODO: use separate key for button text
-        JButton button = ButtonFactory.createButton(idata.langpack.getString("EnhancedValidationUserInputPanel.search.browse"), idata.buttonsHColor);
+        JButton button = ButtonFactory.createButton(idata.langpack.getString("UserInputPanel.search.browse"), idata.buttonsHColor);
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -775,7 +775,7 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
         uiff.setFileExtDesc(filterdesc);
 
         // TODO: use separate key for button text
-        JButton button = ButtonFactory.createButton(idata.langpack.getString("EnhancedValidationUserInputPanel.search.browse"), idata.buttonsHColor);
+        JButton button = ButtonFactory.createButton(idata.langpack.getString("UserInputPanel.search.browse"), idata.buttonsHColor);
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1188,8 +1188,8 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
 
     private void showMessage(String messageType)
     {
-        JOptionPane.showMessageDialog(parent, parent.langpack.getString("EnhancedValidationUserInputPanel." + messageType + ".message"),
-                parent.langpack.getString("EnhancedValidationUserInputPanel." + messageType + ".caption"),
+        JOptionPane.showMessageDialog(parent, parent.langpack.getString("UserInputPanel." + messageType + ".message"),
+                parent.langpack.getString("UserInputPanel." + messageType + ".caption"),
                 JOptionPane.WARNING_MESSAGE);
     }
 
@@ -2351,7 +2351,7 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
                 if (!success)
                 {
                     JOptionPane.showMessageDialog(parentFrame, group.getValidatorMessage(i),
-                            parentFrame.langpack.getString("EnhancedValidationUserInputPanel.error.caption"),
+                            parentFrame.langpack.getString("UserInputPanel.error.caption"),
                             JOptionPane.WARNING_MESSAGE);
                     break;
                 }
@@ -2360,7 +2360,7 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
 
 //    // Changed to show messages for each validator
 //    if (!success) {
-//      JOptionPane.showMessageDialog(parentFrame, message, parentFrame.langpack.getString("EnhancedValidationUserInputPanel.error.caption"), JOptionPane.WARNING_MESSAGE);
+//      JOptionPane.showMessageDialog(parentFrame, message, parentFrame.langpack.getString("UserInputPanel.error.caption"), JOptionPane.WARNING_MESSAGE);
 //      return (false);
 //    }
 
@@ -2670,14 +2670,14 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
         if ((filename != null) && (filename.length() > 0))
         {
             tooltiptext.append(MessageFormat.format(parentFrame.langpack
-                    .getString("EnhancedValidationUserInputPanel.search.location"), new Object[]{new String[]{filename}}));
+                    .getString("UserInputPanel.search.location"), new Object[]{new String[]{filename}}));
         }
 
         boolean showAutodetect = (check_filename != null) && (check_filename.length() > 0);
         if (showAutodetect)
         {
             tooltiptext.append(MessageFormat.format(parentFrame.langpack
-                    .getString("EnhancedValidationUserInputPanel.search.location.checkedfile"), new Object[]{new String[]{check_filename}}));
+                    .getString("UserInputPanel.search.location.checkedfile"), new Object[]{new String[]{check_filename}}));
         }
 
         if (tooltiptext.length() > 0)
@@ -2693,16 +2693,16 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
                 com.izforge.izpack.gui.FlowLayout.LEADING));
 
         JButton autodetectButton = ButtonFactory.createButton(parentFrame.langpack
-                .getString("EnhancedValidationUserInputPanel.search.autodetect"), idata.buttonsHColor);
+                .getString("UserInputPanel.search.autodetect"), idata.buttonsHColor);
         autodetectButton.setVisible(showAutodetect);
 
         autodetectButton.setToolTipText(parentFrame.langpack
-                .getString("EnhancedValidationUserInputPanel.search.autodetect.tooltip"));
+                .getString("UserInputPanel.search.autodetect.tooltip"));
 
         buttonPanel.add(autodetectButton);
 
         JButton browseButton = ButtonFactory.createButton(parentFrame.langpack
-                .getString("EnhancedValidationUserInputPanel.search.browse"), idata.buttonsHColor);
+                .getString("UserInputPanel.search.browse"), idata.buttonsHColor);
 
         buttonPanel.add(browseButton);
 
@@ -3649,8 +3649,8 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
             {
                 if (!autodetect())
                 {
-                    showMessageDialog(parent, "EnhancedValidationUserInputPanel.search.autodetect.failed.message",
-                            "EnhancedValidationUserInputPanel.search.autodetect.failed.caption",
+                    showMessageDialog(parent, "UserInputPanel.search.autodetect.failed.message",
+                            "UserInputPanel.search.autodetect.failed.caption",
                             JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -3674,8 +3674,8 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
                     // use any given directory directly
                     if (this.resultType != TYPE_FILE && !this.pathMatches(f.getAbsolutePath()))
                     {
-                        showMessageDialog(parent, "EnhancedValidationUserInputPanel.search.wrongselection.message",
-                                "EnhancedValidationUserInputPanel.search.wrongselection.caption",
+                        showMessageDialog(parent, "UserInputPanel.search.wrongselection.message",
+                                "UserInputPanel.search.wrongselection.caption",
                                 JOptionPane.WARNING_MESSAGE);
 
                     }
@@ -3840,7 +3840,7 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
     private void showWarningMessageDialog(InstallerFrame parentFrame, String message)
     {
         showMessageDialog(parentFrame, message,
-                parentFrame.langpack.getString("EnhancedValidationUserInputPanel.error.caption"),
+                parentFrame.langpack.getString("UserInputPanel.error.caption"),
                 JOptionPane.WARNING_MESSAGE);
     }
 
@@ -3900,7 +3900,7 @@ public class EnhancedValidationUserInputPanel extends IzPanel implements ActionL
 
     }
 
-} // public class EnhancedValidationUserInputPanel
+} // public class UserInputPanel
 
 /*---------------------------------------------------------------------------*/
 class UserInputFileFilter extends FileFilter
