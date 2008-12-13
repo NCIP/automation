@@ -673,8 +673,8 @@ public class UserInputPanel extends IzPanel implements ActionListener
 
                 if (filechooser.showOpenDialog(parentFrame) == JFileChooser.APPROVE_OPTION)
                 {
-                    filetxt.setText(filechooser.getSelectedFile().getAbsolutePath());
-                    currentDirectoryPath = filechooser.getSelectedFile().getAbsolutePath();
+                    filetxt.setText(filechooser.getCurrentDirectory().getAbsolutePath());
+                    currentDirectoryPath = filechooser.getCurrentDirectory().getAbsolutePath();
                     Debug.trace("Setting current file chooser directory to: " + currentDirectoryPath);
                 }
             }
