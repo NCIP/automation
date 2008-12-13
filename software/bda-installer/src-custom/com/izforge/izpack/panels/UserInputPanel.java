@@ -1182,6 +1182,8 @@ public class UserInputPanel extends IzPanel implements ActionListener
         }
         catch (Exception e)
         {
+			System.err.println("Cannot read Directory field: " + e.getMessage());
+			e.printStackTrace(System.err);
             if (Debug.stackTracing())
             {
                 Debug.trace(e);
