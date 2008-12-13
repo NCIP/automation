@@ -1136,10 +1136,12 @@ public class UserInputPanel extends IzPanel implements ActionListener
 
     private boolean readDirectoryField(Object[] field)
     {
+		System.out.println("readDirectoryField(Object[]) starting...");
         try
         {
             ProcessingJPanel panel = (ProcessingJPanel) field[POS_FIELD];
             String message = (String) field[POS_MESSAGE];
+            System.out.println("message =" + message + "=");
             JTextField textf = (JTextField) panel.getComponent(0);
             String file = textf.getText();
             if (file != null)
@@ -1150,6 +1152,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
                 	// validate the input
                     Debug.trace("Validating text field");
                     boolean success = panel.validateContents();
+            		System.out.println("success =" + success + "=");
                     if (!success)
                     {
                         Debug.trace("Validation did not pass, message: " + message);
