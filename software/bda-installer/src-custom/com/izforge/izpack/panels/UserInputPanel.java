@@ -555,6 +555,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
 		HashMap<String, String> validateParamMap = null;
 		Vector<XMLElement> validateParams = null;
         String validator = null;
+        String message = null;
 
         String variable = field.getAttribute(VARIABLE);
         if ((variable == null) || (variable.length() == 0))
@@ -623,7 +624,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
         {
             validator = validatorXmlElement.getAttribute(CLASS);
             Debug.trace("Validator found for text field: " + validator);
-            String message = getText(validatorXmlElement);
+            message = getText(validatorXmlElement);
             // ----------------------------------------------------------
             // check and see if we have any parameters for this validator.
             // If so, then add them to validateParamMap.
