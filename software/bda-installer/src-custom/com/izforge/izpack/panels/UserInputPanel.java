@@ -684,7 +684,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
         panel.add(filetxt);
         panel.add(button);
         uiElements.add(new Object[]{null, DIR_FIELD, variable, constraints2, panel, forPacks,
-                forOs});
+                forOs, null, null, message});
 
     }
 
