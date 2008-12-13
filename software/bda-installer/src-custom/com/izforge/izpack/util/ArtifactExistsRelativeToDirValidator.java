@@ -39,6 +39,7 @@ public class ArtifactExistsRelativeToDirValidator implements
 			boolean isDir = Boolean.valueOf(paramMap.get(IS_DIR_PARAM)).booleanValue();
 			System.out.println("isDir =" + isDir + "=");
 			File artifactFile = new File(specifiedDirPath + File.separator + artifactPathRelativeToText);
+			System.out.println("artifactFile.getAbsolutePath() =" + artifactFile.getAbsolutePath() + "=");
 			artifactExists = artifactFile.exists();
 			if (artifactExists && isDir) {
 				artifactExists = artifactFile.isDirectory();
