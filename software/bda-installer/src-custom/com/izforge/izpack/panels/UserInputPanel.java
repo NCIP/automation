@@ -656,7 +656,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
         TwoColumnConstraints constraints = new TwoColumnConstraints();
         constraints.position = TwoColumnConstraints.WEST;
 
-        uiElements.add(new Object[]{null, FIELD_LABEL, null, constraints, label, forPacks, forOs});
+        uiElements.add(new Object[]{null, FIELD_LABEL, null, constraints, label, forPacks, forOs, null, null, message});
 
         TwoColumnConstraints constraints2 = new TwoColumnConstraints();
         constraints2.position = TwoColumnConstraints.EAST;
@@ -1138,6 +1138,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
         try
         {
             ProcessingJPanel panel = (ProcessingJPanel) field[POS_FIELD];
+            String message = (String) field[POS_MESSAGE];
             JTextField textf = (JTextField) panel.getComponent(0);
             String file = textf.getText();
             if (file != null)
@@ -1150,7 +1151,6 @@ public class UserInputPanel extends IzPanel implements ActionListener
                     boolean success = panel.validateContents();
                     if (!success)
                     {
-                    	String message = null;
                         Debug.trace("Validation did not pass, message: " + message);
                         if (message == null)
                         {
