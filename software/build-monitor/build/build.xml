@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="buildmonitor" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+	<!-- PROPERTIES -->
+	<property name="software.dir" value="${basedir}/.." />
+	<property name="lib.dir" value="${software.dir}/lib" />
+	<property name="source.dir" value="${software.dir}/src/main/java" />
+	<property name="resource.dir" value="${software.dir}/src/main/resources" />
+	<property name="classes.dir" value="${software.dir}/classes" />
+	<property name="target.dir" value="${software.dir}/target" />
+	<property name="dist.dir" value="${target.dir}/dist" />
+	<property name="build.monitor.jar" value="build-monitor.jar" />
+	
+	<property file="${basedir}/install.properties"/>
+
+		
+	<property name="sql.file" value="${sql.dir}/create_buildmonitor_schema.sql" />
+	
+	<property name="deploy.dir" value="${user.home}/buildmonitor" />
+	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
+	
+	
+
+	<!-- PATHS -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="project.classpath"/>
+
+	<target name="init" depends="clean" description="create table and populate data">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="clean" description="create table and populate data">
+		<delete dir="${classes.dir}" />
+		<delete dir="${target.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="deploy:init" depends="deploy:clean" description="create table and populate data">
+		<mkdir dir="${deploy.dir}" />
+	</target>
+
+
+	<target name="deploy:clean" description="create table and populate data">
+		<delete dir="${deploy.dir}" />
+	</target>
+
+
+	<target name="generate-sql" description="create table and populate data">
+		<run-sql-script sql.file="${sql.file}"  database.url="${database.url}" database.user="" database.password=""/>
+	
+	</target>
+
+
+	<target name="run" depends="init,compile,package,deploy" description="Run the class to update Wiki">
+						
+	</target>
+	
+	<target name="compile"  description="Compile the build monitor source">
+		<javac srcdir="${source.dir}" destdir="${classes.dir}" classpathref="project.classpath"/>		
+	</target>
+
+	<target name="prepare" description="Package the build monitor">		
+		<copy todir="${classes.dir}" overwrite="true">
+			<fileset dir="${source.dir}">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+	</target>
+
+
+	<target name="package" depends="prepare" description="Package the build monitor">
+		<jar destfile="${dist.dir}/${build.monitor.jar}" basedir="${classes.dir}" update="true" />
+	</target>
+
+
+	<target name="deploy:artifacts" depends="deploy:init,package" description="Package the build monitor">
+		<copy todir="${deploy.dir}" overwrite="true">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+
+		<copy file="${dist.dir}/${build.monitor.jar}" todir="${deploy.dir}" />
+		<copy file="${resource.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
+		
+	</target>
+
+	<target name="deploy:configure"  description="Package the build monitor">
+		<xmltask failWithoutMatch="true" source="${deploy.dir}/${hibernate.config.file}" dest="${deploy.dir}/${hibernate.config.file}">		
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.driver_class']/text()" withtext="${database.driver}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.url']/text()" withtext="${database.url}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.username']/text()" withtext="${database.user}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.password']/text()" withtext="${database.password}"/>
+		</xmltask>
+	</target>
+
+	<target name="deploy" depends="deploy:artifacts,deploy:configure" description="deploy the build monitor">
+		
+	</target>
+
+
+
+	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
+		<attribute name="sql.file" />
+		<attribute name="sql.delimiter" default=";" />
+		<attribute name="sql.delimitertype" default="normal" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="onerror" default="abort" />
+		<sequential>
+			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+				<classpath>
+					<pathelement location="${lib.dir}/derby.jar" />
+				</classpath>
+			</sql>
+		</sequential>
+	</macrodef>
+
+
+</project>
