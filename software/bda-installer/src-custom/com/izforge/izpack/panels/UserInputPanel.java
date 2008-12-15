@@ -1158,7 +1158,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
                         Debug.trace("Validation did not pass, message: " + message);
                         if (message == null)
                         {
-                            message = "Text entered did not pass validation.";
+                            message = "Directory entered did not pass validation.";
                         }
                         showWarningMessageDialog(parentFrame, message);
                         return (false);
