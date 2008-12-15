@@ -11,6 +11,14 @@
 	<property name="database.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
 	<property name="database.url" value="jdbc:derby:${database.name};create=true" />
 	<property name="sql.file" value="${sql.dir}/populate_wikiDB.sql" />
+	<property name="target.dir" value="${software.dir}/target" />
+	<property name="dist.dir" value="${target.dir}/dist" />
+	<property name="deploy.dir" value="${target.dir}/deploy" />
+	<property name="wiki_cli_jar" value="wiki_cli_nci.jar" />
+	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
+	
+	
+	
 	<echo message="${lib.dir}"/>
 
 	<!-- PATHS -->
@@ -24,7 +32,16 @@
 
 	<target name="init" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${dist.dir}" />
 	</target>
+
+	<target name="clean" description="create table and populate data">
+		<delete dir="${classes.dir}" />
+		<delete dir="${target.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
 
 	<target name="generate-sql" description="create table and populate data">
 		<run-sql-script sql.file="${sql.file}"  database.url="${database.url}" database.user="" database.password=""/>
@@ -32,28 +49,48 @@
 	</target>
 
 
-	<target name="run" depends="init" description="Run the class to update Wiki">
+	<target name="run" depends="init,build,package,deploy" description="Run the class to update Wiki">
+		
+	</target>
+	
+	
+	<target name="build" description="build the class to update Wiki">
 		<groovyc srcdir="${source.dir}" destdir="${classes.dir}">
 			<classpath>
 				<pathelement location="${lib.dir}/groovy-all-1.6-beta-1.jar"/>
 			</classpath>
 			<javac source="1.5" target="1.5" debug="on" />
 		</groovyc>
+	</target>
 
-		<jar destfile="${software.dir}/wiki_cli_nci.jar" basedir="${classes.dir}" update="true" />
-		
-		<java classname="gov.nih.nci.confluence.TableUpdater">	
+
+	<target name="package" description="package the jar to update Wiki">
+		<jar destfile="${dist.dir}/${wiki_cli_jar}" basedir="${classes.dir}" update="true" />
+	</target>
+
+
+	<target name="deploy" description="Run the class to update Wiki">
+		<copy todir="${deploy.lib.dir}" overwrite="true">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+
+		<copy file="${dist.dir}/${wiki_cli_jar}" todir="${deploy.dir}" />
+		<copy file="${software.dir}/wiki.properties" todir="${deploy.dir}" />
+	</target>
+
+
+	<target name="execute" description="Run the class to update Wiki">
+		<java classname="gov.nih.nci.confluence.BuildStatusUpdater">	
 			<classpath>
-				<pathelement location="${software.dir}/wiki_cli_nci.jar"/>
-				<pathelement location="${lib.dir}/groovy-all-1.6-beta-1.jar"/>
-				<pathelement location="${lib.dir}/derby.jar"/>
+				<pathelement location="${deploy.dir}/wiki_cli_nci.jar"/>
+				<pathelement location="${deploy.lib.dir}/groovy-all-1.6-beta-1.jar"/>
+				<pathelement location="${deploy.lib.dir}/mysql-connector-java-5.0.5.jar"/>
 			</classpath>
-		</java>
-
-		
+		</java>		
 	</target>
 	
-
 	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
 		<attribute name="sql.file" />
 		<attribute name="sql.delimiter" default=";" />

@@ -2241,6 +2241,7 @@ software/confluence-cli/lib/jsap-2.1.jar -text
 software/confluence-cli/lib/log4j-1.2.12.jar -text
 software/confluence-cli/lib/logkit-1.0.1.jar -text
 software/confluence-cli/lib/mail-1.4.jar -text
+software/confluence-cli/lib/mysql-connector-java-5.0.5.jar -text
 software/confluence-cli/lib/servlet-api-2.3.jar -text
 software/confluence-cli/license/LICENSE-APACHE.txt -text
 software/confluence-cli/license/LICENSE-DOLBY.txt -text
@@ -2251,6 +2252,7 @@ software/confluence-cli/pom.xml -text
 software/confluence-cli/source.txt -text
 software/confluence-cli/sql/populate_wikiDB.sql -text
 software/confluence-cli/src/assembly/release.xml -text
+software/confluence-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 software/confluence-cli/src/main/java/gov/nih/nci/confluence/TableUpdater.groovy -text
 software/confluence-cli/src/main/java/org/swift/confluence/cli/ConfluenceClient.java -text
 software/confluence-cli/src/main/resources/confluence.bat -text
@@ -2268,6 +2270,7 @@ software/confluence-cli/target/examples/examples.txt -text
 software/confluence-cli/target/examples/input.txt -text
 software/confluence-cli/target/examples/source.txt -text
 software/confluence-cli/target/release.xml -text
+software/confluence-cli/wiki.properties -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
