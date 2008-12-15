@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" href="./DataBasketAnnotationResultSet.html" title="&lt;TABLE&gt;" alt="" coords="16,378,379,562"/>
+<area shape="rect" href="./DataBasketSeriesResultSet.html" title="&lt;TABLE&gt;" alt="" coords="424,210,781,730"/>
+<area shape="rect" href="./ImageResultSet.html" title="&lt;TABLE&gt;" alt="" coords="827,234,1149,706"/>
+<area shape="rect" href="./PatientResultSet.html" title="&lt;TABLE&gt;" alt="" coords="1195,354,1445,586"/>
+<area shape="rect" href="./QuarantinedFileResultSet.html" title="&lt;TABLE&gt;" alt="" coords="1491,306,1813,634"/>
+<area shape="rect" href="./ResultSet.html" title="&lt;TABLE&gt;" alt="" coords="1613,17,1691,41"/>
+<area shape="rect" href="./SeriesContentTypeResultSet.html" title="&lt;TABLE&gt;" alt="" coords="1859,426,2299,514"/>
+<area shape="rect" href="./SingleDateResultSet.html" title="&lt;TABLE&gt;" alt="" coords="2344,426,2501,514"/>
+<area shape="rect" href="./StudyResultSet.html" title="&lt;TABLE&gt;" alt="" coords="2547,154,2883,786"/>
+<area shape="rect" href="./VerifySubmissionResultSet.html" title="&lt;TABLE&gt;" alt="" coords="2928,106,3440,834"/>
+</map>

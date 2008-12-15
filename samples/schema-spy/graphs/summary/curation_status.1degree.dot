@@ -1,0 +1,37 @@
+// dot 2.16.1 on Linux 2.6.25.6-27.fc8
+digraph "curation_status" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "curation_status" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD PORT="curation_status.heading" COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">curation_status</TD></TR>
+      <TR><TD PORT="curation_pk_id" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">curation_pk_id</TD></TR>
+      <TR><TD PORT="sop_instance_uid" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">sop_instance_uid</TD></TR>
+      <TR><TD PORT="curation_status" COLSPAN="3" ALIGN="LEFT">curation_status</TD></TR>
+      <TR><TD PORT="visibility" COLSPAN="3" ALIGN="LEFT">visibility</TD></TR>
+      <TR><TD PORT="curator_name" COLSPAN="3" ALIGN="LEFT">curator_name</TD></TR>
+      <TR><TD PORT="curation_timestamp" COLSPAN="3" ALIGN="LEFT">curation_timestamp</TD></TR>
+      <TR><TD PORT="comments" COLSPAN="3" ALIGN="LEFT">comments</TD></TR>
+      <TR><TD PORT="file_load_timestamp" COLSPAN="3" ALIGN="LEFT">file_load_timestamp</TD></TR>
+      <TR><TD PORT="db_update_status" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">db_update_status</TD></TR>
+      <TR><TD PORT="db_update_timestamp" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">db_update_timestamp</TD></TR>
+      <TR><TD PORT="patient_id" COLSPAN="3" ALIGN="LEFT">patient_id</TD></TR>
+      <TR><TD PORT="study_instance_uid" COLSPAN="3" ALIGN="LEFT">study_instance_uid</TD></TR>
+      <TR><TD PORT="series_instance_uid" COLSPAN="3" ALIGN="LEFT">series_instance_uid</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/curation_status.html#"
+    tooltip="curation_status"
+  ];
+}
