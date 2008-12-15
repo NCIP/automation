@@ -93,7 +93,12 @@
 	</target>
 
 	<target name="deploy:configure"  description="Package the build monitor">
-		<xmltask failWithoutMatch="true" source="${deploy.dir}/${hibernate.config.file}" dest="${deploy.dir}/${hibernate.config.file}">		
+		<xmltask failWithoutMatch="true" source="${deploy.dir}/${hibernate.config.file}" 
+			dest="${deploy.dir}/${hibernate.config.file}"
+			public="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+               		system="http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"
+               		omitHeader="true"
+		>		
 			<replace path="/hibernate-configuration/session-factory/property[@name='connection.driver_class']/text()" withtext="${database.driver}"/>
 			<replace path="/hibernate-configuration/session-factory/property[@name='connection.url']/text()" withtext="${database.url}"/>
 			<replace path="/hibernate-configuration/session-factory/property[@name='connection.username']/text()" withtext="${database.user}"/>
