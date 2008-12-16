@@ -115,7 +115,8 @@ public class BuildMonitorHelper {
 	    session.beginTransaction(); 		    
 		
 		if (!bmb.isBuildSuccessful()) 
-		{											    		    
+		{	
+			// build failed
 		    Query query = session.createQuery( " from ProjectBuildStatus where product= :projectName ");
 		    query.setString("projectName", projectName);			
 		    Iterator it=query.iterate();			
@@ -133,12 +134,34 @@ public class BuildMonitorHelper {
 		    else
 		    {
 		    	pbs = new ProjectBuildStatus();
-		    	pbs.setProduct(projectName);
-		    	pbs.setDev(BuildMonitorConstants.WIKI_FAILED);
-		    	pbs.setQa(BuildMonitorConstants.WIKI_FAILED);
-		    	pbs.setStage(BuildMonitorConstants.WIKI_FAILED);
-		    	pbs.setProd(BuildMonitorConstants.WIKI_FAILED);
-		    	session.save(pbs);		    	
+		    	Method[] methods = pbs.getClass().getMethods();
+		    	for (int i = 0; i < methods.length; i++)
+		    	{
+		    		if(methods[i].getName().equals(methodName))
+    				{
+		    			try 
+		    			{
+		    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_FAILED));
+		    			}
+				    	catch (Exception e) {				
+							e.printStackTrace();
+						}
+    				}
+		    		else if(methods[i].getName().startsWith("set"))
+		    		{
+		    			if(!(methods[i].getName().equals("setProduct") || methods[i].getName().equals("setId")))
+						{
+			    			try 
+			    			{
+			    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_NOTBUILD));
+							}
+			    			catch (Exception e) 
+			    			{				
+			    				e.printStackTrace();
+			    			}
+						}
+		    		}
+		    	}	    	
 		    }
 
 	    	BuildHistory bh = new BuildHistory();
@@ -153,7 +176,7 @@ public class BuildMonitorHelper {
 		}
 		else
 		{						
-		    
+			// build successful	    
 		    Query query = session.createQuery( " from ProjectBuildStatus where product= :projectName ");
 		    query.setString("projectName", projectName);
 			pbs= (ProjectBuildStatus) query.uniqueResult();
@@ -190,7 +213,7 @@ public class BuildMonitorHelper {
 						{
 			    			try 
 			    			{
-			    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_FAILED));
+			    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_NOTBUILD));
 							}
 			    			catch (Exception e) 
 			    			{				
