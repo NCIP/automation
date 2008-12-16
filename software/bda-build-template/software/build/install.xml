@@ -101,7 +101,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<property name="grid.resource.dir" value="${basedir}/${grid.dist.relative.dir}" />
 	<property name="grid.application.dir" value="${basedir}/${grid-sample.dist.relative.dir}" />
 	<property name="grid.artifact.file" value="sample-wsrf-war.zip" />
-	<property name="grid.dir.dest" value="wsrf.war" />
+	<property name="grid.dir.dest" value="wsrf" />
 	<property name="grid.application.name" value="Sample" />
 	<property name="resource.file.jboss-globus-lib" value="jboss-globus-libs-cagrid1_1.zip" />
 	<property name="resource.file.jboss-globus-war" value="jboss-globus-wsrf-war-cagrid1_1.zip" />
@@ -709,8 +709,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<target name="install:jboss:grid:configure" description="Configure tomcat-application" unless="exclude.jboss">
-		<grid-appserver-configure
-			
+		<configurer-grid
 			/>
 	</target>
 
@@ -773,9 +772,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	</target>
 	<target name="-install:jboss:configure:enable-ssl">
-		<!--
 		<jboss-ssl-enable
 			/>
-		-->
 	</target>
 </project>
