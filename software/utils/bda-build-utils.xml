@@ -2372,15 +2372,62 @@ $HeadURL$
 		<attribute name="grid.poc.tech.role" default="${grid.poc.tech.role}"/>
 		<attribute name="grid.external.host" default="${grid.external.host}"/>
 		<attribute name="grid.external.port" default="${grid.external.port}"/>
+		<attribute name="grid.secure.enable" default="false"/>
+		<attribute name="grid.secure.key.file.location" default="${grid.secure.key.file.location}"/>
+		<attribute name="grid.secure.cert.file.location" default="${grid.secure.cert.file.location}"/>
 		<sequential>
+			<switch value="@{grid.secure.enable}">
+				<case value="true">
+					<property name="scheme" value="https"/>
+				</case>
+				<case value="false">
+					<property name="scheme" value="http"/>
+				</case>
+				<default>
+					<fail message="grid.secure.enable must be true or false"/>
+				</default>
+			</switch>
+
 			<!-- Fix all wsdl files that refer to statically defined host and port -->
 			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port}">
 				<include name="**/*.wsdl" />
 			</replace>
+
 			<!-- Fix default jndi-config -->
 			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port}"/>
+
 			<!-- fix web.xml -->
-			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/web.xml" token="@{search.port}" value="@{appserver.port}"/>
+			<update-grid-web-xml-protocol
+				appserver.webapp.dir="@{appserver.webapp.dir}"
+				scheme="@{scheme}"
+				port="@{appserver.port}"
+				/>
+
+			<!-- Secure Grid configuraiotns -->
+			<if>
+				<equals arg1="@{grid.secure.enable}" arg2="true"/>
+				<then>
+					<echo message="grid.secure.enable=true, configuring secure grid services"/>
+					<grid-secure-configure-connector
+						appserver.webapp.dir="@{appserver.application.dir}"
+						grid.secure.key.file.location="@{grid.secure.key.file.location}"
+						grid.secure.cert.file.location="@{service.key.path}"
+						/>
+					<grid-secure-configure-valve
+						appserver.webapp.dir="@{appserver.application.dir}"
+						/>
+					<grid-secure-configure-files
+						appserver.webapp.dir="@{appserver.application.dir}"
+						secdesc.file="@{secdesc.file}"
+						grid.secure.key.file.location="@{grid.secure.key.file.location}"
+						grid.secure.cert.file.location="@{service.key.path}"
+						/>
+				</then>
+				<else>
+					<echo message="grid.secure.enable=false, skipping configuring secure grid services"/>
+				</else>
+
+			</if>
 
 			<!-- Fix service specific jndi-config -->
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
@@ -2396,9 +2443,9 @@ $HeadURL$
 			<if>
 				<isset  property="external.has.value"/>
 				<then>
-					<securegrid-configure-server-config
+					<grid-configure-server-config
 						service.hostname="grid.external.host"
-						use.secure.container="jboss.grid.secure.enable"
+						grid.secure.enable="jboss.grid.secure.enable"
 						/>
 				</then>
 			</if>
@@ -3242,15 +3289,12 @@ $HeadURL$
 					<copy todir="@{jboss.home}/server/@{jboss.server.name}/conf" file="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file}"/>
 
 					<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
-					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-						match="(&lt;\!-- SSL.TLS Connector.*)(${line.separator}\s+&lt;Connector port=&quot;8443&quot;)"
-						replace="\1 (Connector block un commented by BDA build script) --&gt;\2"
-						flags="sg"
-						/>
-					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-						match="(sslProtocol = &quot;TLS&quot; /&gt;${line.separator}).*(${line.separator}\s+&lt;Engine name=&quot;jboss.web&quot;)"
-						replace="\1\2"
-						flags="sg"
+					<insert-jboss-ssl-connector
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.ssl.keystore.file="@{jboss.ssl.keystore.file}"
+						jboss.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
+						jboss.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
 						/>
 					<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
 						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystoreFile" withText="@{jboss.home}/server/@{jboss.server.name}/conf/@{jboss.ssl.keystore.file}" />
@@ -3374,14 +3418,13 @@ $HeadURL$
 		</sequential>      
 	</macrodef>
 
-	<macrodef name="insert-jboss-securegrid-connector" description="Inserts a secure connector configuration into a tomcat configuration, including jboss tomcat">
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="service.cert.path" default="${service.cert.path}" />
-		<attribute name="service.key.path" default="${service.key.path}" />
+	<macrodef name="grid-secure-configure-connector" description="Inserts a secure connector configuration into a tomcat configuration, including jboss tomcat">
+		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
+		<attribute name="grid.secure.key.file.location" default="${grid.secure.key.file.location}" />
+		<attribute name="grid.secure.cert.file.location" default="${service.key.path}" />
 		<sequential>
-			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-				dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
+			<xmltask source="@{appserver.webapp.dir}/jbossweb-tomcat55.sar/server.xml"
+				dest="@{appserver.webapp.dir}/jbossweb-tomcat55.sar/server.xml">
 				<remove	path="/Server/Service[@name='Catalina']/Connector[@scheme='https']" />
 				<insert path="/Server/Service[@name='Catalina']">
 					<![CDATA[
@@ -3396,19 +3439,18 @@ $HeadURL$
 						enableLookups="true" 
 						acceptCount="10" 
 						debug="0" 
-						cert="@{service.cert.path}"
-						key="@{service.key.path}"/>
+						cert="@{grid.secure.key.file.location}"
+						key="@{grid.secure.cert.file.location}"/>
 					]]>
 				</insert>
 			</xmltask>
 		</sequential>      
 	</macrodef>
-	<macrodef name="insert-jboss-grid-valve">
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+	<macrodef name="grid-secure-configure-valve">
+		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
 		<sequential>    
-			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-				dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
+			<xmltask source="@{appserver.webapp.dir}/jbossweb-tomcat55.sar/server.xml"
+				dest="@{appserver.webapp.dir}/jbossweb-tomcat55.sar/server.xml">
 				<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Valve[@className='org.globus.tomcat.coyote.valves.HTTPSValve']" />
 				<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']">
 					<![CDATA[                               
@@ -3419,11 +3461,11 @@ $HeadURL$
 		</sequential>   
 	</macrodef>
 
-	<macrodef name="securegrid-set-cert-and-key-paths">
-		<attribute name="appserver.application.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="secdesc.file" default="@{appserver.application.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
-		<attribute name="service.cert.path" default="${service.cert.path}" />
-		<attribute name="service.key.path" default="${service.key.path}" />
+	<macrodef name="grid-secure-configure-files">
+		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
+		<attribute name="secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<attribute name="grid.secure.key.file.location" default="${grid.secure.key.file.location}" />
+		<attribute name="grid.secure.cert.file.location" default="${service.key.path}" />
 		<sequential>
 			<if>
 				<available file="@{secdesc.file}" />
@@ -3433,10 +3475,10 @@ $HeadURL$
 						<remove path="/*[local-name()='securityConfig']/*[local-name()='gridmap']" />
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='key-file']"
 							attr="value" 
-							value="@{service.key.path}" />
+							value="@{grid.secure.cert.file.location}" />
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='cert-file']"
 							attr="value" 
-							value="@{service.cert.path}" />
+							value="@{grid.secure.key.file.location}" />
 					</xmltask>
 				</then>
 			</if>
@@ -3444,12 +3486,12 @@ $HeadURL$
 	</macrodef>
 
 
-	<macrodef name="securegrid-configure-server-config">
-		<attribute name="appserver.application.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="server-config.file" default="@{appserver.application.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/server-config.wsdd" />
-		<attribute name="secdesc.file" default="@{appserver.application.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+	<macrodef name="grid-configure-server-config">
+		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
+		<attribute name="server-config.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/server-config.wsdd" />
+		<attribute name="secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="service.hostname" default="${service.hostname}"/>
-		<attribute name="use.secure.container" default="true"/>
+		<attribute name="grid.secure.enable" default="true"/>
 		<sequential>
 			<xmltask source="@{server-config.file}" dest="@{server-config.file}">
 				<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
@@ -3469,7 +3511,7 @@ $HeadURL$
 				</insert>
 			</xmltask>
 			<if>
-				<equals arg1="@{use.secure.container}" arg2="true" trim="true" />
+				<equals arg1="@{grid.secure.enable}" arg2="true" trim="true" />
 				<then>
 					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='containerSecDesc']" />
@@ -3497,14 +3539,15 @@ $HeadURL$
 
 
 	<macrodef name="update-grid-web-xml-protocol">
-		<attribute name="appserver.application.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="web-xml.location" default="@{appserver.application.dir}/wsrf/WEB-INF/web.xml"/>
+		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
+		<attribute name="web-xml.location" default="@{appserver.webapp.dir}/wsrf/WEB-INF/web.xml"/>
 		<attribute name="scheme" default="http" />
 		<attribute name="port" default="${jboss.server.port}"/>
 		<sequential>
 			<xmltask source="@{web-xml.location}" dest="@{web-xml.location}">
 				<xmlcatalog refid="installer.catalog"/>
 				<remove path="/web-app/servlet[servlet-name='WSRFServlet']/init-param[param-name='defaultProtocol']" />
+				<remove path="/web-app/servlet[servlet-name='WSRFServlet']/init-param[param-name='defaultPort']" />
 				<insert path="/web-app/servlet[servlet-name='WSRFServlet']/servlet-class"
 					position="after">
 					<![CDATA[
@@ -3514,132 +3557,11 @@ $HeadURL$
 					</init-param>
 					<init-param>
 						<param-name>defaultPort</param-name>
-						<param-value>@{tomcat.port}</param-value>
+						<param-value>@{port}</param-value>
 					</init-param>
 					]]>
 				</insert>
 			</xmltask>
-		</sequential>
-	</macrodef>
-
-	<macrodef  name="configurer-grid">
-		<!-- name="grid-appserver-configure"-->
-		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy"/>
-		<attribute name="appserver.port" default="${jboss.server.port}"/>
-		<attribute name="appserver.hostname" default="${jboss.server.hostname}"/>
-		<attribute name="search.host" default="localhost"/>
-		<attribute name="search.port" default="8080"/>
-		<attribute name="grid.application.name" default="${grid.application.name}"/>
-		<attribute name="grid.application.relative.dir" default="${grid.dir.dest}"/>
-		<attribute name="grid.index.url" default="${grid.index.url}"/>
-		<attribute name="grid.poc.science.affiliation" default="${grid.poc.science.affiliation}"/>
-		<attribute name="grid.poc.science.name.last" default="${grid.poc.science.name.last}"/>
-		<attribute name="grid.poc.science.name.first" default="${grid.poc.science.name.first}" />
-		<attribute name="grid.poc.science.phone" default="${grid.poc.science.phone}"/>
-		<attribute name="grid.poc.science.role" default="${grid.poc.science.role}" />
-		<attribute name="grid.poc.science.email" default="${grid.poc.science.email}" />
-		<attribute name="grid.poc.tech.researchCenter.displayname" default="${grid.poc.tech.researchCenter.displayname}"/>
-		<attribute name="grid.poc.tech.researchCenter.shortname" default="${grid.poc.tech.researchCenter.shortname}"/>
-		<attribute name="grid.poc.tech.addr.country" default="${grid.poc.tech.addr.country}"/>
-		<attribute name="grid.poc.tech.addr.locality" default="${grid.poc.tech.addr.locality}"/>
-		<attribute name="grid.poc.tech.addr.postalCode" default="${grid.poc.tech.addr.postalCode}"/>
-		<attribute name="grid.poc.tech.addr.stateProvince" default="${grid.poc.tech.addr.stateProvince}"/>
-		<attribute name="grid.poc.tech.addr.street1" default="${grid.poc.tech.addr.street1}"/>
-		<attribute name="grid.poc.tech.addr.street2" default="${grid.poc.tech.addr.street2}"/>
-		<attribute name="grid.poc.tech.affiliation" default="${grid.poc.tech.affiliation}"/>
-		<attribute name="grid.poc.tech.name.last" default="${grid.poc.tech.name.last}"/>
-		<attribute name="grid.poc.tech.name.first" default="${grid.poc.tech.name.first}"/>
-		<attribute name="grid.poc.tech.phone" default="${grid.poc.tech.phone}"/>
-		<attribute name="grid.poc.tech.email" default="${grid.poc.tech.email}"/>
-		<attribute name="grid.poc.tech.role" default="${grid.poc.tech.role}"/>
-		<attribute name="grid.external.host" default="${grid.external.host}"/>
-		<attribute name="grid.external.port" default="${grid.external.port}"/>
-		<!-- "insert-jboss-securegrid-connector" -->
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="service.cert.path" default="${service.cert.path}" />
-		<attribute name="service.key.path" default="${service.key.path}" />
-		<!-- "insert-jboss-grid-valve"
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>-->
-		<!-- "securegrid-set-cert-and-key-paths" -->
-		<attribute name="appserver.application.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="secdesc.file" default="@{appserver.application.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
-		<!--<attribute name="service.cert.path" default="${service.cert.path}" />
-		<attribute name="service.key.path" default="${service.key.path}" />-->
-		<!-- "securegrid-configure-server-config" -->
-		<!--<attribute name="appserver.application.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>-->
-		<attribute name="server-config.file" default="@{appserver.application.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/server-config.wsdd" />
-		<!--<attribute name="secdesc.file" default="@{appserver.application.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/> -->
-		<attribute name="service.hostname" default="${service.hostname}"/>
-		<attribute name="use.secure.container" default="true"/>
-		<!--"update-grid-web-xml-protocol"
-		<attribute name="appserver.application.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>-->
-		<attribute name="web-xml.location" default="@{appserver.application.dir}/wsrf/WEB-INF/web.xml"/>
-		<attribute name="scheme" default="http" />
-		<attribute name="port" default="${jboss.server.port}"/>
-		<sequential>
-			<grid-appserver-configure
-				appserver.webapp.dir="@{appserver.webapp.dir}"
-				appserver.port="@{appserver.port}"
-				appserver.hostname="@{appserver.hostname}"
-				search.host="@{search.host}"
-				search.port="@{search.port}"
-				grid.application.name="@{grid.application.name}"
-				grid.application.relative.dir="@{grid.application.relative.dir}"
-				grid.index.url="@{grid.index.url}"
-				grid.poc.science.affiliation="@{grid.poc.science.affiliation}"
-				grid.poc.science.name.last="@{grid.poc.science.name.last}"
-				grid.poc.science.name.first="@{grid.poc.science.name.first}"
-				grid.poc.science.phone="@{grid.poc.science.phone}"
-				grid.poc.science.role="@{grid.poc.science.role}"
-				grid.poc.science.email="@{grid.poc.science.email}"
-				grid.poc.tech.researchCenter.displayname="@{grid.poc.tech.researchCenter.displayname}"
-				grid.poc.tech.researchCenter.shortname="@{grid.poc.tech.researchCenter.shortname}"
-				grid.poc.tech.addr.country="@{grid.poc.tech.addr.country}"
-				grid.poc.tech.addr.locality="@{grid.poc.tech.addr.locality}"
-				grid.poc.tech.addr.postalCode="@{grid.poc.tech.addr.postalCode}"
-				grid.poc.tech.addr.stateProvince="@{grid.poc.tech.addr.stateProvince}"
-				grid.poc.tech.addr.street1="@{grid.poc.tech.addr.street1}"
-				grid.poc.tech.addr.street2="@{grid.poc.tech.addr.street2}"
-				grid.poc.tech.affiliation="@{grid.poc.tech.affiliation}"
-				grid.poc.tech.name.last="@{grid.poc.tech.name.last}"
-				grid.poc.tech.name.first="@{grid.poc.tech.name.first}"
-				grid.poc.tech.phone="@{grid.poc.tech.phone}"
-				grid.poc.tech.email="@{grid.poc.tech.email}"
-				grid.poc.tech.role="@{grid.poc.tech.role}"
-				grid.external.host="@{grid.external.host}"
-				grid.external.port="@{grid.external.port}"
-				/>
-			<insert-jboss-securegrid-connector
-				jboss.home="@{jboss.home}"
-				jboss.server.name="@{jboss.server.name}"
-				service.cert.path="@{service.cert.path}"
-				service.key.path="@{service.key.path}"
-				/>
-			<insert-jboss-grid-valve
-				jboss.home="@{jboss.home}"
-				jboss.server.name="@{jboss.server.name}"
-				/>
-			<securegrid-set-cert-and-key-paths
-				appserver.application.dir="@{appserver.application.dir}"
-				secdesc.file="@{secdesc.file}"
-				service.cert.path="@{service.cert.path}"
-				service.key.path="@{service.key.path}"
-				/>
-			<securegrid-configure-server-config
-				appserver.application.dir="@{appserver.application.dir}"
-				server-config.file="@{server-config.file}"
-				secdesc.file="@{secdesc.file}"
-				service.hostname="@{service.hostname}"
-				use.secure.container="@{use.secure.container}"
-				/>
-			<update-grid-web-xml-protocol
-				appserver.application.dir="@{appserver.application.dir}"
-				web-xml.location="@{web-xml.location}"
-				scheme="@{scheme}"
-				port="@{port}"
-				/>
 		</sequential>
 	</macrodef>
 </project>
