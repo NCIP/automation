@@ -113,18 +113,19 @@ public class BuildMonitorHelper {
 		String methodName = "set"+buildTier;
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction(); 		    
-		
+	    String wikiFailedString = "["+BuildMonitorConstants.WIKI_FAILED+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]";
+	    String wikiSuccessString = "["+BuildMonitorConstants.WIKI_SUCCESSFUL+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]";
+	    
 		if (!bmb.isBuildSuccessful()) 
 		{	
 			// build failed
 		    Query query = session.createQuery( " from ProjectBuildStatus where product= :projectName ");
-		    query.setString("projectName", projectName);			
-		    Iterator it=query.iterate();			
-			if(it != null && it.hasNext())
-		    {		    	
-		    	pbs = (ProjectBuildStatus) it.next();	
-		    	try {
-					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildMonitorConstants.WIKI_FAILED); 
+		    query.setString("projectName", projectName);
+			pbs= (ProjectBuildStatus) query.uniqueResult();
+			if(pbs != null )
+			{	
+		    	try {		    		
+					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,wikiFailedString); 
 				}
 		    	catch (Exception e) {				
 					e.printStackTrace();
@@ -140,8 +141,8 @@ public class BuildMonitorHelper {
 		    		if(methods[i].getName().equals(methodName))
     				{
 		    			try 
-		    			{
-		    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_FAILED));
+		    			{	System.out.println("wikiFailedString::::" + wikiFailedString);	    				
+		    				methods[i].invoke(pbs,new String(wikiFailedString));
 		    			}
 				    	catch (Exception e) {				
 							e.printStackTrace();
@@ -153,6 +154,7 @@ public class BuildMonitorHelper {
 						{
 			    			try 
 			    			{
+			    				System.out.println("WIKI_NOTBUILD::::" );
 			    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_NOTBUILD));
 							}
 			    			catch (Exception e) 
@@ -161,7 +163,9 @@ public class BuildMonitorHelper {
 			    			}
 						}
 		    		}
-		    	}	    	
+		    	}
+		    	pbs.setProduct(projectName);
+		    	session.save(pbs);		
 		    }
 
 	    	BuildHistory bh = new BuildHistory();
@@ -184,7 +188,7 @@ public class BuildMonitorHelper {
 			if(pbs != null )
 			{						    		
 		    	try {
-					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildMonitorConstants.WIKI_SUCCESSFUL); 
+					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,wikiSuccessString); 
 				}
 		    	catch (Exception e) {				
 					e.printStackTrace();
@@ -201,7 +205,7 @@ public class BuildMonitorHelper {
     				{
 		    			try 
 		    			{
-		    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_SUCCESSFUL));
+		    				methods[i].invoke(pbs,new String(wikiSuccessString));
 		    			}
 				    	catch (Exception e) {				
 							e.printStackTrace();
