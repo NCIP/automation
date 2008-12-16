@@ -113,8 +113,8 @@ public class BuildMonitorHelper {
 		String methodName = "set"+buildTier;
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction(); 		    
-	    String wikiFailedString = "["+BuildMonitorConstants.WIKI_FAILED+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]";
-	    String wikiSuccessString = "["+BuildMonitorConstants.WIKI_SUCCESSFUL+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]";
+	    String wikiFailedString = "'["+BuildMonitorConstants.WIKI_FAILED+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]'";
+	    String wikiSuccessString = "'["+BuildMonitorConstants.WIKI_SUCCESSFUL+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]'";
 	    
 		if (!bmb.isBuildSuccessful()) 
 		{	
