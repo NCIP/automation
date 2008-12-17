@@ -246,13 +246,13 @@ public class BuildMonitorHelper {
 	private String getTierName(String  propertyFile) {
 		String tierName = "local";
 				
-		if(propertyFile.contains("dev-"))
+		if(propertyFile.toLowerCase().contains("dev-") || propertyFile.toLowerCase().contains("dev_"))
 			tierName="Dev";
-		if(propertyFile.contains("qa-"))
+		if(propertyFile.toLowerCase().contains("qa-") || propertyFile.toLowerCase().contains("qa_"))
 			tierName="Qa";
-		if(propertyFile.contains("stage-"))
+		if(propertyFile.toLowerCase().contains("stage-") || propertyFile.toLowerCase().contains("stage_"))
 			tierName="Stage";
-		if(propertyFile.contains("prod-"))
+		if(propertyFile.toLowerCase().contains("prod-") || propertyFile.toLowerCase().contains("prod_"))
 			tierName="Prod";
 		
 		return tierName;
