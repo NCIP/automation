@@ -349,12 +349,12 @@ $HeadURL$
 		<attribute name="java.check.version.minor" default="1.5.0_10" />
 		<attribute name="property.template.file" default="${properties.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
-		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
-		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
-		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
-		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
-		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="appserver.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -403,12 +403,12 @@ $HeadURL$
 				database.name="@{database.name}"
 				/>
 			<jboss-ssl-verify-keystore
-				jboss.ssl.enable="@{jboss.ssl.enable}"
-				jboss.ssl.keystore.file="@{jboss.ssl.keystore.file}"
-				jboss.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
-				jboss.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
-				jboss.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
-				jboss.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
+				appserver.ssl.enable="@{appserver.ssl.enable}"
+				appserver.ssl.keystore.file="@{appserver.ssl.keystore.file}"
+				appserver.ssl.keystore.pass="@{appserver.ssl.keystore.pass}"
+				appserver.ssl.keystore.alias="@{appserver.ssl.keystore.alias}"
+				appserver.ssl.fullyqualified.hostname="@{appserver.ssl.fullyqualified.hostname}"
+				appserver.ssl.keystore.dir="@{appserver.ssl.keystore.dir}"
 				/>
 		</sequential>
 	</macrodef>
@@ -3266,62 +3266,60 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jboss-ssl-enable" description="macro for enabling ssl in jboss">
-		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
-		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
-		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
-		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+	<macrodef name="appserver-secure-configure" description="macro for enabling ssl in jboss">
+		<attribute name="appserver.conf.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="appserver.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<sequential>
 			<!-- Questions
 			If you connect to http will it automatically redirect you to https?
 			Will bindnings work?
 			-->
 			<if>
-				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
+				<equals arg1="@{appserver.ssl.enable}" arg2="true"/>
 				<then>
 					<echo message="Install JBoss SSL configurations"/>
 
 					<!-- copy keystore to ${jboss.home}/server/${jboss.server.name}/conf -->
-					<copy todir="@{jboss.home}/server/@{jboss.server.name}/conf" file="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file}"/>
+					<copy todir="@{jboss.home}/server/@{jboss.server.name}/conf" file="@{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file}"/>
 
 					<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
-					<insert-jboss-ssl-connector
-						jboss.home="@{jboss.home}"
-						jboss.server.name="@{jboss.server.name}"
-						jboss.ssl.keystore.file="@{jboss.ssl.keystore.file}"
-						jboss.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
-						jboss.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
+					<appserver-secure-configure-connector
+						appserver.conf.file="@{appserver.conf.file}"
+						appserver.ssl.keystore.file="@{appserver.ssl.keystore.file}"
+						appserver.ssl.keystore.pass="@{appserver.ssl.keystore.pass}"
+						appserver.ssl.keystore.alias="@{appserver.ssl.keystore.alias}"
 						/>
-					<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
-						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystoreFile" withText="@{jboss.home}/server/@{jboss.server.name}/conf/@{jboss.ssl.keystore.file}" />
-						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystorePass" withText="@{jboss.ssl.keystore.pass}" />
+					<xmltask failWithoutMatch="true" source="@{appserver.conf.file}" dest="@{appserver.conf.file}">
+						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystoreFile" withText="@{jboss.home}/server/@{jboss.server.name}/conf/@{appserver.ssl.keystore.file}" />
+						<replace path="/Server/Service[@name='jboss.web']/Connector[@port='8443']/@keystorePass" withText="@{appserver.ssl.keystore.pass}" />
 					</xmltask>
 				</then>
 				<else>
-					<echo message="jboss.ssl.enable not set or true so skipping install of JBoss SSL configuration"/>
+					<echo message="appserver.ssl.enable not set or true so skipping install of JBoss SSL configuration"/>
 				</else>
 			</if>
 
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-ssl-verify-keystore" description="macro for verifying a keystore">
-		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
-		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="jboss.ssl.keystore.dir" default="${jboss-conf.dir.src}"/>
-		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
-		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
-		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="appserver.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<sequential>
 			<if>
-				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
+				<equals arg1="@{appserver.ssl.enable}" arg2="true"/>
 				<then>
 					<echo message="Validating JBoss SSL configurations"/>
 			<groovy>
-				<arg line="@{jboss.ssl.keystore.dir}/@{jboss.ssl.keystore.file} @{jboss.ssl.keystore.pass} @{jboss.ssl.keystore.alias} @{jboss.ssl.fullyqualified.hostname}"/>
+				<arg line="@{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file} @{appserver.ssl.keystore.pass} @{appserver.ssl.keystore.alias} @{appserver.ssl.fullyqualified.hostname}"/>
 				import java.util.regex.Matcher
 				import java.util.regex.Pattern
 
@@ -3378,22 +3376,21 @@ $HeadURL$
 			</groovy>
 				</then>
 				<else>
-					<echo message="jboss.ssl.enable not set or true so skipping ssl validation"/>
+					<echo message="appserver.ssl.enable not set or true so skipping ssl validation"/>
 				</else>
 			</if>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="insert-jboss-ssl-connector" description="Inserts a secure connector configuration into a tomcat configuration, including jboss tomcat">
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
-		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+	<macrodef name="appserver-secure-configure-connector" description="Inserts a secure connector configuration into a tomcat configuration, including jboss tomcat">
+		<attribute name="appserver.conf.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<sequential>
 			<echo  message="In insert-ssl-secure-connector."/>
-			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"
-				dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml">
+			<xmltask source="@{appserver.conf.file}"
+				dest="@{appserver.conf.file}">
 
 				<remove	path="/Server/Service[@name='jboss.web']/Connector[@scheme='https']" />
 
@@ -3408,9 +3405,9 @@ $HeadURL$
 						scheme="https"
 						secure="true"
 					       	clientAuth="false" 
-						keystoreFile="@{jboss.home}/server/@{jboss.server.name}/conf/@{jboss.ssl.keystore.file}"
-						keystorePass="@{jboss.ssl.keystore.pass}"
-						keyAlias="@{jboss.ssl.keystore.alias}"
+						keystoreFile="@{jboss.home}/server/@{jboss.server.name}/conf/@{appserver.ssl.keystore.file}"
+						keystorePass="@{appserver.ssl.keystore.pass}"
+						keyAlias="@{appserver.ssl.keystore.alias}"
 					       	sslProtocol = "TLS" />
 					]]>
 				</insert>
