@@ -14,7 +14,7 @@
 	<property file="${basedir}/install.properties"/>
 
 		
-	<property name="sql.file" value="${sql.dir}/create_buildmonitor_schema.sql" />
+	<property name="sql.file" value="${sql.dir}/create_schema_buildmonitordb.sql" />
 	
 	<property name="deploy.dir" value="${user.home}/buildmonitor" />
 	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
@@ -52,8 +52,8 @@
 	</target>
 
 
-	<target name="generate-sql" description="create table and populate data">
-		<run-sql-script sql.file="${sql.file}"  database.url="${database.url}" database.user="" database.password=""/>
+	<target name="deploy:sql" description="create table and populate data">
+		<run-sql-script sql.file="${sql.file}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
 	
 	</target>
 

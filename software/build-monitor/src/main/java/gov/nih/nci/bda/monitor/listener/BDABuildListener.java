@@ -62,7 +62,13 @@ public class BDABuildListener implements BuildListener {
 	private BuildMonitorBean populateBuildMonitorBean(BuildEvent event) {
 
 		BuildMonitorBean bmb = new BuildMonitorBean();
-		bmb.setPropertiesFileName(event.getProject().getProperty("properties.file"));
+		
+		if(event.getProject().getProperty("properties.file") != null)
+			bmb.setPropertiesFileName(event.getProject().getProperty("properties.file"));
+		else if(event.getProject().getProperty("envpropertyfile") != null)
+			bmb.setPropertiesFileName(event.getProject().getProperty("envpropertyfile"));
+
+			
 		if(event.getException() != null)
 			bmb.setBuildSuccessful(false); 
 		else
