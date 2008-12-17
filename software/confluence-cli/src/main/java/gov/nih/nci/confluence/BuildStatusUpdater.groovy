@@ -24,25 +24,25 @@ class BuildStatusUpdater {
 	    String deploymentStatusPageSpace = properties.getProperty("deployment-status.page.space");//"confluence-cli-1.3.0.jar"
 
         // get most recent tempates
-		doCmd("${confluence} -a getPageSource --space \""+deploymentStatusTemplateSpace+"\" --title \"" + deploymentStatusTemplateFile+ "\" --file "+deploymentStatusTemplateFile+"_temp.txt")
+		doCmd("${confluence} -a getPageSource --space \""+deploymentStatusTemplateSpace+"\" --title \"" + deploymentStatusTemplateFile+ "\" --file _temp.txt")
 		String statement   = "select PRODUCT,DEV,QA,STAGE,PROD from PROJECT_BUILD_STATUS "
 
         int count = 0
         connection.eachRow(statement) { row ->
             count++
 
-            String productName    = row.PRODUCT.toLowerCase();
-            String devStatus = row.DEV.toLowerCase();
-            String qaStatus = row.QA.toLowerCase();
-            String stageStatus = row.STAGE.toLowerCase();
-            String prodStatus = row.PROD.toLowerCase();
+            String productName    = row.PRODUCT;
+            String devStatus = row.DEV;
+            String qaStatus = row.QA;
+            String stageStatus = row.STAGE;
+            String prodStatus = row.PROD;
 
 			String findReplace = "--findReplace \"Product${count}:${productName},dev-status${count}:${devStatus},qa-status${count}:${qaStatus},stage-status${count}:${stageStatus},prod-status${count}:${prodStatus}\""
 	        
 			println findReplace
 			// update page
-			doCmd("${confluence} -a storePage --space \""+deploymentStatusPageSpace+"\" --title \""+deploymentStatusPageFile+"\"   --file "+deploymentStatusTemplateFile+"_temp.txt ${findReplace}")
-			doCmd("${confluence} -a getPageSource --space \""+deploymentStatusPageSpace+"\" --title \""+deploymentStatusPageFile+"\"    --file "+deploymentStatusTemplateFile+"_temp.txt")
+			doCmd("${confluence} -a storePage --space \""+deploymentStatusPageSpace+"\" --title \""+deploymentStatusPageFile+"\"   --file _temp.txt ${findReplace}")
+			doCmd("${confluence} -a getPageSource --space \""+deploymentStatusPageSpace+"\" --title \""+deploymentStatusPageFile+"\"    --file _temp.txt")
 		}
 	}
 	
@@ -88,10 +88,19 @@ class BuildStatusUpdater {
 	}
 
 	static Process doCmd(String cmd) {
-
 		println ">>> ${cmd}"
-	    Process process = "cmd /c ${cmd}".execute()
-	    println "${process.text} ${process.err.text}"
+		def cmdStr 
+		def osName = System.getProperty("os.name")
+		println " OS-NAME:: $osName "
+
+		if (osName.startsWith("Win"))		
+			cmdStr = "cmd /c ${cmd}"
+		else
+			cmdStr = ["sh","-c","${cmd}"]
+	
+		Process process = cmdStr.execute()
+	    	println "${process.text} ${process.err.text}"
 		return process
+
 	}
 }
