@@ -2223,6 +2223,7 @@ software/build-monitor/src/main/java/gov/nih/nci/bda/monitor/domain/ProjectBuild
 software/build-monitor/src/main/java/gov/nih/nci/bda/monitor/listener/BDABuildListener.java -text
 software/build-monitor/src/main/java/gov/nih/nci/bda/monitor/util/HibernateUtil.java -text
 software/build-monitor/src/main/resources/hibernate.cfg.xml -text
+software/build-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
 software/confluence-cli/.classpath -text
 software/confluence-cli/.project -text
 software/confluence-cli/README.txt -text
