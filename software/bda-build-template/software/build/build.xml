@@ -353,7 +353,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 
 	<target name="dist:tools:retrieve" description="Downloads binary applications from commonlibrary repository" depends="
 		init,
-		dist:tools:retrieve:jboss
+		dist:tools:retrieve:jboss,
+		dist:tools:retrieve:tomcat
 		" />
 
 	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
