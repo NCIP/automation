@@ -49,7 +49,6 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
 {
 
     private static final long serialVersionUID = 3257282547959410992L;
-    private static final String NEW_LINE ="\n";
 
     /**
      * The tip label.
