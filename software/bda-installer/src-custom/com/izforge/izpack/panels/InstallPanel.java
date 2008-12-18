@@ -49,6 +49,7 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
 {
 
     private static final long serialVersionUID = 3257282547959410992L;
+    private static final String NEW_LINE ="\n";
 
     /**
      * The tip label.
@@ -90,7 +91,7 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
      */
     private int noOfPacks = 0;
 
-    protected JEditorPane textArea;
+    protected JTextArea textArea;
 
     private LogFileTailer tailer;
     /**
@@ -118,13 +119,11 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
         //add(IzPanelLayout.createParagraphGap());
 
 
-        textArea = new JEditorPane();
-        textArea.setContentType("text/plain");
+
+        textArea = new JTextArea();
         textArea.setEditable(false);
         JScrollPane scroller = new JScrollPane(textArea);
-      //  scroller.getVerticalScrollBar().setEnabled(false);
-        add(scroller, BorderLayout.CENTER);
-
+        add(scroller, NEXT_LINE);
 
 
         overallOpLabel = LabelFactory.create(parent.langpack.getString("InstallPanel.progress"),
@@ -295,44 +294,31 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
 
         parent.install(this);
 
+ //       String[] files = {"C:\\Documents and Settings\\narram\\.installer\\antlog_installer.txt"};
+ //       JTailer frame = new JTailer( files );
 
-        File logDir = new File( idata.getVariable("SYSTEM_user_home")+"/"+idata.getVariable("installer.dir")+"/" );
+        File logDir = new File( idata.getVariable("SYSTEM_user_home")+"/.installer/" );
         if (!logDir.exists())
-        	 new File( idata.getVariable("SYSTEM_user_home")+"/"+idata.getVariable("installer.dir")).mkdirs();
+        	 new File( idata.getVariable("SYSTEM_user_home")+"/.installer" ).mkdirs();
 
-		String fileName = new String(idata.getVariable("SYSTEM_user_home")+"/"+idata.getVariable("installer.dir")+"/antlog_installer.txt");
-        File logFile = new File(fileName);
+        File logFile = new File( idata.getVariable("SYSTEM_user_home")+"/.installer/antlog_installer.txt" );
         if (!logFile.exists())
         {
-			try
-			{
+			try {
 				logFile.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
-
         tailer = new LogFileTailer( logFile, 1000, false );
         tailer.addLogFileTailerListener( this );
         tailer.start();
 
-// 		Will tail the log in new frame
-//		JTailer frame = new JTailer(fileName);
-
     }
 
 	public void newLogFileLine(String line) {
-	    if( this.textArea.getText().length() == 0 )
-	    {
-	      this.textArea.setText( line );
-	    }
-	    else
-	    {
-	      this.textArea.setText( this.textArea.getText() + "\n" + line );
-	    }
-	    int length = this.textArea.getText().length();
-	    this.textArea.select( length - 1, length - 1 );
+		this.textArea.append(line + NEW_LINE);
 	}
 
 }
