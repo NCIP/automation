@@ -3287,11 +3287,13 @@ $HeadURL$
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="appserver.ssl.port" default="8443"/>
 		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
 		<attribute name="appserver.ssl.keystore.dir" default="${security.dir.src}"/>
 		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
 		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+
 		<sequential>
 			<!-- Questions
 			If you connect to http will it automatically redirect you to https?
@@ -3313,7 +3315,7 @@ $HeadURL$
 		
 						<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']">
 							<![CDATA[
-							<Connector port="8443"
+							<Connector port="@{appserver.ssl.port}"
 							       	address="\${jboss.bind.address}"
 								maxThreads="100"
 								strategy="ms"
@@ -3450,12 +3452,23 @@ $HeadURL$
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<sequential>    
+			<switch value="@{appserver.server-xml.service.name}">
+				<case value="jboss.web">
+					<property name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve55"/>
+				</case>
+				<case value="Catalina">
+					<property name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve"/>
+				</case>
+				<default>
+					<fail message="Unkown server.xml service name - @{appserver.server-xml.service.name}, don't know how to handle"/>
+				</default>
+			</switch>
 			<xmltask source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
-				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']/Valve[@className='org.globus.tomcat.coyote.valves.HTTPSValve']" />
+				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
 				<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']">
 					<![CDATA[                               
-					<Valve className="org.globus.tomcat.coyote.valves.HTTPSValve"/>
+					<Valve className="${valve.name}"/>
 					]]>                                     
 				</insert>                       
 			</xmltask>              
@@ -3584,14 +3597,12 @@ $HeadURL$
 					<echo message="Grid External Host Name set so configuring proxy settings"/>
 					<xmltask source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}">
-						<!--
 						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='@{protocol.scheme}']" 
 							attr="proxyPort" 
 							value="@{appserver.external.port}"/>
 						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='@{protocol.scheme}']" 
 							attr="proxyName" 
 							value="@{appserver.external.host}"/>
-						-->
 						<!--
 						<attr path="//Engine[@name='@{appserver.server-xml.service.name}']" 
 							attr="defaultHost"                    
@@ -3609,4 +3620,33 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
+	<macrodef name="tomcat-configure-server-xml-db">
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.jndi.datasource.name" default="${database.jndi.datasource.name}" />
+		<attribute name="database.context.path" default="${database.jndi.datasource.name}" />
+		<sequential>
+			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
+				<xmlcatalog refid="installer.catalog"/>
+				<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Context[@path='/@{database.context.path}']"/>
+				<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']"
+					position="after">
+					<![CDATA[
+					<Context path="/@{database.context.path}" docBase="@{database.context.path}" reloadable="false">
+						<Resource name="@{database.jndi.datasource.name}" auth="Container" type="javax.sql.DataSource"
+							username="@{database.user}"
+							password="@{database.password}"
+							driverClassName="@{database.driver}"
+							url="@{database.url}?autoReconnect=true"
+							maxActive="20" />
+					</Context>
+					]]>
+				</insert>
+			</xmltask>
+		</sequential>
+	</macrodef>
 </project>
