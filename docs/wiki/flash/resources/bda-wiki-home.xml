@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
-	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P>Remember to check out the latest BDA Release 0.7.0 in the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Flash news</b>: The latest <a href='http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/xmlconfig/xmlconfig/0.2.0/xmlconfig-0.2.0.jar'>XmlConfig 0.2.0</a> is out! It adds the following features: <UL><LI>Beautiful output file formatting</LI><LI>Support for inserting a branch from an Ant property</LI><LI>The JAR file now includes a manifest file with date and version of the JAR</LI></UL><a href='https://wiki.nci.nih.gov/x/zKN8'>Read more...</a>]]></welcome>
+	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P>Remember to check out the latest BDA Release 0.7.0 in the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Flash news</b>: The BDA team is preparing for an enterprise rollout to all active CBIIT development teams]]></welcome>
 
 	<button>
 		<name>News</name>
 		<link>https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/internet.png</image>
-		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://wiki.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://wiki.nci.nih.gov/x/1AKM">here</a></LI><LI>Paul Duvall is hosting an information session on the upcoming <a href="https://wiki.nci.nih.gov/x/vxKy">BDA enterprise rollout for 2009</a> on Wednesday, December 17th, 2008.</LI></UL>]]></teaser>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://wiki.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://wiki.nci.nih.gov/x/1AKM">here</a></LI><LI>Paul Duvall held an information session on the upcoming <a href="https://wiki.nci.nih.gov/x/vxKy">BDA enterprise rollout for 2009</a> on Wednesday, December 17th, 2008.</LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>FAQ</name>
