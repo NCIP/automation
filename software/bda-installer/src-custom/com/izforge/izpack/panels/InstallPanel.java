@@ -320,6 +320,8 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
 	public void newLogFileLine(String line) {
 		System.out.println("newLogFileLine(String): newLogFileLine =" + line + "=");
 		this.textArea.append(line + NEW_LINE);
+		this.textArea.setCaretPosition(this.textArea.getDocument().getLength());
+
 	}
 
 }
