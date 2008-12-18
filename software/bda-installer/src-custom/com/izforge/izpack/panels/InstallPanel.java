@@ -123,7 +123,7 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
         textArea.setEditable(false);
         textArea.setTabSize(4);
         JScrollPane scroller = new JScrollPane(textArea);
-        add(scroller, NEXT_LINE);
+        add(scroller, BorderLayout.CENTER);
 
 
         overallOpLabel = LabelFactory.create(parent.langpack.getString("InstallPanel.progress"),
