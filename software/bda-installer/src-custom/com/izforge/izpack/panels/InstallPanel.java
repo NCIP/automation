@@ -283,39 +283,44 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
      */
     public void panelActivate()
     {
-        // We clip the panel
-        Dimension dim = parent.getPanelsContainerSize();
-        dim.width -= (dim.width / 4);
-        dim.height = 150;
-        setMinimumSize(dim);
-        setMaximumSize(dim);
-        setPreferredSize(dim);
-        parent.lockNextButton();
+		// We clip the panel
+		Dimension dim = parent.getPanelsContainerSize();
+		dim.width -= (dim.width / 4);
+		dim.height = 150;
+		setMinimumSize(dim);
+		setMaximumSize(dim);
+		setPreferredSize(dim);
+		parent.lockNextButton();
 
-        parent.install(this);
+		parent.install(this);
 
- //       String[] files = {"C:\\Documents and Settings\\narram\\.installer\\antlog_installer.txt"};
- //       JTailer frame = new JTailer( files );
+		File logDir = new File(idata.getVariable("SYSTEM_user_home") + "/"
+				+ idata.getVariable("installer.dir") + "/");
+		if (!logDir.exists())
+			new File(idata.getVariable("SYSTEM_user_home") + "/"
+					+ idata.getVariable("installer.dir")).mkdirs();
 
-        File logDir = new File( idata.getVariable("SYSTEM_user_home")+"/.installer/" );
-        if (!logDir.exists())
-        	 new File( idata.getVariable("SYSTEM_user_home")+"/.installer" ).mkdirs();
-
-        File logFile = new File( idata.getVariable("SYSTEM_user_home")+"/.installer/antlog_installer.txt" );
-        if (!logFile.exists())
-        {
+		String fileName = new String(idata.getVariable("SYSTEM_user_home")
+				+ "/" + idata.getVariable("installer.dir")
+				+ "/antlog_installer.txt");
+		File logFile = new File(fileName);
+		if (!logFile.exists()) {
 			try {
 				logFile.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        }
-        tailer = new LogFileTailer( logFile, 1000, false );
-        tailer.addLogFileTailerListener( this );
-        tailer.start();
+		}
 
-    }
+		tailer = new LogFileTailer(logFile, 1000, false);
+		tailer.addLogFileTailerListener(this);
+		tailer.start();
+
+		// Will tail the log in new frame
+		// JTailer frame = new JTailer(fileName);
+
+	}
 
 	public void newLogFileLine(String line) {
 		System.out.println("newLogFileLine(String): newLogFileLine =" + line + "=");
