@@ -2346,7 +2346,8 @@ $HeadURL$
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy"/>
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
-		<attribute name="appserver.port" default="${jboss.server.port}"/>
+		<attribute name="appserver.port.http" default="${jboss.server.port}"/>
+		<attribute name="appserver.port.ssl" default="${jboss.ssl.port}"/>
 		<attribute name="appserver.hostname" default="${jboss.server.hostname}"/>
 		<attribute name="search.host" default="localhost"/>
 		<attribute name="search.port" default="8080"/>
@@ -2383,9 +2384,11 @@ $HeadURL$
 			<switch value="@{grid.secure.enable}">
 				<case value="true">
 					<property name="scheme" value="https"/>
+					<property name="appserver.default.web.port" value="@{appserver.port.ssl}"/>
 				</case>
 				<case value="false">
 					<property name="scheme" value="http"/>
+					<property name="appserver.default.web.port" value="@{appserver.port.ssl}"/>
 				</case>
 				<default>
 					<fail message="grid.secure.enable must be true or false"/>
@@ -2393,18 +2396,19 @@ $HeadURL$
 			</switch>
 
 			<!-- Fix all wsdl files that refer to statically defined host and port -->
-			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port}">
+			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port.http}">
 				<include name="**/*.wsdl" />
 			</replace>
 
 			<!-- Fix default jndi-config -->
-			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port}"/>
+			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port.http}"/>
 
 			<!-- fix web.xml -->
 			<update-grid-web-xml-protocol
 				appserver.webapp.dir="@{appserver.webapp.dir}"
+				web-xml.location="@{appserver.webapp.dir}/wsrf/WEB-INF/web.xml"
 				scheme="${scheme}"
-				port="@{appserver.port}"
+				port="${appserver.default.web.port}"
 				/>
 
 			<!-- Secure Grid configuraiotns -->
@@ -2429,7 +2433,7 @@ $HeadURL$
 			<!-- Fix service specific jndi-config -->
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
 				match="(\s+.value.)http://.*\:\d+(\/.*)" 
-				replace="\1http://@{appserver.hostname}:@{appserver.port}\2" 
+				replace="\1http://@{appserver.hostname}:@{appserver.port.http}\2" 
 				flags="g" byline="true"/>
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
 			<propertyregex property="grid.external.host.has.value"
@@ -2440,12 +2444,17 @@ $HeadURL$
 			<if>
 				<isset  property="grid.external.host.has.value"/>
 				<then>
-					<grid-configure-server-config
-						service.hostname="grid.external.host"
-						grid.secure.enable="jboss.grid.secure.enable"
-						/>
+					<property name="logical.hostname" value="@{grid.external.host}"/>
 				</then>
+				<else>
+					<property name="logical.hostname" value="@{appserver.hostname}"/>
+				</else>
 			</if>
+			<grid-configure-server-config
+				appserver.webapp.dir="@{appserver.webapp.dir}"
+				service.hostname="${logical.hostname}"
+				grid.secure.enable="jboss.grid.secure.enable"
+				/>
 					
 			<!-- POC stuff -->
 			<echo message="Updateing POC info @{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"/>
@@ -3636,14 +3645,6 @@ $HeadURL$
 						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{proxy.update.connector.port}']" 
 							attr="proxyName" 
 							value="@{appserver.external.host}"/>
-						<!--
-						<attr path="//Engine[@name='@{appserver.server-xml.service.name}']" 
-							attr="defaultHost"                    
-							value="@{appserver.external.host}" />              
-						<attr path="//Engine[@name='@{appserver.server-xml.service.name}']/Host"
-							attr="name"                           
-							value="@{appserver.external.host}" />              
-						-->
 					</xmltask>
 				</then>
 				<else>
@@ -3712,6 +3713,8 @@ $HeadURL$
 		<attribute name="tomcat.external.host" default="${tomcat.external.host}"/>
 		<attribute name="tomcat.external.port" default="${tomcat.external.port}"/>
 		<attribute name="proxy.update.connector.port" default="8443"/>
+		<!--appserver-configure-hostname -->
+		<attribute name="tomcat.hostname" default="${tomcat.hostname}"/>
 		<!--grid-secure-configure-connector-->
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.dir" default="${security.dir.src}"/>
@@ -3753,14 +3756,20 @@ $HeadURL$
 				appserver.external.port="@{tomcat.external.port}"
 				proxy.update.connector.port="@{proxy.update.connector.port}"
 				/>                                                                      
+			<echo message="Configuring JBoss hostname in server.xml"/>
+			<appserver-configure-hostname
+				appserver.server-xml.file="@{tomcat.server-xml.file}"
+				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+				appserver.hostname="@{tomcat.hostname}"
+				/>
 
 			<echo message="Updating Tomcat Ports"/> 
-			<xmlconfig in="${tomcat.home}/conf/server.xml" verbose="false">
-				<update path="(//Connector)[@port=8080]/@port" value="${tomcat.port.http}" />
-				<update path="(//Connector)[@redirectPort=8443]/@redirectPort" value="${tomcat.port.ssl}" />
-				<update path="(//Connector)[@port=8009]/@port" value="${tomcat.port.ajp}" />
-				<update path="(//Connector)[@port=8443]/@port" value="${tomcat.port.ssl}" />
-				<update path="(//Server)[@port=8005]/@port" value="${tomcat.port.shutdown}" />
+			<xmlconfig in="@{tomcat.home}/conf/server.xml" verbose="false">
+				<update path="(//Connector)[@port=8080]/@port" value="@{tomcat.port.http}" />
+				<update path="(//Connector)[@redirectPort=8443]/@redirectPort" value="@{tomcat.port.ssl}" />
+				<update path="(//Connector)[@port=8009]/@port" value="@{tomcat.port.ajp}" />
+				<update path="(//Connector)[@port=8443]/@port" value="@{tomcat.port.ssl}" />
+				<update path="(//Server)[@port=8005]/@port" value="@{tomcat.port.shutdown}" />
 			</xmlconfig>
 
 			<echo message="Configuring secure grid in tomcat"/>
@@ -3814,6 +3823,8 @@ $HeadURL$
 		<attribute name="jboss.external.host" default="${grid.external.host}"/>
 		<attribute name="jboss.external.port" default="${grid.external.port}"/>
 		<attribute name="proxy.update.connector.port" default="8443"/>
+		<!--appserver-configure-hostname -->
+		<attribute name="jboss.hostname" default="${jboss.server.hostname}"/>
 		<!-- grid-secure-configure-connector -->
 		<attribute name="grid.secure.dir" default="${security.dir.src}"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
@@ -3886,6 +3897,12 @@ $HeadURL$
 				appserver.external.port="@{jboss.external.port}"
 				proxy.update.connector.port="@{proxy.update.connector.port}"
 				/>                                                                      
+			<echo message="Configuring JBoss hostname in server.xml"/>
+			<appserver-configure-hostname
+				appserver.server-xml.file="@{jboss.server-xml.file}"
+				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+				appserver.hostname="@{jboss.hostname}"
+				/>
 
 			<echo message="Configuring secure grid in JBoss"/>
 			<grid-secure-configure-connector
@@ -3901,6 +3918,23 @@ $HeadURL$
 				appserver.server-xml.file="@{jboss.server-xml.file}"
 				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="appserver-configure-hostname">
+		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
+		<attribute name="appserver.hostname" default="${jboss.server.hostname}"/>
+		<sequential>
+			<echo message="Updateing hostname in server.xml"/>
+			<xmltask source="@{appserver.server-xml.file}"
+				dest="@{appserver.server-xml.file}">
+				<attr path="//Engine[@name='@{appserver.server-xml.service.name}']" 
+					attr="defaultHost"                    
+					value="@{appserver.hostname}" />              
+				<attr path="//Engine[@name='@{appserver.server-xml.service.name}']/Host"
+					attr="name"                           
+					value="@{appserver.hostname}" />              
+			</xmltask>
 		</sequential>
 	</macrodef>
 </project>
