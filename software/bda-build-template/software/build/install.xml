@@ -279,6 +279,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 
 	<!-- Does directory management and copy some files with filtering to ensure token expansion -->
 	<target name="install:init" description="Does directory management to initialize install">
+		<math result="jboss.ssl.port" operand1="${jboss.server.port}" operation="+" operand2="363" datatype="int"/>
 		<filterset id="embedded.filterset">
 			<filter token="application.base.path" value="${application.base.path}"/>
 			<filter token="application.url" value="${application.url}"/>
@@ -696,7 +697,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			appserver.webapp.dir="${tomcat.home}/webapps"
 			appserver.server-xml.file="${tomcat.home}/conf/server.xml"
 			appserver.server-xml.service.name="Catalina"
-			appserver.port="${tomcat.port.http}"
+			appserver.port.http="${tomcat.port.http}"
+			appserver.port.ssl="${tomcat.port.ssl}"
 			appserver.hostname="${tomcat.hostname}"
 			/>
 	</target>
