@@ -700,6 +700,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			appserver.port.http="${tomcat.port.http}"
 			appserver.port.ssl="${tomcat.port.ssl}"
 			appserver.hostname="${tomcat.hostname}"
+			grid.external.host="${tomcat.external.host}"
+			grid.external.port="${tomcat.external.port}"
 			/>
 	</target>
 
