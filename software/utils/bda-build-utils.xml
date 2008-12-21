@@ -2374,8 +2374,8 @@ $HeadURL$
 		<attribute name="grid.poc.tech.phone" default="${grid.poc.tech.phone}"/>
 		<attribute name="grid.poc.tech.email" default="${grid.poc.tech.email}"/>
 		<attribute name="grid.poc.tech.role" default="${grid.poc.tech.role}"/>
-		<attribute name="grid.external.host" default="${grid.external.host}"/>
-		<attribute name="grid.external.port" default="${grid.external.port}"/>
+		<attribute name="grid.external.host" default="${jboss.external.host}"/>
+		<attribute name="grid.external.port" default="${jboss.external.port}"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.dir" default="${security.dir.src}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}"/>
@@ -2396,14 +2396,17 @@ $HeadURL$
 			</switch>
 
 			<!-- Fix all wsdl files that refer to statically defined host and port -->
-			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port.http}">
+			<echo message="Cleaning up hostname:port refereces in **/*.wsdl"/>
+			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:${appserver.default.web.port}">
 				<include name="**/*.wsdl" />
 			</replace>
 
 			<!-- Fix default jndi-config -->
-			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:@{appserver.port.http}"/>
+			<echo message="Fixing grid jndi-config"/>
+			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:${appserver.default.web.port}"/>
 
 			<!-- fix web.xml -->
+			<echo message="Updating grid web.xml"/>
 			<update-grid-web-xml-protocol
 				appserver.webapp.dir="@{appserver.webapp.dir}"
 				web-xml.location="@{appserver.webapp.dir}/wsrf/WEB-INF/web.xml"
@@ -2431,9 +2434,10 @@ $HeadURL$
 			</if>
 
 			<!-- Fix service specific jndi-config -->
+			<echo message="Fixing second grid jnid-config"/>
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
 				match="(\s+.value.)http://.*\:\d+(\/.*)" 
-				replace="\1http://@{appserver.hostname}:@{appserver.port.http}\2" 
+				replace="\1http://@{appserver.hostname}:${appserver.default.web.port}\2" 
 				flags="g" byline="true"/>
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
 			<propertyregex property="grid.external.host.has.value"
@@ -2450,10 +2454,11 @@ $HeadURL$
 					<property name="logical.hostname" value="@{appserver.hostname}"/>
 				</else>
 			</if>
+			<echo message="Configuring external grid hostname - ${logical.hostname}"/>
 			<grid-configure-server-config
 				appserver.webapp.dir="@{appserver.webapp.dir}"
 				service.hostname="${logical.hostname}"
-				grid.secure.enable="jboss.grid.secure.enable"
+				grid.secure.enable="${grid.secure.enable}"
 				/>
 					
 			<!-- POC stuff -->
@@ -2487,8 +2492,8 @@ $HeadURL$
 				match="&lt;ns1:hostingResearchCenter&gt;.*&lt;\/ns1:hostingResearchCenter&gt;"
 				replace="&lt;ns1:hostingResearchCenter&gt;${poc.tech.string}&lt;\/ns1:hostingResearchCenter&gt;"
 				flags="sg"/>
-			<echo message="Updating grid registration.xml"/>
 
+			<echo message="Updating poll interval grid registration.xml"/>
 			<replaceregexp 
 				match="(&lt;agg:PollIntervalMillis&gt;).*(&lt;\/agg:PollIntervalMillis&gt;)"
 				replace="\13600000\2"
@@ -2498,6 +2503,7 @@ $HeadURL$
 				</fileset>
 			</replaceregexp>
 			<!-- Change pointer to index service based on property -->
+			<echo message="Updating grid.index.url - @{grid.index.url}"/>
 			<replaceregexp 
 				match="(&lt;wsa:Address&gt;).*(&lt;\/wsa:Address&gt;)"
 				replace="\1@{grid.index.url}\2"
@@ -3550,23 +3556,39 @@ $HeadURL$
 		<attribute name="service.hostname" default="${service.hostname}"/>
 		<attribute name="grid.secure.enable" default="true"/>
 		<sequential>
-			<xmltask source="@{server-config.file}" dest="@{server-config.file}">
-				<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
-				<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='publishHostName']" />
-				<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
-					<![CDATA[
-					<parameter xmlns="http://xml.apache.org/axis/wsdd/"
-						name="logicalHost"
-						value="@{service.hostname}"/>
-					<parameter xmlns="http://xml.apache.org/axis/wsdd/"
-						name="publishHostName"
-						value="true"/>
-					<parameter xmlns="http://xml.apache.org/axis/wsdd/"
-						name="disableDNS"
-						value="true"/>
-					]]>
-				</insert>
-			</xmltask>
+			
+			<propertyregex property="service.hostname.is.localhost"
+				input="@{service.hostname}"
+				regexp="localhost"
+				select="true"
+				override="true"
+				/>
+			<if>
+				<isset property="service.hostname.is.localhost"/>
+				<then>
+					<echo message="grid.external.host is localhost, skipping configuration"/>
+				</then>
+				<else>
+					<echo message="grid.external.host is @{service.hostname}, proceeding with configuration"/>
+					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
+						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
+						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='publishHostName']" />
+						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
+							<![CDATA[
+							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
+								name="logicalHost"
+								value="@{service.hostname}"/>
+							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
+										name="publishHostName"
+								value="true"/>
+							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
+								name="disableDNS"
+										value="true"/>
+							]]>
+						</insert>
+					</xmltask>
+				</else>
+			</if>
 			<if>
 				<equals arg1="@{grid.secure.enable}" arg2="true" trim="true" />
 				<then>
@@ -3624,8 +3646,8 @@ $HeadURL$
 	<macrodef name="appserver-configure-external-hostname">
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
-		<attribute name="appserver.external.host" default="${grid.external.host}"/>
-		<attribute name="appserver.external.port" default="${grid.external.port}"/>
+		<attribute name="appserver.external.host" default="${jboss.external.host}"/>
+		<attribute name="appserver.external.port" default="${jboss.external.port}"/>
 		<attribute name="proxy.update.connector.port" default="8443"/>
 		<sequential>
 			<propertyregex property="appserver.external.host.has.value"
@@ -3820,8 +3842,8 @@ $HeadURL$
 		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<!-- appserver-configure-external-hostname -->
-		<attribute name="jboss.external.host" default="${grid.external.host}"/>
-		<attribute name="jboss.external.port" default="${grid.external.port}"/>
+		<attribute name="jboss.external.host" default="${jboss.external.host}"/>
+		<attribute name="jboss.external.port" default="${jboss.external.port}"/>
 		<attribute name="proxy.update.connector.port" default="8443"/>
 		<!--appserver-configure-hostname -->
 		<attribute name="jboss.hostname" default="${jboss.server.hostname}"/>
