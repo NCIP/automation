@@ -39,6 +39,7 @@ database.url=The JDBC url for that user above, value referes to other properties
 jboss.relative.path=This is the part of the path after application.base.path which will form the jboss.home. Example: ${jboss.binaries.relative.dir}
 jboss.server.hostname=The server name where jboss will be running. Example: localhost
 jboss.server.name=The jboss server instance name, $JBOSS_HOME/server/${jboss.server.name}. Example: default
+jboss.web.user=The account name to log into the JBoss web consoles.  Example: admin
 jboss.web.password=The password to the access the jboss web console and jmx console. Example: blueprint123!. The user is admin. 
 #jboss.port.config=This is the NCICB port configuration scheme used by this application server.  If this is set the other ports except for jboss.server.port and jboss.server.jndi.port are igored (those are used by the install process). Having this set also causes pre and post installation validation to not check ports.
 # Ports used by JBoss. Must not conflict with other LSD applications. Check with BDA or Systems teams.
@@ -60,6 +61,15 @@ jboss.web.password=The password to the access the jboss web console and jmx cons
 #jboss.snmp.port=
 #jboss.snmp-trapd.port=
 #jboss.web.service.port=
+
+#jboss.ssl.enable=A flag to determine where JBoss is configured with SSL, see https://wiki.nci.nih.gov/x/7xWy
+#jboss.ssl.keystore.location=The keystore file location, dir/filename recommend projectroot/software/common/security
+#jboss.ssl.keystore.pass=The password for that keystore file
+#jboss.ssl.keystore.alias=The alias for that keystore file
+#jboss.ssl.fullyqualified.hostname=The fully qualified hostname (www.nci.nih.gov) that the cert is for.  This url is verified within the cert.
+#jboss.external.host=Set this if you are using external hostnames, see https://wiki.nci.nih.gov/x/8hWy
+#jboss.eternal.port=Set this if you are using a different port with the external hostname above
+
 ##############
 ### TOMCAT ###
 ##############
@@ -71,6 +81,14 @@ jboss.web.password=The password to the access the jboss web console and jmx cons
 #tomcat.port.ajp=
 #tomcat.port.ssl=
 #tomcat.port.shutdown=
+#tomcat.ssl.enable=A flag to determine where Tomcat is configured with SSL, see https://wiki.nci.nih.gov/x/7xWy
+#tomcat.ssl.keystore.location=The keystore file location, dir/filename recommend projectroot/software/common/security
+#tomcat.ssl.keystore.pass=The password for that keystore file
+#tomcat.ssl.keystore.alias=The alias for that keystore file
+#tomcat.ssl.fullyqualified.hostname=The fully qualified hostname (www.nci.nih.gov) that the cert is for.  This url is verified within the cert.
+#tomcat.external.host=Set this if you are using external hostnames, see https://wiki.nci.nih.gov/x/8hWy
+#tomcat.eternal.port=Set this if you are using a different port with the external hostname above
+
 ##############
 ###  LDAP  ###
 ##############
@@ -117,8 +135,12 @@ ldap.basedn=The base DN to search for records. Example: ldap.basedn=ou=nci,o=nih
 #grid.poc.science.email=Example: john.smith@mail.com
 #grid.poc.science.role=Example: sysadmin
 # The external host an IP to access the grid service from the internet.  For security reasons Network Address Translation (NAT) is often used to allow traffic from the internet into the local network.  With NAT an IP address and port are configured on the seucrity device facing the internet and are mapped back to the IP and port of the server running the application.  The name in DNS for access from the intenet is often different than the server it's self.  So you would want to put the NAT IP or NAT hostname and the NAT port in the fileds below.
-#grid.external.host=
-#grid.external.port=
+#grid.external.host=removed
+#grid.external.port=removed
+#grid.secure.enable=Flag whether to deploy secure grid, see https://wiki.nci.nih.gov/x/8BWy
+#grid.secure.cert.location=Location (patt/file) of caGrid issued Cert File
+#grid.secure.key.location=Location (patt/file) of caGrid issued key File
+#
 ########################
 ###  MAIL  SETTINGS  ###
 ########################

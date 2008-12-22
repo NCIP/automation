@@ -194,28 +194,34 @@
 					<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="install.custom"/>
 					<!-- Jboss Continued -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.4" condition="install.custom"/>
-					<!-- Upgrade Related properties -->
+					<!-- Jboss SSL -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.5" condition="upgrade"/>
+					<!-- Upgrade Related properties -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="upgrade"/>
 					<!-- Authentication Type -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="install.custom"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.7" condition="install.custom"/>
 					<!-- Ldap data entry -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.7" condition="ldap.setup"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.8" condition="ldap.setup"/>
 					<!-- Database Properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.8" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.9" condition="install"/>
 					<!-- Global Configuraiton Options -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.9" condition="install.custom|upgrade"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.10" condition="install.custom|upgrade"/>
 					<!-- Grid Global Configuration -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.10" condition="never"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.11" condition="install|upgrade"/>
 					<!-- Grid Research Center -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.11" condition="never" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.12" condition="install|upgrade" />
 					<!-- Grid Tech Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.12" condition="never" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="install|upgrade" />
 					<!-- Grid Science Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="never" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="install|upgrade" />
+					<!-- Secure Grid Configuration -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.15" condition="install" />
 					<!-- Application Specific Properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="never"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.16" condition="install|upgrade"/>
+					<!-- Tomcat SSL -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.17" condition="install|upgrade"/>
 					<!-- Installation Summary -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.15" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.18" />
 					<panel classname="InstallationGroupPanel"/>
 					<panel classname="ExtendedInstallPanel"/>
 					<panel classname="FinishPanel"/>

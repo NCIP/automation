@@ -87,7 +87,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<property name="db-upgrade.dir.dest" value="${working.dir}/${db-upgrade.dist.relative.dir}" />
 	<property name="jboss-conf.dir.src" value="${basedir}/${jboss-conf.dist.relative.dir}" />
 	<property name="jboss-conf.dir.dest" value="${working.dir}/${jboss-conf.dist.relative.dir}" />
-	<property name="security.dir.src" value="${basedir}/${security.dist.relative.dir}" />
 
 	<!-- Jboss binding configurtion related properties -->
 	<property name="jboss.binding.template.location" value="${bda-utils.dir}/resource/${jboss.template.relative.dir}/bindings.xml"/>
@@ -214,6 +213,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</switch>
 
 
+	<!-- Added to convert location to file and path -->
+	<basename file="${jboss.ssl.keystore.location}" property="jboss.ssl.keystore.file"/>
+	<dirname file="${jboss.ssl.keystore.location}" property="jboss.ssl.keystore.dir"/>
+	<basename file="${tomcat.ssl.keystore.location}" property="tomcat.ssl.keystore.file"/>
+	<dirname file="${tomcat.ssl.keystore.location}" property="tomcat.ssl.keystore.dir"/>
+	<basename file="${grid.secure.cert.location}" property="grid.secure.cert.file"/>
+	<dirname file="${grid.secure.cert.location}" property="grid.secure.dir"/>
+	<basename file="${grid.secure.key.location}" property="grid.secure.key.file"/>
 
 	<!-- Start logging --> 
 	<property name="install-logs.dir" location="${application.base.path}/change-logs"/>
