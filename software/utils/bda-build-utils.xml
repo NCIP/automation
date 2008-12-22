@@ -351,7 +351,7 @@ $HeadURL$
 		<attribute name="envpropertyfile" default="${properties.file}"/>
 		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
 		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="appserver.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="appserver.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
 		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
@@ -2377,7 +2377,7 @@ $HeadURL$
 		<attribute name="grid.external.host" default="${jboss.external.host}"/>
 		<attribute name="grid.external.port" default="${jboss.external.port}"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
-		<attribute name="grid.secure.dir" default="${security.dir.src}"/>
+		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}"/>
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}"/>
 		<sequential>
@@ -3286,7 +3286,7 @@ $HeadURL$
 		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
 		<attribute name="appserver.ssl.port" default="8443"/>
 		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="appserver.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="appserver.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
 		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
@@ -3339,7 +3339,7 @@ $HeadURL$
 	<macrodef name="verify-keystore" description="macro for verifying a keystore">
 		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
 		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="appserver.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="appserver.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
 		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
@@ -3418,7 +3418,7 @@ $HeadURL$
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.port" default="8443"/>
-		<attribute name="grid.secure.dir" default="${security.dir.src}"/>
+		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
 		<sequential>
@@ -3727,7 +3727,7 @@ $HeadURL$
 		<attribute name="tomcat.ssl.enable" default="${tomcat.ssl.enable}"/>
 		<attribute name="tomcat.ssl.port" default="${tomcat.port.ssl}"/>
 		<attribute name="tomcat.ssl.keystore.file" default="${tomcat.ssl.keystore.file}"/>
-		<attribute name="tomcat.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="tomcat.ssl.keystore.dir" default="${tomcat.ssl.keystore.dir}"/>
 		<attribute name="tomcat.ssl.keystore.pass" default="${tomcat.ssl.keystore.pass}"/>
 		<attribute name="tomcat.ssl.keystore.alias" default="${tomcat.ssl.keystore.alias}"/>
 		<attribute name="tomcat.ssl.fullyqualified.hostname" default="${tomcat.ssl.fullyqualified.hostname}"/>
@@ -3739,7 +3739,7 @@ $HeadURL$
 		<attribute name="tomcat.hostname" default="${tomcat.hostname}"/>
 		<!--grid-secure-configure-connector-->
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
-		<attribute name="grid.secure.dir" default="${security.dir.src}"/>
+		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
 		<sequential>
@@ -3837,7 +3837,7 @@ $HeadURL$
 		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
 		<attribute name="jboss.ssl.port" default="8443"/>
 		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="jboss.ssl.keystore.dir" default="${security.dir.src}"/>
+		<attribute name="jboss.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
 		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
@@ -3848,7 +3848,7 @@ $HeadURL$
 		<!--appserver-configure-hostname -->
 		<attribute name="jboss.hostname" default="${jboss.server.hostname}"/>
 		<!-- grid-secure-configure-connector -->
-		<attribute name="grid.secure.dir" default="${security.dir.src}"/>
+		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
