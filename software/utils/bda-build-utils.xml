@@ -585,14 +585,25 @@ $HeadURL$
 								<sequential>
 		 							<propertycopy name="hostname.value" from="@{hostname.property}" />
 									<echo message="Attempting to connnect to ${hostname.value}...."/>
+									<var name="hostname.has.value" value="false"/>
+									<propertyregex property="hostname.has.value"
+										input="@{hostname.value}"
+										regexp="\S+"
+										select="true"
+										/>
 									<if>
-										<isreachable host="${hostname.value}" timeout="5"/>
+										<equals arg1="${hostname.has.value}" arg2="true"/>
 										<then>
-											<echo message="${hostname.value} reached. (@{hostname.property})"/>
+											<if>
+												<isreachable host="${hostname.value}" timeout="5"/>
+												<then>
+													<echo message="${hostname.value} reached. (@{hostname.property})"/>
+												</then>
+												<else>
+													<echo message="Could not reach host from property @{hostname.property} with value of ${hostname.value}"/>
+												</else>
+											</if>
 										</then>
-										<else>
-											<echo message="Could not reach host from property @{hostname.property} with value of ${hostname.value}"/>
-										</else>
 									</if>
 								</sequential>
 							</for>
@@ -3852,7 +3863,8 @@ $HeadURL$
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
-
+		<!--jboss-configure-java_opts -->
+		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
 		<sequential>
 			<echo message="Configuring JBoss ports (bindings)"/>
 			<jboss-bindings
@@ -3940,6 +3952,10 @@ $HeadURL$
 				appserver.server-xml.file="@{jboss.server-xml.file}"
 				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 				/>
+			<jboss-configure-java_opts
+				jboss.home="@{jboss.home}"
+				jboss.java.opts="@{jboss.java.opts}"
+				/>
 		</sequential>
 	</macrodef>
 	<macrodef name="appserver-configure-hostname">
@@ -3959,4 +3975,37 @@ $HeadURL$
 			</xmltask>
 		</sequential>
 	</macrodef>
+	<macrodef name="jboss-configure-java_opts">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.java.opts" default="${jboss.java.opts}" />
+		<sequential>
+			<osfamily property="os.family"/>
+			<echo message="os.family=${os.family}"/>
+			<switch value="${os.family}">
+				<case value="unix">
+					<replaceregexp file="${jboss.home}/bin/run.conf" byline="true"
+						match="^(\s+JAVA_OPTS)=(.*)"
+						replace="\1='@{jboss.java.opts}'"
+						/>
+				</case>
+				<case value="mac">
+					<replaceregexp file="${jboss.home}/bin/run.conf" byline="true"
+						match="^(\s+JAVA_OPTS)=(.*)"
+						replace="\1='@{jboss.java.opts}'"
+						/>
+				</case>
+				<case value="windows">
+					<replaceregexp file="${jboss.home}/bin/run.bat" byline="true"
+						match="^(set\s+JAVA_OPTS)=(.*)"
+						replace="rem \1=\2"
+						/>
+					<replaceregexp file="${jboss.home}/bin/run.bat" byline="true"
+						match="^(rem JVM memory.*))"
+						replace="rem added by BDA installer${line.separator}set JAVA_OPTS=@{jboss.java.opts}${line.separator}\1"
+						/>
+				</case>
+			</switch>
+		</sequential>
+	</macrodef>
+
 </project>
