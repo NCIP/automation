@@ -328,6 +328,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<target name="dist:gui-installer" description="Makes Gui-Installer distribution">
+		<delete>
+			<fileset dir="${dist.dir}">
+				<include name="*.jar"/>
+			</fileset>
+		</delete>
 		<gui-installer-prep
 			/>
 		<ant inheritAll="false" inheritRefs="false" 

@@ -1,8 +1,4 @@
-false>
-		<field type="text" variable="">
-			<spec txt=""  size="" set=""/>
-			<validator class="com.izforge.izpack.util.PortValidator" txt="" id="error.label"/>
-		</field>
+<userInput>
 	<panel order="0">
 		<field type="title" txt="Install or Upgrade software" bold="true" size="1" />
 		<field type="staticText" align="left" txt="Choose Install if you haven't installed caGWAS on this machine before. Choose Upgrade if caGWAS has previously been installed. WARNING: When choosing Install, the installer will remove any previously installed application servers (using caBIG installers) or databases installed based on the information you provide, so be sure to backup your application server and database instance if they exist. For detailed descriptions on each of the properties in this installer, see http://someurl"/>
@@ -83,19 +79,26 @@ false>
 		<variable name="tomcat.port.ssl" value="21443"/> 
 		<variable name="tomcat.relative.path" value="${tomcat.binaries.relative.dir}"/>
 		<variable name="jboss.ssl.enable" value="false"/>
-		<variable name="jboss.ssl.keystore.file" value=""/>
+		<variable name="jboss.ssl.keystore.location" value=""/>
 		<variable name="jboss.ssl.keystore.pass" value=""/>
 		<variable name="jboss.ssl.keystore.alias" value=""/>
 		<variable name="jboss.ssl.fullyqualified.hostname" value=""/>
 		<variable name="jboss.external.host" value=""/>
-		<variable name="jboss.eternal.port" value=""/>
+		<variable name="jboss.external.port" value=""/>
 		<variable name="tomcat.ssl.enable" value="false"/>
-		<variable name="tomcat.ssl.keystore.file" value=""/>
+		<variable name="tomcat.ssl.keystore.location" value=""/>
 		<variable name="tomcat.ssl.keystore.pass" value=""/>
 		<variable name="tomcat.ssl.keystore.alias" value=""/>
 		<variable name="tomcat.ssl.fullyqualified.hostname" value=""/>
 		<variable name="tomcat.external.host" value=""/>
-		<variable name="tomcat.eternal.port" value=""/>
+		<variable name="tomcat.external.port" value=""/>
+		<variable name="grid.secure.enable" value="false"/>
+		<variable name="grid.secure.cert.location" value=""/>
+		<variable name="grid.secure.key.location" value=""/>
+		<variable name="log4j.maxFileSize" value="100MB"/>
+		<variable name="log4j.maxDays" value="7"/>
+		<variable name="log4j.level" value="WARN"/>
+		<variable name="jboss.java.opts" value="-server -Xms256m -Xmx512m -XX:ThreadStackSize=128 -XX:SurvivorRatio=10 -XX:PermSize=128m -XX:MaxPermSize=128m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.awt.headless=true"/>
 
 	</panel>
 	<panel order="3">
@@ -112,6 +115,10 @@ false>
 			<spec txt="JBoss Server Name (JBoss_HOME/server/JBoss_SERVER_NAME):" id="text.label" size="15" set="default"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt=" JBoss Server Name (JBoss_HOME/server/JBoss_SERVER_NAME) is a required field" />
 		</field>
+		<field type="text" variable="jboss.web.user">
+			<spec txt="JBoss Web Console User:" id="text.label" size="15" set="admin"/>
+			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="JBoss web user is a required field" />
+		</field>
 		<field type="password" align="left" variable="jboss.web.password">
 			<spec>
 				<pwd txt="JBoss Web Console Password:" size="25" set=""/>
@@ -121,7 +128,7 @@ false>
 			<validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Passwords do not match. Please re-enter your JBoss Web Console passwords" id="key for the error text"/>
 		</field>
 		<field type="text" variable="jboss.java.opts">
-			<spec txt="JBoss Server JAVA_OPTS:" id="text.label" size="135" set="-server -Xms2048m -Xmx2048m -XX:ThreadStackSize=128 -XX:SurvivorRatio=10 -XX:PermSize=128m -XX:MaxPermSize=128m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.awt.headless=true"/>
+			<spec txt="JBoss Server JAVA_OPTS:" id="text.label" size="135" set="-server -Xms256m -Xmx512m -XX:ThreadStackSize=128 -XX:SurvivorRatio=10 -XX:PermSize=128m -XX:MaxPermSize=128m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.awt.headless=true"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="JBoss Server JAVA_OPTS is a required field" />
 		</field>
 
@@ -163,6 +170,10 @@ false>
 			<spec txt="JBoss JMS port:" id="text.label" size="5" set="18293"/>
 			<validator class="com.izforge.izpack.util.PortValidator" txt="The JBoss JMS port number is already in use" id="error.label"/>
 		</field>
+		<!-- Not sure we ant to prompt for these, this page is so big already --> 
+		<variable name="log4j.maxFileSize" value="100MB"/>
+		<variable name="log4j.maxDays" value="7"/>
+		<variable name="log4j.level" value="WARN"/>
 
 	</panel>
 
@@ -235,32 +246,28 @@ false>
 		<field type="staticText" align="left" txt="For JBoss SSL configuration details see https://wiki.nci.nih.gov/x/7xWy"/>
 		<field type="divider" align="top"/>
 
-		<field type="radio" variable="jboss.ssl.enabe">
-			<description align="left" txt="Enable JBoss SSL Port (note requires SSL Certificate Keystore and Internet facing DNS "/>
+		<field type="radio" variable="jboss.ssl.enable">
+			<description align="left" txt="Enable JBoss SSL Port (note requires SSL Certificate Keystore and Internet facing DNS) "/>
 			<spec>
 				<choice txt="True"  value="true" />
 				<choice txt="False" value="false" set="true"/>
 			</spec>
 		</field>
-		<field type="dir" variable="jboss.ssl.keystore.location">
+		<field type="text" variable="jboss.ssl.keystore.location">
 			<spec txt="Keystore file location: "  size="75" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Keystore file location is a required field"/>
 		</field>
 		<field type="password" align="left" variable="jboss.ssl.keystore.pass">
 			<spec>
 				<pwd txt="Keystore file password:" size="25" set=""/>
 				<pwd txt="Confirm keystore file password:" size="25" set=""/>
 			</spec>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Keystore file passwords are required fields" />
 			<validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Passwords do not match. Please re-enter your passwords."/>
 		</field>
 		<field type="text" variable="jboss.ssl.keystore.alias">
 			<spec txt="Keystore alias name: "  size="25" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Keystore alias name is a required field"/>
 		</field>
 		<field type="text" variable="jboss.ssl.fullyqualified.hostname">
 			<spec txt="Fully Qualified Host Name (FQHN) (ie, www.mydomain.com): "  size="50" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="FQHN is a required field"/>
 		</field>
 
 		<field type="divider" align="top"/>
@@ -299,7 +306,7 @@ false>
 		</field>
 		<!-- if using tomcat
 		<field type="dir" align="left" variable="existing.tomcat.home">
-			<spec txt="Existing MIRC Tomcat Home:" size="25" set="${UserPathPanelVariable}/mirc/${tomcat.binaries.relative.dir}"/>
+			<spec txt="Existing MIRC Tomcat Home:" size="25" set="${UserPathPanelVariable}/{tomcat.binaries.relative.dir}"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Enter a value for Existing MIRC Tomcat Home" />
 		</field>  
 		-->
@@ -496,20 +503,18 @@ false>
 		<field type="staticText" align="left" txt="For secure grid inforation see https://wiki.nci.nih.gov/x/8BWy"/> 
 		<field type="divider" align="top"/>
 
-		<field type="radio" variable="grid.secure.enabe">
+		<field type="radio" variable="grid.secure.enable">
 			<description align="left" txt="Enable secure Grid"/>
 			<spec>
 				<choice txt="True"  value="true" />
 				<choice txt="False" value="false" set="true"/>
 			</spec>
 		</field>
-		<field type="dir" variable="grid.secure.cert.location">
+		<field type="text" variable="grid.secure.cert.location">
 			<spec txt="caGrid certificate file location: "  size="75" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="caGrid certificate file location is a required field"/>
 		</field>
-		<field type="dir" variable="grid.secure.key.location">
+		<field type="text" variable="grid.secure.key.location">
 			<spec txt="caGrid private key file location: "  size="75" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="caGrid certificate file location is a required field"/>
 		</field>
 	</panel>
 
@@ -518,7 +523,7 @@ false>
 		<field type="staticText" align="left" txt="For detailed descriptions on each of the properties below, see the Application Settings section at http://someurl"/>
 		<field type="divider" align="top"/>
 		<field type="text" align="left" variable="tomcat.relative.path">
-			<spec txt="Relative Directory for Tomcat (relative from ${UserPathPanelVariable}):" size="25" set="mirc/${tomcat.binaries.relative.dir}"/>
+			<spec txt="Relative Directory for Tomcat (relative from ${UserPathPanelVariable}):" size="25" set="${tomcat.binaries.relative.dir}"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Enter a value for Relative Directory for Tomcat (relative from ${UserPathPanelVariable})" />
 		</field>
 		<field type="text" align="left" variable="tomcat.hostname">
@@ -557,32 +562,28 @@ false>
 		<field type="staticText" align="left" txt="For Tomcat SSL configuration details see https://wiki.nci.nih.gov/x/7xWy"/>
 		<field type="divider" align="top"/>
 
-		<field type="radio" variable="tomcat.ssl.enabe">
+		<field type="radio" variable="tomcat.ssl.enable">
 			<description align="left" txt="Enable Tomcat SSL Port (note requires SSL Certificate Keystore and Internet facing DNS "/>
 			<spec>
 				<choice txt="True"  value="true" />
 				<choice txt="False" value="false" set="true"/>
 			</spec>
 		</field>
-		<field type="dir" variable="tomcat.ssl.keystore.location">
+		<field type="text" variable="tomcat.ssl.keystore.location">
 			<spec txt="Keystore file location: "  size="75" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Keystore file location is a required field"/>
 		</field>
 		<field type="password" align="left" variable="tomcat.ssl.keystore.pass">
 			<spec>
 				<pwd txt="Keystore file password:" size="25" set=""/>
 				<pwd txt="Confirm keystore file password:" size="25" set=""/>
 			</spec>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Keystore file passwords are required fields" />
 			<validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Passwords do not match. Please re-enter your passwords."/>
 		</field>
 		<field type="text" variable="tomcat.ssl.keystore.alias">
 			<spec txt="Keystore alias name: "  size="25" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Keystore alias name is a required field"/>
 		</field>
 		<field type="text" variable="tomcat.ssl.fullyqualified.hostname">
 			<spec txt="Fully Qualified Host Name (FQHN) (ie, www.mydomain.com): "  size="50" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="FQHN is a required field"/>
 		</field>
 
 		<field type="divider" align="top"/>
