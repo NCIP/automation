@@ -1563,11 +1563,19 @@ $HeadURL$
 							<fail message="Some or all required database properties are not set and @{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file} is not found.   Ensure arguments passed to this macro are correct or set required database properties in your property file."/>
 						</then>
 						<else>
+						<!--
 							<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
 								<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
 								<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
 								<read path="//datasources/local-tx-datasource/password" property="read.database.password" />
 							</xmlconfig>
+						-->
+							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}">
+								<copy path="//datasources/local-tx-datasource/connection-url/text()" property="read.database.url" />
+								<copy path="//datasources/local-tx-datasource/user-name/text()" property="read.database.user" />
+								<copy path="//datasources/local-tx-datasource/password/text()" property="read.database.password" />
+							</xmltask>
+						
 							<dbconfig property="db.appuser.works" 
 										driver="${read.database.driver}"
 								url="${read.database.url}"
@@ -1851,6 +1859,7 @@ $HeadURL$
 			<mkdir dir="@{fusebox.output.dir}"/>
 			<mkdir dir="@{fusebox.persist.dir}"/>
 
+<!--
 			<xmlconfig in="@{fusebox.config.file}" verbose="false">			
 				<update path="//config/@project" value="@{fusebox.project.name}" />
 				<update path="//config/@search" value="@{fusebox.search.dir}" />
@@ -1859,6 +1868,15 @@ $HeadURL$
 				<update path="//config/@template" value="@{fusebox.template.file}" />
 				<update path="//config/@html" value="@{fusebox.output.dir}/dashboard.html" />
 			</xmlconfig>
+-->
+			<xmltask source="@{fusebox.config.file}" dest="@{fusebox.config.file}">
+				<replace path="//config/@project" withtext="@{fusebox.project.name}" />
+				<replace path="//config/@search" withtext="@{fusebox.search.dir}" />
+				<replace path="//config/@output" withtext="@{fusebox.output.dir}" />
+				<replace path="//config/@persist" withtext="@{fusebox.persist.dir}" />
+				<replace path="//config/@template" withtext="@{fusebox.template.file}" />
+				<replace path="//config/@html" withtext="@{fusebox.output.dir}/dashboard.html" />
+			</xmltask>
 
 
 			<java classname="com.stelligent.fusemetrics.FuseMetrics" >
@@ -2761,10 +2779,15 @@ $HeadURL$
 				<fileset dir="@{izpack-custom.svn.dir}" />
 			</copy>
 
-			<!-- customize izpack -->
+			<!-- customize izpack 
 			<xmlconfig in="@{target.dir}/@{izpack.binary.name}/src/build.xml" verbose="false">
 				<insertbranch path="//target[@name='build.listeners']" srcxmlfile="@{izpack-custom.svn.dir}/resources/ProgressBarInstallerListener.xml" srcpath="//build-installer-listener" />
 			</xmlconfig>
+-->
+			<xmltask failWithoutMatch="true" source="@{target.dir}/@{izpack.binary.name}/src/build.xml" 
+				dest="@{target.dir}/@{izpack.binary.name}/src/build.xml">		
+				<insert path="//target[@name='build.listeners']" file="@{izpack-custom.svn.dir}/resources/ProgressBarInstallerListener.xml"/>
+			</xmltask>
 			<copy file="@{izpack-custom.svn.dir}/resources/eng.xml" todir="@{target.dir}/@{izpack.binary.name}/bin/langpacks/installer" overwrite="true" />
 
 			<!-- Copy over library files -->
@@ -2815,11 +2838,18 @@ $HeadURL$
 							<echo message="LDAP properties not set and can't open login-config.xml to see if JBoss is setup to use LDAP for authentication."/>
 						</then>
 						<else>
+<!--					
 							<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" verbose="true">
 								<read path="//module-optio[@name]='ldapHost'" property="read.ldap.url" />
 								<read path="//module-optio[@name]='ldapSearchableBase'" property="read.ldap.basedn" />
 								<read path="//module-optio[@name]='ldapUserIdLabel'" property="read.ldap.searchprefix" />
 							</xmlconfig>
+-->							
+							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
+								<copy path="//module-option[@name='ldapHost']/text()" property="read.ldap.url" />
+								<copy path="//module-option[@name='ldapSearchableBase']/text()" property="read.ldap.basedn" />
+								<copy path="//module-option[@name='ldapUserIdLabel']/text()" property="read.ldap.searchprefix" />
+							</xmltask>							
 							<if>
 								<isset property="read.ldap.url"/>
 								<then>
@@ -3051,9 +3081,15 @@ $HeadURL$
 				</else>         
 			</if>           
 			<echo message="Inserting ${login-config.block.file} into @{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
+<!--
 			<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" verbose="false">
 				<insertbranch path="//policy" srcxmlfile="${login-config.block.file}" srcpath="//application-policy" />
-			</xmlconfig>    
+			</xmlconfig>
+-->
+			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" 
+				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">		
+				<insert path="//policy" file="${login-config.block.file}"/>
+			</xmltask>   
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-log4j-config">
@@ -3174,7 +3210,7 @@ $HeadURL$
 		<attribute name="build.dir" default="${build.dir}"/>
 		<attribute name="install.dir" default="${dist.exploded.dir}" />
 		<attribute name="properties.file" default="${properties.file}" />
-		<attribute name="target.name" />
+		<attribute name="install.target" />
 		<sequential>
 			<!-- Copies over all files so linux and windows properties are present --> 
 			<copy todir="@{install.dir}">
