@@ -2174,6 +2174,10 @@ software/bda-dashboard/anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/lis
 software/bda-dashboard/anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/util/HibernateUtil.java -text
 software/bda-dashboard/anthill-monitor/src/main/resources/hibernate.cfg.xml -text
 software/bda-dashboard/anthill-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
+software/bda-dashboard/docs/BDA_Certification_Stories.doc -text
+software/bda-dashboard/docs/BDA_Certification_design.doc -text
+software/bda-dashboard/docs/bda-dashboard.vsd -text
+software/bda-dashboard/docs/dashboard_sequence.vsd -text
 software/bda-dashboard/wiki-cli/.classpath -text
 software/bda-dashboard/wiki-cli/.project -text
 software/bda-dashboard/wiki-cli/README.txt -text
