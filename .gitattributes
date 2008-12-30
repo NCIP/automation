@@ -1975,6 +1975,8 @@ software/bda-build-template/software/common/resources/jboss-conf/log4j.dtd -text
 software/bda-build-template/software/common/resources/jboss-conf/login-config.db-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/login-config.ldap-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/template-log4j.xml -text
+software/bda-build-template/software/common/resources/security/165.112.132.171-cert.pem -text
+software/bda-build-template/software/common/resources/security/165.112.132.171-key.pem -text
 software/bda-build-template/software/common/resources/security/grid-sample-cert.pem -text
 software/bda-build-template/software/common/resources/security/grid-sample-key.pem -text
 software/bda-build-template/software/common/resources/security/ncicb-test-ssl.keystore -text
