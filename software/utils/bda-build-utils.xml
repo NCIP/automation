@@ -3833,6 +3833,7 @@ $HeadURL$
 				/>
 
 			<echo message="Updating Tomcat Ports"/> 
+<!--			
 			<xmlconfig in="@{tomcat.home}/conf/server.xml" verbose="false">
 				<update path="(//Connector)[@port=8080]/@port" value="@{tomcat.port.http}" />
 				<update path="(//Connector)[@redirectPort=8443]/@redirectPort" value="@{tomcat.port.ssl}" />
@@ -3840,6 +3841,15 @@ $HeadURL$
 				<update path="(//Connector)[@port=8443]/@port" value="@{tomcat.port.ssl}" />
 				<update path="(//Server)[@port=8005]/@port" value="@{tomcat.port.shutdown}" />
 			</xmlconfig>
+-->
+			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
+				<replace path="(//Connector)[@port=8080]/@port" withtext="@{tomcat.port.http}" />
+				<replace path="(//Connector)[@redirectPort=8443]/@redirectPort" withtext="@{tomcat.port.ssl}" />
+				<replace path="(//Connector)[@port=8009]/@port" withtext="@{tomcat.port.ajp}" />
+				<replace path="(//Connector)[@port=8443]/@port" withtext="@{tomcat.port.ssl}" />
+				<replace path="(//Server)[@port=8005]/@port" withtext="@{tomcat.port.shutdown}" />				
+			</xmltask>
+
 
 			<echo message="Configuring secure grid in tomcat"/>
 			<grid-secure-configure-connector
