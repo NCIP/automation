@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
-	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P>Remember to check out the latest BDA Release 0.7.0 in the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Flash news</b>: The BDA team is preparing for an enterprise rollout to all active CBIIT development teams]]></welcome>
+	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P>BDA version 0.8.0 was released on December 30th. See the <a href='https://wiki.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Latest News</b>: The BDA team is preparing for an enterprise rollout to all active CBIIT development teams - likely to rollout March 1, 2009]]></welcome>
 
 	<button>
 		<name>News</name>
