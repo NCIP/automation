@@ -231,6 +231,7 @@ docs/wiki/flash/images/loading_32x32.gif -text
 docs/wiki/flash/images/loading_48x48.gif -text
 docs/wiki/flash/images/map_loading.gif -text
 docs/wiki/flash/resources/bda-wiki-home.css -text
+docs/wiki/flash/resources/bda-wiki-home.template -text
 docs/wiki/flash/resources/bda-wiki-home.xml -text
 docs/wiki/flash/src/BDAHome.mxml -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/Constants.as -text
