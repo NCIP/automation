@@ -230,6 +230,24 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</mail>	
 	</target>
 
-
+	<target name="update:wikidocs" description="Updates the wiki doc Flash XML">
+	   <get src="${svn.wikidocs.url}/bda-wiki-home.template" dest="${svn.local.checkout}/bda-wiki-home.template" verbose="on" />
+		<filterset id="embedded.filterset">
+			<filter token="bda.version" value="${bda.version}"/>
+			<filter token="bda.release.date" value="${bda.release.date}"/>
+		</filterset>
+		<copy todir="../../docs/wiki/flash/resources" filtering="true">
+		  <fileset dir="${svn.local.checkout}">
+			<include name="**/*"/>
+	      </fileset>
+		  <filterset refid="embedded.filterset"/>
+			<filterset>
+				<filtersfile file="${basedir}/release.properties"/>
+			</filterset>
+		</copy>
+		<move file="../../docs/wiki/flash/resources/bda-wiki-home.template" tofile="../../docs/wiki/flash/resources/bda-wiki-home.xml"/>
+		<delete file="../../docs/wiki/flash/resources/bda-wiki-home.template" quiet="true" />
+		<!-- TODO: Need to check in local changes to SVN repository -->
+	</target>
 
 </project>
