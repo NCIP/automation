@@ -3210,7 +3210,7 @@ $HeadURL$
 		<attribute name="build.dir" default="${build.dir}"/>
 		<attribute name="install.dir" default="${dist.exploded.dir}" />
 		<attribute name="properties.file" default="${properties.file}" />
-		<attribute name="install.target" />
+		<attribute name="target.name" />
 		<sequential>
 			<!-- Copies over all files so linux and windows properties are present --> 
 			<copy todir="@{install.dir}">
@@ -3230,7 +3230,7 @@ $HeadURL$
 				<arg value="-Dproperties.file=@{properties.file}" />
 				<!-- force reinstall of database and jboss without prompting -->
 				<arg value="-Dforce.reinstall=true" />
-				<arg value="@{install.target}" />
+				<arg value="@{target.name}" />
 			</exec>         
 		</sequential>
 	</macrodef>
