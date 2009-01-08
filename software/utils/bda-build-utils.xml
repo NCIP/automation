@@ -349,12 +349,18 @@ $HeadURL$
 		<attribute name="java.check.version.minor" default="1.5.0_10" />
 		<attribute name="property.template.file" default="${properties.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
-		<attribute name="appserver.ssl.enable" default="${jboss.ssl.enable}"/>
-		<attribute name="appserver.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
-		<attribute name="appserver.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
-		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
-		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
-		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="jboss.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
+		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<attribute name="tomcat.ssl.enable" default="${tomcat.ssl.enable}"/>
+		<attribute name="tomcat.ssl.keystore.file" default="${tomcat.ssl.keystore.file}"/>
+		<attribute name="tomcat.ssl.keystore.dir" default="${tomcat.ssl.keystore.dir}"/>
+		<attribute name="tomcat.ssl.keystore.pass" default="${tomcat.ssl.keystore.pass}"/>
+		<attribute name="tomcat.ssl.keystore.alias" default="${tomcat.ssl.keystore.alias}"/>
+		<attribute name="tomcat.ssl.fullyqualified.hostname" default="${tomcat.ssl.fullyqualified.hostname}"/>
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -403,12 +409,20 @@ $HeadURL$
 				database.name="@{database.name}"
 				/>
 			<verify-keystore
-				appserver.ssl.enable="@{appserver.ssl.enable}"
-				appserver.ssl.keystore.file="@{appserver.ssl.keystore.file}"
-				appserver.ssl.keystore.pass="@{appserver.ssl.keystore.pass}"
-				appserver.ssl.keystore.alias="@{appserver.ssl.keystore.alias}"
-				appserver.ssl.fullyqualified.hostname="@{appserver.ssl.fullyqualified.hostname}"
-				appserver.ssl.keystore.dir="@{appserver.ssl.keystore.dir}"
+				appserver.ssl.enable="@{jboss.ssl.enable}"
+				appserver.ssl.keystore.file="@{jboss.ssl.keystore.file}"
+				appserver.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
+				appserver.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
+				appserver.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
+				appserver.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
+				/>
+			<verify-keystore
+				appserver.ssl.enable="@{tomcat.ssl.enable}"
+				appserver.ssl.keystore.file="@{tomcat.ssl.keystore.file}"
+				appserver.ssl.keystore.pass="@{tomcat.ssl.keystore.pass}"
+				appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
+				appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
+				appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
 				/>
 		</sequential>
 	</macrodef>
@@ -1502,19 +1516,23 @@ $HeadURL$
 				</filterset>
 			</copy> 
 	
-			<copy file="@{jboss.server.service.template.location}" tofile="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" overwrite="true">
-				<filterset>
-					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
-					<filter token="jboss.server.bindingfile.location" value="@{jboss.server.bindingfile.location}"/>
-				</filterset>
-			</copy>
-
-			<!-- Use tokens where possible
-			<xmlconfig in="${jboss-service.file}" verbose="false">
-				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']" value="@{jboss.server.ports.name}" />
-				<update path="(//mbean)[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']" value="file://@{jboss.server.bindingfile.location}" />
-			</xmlconfig>
-			-->
+			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+				<xmlcatalog refid="installer.catalog"/>
+				<remove path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']"/>
+				<insert path="/server/mbean[@code='org.jboss.util.property.jmx.SystemPropertyClassValue']"
+					position="after">
+					<![CDATA[
+					<mbean code="org.jboss.services.binding.ServiceBindingManager"
+						name="jboss.system:service=ServiceBindingManager">
+						<attribute name="ServerName">@{jboss.server.ports.name}</attribute>
+						<attribute name="StoreURL">file:@{jboss.server.bindingfile.location}</attribute>
+						<attribute name="StoreFactoryClassName">
+							org.jboss.services.binding.XMLServicesStoreFactory
+						</attribute>
+					</mbean>
+					]]>
+				</insert>
+			</xmltask>
 		</sequential>
 	</macrodef>
 
@@ -1639,13 +1657,19 @@ $HeadURL$
 	</macrodef>
 
 	<macrodef name="validate-pre-build">		
-		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
 		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="require.build.wscore" default="${require.build.wscore}"/>
+		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
 		<sequential>			
-			<check-wscore-exists
-				wscore.download.url="@{wscore.download.url}"
-				application.base.path="@{application.base.path}"
-				/>
+			<if>
+				<equals arg1="@{require.build.wscore}" arg2="true"/>
+				<then>
+					<check-wscore-exists
+						wscore.download.url="@{wscore.download.url}"
+						application.base.path="@{application.base.path}"
+						/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -2610,49 +2634,59 @@ $HeadURL$
 		<sequential>
 			<property name="jmx-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml"/>
 			<echo message="Updating ${jmx-console.web-xml.file}"/>
+			<xmltask source="${jmx-console.web-xml.file}"
+				dest="${jmx-console.web-xml.file}">
+				<remove path="/web-app/security-constraint"/>
+				<insert path="/web-app">
+					<![CDATA[
+					<security-constraint>
+						<web-resource-collection>
+							<web-resource-name>HtmlAdaptor</web-resource-name>
+							<description>An example security config that only allows users with the
+								role JBossAdmin to access the HTML JMX console web application
+							</description>
+							<url-pattern>/*</url-pattern>
+							<http-method>GET</http-method>
+							<http-method>POST</http-method>
+						</web-resource-collection>
+						<auth-constraint>
+							<role-name>JBossAdmin</role-name>
+						</auth-constraint>
+					</security-constraint>
 
-
-			<replaceregexp file="${jmx-console.web-xml.file}"
-				match="(&lt;!-- A security[^&lt;]+)(&lt;security-constraint&gt;)"
-				replace="\1 --&gt;\2"
-				flags="sg"/>
-			<replaceregexp file="${jmx-console.web-xml.file}"
-				match="(&lt;\/security-constraint&gt;.*)--&gt;"
-				replace="\1"
-				flags="sg"/>
-			<loadfile
-				property="jmx-web.login.config.found"
-				srcFile="${jmx-console.web-xml.file}">
-				<filterchain>
-					<linecontainsregexp>
-						<regexp pattern="login-config"/>
-					</linecontainsregexp>
-				</filterchain>
-			</loadfile>
-			<property name="jmx-web-xml.login-config.block" value="${line.separator}  &lt;login-config&gt;${line.separator}    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;${line.separator}    &lt;realm-name&gt;JBoss JMX Console&lt;/realm-name&gt;${line.separator}  &lt;/login-config&gt;${line.separator}"/>
-			<if>
-				<not>
-					<isset property="jmx-web.login.config.found"/>
-				</not>
-				<then>
-					<replaceregexp file="${jmx-console.web-xml.file}"
-						match="(&lt;\/security-constraint&gt;).*(&lt;security-role&gt;)"
-						replace="\1${jmx-web-xml.login-config.block}\2"
-						flags="sg"/>
-				</then>
-			</if>
+					]]>
+				</insert>
+				<remove path="/web-app/login-config"/>
+				<insert path="/web-app">
+					<![CDATA[
+					<login-config>
+						<auth-method>BASIC</auth-method>
+						<realm-name>JBoss JMX Console</realm-name>
+					</login-config>
+					]]>
+				</insert>
+				<remove path="/web-app/security-role"/>
+				<insert path="/web-app">
+					<![CDATA[
+					<security-role>
+						<role-name>JBossAdmin</role-name>
+					</security-role>
+					]]>
+				</insert>
+			</xmltask>
 
 			<property name="jmx-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${jmx-console.jboss-web-xml.file}"/>
+			<xmltask source="${jmx-console.jboss-web-xml.file}"
+				dest="${jmx-console.jboss-web-xml.file}">
+				<remove path="/jboss-web/security-domain"/>
+				<insert path="/jboss-web">
+					<![CDATA[
+					<security-domain>java:/jaas/jmx-console</security-domain>
+					]]>
+				</insert>
+			</xmltask>
 
-			<replaceregexp file="${jmx-console.jboss-web-xml.file}"
-				match="(&lt;!-- Uncomment.*)(&lt;security-domain)"
-				replace="\1 --&gt; \2"
-				flags="sg"/>
-			<replaceregexp file="${jmx-console.jboss-web-xml.file}"
-				match="(&lt;\/security-domain.*)--&gt;"
-				replace="\1"
-				flags="sg"/>
 			<property name="jmx-console.password.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-users.properties"/>
 			<echo message="Updating ${jmx-console.password.file}"/>
 
@@ -2660,57 +2694,63 @@ $HeadURL$
 				match="^(admin)=.*"
 				replace="@{jboss.web.user}=@{jboss.web.password}"
 				flags="g" byline="true"/>
+
 			<property name="web-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml"/>
 			<echo message="Updating ${web-console.web-xml.file}"/>
+			<xmltask source="${web-console.web-xml.file}"
+				dest="${web-console.web-xml.file}">
+				<remove path="/web-app/security-constraint"/>
+				<insert path="/web-app">
+					<![CDATA[
+					<security-constraint>
+						<web-resource-collection>
+							<web-resource-name>HtmlAdaptor</web-resource-name>
+							<description>An example security config that only allows users with the
+								role JBossAdmin to access the HTML JMX console web application
+							</description>
+							<url-pattern>/*</url-pattern>
+							<http-method>GET</http-method>
+							<http-method>POST</http-method>
+						</web-resource-collection>
+						<auth-constraint>
+							<role-name>JBossAdmin</role-name>
+						</auth-constraint>
+					</security-constraint>
 
-			<replaceregexp file="${web-console.web-xml.file}"
-				match="(&lt;!-- A security.*)(&lt;security-constraint&gt;)"
-				replace="\1 --&gt;\2"
-				flags="sg"/>
-			<replaceregexp file="${web-console.web-xml.file}"
-				match="(&lt;\/security-constraint&gt;.*)--&gt;"
-				replace="\1"
-				flags="sg"/>
-			<loadfile
-				property="web.login.config.found"
-				srcFile="${web-console.web-xml.file}">
-				<filterchain>
-					<linecontainsregexp>
-						<regexp pattern="login-config"/>
-					</linecontainsregexp>
-				</filterchain>
-			</loadfile>
-			<property name="web-xml.login-config.block" value="${line.separator}  &lt;login-config&gt;${line.separator}    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;${line.separator}    &lt;realm-name&gt;JBoss Web Console&lt;/realm-name&gt;${line.separator}  &lt;/login-config&gt;${line.separator}"/>
-			<if>
-				<not>
-					<isset property="web.login.config.found"/>
-				</not>
-				<then>
-					<replaceregexp file="${web-console.web-xml.file}"
-						match="(&lt;\/security-constraint&gt;).*(&lt;security-role&gt;)"
-						replace="\1${jmx-web-xml.login-config.block}\2"
-						flags="sg"/>
-				</then>
-			</if>
+					]]>
+				</insert>
+				<remove path="/web-app/login-config"/>
+				<insert path="/web-app">
+					<![CDATA[
+					<login-config>
+						<auth-method>BASIC</auth-method>
+						<realm-name>JBoss Web Console</realm-name>
+					</login-config>
+					]]>
+				</insert>
+				<remove path="/web-app/security-role"/>
+				<insert path="/web-app">
+					<![CDATA[
+					<security-role>
+						<role-name>JBossAdmin</role-name>
+					</security-role>
+					]]>
+				</insert>
+			</xmltask>
 
 			<property name="web-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${web-console.jboss-web-xml.file}"/>
 
-			<replaceregexp file="${web-console.jboss-web-xml.file}"
-				match="(&lt;!-- Uncomment.*)(&lt;security-domain)"
-				replace="\1 --&gt; \2"
-				flags="sg"/>
-			<replaceregexp file="${web-console.jboss-web-xml.file}"
-				match="(&lt;\/security-domain&gt;)\s+--&gt;"
-				replace="\1"
-				flags="sg"/>
-			<property name="login-config.xml" value="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
-			<echo message="Updating ${login-config.xml}"/>
+			<xmltask source="${web-console.jboss-web-xml.file}"
+				dest="${web-console.jboss-web-xml.file}">
+				<remove path="/jboss-web/security-domain"/>
+				<insert path="/jboss-web">
+					<![CDATA[
+					<security-domain>java:/jaas/web-console</security-domain>
+					]]>
+				</insert>
+			</xmltask>
 
-			<replaceregexp file="${login-config.xml}"
-				match="web-console-"
-				replace="props\/web-console-"
-				flags="g" byline="true"/>
 			<property name="web-console.classes.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes"/>
 			<property name="jboss.props.dir" value="@{jboss.home}/server/@{jboss.server.name}/conf/props"/>
 			<copy todir="${jboss.props.dir}">
@@ -2718,12 +2758,21 @@ $HeadURL$
 					<include name="web-console-*.properties"/>
 				</fileset>
 			</copy>
+
 			<property name="web-console.password.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-users.properties"/>
 			<echo message="Updating ${web-console.password.file}"/>
 
 			<replaceregexp file="${web-console.password.file}"
 				match="^(admin)=.*"
-				replace="\1=@{jboss.web.password}"
+				replace="@{jboss.web.user}=@{jboss.web.password}"
+				flags="g" byline="true"/>
+
+			<property name="login-config.xml" value="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
+			<echo message="Updating ${login-config.xml}"/>
+
+			<replaceregexp file="${login-config.xml}"
+				match="web-console-"
+				replace="props\/web-console-"
 				flags="g" byline="true"/>
 		</sequential>
 	</macrodef>
@@ -3058,6 +3107,7 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="jboss-login-config">
 		<attribute name="authentication.type" default="${authentication.type}"/>
+		<attribute name="application.context.name" default="${application.context.name}"/>
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="login-config.ldap.file"/>
@@ -3086,6 +3136,10 @@ $HeadURL$
 				<insertbranch path="//policy" srcxmlfile="${login-config.block.file}" srcpath="//application-policy" />
 			</xmlconfig>
 -->
+			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" 
+				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">		
+				<remove path="//policy/application-policy[@name='@{application.context.name}']"/>
+			</xmltask>
 			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" 
 				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">		
 				<insert path="//policy" file="${login-config.block.file}"/>
@@ -3148,7 +3202,7 @@ $HeadURL$
 				if (appenderClass.indexOf("Roll") &lt; 1)
 				{
 				println errorMsg
-				System.exit(exitCode)
+				//System.exit(exitCode)
 				}
 				// Test Thresholds
 				String fileSize="" 
@@ -3160,7 +3214,7 @@ $HeadURL$
 				{
 				println "Max Size is not set."
 				println errorMsg
-				System.exit(exitCode)
+				//System.exit(exitCode)
 				}
 				Integer numFiles=0 
 				if ( log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxBackupIndex'})
@@ -3171,7 +3225,7 @@ $HeadURL$
 				{
 				println "Max Files is not set." 
 				println errorMsg
-				System.exit(exitCode)
+				//System.exit(exitCode)
 				}
 
 				println "Appender MaxSize-\t${fileSize}"
@@ -3192,13 +3246,13 @@ $HeadURL$
 				if (maxSize > thresholdFileSize)
 				{
 				println errorMsg
-				System.exit(exitCode)
+				//System.exit(exitCode)
 				}
 
 				if (numFiles > thresholdFileNum)
 				{
 				println errorMsg
-				System.exit(exitCode)
+				//System.exit(exitCode)
 				}
 				println "Appender Processed Sucessfully.\n"
 				}
@@ -3230,7 +3284,7 @@ $HeadURL$
 				<arg value="-Dproperties.file=@{properties.file}" />
 				<!-- force reinstall of database and jboss without prompting -->
 				<arg value="-Dforce.reinstall=true" />
-				<arg value="@{target.name}" />
+				<arg value="@{install.target}" />
 			</exec>         
 		</sequential>
 	</macrodef>
@@ -3355,7 +3409,7 @@ $HeadURL$
 					<xmltask source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}">
 		
-						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']" />
+						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{appserver.ssl.port}']" />
 		
 						<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']">
 							<![CDATA[
@@ -3464,7 +3518,7 @@ $HeadURL$
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
-		<attribute name="grid.secure.port" default="8443"/>
+		<attribute name="grid.secure.port" default="@{grid.secure.port}"/>
 		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
@@ -3513,9 +3567,20 @@ $HeadURL$
 					<echo message="grid.secure.enable set so secure grid is being configured"/>
 					<copy todir="@{appserver.conf.dir}" file="@{grid.secure.dir}/@{grid.secure.cert.file}"/>
 					<copy todir="@{appserver.conf.dir}" file="@{grid.secure.dir}/@{grid.secure.key.file}"/>
+					<switch value="@{appserver.server-xml.service.name}">
+						<case value="jboss.web">
+							<var name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve55"/>
+						</case>
+						<case value="Catalina">
+							<var name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve"/>
+						</case>
+						<default>
+							<fail message="Unkown server.xml service name - @{appserver.server-xml.service.name}, don't know how to handle"/>
+						</default>
+					</switch>
 					<xmltask source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}" >
-						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']" />
+						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{grid.secure.port}']" />
 						<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']">
 							<![CDATA[
 							<Connector className="org.globus.tomcat.coyote.net.HTTPSConnector"
@@ -3528,11 +3593,13 @@ $HeadURL$
 								scheme="https"
 								enableLookups="true" 
 								acceptCount="10" 
-										debug="0" 
+								debug="0" 
 								cert="@{appserver.conf.dir}/@{grid.secure.cert.file}"
 								key="@{appserver.conf.dir}/@{grid.secure.key.file}"
 								${tomcat55.extras}
-								/>
+								>
+									<Valve className="${valve.name}"/>
+								</Connector>
 							]]>
 						</insert>
 					</xmltask>
@@ -3547,6 +3614,7 @@ $HeadURL$
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<sequential>    
+			<!-- Functionallity moved to grid-secure-configure-connector
 			<switch value="@{appserver.server-xml.service.name}">
 				<case value="jboss.web">
 					<var name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve55"/>
@@ -3560,13 +3628,14 @@ $HeadURL$
 			</switch>
 			<xmltask source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
-				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
+				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/ConnenctorEngine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
 				<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']">
 					<![CDATA[                               
 					<Valve className="${valve.name}"/>
 					]]>                                     
 				</insert>                       
 			</xmltask>              
+			-->
 		</sequential>   
 	</macrodef>
 
@@ -3786,6 +3855,7 @@ $HeadURL$
 		<attribute name="tomcat.hostname" default="${tomcat.hostname}"/>
 		<!--grid-secure-configure-connector-->
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
+		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
 		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
@@ -3857,7 +3927,7 @@ $HeadURL$
 				appserver.server-xml.file="@{tomcat.server-xml.file}"
 				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
 				grid.secure.enable="@{grid.secure.enable}"
-				grid.secure.port="@{tomcat.port.ssl}"
+				grid.secure.port="@{grid.secure.port}"
 				grid.secure.dir="@{grid.secure.dir}"
 				grid.secure.cert.file="@{grid.secure.cert.file}"
 				grid.secure.key.file="@{grid.secure.key.file}"
@@ -3907,6 +3977,7 @@ $HeadURL$
 		<!-- grid-secure-configure-connector -->
 		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
+		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
 		<!--jboss-configure-java_opts -->
