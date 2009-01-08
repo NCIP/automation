@@ -409,11 +409,49 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		-->
 	</target>
 
-	<target name="install:jboss:configure" description="Configure JBoss (bindings, login-config.xml, ect)" unless="exclude.jboss" depends="install:jboss:binaries ">
+	<target name="install:jboss:configure:log4j" description="Configure custom entries in system wide log4j" unless="exclude.jboss" >
+		<echo message="Configuring Log4J"/>
+		<!-- Insert an appender -->
+		<!--<copy todir="${jboss.home}/server/${jboss.server.name}/conf" file="${jboss-conf.dir.src}/log4j.dtd"/>-->
+		<copy todir="${basedir}" file="${jboss-conf.dir.src}/log4j.dtd"/>
+		<xmltask source="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
+			dest="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml">
+			<xmlcatalog refid="installer.catalog"/>
+			<remove path="/log4j:configuration/appender[@name='TestAppender']"/>
+			<insert path="/log4j:configuration">
+				<![CDATA[
+				<appender name="TestAppender" class="org.jboss.logging.appender.RollingFileAppender">
+					<errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+					<param name="File" value="${jboss.server.log.dir}/testAppender.log"/>
+					<param name="Append" value="false"/>
+					<param name="MaxFileSize" value="${log4j.maxFileSize}"/>
+					<!--<param name="MaxBackupIndex" value="${log4j.maxDays}"/>-->
+
+					<layout class="org.apache.log4j.PatternLayout">
+						<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+					</layout>           
+				</appender>
+				]]>
+			</insert>
+			<remove path="/log4j:configuration/category[@name='org.nih.nci']"/>
+			<insert path="/log4j:configuration">
+				<![CDATA[
+				<category name="org.nih.nci">
+					<priority value="${log4j.level}"/>
+				</category>
+				]]>
+			</insert>
+		</xmltask>
+		<validate-log4j
+			/>                              
+	</target>
+	<target name="install:jboss:configure" description="Configure JBoss (bindings, login-config.xml, ect)" unless="exclude.jboss"
+		depends="install:jboss:binaries,
+			install:jboss:configure:log4j	
+			">
 		<!-- Calls the following macros
 			jboss-bindings - configures ports for jboss
 			jboss-login-config - sets up authentication
-			jboss-log4j-config - configures log4j
 			secure-jboss-console - adds password to jboss console apps
 			jboss-update-shutdown - updates shutdown.jar with correct jndi port so no args need to used 4 shutdown
 			appserver-ssl-configure -  enables ssl
