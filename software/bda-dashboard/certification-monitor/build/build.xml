@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project name="bda-certification" default="build:project" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:cs="antlib:com.puppycrawl.tools.checkstyle">
+	<description>
+		This build file is part of the bda-build-template project.  This is the master build file for the project.  It should be placed in project/software/.  This script wrappers sub projects to build, test and inspect code.  Additionally this project manges creation of distributions and deployment locally or remotely.  Deployments will call the install.xml from the distribution to install or upgrade the application.  Lastly this script will run include targets that require manipulation of containers (selenium tests because they require starting the application server container (and require a fully deployed application which this process is responsible for). This build script assumes two sub-projects bda-blueprints-webapp and bda-blueprints-api. The API targets are commented out and can be removed if not needed.  Also support for both tomcat and jboss download, install and configure are included.  These scripts require Java, Ant, Database and SVN to work.
+	</description>
+
+	<property file="project.properties" />
+	<property name="build.dir" location="${basedir}" />
+	<property name="bda-download.dir" location="${build.dir}/bda-download" />
+	<property name="lib.dir" location="${build.dir}/lib" />
+	<property name="bda-utils.dir" location="${build.dir}/bda-utils" />
+	<property name="log.dir" location="${build.dir}/logs" />
+	
+	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<mkdir dir="${bda-download.dir}" />
+	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+
+	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
+		<property name="bda.version" value="${bda.version}" />
+		<property name="bda-utils.dir" location="${bda-utils.dir}" />
+		<property name="lib.dir" location="${lib.dir}" />
+		<property name="software.dir" location="${build.dir}" />
+	</ant>
+
+
+
+	<!-- Paths -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<path id="ivy.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="${ivy.file}" />
+			<include name="${ivy-core.file}" />
+		</fileset>
+	</path>
+	
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath" />
+	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
+		<classpath>
+			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+
+	<!-- Start logging -->
+	<mkdir dir="${log.dir}" />
+	<tstamp>
+		<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
+	</tstamp>
+	<record name="${log.dir}/install-${install.time}.log" action="start" />
+	<!-- set some db variables -->
+	<switch value="${database.type}">
+		<case value="oracle">
+			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
+			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="db-upgrade.list.file" value="${db-upgrade.oracle.list.file}"/>
+			<property name="db-upgrade.conf.file" value="${db-upgrade.oracle.conf.file}"/>
+			<property name="database.schema" value="${database.name}"/>
+		</case>
+		<case value="mysql">
+			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
+			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="db-upgrade.list.file" value="${db-upgrade.mysql.list.file}"/>
+			<property name="db-upgrade.conf.file" value="${db-upgrade.mysql.conf.file}"/>
+			<property name="database.schema" value="${database.name}"/>
+		</case>
+		<case value="postgresql">
+			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
+			<property name="database.driver" value="org.postgresql.Driver"/>
+			<property name="db-upgrade.list.file" value="${db-upgrade.postgresql.list.file}"/>
+			<property name="db-upgrade.conf.file" value="${db-upgrade.postgresql.conf.file}"/>
+			<property name="database.schema" value="public"/>
+		</case>
+		<default>
+			<fail message="Invalid database type ${database.type}"/>
+		</default>
+	</switch>
+
+	<path id="jdbc.driver.classpath">
+		<pathelement location="${database.driver.file}"/>
+	</path>
+
+
+	<!-- Targets -->
+
+
+	<target name="init" description="Sets up build are and initalizes variables">
+
+	</target>
+
+	<target name="build:project" depends="init,validation:JADS,svn:checkout,build:single-command-build" description="Sets up build are and initalizes variables">
+		<echo message="call build:project target.. "/>
+	</target>
+	
+	<target name="validation:JADS" description="Runs pre-install validation checks bda-utils">
+		<validate-environment
+			ant.check.version="${ant.minimum.version}"
+			java.check.version.major="${java.major.version}"
+			java.check.version.minor="${java.minor.version}"		
+			/>
+	
+		<database-create
+			database.driver="${database.driver}"
+			database.system.url="${database.system.url}"
+			database.system.user="${database.system.user}"
+			database.system.password="${database.system.password}"
+			database.url="${database.url}"
+			database.user="${database.user}"
+			database.password="${database.password}"
+			database.version="${database.version}"
+			database.name="${database.name}"
+			/>
+
+		<validate-database
+			database.driver="${database.driver}"
+			database.system.url="${database.system.url}"
+			database.system.user="${database.system.user}"
+			database.system.password="${database.system.password}"
+			database.url="${database.url}"
+			database.user="${database.user}"
+			database.password="${database.password}"
+			database.version="${database.version}"
+			database.name="${database.name}"
+			/>
+	</target>
+
+	
+	<target name="svn:checkout" depends="svn:scorch,svn:init">	
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
+		</svn>
+	</target>
+	
+	<target name="svn:scorch">
+		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
+		<delete dir="${svn.local.checkout}" />
+	</target>
+	
+	<target name="svn:init">		
+		<mkdir dir="working"/>
+	</target>
+	
+	<target name="build:single-command-build">		
+		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.build.target}" dir="${master.build.location}"/>	
+		
+	</target>
+
+</project>
