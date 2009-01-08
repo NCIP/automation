@@ -3165,10 +3165,10 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="validate-log4j">
-		<attribute name="log4j.template.file"/>
+		<attribute name="log4j.file" default="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"/>
 		<sequential>
 			<groovy>
-				<arg line="@{log4j.template.file}"/>
+				<arg line="@{log4j.file}"/>
 				import java.util.regex.Matcher
 				import java.util.regex.Pattern
 
@@ -3194,14 +3194,15 @@ $HeadURL$
 				// Test Appenders
 				println log4j.appender."@name"
 				log4j.appender."@name".each{name ->
-				if (name != "CONSOLE")
+				if (name != "CONSOLE" &amp;&amp; name != "FILE")
 				{
 				appenderClass = log4j.appender.find{it.'@name'==name}."@class"
 				println "Appender Name-\t${name}"
 				println "Appender Class-\t${appenderClass}"
 				if (appenderClass.indexOf("Roll") &lt; 1)
 				{
-				println errorMsg
+				println "WARNING - Appender should be a rolling appender."
+				//println errorMsg
 				//System.exit(exitCode)
 				}
 				// Test Thresholds
@@ -3212,19 +3213,19 @@ $HeadURL$
 				}
 				else
 				{
-				println "Max Size is not set."
-				println errorMsg
+				println "WARNING - Max Size is not set."
+				//println errorMsg
 				//System.exit(exitCode)
 				}
-				Integer numFiles=0 
+				Integer numFiles
 				if ( log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxBackupIndex'})
 				{
 				numFiles =  log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxBackupIndex'}."@value".toInteger()
 				}
 				else
 				{
-				println "Max Files is not set." 
-				println errorMsg
+				println "WARNING - Max Files is not set." 
+				//println errorMsg
 				//System.exit(exitCode)
 				}
 
@@ -3245,13 +3246,15 @@ $HeadURL$
 				}
 				if (maxSize > thresholdFileSize)
 				{
-				println errorMsg
+				println "WARNING - MaxFileSize exceeds threshold of ${thresholdFileSize}"
+				//println errorMsg
 				//System.exit(exitCode)
 				}
 
 				if (numFiles > thresholdFileNum)
 				{
-				println errorMsg
+				println "WARNING - MaxFileNum exceeds threshold of ${thresholdFileNum}"
+				//println errorMsg
 				//System.exit(exitCode)
 				}
 				println "Appender Processed Sucessfully.\n"
@@ -3950,8 +3953,6 @@ $HeadURL$
 		<attribute name="authentication.type" default="${authentication.type}"/>
 		<attribute name="login-config.ldap.file" default="${jboss-conf.dir.dest}/login-config.ldap-block.xml"/>
 		<attribute name="login-config.db.file" default="${jboss-conf.dir.dest}/login-config.db-block.xml"/>
-		<!-- jboss-log4j-config -->
-		<attribute name="log4j.template.file" default="${jboss-conf.dir.dest}/template-log4j.xml"/>
 		<!-- secure-jboss-console -->
 		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
 		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
@@ -4002,13 +4003,6 @@ $HeadURL$
 				login-config.ldap.file="@{login-config.ldap.file}"
 				login-config.db.file="@{login-config.db.file}"
 
-				/>
-
-			<echo message="Configuring JBoss log4j"/>
-			<jboss-log4j-config
-				jboss.home="@{jboss.home}"
-				jboss.server.name="@{jboss.server.name}"
-				log4j.template.file="@{log4j.template.file}"
 				/>
 
 			<echo message="Adding user and password to JBoss console apps"/>
