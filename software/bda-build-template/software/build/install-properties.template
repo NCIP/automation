@@ -138,6 +138,7 @@ ldap.basedn=The base DN to search for records. Example: ldap.basedn=ou=nci,o=nih
 #grid.external.host=removed
 #grid.external.port=removed
 #grid.secure.enable=Flag whether to deploy secure grid, see https://wiki.nci.nih.gov/x/8BWy
+#grid.secure.port=The port to be used for the secure grid listener
 #grid.secure.cert.location=Location (patt/file) of caGrid issued Cert File
 #grid.secure.key.location=Location (patt/file) of caGrid issued key File
 #

@@ -111,6 +111,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<!-- Default to false, properties can override -->
 	<property name="grid.secure.enable" value="false"/>
 	<property name="jboss.ssl.enable" value="false"/>
+	<property name="tomcat.ssl.enable" value="false"/>
 
 
 	<!-- Paths -->
@@ -482,6 +483,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<!-- Wrapper target to deploy JBOSS container -->
+	<!--
 	<target name="install:jboss" description="Wrapper scripts that calls all required targets to install the jboss container" unless="exclude.jboss"
 		depends="
 		install:validation:pre-install,
@@ -495,6 +497,22 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:jboss:bda-blueprints-webapp:configure,
 		install:jboss:configure,
 		install:bda-blueprints-grid,
+		install:post,
+		install:jboss:start
+		" />
+	-->
+	<target name="install:jboss" description="Wrapper scripts that calls all required targets to install the jboss container" unless="exclude.jboss"
+		depends="
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:validation:pre-install:ports,
+		install:clean:jboss,
+		install:init,
+		install:jboss:binaries,
+		install:jboss:bda-blueprints-webapp:re-configure,
+		install:jboss:bda-blueprints-webapp,
+		install:jboss:bda-blueprints-webapp:configure,
+		install:jboss:configure,
 		install:post,
 		install:jboss:start
 		" />

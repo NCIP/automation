@@ -297,7 +297,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<!-- Wrapper build target, call appropriate builds for sub-projects -->
+	<target name="validate:pre:build">
+		<validate-pre-build
+			/>
+	</target>
 	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends="
+		validate:pre:build,
 		clean,
 		init,
 		build:bda-blueprints-webapp,
@@ -309,6 +314,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<ant inheritAll="false" inheritRefs="false" antfile="${bda-blueprints-api.build.file}"
 			target="${bda-blueprints-api.build.target}"
 			dir="${bda-blueprints-api.base.dir}" >
+			<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 		</ant>
 		-->
 	</target>
@@ -324,6 +330,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<!-- setting the property in the ant call overrides the property in the sub-project allowing the artifact to be produced where needed -->
 		<ant inheritAll="false" inheritRefs="false" antfile="${bda-blueprints-webapp.build.file}" target="${bda-blueprints-webapp.build.target}" dir="${bda-blueprints-webapp.base.dir}">
 			<property name="dist.dir" value="${bda-blueprints-webapp.dist.dir}" />
+			<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 		</ant>
 	</target>
 
