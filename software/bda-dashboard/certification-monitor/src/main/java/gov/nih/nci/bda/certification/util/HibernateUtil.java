@@ -1,13 +1,16 @@
 package gov.nih.nci.bda.certification.util;
-  import org.hibernate.SessionFactory;
-  import org.hibernate.cfg.Configuration;
+  import java.io.File;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
   public class HibernateUtil 
-  {
+  {	  
         private static final SessionFactory sessionFactory;
         static {
             try {
                 // Create the SessionFactory from hibernate.cfg.xml
+            	//File f =new File("hibernate.cfg.xml");            	
                 sessionFactory = new Configuration().configure().buildSessionFactory();
             } catch (Throwable ex) {
                 // Make sure you log the exception, as it might be swallowed

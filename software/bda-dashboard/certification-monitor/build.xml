@@ -61,16 +61,7 @@
 
 
 	<target name="run" depends="init,compile,package,deploy" description="Run the class to update Wiki">
-	       <java classname="gov.nih.nci.bda.certification.CertificationManager">
-		 <classpath>
-		   <pathelement location="${deploy.dir}/ant.jar"/>
-		   <pathelement location="${deploy.dir}/ant-launcher.jar"/>
-		   <pathelement location="${deploy.dir}/ant-nodeps.jar"/>
-		   <pathelement location="${deploy.dir}/xercesImpl.jar"/>
-		   <pathelement location="${deploy.dir}/${build.certification.jar}"/>		   
-		   <pathelement path="${project.classpath}"/>
-		 </classpath>
-	       </java>
+
 	</target>
 	
 	<target name="compile"  description="Compile the build monitor source">
@@ -103,6 +94,7 @@
 
 		<copy file="${dist.dir}/${build.certification.jar}" todir="${deploy.dir}" />
 		<copy file="${resource.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
+		<copy file="${resource.dir}/build.xml" todir="${deploy.dir}" />
 		
 	</target>
 

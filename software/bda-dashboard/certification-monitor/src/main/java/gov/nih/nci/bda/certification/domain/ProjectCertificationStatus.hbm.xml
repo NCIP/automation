@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="gov.nih.nci.bda.certification.domain.ProjectCertificationStatus" table="PROJECT_CERTIFICATION_STATUS">
+         <id name="id" column="id"> 
+         	<generator class="increment"/>           
+         </id>
+         <property name="product" column="PRODUCT"/>
+         <property name="certificationStatus" column="CERTIFICATION_STATUS"/>
+         <property name="certificationWikiStatus" column="CERTIFICATION_WIKI_STATUS"/>
+         <property name="singleCommandBuild" column="SINGLE_COMMAND_BUILD"/>
+         <property name="singleCommandDeployment" column="SINGLE_COMMAND_DEPLOYMENT"/>
+         <property name="databaseIntegration" column="DATABASE_INTEGRATION"/>         
+     </class>	
+</hibernate-mapping>

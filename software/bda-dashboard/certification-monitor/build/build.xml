@@ -10,7 +10,7 @@
 	<property name="bda-download.dir" location="${build.dir}/bda-download" />
 	<property name="lib.dir" location="${build.dir}/lib" />
 	<property name="bda-utils.dir" location="${build.dir}/bda-utils" />
-	<property name="log.dir" location="${build.dir}/logs" />
+	<property name="log.dir" location="${build.dir}/logs" />	
 	
 	<!-- retrive ivy files then retrieve bda files and librarires -->
 	<property name="bda-download.file" value="bda-ivy-build.xml" />
@@ -136,24 +136,32 @@
 	</target>
 
 	
-	<target name="svn:checkout" depends="svn:scorch,svn:init">	
-		<svn username="${svn.username}" password="${svn.password}">
-			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
+	<target name="svn:checkout" depends="svn:scorch,svn:init">
+		<propertycopy name="project.svn.username" from="${project.name}.svn.username" />
+		<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
+		<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
+		<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
+
+		<svn username="${project.svn.username}" password="${project.svn.password}">
+			<checkout url="${project.svn.project.url}" revision="HEAD" destPath="${project.svn.local.checkout}" />
 		</svn>
 	</target>
 	
 	<target name="svn:scorch">
-		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
-		<delete dir="${svn.local.checkout}" />
+		<echo message="Scorching local SVN working directory ${project.svn.local.checkout}..." />
+		<delete dir="${project.svn.local.checkout}" />
 	</target>
 	
 	<target name="svn:init">		
 		<mkdir dir="working"/>
 	</target>
 	
-	<target name="build:single-command-build">		
-		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.build.target}" dir="${master.build.location}"/>	
-		
+	<target name="build:single-command-build">
+		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
+		<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />
+		<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
+
+		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="${project.single-command.build.target}" dir="${project.master.build.location}"/>		
 	</target>
 
 </project>

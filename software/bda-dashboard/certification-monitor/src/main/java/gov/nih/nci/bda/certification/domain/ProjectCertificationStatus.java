@@ -4,11 +4,11 @@ package gov.nih.nci.bda.certification.domain;
 public class ProjectCertificationStatus {
 	private int id;
 	private String product;
-    private String dev;
-    private String qa;    
-    private String stage;
-    private String prod;
-    
+	private String certificationStatus;
+	private String certificationWikiStatus;
+	private String singleCommandBuild;
+	private String singleCommandDeployment;
+	private String databaseIntegration;
 	public int getId() {
 		return id;
 	}
@@ -21,28 +21,34 @@ public class ProjectCertificationStatus {
 	public void setProduct(String product) {
 		this.product = product;
 	}
-	public String getDev() {
-		return dev;
+	public String getCertificationStatus() {
+		return certificationStatus;
 	}
-	public void setDev(String dev) {
-		this.dev = dev;
+	public void setCertificationStatus(String certificationStatus) {
+		this.certificationStatus = certificationStatus;
 	}
-	public String getQa() {
-		return qa;
+	public String getCertificationWikiStatus() {
+		return certificationWikiStatus;
 	}
-	public void setQa(String qa) {
-		this.qa = qa;
+	public void setCertificationWikiStatus(String certificationWikiStatus) {
+		this.certificationWikiStatus = certificationWikiStatus;
 	}
-	public String getStage() {
-		return stage;
+	public String getSingleCommandBuild() {
+		return singleCommandBuild;
 	}
-	public void setStage(String stage) {
-		this.stage = stage;
+	public void setSingleCommandBuild(String singleCommandBuild) {
+		this.singleCommandBuild = singleCommandBuild;
 	}
-	public String getProd() {
-		return prod;
+	public String getSingleCommandDeployment() {
+		return singleCommandDeployment;
 	}
-	public void setProd(String prod) {
-		this.prod = prod;
+	public void setSingleCommandDeployment(String singleCommandDeployment) {
+		this.singleCommandDeployment = singleCommandDeployment;
+	}
+	public String getDatabaseIntegration() {
+		return databaseIntegration;
+	}
+	public void setDatabaseIntegration(String databaseIntegration) {
+		this.databaseIntegration = databaseIntegration;
 	}
 }

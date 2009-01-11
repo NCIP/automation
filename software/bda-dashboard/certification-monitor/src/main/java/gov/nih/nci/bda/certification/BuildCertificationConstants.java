@@ -1,6 +1,7 @@
 package gov.nih.nci.bda.certification;
 
-public class BuildMonitorConstants {
+public class BuildCertificationConstants 
+{
 	public static final String BUILD_FAILED = "FAILED";
 	public static final String BUILD_SUCCESSFUL = "SUCCESSFUL";
 	public static final String WIKI_SUCCESSFUL = "(/)";

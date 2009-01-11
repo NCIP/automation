@@ -1,14 +1,10 @@
 package gov.nih.nci.bda.certification;
 
+import java.lang.reflect.Method;
+
 import gov.nih.nci.bda.certification.business.BuildCertificationBean;
-import gov.nih.nci.bda.certification.domain.BuildHistory;
 import gov.nih.nci.bda.certification.domain.ProjectCertificationStatus;
 import gov.nih.nci.bda.certification.util.HibernateUtil;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.Timestamp;
-import java.util.Iterator;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,23 +27,27 @@ public class BuildCertificationHelper {
 	{				
 		ProjectCertificationStatus pbs = null;
 		String projectName = bmb.getProjectName();
+		System.out.println("projectName:::::::" +projectName);
+		String mapName = bmb.getMapName();		
+		System.out.println("mapName:::::::" +mapName);
+		String methodName = getSetMethodName(mapName);
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction(); 		    
-	    String wikiFailedString = "'["+BuildMonitorConstants.WIKI_FAILED+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]'";
-	    String wikiSuccessString = "'["+BuildMonitorConstants.WIKI_SUCCESSFUL+"|"+BuildMonitorConstants.ANTHILL_ADDRESS+"]'";
+	    	    
 	    
 		if (!bmb.isBuildSuccessful()) 
 		{	
 			System.out.println("SINGLE COMMAND FAILED");
 			// build failed
-			/*
-		    Query query = session.createQuery( " from ProjectBuildStatus where product= :projectName ");
+
+		    Query query = session.createQuery( " select "+mapName+" from ProjectCertificationStatus where product= :projectName");
 		    query.setString("projectName", projectName);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
+			System.out.println("SINGLE COMMAND FAILED :::11");
 			if(pbs != null )
 			{	
 		    	try {		    		
-					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,wikiFailedString); 
+					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_FAILED); 
 				}
 		    	catch (Exception e) {				
 					e.printStackTrace();
@@ -56,15 +56,15 @@ public class BuildCertificationHelper {
 		    }
 		    else
 		    {
-		    	pbs = new ProjectBuildStatus();
+		    	pbs = new ProjectCertificationStatus();
 		    	Method[] methods = pbs.getClass().getMethods();
 		    	for (int i = 0; i < methods.length; i++)
 		    	{
 		    		if(methods[i].getName().equals(methodName))
     				{
 		    			try 
-		    			{	System.out.println("wikiFailedString::::" + wikiFailedString);	    				
-		    				methods[i].invoke(pbs,new String(wikiFailedString));
+		    			{	System.out.println("BuildCertificationConstants.WIKI_FAILED::::" + BuildCertificationConstants.WIKI_FAILED);	    				
+		    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_FAILED));
 		    			}
 				    	catch (Exception e) {				
 							e.printStackTrace();
@@ -75,9 +75,8 @@ public class BuildCertificationHelper {
 		    			if(!(methods[i].getName().equals("setProduct") || methods[i].getName().equals("setId")))
 						{
 			    			try 
-			    			{
-			    				System.out.println("WIKI_NOTBUILD::::" );
-			    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_NOTBUILD));
+			    			{			    				
+			    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_NOTBUILD));
 							}
 			    			catch (Exception e) 
 			    			{				
@@ -89,7 +88,7 @@ public class BuildCertificationHelper {
 		    	pbs.setProduct(projectName);
 		    	session.save(pbs);		
 		    }
-
+/*
 	    	BuildHistory bh = new BuildHistory();
 	    	bh.setProduct(projectName);
 	    	bh.setBuildTier(buildTier);
@@ -104,15 +103,15 @@ public class BuildCertificationHelper {
 		{	
 			System.out.println("SINGLE COMMAND SUCCESSFUL");
 			// build successful	 
-			/*
-		    Query query = session.createQuery( " from ProjectBuildStatus where product= :projectName ");
+
+		    Query query = session.createQuery( " select "+mapName+" from ProjectCertificationStatus where product= :projectName ");
 		    query.setString("projectName", projectName);
-			pbs= (ProjectBuildStatus) query.uniqueResult();
+			pbs= (ProjectCertificationStatus) query.uniqueResult();
 
 			if(pbs != null )
 			{						    		
 		    	try {
-					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,wikiSuccessString); 
+					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_SUCCESSFUL); 
 				}
 		    	catch (Exception e) {				
 					e.printStackTrace();
@@ -121,7 +120,7 @@ public class BuildCertificationHelper {
 		    }
 		    else
 		    {
-		    	pbs = new ProjectBuildStatus();
+		    	pbs = new ProjectCertificationStatus();
 		    	Method[] methods = pbs.getClass().getMethods();
 		    	for (int i = 0; i < methods.length; i++)
 		    	{
@@ -129,7 +128,7 @@ public class BuildCertificationHelper {
     				{
 		    			try 
 		    			{
-		    				methods[i].invoke(pbs,new String(wikiSuccessString));
+		    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_SUCCESSFUL));
 		    			}
 				    	catch (Exception e) {				
 							e.printStackTrace();
@@ -141,7 +140,7 @@ public class BuildCertificationHelper {
 						{
 			    			try 
 			    			{
-			    				methods[i].invoke(pbs,new String(BuildMonitorConstants.WIKI_NOTBUILD));
+			    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_NOTBUILD));
 							}
 			    			catch (Exception e) 
 			    			{				
@@ -153,7 +152,7 @@ public class BuildCertificationHelper {
 		    	pbs.setProduct(projectName);
 		    	session.save(pbs);		    	
 		    }
-
+/*
 	    	BuildHistory bh = new BuildHistory();		  
 	    	bh.setProduct(projectName);
 	    	bh.setBuildTier(buildTier);
@@ -163,23 +162,14 @@ public class BuildCertificationHelper {
 	    	session.save(bh);
 		     */
 		}
-	 //   session.getTransaction().commit();
+	    session.getTransaction().commit();
 	   
 	}
 	
 	
-	private String getTierName(String  propertyFile) {
-		String tierName = "local";
-				
-		if(propertyFile.toLowerCase().contains("dev-") || propertyFile.toLowerCase().contains("dev_"))
-			tierName="Dev";
-		if(propertyFile.toLowerCase().contains("qa-") || propertyFile.toLowerCase().contains("qa_"))
-			tierName="Qa";
-		if(propertyFile.toLowerCase().contains("stage-") || propertyFile.toLowerCase().contains("stage_"))
-			tierName="Stage";
-		if(propertyFile.toLowerCase().contains("prod-") || propertyFile.toLowerCase().contains("prod_"))
-			tierName="Prod";
+	private String getSetMethodName(String mapName) {
 		
-		return tierName;
+		return "set"+"SingleCommandBuild";
 	}
+
 }

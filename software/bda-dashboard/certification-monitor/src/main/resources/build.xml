@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="buildmonitor" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+
+
+	<target name="run" description="Run the class to update Wiki">
+	       <java classname="gov.nih.nci.bda.certification.CertificationManager">
+		 <classpath>
+		   <pathelement location="./ant.jar"/>
+		   <pathelement location="./ant-launcher.jar"/>
+		   <pathelement location="./ant-nodeps.jar"/>
+		   <pathelement location="./xercesImpl.jar"/>
+		   <pathelement location="./build-certification.jar"/>
+		   <pathelement location="./antlr-2.7.6.jar"/>
+		   <pathelement location="./commons-collections-3.1.jar"/>
+		   <pathelement location="./dom4j-1.6.1.jar"/>
+		   <pathelement location="./hibernate3.jar"/>
+		   <pathelement location="./javassist-3.4.GA.jar"/>
+		   <pathelement location="./jta-1.1.jar"/>
+		   <pathelement location="./mysql-connector-java-5.0.5.jar"/>
+		   <pathelement location="./slf4j-api-1.5.2.jar"/>
+		   <pathelement location="./slf4j-simple-1.5.2.jar"/>
+		   <pathelement location="./xercesImpl.jar"/>
+		   <pathelement location="./xmltask-1.15.1.jar"/>		   		   
+		 </classpath>
+	       </java>
+	</target>
+	
+</project>

@@ -37,7 +37,7 @@ public class SingleCommandListener implements BuildListener {
 	public void targetFinished(BuildEvent event) {
 		String targetName=event.getTarget().getName();
 		System.out.println("Target " + targetName +  " finished!");
-	    if(targetName != null && targetName.equals("build:project"))
+	    if(targetName != null && targetName.equals("validation:JADS"))
 		{
 			BuildCertificationBean bmb = populateBuildCertificationBean(event);
 			BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
@@ -70,10 +70,14 @@ public class SingleCommandListener implements BuildListener {
 			bmb.setBuildSuccessful(false); 
 		else
 			bmb.setBuildSuccessful(true);
-		bmb.setProjectName(event.getProject().getName());
+		bmb.setProjectName(event.getProject().getProperty("project.name"));
+		bmb.setTargetName(event.getTarget().getName());
+		bmb.setMapName(event.getProject().getProperty("map.name"));
 
-		System.out.println("bmb.buildsuccesful" + bmb.getProjectName());
+		System.out.println("bmb.ProjectName" + bmb.getProjectName());
 		System.out.println("bmb.buildsuccesful" + bmb.isBuildSuccessful());
+		System.out.println("bmb.TagegetName" + bmb.getTargetName());
+		System.out.println("bmb.MAPName" + bmb.getMapName());
 		return bmb;
 	}
 
