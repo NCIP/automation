@@ -41,6 +41,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2"/>
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2"/>
 	<property file="${properties.file}" />
+	<property name="env.name" value="local"/>
 	<!-- Set application.base.path based on platform -->
 	<condition property="application.base.path" value="${application.base.path.linux}">
 		<or>
@@ -458,8 +459,15 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			appserver-configure-external-hostname - configures jboss for use through a reverse proxy
 			grid-secure-configure-connector - configures secure grid
 		-->
+		<!-- Use below if you are defining all the ports in your install.xml not the NCICB port configuraitons-->
+		<jboss-configure
+			jboss.server.ports.name="bda-ports"
+			jboss.server.binding.template.location="${bda-utils.resource.dir}/template-binding.xml"
+			/>
+		<!-- Default values for all attributes if you are using standard NCICB port configurations
 		<jboss-configure
 			/>
+			-->
 	</target>
 
 
