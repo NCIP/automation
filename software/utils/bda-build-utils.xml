@@ -1503,12 +1503,12 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="ports-01"/>
-		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"/>
 		<attribute name="jboss.server.binding.template.location" default="${bda-utils.resource.dir}/template-binding.xml"/>
 		<attribute name="jboss.server.service.template.location" default="${bda-utils.resource.dir}/template-jboss-service.xml"/>
 		<sequential>						
 			<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
-			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}">
+			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true">
 				<filterset>
 					<filtersfile file="${properties.file}" />
 					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
@@ -2431,17 +2431,19 @@ $HeadURL$
 		<attribute name="grid.external.port" default="${jboss.external.port}"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
+		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}"/>
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}"/>
+		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<sequential>
 			<switch value="@{grid.secure.enable}">
 				<case value="true">
 					<property name="scheme" value="https"/>
-					<property name="appserver.default.web.port" value="@{appserver.port.ssl}"/>
+					<property name="appserver.default.web.port" value="@{grid.secure.port}"/>
 				</case>
 				<case value="false">
 					<property name="scheme" value="http"/>
-					<property name="appserver.default.web.port" value="@{appserver.port.ssl}"/>
+					<property name="appserver.default.web.port" value="@{appserver.port.http}"/>
 				</case>
 				<default>
 					<fail message="grid.secure.enable must be true or false"/>
@@ -2450,13 +2452,13 @@ $HeadURL$
 
 			<!-- Fix all wsdl files that refer to statically defined host and port -->
 			<echo message="Cleaning up hostname:port refereces in **/*.wsdl"/>
-			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:${appserver.default.web.port}">
+			<replace dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}" token="http://@{search.host}:@{search.port}" value="${scheme}://@{appserver.hostname}:${appserver.default.web.port}">
 				<include name="**/*.wsdl" />
 			</replace>
 
 			<!-- Fix default jndi-config -->
 			<echo message="Fixing grid jndi-config"/>
-			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="@{search.host}:@{search.port}" value="@{appserver.hostname}:${appserver.default.web.port}"/>
+			<replace file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_resolution_service/jndi-config.xml" token="http://@{search.host}:@{search.port}" value="${scheme}://@{appserver.hostname}:${appserver.default.web.port}"/>
 
 			<!-- fix web.xml -->
 			<echo message="Updating grid web.xml"/>
@@ -2471,11 +2473,11 @@ $HeadURL$
 			<if>
 				<equals arg1="@{grid.secure.enable}" arg2="true"/>
 				<then>
-					<echo message="grid.secure.enable=true, configuring secure grid services"/>
+					<echo message="grid.secure.enable=true, configuring secure grid services @{grid.secdesc.file}"/>
 					<grid-secure-configure-secdesc
 						appserver.conf.dir="@{appserver.conf.dir}"
 						appserver.webapp.dir="@{appserver.application.dir}"
-						secdesc.file="@{secdesc.file}"
+						grid.secdesc.file="@{grid.secdesc.file}"
 						grid.secure.cert.file="@{grid.secure.cert.file}"
 						grid.secure.key.file="@{grid.secure.key.file}"
 						/>
@@ -2490,7 +2492,7 @@ $HeadURL$
 			<echo message="Fixing second grid jnid-config"/>
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
 				match="(\s+.value.)http://.*\:\d+(\/.*)" 
-				replace="\1http://@{appserver.hostname}:${appserver.default.web.port}\2" 
+				replace="\1${scheme}://@{appserver.hostname}:${appserver.default.web.port}\2" 
 				flags="g" byline="true"/>
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
 			<propertyregex property="grid.external.host.has.value"
@@ -3417,7 +3419,6 @@ $HeadURL$
 						<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']">
 							<![CDATA[
 							<Connector port="@{appserver.ssl.port}"
-							       	address="\${jboss.bind.address}"
 								maxThreads="100"
 								strategy="ms"
 							       	maxHttpHeaderSize="8192"
@@ -3432,6 +3433,21 @@ $HeadURL$
 							]]>
 						</insert>
 					</xmltask>
+					<!--
+							<Connector port="@{appserver.ssl.port}"
+							       	address="\${jboss.bind.address}"
+								maxThreads="100"
+								strategy="ms"
+							       	maxHttpHeaderSize="8192"
+								emptySessionPath="true"
+								scheme="https"
+								secure="true"
+							       	clientAuth="false" 
+								keystoreFile="@{appserver.conf.dir}/@{appserver.ssl.keystore.file}"
+								keystorePass="@{appserver.ssl.keystore.pass}"
+								keyAlias="@{appserver.ssl.keystore.alias}"
+							       	sslProtocol = "TLS" />
+					-->
 				</then>
 				<else>
 					<echo message="appserver.ssl.enable not set or true so skipping install of JBoss SSL configuration"/>
@@ -3645,15 +3661,16 @@ $HeadURL$
 	<macrodef name="grid-secure-configure-secdesc">
 		<attribute name="appserver.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf/"/>
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
 		<sequential>
 			<if>
-				<available file="@{secdesc.file}" />
+				<available file="@{grid.secdesc.file}" />
 				<then>
-					<xmltask source="@{secdesc.file}" 
-						dest="@{secdesc.file}">
+					<xmltask source="@{grid.secdesc.file}" 
+						dest="@{grid.secdesc.file}"
+						failWithoutMatch="true">
 						<remove path="/*[local-name()='securityConfig']/*[local-name()='gridmap']" />
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='key-file']"
 							attr="value" 
@@ -3663,6 +3680,19 @@ $HeadURL$
 							value="@{appserver.conf.dir}/@{grid.secure.key.file}" />
 					</xmltask>
 				</then>
+				<else>
+					<fail message="Cannot filed security descriptor file @{grid.secdesc.file}"/>
+					<!--
+					<echoxml file="@{grid.secdesc.file}">
+						<securityConfig xmlns="http://www.globus.org">
+							<credential>
+								<key-file value="@{appserver.conf.dir}/@{grid.secure.key.file}"/>
+								<cert-file value="@{appserver.conf.dir}/@{grid.secure.key.file}"/>
+							</credential>
+						</securityConfig>
+					</echoxml>
+					-->
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -3671,7 +3701,7 @@ $HeadURL$
 	<macrodef name="grid-configure-server-config">
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
 		<attribute name="server-config.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/server-config.wsdd" />
-		<attribute name="secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="service.hostname" default="${service.hostname}"/>
 		<attribute name="grid.secure.enable" default="true"/>
 		<sequential>
@@ -3717,7 +3747,7 @@ $HeadURL$
 							<![CDATA[
 							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
 								name="containerSecDesc"
-								value="@{secdesc.file}"/>
+								value="@{grid.secdesc.file}"/>
 							]]>
 						</insert>
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='requestFlow']/*[local-name()='handler' and @type='java:org.globus.wsrf.impl.security.authentication.transport.TomcatTransportSecurityHandler']" />
@@ -3935,10 +3965,12 @@ $HeadURL$
 				grid.secure.cert.file="@{grid.secure.cert.file}"
 				grid.secure.key.file="@{grid.secure.key.file}"
 				/>
+			<!--
 			<grid-secure-configure-valve
 				appserver.server-xml.file="@{tomcat.server-xml.file}"
 				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
 				/>
+			-->
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-configure">
@@ -3946,7 +3978,7 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="${jboss.port.configuration}"/>
-		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/server/${jboss.server.name}/conf/${jboss-bindings.file}"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"/>
 		<attribute name="jboss.server.binding.template.location" default="${basedir}/${jboss-bindings.file}"/>
 		<attribute name="jboss.server.service.template.location" default="${bda-utils.resource.dir}/template-jboss-service.xml"/>
 		<!-- jboss-login-config -->
@@ -4059,10 +4091,12 @@ $HeadURL$
 				grid.secure.key.file="@{grid.secure.key.file}"
 				grid.secure.cert.file="@{grid.secure.cert.file}"
 				/>
+			<!--
 			<grid-secure-configure-valve
 				appserver.server-xml.file="@{jboss.server-xml.file}"
 				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 				/>
+			-->
 			<jboss-configure-java_opts
 				jboss.home="@{jboss.home}"
 				jboss.java.opts="@{jboss.java.opts}"
