@@ -2495,24 +2495,9 @@ $HeadURL$
 				replace="\1${scheme}://@{appserver.hostname}:${appserver.default.web.port}\2" 
 				flags="g" byline="true"/>
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
-			<propertyregex property="grid.external.host.has.value"
-				input="@{grid.external.host}"
-				regexp="\S+"
-				select="true"
-				/>
-			<if>
-				<isset  property="grid.external.host.has.value"/>
-				<then>
-					<property name="logical.hostname" value="@{grid.external.host}"/>
-				</then>
-				<else>
-					<property name="logical.hostname" value="@{appserver.hostname}"/>
-				</else>
-			</if>
-			<echo message="Configuring external grid hostname - ${logical.hostname}"/>
 			<grid-configure-server-config
 				appserver.webapp.dir="@{appserver.webapp.dir}"
-				service.hostname="${logical.hostname}"
+				grid.external.host="@{grid.external.host}"
 				grid.secure.enable="${grid.secure.enable}"
 				/>
 					
@@ -3363,7 +3348,7 @@ $HeadURL$
 			<echo message="Copying common dir"/>
 			<copy todir="@{dist.exploded.dir}/common" overwrite="true">
 				<fileset dir="@{common.dir}">
-					<include name="**/*" />
+					<include name="**/resource/**/*" />
 				</fileset>
 			</copy>
 
@@ -3674,10 +3659,10 @@ $HeadURL$
 						<remove path="/*[local-name()='securityConfig']/*[local-name()='gridmap']" />
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='key-file']"
 							attr="value" 
-							value="@{appserver.conf.dir}/@{grid.secure.cert.file}" />
+							value="@{appserver.conf.dir}/@{grid.secure.key.file}" />
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='cert-file']"
 							attr="value" 
-							value="@{appserver.conf.dir}/@{grid.secure.key.file}" />
+							value="@{appserver.conf.dir}/@{grid.secure.cert.file}" />
 					</xmltask>
 				</then>
 				<else>
@@ -3702,23 +3687,19 @@ $HeadURL$
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
 		<attribute name="server-config.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/server-config.wsdd" />
 		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
-		<attribute name="service.hostname" default="${service.hostname}"/>
+		<attribute name="grid.external.host" default="${grid.external.host}"/>
 		<attribute name="grid.secure.enable" default="true"/>
 		<sequential>
 			
-			<propertyregex property="service.hostname.is.localhost"
-				input="@{service.hostname}"
-				regexp="localhost"
+			<propertyregex property="grid.external.host.has.value"
+				input="@{grid.external.host}"
+				regexp="\S+"
 				select="true"
-				override="true"
 				/>
 			<if>
-				<isset property="service.hostname.is.localhost"/>
+				<isset property="grid.external.host.has.value"/>
 				<then>
-					<echo message="grid.external.host is localhost, skipping configuration"/>
-				</then>
-				<else>
-					<echo message="grid.external.host is @{service.hostname}, proceeding with configuration"/>
+					<echo message="grid.external.host is @{grid.external.host}, proceeding with configuration"/>
 					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='publishHostName']" />
@@ -3726,7 +3707,7 @@ $HeadURL$
 							<![CDATA[
 							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
 								name="logicalHost"
-								value="@{service.hostname}"/>
+								value="@{grid.external.host}"/>
 							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
 										name="publishHostName"
 								value="true"/>
@@ -3736,6 +3717,9 @@ $HeadURL$
 							]]>
 						</insert>
 					</xmltask>
+				</then>
+				<else>
+					<echo message="grid.external.host is is not set skipping external host configuration."/>
 				</else>
 			</if>
 			<if>
