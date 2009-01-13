@@ -3348,7 +3348,7 @@ $HeadURL$
 			<echo message="Copying common dir"/>
 			<copy todir="@{dist.exploded.dir}/common" overwrite="true">
 				<fileset dir="@{common.dir}">
-					<include name="**/resource/**/*" />
+					<include name="**/resources/**/*" />
 				</fileset>
 			</copy>
 
