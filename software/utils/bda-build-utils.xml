@@ -3274,7 +3274,7 @@ $HeadURL$
 				<arg value="-Dproperties.file=@{properties.file}" />
 				<!-- force reinstall of database and jboss without prompting -->
 				<arg value="-Dforce.reinstall=true" />
-				<arg value="@{install.target}" />
+				<arg value="@{target.name}" />
 			</exec>         
 		</sequential>
 	</macrodef>
