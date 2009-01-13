@@ -34,23 +34,25 @@ import org.hibernate.Session;
      SingleCommandListener scListener = new SingleCommandListener();
      project.addBuildListener(scListener);
    
-     File buildFile = new File("C:\\dev\\automat\\trunk\\software\\bda-dashboard\\certification-monitor\\build\\build.xml");
+     File buildFile = new File("build/build.xml");
      ProjectHelper.configureProject(project, buildFile);
      //project.setProperty("ant.file", buildFile.getAbsolutePath());
 
 
-    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    Session session = HibernateUtil.getSession();
     session.beginTransaction(); 		    
     Query query = session.createQuery( " from TargetLookup ");
     
     Iterator targets = query.iterate();
-	
+    
     while (targets.hasNext()) 
     {
           TargetLookup targetLookup= (TargetLookup)  targets.next();
           System.out.println("targetName::"+targetLookup.getMapName()+"::MAPNAME::" + targetLookup.getTargetName()+ "::projectName::" +projectName);
           project.setProperty("map.name", targetLookup.getMapName());
           project.setProperty("project.name", projectName);
+          project.setProperty("executed.target.name", targetLookup.getTargetName());
           try
           {
         	  project.executeTarget(targetLookup.getTargetName());
@@ -58,11 +60,12 @@ import org.hibernate.Session;
           catch(Exception e)
           {
 			System.out.println("EXCEPTION::::" + e.getMessage());
+			e.printStackTrace();
 			System.err.println(e.getMessage());
           }
      } 
      
-   
+    	session.close();
         System.out.println("FINISH THE EXECUTE METHOD");
     }
     

@@ -13,7 +13,16 @@ import org.apache.tools.ant.BuildListener;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import org.hibernate.*;
+import org.hibernate.criterion.*;
+
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+
 public class SingleCommandListener implements BuildListener {
+
 
 	public void buildFinished(BuildEvent event) {
 		// TODO Auto-generated method stub
@@ -35,13 +44,21 @@ public class SingleCommandListener implements BuildListener {
 	}
 
 	public void targetFinished(BuildEvent event) {
-		String targetName=event.getTarget().getName();
-		System.out.println("Target " + targetName +  " finished!");
-	    if(targetName != null && targetName.equals("validation:JADS"))
+		try
 		{
-			BuildCertificationBean bmb = populateBuildCertificationBean(event);
-			BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
-			buildHelper.updateProjectBuildStatus();			
+			String targetName=event.getTarget().getName();
+			String executedTargetName=event.getProject().getProperty("executed.target.name");
+			System.out.println("Target " + targetName +  " finished!");
+		    if(targetName != null && targetName.equals(executedTargetName))
+			{
+				BuildCertificationBean bmb = populateBuildCertificationBean(event);
+				BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
+				buildHelper.updateProjectBuildStatus();			
+			}	
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 	}
 

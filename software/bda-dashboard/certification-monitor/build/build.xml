@@ -10,7 +10,7 @@
 	<property name="bda-download.dir" location="${build.dir}/bda-download" />
 	<property name="lib.dir" location="${build.dir}/lib" />
 	<property name="bda-utils.dir" location="${build.dir}/bda-utils" />
-	<property name="log.dir" location="${build.dir}/logs" />	
+	<property name="log.dir" location="${build.dir}/logs" />
 	
 	<!-- retrive ivy files then retrieve bda files and librarires -->
 	<property name="bda-download.file" value="bda-ivy-build.xml" />
@@ -56,8 +56,21 @@
 		<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
 	</tstamp>
 	<record name="${log.dir}/install-${install.time}.log" action="start" />
+
+
+	<path id="jdbc.driver.classpath">
+		<pathelement location="${database.driver.file}"/>
+	</path>
+
+
+	<!-- Targets -->
+
+
+	<target name="init" description="Sets up build are and initalizes variables">
+
 	<!-- set some db variables -->
-	<switch value="${database.type}">
+	<propertycopy name="project.database.type" from="${project.name}.database.type" />
+	<switch value="${project.database.type}">
 		<case value="oracle">
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
@@ -87,23 +100,18 @@
 		</default>
 	</switch>
 
-	<path id="jdbc.driver.classpath">
-		<pathelement location="${database.driver.file}"/>
-	</path>
-
-
-	<!-- Targets -->
-
-
-	<target name="init" description="Sets up build are and initalizes variables">
 
 	</target>
 
-	<target name="build:project" depends="init,validation:JADS,svn:checkout,build:single-command-build" description="Sets up build are and initalizes variables">
+	<target name="build:project" depends="init,build:single-command-build" description="Sets up build are and initalizes variables">
 		<echo message="call build:project target.. "/>
 	</target>
 	
-	<target name="validation:JADS" description="Runs pre-install validation checks bda-utils">
+	<target name="validate:JAD" depends="init" description="Runs pre-install validation checks bda-utils">		
+		<propertycopy name="project.database.url" from="${project.name}.database.url" />
+		<propertycopy name="project.database.system.url" from="${project.name}.database.system.url" />
+
+
 		<validate-environment
 			ant.check.version="${ant.minimum.version}"
 			java.check.version.major="${java.major.version}"
@@ -112,10 +120,10 @@
 	
 		<database-create
 			database.driver="${database.driver}"
-			database.system.url="${database.system.url}"
+			database.system.url="${project.database.system.url}"
 			database.system.user="${database.system.user}"
 			database.system.password="${database.system.password}"
-			database.url="${database.url}"
+			database.url="${project.database.url}"
 			database.user="${database.user}"
 			database.password="${database.password}"
 			database.version="${database.version}"
@@ -124,10 +132,10 @@
 
 		<validate-database
 			database.driver="${database.driver}"
-			database.system.url="${database.system.url}"
+			database.system.url="${project.database.system.url}"
 			database.system.user="${database.system.user}"
 			database.system.password="${database.system.password}"
-			database.url="${database.url}"
+			database.url="${project.database.url}"
 			database.user="${database.user}"
 			database.password="${database.password}"
 			database.version="${database.version}"
@@ -136,7 +144,7 @@
 	</target>
 
 	
-	<target name="svn:checkout" depends="svn:scorch,svn:init">
+	<target name="validate:svn:checkout-project" depends="init,svn:scorch,svn:init">
 		<propertycopy name="project.svn.username" from="${project.name}.svn.username" />
 		<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
 		<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
@@ -156,7 +164,7 @@
 		<mkdir dir="working"/>
 	</target>
 	
-	<target name="build:single-command-build">
+	<target name="build:single-command-build" depends="init">
 		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
 		<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />
 		<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />

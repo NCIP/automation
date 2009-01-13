@@ -31,6 +31,7 @@ public class BuildCertificationHelper {
 		String mapName = bmb.getMapName();		
 		System.out.println("mapName:::::::" +mapName);
 		String methodName = getSetMethodName(mapName);
+		System.out.println("methodName:::::::" +methodName);
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction(); 		    
 	    	    
@@ -40,10 +41,9 @@ public class BuildCertificationHelper {
 			System.out.println("SINGLE COMMAND FAILED");
 			// build failed
 
-		    Query query = session.createQuery( " select "+mapName+" from ProjectCertificationStatus where product= :projectName");
+		    Query query = session.createQuery( " from ProjectCertificationStatus where product= :projectName");
 		    query.setString("projectName", projectName);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
-			System.out.println("SINGLE COMMAND FAILED :::11");
 			if(pbs != null )
 			{	
 		    	try {		    		
@@ -104,14 +104,14 @@ public class BuildCertificationHelper {
 			System.out.println("SINGLE COMMAND SUCCESSFUL");
 			// build successful	 
 
-		    Query query = session.createQuery( " select "+mapName+" from ProjectCertificationStatus where product= :projectName ");
+		    Query query = session.createQuery( " from ProjectCertificationStatus where product= :projectName ");
 		    query.setString("projectName", projectName);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 
 			if(pbs != null )
 			{						    		
-		    	try {
-					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_SUCCESSFUL); 
+		    	try {	
+					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_SUCCESSFUL);
 				}
 		    	catch (Exception e) {				
 					e.printStackTrace();
@@ -124,11 +124,12 @@ public class BuildCertificationHelper {
 		    	Method[] methods = pbs.getClass().getMethods();
 		    	for (int i = 0; i < methods.length; i++)
 		    	{
+
 		    		if(methods[i].getName().equals(methodName))
     				{
 		    			try 
-		    			{
-		    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_SUCCESSFUL));
+		    			{		    				
+		    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_SUCCESSFUL));		    			
 		    			}
 				    	catch (Exception e) {				
 							e.printStackTrace();
@@ -169,7 +170,7 @@ public class BuildCertificationHelper {
 	
 	private String getSetMethodName(String mapName) {
 		
-		return "set"+"SingleCommandBuild";
+		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1); 
 	}
 
 }

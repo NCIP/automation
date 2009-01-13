@@ -1,6 +1,8 @@
 package gov.nih.nci.bda.certification.util;
   import java.io.File;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -21,4 +23,58 @@ import org.hibernate.cfg.Configuration;
         public static SessionFactory getSessionFactory() {
             return sessionFactory;
         }
+        public static final ThreadLocal session = new ThreadLocal();
+
+        public static Session getSession() throws HibernateException {
+               Session s = (Session) session.get();
+               // Open a new Session, if this thread has none yet
+               if (s == null) {
+                   s = sessionFactory.openSession();
+                   // Store it in the ThreadLocal variable
+                   session.set(s);
+               }
+               return s;
+           }
+
+           public static void closeSession() throws HibernateException {
+               Session s = (Session) session.get();
+               if (s != null)
+                   s.close();
+               session.set(null);
+           }
+
+
+       /**
+            * This is a simple method to reduce the amount of
+       code that needs
+            * to be written every time hibernate is used.
+            */
+           public static void rollback(org.hibernate.Transaction
+       tx) {
+               if (tx != null) {
+                   try {
+                       tx.rollback( );
+                   }
+                   catch (HibernateException ex) {
+                	   //handle the exception
+                   }
+               }
+           }
+       /**
+            * This is a simple method to reduce the amount of
+       code that needs
+            * to be written every time hibernate is used.
+            */
+           public static void commit(org.hibernate.Transaction tx) {
+               if (tx != null) {
+                   try {
+                       tx.commit( );
+                   }
+                   catch (HibernateException ex) {
+                	   //handle the exception
+                   }
+               }
+           }
+
+ 
   }

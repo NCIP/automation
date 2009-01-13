@@ -7,6 +7,7 @@
 	<property name="source.dir" value="${software.dir}/src/main/java" />
 	<property name="resource.dir" value="${software.dir}/src/main/resources" />
 	<property name="classes.dir" value="${software.dir}/classes" />
+	<property name="build.dir" value="${software.dir}/build" />
 	<property name="target.dir" value="${software.dir}/target" />
 	<property name="dist.dir" value="${target.dir}/dist" />
 	<property name="build.certification.jar" value="build-certification.jar" />
@@ -16,7 +17,7 @@
 		
 	
 	
-	<property name="deploy.dir" value="${basedir}/buildcertification" />
+	<property name="deploy.dir" value="C:/buildcertification" />
 	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
 	
 	
@@ -95,6 +96,9 @@
 		<copy file="${dist.dir}/${build.certification.jar}" todir="${deploy.dir}" />
 		<copy file="${resource.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
 		<copy file="${resource.dir}/build.xml" todir="${deploy.dir}" />
+		
+		<copy file="${build.dir}/build.xml" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/project.properties" todir="${deploy.dir}/build" />
 		
 	</target>
 

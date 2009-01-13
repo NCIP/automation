@@ -2195,6 +2195,7 @@ software/bda-dashboard/certification-monitor/lib/jta-1.1.jar -text
 software/bda-dashboard/certification-monitor/lib/mysql-connector-java-5.0.5.jar -text
 software/bda-dashboard/certification-monitor/lib/slf4j-api-1.5.2.jar -text
 software/bda-dashboard/certification-monitor/lib/slf4j-simple-1.5.2.jar -text
+software/bda-dashboard/certification-monitor/lib/tools.jar -text
 software/bda-dashboard/certification-monitor/lib/xercesImpl.jar -text
 software/bda-dashboard/certification-monitor/lib/xmltask-1.15.1.jar -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationConstants.java -text
