@@ -150,8 +150,8 @@
 		<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
 		<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
 
-		<svn username="${project.svn.username}" password="${project.svn.password}" javahl="false">
-			<checkout url="${project.svn.project.url}" destPath="${project.svn.local.checkout}" />
+		<svn username="${project.svn.username}" password="${project.svn.password}">
+			<checkout url="${project.svn.project.url}" revision="HEAD" destPath="${project.svn.local.checkout}" />
 		</svn>
 	</target>
 	
@@ -160,7 +160,8 @@
 		<delete dir="${project.svn.local.checkout}" />
 	</target>
 	
-	<target name="svn:init">		
+	<target name="svn:init">
+		<delete dir="working"/>
 		<mkdir dir="working"/>
 	</target>
 	
