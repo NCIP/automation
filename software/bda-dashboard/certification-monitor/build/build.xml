@@ -151,7 +151,7 @@
 		<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
 
 		<svn username="${project.svn.username}" password="${project.svn.password}">
-			<checkout url="${project.svn.project.url}" revision="HEAD" destPath="${project.svn.local.checkout}" />
+			<checkout url="${project.svn.project.url}" destPath="${project.svn.local.checkout}" />
 		</svn>
 	</target>
 	
