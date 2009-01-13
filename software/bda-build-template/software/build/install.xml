@@ -447,7 +447,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			/>                              
 	</target>
 	<target name="install:jboss:configure" description="Configure JBoss (bindings, login-config.xml, ect)" unless="exclude.jboss"
-		depends="install:jboss:binaries,
+		depends="
 			install:jboss:configure:log4j	
 			">
 		<!-- Calls the following macros
@@ -617,6 +617,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:init,
+		install:jboss:configure,
 		install:jboss:bda-blueprints-webapp:re-configure,
 		install:jboss:bda-blueprints-webapp,
 		install:jboss:bda-blueprints-webapp:configure,
@@ -627,6 +628,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:validation:pre-install,
 		install:tomcat:stop,
 		install:init,
+		install:tomcat:configure,
 		install:tomcat:bda-blueprints-webapp:re-configure,
 		install:tomcat:bda-blueprints-webapp,
 		install:tomcat:bda-blueprints-webapp:configure,
@@ -771,8 +773,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			appserver.port.http="${tomcat.port.http}"
 			appserver.port.ssl="${tomcat.port.ssl}"
 			appserver.hostname="${tomcat.hostname}"
-			grid.external.host="${tomcat.external.host}"
-			grid.external.port="${tomcat.external.port}"
+			grid.external.secure.host="${grid.external.secure.host}"
+			grid.external.secure.port="${grid.external.secure.port}"
 			/>
 	</target>
 

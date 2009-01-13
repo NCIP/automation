@@ -67,9 +67,11 @@ jboss.web.password=The password to the access the jboss web console and jmx cons
 #jboss.ssl.keystore.pass=The password for that keystore file
 #jboss.ssl.keystore.alias=The alias for that keystore file
 #jboss.ssl.fullyqualified.hostname=The fully qualified hostname (www.nci.nih.gov) that the cert is for.  This url is verified within the cert.
-#jboss.external.host=Set this if you are using external hostnames, see https://wiki.nci.nih.gov/x/8hWy
-#jboss.eternal.port=Set this if you are using a different port with the external hostname above
-
+#jboss.external.http.host=Set this if you are using external hostnames for http,  see https://wiki.nci.nih.gov/x/8hWy
+#jboss.external.http.port=Set this if you are using a different port with the external hostname above for http
+#jboss.external.ssl.host=Set this if you are using external hostnames for ssl, see https://wiki.nci.nih.gov/x/8hWy
+#jboss.external.ssl.port=Set this if you are using a different port with the external hostname above for ssl
+#jboss.java.opts=java options for starting jboss
 ##############
 ### TOMCAT ###
 ##############
@@ -86,8 +88,10 @@ jboss.web.password=The password to the access the jboss web console and jmx cons
 #tomcat.ssl.keystore.pass=The password for that keystore file
 #tomcat.ssl.keystore.alias=The alias for that keystore file
 #tomcat.ssl.fullyqualified.hostname=The fully qualified hostname (www.nci.nih.gov) that the cert is for.  This url is verified within the cert.
-#tomcat.external.host=Set this if you are using external hostnames, see https://wiki.nci.nih.gov/x/8hWy
-#tomcat.eternal.port=Set this if you are using a different port with the external hostname above
+#tomcat.external.http.host=Set this if you are using external hostnames for http, see https://wiki.nci.nih.gov/x/8hWy
+#tomcat.external.http.port=Set this if you are using a different port with the external hostname above for http
+#tomcat.external.ssl.host=Set this if you are using external hostnames for ssl, see https://wiki.nci.nih.gov/x/8hWy
+#tomcat.external.ssl.port=Set this if you are using a different port with the external hostname above for ssl
 
 ##############
 ###  LDAP  ###
@@ -135,13 +139,13 @@ ldap.basedn=The base DN to search for records. Example: ldap.basedn=ou=nci,o=nih
 #grid.poc.science.email=Example: john.smith@mail.com
 #grid.poc.science.role=Example: sysadmin
 # The external host an IP to access the grid service from the internet.  For security reasons Network Address Translation (NAT) is often used to allow traffic from the internet into the local network.  With NAT an IP address and port are configured on the seucrity device facing the internet and are mapped back to the IP and port of the server running the application.  The name in DNS for access from the intenet is often different than the server it's self.  So you would want to put the NAT IP or NAT hostname and the NAT port in the fileds below.
-#grid.external.host=removed
-#grid.external.port=removed
 #grid.secure.enable=Flag whether to deploy secure grid, see https://wiki.nci.nih.gov/x/8BWy
 #grid.secure.port=The port to be used for the secure grid listener
 #grid.secure.cert.location=Location (patt/file) of caGrid issued Cert File
 #grid.secure.key.location=Location (patt/file) of caGrid issued key File
-#
+#grid.external.secure.host=Set this if you are using external hostnames for secure grid, see https://wiki.nci.nih.gov/x/8hWy
+#grid.external.secure.port=Set this if you are using a different port with the external hostname above for secure grid
+
 ########################
 ###  MAIL  SETTINGS  ###
 ########################
