@@ -4129,7 +4129,7 @@ $HeadURL$
 						replace="rem \1=\2"
 						/>
 					<replaceregexp file="${jboss.home}/bin/run.bat" byline="true"
-						match="^(rem JVM memory.*))"
+						match="^(rem JVM memory.*)"
 						replace="rem added by BDA installer${line.separator}set JAVA_OPTS=@{jboss.java.opts}${line.separator}\1"
 						/>
 				</case>
