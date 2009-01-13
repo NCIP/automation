@@ -17,7 +17,7 @@
 		
 	
 	
-	<property name="deploy.dir" value="C:/buildcertification" />
+	<property name="deploy.dir" value="${user.home}/buildcertification" />
 	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
 	
 	
@@ -116,7 +116,7 @@
 		</xmltask>
 	</target>
 
-	<target name="deploy" depends="deploy:artifacts" description="deploy the build monitor">
+	<target name="deploy" depends="deploy:artifacts,deploy:configure" description="deploy the build monitor">
 		
 	</target>
 
