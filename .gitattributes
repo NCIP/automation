@@ -2256,6 +2256,7 @@ software/bda-dashboard/wiki-cli/src/assembly/release.xml -text
 software/bda-dashboard/wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 software/bda-dashboard/wiki-cli/src/main/java/gov/nih/nci/confluence/TableUpdater.groovy -text
 software/bda-dashboard/wiki-cli/src/main/java/org/swift/confluence/cli/ConfluenceClient.java -text
+software/bda-dashboard/wiki-cli/src/main/resources/build.xml -text
 software/bda-dashboard/wiki-cli/src/main/resources/confluence.bat -text
 software/bda-dashboard/wiki-cli/src/main/resources/examples/addUserToGroupWithFile.csv -text
 software/bda-dashboard/wiki-cli/src/main/resources/examples/addUserWithFile.csv -text
