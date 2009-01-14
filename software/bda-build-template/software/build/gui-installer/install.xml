@@ -215,14 +215,16 @@
 					<!-- Grid Science Contact -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="install|upgrade" />
 					<!-- Secure Grid Configuration -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.15" condition="install.custom" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.15" condition="install|upgrade" />
 					<!-- Application Specific Properties -->
 					<!-- Tomcat Base Config -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.16" condition="install.custom"/>
+					<!-- Tomcat Upgrade -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.17" condition="upgrade"/>
 					<!-- Tomcat SSL -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.17" condition="install.custom"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.18" condition="install.custom"/>
 					<!-- Installation Summary -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.18" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.19" />
 					<panel classname="InstallationGroupPanel"/>
 					<panel classname="ExtendedInstallPanel"/>
 					<panel classname="FinishPanel"/>

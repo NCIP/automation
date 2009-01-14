@@ -423,7 +423,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="dist:installer" depends="dist:installer:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
 		<delete file="${dist.dir}/${bda-blueprints-webapp.install.zip.file}" />
 		<!-- Set environment name to external -->
-		<replaceregexp file="@{dist.exploded.dir}/build.xml" byline="true" match="(&lt;property name=&quot;env.name&quot; value=&quot;)\w+(&quot;/&gt;)" replace="\1external\2" />
+		<replaceregexp file="${dist.exploded.dir}/build.xml" byline="true" match="(&lt;property name=&quot;env.name&quot; value=&quot;)\w+(&quot;/&gt;)" replace="\1external\2" />
 		<obfuscate-properties-file
 			properties.file="${dist.exploded.dir}/install.properties"
 			required.property.list="application.base.path.linux,application.base.path.windows,database.system.user,database.system.password,database.server,database.port,database.name,database.user,database.password,mail.smtp.host,jboss.server.hostname"
@@ -450,7 +450,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="dist:upgrader" depends="dist:upgrader:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
 		<delete file="${dist.dir}/${bda-blueprints-webapp.upgrade.zip.file}" />
 		<!-- Set environment name to external -->
-		<replaceregexp file="@{dist.exploded.dir}/build.xml" byline="true" match="(&lt;property name=&quot;env.name&quot; value=&quot;)\w+(&quot;/&gt;)" replace="\1external\2" />
+		<replaceregexp file="${dist.exploded.dir}/build.xml" byline="true" match="(&lt;property name=&quot;env.name&quot; value=&quot;)\w+(&quot;/&gt;)" replace="\1external\2" />
 
 		<obfuscate-properties-file
 			properties.file="${dist.exploded.dir}/install.properties"

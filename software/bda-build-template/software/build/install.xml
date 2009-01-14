@@ -414,7 +414,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<echo message="Configuring Log4J"/>
 		<!-- Insert an appender -->
 		<!--<copy todir="${jboss.home}/server/${jboss.server.name}/conf" file="${jboss-conf.dir.src}/log4j.dtd"/>-->
-		<copy todir="${basedir}" file="${jboss-conf.dir.src}/log4j.dtd"/>
+		<copy todir="${env.PWD}" file="${jboss-conf.dir.src}/log4j.dtd"/>
 		<xmltask source="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
 			dest="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml">
 			<xmlcatalog refid="installer.catalog"/>

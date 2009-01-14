@@ -83,18 +83,24 @@
 		<variable name="jboss.ssl.keystore.pass" value=""/>
 		<variable name="jboss.ssl.keystore.alias" value=""/>
 		<variable name="jboss.ssl.fullyqualified.hostname" value=""/>
-		<variable name="jboss.external.host" value=""/>
-		<variable name="jboss.external.port" value=""/>
+		<variable name="jboss.external.ssl.host" value=""/>
+		<variable name="jboss.external.ssl.port" value=""/>
+		<variable name="jboss.external.http.host" value=""/>
+		<variable name="jboss.external.http.port" value=""/>
 		<variable name="tomcat.ssl.enable" value="false"/>
 		<variable name="tomcat.ssl.keystore.location" value=""/>
 		<variable name="tomcat.ssl.keystore.pass" value=""/>
 		<variable name="tomcat.ssl.keystore.alias" value=""/>
 		<variable name="tomcat.ssl.fullyqualified.hostname" value=""/>
-		<variable name="tomcat.external.host" value=""/>
-		<variable name="tomcat.external.port" value=""/>
+		<variable name="tomcat.external.ssl.host" value=""/>
+		<variable name="tomcat.external.ssl.port" value=""/>
+		<variable name="tomcat.external.http.host" value=""/>
+		<variable name="tomcat.external.http.port" value=""/>
 		<variable name="grid.secure.enable" value="false"/>
 		<variable name="grid.secure.cert.location" value=""/>
 		<variable name="grid.secure.key.location" value=""/>
+		<variable name="grid.external.secure.host" value=""/>
+		<variable name="grid.external.secure.port" value=""/>
 		<variable name="log4j.maxFileSize" value="100MB"/>
 		<variable name="log4j.maxDays" value="7"/>
 		<variable name="log4j.level" value="WARN"/>
@@ -272,11 +278,17 @@
 
 		<field type="divider" align="top"/>
 		<field type="staticText" align="left" txt="For JBoss External Hostname configurations see https://wiki.nci.nih.gov/x/8hWy, values not required if not externally accessible"/>
-		<field type="text" variable="jboss.external.host">
-			<spec txt="External Host Name (generally same as FQHN): "  size="50" set=""/>
+		<field type="text" variable="jboss.external.ssl.host">
+			<spec txt="External Host Name for ssl port (generally same as FQHN): "  size="50" set=""/>
 		</field>
-		<field type="text" variable="jboss.external.port">
-			<spec txt="External Port"  size="5" set=""/>
+		<field type="text" variable="jboss.external.ssl.port">
+			<spec txt="External Port for ssl port"  size="5" set=""/>
+		</field>
+		<field type="text" variable="jboss.external.http.host">
+			<spec txt="External Host Name for http port (generally same as FQHN): "  size="50" set=""/>
+		</field>
+		<field type="text" variable="jboss.external.http.port">
+			<spec txt="External Port for http port"  size="5" set=""/>
 		</field>
 
 	</panel>
@@ -310,6 +322,9 @@
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Enter a value for Existing MIRC Tomcat Home" />
 		</field>  
 		-->
+		<variable name="log4j.maxFileSize" value="100MB"/>
+		<variable name="log4j.maxDays" value="7"/>
+		<variable name="log4j.level" value="WARN"/>
 	</panel>
 	<panel order="7">
 		<field type="title" txt="Authentication Type" bold="true" size="1" />
@@ -391,17 +406,6 @@
 			<spec txt="Grid Index Url:" id="text.label" size="35" set="http://training03.cagrid.org:6080/wsrf/services/DefaultIndexService"/>
 			<validator class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid Index URL" id="indexurl.label"/>
 		</field>
-		<!-- no lnoger used, are used by jboss.external and tomcat.external
-		<field type="text" variable="grid.external.host">
-			<spec txt="Grid External Hostname:" id="text.label" size="25" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt=" Grid External Hostname is a required field" />
-		</field>
-
-		<field type="text" variable="grid.external.port">
-			<spec txt="Grid External Port Number:" id="text.label" size="5" set=""/>
-			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt=" Grid External Port Number is a required field" />
-		</field>
-		-->
 	</panel>
 
 	<panel order="12">
@@ -516,6 +520,13 @@
 		<field type="text" variable="grid.secure.key.location">
 			<spec txt="caGrid private key file location: "  size="75" set=""/>
 		</field>
+		<field type="text" variable="grid.external.secure.host">
+			<spec txt="Grid External Hostname:" id="text.label" size="25" set=""/>
+		</field>
+
+		<field type="text" variable="grid.external.secure.port">
+			<spec txt="Grid External Port Number:" id="text.label" size="5" set=""/>
+		</field>
 	</panel>
 
 	<panel order="16">
@@ -558,6 +569,34 @@
 		</field>
 	</panel>
 	<panel order="17">
+		<field type="title" txt="Tomcat Configuration" bold="true" size="1" />
+		<field type="staticText" align="left" txt="For detailed descriptions on each of the properties below, see the Application Settings section at http://someurl"/>
+		<field type="divider" align="top"/>
+
+		<field type="dir" align="left" variable="existing.tomcat.home">
+			<spec txt="Existing Tomcat Home:" size="25" set=""/>
+			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt=" Existing JBoss Home is a required field" />
+		</field>
+		<field type="text" align="left" variable="tomcat.hostname">
+			<spec txt="Hostname of this Server:" size="20" set="$HOST_NAME"/>
+			<validator
+				class="com.izforge.izpack.util.HostNameValidator" txt="Enter a valid Host name or the Host is not reachable" id="jbosshostname.label">
+			</validator>
+		</field>
+		<field type="text" variable="tomcat.port.http">
+			<spec txt="Tomcat HTTP port:" id="text.label" size="5" set="21080"/>
+			<validator
+				class="com.izforge.izpack.util.PortValidator" txt="The http port number is already in use" id="error.label">
+			</validator>
+		</field>
+		<field type="text" variable="tomcat.port.ssl">
+			<spec txt="Tomcat Re-direct port:" id="text.label" size="5" set="21443"/>
+			<validator
+				class="com.izforge.izpack.util.PortValidator" txt="The http port number is already in use" id="error.label">
+			</validator>
+		</field>
+	</panel>
+	<panel order="18">
 		<field type="title" txt="Configuring Tomcat SSL and External Hostnames" bold="true" size="1" />
 		<field type="staticText" align="left" txt="For Tomcat SSL configuration details see https://wiki.nci.nih.gov/x/7xWy"/>
 		<field type="divider" align="top"/>
@@ -588,15 +627,21 @@
 
 		<field type="divider" align="top"/>
 		<field type="staticText" align="left" txt="For Tomcat External Hostname configurations see https://wiki.nci.nih.gov/x/8hWy, values not required if not externally accessible"/>
-		<field type="text" variable="tomcat.external.host">
-			<spec txt="External Host Name (generally same as FQHN): "  size="50" set=""/>
+		<field type="text" variable="tomcat.external.ssl.host">
+			<spec txt="External Host Name for ssl port(generally same as FQHN): "  size="50" set=""/>
 		</field>
-		<field type="text" variable="tomcat.external.port">
-			<spec txt="External Port"  size="5" set=""/>
+		<field type="text" variable="tomcat.external.ssl.port">
+			<spec txt="External Port for ssl port"  size="5" set=""/>
+		</field>
+		<field type="text" variable="tomcat.external.http.host">
+			<spec txt="External Host Name for http port (generally same as FQHN): "  size="50" set=""/>
+		</field>
+		<field type="text" variable="tomcat.external.http.port">
+			<spec txt="External Port for http port"  size="5" set=""/>
 		</field>
 
 	</panel>
-	<panel order="18">
+	<panel order="19">
 		<field type="title" txt="Installation Summary" bold="true" size="1" />
 		<field type="staticText" align="left" txt="Below are "/>
 		<field type="divider" align="top"/>
