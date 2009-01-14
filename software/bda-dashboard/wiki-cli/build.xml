@@ -5,6 +5,7 @@
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="sql.dir" value="${software.dir}/sql" />
+	<property name="resources.dir" value="${software.dir}/src/main/resources" />
 	<property name="source.dir" value="${software.dir}/src/main/java/gov/nih/nci/confluence" />
 	<property name="classes.dir" value="${software.dir}/classes" />
 	<property name="database.name" value="wikiDB" />	
@@ -13,7 +14,7 @@
 	<property name="sql.file" value="${sql.dir}/populate_wikiDB.sql" />
 	<property name="target.dir" value="${software.dir}/target" />
 	<property name="dist.dir" value="${target.dir}/dist" />
-	<property name="deploy.dir" value="${target.dir}/deploy" />
+	<property name="deploy.dir" value="${user.home}/wiki_cli" />
 	<property name="wiki_cli_jar" value="wiki_cli_nci.jar" />
 	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
 	
@@ -78,6 +79,7 @@
 
 		<copy file="${dist.dir}/${wiki_cli_jar}" todir="${deploy.dir}" />
 		<copy file="${software.dir}/wiki.properties" todir="${deploy.dir}" />
+		<copy file="${resources.dir}/build.xml" todir="${deploy.dir}" />
 	</target>
 
 
