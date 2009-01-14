@@ -13,7 +13,9 @@ class BuildStatusUpdater {
 		buildStatus.loadProperties();
 		buildStatus.setDBConnection();
 		buildStatus.setDefaultConfluenceString();
-		buildStatus.updateBuildStatus();	        
+		buildStatus.updateBuildStatus();
+		buildStatus.updateCertificationStatus();
+		buildStatus.closeDBConnection();
 	}
 	
 	public void updateBuildStatus()
@@ -47,6 +49,38 @@ class BuildStatusUpdater {
 	}
 	
 	
+	public void updateCertificationStatus()
+	{	 
+	    String certificationTemplateFile = properties.getProperty("certification.template.file");//"Deployment_Status_Template"
+	    String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
+	    String certificationPageFile = properties.getProperty("certification.page.file");//"page1"
+	    String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
+
+	// get most recent tempates
+		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")
+		String statement   = "select PRODUCT,CERTIFICATION_STATUS,CERTIFICATION_WIKI_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION from PROJECT_CERTIFICATION_STATUS "
+
+	int count = 0
+	connection.eachRow(statement) { row ->
+	    count++
+
+	    String productName    = row.PRODUCT;
+	    String certificationStatus = row.CERTIFICATION_STATUS;
+	    String certificationWikiStatus = row.CERTIFICATION_WIKI_STATUS;
+	    String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
+	    String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
+	    String databaseIntegration = row.DATABASE_INTEGRATION;
+
+			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Certification-Wiki-Status${count}:${certificationWikiStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration}\""
+
+			println findReplace
+			// update page
+			doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplace}")
+			doCmd("${confluence} -a getPageSource --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"    --file "+certificationTemplateFile+"_temp.txt")
+		}
+	}
+	
+	
 	public void loadProperties()
 	{
 		properties = new java.util.Properties();
@@ -73,6 +107,11 @@ class BuildStatusUpdater {
 	    String monitorPassword = properties.getProperty("database.password");//"password"
 
 		connection = Sql.newInstance(monitorUrl, monitorUser, monitorPassword, monitorDriver)		
+	}
+	
+	public void closeDBConnection()
+	{
+		connection.close();		
 	}
 	
 	static void doCmdWithException(String cmd) {
