@@ -3897,6 +3897,7 @@ $HeadURL$
 		<!--appserver-configure-hostname -->
 		<attribute name="tomcat.hostname" default="${tomcat.hostname}"/>
 		<!--grid-secure-configure-connector-->
+		<attribute name="tomcat.grid.configure" default="false"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
 		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
@@ -3979,41 +3980,43 @@ $HeadURL$
 					</xmltask>
 		
 		
-					<echo message="Configuring secure grid in tomcat"/>
-					<grid-secure-configure-connector
-						appserver.conf.dir="@{tomcat.conf.dir}"
-						appserver.server-xml.file="@{tomcat.server-xml.file}"
-						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-						grid.secure.enable="@{grid.secure.enable}"
-						grid.secure.port="@{grid.secure.port}"
-						grid.secure.dir="@{grid.secure.dir}"
-						grid.secure.cert.file="@{grid.secure.cert.file}"
-						grid.secure.key.file="@{grid.secure.key.file}"
-						/>
-					<!-- needs to be done after adding connector -->
 					<if>
-						<equals arg1="@{grid.secure.enable}" arg2="true"/>
+						<equals arg1="@{tomcat.grid.configure}" arg2="true"/>
 						<then>
-							<echo message="Configuring tomcat proxy settings for secure grid"/>
-							<appserver-configure-external-hostname
+							<echo message="Configuring secure grid in tomcat"/>
+							<grid-secure-configure-connector
+								appserver.conf.dir="@{tomcat.conf.dir}"
 								appserver.server-xml.file="@{tomcat.server-xml.file}"
-										appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-								appserver.external.host="@{grid.external.secure.host}"
-								appserver.external.port="@{grid.external.secure.port}"
-								proxy.update.connector.port="@{grid.secure.port}"
-								/>                                                                      
+								appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+								grid.secure.enable="@{grid.secure.enable}"
+								grid.secure.port="@{grid.secure.port}"
+								grid.secure.dir="@{grid.secure.dir}"
+								grid.secure.cert.file="@{grid.secure.cert.file}"
+								grid.secure.key.file="@{grid.secure.key.file}"
+								/>
+							<!-- needs to be done after adding connector -->
+							<if>
+								<equals arg1="@{grid.secure.enable}" arg2="true"/>
+								<then>
+									<echo message="Configuring tomcat proxy settings for secure grid"/>
+									<appserver-configure-external-hostname
+										appserver.server-xml.file="@{tomcat.server-xml.file}"
+												appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+										appserver.external.host="@{grid.external.secure.host}"
+										appserver.external.port="@{grid.external.secure.port}"
+										proxy.update.connector.port="@{grid.secure.port}"
+										/>                                                                      
+								</then>
+								<else>
+									<echo message="Skipping configuring tomcat proxy settings for secure grid since secure grid is not set."/>
+								</else>
+							</if>
 						</then>
 						<else>
-							<echo message="Skipping configuring tomcat proxy settings for secure grid since secure grid is not set."/>
+							<echo message="Skipping configuration of GRID on Tomcat"/>
 						</else>
 					</if>
 
-					<!--
-					<grid-secure-configure-valve
-						appserver.server-xml.file="@{tomcat.server-xml.file}"
-						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-						/>
-					-->
 					<appserver-accesslog-configure
 						appserver.conf.dir="@{tomcat.conf.dir}"
 						appserver.server-xml.file="@{tomcat.server-xml.file}"
@@ -4067,6 +4070,7 @@ $HeadURL$
 		<!--appserver-configure-hostname -->
 		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}"/>
 		<!-- grid-secure-configure-connector -->
+		<attribute name="jboss.grid.configure" default="false"/>
 		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.enable" default="${grid.secure.enable}"/>
 		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
@@ -4162,36 +4166,45 @@ $HeadURL$
 								/>
 		
 					<echo message="Configuring secure grid in JBoss"/>
-					<grid-secure-configure-connector
-						appserver.conf.dir="@{jboss.conf.dir}"
-						appserver.server-xml.file="@{jboss.server-xml.file}"
-						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-						grid.secure.dir="@{grid.secure.dir}"
-						grid.secure.enable="@{grid.secure.enable}"
-						grid.secure.key.file="@{grid.secure.key.file}"
-						grid.secure.cert.file="@{grid.secure.cert.file}"
-						/>
-					<!--
-					<grid-secure-configure-valve
-						appserver.server-xml.file="@{jboss.server-xml.file}"
-						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-						/>
-					-->
-					<!-- needs to be done after adding connector -->
 					<if>
-						<equals arg1="@{grid.secure.enable}" arg2="true"/>
-								<then>
-							<echo message="Configuring jboss proxy settings for secure grid"/>
-							<appserver-configure-external-hostname
+						<equals arg1="@{jboss.grid.configure}" arg2="true"/>
+						<then>
+							<echo message="Configuring grid on JBoss"/>
+							<grid-secure-configure-connector
+								appserver.conf.dir="@{jboss.conf.dir}"
 								appserver.server-xml.file="@{jboss.server-xml.file}"
 								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-								appserver.external.host="@{grid.external.secure.host}"
-								appserver.external.port="@{grid.external.secure.port}"
-								proxy.update.connector.port="@{grid.secure.port}"
-								/>                                                                      
+								grid.secure.dir="@{grid.secure.dir}"
+								grid.secure.enable="@{grid.secure.enable}"
+								grid.secure.key.file="@{grid.secure.key.file}"
+								grid.secure.cert.file="@{grid.secure.cert.file}"
+								/>
+							<!--
+							<grid-secure-configure-valve
+								appserver.server-xml.file="@{jboss.server-xml.file}"
+								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+								/>
+							-->
+							<!-- needs to be done after adding connector -->
+							<if>
+								<equals arg1="@{grid.secure.enable}" arg2="true"/>
+										<then>
+									<echo message="Configuring jboss proxy settings for secure grid"/>
+									<appserver-configure-external-hostname
+										appserver.server-xml.file="@{jboss.server-xml.file}"
+										appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+										appserver.external.host="@{grid.external.secure.host}"
+										appserver.external.port="@{grid.external.secure.port}"
+										proxy.update.connector.port="@{grid.secure.port}"
+										/>                                                                      
+								</then>
+								<else>
+									<echo message="Skipping configuring jboss proxy settings for secure grid since secure grid is not set."/>
+								</else>
+							</if>
 						</then>
 						<else>
-							<echo message="Skipping configuring jboss proxy settings for secure grid since secure grid is not set."/>
+							<echo message="Skipping configuration of GRID on JBos"/>
 						</else>
 					</if>
 					<appserver-accesslog-configure
