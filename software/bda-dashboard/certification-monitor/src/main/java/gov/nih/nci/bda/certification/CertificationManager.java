@@ -1,6 +1,7 @@
 package gov.nih.nci.bda.certification;
 
 
+import gov.nih.nci.bda.certification.business.BuildCertificationBean;
 import gov.nih.nci.bda.certification.domain.TargetLookup;
 import gov.nih.nci.bda.certification.listener.SingleCommandListener;
 import gov.nih.nci.bda.certification.util.HibernateUtil;
@@ -60,8 +61,14 @@ import org.hibernate.Session;
           catch(Exception e)
           {
 			System.out.println("EXCEPTION::::" + e.getMessage());
-			e.printStackTrace();
-			System.err.println(e.getMessage());
+			BuildCertificationBean bmb = new BuildCertificationBean();
+			bmb.setBuildSuccessful(false); 
+			bmb.setProjectName(projectName);
+			bmb.setTargetName(targetLookup.getTargetName());
+			bmb.setMapName(targetLookup.getMapName());
+			
+			BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
+			buildHelper.updateProjectBuildStatus();			
           }
      } 
      
