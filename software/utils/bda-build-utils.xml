@@ -3164,6 +3164,7 @@ $HeadURL$
 	<macrodef name="validate-log4j">
 		<attribute name="log4j.file" default="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"/>
 		<sequential>
+			<echo message="Validating log4j configuration at @{log4j.file}"/>
 			<groovy>
 				<arg line="@{log4j.file}"/>
 				import java.util.regex.Matcher
@@ -3891,118 +3892,128 @@ $HeadURL$
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
 		<sequential>
-			<echo message="Configuring datasource for jboss"/>
-			<tomcat-configure-server-xml-db
-				tomcat.home="@{tomcat.home}"
-				database.driver="@{database.driver}"
-				database.url="@{database.url}"
-				database.user="@{database.user}"
-				database.password="@{database.password}"
-				database.name="@{database.name}"
-				database.jndi.datasource.name="@{database.jndi.datasource.name}"
-				database.context.path="@{database.context.path}"
-				/>
-
-			<echo message="Securing tomcat app server"/>
-			<appserver-ssl-configure
-				appserver.conf.dir="@{tomcat.conf.dir}"
-				appserver.server-xml.file="@{tomcat.server-xml.file}"
-				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-				appserver.ssl.enable="@{tomcat.ssl.enable}"
-				appserver.ssl.port="@{tomcat.ssl.port}"
-				appserver.ssl.keystore.file="@{tomcat.ssl.keystore.file}"
-				appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
-				appserver.ssl.keystore.pass="@{tomcat.ssl.keystore.pass}"
-				appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
-				appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
-				/>
-
-			<!-- needs to be done before changing ports -->
-			<echo message="Configuring tomcat proxy settings for ssl"/>
-			<appserver-configure-external-hostname
-				appserver.server-xml.file="@{tomcat.server-xml.file}"
-				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-				appserver.external.host="@{tomcat.external.ssl.host}"
-				appserver.external.port="@{tomcat.external.ssl.port}"
-				proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
-				/>                                                                      
-			<!-- needs to be done before changing ports -->
-			<echo message="Configuring tomcat proxy settings for http"/>
-			<appserver-configure-external-hostname
-				appserver.server-xml.file="@{tomcat.server-xml.file}"
-				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-				appserver.external.host="@{tomcat.external.http.host}"
-				appserver.external.port="@{tomcat.external.http.port}"
-				proxy.update.connector.port="@{proxy.update.connector.port.http}"
-				/>                                                                      
-			<!-- needs to be done before changing ports -->
-			<echo message="Configuring JBoss hostname in server.xml"/>
-			<appserver-configure-hostname
-				appserver.server-xml.file="@{tomcat.server-xml.file}"
-				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-				appserver.hostname="@{tomcat.hostname}"
-				/>
-
-			<echo message="Updating Tomcat Ports"/> 
-<!--			
-			<xmlconfig in="@{tomcat.home}/conf/server.xml" verbose="false">
-				<update path="(//Connector)[@port=8080]/@port" value="@{tomcat.port.http}" />
-				<update path="(//Connector)[@redirectPort=8443]/@redirectPort" value="@{tomcat.port.ssl}" />
-				<update path="(//Connector)[@port=8009]/@port" value="@{tomcat.port.ajp}" />
-				<update path="(//Connector)[@port=8443]/@port" value="@{tomcat.port.ssl}" />
-				<update path="(//Server)[@port=8005]/@port" value="@{tomcat.port.shutdown}" />
-			</xmlconfig>
--->
-			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
-				<replace path="(//Connector)[@port=8080]/@port" withtext="@{tomcat.port.http}" />
-				<replace path="(//Connector)[@redirectPort=8443]/@redirectPort" withtext="@{tomcat.port.ssl}" />
-				<replace path="(//Connector)[@port=8009]/@port" withtext="@{tomcat.port.ajp}" />
-				<replace path="(//Connector)[@port=8443]/@port" withtext="@{tomcat.port.ssl}" />
-				<replace path="(//Server)[@port=8005]/@port" withtext="@{tomcat.port.shutdown}" />				
-			</xmltask>
-
-
-			<echo message="Configuring secure grid in tomcat"/>
-			<grid-secure-configure-connector
-				appserver.conf.dir="@{tomcat.conf.dir}"
-				appserver.server-xml.file="@{tomcat.server-xml.file}"
-				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-				grid.secure.enable="@{grid.secure.enable}"
-				grid.secure.port="@{grid.secure.port}"
-				grid.secure.dir="@{grid.secure.dir}"
-				grid.secure.cert.file="@{grid.secure.cert.file}"
-				grid.secure.key.file="@{grid.secure.key.file}"
-				/>
-			<!-- needs to be done after adding connector -->
 			<if>
-				<equals arg1="@{grid.secure.enable}" arg2="true"/>
+				<not>
+					<equals arg1="${exclude.tomcat-config}" arg2="true"/>
+				</not>
 				<then>
-					<echo message="Configuring tomcat proxy settings for secure grid"/>
+					<echo message="Configuring datasource for jboss"/>
+					<tomcat-configure-server-xml-db
+						tomcat.home="@{tomcat.home}"
+						database.driver="@{database.driver}"
+						database.url="@{database.url}"
+						database.user="@{database.user}"
+						database.password="@{database.password}"
+						database.name="@{database.name}"
+						database.jndi.datasource.name="@{database.jndi.datasource.name}"
+						database.context.path="@{database.context.path}"
+						/>
+		
+					<echo message="Securing tomcat app server"/>
+					<appserver-ssl-configure
+						appserver.conf.dir="@{tomcat.conf.dir}"
+								appserver.server-xml.file="@{tomcat.server-xml.file}"
+						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+						appserver.ssl.enable="@{tomcat.ssl.enable}"
+						appserver.ssl.port="@{tomcat.ssl.port}"
+						appserver.ssl.keystore.file="@{tomcat.ssl.keystore.file}"
+						appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
+						appserver.ssl.keystore.pass="@{tomcat.ssl.keystore.pass}"
+						appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
+						appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
+						/>
+		
+					<!-- needs to be done before changing ports -->
+					<echo message="Configuring tomcat proxy settings for ssl"/>
 					<appserver-configure-external-hostname
 						appserver.server-xml.file="@{tomcat.server-xml.file}"
 						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-						appserver.external.host="@{grid.external.secure.host}"
-						appserver.external.port="@{grid.external.secure.port}"
-						proxy.update.connector.port="@{grid.secure.port}"
+						appserver.external.host="@{tomcat.external.ssl.host}"
+						appserver.external.port="@{tomcat.external.ssl.port}"
+						proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
 						/>                                                                      
+					<!-- needs to be done before changing ports -->
+					<echo message="Configuring tomcat proxy settings for http"/>
+					<appserver-configure-external-hostname
+						appserver.server-xml.file="@{tomcat.server-xml.file}"
+						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+						appserver.external.host="@{tomcat.external.http.host}"
+						appserver.external.port="@{tomcat.external.http.port}"
+						proxy.update.connector.port="@{proxy.update.connector.port.http}"
+						/>                                                                      
+					<!-- needs to be done before changing ports -->
+					<echo message="Configuring JBoss hostname in server.xml"/>
+					<appserver-configure-hostname
+						appserver.server-xml.file="@{tomcat.server-xml.file}"
+						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+						appserver.hostname="@{tomcat.hostname}"
+						/>
+
+					<echo message="Updating Tomcat Ports"/> 
+<!--					
+					<xmlconfig in="@{tomcat.home}/conf/server.xml" verbose="false">
+						<update path="(//Connector)[@port=8080]/@port" value="@{tomcat.port.http}" />
+						<update path="(//Connector)[@redirectPort=8443]/@redirectPort" value="@{tomcat.port.ssl}" />
+						<update path="(//Connector)[@port=8009]/@port" value="@{tomcat.port.ajp}" />
+						<update path="(//Connector)[@port=8443]/@port" value="@{tomcat.port.ssl}" />
+						<update path="(//Server)[@port=8005]/@port" value="@{tomcat.port.shutdown}" />
+					</xmlconfig>
+-->
+					<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
+						<replace path="(//Connector)[@port=8080]/@port" withtext="@{tomcat.port.http}" />
+						<replace path="(//Connector)[@redirectPort=8443]/@redirectPort" withtext="@{tomcat.port.ssl}" />
+						<replace path="(//Connector)[@port=8009]/@port" withtext="@{tomcat.port.ajp}" />
+						<replace path="(//Connector)[@port=8443]/@port" withtext="@{tomcat.port.ssl}" />
+						<replace path="(//Server)[@port=8005]/@port" withtext="@{tomcat.port.shutdown}" />				
+					</xmltask>
+		
+		
+					<echo message="Configuring secure grid in tomcat"/>
+					<grid-secure-configure-connector
+						appserver.conf.dir="@{tomcat.conf.dir}"
+						appserver.server-xml.file="@{tomcat.server-xml.file}"
+						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+						grid.secure.enable="@{grid.secure.enable}"
+						grid.secure.port="@{grid.secure.port}"
+						grid.secure.dir="@{grid.secure.dir}"
+						grid.secure.cert.file="@{grid.secure.cert.file}"
+						grid.secure.key.file="@{grid.secure.key.file}"
+						/>
+					<!-- needs to be done after adding connector -->
+					<if>
+						<equals arg1="@{grid.secure.enable}" arg2="true"/>
+						<then>
+							<echo message="Configuring tomcat proxy settings for secure grid"/>
+							<appserver-configure-external-hostname
+								appserver.server-xml.file="@{tomcat.server-xml.file}"
+										appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+								appserver.external.host="@{grid.external.secure.host}"
+								appserver.external.port="@{grid.external.secure.port}"
+								proxy.update.connector.port="@{grid.secure.port}"
+								/>                                                                      
+						</then>
+						<else>
+							<echo message="Skipping configuring tomcat proxy settings for secure grid since secure grid is not set."/>
+						</else>
+					</if>
+
+					<!--
+					<grid-secure-configure-valve
+						appserver.server-xml.file="@{tomcat.server-xml.file}"
+						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+						/>
+					-->
+					<appserver-accesslog-configure
+						appserver.conf.dir="@{tomcat.conf.dir}"
+						appserver.server-xml.file="@{tomcat.server-xml.file}"
+						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+						appserver.hostname="@{tomcat.hostname}"
+						/>
 				</then>
 				<else>
-					<echo message="Skipping configuring tomcat proxy settings for secure grid since secure grid is not set."/>
+					<echo message="Skipping Tomcat Config because exclude.tomcat-config is set"/>
 				</else>
 			</if>
-
-			<!--
-			<grid-secure-configure-valve
-				appserver.server-xml.file="@{tomcat.server-xml.file}"
-				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-				/>
-			-->
-			<appserver-accesslog-configure
-				appserver.conf.dir="@{tomcat.conf.dir}"
-				appserver.server-xml.file="@{tomcat.server-xml.file}"
-				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-				appserver.hostname="@{tomcat.hostname}"
-				/>
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-configure">
@@ -4055,126 +4066,134 @@ $HeadURL$
 		<sequential>
 			<if>
 				<not>
-					<equals arg1="${exclude.jboss-bindings}" arg2="true"/>
+					<equals arg1="${exclude.jboss-config}" arg2="true"/>
 				</not>
 				<then>
-					<echo message="Configuring JBoss ports (bindings)"/>
-					<jboss-bindings
+					<if>
+						<not>
+							<equals arg1="${exclude.jboss-bindings}" arg2="true"/>
+						</not>
+						<then>
+							<echo message="Configuring JBoss ports (bindings)"/>
+							<jboss-bindings
+								jboss.home="@{jboss.home}"
+								jboss.server.name="@{jboss.server.name}"
+								jboss.server.ports.name="@{jboss.server.ports.name}"
+								jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
+								jboss.server.binding.template.location="@{jboss.server.binding.template.location}"
+								jboss.server.service.template.location="@{jboss.server.service.template.location}"
+								/>
+						</then>
+						<else>
+							<echo message="Skipping configuring JBoss ports (bindings) because exclude.jboss-bindings is set"/>
+						</else>
+					</if>
+		
+					<echo message="Configuring JBoss authentication settins (login-config.xml)"/>
+					<jboss-login-config
+						authentication.type="@{authentication.type}"
 						jboss.home="@{jboss.home}"
 						jboss.server.name="@{jboss.server.name}"
-						jboss.server.ports.name="@{jboss.server.ports.name}"
-						jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
-						jboss.server.binding.template.location="@{jboss.server.binding.template.location}"
-						jboss.server.service.template.location="@{jboss.server.service.template.location}"
-		
+						login-config.ldap.file="@{login-config.ldap.file}"
+						login-config.db.file="@{login-config.db.file}"
 						/>
-				</then>
-				<else>
-					<echo message="Skipping configuring JBoss ports (bindings) because exclude.jboss-bindings is set"/>
-				</else>
-			</if>
-
-			<echo message="Configuring JBoss authentication settins (login-config.xml)"/>
-			<jboss-login-config
-				authentication.type="@{authentication.type}"
-				jboss.home="@{jboss.home}"
-				jboss.server.name="@{jboss.server.name}"
-				login-config.ldap.file="@{login-config.ldap.file}"
-				login-config.db.file="@{login-config.db.file}"
-
-				/>
-
-			<echo message="Adding user and password to JBoss console apps"/>
-			<secure-jboss-console
-				jboss.home="@{jboss.home}"
-				jboss.server.name="@{jboss.server.name}"
-				jboss.web.user="@{jboss.web.user}"
-				jboss.web.password="@{jboss.web.password}"
-				/>
-
-			<echo message="Updating JBoss shutdown.jar to allow shutdown without command line args"/>
-			<jboss-update-shutdown
-				jboss.home="@{jboss.home}"
-				jboss.server.hostname="@{jboss.server.hostname}"
-				jboss.server.jndi.port="@{jboss.server.jndi.port}"
-				/>
-
-			<echo message="Enableing SSL for JBoss"/>
-			<appserver-ssl-configure
-				appserver.conf.dir="@{jboss.conf.dir}"
-				appserver.server-xml.file="@{jboss.server-xml.file}"
-				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-				appserver.ssl.enable="@{jboss.ssl.enable}"
-				appserver.ssl.port="@{jboss.ssl.port}"
-				appserver.ssl.keystore.file="@{jboss.ssl.keystore.file}"
-				appserver.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
-				appserver.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
-				appserver.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
-				appserver.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
-				/>
-
-			<echo message="Configuring JBoss proxy settings for ssl"/>
-			<appserver-configure-external-hostname
-				appserver.server-xml.file="@{jboss.server-xml.file}"
-				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-				appserver.external.host="@{jboss.external.ssl.host}"
-				appserver.external.port="@{jboss.external.ssl.port}"
-				proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
-				/>                                                                      
-			<echo message="Configuring JBoss proxy settings for http"/>
-			<appserver-configure-external-hostname
-				appserver.server-xml.file="@{jboss.server-xml.file}"
-				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-				appserver.external.host="@{jboss.external.http.host}"
-				appserver.external.port="@{jboss.external.http.port}"
-				proxy.update.connector.port="@{proxy.update.connector.port.http}"
-				/>                                                                      
-			<echo message="Configuring JBoss hostname in server.xml"/>
-			<appserver-configure-hostname
-				appserver.server-xml.file="@{jboss.server-xml.file}"
-				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-				appserver.hostname="@{jboss.server.hostname}"
-				/>
-
-			<echo message="Configuring secure grid in JBoss"/>
-			<grid-secure-configure-connector
-				appserver.conf.dir="@{jboss.conf.dir}"
-				appserver.server-xml.file="@{jboss.server-xml.file}"
-				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-				grid.secure.dir="@{grid.secure.dir}"
-				grid.secure.enable="@{grid.secure.enable}"
-				grid.secure.key.file="@{grid.secure.key.file}"
-				grid.secure.cert.file="@{grid.secure.cert.file}"
-				/>
-			<!--
-			<grid-secure-configure-valve
-				appserver.server-xml.file="@{jboss.server-xml.file}"
-				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-				/>
-			-->
-			<!-- needs to be done after adding connector -->
-			<if>
-				<equals arg1="@{grid.secure.enable}" arg2="true"/>
-				<then>
-					<echo message="Configuring jboss proxy settings for secure grid"/>
+		
+					<echo message="Adding user and password to JBoss console apps"/>
+					<secure-jboss-console
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.web.user="@{jboss.web.user}"
+						jboss.web.password="@{jboss.web.password}"
+						/>
+		
+					<echo message="Updating JBoss shutdown.jar to allow shutdown without command line args"/>
+					<jboss-update-shutdown
+						jboss.home="@{jboss.home}"
+						jboss.server.hostname="@{jboss.server.hostname}"
+						jboss.server.jndi.port="@{jboss.server.jndi.port}"
+						/>
+		
+					<echo message="Enableing SSL for JBoss"/>
+					<appserver-ssl-configure
+						appserver.conf.dir="@{jboss.conf.dir}"
+						appserver.server-xml.file="@{jboss.server-xml.file}"
+						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+						appserver.ssl.enable="@{jboss.ssl.enable}"
+						appserver.ssl.port="@{jboss.ssl.port}"
+						appserver.ssl.keystore.file="@{jboss.ssl.keystore.file}"
+						appserver.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
+						appserver.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
+						appserver.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
+						appserver.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
+						/>
+		
+					<echo message="Configuring JBoss proxy settings for ssl"/>
 					<appserver-configure-external-hostname
 						appserver.server-xml.file="@{jboss.server-xml.file}"
 						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-						appserver.external.host="@{grid.external.secure.host}"
-						appserver.external.port="@{grid.external.secure.port}"
-						proxy.update.connector.port="@{grid.secure.port}"
+						appserver.external.host="@{jboss.external.ssl.host}"
+						appserver.external.port="@{jboss.external.ssl.port}"
+						proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
 						/>                                                                      
+					<echo message="Configuring JBoss proxy settings for http"/>
+					<appserver-configure-external-hostname
+						appserver.server-xml.file="@{jboss.server-xml.file}"
+						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+						appserver.external.host="@{jboss.external.http.host}"
+						appserver.external.port="@{jboss.external.http.port}"
+						proxy.update.connector.port="@{proxy.update.connector.port.http}"
+						/>                                                                      
+					<echo message="Configuring JBoss hostname in server.xml"/>
+					<appserver-configure-hostname
+						appserver.server-xml.file="@{jboss.server-xml.file}"
+						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+						appserver.hostname="@{jboss.server.hostname}"
+								/>
+		
+					<echo message="Configuring secure grid in JBoss"/>
+					<grid-secure-configure-connector
+						appserver.conf.dir="@{jboss.conf.dir}"
+						appserver.server-xml.file="@{jboss.server-xml.file}"
+						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+						grid.secure.dir="@{grid.secure.dir}"
+						grid.secure.enable="@{grid.secure.enable}"
+						grid.secure.key.file="@{grid.secure.key.file}"
+						grid.secure.cert.file="@{grid.secure.cert.file}"
+						/>
+					<!--
+					<grid-secure-configure-valve
+						appserver.server-xml.file="@{jboss.server-xml.file}"
+						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+						/>
+					-->
+					<!-- needs to be done after adding connector -->
+					<if>
+						<equals arg1="@{grid.secure.enable}" arg2="true"/>
+								<then>
+							<echo message="Configuring jboss proxy settings for secure grid"/>
+							<appserver-configure-external-hostname
+								appserver.server-xml.file="@{jboss.server-xml.file}"
+								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+								appserver.external.host="@{grid.external.secure.host}"
+								appserver.external.port="@{grid.external.secure.port}"
+								proxy.update.connector.port="@{grid.secure.port}"
+								/>                                                                      
+						</then>
+						<else>
+							<echo message="Skipping configuring jboss proxy settings for secure grid since secure grid is not set."/>
+						</else>
+					</if>
+					<appserver-accesslog-configure
+						appserver.conf.dir="@{jboss.conf.dir}"
+						appserver.server-xml.file="@{jboss.server-xml.file}"
+						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+						appserver.hostname="@{jboss.server.hostname}"
+						/>
 				</then>
 				<else>
-					<echo message="Skipping configuring jboss proxy settings for secure grid since secure grid is not set."/>
+					<echo message="Skipping jboss configuraiton because exclude.jboss-config is set"/>
 				</else>
 			</if>
-			<appserver-accesslog-configure
-				appserver.conf.dir="@{jboss.conf.dir}"
-				appserver.server-xml.file="@{jboss.server-xml.file}"
-				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-				appserver.hostname="@{jboss.server.hostname}"
-				/>
 		</sequential>
 	</macrodef>
 	<macrodef name="appserver-configure-hostname">
