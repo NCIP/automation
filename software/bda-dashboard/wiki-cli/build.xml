@@ -14,7 +14,7 @@
 	<property name="sql.file" value="${sql.dir}/populate_wikiDB.sql" />
 	<property name="target.dir" value="${software.dir}/target" />
 	<property name="dist.dir" value="${target.dir}/dist" />
-	<property name="deploy.dir" value="${user.home}/wiki_cli" />
+	<property name="deploy.dir" value="${user.home}/wiki-cli" />
 	<property name="wiki_cli_jar" value="wiki_cli_nci.jar" />
 	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
 	
