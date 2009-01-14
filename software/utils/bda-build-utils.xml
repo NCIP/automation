@@ -12,6 +12,11 @@ $HeadURL$
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" value="${bda-utils.resource.dir}/template-db-integrate.xml"/>
 
+	<!-- Supported versions --> 
+	<property name="jboss.version.min" value="4.0.4"/>
+	<property name="jboss.version.max" value="4.0.5"/>
+	<property name="tomcat.version.min" value="5.0.0"/>
+	<property name="tomcat.version.max" value="5.5.999"/>
 	<!-- PATHS -->
 	<path id="macrodef.classpath">
 		<fileset dir="${bda-utils.dir}">
@@ -361,6 +366,8 @@ $HeadURL$
 		<attribute name="tomcat.ssl.keystore.pass" default="${tomcat.ssl.keystore.pass}"/>
 		<attribute name="tomcat.ssl.keystore.alias" default="${tomcat.ssl.keystore.alias}"/>
 		<attribute name="tomcat.ssl.fullyqualified.hostname" default="${tomcat.ssl.fullyqualified.hostname}"/>
+		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
+		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -423,6 +430,10 @@ $HeadURL$
 				appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
 				appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
 				appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
+				/>
+			<validate-appserver-versions
+				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
+				tomcat.binaries.relative.dir="@{tomcat.binaries.relative.dir}"
 				/>
 		</sequential>
 	</macrodef>
@@ -4298,6 +4309,125 @@ $HeadURL$
 				</insert>
 			</xmltask>
 			<!-- when using proxies can pattern can be changed pattern="%{x-forwarded-for}i %l %u %t %r %s %b" -->
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-appserver-versions">
+		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
+		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
+		<sequential>
+			<var name="jboss.version.check" unset="true"/>
+			<propertyregex property="jboss.version.check"
+				input="@{jboss.binaries.relative.dir}"
+				regexp="(\d+\.\d+\.\d+).*"
+				select="\1"
+				/>
+			<var name="tomcat.version.check" unset="true"/>
+			<propertyregex property="tomcat.version.check"
+				input="@{tomcat.binaries.relative.dir}"
+				regexp="(\d+\.\d+\.\d+).*"
+				select="\1"
+				/>                      
+			<echo message="checking jboss version - ${jboss.version.check}."/>
+			<if>
+				<isset property="jboss.version.check"/>
+				<then>
+					<compare-version-major-min-patch
+						version.check="${jboss.version.check}"
+						version.min="${jboss.version.min}"
+						version.max="${jboss.version.max}"
+						/>
+				</then>
+			</if>
+			<echo message="checking tomcat version - ${tomcat.version.check}."/>
+			<if>
+				<isset property="tomcat.version.check"/>
+				<then>
+					<compare-version-major-min-patch
+						version.check="${tomcat.version.check}"
+						version.min="${tomcat.version.min}"
+						version.max="${tomcat.version.max}"
+						/>
+				</then>
+			</if>
+
+
+		</sequential>
+	</macrodef>
+	<macrodef name="compare-version-major-min-patch">
+		<attribute name="version.check"/>
+		<attribute name="version.min"/>
+		<attribute name="version.max"/>
+		<sequential>
+			<groovy>
+				<arg line="@{version.check} @{version.min} @{version.max}"/>
+
+				import java.util.regex.Matcher
+				import java.util.regex.Pattern
+
+				versionCheck = args[0]
+				versionMin = args[1]
+				versionMax = args[2]
+				BigInteger checkCalcVersion
+				BigInteger minCalcVersion
+				BigInteger maxCalcVersion
+
+				try {
+				checkMatcher =  java.util.regex.Pattern.compile(/(\d+)\.(\d+)\.(\d+)/).matcher(versionCheck)
+				checkMatches = checkMatcher.matches()
+				Integer checkMajor = checkMatcher.group(1).toInteger()
+				Integer checkMinor = checkMatcher.group(2).toInteger()
+				Integer checkPatch = checkMatcher.group(3).toInteger()
+
+				checkCalcVersion= ((checkMajor*1000000)+(checkMinor*1000)+checkPatch)
+				println "Check version is ${checkCalcVersion}"
+				} catch (Throwable ex) {
+				println "Check version is not in the format major.minor.patch (up to 3 digits each)."
+				System.exit(3)
+				}
+
+				try {
+				minMatcher =  java.util.regex.Pattern.compile(/(\d+)\.(\d+)\.(\d+)/).matcher(versionMin)
+				minMatches = minMatcher.matches()
+				Integer minMajor = minMatcher.group(1).toInteger()
+				Integer minMinor = minMatcher.group(2).toInteger()
+				Integer minPatch = minMatcher.group(3).toInteger()
+
+				minCalcVersion= ((minMajor*1000000)+(minMinor*1000)+minPatch)
+				println "Min version is ${minCalcVersion}"
+				} catch (Throwable ex) {
+				println "Minimum version is not in the format major.minor.patch (up to 3 digits each)."
+				System.exit(3)
+				}
+
+				try {
+				maxMatcher =  java.util.regex.Pattern.compile(/(\d+)\.(\d+)\.(\d+)/).matcher(versionMax)
+				maxMatches = maxMatcher.matches()
+				Integer maxMajor = maxMatcher.group(1).toInteger()
+				Integer maxMinor = maxMatcher.group(2).toInteger()
+				Integer maxPatch = maxMatcher.group(3).toInteger()
+
+				maxCalcVersion= ((maxMajor*1000000)+(maxMinor*1000)+maxPatch)
+				println "Max version is ${maxCalcVersion}"
+				} catch (Throwable ex) {
+				println "Maximum version is not in the format major.minor.patch (up to 3 digits each)."
+				System.exit(3)
+				}
+
+				if ( checkCalcVersion &lt; minCalcVersion)
+				{
+				println "The check version ${checkCalcVersion} is less than the minium supported version ${minCalcVersion}."
+				System.exit(2)
+				}
+
+				if ( checkCalcVersion &gt; maxCalcVersion)
+				{
+				println "The check version ${checkCalcVersion} is greater than the maximum supported version ${maxCalcVersion}."
+				System.exit(2)
+				}
+
+
+			</groovy>
 		</sequential>
 	</macrodef>
 </project>
