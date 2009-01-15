@@ -194,7 +194,7 @@
 					<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="install.custom"/>
 					<!-- Jboss Continued -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.4" condition="install.custom"/>
-					<!-- Jboss SSL -->
+					<!-- Jboss SSL 0.9.0 -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.5" condition="install.custom"/>
 					<!-- Upgrade Related properties -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="upgrade"/>
@@ -214,14 +214,14 @@
 					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="install|upgrade" />
 					<!-- Grid Science Contact -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="install|upgrade" />
-					<!-- Secure Grid Configuration -->
+					<!-- Secure Grid Configuration 0.9.0 -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.15" condition="install|upgrade" />
 					<!-- Application Specific Properties -->
-					<!-- Tomcat Base Config -->
+					<!-- Tomcat Base Config 0.9.0 -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.16" condition="install.custom"/>
-					<!-- Tomcat Upgrade -->
+					<!-- Tomcat Upgrade 0.9.0-->
 					<panel classname="UserInputPanel"  id="UserInputPanel.17" condition="upgrade"/>
-					<!-- Tomcat SSL -->
+					<!-- Tomcat SSL 0.9.0 -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.18" condition="install.custom"/>
 					<!-- Installation Summary -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.19" />
