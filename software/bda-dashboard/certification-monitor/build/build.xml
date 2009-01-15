@@ -173,4 +173,65 @@
 		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="${project.single-command.build.target}" dir="${project.master.build.location}"/>		
 	</target>
 
+	<target name="build:single-command-deployment" depends="init">
+		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
+		<propertycopy name="project.single-command.deployment.target" from="${project.name}.single-command.deployment.target" />
+		<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
+
+		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="dist:installer:prep" dir="${project.master.build.location}"/>
+<!--		
+		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="install" dir="${project.master.build.location}/../target/dist/exploded">
+			<property name="-Dproperties.file" value="install.properties" />			
+			<property name="-Dforce.reinstall" value="true" />
+			<property name="database.system.user" value="root"/>
+			<property name="database.system.password" value="mysql"/>
+			<property name="database.server" value="${database.server}"/>
+			<property name="database.port" value="${database.port}"/>
+			<property name="database.name" value="${database.name}"/>
+			<property name="database.user" value="${database.user}"/>
+			<property name="database.password" value="${database.password}"/>			
+		</ant>
+
+-->
+		<exec osfamily="unix" executable="ant" dir="${project.master.build.location}/../target/dist/exploded" failonerror="true">			
+			<arg value="-Dproperties.file=install.properties" />			
+			<arg value="-Dforce.reinstall=true" />
+			<arg value="-Ddatabase.system.user=root" />
+			<arg value="-Ddatabase.system.password=mysql" />
+			<arg value="-Ddatabase.server=${database.server}" />
+			<arg value="-Ddatabase.port=${database.port}" />
+			<arg value="-Ddatabase.name=${database.name}" />
+			<arg value="-Ddatabase.user=${database.user}" />
+			<arg value="-Ddatabase.password=${database.password}" />
+			<arg value="-Dexecuted.target.name=install" />
+			<arg value="-Dmap.name=singleCommandDeployment" />			
+			<arg value="-Dproject.name=${project.name}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
+			<arg value="install" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${project.master.build.location}/../target/dist/exploded" failonerror="true">			
+			<arg value="-Dproperties.file=install.properties" />			
+			<arg value="-Dforce.reinstall=true" />
+			<arg value="-Ddatabase.system.user=root" />
+			<arg value="-Ddatabase.system.password=mysql" />
+			<arg value="-Ddatabase.server=${database.server}" />
+			<arg value="-Ddatabase.port=${database.port}" />
+			<arg value="-Ddatabase.name=${database.name}" />
+			<arg value="-Ddatabase.user=${database.user}" />
+			<arg value="-Ddatabase.password=${database.password}" />
+			<arg value="-Dexecuted.target.name=install" />
+			<arg value="-Dmap.name=singleCommandDeployment" />			
+			<arg value="-Dproject.name=${project.name}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
+			<arg value="install" />
+		</exec>
+
+	</target>
+
 </project>

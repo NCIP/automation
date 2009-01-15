@@ -32,7 +32,8 @@ public class BuildCertificationHelper {
 		System.out.println("mapName:::::::" +mapName);
 		String methodName = getSetMethodName(mapName);
 		System.out.println("methodName:::::::" +methodName);
-	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 	    session.beginTransaction(); 		    
 	    	    
 	    
