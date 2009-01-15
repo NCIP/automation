@@ -196,8 +196,8 @@
 		<exec osfamily="unix" executable="ant" dir="${project.master.build.location}/../target/dist/exploded" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
 			<arg value="-Dforce.reinstall=true" />
-			<arg value="-Ddatabase.system.user=root" />
-			<arg value="-Ddatabase.system.password=mysql" />
+			<arg value="-Ddatabase.system.user=${database.system.user}" />
+			<arg value="-Ddatabase.system.password=${database.system.password}" />
 			<arg value="-Ddatabase.server=${database.server}" />
 			<arg value="-Ddatabase.port=${database.port}" />
 			<arg value="-Ddatabase.name=${database.name}" />
@@ -215,8 +215,8 @@
 		<exec osfamily="windows" executable="ant.bat" dir="${project.master.build.location}/../target/dist/exploded" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
 			<arg value="-Dforce.reinstall=true" />
-			<arg value="-Ddatabase.system.user=root" />
-			<arg value="-Ddatabase.system.password=mysql" />
+			<arg value="-Ddatabase.system.user=${database.system.user}" />
+			<arg value="-Ddatabase.system.password=${database.system.password}" />
 			<arg value="-Ddatabase.server=${database.server}" />
 			<arg value="-Ddatabase.port=${database.port}" />
 			<arg value="-Ddatabase.name=${database.name}" />
