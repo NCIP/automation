@@ -12,8 +12,8 @@ import org.hibernate.cfg.Configuration;
         static {
             try {
                 // Create the SessionFactory from hibernate.cfg.xml
-            	//File f =new File("hibernate.cfg.xml");
-            	//System.out.println("Absolute Path::"+f.getAbsolutePath());
+            	File f =new File("hibernate.cfg.xml");
+            	System.out.println("Absolute Path::"+f.getAbsolutePath());
                 sessionFactory = new Configuration().configure().buildSessionFactory();
             } catch (Throwable ex) {
                 // Make sure you log the exception, as it might be swallowed
