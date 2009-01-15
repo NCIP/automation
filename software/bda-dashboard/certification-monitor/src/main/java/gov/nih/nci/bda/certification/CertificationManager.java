@@ -22,6 +22,9 @@ import org.hibernate.Session;
     	
      System.out.println("ENTER THE EXECUTE METHOD");
 
+     //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+     Session session = HibernateUtil.getSession();
+     
      Project project = new Project();
      project.init();
           
@@ -33,15 +36,14 @@ import org.hibernate.Session;
      
          
      SingleCommandListener scListener = new SingleCommandListener();
-     project.addBuildListener(scListener);
+     project.addBuildListener(scListener);     
    
      File buildFile = new File("build/build.xml");
      ProjectHelper.configureProject(project, buildFile);
      //project.setProperty("ant.file", buildFile.getAbsolutePath());
 
 
-    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-    Session session = HibernateUtil.getSession();
+
     session.beginTransaction(); 		    
     Query query = session.createQuery( " from TargetLookup ");
     
