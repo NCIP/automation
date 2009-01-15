@@ -193,6 +193,9 @@
 		</ant>
 
 -->
+		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${project.master.build.location}/../target/dist/exploded"/>
+
+
 		<exec osfamily="unix" executable="ant" dir="${project.master.build.location}/../target/dist/exploded" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
 			<arg value="-Dforce.reinstall=true" />
