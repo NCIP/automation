@@ -178,7 +178,7 @@
 		<propertycopy name="project.single-command.deployment.target" from="${project.name}.single-command.deployment.target" />
 		<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
 
-		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="dist:installer:prep" dir="${project.master.build.location}"/>
+		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="${project.single-command.deployment.target}" dir="${project.master.build.location}"/>
 <!--		
 		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="install" dir="${project.master.build.location}/../target/dist/exploded">
 			<property name="-Dproperties.file" value="install.properties" />			
