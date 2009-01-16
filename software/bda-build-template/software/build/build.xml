@@ -184,24 +184,18 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.oracle.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.oracle.conf.file}"/>
 			<property name="database.schema" value="${database.name}"/>
 		</case>
 		<case value="mysql">
 			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
 			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.mysql.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.mysql.conf.file}"/>
 			<property name="database.schema" value="${database.name}"/>
 		</case>
 		<case value="postgresql">
 			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
 			<property name="database.driver" value="org.postgresql.Driver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.postgresql.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.postgresql.conf.file}"/>
 			<property name="database.schema" value="public"/>
 		</case>
 		<default>
