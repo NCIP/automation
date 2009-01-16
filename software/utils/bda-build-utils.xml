@@ -2407,14 +2407,6 @@ $HeadURL$
 			</for>
 		</sequential>
 	</macrodef>
-	<macrodef name="jboss-backup">
-		<attribute name="jboss.home" default="${jboss.home}"/>
-		<attribute name="backup.base.dir" default="${user.home}/tmp/jboss-backup"/>
-		<attribute name="backup.copies" default="3"/>
-		<sequential>
-			<!-- will add later -->
-		</sequential>
-	</macrodef>
 	<macrodef name="grid-appserver-configure">
 		<attribute name="appserver.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf"/>
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy"/>
@@ -4104,14 +4096,24 @@ $HeadURL$
 						</else>
 					</if>
 		
-					<echo message="Configuring JBoss authentication settins (login-config.xml)"/>
-					<jboss-login-config
-						authentication.type="@{authentication.type}"
-						jboss.home="@{jboss.home}"
-						jboss.server.name="@{jboss.server.name}"
-						login-config.ldap.file="@{login-config.ldap.file}"
-						login-config.db.file="@{login-config.db.file}"
-						/>
+					<if>
+						<not>
+							<equals arg1="${exclude.jboss-login-config}" arg2="true"/>
+						</not>
+						<then>
+							<echo message="Configuring JBoss authentication settins (login-config.xml)"/>
+							<jboss-login-config
+								authentication.type="@{authentication.type}"
+								jboss.home="@{jboss.home}"
+								jboss.server.name="@{jboss.server.name}"
+								login-config.ldap.file="@{login-config.ldap.file}"
+								login-config.db.file="@{login-config.db.file}"
+								/>
+						</then>
+						<else>
+							<echo message="Skipping configuring JBoss login-config.xml because exclude.jboss-bindings is set"/>
+						</else>
+					</if>
 		
 					<echo message="Adding user and password to JBoss console apps"/>
 					<secure-jboss-console
