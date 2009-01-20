@@ -237,4 +237,61 @@
 
 	</target>
 
+	<target name="build:database-integration" depends="init">
+		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
+		<propertycopy name="project.database.integration.target" from="${project.name}.database.integration.target" />
+		<propertycopy name="project.database.type" from="${project.name}.database.type" />
+		<groovy>
+			<arg line="${project.master.build.location}"/>
+			<arg line="${project.database.integration.target}"/>
+			<arg line="${project.database.type}"/>
+			def buildFileLocation=args[0]
+			def targetName=args[1]
+			def databaseType=args[2]
+			
+			def ant = new AntBuilder()						
+			String installPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();			
+			Properties props = new Properties();
+			props.load(new FileInputStream(installPropertiesFile));			
+			String dbFlag = props.getProperty("exclude.database");
+			println dbFlag;
+			println databaseType;
+			if(dbFlag != null)
+			{
+				println "Flag is set skip DB integration Check"
+			}
+			else
+			{
+				println "DB integration Check"
+				installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+				project = new XmlParser().parse(installFile)				
+				println project.target.'@name'.contains(targetName)
+				if(project.target.'@name'.contains(targetName))
+				{
+					if(project.target.find{it.'@name'=='install'}.'@depends'.contains(targetName))
+					{
+						def targetUpgrade = project.target.find{it.@name==targetName}.'database-upgrade'
+						if(!targetUpgrade)
+							ant.fail("DATABASE INTEGRATION FAILED: The database-upgrade target is missing")
+							
+						def targetInstall = project.'target'.find{it.@name==targetName}.switch.'case'.find{it.'@value'==databaseType}.'database-install'
+						if(!targetInstall)
+							ant.fail("DATABASE INTEGRATION FAILED: The database-install target is missing")
+						
+						println "CHECK FOR MACROS COMPLETE"
+					}
+					else
+					{				
+						ant.fail("DATABASE INTEGRATION FAILED: The install:database target is not called from the install target")
+					}
+				}
+				else
+				{				
+					ant.fail("DATABASE INTEGRATION FAILED: The install:database target is not found in the install.xml")
+				}
+				
+			}	
+		</groovy>
+	</target>
+
 </project>
