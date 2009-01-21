@@ -58,20 +58,20 @@ class BuildStatusUpdater {
 
 	// get most recent tempates
 		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")
-		String statement   = "select PRODUCT,CERTIFICATION_STATUS,CERTIFICATION_WIKI_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION from PROJECT_CERTIFICATION_STATUS "
+		String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,BDA_UTILS_VERSION from PROJECT_CERTIFICATION_STATUS "
 
 	int count = 0
 	connection.eachRow(statement) { row ->
 	    count++
 
 	    String productName    = row.PRODUCT;
-	    String certificationStatus = row.CERTIFICATION_STATUS;
-	    String certificationWikiStatus = row.CERTIFICATION_WIKI_STATUS;
+	    String certificationStatus = row.CERTIFICATION_STATUS;	    
 	    String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
 	    String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
 	    String databaseIntegration = row.DATABASE_INTEGRATION;
+	    String bdaUtilsVersion = row.BDA_UTILS_VERSION;
 
-			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Certification-Wiki-Status${count}:${certificationWikiStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration}\""
+			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},BDA-Utils-Version${count}:${bdaUtilsVersion}\""
 
 			println findReplace
 			// update page
