@@ -305,7 +305,6 @@
 			def buildFileLocation=args[0]
 
 			def ant = new AntBuilder()
-			Sql connection = null
 			
 			String projectPropertiesFile=new File(buildFileLocation+"/project.properties").getAbsoluteFile();
 			Properties props = new Properties();
