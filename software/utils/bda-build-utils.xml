@@ -268,7 +268,7 @@ $HeadURL$
 
 					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
-						<arg line="-d -i -w ${jboss.home}/bin/run.bat" />
+						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat" />
 					</exec>
 					<sleep seconds="15" />
 				</else>
@@ -1365,9 +1365,9 @@ $HeadURL$
 				<env key="NOPAUSE" value="true" />
 				<arg line="startup.sh" />
 			</exec>
-			<exec osfamily="windows" executable="cmd" dir="@{tomcat.home}/bin" spawn="true" >
+			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
-				<arg line="/c startup.bat" />
+				<arg line="-d -i -w @{tomcat.home}/bin @{tomcat.home}/bin/startup.bat" />
 			</exec>
 			<sleep seconds="5" />
 		</sequential>
@@ -3193,7 +3193,7 @@ $HeadURL$
 				'''
 
 				log4jFile = new File(args[0]).getAbsoluteFile()
-				log4j = new XmlParser().parse(log4jFile)
+				log4j = new XmlParser(false,false).parse(log4jFile)
 
 				// Test Appenders
 				println log4j.appender."@name"
@@ -3293,6 +3293,11 @@ $HeadURL$
 				<arg value="-Dforce.reinstall=true" />
 				<arg value="@{target.name}" />
 			</exec>         
+			<!-- ant returns exit code zero on failure to psexec, issue still lives on
+			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{install.dir}" failonerror="true">
+				<arg line="ant.bat -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}"/>
+			</exec>         
+			-->
 		</sequential>
 	</macrodef>
 	<macrodef name="deploy-files" description="Macro for deploying and extracting distrution to server">
