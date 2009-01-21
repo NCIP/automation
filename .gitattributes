@@ -2350,6 +2350,7 @@ software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
 software/utils/resource/jboss-4.0.5.GA-jems-ejb3/bindings.xml -text
 software/utils/resource/jboss-4.0.5.GA-jems-ejb3/jboss-service.xml -text
+software/utils/resource/psexec.exe -text
 software/utils/resource/template-binding.xml -text
 software/utils/resource/template-db-integrate.xml -text
 software/utils/resource/template-jboss-service.xml -text
