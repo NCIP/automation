@@ -9,6 +9,8 @@ public class ProjectCertificationStatus {
 	private String singleCommandBuild;
 	private String singleCommandDeployment;
 	private String databaseIntegration;
+	private String bdaUtilsVersion;
+	
 	public int getId() {
 		return id;
 	}
@@ -51,4 +53,11 @@ public class ProjectCertificationStatus {
 	public void setDatabaseIntegration(String databaseIntegration) {
 		this.databaseIntegration = databaseIntegration;
 	}
+	public String getBdaUtilsVersion() {
+		return bdaUtilsVersion;
+	}
+	public void setBdaUtilsVersion(String bdaUtilsVersion) {
+		this.bdaUtilsVersion = bdaUtilsVersion;
+	}
+	
 }
