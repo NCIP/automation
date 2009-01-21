@@ -90,14 +90,13 @@ public class SingleCommandListener implements BuildListener {
 		bmb.setProjectName(event.getProject().getProperty("project.name"));
 		bmb.setTargetName(event.getTarget().getName());
 		bmb.setMapName(event.getProject().getProperty("map.name"));
-		if(event.getProject().getProperty("is.value") != null && event.getProject().getProperty("is.value").equals(""))
-		{	
-			if(event.getProject().getProperty("is.value").equals("true"))
-			{
-					bmb.setValue(true);
-					bmb.setPropertyValue(event.getProject().getProperty("certification.property.value"));
-			}			
-		}else
+
+		if(event.getProject().getProperty("is.value") != null && event.getProject().getProperty("is.value").equals("true"))
+		{
+				bmb.setValue(true);
+				bmb.setPropertyValue(event.getProject().getProperty("certification.property.value"));
+		}			
+		else
 		{
 			bmb.setValue(false);
 		}
