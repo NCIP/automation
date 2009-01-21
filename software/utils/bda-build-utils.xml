@@ -266,9 +266,9 @@ $HeadURL$
 						<arg line="run.sh" />
 					</exec>
 
-					<exec osfamily="windows" executable="cmd" dir="@{jboss.home}/bin" spawn="true" >
+					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
-						<arg line="/c run.bat" />
+						<arg line="-d -i -w ${jboss.home}/bin/run.bat" />
 					</exec>
 					<sleep seconds="15" />
 				</else>
@@ -2447,7 +2447,7 @@ $HeadURL$
 		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}"/>
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}"/>
-		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<sequential>
 			<switch value="@{grid.secure.enable}">
 				<case value="true">
@@ -2477,7 +2477,8 @@ $HeadURL$
 			<echo message="Updating grid web.xml"/>
 			<update-grid-web-xml-protocol
 				appserver.webapp.dir="@{appserver.webapp.dir}"
-				web-xml.location="@{appserver.webapp.dir}/wsrf/WEB-INF/web.xml"
+				grid.application.relative.dir="@{grid.application.relative.dir}"
+				web-xml.location="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/web.xml"
 				scheme="${scheme}"
 				port="${appserver.default.web.port}"
 				/>
@@ -2490,6 +2491,7 @@ $HeadURL$
 					<grid-secure-configure-secdesc
 						appserver.conf.dir="@{appserver.conf.dir}"
 						appserver.webapp.dir="@{appserver.application.dir}"
+						grid.application.relative.dir="@{grid.application.relative.dir}"
 						grid.secdesc.file="@{grid.secdesc.file}"
 						grid.secure.cert.file="@{grid.secure.cert.file}"
 						grid.secure.key.file="@{grid.secure.key.file}"
@@ -2510,6 +2512,7 @@ $HeadURL$
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
 			<grid-configure-server-config
 				appserver.webapp.dir="@{appserver.webapp.dir}"
+				grid.application.relative.dir="@{grid.application.relative.dir}"
 				grid.external.secure.host="@{grid.external.secure.host}"
 				grid.secure.enable="@{grid.secure.enable}"
 				/>
@@ -3304,15 +3307,30 @@ $HeadURL$
 			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" />
 			<check-valid-directory-name directory.property="remote.dir" />
 			<!-- Delete/re-create remote directory -->
-			<remote-ssh remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
+			<remote-ssh 
+				remoteSshHost="@{remoteSshHost}"
+				remoteSshUser="@{remoteSshUser}"
+				remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
 			<!-- work around for issue where basedir is required but is not currently used -->
-			<remote-ssh remotesshcommand="mkdir -p ${remote.dir}/lib" /> 
+			<remote-ssh 
+				remoteSshHost="@{remoteSshHost}"
+				remoteSshUser="@{remoteSshUser}"
+				remotesshcommand="mkdir -p ${remote.dir}/lib" /> 
 
 			<!-- copy distribution and prop file to remote system -->
-			<remote-scp remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
-			<remote-scp remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+			<remote-scp 
+				remoteSshHost="@{remoteSshHost}"
+				remoteSshUser="@{remoteSshUser}"
+				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+			<remote-scp 
+				remoteSshHost="@{remoteSshHost}"
+				remoteSshUser="@{remoteSshUser}"
+				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 			<!-- Extract zip file -->
-			<remote-ssh remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
+			<remote-ssh 
+				remoteSshHost="@{remoteSshHost}"
+				remoteSshUser="@{remoteSshUser}"
+				remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
 		</sequential>
 	</macrodef>
 	<macrodef name="dist-prep" description="Macro for copying files to dist area">
@@ -3463,31 +3481,33 @@ $HeadURL$
 		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<sequential>
-			<if>
+			<if>                            
 				<equals arg1="@{appserver.ssl.enable}" arg2="true"/>
-				<then>
+				<then>                                  
+					<var name="keytool.output" unset="true"/>
+					<var name="keytool.error" unset="true"/>
+					<var name="keytool.result" unset="true"/>
 					<echo message="Validating JBoss SSL configurations"/>
-			<groovy>
-				<arg line="@{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file} @{appserver.ssl.keystore.pass} @{appserver.ssl.keystore.alias} @{appserver.ssl.fullyqualified.hostname}"/>
-				import java.util.regex.Matcher
+					<exec executable="keytool" outputproperty="keytool.output" errorproperty="keytool.error" resultproperty="keytool.result">
+						<arg line="-list -keystore @{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file} -storepass @{appserver.ssl.keystore.pass} -alias  @{appserver.ssl.keystore.alias} -v"/>
+					</exec>                                 
+					<if>                                            
+						<not>                                                   
+							<equals arg1="${keytool.result}" arg2="0"/>     
+						</not>                                          
+						<then>                                                  
+							<fail message="keytool failed - ${keytool.output} ${keytool.error}"/>
+						</then>                                         
+						<else>                                                  
+							<echo message="debug - ${keytool.result} ${keytool.output} ${keytool.error}"/>
+			<groovy>                
+				<arg line="${keytool.output} @{appserver.ssl.fullyqualified.hostname}"/>
 				import java.util.regex.Pattern
 
-				String certFile = args[0]
-				String certPass = args[1]
-				String certAlias = args[2]
+				String keytoolOutput = args[0]
 				String fqhn = args[3]
 
-				certFile = new File(certFile)
-				results = "keytool -list -keystore ${certFile} -storepass ${certPass} -alias ${certAlias} -v".execute()
-				results.waitFor()
-				if (results.exitValue() > 0)
-				{
-				System.err.println "keytool command failed with following results:"
-				System.err.println results.text
-				System.exit(1)
-				}
-
-				results.text.eachLine
+				keytoolOutput.eachLine
 				{ cline ->
 				//Owner: CN=*.nci.nih.gov, OU=National Cancer Institute, O=National Institute of Health, L=Rockville, ST=Maryland, C=US
 				//m = java.util.regex.Pattern.compile(/^Owner:\s+CN=([\w\d\-\_\.\*]+).*/).matcher(cline)
@@ -3521,13 +3541,14 @@ $HeadURL$
 				}
 				}
 				}
-
 			</groovy>
-				</then>
-				<else>
+						</else>                                       
+					</if>                                   
+				</then>                         
+				<else>                          
 					<echo message="appserver.ssl.enable not set or true so skipping ssl validation"/>
-				</else>
-			</if>
+				</else>                         
+			</if>                   
 		</sequential>
 	</macrodef>
 
@@ -3660,7 +3681,8 @@ $HeadURL$
 	<macrodef name="grid-secure-configure-secdesc">
 		<attribute name="appserver.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf/"/>
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<attribute name="grid.application.relative.dir" default="${grid.dir.dest}"/>
+		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
 		<sequential>
@@ -3699,8 +3721,9 @@ $HeadURL$
 
 	<macrodef name="grid-configure-server-config">
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="server-config.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/server-config.wsdd" />
-		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/wsrf/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<attribute name="grid.application.relative.dir" default="${grid.dir.dest}"/>
+		<attribute name="server-config.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/server-config.wsdd" />
+		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="grid.external.secure.host" default="${grid.external.secure.host}"/>
 		<attribute name="grid.secure.enable" default="true"/>
 		<sequential>
@@ -3766,7 +3789,8 @@ $HeadURL$
 
 	<macrodef name="update-grid-web-xml-protocol">
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/"/>
-		<attribute name="web-xml.location" default="@{appserver.webapp.dir}/wsrf/WEB-INF/web.xml"/>
+		<attribute name="grid.application.relative.dir" default="${grid.dir.dest}"/>
+		<attribute name="web-xml.location" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/web.xml"/>
 		<attribute name="scheme" default="http" />
 		<attribute name="port" default="${jboss.server.port}"/>
 		<sequential>
