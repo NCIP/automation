@@ -53,7 +53,7 @@ public class SingleCommandListener implements BuildListener {
 			{
 				BuildCertificationBean bmb = populateBuildCertificationBean(event);
 				BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
-				buildHelper.updateProjectBuildStatus();			
+				buildHelper.updateProjectBuildStatus();
 			}	
 		}
 		catch(Exception ex)
@@ -90,11 +90,24 @@ public class SingleCommandListener implements BuildListener {
 		bmb.setProjectName(event.getProject().getProperty("project.name"));
 		bmb.setTargetName(event.getTarget().getName());
 		bmb.setMapName(event.getProject().getProperty("map.name"));
+		if(event.getProject().getProperty("is.value") != null && event.getProject().getProperty("is.value").equals(""))
+		{	
+			if(event.getProject().getProperty("is.value").equals("true"))
+			{
+					bmb.setValue(true);
+					bmb.setPropertyValue(event.getProject().getProperty("certification.property.value"));
+			}			
+		}else
+		{
+			bmb.setValue(false);
+		}
 
 		System.out.println("bmb.ProjectName" + bmb.getProjectName());
 		System.out.println("bmb.buildsuccesful" + bmb.isBuildSuccessful());
 		System.out.println("bmb.TagegetName" + bmb.getTargetName());
 		System.out.println("bmb.MAPName" + bmb.getMapName());
+		System.out.println("bmb.VALUE" + bmb.isValue());
+		System.out.println("bmb.PROPERTY VALUE" + bmb.getPropertyValue());
 		return bmb;
 	}
 

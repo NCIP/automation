@@ -294,4 +294,74 @@
 		</groovy>
 	</target>
 
+
+
+
+	<target name="build:bda-utils" depends="init">
+		<echo message="${deploy.dir}"/>
+		<echo message="${hibernate.config.file}"/>
+		
+	
+		<xmltask failWithoutMatch="true" source="${deploy.dir}/${hibernate.config.file}" 
+			dest="${deploy.dir}/${hibernate.config.file}"
+			public="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+			system="http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"
+			omitHeader="true"
+		>		
+			<copy path="/hibernate-configuration/session-factory/property[@name='connection.driver_class']/text()" property="monitor.database.driver"/>
+			<copy path="/hibernate-configuration/session-factory/property[@name='connection.url']/text()" property="monitor.database.url"/>
+			<copy path="/hibernate-configuration/session-factory/property[@name='connection.username']/text()" property="monitor.database.user"/>
+			<copy path="/hibernate-configuration/session-factory/property[@name='connection.password']/text()" property="monitor.database.password"/>
+		</xmltask>
+		
+		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
+		<propertycopy name="project.database.integration.target" from="${project.name}.database.integration.target" />
+		<propertycopy name="project.database.type" from="${project.name}.database.type" />
+		<groovy>
+			<arg line="${project.master.build.location}"/>
+			<arg line="${project.name}"/>			
+			<arg line="${monitor.database.driver}"/>
+			<arg line="${monitor.database.url}"/>
+			<arg line="${monitor.database.user}"/>
+			<arg line="${monitor.database.password}"/>
+			import groovy.sql.Sql
+			def buildFileLocation=args[0]
+			def projectName=args[1]
+			def monitorDbDriver=args[2]
+			def monitorDbUrl=args[3]
+			def monitorDbUser=args[4]
+			def monitorDbPassword=args[5]
+
+			def ant = new AntBuilder()
+			Sql connection = null
+			
+			String projectPropertiesFile=new File(buildFileLocation+"/project.properties").getAbsoluteFile();
+			Properties props = new Properties();
+			props.load(new FileInputStream(projectPropertiesFile));			
+			String bdaVersion = props.getProperty("bda.version");
+			println bdaVersion;
+			project.setProperty("certification.property.value",bdaVersion);
+			
+		/*	
+			println monitorDbDriver;
+			println monitorDbUrl;
+			println monitorDbUser;
+			println monitorDbPassword;
+			
+			if(!bdaVersion)
+			{
+				ant.fail("BDA UTILS FAILED: Can not obtain the version of the BDA utils")
+			}
+			else
+			{
+				println "UPDATE THE DATABASE WITH THE VERSION"
+				connection = Sql.newInstance(monitorDbUrl, monitorDbUser, monitorDbPassword, monitorDbDriver)
+				//String statement   = "update PROJECT_CERTIFICATION_STATUS set BDA_UTILS_VERSION = ? where product= ?",[bdaVersion,projectName]
+				connection.executeUpdate("update PROJECT_CERTIFICATION_STATUS set BDA_UTILS_VERSION = ? where product= ?",[bdaVersion,projectName])
+			}
+		*/	
+		</groovy>
+	</target>
+
+
 </project>

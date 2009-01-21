@@ -4,6 +4,7 @@ public class TargetLookup {
 private int id;
 private String targetName;
 private String mapName;
+private String isValue;
 public int getId() {
 	return id;
 }
@@ -22,5 +23,12 @@ public String getMapName() {
 public void setMapName(String mapName) {
 	this.mapName = mapName;
 }
+public String getIsValue() {
+	return isValue;
+}
+public void setIsValue(String isValue) {
+	this.isValue = isValue;
+}
+
 
 }

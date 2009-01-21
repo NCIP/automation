@@ -47,8 +47,11 @@ public class BuildCertificationHelper {
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 			if(pbs != null )
 			{	
-		    	try {		    		
-					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_FAILED); 
+		    	try {
+		    		if(!bmb.isValue())
+		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_FAILED);
+		    		else
+		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
 				}
 		    	catch (Exception e) {				
 					e.printStackTrace();
@@ -111,8 +114,12 @@ public class BuildCertificationHelper {
 
 			if(pbs != null )
 			{						    		
-		    	try {	
-					pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_SUCCESSFUL);
+		    	try {
+		    		if(!bmb.isValue())
+		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_SUCCESSFUL);
+		    		else
+		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
+
 				}
 		    	catch (Exception e) {				
 					e.printStackTrace();

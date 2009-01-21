@@ -11,6 +11,7 @@
          <property name="certificationWikiStatus" column="CERTIFICATION_WIKI_STATUS"/>
          <property name="singleCommandBuild" column="SINGLE_COMMAND_BUILD"/>
          <property name="singleCommandDeployment" column="SINGLE_COMMAND_DEPLOYMENT"/>
-         <property name="databaseIntegration" column="DATABASE_INTEGRATION"/>         
+         <property name="databaseIntegration" column="DATABASE_INTEGRATION"/>
+         <property name="bdaUtilsVersion" column="BDA_UTILS_VERSION"/>         
      </class>	
 </hibernate-mapping>

@@ -7,6 +7,8 @@ public class BuildCertificationBean {
 	private String projectName;
 	private String targetName;
 	private String mapName;
+	private boolean isValue;
+	private String propertyValue;
 	public boolean isBuildSuccessful() {
 		return buildSuccessful;
 	}
@@ -31,4 +33,18 @@ public class BuildCertificationBean {
 	public void setMapName(String mapName) {
 		this.mapName = mapName;
 	}
+	public boolean isValue() {
+		return isValue;
+	}
+	public void setValue(boolean isValue) {
+		this.isValue = isValue;
+	}
+	public String getPropertyValue() {
+		return propertyValue;
+	}
+	public void setPropertyValue(String propertyValue) {
+		this.propertyValue = propertyValue;
+	}
+	
+	
 }
