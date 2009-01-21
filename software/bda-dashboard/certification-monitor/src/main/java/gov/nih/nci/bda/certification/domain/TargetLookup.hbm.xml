@@ -8,5 +8,6 @@
          </id>
          <property name="targetName" column="TARGET_NAME"/>
          <property name="mapName" column="MAP_NAME"/>
+         <property name="isValue" column="IS_VALUE"/>
      </class>	
 </hibernate-mapping>
