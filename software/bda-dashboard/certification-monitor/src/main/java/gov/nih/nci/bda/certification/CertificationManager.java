@@ -56,7 +56,8 @@ import org.hibernate.Session;
           project.setProperty("map.name", targetLookup.getMapName());
           project.setProperty("project.name", projectName);
           project.setProperty("executed.target.name", targetLookup.getTargetName());
-          project.setProperty("is.value", targetLookup.getIsValue());
+          if(targetLookup.getIsValue() != null && targetLookup.getIsValue().equals(""))
+        	  project.setProperty("is.value", targetLookup.getIsValue());
           
           try
           {
