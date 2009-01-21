@@ -72,8 +72,12 @@ public class BuildCertificationHelper {
 		    		if(methods[i].getName().equals(methodName))
     				{
 		    			try 
-		    			{	System.out.println("BuildCertificationConstants.WIKI_FAILED::::" + BuildCertificationConstants.WIKI_FAILED);	    				
-		    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_FAILED));
+		    			{	
+		    				System.out.println("BuildCertificationConstants.WIKI_FAILED::::" + BuildCertificationConstants.WIKI_FAILED);	    						    				
+		    	    		if(!bmb.isValue())
+		    	    			methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_FAILED));
+				    		else
+				    			methods[i].invoke(pbs,new String(bmb.getPropertyValue()));	
 		    			}
 				    	catch (Exception e) {				
 							e.printStackTrace();
@@ -141,8 +145,11 @@ public class BuildCertificationHelper {
 		    		if(methods[i].getName().equals(methodName))
     				{
 		    			try 
-		    			{		    				
-		    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_SUCCESSFUL));		    			
+		    			{	
+				    		if(!bmb.isValue())
+				    			methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_SUCCESSFUL));
+				    		else
+				    			methods[i].invoke(pbs,new String(bmb.getPropertyValue()));		    						    			
 		    			}
 				    	catch (Exception e) {				
 							e.printStackTrace();

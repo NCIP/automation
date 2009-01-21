@@ -52,11 +52,11 @@ import org.hibernate.Session;
     while (targets.hasNext()) 
     {
           TargetLookup targetLookup= (TargetLookup)  targets.next();
-          System.out.println("targetName::"+targetLookup.getMapName()+"::MAPNAME::" + targetLookup.getTargetName()+ "::projectName::" +projectName);
+          System.out.println("targetName::"+targetLookup.getMapName()+"::MAPNAME::" + targetLookup.getTargetName()+ "::projectName::" +projectName+ "::ISVALUE::" +targetLookup.getIsValue());
           project.setProperty("map.name", targetLookup.getMapName());
           project.setProperty("project.name", projectName);
           project.setProperty("executed.target.name", targetLookup.getTargetName());
-          if(targetLookup.getIsValue() != null && targetLookup.getIsValue().equals(""))
+          if(targetLookup.getIsValue() != null)
         	  project.setProperty("is.value", targetLookup.getIsValue());
           
           try
