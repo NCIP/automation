@@ -414,7 +414,28 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		<echo message="Configuring Log4J"/>
 		<!-- Insert an appender -->
 		<!--<copy todir="${jboss.home}/server/${jboss.server.name}/conf" file="${jboss-conf.dir.src}/log4j.dtd"/>-->
-		<copy todir="${env.PWD}" file="${jboss-conf.dir.src}/log4j.dtd"/>
+		<!--
+		<osfamily property="os.family"/>
+		<echo message="os.family=${os.family}"/>
+		<switch value="${os.family}">
+			<case value="unix">
+				<copy todir="${env.PWD}" file="${jboss-conf.dir.src}/log4j.dtd"/>
+			</case>
+			<case value="mac">
+				<copy todir="${env.PWD}" file="${jboss-conf.dir.src}/log4j.dtd"/>
+			</case>
+			<case value="windows">
+				<copy todir="${user.dir}" file="${jboss-conf.dir.src}/log4j.dtd"/>
+			</case>
+		</switch>
+		-->
+
+		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
+			byline="true"
+			match="DOCTYPE log4j:configuration SYSTEM &quot;log4j.dtd&quot;"
+			replace="DOCTYPE log4j:configuration"
+			/>
+
 		<xmltask source="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
 			dest="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml">
 			<xmlcatalog refid="installer.catalog"/>
@@ -445,6 +466,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		</xmltask>
 		<validate-log4j
 			/>                              
+		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
+			byline="true"
+			match="DOCTYPE log4j:configuration"
+			replace="DOCTYPE log4j:configuration SYSTEM &quot;log4j.dtd&quot;"
+			/>
 	</target>
 	<target name="install:jboss:configure" description="Configure JBoss (bindings, login-config.xml, ect)" unless="exclude.jboss"
 		depends="
