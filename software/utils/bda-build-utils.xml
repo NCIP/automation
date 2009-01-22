@@ -151,13 +151,13 @@ $HeadURL$
 	-->
 	<macrodef name="remote-ssh" description="This is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execure remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.">
 		<attribute name="remoteSshCommand" />
-		<attribute name="remoteSshPort" default="${ssh.port}" />
+		<attribute name="remoteSshPort" default="22" />
 		<attribute name="remoteSshHost" default="${ssh.server.hostname}" />
 		<attribute name="remoteSshUser" default="${ssh.server.username}" />
 		<attribute name="remoteSshKeyfile" default="${ssh.key.file}" />
 		<attribute name="remoteSshSleep" default="5" />
 		<sequential>
-			<sshexec port="@{remotesshport}" host="@{remotesshhost}" username="@{remoteSshUser}" keyfile="@{remoteSshKeyfile}" trust="true" passphrase="" verbose="true" command="@{remotesshcommand}" />
+			<sshexec port="@{remoteSshPort}" host="@{remoteSshHost}" username="@{remoteSshUser}" keyfile="@{remoteSshKeyfile}" trust="true" passphrase="" verbose="true" command="@{remoteSshCommand}" />
 			<sleep seconds="@{remoteSshSleep}" />
 			<echo message="Performed @{remoteSshCommand} command on @{remoteSshHost}:@{remoteSshPort} using SSH..." />
 		</sequential>
@@ -3307,34 +3307,32 @@ $HeadURL$
 		<attribute name="properties.file" default="${properties.file}" />
 		<attribute name="dist.dir" default="${dist.dir}" />
 		<attribute name="dist.file" />
+		<attribute name="ssh.port" default="22"/>
+		<attribute name="ssh.key.file" default="${ssh.key.file}"/>
 		<sequential>
 			<!-- Validate remote directory is valid -->
 			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" />
 			<check-valid-directory-name directory.property="remote.dir" />
 			<!-- Delete/re-create remote directory -->
 			<remote-ssh 
-				remoteSshHost="@{remoteSshHost}"
-				remoteSshUser="@{remoteSshUser}"
+				remoteSshHost="@{ssh.host}"
+				remoteSshUser="@{ssh.user}"
 				remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
 			<!-- work around for issue where basedir is required but is not currently used -->
 			<remote-ssh 
-				remoteSshHost="@{remoteSshHost}"
-				remoteSshUser="@{remoteSshUser}"
+				remoteSshHost="@{ssh.host}"
+				remoteSshUser="@{ssh.user}"
 				remotesshcommand="mkdir -p ${remote.dir}/lib" /> 
 
 			<!-- copy distribution and prop file to remote system -->
 			<remote-scp 
-				remoteSshHost="@{remoteSshHost}"
-				remoteSshUser="@{remoteSshUser}"
 				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 			<remote-scp 
-				remoteSshHost="@{remoteSshHost}"
-				remoteSshUser="@{remoteSshUser}"
 				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 			<!-- Extract zip file -->
 			<remote-ssh 
-				remoteSshHost="@{remoteSshHost}"
-				remoteSshUser="@{remoteSshUser}"
+				remoteSshHost="@{ssh.host}"
+				remoteSshUser="@{ssh.user}"
 				remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
 		</sequential>
 	</macrodef>
