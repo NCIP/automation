@@ -4042,7 +4042,7 @@ $HeadURL$
 						appserver.conf.dir="@{tomcat.conf.dir}"
 						appserver.server-xml.file="@{tomcat.server-xml.file}"
 						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-						appserver.hostname="@{tomcat.hostname}"
+						appserver.hostname="localhost"
 						/>
 				</then>
 				<else>
@@ -4244,7 +4244,7 @@ $HeadURL$
 						appserver.conf.dir="@{jboss.conf.dir}"
 						appserver.server-xml.file="@{jboss.server-xml.file}"
 						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-						appserver.hostname="@{jboss.server.hostname}"
+						appserver.hostname="localhost"
 						/>
 				</then>
 				<else>
