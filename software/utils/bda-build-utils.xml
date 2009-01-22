@@ -3973,12 +3973,14 @@ $HeadURL$
 						proxy.update.connector.port="@{proxy.update.connector.port.http}"
 						/>                                                                      
 					<!-- needs to be done before changing ports -->
+					<!--
 					<echo message="Configuring JBoss hostname in server.xml"/>
 					<appserver-configure-hostname
 						appserver.server-xml.file="@{tomcat.server-xml.file}"
 						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
 						appserver.hostname="@{tomcat.hostname}"
 						/>
+					-->
 
 					<echo message="Updating Tomcat Ports"/> 
 <!--					
@@ -4187,12 +4189,14 @@ $HeadURL$
 						appserver.external.port="@{jboss.external.http.port}"
 						proxy.update.connector.port="@{proxy.update.connector.port.http}"
 						/>                                                                      
+					<!--
 					<echo message="Configuring JBoss hostname in server.xml"/>
 					<appserver-configure-hostname
 						appserver.server-xml.file="@{jboss.server-xml.file}"
 						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 						appserver.hostname="@{jboss.server.hostname}"
-								/>
+						/>
+					-->
 		
 					<echo message="Configuring secure grid in JBoss"/>
 					<if>
