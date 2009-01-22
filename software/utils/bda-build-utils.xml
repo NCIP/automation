@@ -196,8 +196,8 @@ $HeadURL$
 		<attribute name="jboss.server.hostname" default="${jboss.server.hostname}" />
 		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
-		<attribute name="jboss.web.user" default="admin" />
-		<attribute name="jboss.web.password" default="admin" />
+		<attribute name="jboss.web.user" default="${jboss.web.user}" />
+		<attribute name="jboss.web.password" default="${jboss.web.password}" />
 		<sequential>
 			<available file="@{jboss.home}/server/@{jboss.server.name}/bin" property="jboss.bin.exists"/>
 			<if>
