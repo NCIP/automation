@@ -3922,6 +3922,7 @@ $HeadURL$
 		<attribute name="grid.secure.dir" default="${grid.secure.dir}"/>
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}" />
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
+		<attribute name="tomcat.logs.dir" default="${tomcat.home}/logs"/>
 		<sequential>
 			<if>
 				<not>
@@ -4040,6 +4041,7 @@ $HeadURL$
 
 					<appserver-accesslog-configure
 						appserver.conf.dir="@{tomcat.conf.dir}"
+						appserver.logs.dir="@{tomcat.logs.dir}"
 						appserver.server-xml.file="@{tomcat.server-xml.file}"
 						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
 						appserver.hostname="localhost"
@@ -4099,6 +4101,7 @@ $HeadURL$
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}" />
 		<!--jboss-configure-java_opts -->
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
+		<attribute name="jboss.logs.dir" default="${jboss.home}/server/${jboss.server.name}/log"/>
 		<sequential>
 			<if>
 				<not>
@@ -4245,6 +4248,7 @@ $HeadURL$
 						appserver.server-xml.file="@{jboss.server-xml.file}"
 						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 						appserver.hostname="localhost"
+						appserver.logs.dir="@{jboss.logs.dir}"
 						/>
 				</then>
 				<else>
@@ -4331,6 +4335,7 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="appserver-accesslog-configure" description="macro for enabling ssl in jboss">
 		<attribute name="appserver.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf"/>
+		<attribute name="appserver.logs.dir" default="${jboss.home}/server/${jboss.server.name}/log"/>
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<attribute name="appserver.hostname" default="${jboss.server.hostname}"/>
@@ -4346,7 +4351,7 @@ $HeadURL$
 				<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']/Host[@name='@{appserver.hostname}']">
 					<![CDATA[
 					<Valve className="org.apache.catalina.valves.AccessLogValve"
-						directory="logs"
+						directory="@{appserver.logs.dir}"
 						prefix="localhost_access_log."
 						suffix=".txt"
 						pattern="common"
