@@ -68,15 +68,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Working directory passed to Ant tasks -->
 	<property name="bda-blueprints-api.base.dir" value="${software.dir}/blueprints-webapp" />
 	<property name="bda-blueprints-webapp.base.dir" value="${software.dir}/blueprints-webapp" />
-	<property name="grid-sample.base.dir" value="${software.dir}/grid-sample" />
+	<property name="grid.base.dir" value="${software.dir}/grid-sample" />
 
 	<!-- Build file names relative working dir above, if the basedir of the sub-project ant script is ".." you should set the *.basdir to and the build file should include the dir and build file name from the *.base.dir -->
 	<property name="bda-blueprints-webapp.build.file" value="build.xml" />
 	<property name="bda-blueprints-api.build.file" value="build.xml" />
+	<property name="grid.build.file" value="build.xml" />
 
 	<!-- The target name that should be called from the sub-project build file -->
 	<property name="bda-blueprints-api.build.target" value="build:all" />
 	<property name="bda-blueprints-webapp.build.target" value="dist" />
+	<property name="grid.build.target" value="dist" />
 
 	<!-- Maven comamnd line arguments, bda profile is inside profiles.xml that gets copied to ear folder before build to override exiting properties -->
 	<property name="bda-blueprints-webapp.maven.profile.list" value="local,bda" />
@@ -313,8 +315,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		-->
 	</target>
 	<target name="build:grid-sample">
+		<!-- Call your build file and grid target
+		<ant inheritAll="false" inheritRefs="false" antfile="${grid.build.file}"
+			target="${grid.build.target}"
+			dir="${grid.base.dir}" >
+			<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
+		</ant>
+		-->
+		<!-- or if you have a static file then you copy it from your source -->
 		<copy todir="${grid-sample.dist.dir}">
-			<fileset dir="${grid-sample.base.dir}">
+			<fileset dir="${grid.base.dir}">
 				<include name="sample-wsrf-war.zip"/>
 			</fileset>
 		</copy>
@@ -870,4 +880,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			/>                      
 	</target>
 
+	<target name="test-deploy-files">
+		<property name="rem.dir" value="/tmp/ssaksa-junk"/>
+		<property name="ssh.key.file" value="/data/home/ssaksa/.ssh/id_dsa_bda"/>
+		<deploy-files
+			ssh.user="ssaksa"
+			ssh.host="localhost"
+			remote.directory.property.name="rem.dir"
+			properties.file="install.properties"
+			dist.dir="/data/home/ssaksa"
+			dist.file="jboss-4.0.5.GA_CP03.zip"
+			/>
+	</target>
 </project>

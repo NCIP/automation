@@ -430,11 +430,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		</switch>
 		-->
 
+		<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.pre"/>
+
 		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
 			byline="true"
-			match="DOCTYPE log4j:configuration SYSTEM &quot;log4j.dtd&quot;"
-			replace="DOCTYPE log4j:configuration"
+			match="^(&lt;!DOCTYPE.*)"
+			replace="&lt;!-- \1 --&gt;"
 			/>
+		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.1"/>-->
 
 		<xmltask source="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
 			dest="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml">
@@ -464,13 +467,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 				]]>
 			</insert>
 		</xmltask>
+		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.2"/>-->
 		<validate-log4j
 			/>                              
+
 		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
 			byline="true"
-			match="DOCTYPE log4j:configuration"
-			replace="DOCTYPE log4j:configuration SYSTEM &quot;log4j.dtd&quot;"
+			match="^&lt;!-- (&lt;!DOCTYPE.*) --&gt;"
+			replace="\1"
 			/>
+		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.post"/>-->
 	</target>
 	<target name="install:jboss:configure" description="Configure JBoss (bindings, login-config.xml, ect)" unless="exclude.jboss"
 		depends="
