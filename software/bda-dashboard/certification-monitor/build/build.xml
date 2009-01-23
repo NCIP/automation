@@ -40,13 +40,81 @@
 		</fileset>
 	</path>
 	
-	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath" />
-	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask">
-		<classpath>
-			<pathelement location="${bda-utils.dir}/ant-contrib-1.0b3.jar" />
-		</classpath>
-	</taskdef>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="bda-utils.classpath"/>
 
+	<echo message="${project.name}"/>
+	<propertycopy name="project.database.type" from="${project.name}.database.type" />
+	<propertycopy name="project.database.system.user" from="${project.database.type}.database.system.user" />
+	<propertycopy name="project.database.system.password" from="${project.database.type}.database.system.password" />
+	<propertycopy name="project.database.server" from="${project.database.type}.database.server" />
+	<propertycopy name="project.database.port" from="${project.database.type}.database.port" />
+	<propertycopy name="project.database.name" from="${project.database.type}.database.name" />
+	<propertycopy name="project.database.user" from="${project.database.type}.database.user" />
+	<propertycopy name="project.database.password" from="${project.database.type}.database.password" />		
+	<propertycopy name="project.database.url" from="${project.database.type}.database.url" />
+	<propertycopy name="project.database.system.url" from="${project.database.type}.database.system.url" />
+
+	<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
+	<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />
+	<propertycopy name="project.single-command.deployment.target" from="${project.name}.single-command.deployment.target" />
+	<propertycopy name="project.database.integration.target" from="${project.name}.database.integration.target" />	
+	<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
+	<propertycopy name="project.exploded.dir.location" from="${project.name}.exploded.dir.location" />
+
+	<propertycopy name="project.svn.username" from="${project.name}.svn.username" />
+	<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
+	<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
+	<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
+
+
+	<echo message="databasetype::${project.database.type}"/>
+	<property name="database.type" value="${project.database.type}" />
+	<property name="database.system.user" value="${project.database.system.user}" />
+	<property name="database.system.password" value="${project.database.system.password}" />
+	<property name="database.server" value="${project.database.server}" />
+	<property name="database.port" value="${project.database.port}" />
+	<property name="database.name" value="${project.database.name}" />
+	<property name="database.user" value="${project.database.user}" />
+	<property name="database.password" value="${project.database.password}" />
+	<property name="database.url" value="${project.database.url}" />
+	<property name="database.system.url" value="${project.database.system.url}" />
+
+	<property name="master.build.location" value="${project.master.build.location}" />
+	<property name="single-command.build.target" value="${project.single-command.build.target}" />
+	<property name="single-command.deployment.target" value="${project.single-command.deployment.target}" />
+	<property name="database.integration.target" value="${project.database.integration.target}" />
+	<property name="master.build.file" value="${project.master.build.file}" />
+	<property name="exploded.dir.location" value="${project.exploded.dir.location}" />
+
+	<property name="svn.username" value="${project.svn.username}" />
+	<property name="svn.password" value="${project.svn.password}" />	
+	<property name="svn.project.url" value="${project.svn.project.url}" />
+	<property name="svn.local.checkout" value="${project.svn.local.checkout}" />
+	
+	<switch value="${database.type}">
+		<case value="oracle">
+			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
+			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="database.schema" value="${database.name}"/>
+		</case>
+		<case value="mysql">
+			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
+			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="database.schema" value="${database.name}"/>
+		</case>
+		<case value="postgresql">
+			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
+			<property name="database.driver" value="org.postgresql.Driver"/>
+			<property name="database.schema" value="public"/>
+		</case>
+		<default>
+			<fail message="Invalid database type ${database.type}"/>
+		</default>
+	</switch>	
+	
 	<!-- Includes- include BDA marcos -->
 	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
@@ -67,39 +135,8 @@
 
 
 	<target name="init" description="Sets up build are and initalizes variables">
-
-	<!-- set some db variables -->
-	<propertycopy name="project.database.type" from="${project.name}.database.type" />
-	<switch value="${project.database.type}">
-		<case value="oracle">
-			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
-			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.oracle.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.oracle.conf.file}"/>
-			<property name="database.schema" value="${database.name}"/>
-		</case>
-		<case value="mysql">
-			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
-			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.mysql.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.mysql.conf.file}"/>
-			<property name="database.schema" value="${database.name}"/>
-		</case>
-		<case value="postgresql">
-			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
-			<property name="database.driver" value="org.postgresql.Driver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.postgresql.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.postgresql.conf.file}"/>
-			<property name="database.schema" value="public"/>
-		</case>
-		<default>
-			<fail message="Invalid database type ${database.type}"/>
-		</default>
-	</switch>
-
+		
+		<echo message="IN INIT::::${database.type}"/>
 
 	</target>
 
@@ -107,11 +144,7 @@
 		<echo message="call build:project target.. "/>
 	</target>
 	
-	<target name="validate:JAD" depends="init" description="Runs pre-install validation checks bda-utils">		
-		<propertycopy name="project.database.url" from="${project.name}.database.url" />
-		<propertycopy name="project.database.system.url" from="${project.name}.database.system.url" />
-
-
+	<target name="validate:JAD" depends="init" description="Runs pre-install validation checks bda-utils">
 		<validate-environment
 			ant.check.version="${ant.minimum.version}"
 			java.check.version.major="${java.major.version}"
@@ -120,44 +153,38 @@
 	
 		<database-create
 			database.driver="${database.driver}"
-			database.system.url="${project.database.system.url}"
+			database.system.url="${database.system.url}"
 			database.system.user="${database.system.user}"
 			database.system.password="${database.system.password}"
-			database.url="${project.database.url}"
+			database.url="${database.url}"
 			database.user="${database.user}"
 			database.password="${database.password}"
-			database.version="${database.version}"
 			database.name="${database.name}"
 			/>
 
 		<validate-database
 			database.driver="${database.driver}"
-			database.system.url="${project.database.system.url}"
+			database.system.url="${database.system.url}"
 			database.system.user="${database.system.user}"
 			database.system.password="${database.system.password}"
-			database.url="${project.database.url}"
+			database.url="${database.url}"
 			database.user="${database.user}"
 			database.password="${database.password}"
-			database.version="${database.version}"
 			database.name="${database.name}"
 			/>
 	</target>
 
 	
 	<target name="validate:svn:checkout-project" depends="init,svn:scorch,svn:init">
-		<propertycopy name="project.svn.username" from="${project.name}.svn.username" />
-		<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
-		<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
-		<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
 
-		<svn username="${project.svn.username}" password="${project.svn.password}">
-			<checkout url="${project.svn.project.url}" revision="HEAD" destPath="${project.svn.local.checkout}" />
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
 		</svn>
 	</target>
 	
 	<target name="svn:scorch">
-		<echo message="Scorching local SVN working directory ${project.svn.local.checkout}..." />
-		<delete dir="${project.svn.local.checkout}" />
+		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
+		<delete dir="${svn.local.checkout}" />
 	</target>
 	
 	<target name="svn:init">
@@ -166,38 +193,18 @@
 	</target>
 	
 	<target name="build:single-command-build" depends="init">
-		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
-		<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />
-		<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
-
-		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="${project.single-command.build.target}" dir="${project.master.build.location}"/>		
+		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.build.target}" dir="${master.build.location}"/>		
 	</target>
 
 	<target name="build:single-command-deployment" depends="init">
-		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
-		<propertycopy name="project.single-command.deployment.target" from="${project.name}.single-command.deployment.target" />
-		<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
 
-		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="${project.single-command.deployment.target}" dir="${project.master.build.location}"/>
-<!--		
-		<ant inheritAll="false" inheritRefs="false" antfile="${project.master.build.file}" target="install" dir="${project.master.build.location}/../target/dist/exploded">
-			<property name="-Dproperties.file" value="install.properties" />			
-			<property name="-Dforce.reinstall" value="true" />
-			<property name="database.system.user" value="root"/>
-			<property name="database.system.password" value="mysql"/>
-			<property name="database.server" value="${database.server}"/>
-			<property name="database.port" value="${database.port}"/>
-			<property name="database.name" value="${database.name}"/>
-			<property name="database.user" value="${database.user}"/>
-			<property name="database.password" value="${database.password}"/>			
-		</ant>
+		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.deployment.target}" dir="${master.build.location}"/>
 
--->
-		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${project.master.build.location}/../target/dist/exploded"/>
+		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${exploded.dir.location}"/>
 
 
-		<exec osfamily="unix" executable="ant" dir="${project.master.build.location}/../target/dist/exploded" failonerror="true">			
-			<arg value="-Dproperties.file=install.properties" />			
+		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
+			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="-Ddatabase.system.user=${database.system.user}" />
 			<arg value="-Ddatabase.system.password=${database.system.password}" />
@@ -206,6 +213,8 @@
 			<arg value="-Ddatabase.name=${database.name}" />
 			<arg value="-Ddatabase.user=${database.user}" />
 			<arg value="-Ddatabase.password=${database.password}" />
+			<arg value="-Ddatabase.url=${database.url}" />
+			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandDeployment" />			
 			<arg value="-Dproject.name=${project.name}" />
@@ -215,7 +224,7 @@
 			<arg value="${build.dir}/.." />
 			<arg value="install" />
 		</exec>
-		<exec osfamily="windows" executable="ant.bat" dir="${project.master.build.location}/../target/dist/exploded" failonerror="true">			
+		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="-Ddatabase.system.user=${database.system.user}" />
@@ -225,6 +234,8 @@
 			<arg value="-Ddatabase.name=${database.name}" />
 			<arg value="-Ddatabase.user=${database.user}" />
 			<arg value="-Ddatabase.password=${database.password}" />
+			<arg value="-Ddatabase.url=${database.url}" />
+			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandDeployment" />			
 			<arg value="-Dproject.name=${project.name}" />
@@ -238,13 +249,10 @@
 	</target>
 
 	<target name="build:database-integration" depends="init">
-		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
-		<propertycopy name="project.database.integration.target" from="${project.name}.database.integration.target" />
-		<propertycopy name="project.database.type" from="${project.name}.database.type" />
 		<groovy>
-			<arg line="${project.master.build.location}"/>
-			<arg line="${project.database.integration.target}"/>
-			<arg line="${project.database.type}"/>
+			<arg line="${master.build.location}"/>
+			<arg line="${database.integration.target}"/>
+			<arg line="${database.type}"/>
 			def buildFileLocation=args[0]
 			def targetName=args[1]
 			def databaseType=args[2]
@@ -266,6 +274,7 @@
 				installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
 				project = new XmlParser().parse(installFile)				
 				println project.target.'@name'.contains(targetName)
+				println targetName
 				if(project.target.'@name'.contains(targetName))
 				{
 					if(project.target.find{it.'@name'=='install'}.'@depends'.contains(targetName))
@@ -298,10 +307,9 @@
 
 
 	<target name="build:bda-utils" depends="init">
-		
-		<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
+				
 		<groovy>
-			<arg line="${project.master.build.location}"/>
+			<arg line="${master.build.location}"/>
 			def buildFileLocation=args[0]
 
 			def ant = new AntBuilder()
