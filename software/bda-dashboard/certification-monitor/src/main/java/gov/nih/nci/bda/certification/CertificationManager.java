@@ -33,7 +33,7 @@ import org.hibernate.Session;
      logger.setErrorPrintStream(System.err);
      logger.setOutputPrintStream(System.out);
      project.addBuildListener(logger);
-     
+     project.setProperty("project.name", projectName);
          
      SingleCommandListener scListener = new SingleCommandListener();
      project.addBuildListener(scListener);     
@@ -53,8 +53,7 @@ import org.hibernate.Session;
     {
           TargetLookup targetLookup= (TargetLookup)  targets.next();
           System.out.println("targetName::"+targetLookup.getMapName()+"::MAPNAME::" + targetLookup.getTargetName()+ "::projectName::" +projectName+ "::ISVALUE::" +targetLookup.getIsValue());
-          project.setProperty("map.name", targetLookup.getMapName());
-          project.setProperty("project.name", projectName);
+          project.setProperty("map.name", targetLookup.getMapName());          
           project.setProperty("executed.target.name", targetLookup.getTargetName());
           if(targetLookup.getIsValue() != null)
         	  project.setProperty("is.value", targetLookup.getIsValue());
