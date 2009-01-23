@@ -302,7 +302,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		clean,
 		init,
 		build:bda-blueprints-webapp,
-		build:grid-sample
+		build:grid
 		" />
 
 	<target name="build:bda-blueprints-api" depends="init" description="Call api sub-projects build target to produce artifiacts">
@@ -314,7 +314,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</ant>
 		-->
 	</target>
-	<target name="build:grid-sample">
+	<target name="build:grid">
 		<!-- Call your build file and grid target
 		<ant inheritAll="false" inheritRefs="false" antfile="${grid.build.file}"
 			target="${grid.build.target}"
