@@ -116,14 +116,17 @@ public class SingleCommandListener implements BuildListener {
 		return bmb;
 	}
 
-	private void nullifyBuildCertificationBean(BuildCertificationBean bmb) 
+	private void nullifyBuildCertificationBean(BuildCertificationBean bmb)	
 	{
-		bmb.setProjectName(null);
-		bmb.setBuildSuccessful(false);
-		bmb.setTargetName(null);
-		bmb.setMapName(null);
-		bmb.setValue(false);
-		bmb.setPropertyValue(null);	
+		if (bmb != null)
+		{
+			bmb.setProjectName(null);
+			bmb.setBuildSuccessful(false);
+			bmb.setTargetName(null);
+			bmb.setMapName(null);
+			bmb.setValue(false);
+			bmb.setPropertyValue(null);
+		}
 	}
 	
 
