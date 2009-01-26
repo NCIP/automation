@@ -62,8 +62,8 @@ import org.hibernate.Session;
           }        	  
           else
           {
-        	  project.setProperty("is.value", null);
-        	  project.setProperty("certification.property.value", null);
+        	  project.setProperty("is.value", "false");
+        	  project.setProperty("certification.property.value", "");
           }
           
           try
