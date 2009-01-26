@@ -44,7 +44,6 @@ public class SingleCommandListener implements BuildListener {
 	}
 
 	public void targetFinished(BuildEvent event) {
-		BuildCertificationBean bmb = null;
 		try
 		{
 			String targetName=event.getTarget().getName();
@@ -52,20 +51,16 @@ public class SingleCommandListener implements BuildListener {
 			System.out.println("Target " + targetName +  " finished!");
 		    if(targetName != null && targetName.equals(executedTargetName))
 			{
-				bmb = populateBuildCertificationBean(event);
+		    	BuildCertificationBean bmb  = populateBuildCertificationBean(event);
 				BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
 				buildHelper.updateProjectBuildStatus();
-				
+				nullifyBuildCertificationBean(bmb);	
 			}	
 		}
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
-		}
-		finally
-		{
-			nullifyBuildCertificationBean(bmb);
-		}
+		}		
 	}
 
 
