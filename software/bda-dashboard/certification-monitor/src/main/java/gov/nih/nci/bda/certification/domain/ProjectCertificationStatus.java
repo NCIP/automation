@@ -10,6 +10,7 @@ public class ProjectCertificationStatus {
 	private String singleCommandDeployment;
 	private String databaseIntegration;
 	private String bdaUtilsVersion;
+	private String templateValidation;
 	
 	public int getId() {
 		return id;
@@ -59,5 +60,12 @@ public class ProjectCertificationStatus {
 	public void setBdaUtilsVersion(String bdaUtilsVersion) {
 		this.bdaUtilsVersion = bdaUtilsVersion;
 	}
+	public String getTemplateValidation() {
+		return templateValidation;
+	}
+	public void setTemplateValidation(String templateValidation) {
+		this.templateValidation = templateValidation;
+	}
+	
 	
 }
