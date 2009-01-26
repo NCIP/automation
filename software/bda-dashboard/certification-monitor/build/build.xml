@@ -382,12 +382,12 @@
 					{ file ->
 						if (file.isFile())
 						{									
-				 			if(file.getName().equalsIgnoreCase(devUpgradePropertiesFile) )
+				 			if(file.getName().equalsIgnoreCase(devUpgradePropertiesFile) || file.getName().equalsIgnoreCase(devInstallPropertiesFile))
 				 				flag = true				 				
 				 		}
 				 	}
 				 	if(!flag)
-				 	ant.fail("PRIVATE REPOSITORY FAILED: Can not find the install or upgrade property files ")
+				 		ant.fail("PRIVATE REPOSITORY FAILED: Can not find the install or upgrade property files ")
 				}
 				else
 				{
