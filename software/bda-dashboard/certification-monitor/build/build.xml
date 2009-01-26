@@ -65,6 +65,9 @@
 	<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
 	<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
 	<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
+	<propertycopy name="project.svn.private.url" from="${project.name}.private.repository" />
+	<propertycopy name="project.local.private.checkout" from="${project.name}.local.private.checkout" />
+	
 
 
 	<echo message="databasetype::${project.database.type}"/>
@@ -90,6 +93,8 @@
 	<property name="svn.password" value="${project.svn.password}" />	
 	<property name="svn.project.url" value="${project.svn.project.url}" />
 	<property name="svn.local.checkout" value="${project.svn.local.checkout}" />
+	<property name="svn.private.url" value="${project.svn.private.url}" />
+	<property name="svn.private.local.checkout" value="${project.local.private.checkout}" />
 	
 	<switch value="${database.type}">
 		<case value="oracle">
@@ -348,6 +353,53 @@
 			if(!project.switch.find{it.@value=='${properties.file.type}'}.'case'.find{it.@value=='install'}.property.@name.contains('properties.template.file'))
 				ant.fail("TEMPLATE VALIDATION FAILED: properties.template.file property is not set ")
 			
+		</groovy>
+
+	</target>
+
+
+	<target name="build:private-repository-properties" depends="init">
+
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.private.url}" revision="HEAD" destPath="${svn.private.local.checkout}" />
+		</svn>
+				
+		<groovy>
+			<arg line="${svn.private.local.checkout}"/>
+			def privatePropertiesLocation=args[0]
+
+			def ant = new AntBuilder()
+			try
+			{			
+				propertiesDir = new File(args[0] + "/properties").getAbsoluteFile()
+				devInstallPropertiesFile = "dev-install.properties"
+				devUpgradePropertiesFile = "dev-upgrade.properties"
+				
+				if(propertiesDir.exists())
+				{
+					flag = false
+					propertiesDir.eachFileRecurse
+					{ file ->
+						if (file.isFile())
+						{									
+				 			if(file.getName().equalsIgnoreCase(devUpgradePropertiesFile) )
+				 				flag = true				 				
+				 		}
+				 	}
+				 	if(!flag)
+				 	ant.fail("PRIVATE REPOSITORY FAILED: Can not find the install or upgrade property files ")
+				}
+				else
+				{
+					println "directory does not exist"
+					ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
+				}
+			}
+			catch(FileNotFoundException ex)
+			{
+				ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
+			}
+
 		</groovy>
 
 	</target>

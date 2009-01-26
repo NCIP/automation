@@ -11,6 +11,7 @@ public class ProjectCertificationStatus {
 	private String databaseIntegration;
 	private String bdaUtilsVersion;
 	private String templateValidation;
+	private String privateRepositoryProperties;
 	
 	public int getId() {
 		return id;
@@ -66,6 +67,11 @@ public class ProjectCertificationStatus {
 	public void setTemplateValidation(String templateValidation) {
 		this.templateValidation = templateValidation;
 	}
-	
-	
+	public String getPrivateRepositoryProperties() {
+		return privateRepositoryProperties;
+	}
+	public void setPrivateRepositoryProperties(String privateRepositoryProperties) {
+		this.privateRepositoryProperties = privateRepositoryProperties;
+	}
+		
 }
