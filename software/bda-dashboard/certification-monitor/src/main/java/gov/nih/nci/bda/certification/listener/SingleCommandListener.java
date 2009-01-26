@@ -54,7 +54,7 @@ public class SingleCommandListener implements BuildListener {
 		    	BuildCertificationBean bmb  = populateBuildCertificationBean(event);
 				BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
 				buildHelper.updateProjectBuildStatus();
-				nullifyBuildCertificationBean(bmb);	
+				//nullifyBuildCertificationBean(bmb);	
 			}	
 		}
 		catch(Exception ex)

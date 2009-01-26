@@ -55,8 +55,16 @@ import org.hibernate.Session;
           System.out.println("targetName::"+targetLookup.getMapName()+"::MAPNAME::" + targetLookup.getTargetName()+ "::projectName::" +projectName+ "::ISVALUE::" +targetLookup.getIsValue());
           project.setProperty("map.name", targetLookup.getMapName());          
           project.setProperty("executed.target.name", targetLookup.getTargetName());
+          
           if(targetLookup.getIsValue() != null)
+          {
         	  project.setProperty("is.value", targetLookup.getIsValue());
+          }        	  
+          else
+          {
+        	  project.setProperty("is.value", null);
+        	  project.setProperty("certification.property.value", null);
+          }
           
           try
           {
