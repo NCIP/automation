@@ -15,6 +15,8 @@ public class bdaProjectStartHelper
 	static databasePreferred = ''
 	static props = new Properties()
 	static fileContentsBuffer = ""
+	static projectSoftwareDir =""
+	static templateDir = ""
 
 	public static void main (String[] args)
 	{
@@ -45,6 +47,8 @@ public class bdaProjectStartHelper
 		projectReplaceString=props.get('project.prefix')
 		databaseTypeList=props.get('database.type.list').split(',')
 		databasePreferred=props.get('database.preferred')
+		templateDir=props.get('bda.template.dir')
+		projectSoftwareDir=props.get('project.software.dir')
 
 		if (useJboss != "true") 
 		{
@@ -70,7 +74,7 @@ public class bdaProjectStartHelper
 
 	private static void createBaseFilteredFile (String fileName)
 	{
-		String fileContents = new File(fileName).text
+		String fileContents = new File(templateDir + "/" + fileName).text
 
 		/*
 		def targetMatcher =  java.util.regex.Pattern.compile(/(<target.*?<\/target>)/, Pattern.DOTALL).matcher(fileContents)
@@ -103,7 +107,7 @@ public class bdaProjectStartHelper
  
 	private static void appendFilteredTargets (String fileName)
 	{
-		String fileContents = new File(fileName).text
+		String fileContents = new File(templateDir + "/" + fileName).text
 
 		def targetMatcher =  java.util.regex.Pattern.compile(/(<target.*?<\/target>)/, Pattern.DOTALL).matcher(fileContents)
 
@@ -207,7 +211,7 @@ public class bdaProjectStartHelper
 		}
 		*/
 		
-		File outFile = new File("output/"+ fileName)
+		File outFile = new File(projectSoftwareDir + "/" + fileName)
 		outFile.write(fileContentsBuffer)
 	}
 }
