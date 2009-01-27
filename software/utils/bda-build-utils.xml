@@ -573,6 +573,7 @@ $HeadURL$
 								<sequential>
 									<echo message="Evaluating line in properties file = @{matches.line}"/>
 									<property name="match.tmp" value="@{matches.line}"/>
+									<var name="is.system.user" unset="true"/>
 									<propertyregex property="is.system.user"
 										input="${match.tmp}"
 										regexp="database.system.user.*"
@@ -608,7 +609,7 @@ $HeadURL$
 						<then>
 							<for list="${hostname.property.list}"  param="hostname.property" >
 								<sequential>
-		 							<propertycopy name="hostname.value" from="@{hostname.property}" />
+		 							<propertycopy name="hostname.value" from="@{hostname.property}" override="true"/>
 									<echo message="Attempting to connnect to ${hostname.value}...."/>
 									<var name="hostname.has.value" value="false"/>
 									<propertyregex property="hostname.has.value"
@@ -689,8 +690,9 @@ $HeadURL$
 		<attribute name="child.dir.property" />
 		<sequential>
 			<!-- Application.base.path compare to Jboss.home -->
-			<propertycopy name="child.dir" from="@{child.dir.property}" />
-			<propertycopy name="parent.dir" from="@{parent.dir.property}" />
+			<propertycopy name="child.dir" from="@{child.dir.property}" override="true"/>
+			<propertycopy name="parent.dir" from="@{parent.dir.property}" override="true" />
+			<var name="child.good" unset="true"/>
 			<propertyregex property="child.good"
 				input="${child.dir}"
 				regexp="${parent.dir}[\\/][\d\w\.\-\_]+"
@@ -720,8 +722,9 @@ $HeadURL$
 		<attribute name="child.dir.property" />
 		<sequential>
 			<!-- Application.base.path compare basedir -->
-			<propertycopy name="not.child.dir" from="@{child.dir.property}" />
-			<propertycopy name="not.parent.dir" from="@{parent.dir.property}" />
+			<propertycopy name="not.child.dir" from="@{child.dir.property}" override="true"/>
+			<propertycopy name="not.parent.dir" from="@{parent.dir.property}" override="true"/>
+			<var name="child.bad" unset="true"/>
 			<propertyregex property="child.bad"
 				input="${not.child.dir}"
 				regexp="${not.parent.dir}"
@@ -749,7 +752,8 @@ $HeadURL$
 		<attribute name="directory.property" />
 		<sequential>
 			<!-- Application.base.path check for bad directory -->
-			<propertycopy name="directory.value" from="@{directory.property}" />
+			<propertycopy name="directory.value" from="@{directory.property}" override="true"/>
+			<var name="has.spaces" unset="true"/>
 			<propertyregex property="has.spaces"
 				regexp="\s+"
 				input="${directory.value}"
@@ -763,6 +767,7 @@ $HeadURL$
 			</if>
 
 			<!-- Application.base.path check for bad directory -->
+			<var name="directory.bad" unset="true"/>
 			<propertyregex property="directory.bad"
 				regexp="^(\w:[\/\\])$"
 				input="${directory.value}"
@@ -818,7 +823,7 @@ $HeadURL$
 		<attribute name="application.dir.property" />
 		<sequential>
 			<!-- If jboss.home exists prompt to conntinue -->
-			<propertycopy name="application.dir" from="@{application.dir.property}" />
+			<propertycopy name="application.dir" from="@{application.dir.property}" override="true"/>
 			<available property="${application.dir.exists}" file="${application.dir}"/>
 			<if>
 				<and>
@@ -1612,16 +1617,19 @@ $HeadURL$
 								password="${read.database.password}">
 								<validate />
 							</dbconfig>
+							<var name="read.database.name" unset="true"/>
 							<propertyregex property="read.database.name"
 								input="${read.database.url}"
 								regexp=".*[\/](.*)"
 								select="\1"
 								/>
+							<var name="read.database.server" unset="true"/>
 							<propertyregex property="read.database.server"
 								input="${read.database.url}"
 								regexp=".*\/\/(.*):.*"
 								select="\1"
 								/>
+							<var name="read.database.port" unset="true"/>
 							<propertyregex property="read.database.port"
 								input="${read.database.url}"
 								regexp=".*:(.*)\/.*"
@@ -1690,6 +1698,7 @@ $HeadURL$
 		<sequential>			
 			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
 			<property name="wscore.dest.file" value="temp/${wscore.file.name}"/>
+			<var name="wscore.relative.dir" unset="true"/>
 			<propertyregex property="wscore.relative.dir"
 				input="@{wscore.download.url}"
 				regexp=".*(ws-core-enum[\d\-\.]+)\.zip"
@@ -1990,6 +1999,7 @@ $HeadURL$
 					<if>
 						<contains string="@{file.name}" substring="dot"/>
 						<then>
+							<var name="base.file.name" unset="true"/>
 							<propertyregex property="base.file.name"
 								input="@{file.name}"
 								regexp="(.*)\.dot"
@@ -2575,7 +2585,8 @@ $HeadURL$
 		<attribute name="directory.property" />
 		<sequential>
 			<!-- Application.base.path check for bad directory -->
-			<propertycopy name="directory.value" from="@{directory.property}" />
+			<propertycopy name="directory.value" from="@{directory.property}" override="true"/>
+			<var name="is.absolute.dir" unset="true"/>
 			<propertyregex property="is.absolute.dir"
 				regexp="^(\w:\/)"
 				input="${directory.value}"
@@ -3062,11 +3073,13 @@ $HeadURL$
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="jboss.binaries.file" default="${tools.dir}/${jboss.binaries.file}" />
 		<sequential>
+			<var name="jboss.file.is.zip" unset="true"/>
 			<propertyregex property="jboss.file.is.zip"
 				input="@{jboss.binaries.file}"
 				regexp=".*.zip"
 				select="true"
 				/>
+			<var name="jboss.file.is.jar" unset="true"/>
 			<propertyregex property="jboss.file.is.jar"
 				input="@{jboss.binaries.file}"
 				regexp=".*.jar"
@@ -3311,7 +3324,7 @@ $HeadURL$
 		<attribute name="ssh.key.file" default="${ssh.key.file}"/>
 		<sequential>
 			<!-- Validate remote directory is valid -->
-			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" />
+			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" override="true" />
 			<check-valid-directory-name directory.property="remote.dir" />
 			<!-- Delete/re-create remote directory -->
 			<remote-ssh 
@@ -3568,16 +3581,19 @@ $HeadURL$
 			<if>
 				<equals arg1="@{grid.secure.enable}" arg2="true"/>
 				<then>
-					<propertyregex property="is.jboss4"
+					<var name="is.jboss40" unset="true"/>
+					<propertyregex property="is.jboss40"
 						input="@{appserver.conf.dir}"
 						regexp="jboss-4.0...GA"
 						select="\1"
 						/>
+					<var name="is.tomcat50" unset="true"/>
 					<propertyregex property="is.tomcat50"
 						input="@{appserver.conf.dir}"
 						regexp="tomcat-5.0..."
 						select="\1"
 						/>
+					<var name="is.tomcat55" unset="true"/>
 					<propertyregex property="is.tomcat55"
 						input="@{appserver.conf.dir}"
 						regexp="tomcat-5.5..."
@@ -3585,22 +3601,22 @@ $HeadURL$
 						/>
 					<if>
 						<or>
-							<isset property="is.jboss4"/>
+							<isset property="is.jboss40"/>
 							<isset property="is.tomcat55"/>
 						</or>
 						<then>
-							<echo message="is.tomcat50 = ${is.tomcat50} is.tomcat55 = ${is.tomcat55} is.jboss4 = ${is.jboss4} "/>
+							<echo message="is.tomcat50 = ${is.tomcat50} is.tomcat55 = ${is.tomcat55} is.jboss40 = ${is.jboss40} "/>
 							<var name="tomcat55.extras" value="protocolHandlerClassName=&quot;org.apache.coyote.http11.Http11Protocol&quot;${line.separator}socketFactory=&quot;org.globus.tomcat.catalina.net.BaseHTTPSServerSocketFactory&quot;"/>
 						</then>
 						<elseif>
 							<isset property="is.tomcat50"/>
 							<then>
-								<echo message="is.tomcat50 = ${is.tomcat50} is.tomcat55 = ${is.tomcat55} is.jboss4 = ${is.jboss4} "/>
+								<echo message="is.tomcat50 = ${is.tomcat50} is.tomcat55 = ${is.tomcat55} is.jboss40 = ${is.jboss40} "/>
 								<var name="tomcat55.extras" value=""/>
 							</then>
 						</elseif>
 						<else>
-							<echo message="is.tomcat50 = ${is.tomcat50} is.tomcat55 = ${is.tomcat55} is.jboss4 = ${is.jboss4} "/>
+							<echo message="is.tomcat50 = ${is.tomcat50} is.tomcat55 = ${is.tomcat55} is.jboss40 = ${is.jboss40} "/>
 							<fail message="Not using Jboss 4.x or Tomcat 5.0.x or Tomcat 5.5.x cannot configure a secure container, failing build.  Please be sure to include the applcation and version as the name of the directory for tomcat.home or jboss.home"/>
 						</else>
 					</if>
@@ -3731,6 +3747,7 @@ $HeadURL$
 		<attribute name="grid.secure.enable" default="true"/>
 		<sequential>
 			
+			<var name="grid.external.secure.host.has.value" unset="true"/>
 			<propertyregex property="grid.external.secure.host.has.value"
 				input="@{grid.external.secure.host}"
 				regexp="\S+"
@@ -3824,6 +3841,7 @@ $HeadURL$
 		<attribute name="appserver.external.port" default="${jboss.external.ssl.port}"/>
 		<attribute name="proxy.update.connector.port" default="8443"/>
 		<sequential>
+			<var name="appserver.external.host.has.value" unset="true"/>
 			<propertyregex property="appserver.external.host.has.value"
 				input="@{appserver.external.host}"
 				regexp="\S+"
