@@ -382,7 +382,7 @@
 					{ file ->
 						if (file.isFile())
 						{									
-				 			if(file.getName().equalsIgnoreCase(devUpgradePropertiesFile) || file.getName().equalsIgnoreCase(devInstallPropertiesFile))
+				 			if(Pattern.matches("*dev*upgrade.properties", file.getName()) || Pattern.matches("*dev*install.properties", file.getName()))
 				 				flag = true				 				
 				 		}
 				 	}
