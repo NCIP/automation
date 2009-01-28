@@ -4499,4 +4499,24 @@ $HeadURL$
 			</groovy>
 		</sequential>
 	</macrodef>
+	<macrodef name="maven">
+		<attribute name="maven.profile.list"/>
+		<attribute name="maven.goal.list"/>
+		<attribute name="maven.dir"/>
+		<sequential>
+			<condition property="mvn.cmd" value="mvn">
+				<or>
+					<os family="unix" />
+					<os family="mac" />
+				</or>
+			</condition>
+			<condition property="mvn.cmd" value="mvn.bat">
+				<os family="windows" />
+			</condition>
+			<exec executable="${mvn.cmd}" dir="@{maven.dir}" failonerror="true">
+				<arg line="@{maven.profile.list} @{maven.goal.list}"/>
+			</exec>
+		</sequential>
+	</macrodef>
+
 </project>
