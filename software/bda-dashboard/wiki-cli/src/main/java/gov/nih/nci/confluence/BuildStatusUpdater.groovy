@@ -84,10 +84,11 @@ class BuildStatusUpdater {
 
 			println findReplace
 			// update page
-			//doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplace}")
-			//doCmd("${confluence} -a getPageSource --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"    --file "+certificationTemplateFile+"_temp.txt")
+			doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplace}")
+			doCmd("${confluence} -a getPageSource --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"    --file "+certificationTemplateFile+"_temp.txt")
+			count--
 		}
-	   count--	
+	   	
 	
 	}
 	
