@@ -63,9 +63,9 @@ class BuildStatusUpdater {
 
 	List projectRows = connection.rows(statement)	
 	
-	println count
-	count =projectRows.size()
-	println projectRows.size()
+	
+	int count =projectRows.size()
+	
 	
 	connection.eachRow(statement) { row ->
 	    
