@@ -1679,6 +1679,7 @@ $HeadURL$
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="require.build.wscore" default="${require.build.wscore}"/>
 		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
+		<attribute name="wscore.relative.dir" default="ws-core-4.0.3"/>
 		<sequential>			
 			<if>
 				<equals arg1="@{require.build.wscore}" arg2="true"/>
@@ -1686,6 +1687,7 @@ $HeadURL$
 					<check-wscore-exists
 						wscore.download.url="@{wscore.download.url}"
 						application.base.path="@{application.base.path}"
+						wscore.relative.dir="@{wscore.relative.dir}"
 						/>
 				</then>
 			</if>
@@ -1694,16 +1696,11 @@ $HeadURL$
 
 	<macrodef name="check-wscore-exists">		
 		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
+		<attribute name="wscore.relative.dir" default="ws-core-4.0.3"/>
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<sequential>			
 			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
 			<property name="wscore.dest.file" value="temp/${wscore.file.name}"/>
-			<var name="wscore.relative.dir" unset="true"/>
-			<propertyregex property="wscore.relative.dir"
-				input="@{wscore.download.url}"
-				regexp=".*(ws-core-enum[\d\-\.]+)\.zip"
-				select="\1"
-				/>
 			<echo message="Checking for existence of GLOBUS_LOCATION envrironment variable."/>
 			<echo message="wscore.relative.dir = ${wscore.relative.dir}"/>
 			<mkdir dir="temp"/>
