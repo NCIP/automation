@@ -138,7 +138,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<property name="bda-download.file" value="bda-ivy-build.xml" />
 	<mkdir dir="${bda-download.dir}" />
 	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
-	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	<!--<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" /> -->
 
 	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
@@ -303,7 +303,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		init,
 		build:bda-blueprints-webapp,
 		build:grid
-		" />
+		" >
+	</target>
 
 	<target name="build:bda-blueprints-api" depends="init" description="Call api sub-projects build target to produce artifiacts">
 		<!--
@@ -361,7 +362,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		dist:upgrader,
 		dist:src,
 		dist:gui-installer
-		" />
+		">
+	</target>
 
 	<target name="dist:src" description="Makes source distribution">
 		<!-- Add tasks here to zip up src into a distribution, may require some additoinal properties for distribution name" -->
@@ -371,7 +373,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		init,
 		dist:tools:retrieve:jboss,
 		dist:tools:retrieve:tomcat
-		" />
+		" >
+	</target>
 
 	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
 		<get src="${jboss.src.url}" dest="${jboss.dest.file}" />
@@ -421,7 +424,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</fileset>
 		</copy>
 		<dist-prep />
-
 	</target>
 
 	<target name="dist:installer" depends="dist:installer:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
@@ -552,7 +554,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		init,
 		test:bda-blueprints-api,
 		test:bda-blueprints-webapp
-		" />
+		" >
+	</target>
 
 
 	<target name="test:bda-blueprints-api" depends="init" description="Calls test target for sub-project">
@@ -576,7 +579,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		init,
 		static-analysis:bda-blueprints-api,
 		static-analysis:bda-blueprints-webapp
-		" />
+		" >
+	</target>
 
 	<target name="static-analysis:bda-blueprints-api" depends="init" description="Calls static-analysis target for sub-project">
 		<!--
@@ -597,7 +601,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="continuous-integration" description="calls wrapper targets for continuous integration build" depends="
 		build:all,
 		static-analysis:all
-		" />
+		" >
+	</target>
 
 
 	<target name="init:ivy" description="Initializes ivy-repo.based on ivy definition file and ivy settings file">
@@ -642,7 +647,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		test:selenium:init,
 		test:selenium:run,
 		test:seleniumrc:stop
-		" />
+		" >
+	</target>
 
 	<target name="test:selenium:run" description="Executes selenium test suite">
 		<!-- Another optoin  for running tests
@@ -726,27 +732,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</for>
 	</target>
 
-	<!-- Sample targets to use against a maven project -->
-	<macrodef name="maven">
-		<attribute name="maven.profile.list"/>
-		<attribute name="maven.goal.list"/>
-		<attribute name="maven.dir"/>
-		<sequential>
-			<condition property="mvn.cmd" value="mvn">
-				<or>
-					<os family="unix" />
-					<os family="mac" />
-				</or>
-			</condition>
-			<condition property="mvn.cmd" value="mvn.bat">
-				<os family="windows" />
-			</condition>
-			<exec executable="${mvn.cmd}" dir="@{maven.dir}" failonerror="true">
-				<arg line="@{maven.profile.list} @{maven.goal.list}"/>
-			</exec>
-		</sequential>
-	</macrodef>
-
 	<target name="maven-build:bda-blueprints-webapp" depends="init, maven-build:bda-blueprints-api">
 		<delete>
 			<fileset dir="${bda-blueprints-webapp.base.dir}">
@@ -799,7 +784,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<!-- Since static-analysis and testing cannot be called separately , just have SA depend on test. -->
-	<target name="maven-static-analysis:all" description="Runs static-analysis target for all sub-projects" depends="maven-test:all" />
+	<target name="maven-static-analysis:all" description="Runs static-analysis target for all sub-projects" depends="maven-test:all" >
+	</target>
 
 	<!-- These targets are for adding files to ivy -->
 	<target name="ivy:module:add2repo">

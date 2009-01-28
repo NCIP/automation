@@ -238,7 +238,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<!-- Clean up destination directory -->
-	<target name="install:clean" description="Removes all files from the local filesystem" depends="install:clean:jboss,install:clean:tomcat"/>
+	<target name="install:clean" description="Removes all files from the local filesystem" depends="install:clean:jboss,install:clean:tomcat">
+	</target>
 
 	<target name="install:clean:jboss" unless="exclude.jboss">
 		<sleep seconds="5" />
@@ -561,24 +562,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	</target>
 
 	<!-- Wrapper target to deploy JBOSS container -->
-	<!--
-	<target name="install:jboss" description="Wrapper scripts that calls all required targets to install the jboss container" unless="exclude.jboss"
-		depends="
-		install:validation:pre-install,
-		install:jboss:stop,
-		install:validation:pre-install:ports,
-		install:clean:jboss,
-		install:init,
-		install:jboss:binaries,
-		install:jboss:bda-blueprints-webapp:re-configure,
-		install:jboss:bda-blueprints-webapp,
-		install:jboss:bda-blueprints-webapp:configure,
-		install:jboss:configure,
-		install:bda-blueprints-grid,
-		install:post,
-		install:jboss:start
-		" />
-	-->
 	<target name="install:jboss" description="Wrapper scripts that calls all required targets to install the jboss container" unless="exclude.jboss"
 		depends="
 		install:validation:pre-install,
@@ -593,7 +576,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:jboss:configure,
 		install:post,
 		install:jboss:start
-		" />
+		" >
+	</target>
 
 	<target name="install:tomcat" description="Wrapper scripts that calls all required targets to install the tomcat container" unless="exclude.tomcat"
 		depends="
@@ -610,7 +594,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:tomcat:grid,
 		install:tomcat:grid:configure,
 		install:tomcat:start
-		" />
+		">
+	</target>
 
 	<target name="install" description="Installs and configures JBOSS, creates database, and deploys application" 
 		depends="
@@ -626,7 +611,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:post,
 		install:jboss:start,
 		install:validation:post-install
-		"/>
+		">
+	</target>
 
 	<target name="install:jboss:bda-blueprints-webapp:re-configure" description="Update contents of artifacts if not all properties have been externalized, by extracting artifact, modify it as needed and re-archive it." unless="exclude.jboss">
 		<!-- This is only required if configuration files are not externalized, below is a sample of what you may do.
@@ -654,7 +640,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:jboss:bda-blueprints-webapp,
 		install:jboss:bda-blueprints-webapp:configure,
 		install:jboss:start
-		" />
+		">
+	</target>
 	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
 		depends="
 		install:validation:pre-install,
@@ -665,7 +652,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:tomcat:bda-blueprints-webapp,
 		install:tomcat:bda-blueprints-webapp:configure,
 		install:tomcat:start
-		" />
+		">
+	</target>
 
 	<target name="upgrade" description="Upgrades JBoss and Database"
 		depends="
@@ -677,7 +665,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		upgrade:jboss,
 		upgrade:tomcat,
 		install:validation:post-install
-		"/>
+		">
+	</target>
 
 	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database"
 		depends="
@@ -688,7 +677,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 		install:database,
 		upgrade:jboss,
 		install:validation:post-install
-		"/>
+		">
+	</target>
 
 	<target name="upgrade:database" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
 		depends="
@@ -778,7 +768,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<target name="install:bda-blueprints-grid" description="Wrapper target for Grid application targets"
 		depends="install:jboss:grid,
 		install:jboss:grid:configure
-	"/>
+	">
+	</target>
 
 	<target name="install:tomcat:grid" description="Deploy grid to tomcat" unless="exclude.tomcat">
 		<mkdir dir="${tomcat.home}/webapps/${grid.dir.dest}"/>
@@ -822,11 +813,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 			/>
 	</target>
 
-	<target name="install:post" depends="install:post:jboss, install:post:tomcat"/>
+	<target name="install:post" depends="install:post:jboss, install:post:tomcat">
+	</target>
 
 	<target name="install:post:jboss" unless="exclude.jboss">
-
-
 		<if>
 			<not>
 				<equals arg1="${exclude.jboss.backup}" arg2="true"/>
@@ -856,29 +846,32 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 				<delete dir="${backup.jboss.base.dir}/backup"/>
 			</then>
 		</if>
-
 	</target>
 
 	<target name="install:post:tomcat" unless="exclude.tomcat">
-		<!-- Tomcat
-		<property name="changelogFile" location="${install-logs.dir}/changeLog-${install.time}.txt"/>
-		<property name="compare1.dir" location="${backup.tomcat.dir}/backup/${tomcat.relative.path}"/>
-		<property name="compare2.dir" location="${tomcat.home}"/>
-		<report-dir-diff
-			dir1="${compare1.dir}"
-			dir2="${compare2.dir}"
-			reportFile="${changelogFile}"
-			/>
-		
-		<mkdir dir="${tomcat.home}/server/${tomcat.server.name}/log"/>
-		<mkdir dir="${backup.tomcat.dir}/backup/${tomcat.relative.path}/server/${tomcat.server.name}/log"/>
-		<copy todir="${tomcat.home}/server/${tomcat.server.name}/log">
-			<fileset dir="${backup.tomcat.dir}/backup/${tomcat.relative.path}/server/${tomcat.server.name}/log">
-				<include name="*"/>
-			</fileset>
-		</copy>
-		-->
-
+		<if>
+			<not>
+				<equals arg1="${exclude.tomcat.backup}" arg2="true"/>
+			</not>
+			<then>
+				<property name="changelogFile" location="${install-logs.dir}/changeLog-${install.time}.txt"/>
+				<property name="compare1.dir" location="${backup.tomcat.base.dir}/backup/${tomcat.relative.path}"/>
+				<property name="compare2.dir" location="${tomcat.home}"/>
+				<report-dir-diff
+					dir1="${compare1.dir}"
+					dir2="${compare2.dir}"
+					reportFile="${changelogFile}"
+					/>
+				
+				<mkdir dir="${tomcat.home}/server/${tomcat.server.name}/log"/>
+				<mkdir dir="${backup.tomcat.base.dir}/backup/${tomcat.relative.path}/server/${tomcat.server.name}/log"/>
+				<copy todir="${tomcat.home}/server/${tomcat.server.name}/log">
+					<fileset dir="${backup.tomcat.base.dir}/backup/${tomcat.relative.path}/server/${tomcat.server.name}/log">
+						<include name="*"/>
+					</fileset>
+				</copy>
+			</then>
+		</if>
 	</target>
 	<target name="install:tomcat:bda-blueprints-webapp" description="Deploy bda-blueprints-webapp and common libraries to tomcat installation" unless="exclude.tomcat">
 		<copy file="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" todir="${tomcat.home}/webapps" overwrite="true" />
@@ -891,5 +884,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software
 	<target name="install:tomcat:bda-blueprints-webapp:configure" description="Configure bda-blueprints-webapp application, copies over externalized properties or configurations that are not part of the tomcat configuration" unless="exclude.tomcat">
 		<!-- configure datasource -->
 	</target>
-	<target name="install:tomcat:bda-blueprints-webapp:re-configure" description="Configure bda-blueprints-webapp application, copies over externalized properties or configurations that are not part of the tomcat configuration" unless="exclude.tomcat"/>
+	<target name="install:tomcat:bda-blueprints-webapp:re-configure" description="Configure bda-blueprints-webapp application, copies over externalized properties or configurations that are not part of the tomcat configuration" unless="exclude.tomcat">
+	</target>
 </project>
