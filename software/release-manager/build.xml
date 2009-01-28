@@ -24,21 +24,21 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<property name="automation.resource.dir" value="resource" />
 
 
-	<get src="${svn.automation.url}/${svn.ivy.project}/bda-ivy-build.xml" dest="${basedir}/bda-ivy-build.xml"/>
+	<property name="working.dir" value="${basedir}/working"/>
+	<property name="lib.dir" value="${working.dir}/lib" />
+	<property name="bda-utils.dir" value="${working.dir}/bda-utils" />
+	<property name="bda-download.dir" value="${working.dir}/bda-download" />
+	
+	
+	<mkdir dir="${working.dir}"/>
+	<get src="${svn.automation.url}/${svn.ivy.project}/bda-ivy-build.xml" dest="${bda-download.dir}/bda-ivy-build.xml"/>
 
 	<!--
 	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda.xml" dest="${basedir}/ivy-bda.xml"/>
 	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda-settings.xml" dest="${basedir}/ivy-bda-settings.xml"/>
 	-->
-
-	<property name="lib.dir" value="${basedir}/lib" />
-	<property name="bda-utils.dir" value="${basedir}/working/bda-utils" />
-	
-	
 	<!-- retrive ivy files then retrieve bda files and librarires -->
-	<mkdir dir="working"/>
-	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml"
-		target="retrieve-bda">
+	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml" dir="${bda-download.dir}"  target="retrieve-bda">
 		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
 		<property name="lib.dir" value="${lib.dir}"/>
@@ -248,6 +248,19 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<move file="../../docs/wiki/flash/resources/bda-wiki-home.template" tofile="../../docs/wiki/flash/resources/bda-wiki-home.xml"/>
 		<delete file="../../docs/wiki/flash/resources/bda-wiki-home.template" quiet="true" />
 		<!-- TODO: Need to check in local changes to SVN repository -->
+	</target>
+
+	<target name="svn:templates:checkout" depends="svn-scorch,svn:ivy:checkout">	
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.automation.url}/${svn.templates.project}" revision="${default.automation.revision}" destPath="${svn.automation.checkout}/${svn.templates.project}" />
+		</svn>	
+	</target>
+	<target name="release:templates" depends="svn:checkout,svn:templates:checkout">
+		<delete file="${svn.local.checkout}/${release.version}}/bda-templates-${release.version}.zip"/>
+		<zip destfile="${svn.local.checkout}/${release.version}/bda-templates-${release.version}.zip" >
+			<zipfileset dir="${svn.automation.checkout}/${svn.templates.project}/software/build" prefix="build"/>
+			<zipfileset dir="${svn.automation.checkout}/${svn.templates.project}/software/common" prefix="common"/>
+		</zip>
 	</target>
 
 </project>
