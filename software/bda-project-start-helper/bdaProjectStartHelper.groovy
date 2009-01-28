@@ -21,10 +21,10 @@ public class bdaProjectStartHelper
 	public static void main (String[] args)
 	{
 		readProperties()
-		println props.toString()
+		println "Property list ${props.toString()}"
 		buildFilterLists()
-		createBaseFilteredFile('build.xml')
-		appendFilteredTargets('build.xml')
+		processXmlFile('build.xml')
+		processXmlFile('install.xml')
 	}
 
 	private static void readProperties ()
@@ -53,26 +53,31 @@ public class bdaProjectStartHelper
 		if (useJboss != "true") 
 		{
 			excludeTargetPatternList << "jboss"
+			excludePropertyPatternList << "jboss"
 		}	
 		if (useTomcat != "true") 
 		{
 			excludeTargetPatternList << "tomcat"
+			excludePropertyPatternList << "tomcat"
 		}	
 		if (useGrid != "true") 
 		{
 			excludeTargetPatternList << "grid"
+			excludePropertyPatternList << "grid"
 		}	
 		if (useMaven != "true") 
 		{
 			excludeTargetPatternList << "maven"
+			excludePropertyPatternList << "maven"
 		}	
 		if (useGuiInstaller != "true") 
 		{
 			excludeTargetPatternList << "gui-installer"
+			excludePropertyPatternList << "gui-installer"
 		}	
 	}
 
-	private static void createBaseFilteredFile (String fileName)
+	private static void createBaseFilteredXmlFile (String fileName)
 	{
 		String fileContents = new File(templateDir + "/" + fileName).text
 
@@ -91,10 +96,9 @@ public class bdaProjectStartHelper
 		{
 			if (! breakFound)
 			{
-				if (it.matches(".*<!-- Targets -->.*"))
+				if (it.matches(".*<target.*"))
 				{
 					breakFound =true
-					 cleanFileBuffer += it + "\n"
 				} else
 				{
 					 cleanFileBuffer += it + "\n"
@@ -146,7 +150,8 @@ public class bdaProjectStartHelper
 				targetIncList << targetName
 			}
 		}
-		println targetExcList
+		println "\nTargets Included - ${targetIncList}"
+		println "\nTargets Excluded - ${targetExcList}"
 		targetMatcher.reset()
 		while(targetMatcher.find())
 		{
@@ -194,13 +199,14 @@ public class bdaProjectStartHelper
 				{
 					//println "${targetName} No depends"
 				}
-				println targetText
+				//println targetText
 				//println fileContentsBuffer
 				def replaceString = Matcher.quoteReplacement("\n\t" + targetText + "\n</project>")
 				fileContentsBuffer = fileContentsBuffer.replaceAll("</project>",replaceString)
+				println "${fileName.toString()} ${targetName} included"
 			} else
 			{
-				//println "${targetName} EXCLUDED"
+				println "${fileName.toString()} ${targetName} EXCLUDED"
 			}	
 		}
 		/*
@@ -211,7 +217,44 @@ public class bdaProjectStartHelper
 		}
 		*/
 		
+	}
+	private static void filterPropertiesXmlFile ()
+	{
+		def newBuffer = ""
+		fileContentsBuffer.eachLine
+		{ line ->
+			def exclude = false
+			if (line.matches(".*<property.*") || 
+				line.matches(".*<mkdir.*")||
+				line.matches(".*<available.*")
+				)
+			{
+				excludePropertyPatternList.each
+				{ excludeProp ->
+					if (line.contains(excludeProp))
+					{
+						exclude = true
+					}
+				}
+				if (! exclude) { newBuffer += line + "\n"}
+			} else
+			{
+				 newBuffer += line + "\n"
+			}
+		}
+		fileContentsBuffer = newBuffer
+	}
+
+	private static void outputXmlFile (String fileName)
+	{
 		File outFile = new File(projectSoftwareDir + "/" + fileName)
 		outFile.write(fileContentsBuffer)
+	}
+	private static void processXmlFile (String fileName)
+	{
+		createBaseFilteredXmlFile(fileName)
+		appendFilteredTargets(fileName)
+		filterPropertiesXmlFile()
+		outputXmlFile(fileName)
 	}
 }
