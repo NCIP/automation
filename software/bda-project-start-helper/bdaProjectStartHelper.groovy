@@ -18,6 +18,10 @@ public class bdaProjectStartHelper
 	static projectSoftwareDir =""
 	static templateDir = ""
 
+	static targetExcList = []
+	static targetIncList = []
+	static targetBuffer =""
+
 	public static void main (String[] args)
 	{
 		readProperties()
@@ -81,15 +85,6 @@ public class bdaProjectStartHelper
 	{
 		String fileContents = new File(templateDir + "/" + fileName).text
 
-		/*
-		def targetMatcher =  java.util.regex.Pattern.compile(/(<target.*?<\/target>)/, Pattern.DOTALL).matcher(fileContents)
-		def targetMatches = targetMatcher.matches()
-
-		targetMatcher.find()
-		def fileContentsNew = targetMatcher.replaceAll("")	
-		fileContentsBuffer = fileContentsNew
-		*/
-
 		def cleanFileBuffer =""
 		def breakFound = false
 		fileContents.eachLine
@@ -112,12 +107,19 @@ public class bdaProjectStartHelper
 	private static void appendFilteredTargets (String fileName)
 	{
 		String fileContents = new File(templateDir + "/" + fileName).text
+		targetBuffer = fileContents
 
 		def targetMatcher =  java.util.regex.Pattern.compile(/(<target.*?<\/target>)/, Pattern.DOTALL).matcher(fileContents)
+	/*
+		def multilineTargetMatcher =  java.util.regex.Pattern.compile(/(<target.*?<\/target>)/, Pattern.DOTALL).matcher(fileContents)
+	/*
+		filterTargets(multilineTargetMatcher,fileName)
 
+	}
+	private static void filterTargets (Matcher targetMatcher, String fileName)
+	{
+	*/
 		//build ignorelist
-		def targetExcList = []
-		def targetIncList = []
 		while(targetMatcher.find())
 		{
 			def targetText = targetMatcher.group(1)
@@ -226,7 +228,8 @@ public class bdaProjectStartHelper
 			def exclude = false
 			if (line.matches(".*<property.*") || 
 				line.matches(".*<mkdir.*")||
-				line.matches(".*<available.*")
+				line.matches(".*<available.*") ||
+				line.matches(".*<.*/>.*")
 				)
 			{
 				excludePropertyPatternList.each

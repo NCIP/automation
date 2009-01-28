@@ -68,15 +68,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<!-- Working directory passed to Ant tasks -->
 	<property name="bda-blueprints-api.base.dir" value="${software.dir}/blueprints-webapp" />
 	<property name="bda-blueprints-webapp.base.dir" value="${software.dir}/blueprints-webapp" />
-	<property name="grid-sample.base.dir" value="${software.dir}/grid-sample" />
+	<property name="grid.base.dir" value="${software.dir}/grid-sample" />
 
 	<!-- Build file names relative working dir above, if the basedir of the sub-project ant script is ".." you should set the *.basdir to and the build file should include the dir and build file name from the *.base.dir -->
 	<property name="bda-blueprints-webapp.build.file" value="build.xml" />
 	<property name="bda-blueprints-api.build.file" value="build.xml" />
+	<property name="grid.build.file" value="build.xml" />
 
 	<!-- The target name that should be called from the sub-project build file -->
 	<property name="bda-blueprints-api.build.target" value="build:all" />
 	<property name="bda-blueprints-webapp.build.target" value="dist" />
+	<property name="grid.build.target" value="dist" />
 
 	<!-- Maven comamnd line arguments, bda profile is inside profiles.xml that gets copied to ear folder before build to override exiting properties -->
 	<property name="bda-blueprints-webapp.maven.profile.list" value="local,bda" />
@@ -295,7 +297,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		<validate-pre-build
 			/>
 	</target>
-	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends=" validate:pre:build, clean, init, build:bda-blueprints-webapp, build:grid-sample " />
+	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends="
+		validate:pre:build,
+		clean,
+		init,
+		build:bda-blueprints-webapp,
+		build:grid
+		" >
+	</target>
 
 	<target name="build:bda-blueprints-api" depends="init" description="Call api sub-projects build target to produce artifiacts">
 		<!--
@@ -306,9 +315,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</ant>
 		-->
 	</target>
-	<target name="build:grid-sample">
+	<target name="build:grid">
+		<!-- Call your build file and grid target
+		<ant inheritAll="false" inheritRefs="false" antfile="${grid.build.file}"
+			target="${grid.build.target}"
+			dir="${grid.base.dir}" >
+			<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
+		</ant>
+		-->
+		<!-- or if you have a static file then you copy it from your source -->
 		<copy todir="${grid-sample.dist.dir}">
-			<fileset dir="${grid-sample.base.dir}">
+			<fileset dir="${grid.base.dir}">
 				<include name="sample-wsrf-war.zip"/>
 			</fileset>
 		</copy>
@@ -345,7 +362,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		dist:upgrader,
 		dist:src,
 		dist:gui-installer
-		" />
+		">
+	</target>
 
 	<target name="dist:src" description="Makes source distribution">
 		<!-- Add tasks here to zip up src into a distribution, may require some additoinal properties for distribution name" -->
@@ -355,7 +373,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		init,
 		dist:tools:retrieve:jboss,
 		dist:tools:retrieve:tomcat
-		" />
+		" >
+	</target>
 
 	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
 		<get src="${jboss.src.url}" dest="${jboss.dest.file}" />
@@ -405,7 +424,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 			</fileset>
 		</copy>
 		<dist-prep />
-
 	</target>
 
 	<target name="dist:installer" depends="dist:installer:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
@@ -536,7 +554,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		init,
 		test:bda-blueprints-api,
 		test:bda-blueprints-webapp
-		" />
+		" >
+	</target>
 
 
 	<target name="test:bda-blueprints-api" depends="init" description="Calls test target for sub-project">
@@ -560,7 +579,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		init,
 		static-analysis:bda-blueprints-api,
 		static-analysis:bda-blueprints-webapp
-		" />
+		" >
+	</target>
 
 	<target name="static-analysis:bda-blueprints-api" depends="init" description="Calls static-analysis target for sub-project">
 		<!--
@@ -581,7 +601,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	<target name="continuous-integration" description="calls wrapper targets for continuous integration build" depends="
 		build:all,
 		static-analysis:all
-		" />
+		" >
+	</target>
 
 
 	<target name="init:ivy" description="Initializes ivy-repo.based on ivy definition file and ivy settings file">
@@ -626,7 +647,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		test:selenium:init,
 		test:selenium:run,
 		test:seleniumrc:stop
-		" />
+		" >
+	</target>
 
 	<target name="test:selenium:run" description="Executes selenium test suite">
 		<!-- Another optoin  for running tests
@@ -710,27 +732,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 		</for>
 	</target>
 
-	<!-- Sample targets to use against a maven project -->
-	<macrodef name="maven">
-		<attribute name="maven.profile.list"/>
-		<attribute name="maven.goal.list"/>
-		<attribute name="maven.dir"/>
-		<sequential>
-			<condition property="mvn.cmd" value="mvn">
-				<or>
-					<os family="unix" />
-					<os family="mac" />
-				</or>
-			</condition>
-			<condition property="mvn.cmd" value="mvn.bat">
-				<os family="windows" />
-			</condition>
-			<exec executable="${mvn.cmd}" dir="@{maven.dir}" failonerror="true">
-				<arg line="@{maven.profile.list} @{maven.goal.list}"/>
-			</exec>
-		</sequential>
-	</macrodef>
-
 	<target name="maven-build:bda-blueprints-webapp" depends="init, maven-build:bda-blueprints-api">
 		<delete>
 			<fileset dir="${bda-blueprints-webapp.base.dir}">
@@ -783,7 +784,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/generic/trunk/software/build.xml $
 	</target>
 
 	<!-- Since static-analysis and testing cannot be called separately , just have SA depend on test. -->
-	<target name="maven-static-analysis:all" description="Runs static-analysis target for all sub-projects" depends="maven-test:all" />
+	<target name="maven-static-analysis:all" description="Runs static-analysis target for all sub-projects" depends="maven-test:all" >
+	</target>
 
 	<!-- These targets are for adding files to ivy -->
 	<target name="ivy:module:add2repo">
