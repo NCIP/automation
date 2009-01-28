@@ -364,43 +364,47 @@
 			<checkout url="${svn.private.url}" revision="HEAD" destPath="${svn.private.local.checkout}" />
 		</svn>
 				
-		<groovy>
-			<arg line="${svn.private.local.checkout}"/>
-			def privatePropertiesLocation=args[0]
+               <groovy>
 
-			def ant = new AntBuilder()
-			try
-			{			
-				propertiesDir = new File(args[0] + "/properties").getAbsoluteFile()
-				devInstallPropertiesFile = "dev-install.properties"
-				devUpgradePropertiesFile = "dev-upgrade.properties"
-				
-				if(propertiesDir.exists())
-				{
-					flag = false
-					propertiesDir.eachFileRecurse
-					{ file ->
-						if (file.isFile())
-						{									
-				 			if(Pattern.matches("*dev*upgrade.properties", file.getName()) || Pattern.matches("*dev*install.properties", file.getName()))
-				 				flag = true				 				
-				 		}
-				 	}
-				 	if(!flag)
-				 		ant.fail("PRIVATE REPOSITORY FAILED: Can not find the install or upgrade property files ")
-				}
-				else
-				{
-					println "directory does not exist"
-					ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
-				}
-			}
-			catch(FileNotFoundException ex)
-			{
-				ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
-			}
+                       <arg line="${svn.private.local.checkout}"/>
+                       import java.util.regex.Matcher
+                       import java.util.regex.Pattern
 
-		</groovy>
+                       def privatePropertiesLocation=args[0]
+                       def ant = new AntBuilder()
+
+                       try
+                       {
+                               propertiesDir = new File(args[0] + "/properties").getAbsoluteFile()
+                               java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
+                               java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
+
+                               if(propertiesDir.exists())
+                               {
+                                       flag = false
+                                       propertiesDir.eachFileRecurse
+                                       { file ->
+                                               if (file.isFile())
+                                               {
+                                                       if(upgradePattern.matcher(file.getName()).matches() || installPattern.matcher(file.getName()).matches())
+                                                               flag = true
+                                               }
+                                       }
+                                       if(!flag)
+                                               ant.fail("PRIVATE REPOSITORY FAILED: Can not find the install or upgrade property files ")
+                               }
+                               else
+                               {
+                                       println "directory does not exist"
+                                       ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
+                               }
+                       }
+                       catch(FileNotFoundException ex)
+                       {
+                               ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
+                       }
+
+               </groovy>
 
 	</target>
 
