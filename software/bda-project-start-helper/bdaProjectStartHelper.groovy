@@ -29,6 +29,10 @@ public class bdaProjectStartHelper
 		buildFilterLists()
 		processXmlFile('build.xml')
 		processXmlFile('install.xml')
+		filterPropertiesFile('install.properties')
+		filterPropertiesFile('upgrade.properties')
+		filterPropertiesFile('install-properties.template')
+		filterPropertiesFile('upgrade-properties.template')
 	}
 
 	private static void readProperties ()
@@ -259,5 +263,47 @@ public class bdaProjectStartHelper
 		appendFilteredTargets(fileName)
 		filterPropertiesXmlFile()
 		outputXmlFile(fileName)
+	}
+	private static void filterPropertiesFile (String fileName)
+	{
+		String fileContents = new File(templateDir + "/" + fileName).text
+		def newBuffer = ""
+		fileContents.eachLine
+		{ line ->
+			def exclude = false
+			/*
+			def propPattern="^(#.*|(.*?)=(.*))"
+			def propMatcher =java.util.regex.Pattern.compile(propPattern).matcher(line)
+			propMatcher.find()
+			def commmentLine = propMatcher.group(1)
+			def propName = propMatcher.group(2)
+			def propVal = propMatcher.group(3)
+			
+			if (propName)	
+			{
+				excludePropertyPatternList.each
+				{ excludeProp ->
+					if (line.contains(excludeProp))
+					{
+						exclude = true
+					}
+				}
+				if (! exclude) { newBuffer += line + "\n"}
+			} else
+			{
+				newBuffer += line + "\n"
+			}
+			*/
+			excludePropertyPatternList.each
+			{ excludeProp ->
+				if (line.contains(excludeProp))
+				{
+					exclude = true
+				}
+			}
+			if (! exclude) { newBuffer += line + "\n"}
+		}
+		File outFile = new File(projectSoftwareDir + "/" + fileName)
+		outFile.write(newBuffer)
 	}
 }
