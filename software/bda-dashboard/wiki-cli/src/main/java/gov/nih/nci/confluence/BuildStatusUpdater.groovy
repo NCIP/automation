@@ -28,6 +28,7 @@ class BuildStatusUpdater {
         // get most recent tempates
 		doCmd("${confluence} -a getPageSource --space \""+deploymentStatusTemplateSpace+"\" --title \"" + deploymentStatusTemplateFile+ "\" --file _temp.txt")
 		String statement   = "select PRODUCT,DEV,QA,STAGE,PROD from PROJECT_BUILD_STATUS "
+	
 
         int count = 0
         connection.eachRow(statement) { row ->
@@ -60,9 +61,14 @@ class BuildStatusUpdater {
 		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")
 		String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,BDA_UTILS_VERSION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES from PROJECT_CERTIFICATION_STATUS "
 
-	int count = 0
+	List projectRows = connection.rows(statement)	
+	
+	println count
+	count =projectRows.size()
+	println projectRows.size()
+	
 	connection.eachRow(statement) { row ->
-	    count++
+	    
 
 	    String productName    = row.PRODUCT;
 	    String certificationStatus = row.CERTIFICATION_STATUS;	    
@@ -78,9 +84,11 @@ class BuildStatusUpdater {
 
 			println findReplace
 			// update page
-			doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplace}")
-			doCmd("${confluence} -a getPageSource --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"    --file "+certificationTemplateFile+"_temp.txt")
+			//doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplace}")
+			//doCmd("${confluence} -a getPageSource --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"    --file "+certificationTemplateFile+"_temp.txt")
 		}
+	   count--	
+	
 	}
 	
 	
