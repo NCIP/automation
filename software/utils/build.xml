@@ -42,8 +42,8 @@
 	<target name="templates2ivy">
 		<delete file="${bda-templates.dest.location}"/>
 		<zip destfile="${bda-templates.dest.location}">
-			<zipfileset dir="${bda-templates.src.dir}/software/build" prefix="build"/>
-			<zipfileset dir="${bda-templates.src.dir}/software/common" prefix="common"/>
+			<zipfileset dir="${bda-templates.src.dir}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${bda-templates.src.dir}/software/common" excludes="**/.svn/*" prefix="common"/>
 		</zip>
 	</target>
 </project>
