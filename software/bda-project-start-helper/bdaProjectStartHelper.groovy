@@ -15,7 +15,7 @@ public class bdaProjectStartHelper
 	static databasePreferred = ''
 	static props = new Properties()
 	static fileContentsBuffer = ""
-	static projectSoftwareDir =""
+	static projectBuildDir =""
 	static templateDir = ""
 
 	static targetExcList = []
@@ -29,6 +29,7 @@ public class bdaProjectStartHelper
 		buildFilterLists()
 		processXmlFile('build.xml')
 		processXmlFile('install.xml')
+		filterPropertiesFile('project.properties')
 		filterPropertiesFile('install.properties')
 		filterPropertiesFile('upgrade.properties')
 		filterPropertiesFile('install-properties.template')
@@ -51,12 +52,13 @@ public class bdaProjectStartHelper
 		def useGrid=props.get('use.grid')
 		def useGuiInstaller=props.get('use.gui-installer')
 		def useMaven=props.get('use.maven')
+		def projectRootDir=props.get('project.root.dir')
 
 		projectReplaceString=props.get('project.prefix')
 		databaseTypeList=props.get('database.type.list').split(',')
 		databasePreferred=props.get('database.preferred')
 		templateDir=props.get('bda.template.dir')
-		projectSoftwareDir=props.get('project.software.dir')
+		projectBuildDir= projectRootDir + "/software/build"
 
 		if (useJboss != "true") 
 		{
@@ -254,8 +256,11 @@ public class bdaProjectStartHelper
 
 	private static void outputXmlFile (String fileName)
 	{
-		File outFile = new File(projectSoftwareDir + "/" + fileName)
-		outFile.write(fileContentsBuffer)
+		def tempBuffer =""
+		fileContentsBuffer.eachLine { tempBuffer += it.replaceAll(projectSearchString,projectReplaceString) + "\n"}
+		
+		File outFile = new File(projectBuildDir + "/" + fileName)
+		outFile.write(tempBuffer)
 	}
 	private static void processXmlFile (String fileName)
 	{
@@ -303,7 +308,9 @@ public class bdaProjectStartHelper
 			}
 			if (! exclude) { newBuffer += line + "\n"}
 		}
-		File outFile = new File(projectSoftwareDir + "/" + fileName)
-		outFile.write(newBuffer)
+		def tempBuffer =""
+		newBuffer.eachLine { tempBuffer += it.replaceAll(projectSearchString,projectReplaceString) + "\n"}
+		File outFile = new File(projectBuildDir + "/" + fileName)
+		outFile.write(tempBuffer)
 	}
 }

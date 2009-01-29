@@ -2328,6 +2328,7 @@ software/bda-installer/src-installer/userInputLang.xml_eng -text
 software/bda-installer/src-installer/userInputSpec.xml -text
 software/bda-installer/src-installer/windir.txt -text
 software/bda-project-start-helper/bdaProjectStartHelper.groovy -text
+software/bda-project-start-helper/build.xml -text
 software/bda-project-start-helper/helper.properties -text
 software/bda-project-start-helper/readme.txt -text
 software/bda-project-start-helper/template-dir/build.xml -text
