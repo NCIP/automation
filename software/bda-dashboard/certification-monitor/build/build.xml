@@ -96,6 +96,9 @@
 	<property name="svn.private.url" value="${project.svn.private.url}" />
 	<property name="svn.private.local.checkout" value="${project.local.private.checkout}" />
 	
+	
+	<property name="directory.name" value="${user.home}/apps"/>
+	
 	<switch value="${database.type}">
 		<case value="oracle">
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
@@ -139,37 +142,8 @@
 	<!-- Targets -->
 
 
-	<target name="init" description="Sets up build are and initalizes variables">
-		
+	<target name="init" description="Sets up build are and initalizes variables">		
 		<echo message="IN INIT::::${database.type}"/>
-		<property name="directory.name" value="${user.home}/apps"/>
-		
-		<groovy>
-			<arg line="${directory.name}"/>
-			def directoryName=args[0]
-			proc1 = 'ps -ef'.execute()
-			proc2 = "grep ${directoryName}".execute()
-			proc3 = 'grep java'.execute()
-
-			proc1 | proc2 | proc3
-			proc3.waitFor()
-
-			proc3.in.eachLine { 
-				line -> line.split('\\s+').eachWithIndex {processToken, i -> 
-					if(i == 1)
-						{
-							println "${processToken}"
-							proc4 ="kill -9 ${processToken}".execute()
-							proc4.waitFor()
-							proc4.in.eachLine { 
-								line2 -> println line2
-							}
-						}
-				}
-			 }
-                </groovy>
-		<delete dir="${user.home}/apps"/>
-
 	</target>
 
 	<target name="build:project" depends="init,build:single-command-build" description="Sets up build are and initalizes variables">
@@ -228,7 +202,36 @@
 		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.build.target}" dir="${master.build.location}"/>		
 	</target>
 
-	<target name="build:single-command-deployment" depends="init">
+	<target name="clean-deployments">		
+		<groovy>
+			<arg line="${directory.name}"/>
+			def directoryName=args[0]
+			proc1 = 'ps -ef'.execute()
+			proc2 = "grep ${directoryName}".execute()
+			proc3 = 'grep java'.execute()
+
+			proc1 | proc2 | proc3
+			proc3.waitFor()
+
+			proc3.in.eachLine { 
+				line -> line.split('\\s+').eachWithIndex {processToken, i -> 
+					if(i == 1)
+						{
+							println "${processToken}"
+							proc4 ="kill -9 ${processToken}".execute()
+							proc4.waitFor()
+							proc4.in.eachLine { 
+								line2 -> println line2
+							}
+						}
+				}
+			 }
+		</groovy>
+		<delete dir="${user.home}/apps"/>
+	</target>
+
+
+	<target name="build:single-command-deployment" depends="init,clean-deployments">
 
 		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.deployment.target}" dir="${master.build.location}"/>
 
