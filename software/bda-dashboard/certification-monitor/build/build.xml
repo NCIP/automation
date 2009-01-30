@@ -150,7 +150,7 @@
 		<echo message="call build:project target.. "/>
 	</target>
 	
-	<target name="validate:JAD" depends="init" description="Runs pre-install validation checks bda-utils">
+	<target name="validate:JAD" depends="init,clean-deployments" description="Runs pre-install validation checks bda-utils">
 		<validate-environment
 			ant.check.version="${ant.minimum.version}"
 			java.check.version.major="${java.major.version}"
@@ -231,7 +231,7 @@
 	</target>
 
 
-	<target name="build:single-command-deployment" depends="init,clean-deployments">
+	<target name="build:single-command-deployment" depends="init">
 
 		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.deployment.target}" dir="${master.build.location}"/>
 
