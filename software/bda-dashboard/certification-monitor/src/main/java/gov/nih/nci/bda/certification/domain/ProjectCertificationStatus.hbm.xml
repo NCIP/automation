@@ -15,6 +15,7 @@
          <property name="bdaUtilsVersion" column="BDA_UTILS_VERSION"/>
          <property name="templateValidation" column="TEMPLATE_VALIDATION"/>
          <property name="privateRepositoryProperties" column="PRIVATE_PROPERTIES"/>
+         <property name="latestCIBuild" column="CI_BUILD"/>
                   
      </class>	
 </hibernate-mapping>

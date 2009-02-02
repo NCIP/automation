@@ -12,6 +12,7 @@ public class ProjectCertificationStatus {
 	private String bdaUtilsVersion;
 	private String templateValidation;
 	private String privateRepositoryProperties;
+	private String latestCIBuild;
 	
 	public int getId() {
 		return id;
@@ -72,6 +73,12 @@ public class ProjectCertificationStatus {
 	}
 	public void setPrivateRepositoryProperties(String privateRepositoryProperties) {
 		this.privateRepositoryProperties = privateRepositoryProperties;
+	}
+	public String getLatestCIBuild() {
+		return latestCIBuild;
+	}
+	public void setLatestCIBuild(String latestCIBuild) {
+		this.latestCIBuild = latestCIBuild;
 	}
 		
 }

@@ -67,6 +67,7 @@
 	<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
 	<propertycopy name="project.svn.private.url" from="${project.name}.private.repository" />
 	<propertycopy name="project.local.private.checkout" from="${project.name}.local.private.checkout" />
+	<propertycopy name="project.ci-server.hostname" from="${project.name}.ci-server.hostname" />
 	
 
 
@@ -96,8 +97,12 @@
 	<property name="svn.private.url" value="${project.svn.private.url}" />
 	<property name="svn.private.local.checkout" value="${project.local.private.checkout}" />
 	
+	<property name="ci-server.hostname" value="${project.ci-server.hostname}" />
 	
 	<property name="directory.name" value="${user.home}/apps"/>
+	
+	<property name="local.hudson.dir" value="${user.home}/apps/hudson_logs"/>
+	
 	
 	<switch value="${database.type}">
 		<case value="oracle">
@@ -436,6 +441,43 @@
 
                </groovy>
 
+	</target>
+
+	<target name="build:ci-server" depends="init">				
+		<if>
+			<isreachable host="${ci-server.hostname}" timeout="5"/>
+			<then>
+				<echo message="${ci-server.hostname} reached."/>				
+				
+				<sshexec host="137.187.180.98" username="hudsonuser" password="BDA@NCI" command="cd /usr/local/hudsonuser/hudson_data/jobs/build-certification/builds/;ls -ct1 | head -1 > ../latestdirectory.txt" trust="true"/>
+
+				<scp  file="hudsonuser@137.187.180.98:/usr/local/hudsonuser/hudson_data/jobs/build-certification/latestdirectory.txt" todir="${local.hudson.dir}" password="BDA@NCI" trust="true" sftp="true"/>
+
+				<loadfile property="latest.build.dir" srcFile="${local.hudson.dir}\latestdirectory.txt">
+				  <filterchain>
+				    <striplinebreaks/>
+				  </filterchain>
+				</loadfile>
+				
+				<echo message="${latest.build.dir}"/>
+
+				<scp  file="hudsonuser@137.187.180.98:/usr/local/hudsonuser/hudson_data/jobs/build-certification/builds/${latest.build.dir}/*" todir="C:\hudson-logs" password="BDA@NCI" trust="true" sftp="true"/>
+
+				<groovy>
+					<arg line="${latest.build.dir}"/>
+					def latestCIBuild=args[0]
+
+					def ant = new AntBuilder()
+
+					project.setProperty("certification.property.value",latestCIBuild);
+				</groovy>
+
+				
+			</then>
+			<else>
+				<echo message="Could not reach host ${ci-server.hostname}."/>
+			</else>
+		</if>
 	</target>
 
 
