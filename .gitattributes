@@ -2331,13 +2331,6 @@ software/bda-project-start-helper/bdaProjectStartHelper.groovy -text
 software/bda-project-start-helper/build.xml -text
 software/bda-project-start-helper/helper.properties -text
 software/bda-project-start-helper/readme.txt -text
-software/bda-project-start-helper/template-dir/build.xml -text
-software/bda-project-start-helper/template-dir/install-properties.template -text
-software/bda-project-start-helper/template-dir/install.properties -text
-software/bda-project-start-helper/template-dir/install.xml -text
-software/bda-project-start-helper/template-dir/project.properties -text
-software/bda-project-start-helper/template-dir/upgrade-properties.template -text
-software/bda-project-start-helper/template-dir/upgrade.properties -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text

@@ -11,7 +11,8 @@ public class bdaProjectStartHelper
 {
 	static excludeTargetPatternList = []
 	static excludePropertyPatternList = []
-	static projectSearchString = 'bda-blueprints'
+	static projectSearchString1 = 'bda-blueprints'
+	static projectSearchString2 = 'blueprints-webapp'
 	static projectReplaceString = ''
 	static databaseTypeList = []
 	static databasePreferred = ''
@@ -258,11 +259,13 @@ public class bdaProjectStartHelper
 
 	private static void outputXmlFile (String fileName)
 	{
-		def tempBuffer =""
-		fileContentsBuffer.eachLine { tempBuffer += it.replaceAll(projectSearchString,projectReplaceString) + "\n"}
+		def tempBuffer1 =""
+		def tempBuffer2 =""
+		fileContentsBuffer.eachLine { tempBuffer1 += it.replaceAll(projectSearchString1,projectReplaceString) + "\n"}
+		tempBuffer1.eachLine { tempBuffer2 += it.replaceAll(projectSearchString2,projectReplaceString) + "\n"}
 		
 		File outFile = new File(projectBuildDir + "/" + fileName)
-		outFile.write(tempBuffer)
+		outFile.write(tempBuffer2)
 	}
 	private static void processXmlFile (String fileName)
 	{
@@ -310,9 +313,11 @@ public class bdaProjectStartHelper
 			}
 			if (! exclude) { newBuffer += line + "\n"}
 		}
-		def tempBuffer =""
-		newBuffer.eachLine { tempBuffer += it.replaceAll(projectSearchString,projectReplaceString) + "\n"}
+		def tempBuffer1 =""
+		def tempBuffer2 =""
+		newBuffer.eachLine { tempBuffer1 += it.replaceAll(projectSearchString1,projectReplaceString) + "\n"}
+		tempBuffer1.eachLine { tempBuffer2 += it.replaceAll(projectSearchString2,projectReplaceString) + "\n"}
 		File outFile = new File(projectBuildDir + "/" + fileName)
-		outFile.write(tempBuffer)
+		outFile.write(tempBuffer2)
 	}
 }
