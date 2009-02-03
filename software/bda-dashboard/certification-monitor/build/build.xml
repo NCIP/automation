@@ -68,9 +68,9 @@
 	<propertycopy name="project.svn.private.url" from="${project.name}.private.repository" />
 	<propertycopy name="project.local.private.checkout" from="${project.name}.local.private.checkout" />
 	<propertycopy name="project.ci-server.hostname" from="${project.name}.ci-server.hostname" />
+	<propertycopy name="project.ci-server.jobname" from="${project.name}.ci-server.jobname" />
+
 	
-
-
 	<echo message="databasetype::${project.database.type}"/>
 	<property name="database.type" value="${project.database.type}" />
 	<property name="database.system.user" value="${project.database.system.user}" />
@@ -98,6 +98,7 @@
 	<property name="svn.private.local.checkout" value="${project.local.private.checkout}" />
 	
 	<property name="ci-server.hostname" value="${project.ci-server.hostname}" />
+	<property name="ci-server.jobname" value="${project.ci-server.jobname}" />
 	
 	<property name="directory.name" value="${user.home}/apps"/>
 	
@@ -449,9 +450,9 @@
 			<then>
 				<echo message="${ci-server.hostname} reached."/>				
 				
-				<sshexec host="137.187.180.98" username="hudsonuser" password="BDA@NCI" command="cd /usr/local/hudsonuser/hudson_data/jobs/build-certification/builds/;ls -ct1 | head -1 > ../latestdirectory.txt" trust="true"/>
+				<sshexec host="${ci-server.hostname}" username="hudsonuser" password="BDA@NCI" command="cd /usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/;ls -ct1 | head -1 > ../latestdirectory.txt" trust="true"/>
 
-				<scp  file="hudsonuser@137.187.180.98:/usr/local/hudsonuser/hudson_data/jobs/build-certification/latestdirectory.txt" todir="${local.hudson.dir}" password="BDA@NCI" trust="true" sftp="true"/>
+				<scp  file="hudsonuser@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/latestdirectory.txt" todir="${local.hudson.dir}" password="BDA@NCI" trust="true" sftp="true"/>
 
 				<loadfile property="latest.build.dir" srcFile="${local.hudson.dir}\latestdirectory.txt">
 				  <filterchain>
@@ -461,7 +462,7 @@
 				
 				<echo message="${latest.build.dir}"/>
 
-				<scp  file="hudsonuser@137.187.180.98:/usr/local/hudsonuser/hudson_data/jobs/build-certification/builds/${latest.build.dir}/*" todir="C:\hudson-logs" password="BDA@NCI" trust="true" sftp="true"/>
+				<scp  file="hudsonuser@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="C:\hudson-logs" password="BDA@NCI" trust="true" sftp="true"/>
 
 				<groovy>
 					<arg line="${latest.build.dir}"/>
