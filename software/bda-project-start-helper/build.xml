@@ -14,7 +14,7 @@
 
 	<property name="working.dir" location="${basedir}/working"/>
 	<property name="lib.dir" location="${working.dir}/lib" />
-	<property name="template.exploded.dir" location="${working.dir}/templates-exploded"/>
+	<property name="template.exploded.dir" location="${bda.template.dir}"/>
 	<property name="template.working.dir" location="${working.dir}/templates-working"/>
 		
 	<property name="bda-utils.dir" location="${working.dir}/bda-utils" />

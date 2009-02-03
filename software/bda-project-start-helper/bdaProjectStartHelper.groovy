@@ -57,7 +57,7 @@ public class bdaProjectStartHelper
 		projectReplaceString=props.get('project.prefix')
 		databaseTypeList=props.get('database.type.list').split(',')
 		databasePreferred=props.get('database.preferred')
-		templateDir=props.get('bda.template.dir')
+		templateDir=props.get('bda.template.dir') + "/build"
 		projectBuildDir= projectRootDir + "/software/build"
 
 		if (useJboss != "true") 
