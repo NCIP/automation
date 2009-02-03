@@ -1,7 +1,6 @@
 ##############################################################
 #
-# $Id: linux-install.properties 4582 2008-04-28 22:06:12Z kascice $
-# $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-template/software/build/install.properties $
+# bda-build-templates version 0.10.0-beta
 #
 # This properties file template for all .properties to adhere (The "interface")
 # 

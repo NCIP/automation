@@ -1,7 +1,6 @@
 ##############################################################
 #
-# $Id: linux-install.properties 4582 2008-04-28 22:06:12Z kascice $
-# $HeadURL: http://gforge.nci.nih.gov/svnroot/bda-blueprints-webapp/trunk/software/linux-install.properties $
+# bda-build-templates version 0.10.0-beta
 #
 # This properties file is for properties for linux developer desktop builds and ci server builds.
 # 
