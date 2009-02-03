@@ -141,7 +141,8 @@
 	</target>
 	
 	<target name="copy-filter-build">
-		<script language="groovy" src="bdaProjectStartHelper.groovy" classpathref="bda-utils.classpath"/>
+		<!--<script language="groovy" src="bdaProjectStartHelper.groovy" classpathref="bda-utils.classpath"/>-->
+		<groovy src="bdaProjectStartHelper.groovy" classpathref="bda-utils.classpath"/>
 	</target>
 	<target name="run"
 		depends="
