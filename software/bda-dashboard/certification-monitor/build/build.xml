@@ -462,7 +462,7 @@
 				
 				<echo message="${latest.build.dir}"/>
 
-				<scp  file="hudsonuser@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="C:\hudson-logs" password="BDA@NCI" trust="true" sftp="true"/>
+				<scp  file="hudsonuser@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="BDA@NCI" trust="true" sftp="true"/>
 
 				<groovy>
 					<arg line="${latest.build.dir}"/>

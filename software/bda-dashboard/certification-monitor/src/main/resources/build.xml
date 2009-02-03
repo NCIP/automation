@@ -11,6 +11,8 @@
 		   <pathelement location="./ant.jar"/>
 		   <pathelement location="./ant-launcher.jar"/>
 		   <pathelement location="./ant-nodeps.jar"/>
+		   <pathelement location="./ant-jsch.jar"/>
+		   <pathelement location="./jsch-0.1.39.jar"/>
 		   <pathelement location="./xercesImpl.jar"/>
 		   <pathelement location="./tools.jar"/>
 		   <pathelement location="./build-certification.jar"/>
