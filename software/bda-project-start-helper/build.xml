@@ -1,5 +1,5 @@
 <project name="bda-templates-helper" default="run" basedir="." >
-
+	<!-- helper-scripts version 0.1.0 -->
 	<property file="helper.properties"/>
 
 	<property name="project.software.dir" location="${project.root.dir}/software"/>

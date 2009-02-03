@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+// helper scripts version 0.1.0
+
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import java.util.Properties
