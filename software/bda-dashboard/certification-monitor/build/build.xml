@@ -483,10 +483,10 @@
 					if(i == 0)
 						{
 							Date dtConverted = format.parse(processToken);
-							println("Time Stamp Format" + dtConverted.toString())
+							println("Time Stamp Format" + dtConverted)
 							parsedDate = formatter.format(dtConverted);
-							println("Time Stamp Format" + parsedDate.toString());
-							project.setProperty("certification.property.value",latestCIBuild);
+							println("Time Stamp Format" + parsedDate);
+							project.setProperty("certification.property.value",parsedDate);
 						}
 					}
 				</groovy>
