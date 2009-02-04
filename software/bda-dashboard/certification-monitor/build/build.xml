@@ -69,6 +69,8 @@
 	<propertycopy name="project.local.private.checkout" from="${project.name}.local.private.checkout" />
 	<propertycopy name="project.ci-server.hostname" from="${project.name}.ci-server.hostname" />
 	<propertycopy name="project.ci-server.jobname" from="${project.name}.ci-server.jobname" />
+	<propertycopy name="project.ci-server.username" from="${project.name}.ci-server.username" />
+	<propertycopy name="project.ci-server.password" from="${project.name}.ci-server.password" />
 
 	
 	<echo message="databasetype::${project.database.type}"/>
@@ -99,6 +101,8 @@
 	
 	<property name="ci-server.hostname" value="${project.ci-server.hostname}" />
 	<property name="ci-server.jobname" value="${project.ci-server.jobname}" />
+	<property name="ci-server.username" value="${project.ci-server.username}" />
+	<property name="ci-server.password" value="${project.ci-server.password}" />
 	
 	<property name="directory.name" value="${user.home}/apps"/>
 	
@@ -450,9 +454,9 @@
 			<then>
 				<echo message="${ci-server.hostname} reached."/>				
 				
-				<sshexec host="${ci-server.hostname}" username="hudsonuser" password="BDA@NCI" command="cd /usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/;ls -ct1 | head -1 > ../latestdirectory.txt" trust="true"/>
+				<sshexec host="${ci-server.hostname}" username="${ci-server.username}" password="${ci-server.password}" command="cd /usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/;ls -ct1 | head -1 > ../latestdirectory.txt" trust="true"/>
 
-				<scp  file="hudsonuser@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/latestdirectory.txt" todir="${local.hudson.dir}" password="BDA@NCI" trust="true" sftp="true"/>
+				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/latestdirectory.txt" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
 
 				<loadfile property="latest.build.dir" srcFile="${local.hudson.dir}\latestdirectory.txt">
 				  <filterchain>
@@ -462,15 +466,29 @@
 				
 				<echo message="${latest.build.dir}"/>
 
-				<scp  file="hudsonuser@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="BDA@NCI" trust="true" sftp="true"/>
+				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
 
 				<groovy>
 					<arg line="${latest.build.dir}"/>
+					import java.text.SimpleDateFormat;
+					import java.util.Date;
+					
 					def latestCIBuild=args[0]
 
 					def ant = new AntBuilder()
+					def format = new SimpleDateFormat("yyyy-MM-dd");
+					def formatter = new SimpleDateFormat("EEE, dd MMM yyyy");
 
-					project.setProperty("certification.property.value",latestCIBuild);
+					latestCIBuild.split('_').eachWithIndex {processToken, i -> 
+					if(i == 0)
+						{
+							Date dtConverted = format.parse(processToken);
+							println("Time Stamp Format" + dtConverted.toString())
+							parsedDate = formatter.format(dtConverted);
+							println("Time Stamp Format" + parsedDate.toString());
+							project.setProperty("certification.property.value",latestCIBuild);
+						}
+					}
 				</groovy>
 
 				
