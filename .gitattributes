@@ -2189,6 +2189,7 @@ software/bda-dashboard/certification-monitor/build.xml -text
 software/bda-dashboard/certification-monitor/build/build.xml -text
 software/bda-dashboard/certification-monitor/build/project.properties -text
 software/bda-dashboard/certification-monitor/install.properties -text
+software/bda-dashboard/certification-monitor/lib/ant-jsch.jar -text
 software/bda-dashboard/certification-monitor/lib/ant-launcher.jar -text
 software/bda-dashboard/certification-monitor/lib/ant-nodeps.jar -text
 software/bda-dashboard/certification-monitor/lib/ant.jar -text
@@ -2197,6 +2198,7 @@ software/bda-dashboard/certification-monitor/lib/commons-collections-3.1.jar -te
 software/bda-dashboard/certification-monitor/lib/dom4j-1.6.1.jar -text
 software/bda-dashboard/certification-monitor/lib/hibernate3.jar -text
 software/bda-dashboard/certification-monitor/lib/javassist-3.4.GA.jar -text
+software/bda-dashboard/certification-monitor/lib/jsch-0.1.39.jar -text
 software/bda-dashboard/certification-monitor/lib/jta-1.1.jar -text
 software/bda-dashboard/certification-monitor/lib/mysql-connector-java-5.0.5.jar -text
 software/bda-dashboard/certification-monitor/lib/slf4j-api-1.5.2.jar -text
