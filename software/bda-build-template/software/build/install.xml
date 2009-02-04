@@ -410,35 +410,19 @@
 
 	<target name="install:jboss:configure:log4j" description="Configure custom entries in system wide log4j" unless="exclude.jboss" >
 		<echo message="Configuring Log4J"/>
-		<!-- Insert an appender -->
-		<!--<copy todir="${jboss.home}/server/${jboss.server.name}/conf" file="${jboss-conf.dir.src}/log4j.dtd"/>-->
-		<!--
-		<osfamily property="os.family"/>
-		<echo message="os.family=${os.family}"/>
-		<switch value="${os.family}">
-			<case value="unix">
-				<copy todir="${env.PWD}" file="${jboss-conf.dir.src}/log4j.dtd"/>
-			</case>
-			<case value="mac">
-				<copy todir="${env.PWD}" file="${jboss-conf.dir.src}/log4j.dtd"/>
-			</case>
-			<case value="windows">
-				<copy todir="${user.dir}" file="${jboss-conf.dir.src}/log4j.dtd"/>
-			</case>
-		</switch>
-		-->
 
-		<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.pre"/>
+		<property name="log4j.file.name" value="log4j.xml"/>
+		<copy file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}" tofile="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}.pre"/>
 
-		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
+		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}"
 			byline="true"
 			match="^(&lt;!DOCTYPE.*)"
 			replace="&lt;!-- \1 --&gt;"
 			/>
-		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.1"/>-->
+		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}" tofile="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}.1"/>-->
 
-		<xmltask source="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
-			dest="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml">
+		<xmltask source="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}"
+			dest="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}">
 			<xmlcatalog refid="installer.catalog"/>
 			<remove path="/log4j:configuration/appender[@name='TestAppender']"/>
 			<insert path="/log4j:configuration">
@@ -465,16 +449,16 @@
 				]]>
 			</insert>
 		</xmltask>
-		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.2"/>-->
+		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}" tofile="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}.2"/>-->
 		<validate-log4j
 			/>                              
 
-		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
+		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}"
 			byline="true"
 			match="^&lt;!-- (&lt;!DOCTYPE.*) --&gt;"
 			replace="\1"
 			/>
-		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml" tofile="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml.post"/>-->
+		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}" tofile="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}.post"/>-->
 	</target>
 	<target name="install:jboss:configure" description="Configure JBoss (bindings, login-config.xml, ect)" unless="exclude.jboss"
 		depends="
