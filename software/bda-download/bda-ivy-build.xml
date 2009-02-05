@@ -33,7 +33,6 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 
 	<property name="ivy.dest.file" value="${lib.dir}/${ivy.file}" />
 	<property name="ivy-core.dest.file" value="${lib.dir}/${ivy-core.file}" />
-
 	<!-- Paths-->
 	<path id="ivy.classpath">
 		<fileset dir="${lib.dir}">
@@ -51,6 +50,7 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 	</condition>
 	<available file="${ivy.settings.file}" property="ivy.settings.available" />
 	<available file="${ivy.bda.file}" property="ivy.bda.available" />
+	<echo message="comonlibrary.dir=${commonlibrary.dir}"/>
 
 	<!-- Targets -->
 	<target name="init" description="Makes transcient directories">
