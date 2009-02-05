@@ -17,6 +17,10 @@ This file is the is the settings file used by IVY.  It is a good starting point 
 				<artifact pattern="${bda.local.repo.dir}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 				<ivy pattern="${bda.local.repo.dir}/[organisation]/[module]/[revision]/ivy.xml" />
 			</filesystem>      
+			<filesystem name="local-ncicb-ivy-repo" local="true">
+				<artifact pattern="${commonlibrary.dir}/ivy-repo/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+				<ivy pattern="${commonlibrary.dir}/ivy-repo/[organisation]/[module]/[revision]/ivy.xml" />
+			</filesystem>           
 			<url name="ncicb-ivy-repo">
 				<artifact pattern="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 				<ivy pattern="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/[organisation]/[module]/[revision]/ivy.xml" />
