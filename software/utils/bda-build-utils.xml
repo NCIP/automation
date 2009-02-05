@@ -14,7 +14,7 @@ $HeadURL$
 
 	<!-- Supported versions --> 
 	<property name="jboss.version.min" value="4.0.4"/>
-	<property name="jboss.version.max" value="4.0.5"/>
+	<property name="jboss.version.max" value="4.2.2"/>
 	<property name="tomcat.version.min" value="5.0.0"/>
 	<property name="tomcat.version.max" value="5.5.999"/>
 	<!-- PATHS -->
