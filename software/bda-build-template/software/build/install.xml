@@ -452,6 +452,7 @@
 		</xmltask>
 		<!--<copy file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}" tofile="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}.2"/>-->
 		<validate-log4j
+			log4j.template.file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}"
 			/>                              
 
 		<replaceregexp file="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}"
