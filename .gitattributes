@@ -2226,8 +2226,6 @@ software/bda-dashboard/certification-monitor/src/main/sql/create_schema_buildmon
 software/bda-dashboard/certification-monitor/src/main/sql/insert_target_lookup.sql -text
 software/bda-dashboard/docs/BDA_Certification_Stories.doc -text
 software/bda-dashboard/docs/BDA_Certification_design.doc -text
-software/bda-dashboard/docs/bda-dashboard.vsd -text
-software/bda-dashboard/docs/dashboard_sequence.vsd -text
 software/bda-dashboard/wiki-cli/.classpath -text
 software/bda-dashboard/wiki-cli/.project -text
 software/bda-dashboard/wiki-cli/README.txt -text
