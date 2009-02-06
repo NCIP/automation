@@ -7,7 +7,7 @@
 	<property name="project.gui-installer.dir" location="${project.build.dir}/gui-installer"/>
 	<property name="project.common.dir" location="${project.software.dir}/common"/>
 	<property name="project.resource.base.dir" location="${project.common.dir}/resource"/>
-	<property name="project.resource.jboss.dir" location="${project.project.base.dir}/jboss"/>
+	<property name="project.resource.jboss.dir" location="${project.project.base.dir}/jboss-conf"/>
 	<property name="project.resource.tomcat.dir" location="${project.project.base.dir}/tomcat"/>
 	<property name="project.resource.grid.dir" location="${project.project.base.dir}/grid"/>
 
@@ -144,13 +144,17 @@
 		<!--<script language="groovy" src="bdaProjectStartHelper.groovy" classpathref="bda-utils.classpath"/>-->
 		<groovy src="bdaProjectStartHelper.groovy" classpathref="bda-utils.classpath"/>
 	</target>
+	<target name="finalize">
+		<copy file="${project.resource.jboss.dir}/bda-blueprints-ds.xml" tofile="${project.resource.jboss.dir}/${project.prefix}-ds.xml"/>
+	</target>
 	<target name="run"
 		depends="
 		verify-project-structure,
 		get-templates,
 		copy-common,
 		copy-conditional,
-		copy-filter-build
+		copy-filter-build,
+		finalize
 		" >
 	</target>
 </project>
