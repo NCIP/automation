@@ -1535,6 +1535,9 @@ $HeadURL$
 			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 				<xmlcatalog refid="installer.catalog"/>
 				<remove path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']"/>
+			</xmltask>
+			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+				<xmlcatalog refid="installer.catalog"/>
 				<insert path="/server/mbean[@code='org.jboss.util.property.jmx.SystemPropertyClassValue']"
 					position="after">
 					<![CDATA[
@@ -2648,6 +2651,12 @@ $HeadURL$
 			<xmltask source="${jmx-console.web-xml.file}"
 				dest="${jmx-console.web-xml.file}">
 				<remove path="/web-app/security-constraint"/>
+				<remove path="/web-app/login-config"/>
+				<remove path="/web-app/security-role"/>
+			</xmltask>
+			<xmltask source="${jmx-console.web-xml.file}"
+				dest="${jmx-console.web-xml.file}"
+				failWithoutMatch="true" >
 				<insert path="/web-app">
 					<![CDATA[
 					<security-constraint>
@@ -2667,7 +2676,6 @@ $HeadURL$
 
 					]]>
 				</insert>
-				<remove path="/web-app/login-config"/>
 				<insert path="/web-app">
 					<![CDATA[
 					<login-config>
@@ -2676,7 +2684,6 @@ $HeadURL$
 					</login-config>
 					]]>
 				</insert>
-				<remove path="/web-app/security-role"/>
 				<insert path="/web-app">
 					<![CDATA[
 					<security-role>
@@ -2691,6 +2698,10 @@ $HeadURL$
 			<xmltask source="${jmx-console.jboss-web-xml.file}"
 				dest="${jmx-console.jboss-web-xml.file}">
 				<remove path="/jboss-web/security-domain"/>
+			</xmltask>
+			<xmltask source="${jmx-console.jboss-web-xml.file}"
+				dest="${jmx-console.jboss-web-xml.file}"
+				failWithoutMatch="true" >
 				<insert path="/jboss-web">
 					<![CDATA[
 					<security-domain>java:/jaas/jmx-console</security-domain>
@@ -2711,6 +2722,12 @@ $HeadURL$
 			<xmltask source="${web-console.web-xml.file}"
 				dest="${web-console.web-xml.file}">
 				<remove path="/web-app/security-constraint"/>
+				<remove path="/web-app/login-config"/>
+				<remove path="/web-app/security-role"/>
+			</xmltask>
+			<xmltask source="${web-console.web-xml.file}"
+				dest="${web-console.web-xml.file}"
+				failWithoutMatch="true" >
 				<insert path="/web-app">
 					<![CDATA[
 					<security-constraint>
@@ -2730,7 +2747,6 @@ $HeadURL$
 
 					]]>
 				</insert>
-				<remove path="/web-app/login-config"/>
 				<insert path="/web-app">
 					<![CDATA[
 					<login-config>
@@ -2739,7 +2755,6 @@ $HeadURL$
 					</login-config>
 					]]>
 				</insert>
-				<remove path="/web-app/security-role"/>
 				<insert path="/web-app">
 					<![CDATA[
 					<security-role>
@@ -2755,6 +2770,10 @@ $HeadURL$
 			<xmltask source="${web-console.jboss-web-xml.file}"
 				dest="${web-console.jboss-web-xml.file}">
 				<remove path="/jboss-web/security-domain"/>
+			</xmltask>
+			<xmltask source="${web-console.jboss-web-xml.file}"
+				dest="${web-console.jboss-web-xml.file}"
+				failWithoutMatch="true" >
 				<insert path="/jboss-web">
 					<![CDATA[
 					<security-domain>java:/jaas/web-console</security-domain>
@@ -3069,6 +3088,8 @@ $HeadURL$
 	<macrodef name="jboss-install-binaries">
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="jboss.binaries.file" default="${tools.dir}/${jboss.binaries.file}" />
+		<attribute name="jems.install.option" default="ejb3" />
+		<attribute name="jboss.home" default="${jboss.home}" />
 		<sequential>
 			<var name="jboss.file.is.zip" unset="true"/>
 			<propertyregex property="jboss.file.is.zip"
@@ -3092,7 +3113,7 @@ $HeadURL$
 				<isset property="jboss.file.is.jar"/>
 				<then>
 					<java jar="${tools.dir}/${jboss.binaries.file}" fork="true">
-						<arg line="-installGroup ejb3 installpath=${jboss.home}"/>
+						<arg line="-installGroup @{jems.install.option} installpath=@{jboss.home}"/>
 					</java>         
 				</then>
 			</if>
@@ -3443,9 +3464,11 @@ $HeadURL$
 					<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
 					<xmltask source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}">
-		
 						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{appserver.ssl.port}']" />
-		
+					</xmltask>
+					<xmltask source="@{appserver.server-xml.file}"
+						dest="@{appserver.server-xml.file}"
+						failWithoutMatch="true" >
 						<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']">
 							<![CDATA[
 							<Connector port="@{appserver.ssl.port}"
@@ -3636,6 +3659,10 @@ $HeadURL$
 					<xmltask source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}" >
 						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{grid.secure.port}']" />
+					</xmltask>
+					<xmltask source="@{appserver.server-xml.file}"
+						dest="@{appserver.server-xml.file}"
+						failWithoutMatch="true" >
 						<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']">
 							<![CDATA[
 							<Connector className="org.globus.tomcat.coyote.net.HTTPSConnector"
@@ -3706,9 +3733,12 @@ $HeadURL$
 				<available file="@{grid.secdesc.file}" />
 				<then>
 					<xmltask source="@{grid.secdesc.file}" 
+						dest="@{grid.secdesc.file}">
+						<remove path="/*[local-name()='securityConfig']/*[local-name()='gridmap']" />
+					</xmltask>
+					<xmltask source="@{grid.secdesc.file}" 
 						dest="@{grid.secdesc.file}"
 						failWithoutMatch="true">
-						<remove path="/*[local-name()='securityConfig']/*[local-name()='gridmap']" />
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='key-file']"
 							attr="value" 
 							value="@{appserver.conf.dir}/@{grid.secure.key.file}" />
@@ -3757,6 +3787,8 @@ $HeadURL$
 					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='publishHostName']" />
+					</xmltask>
+					<xmltask source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
 						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
 							<![CDATA[
 							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
@@ -3781,6 +3813,9 @@ $HeadURL$
 				<then>
 					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='containerSecDesc']" />
+						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='requestFlow']/*[local-name()='handler' and @type='java:org.globus.wsrf.impl.security.authentication.transport.TomcatTransportSecurityHandler']" />
+					</xmltask>
+					<xmltask source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
 						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
 							<![CDATA[
 							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
@@ -3788,7 +3823,6 @@ $HeadURL$
 								value="@{grid.secdesc.file}"/>
 							]]>
 						</insert>
-						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='requestFlow']/*[local-name()='handler' and @type='java:org.globus.wsrf.impl.security.authentication.transport.TomcatTransportSecurityHandler']" />
 						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='requestFlow']/*[local-name()='handler' and @type='java:org.globus.wsrf.handlers.URLMapper']"
 							position="after">
 							<![CDATA[
@@ -3796,7 +3830,6 @@ $HeadURL$
 								xmlns="http://xml.apache.org/axis/wsdd/"/>
 							]]>
 						</insert>
-	
 					</xmltask>
 				</then>
 			</if>
@@ -3815,6 +3848,9 @@ $HeadURL$
 				<xmlcatalog refid="installer.catalog"/>
 				<remove path="/web-app/servlet[servlet-name='WSRFServlet']/init-param[param-name='defaultProtocol']" />
 				<remove path="/web-app/servlet[servlet-name='WSRFServlet']/init-param[param-name='defaultPort']" />
+			</xmltask>
+			<xmltask source="@{web-xml.location}" dest="@{web-xml.location}" failWithoutMatch="true">
+				<xmlcatalog refid="installer.catalog"/>
 				<insert path="/web-app/servlet[servlet-name='WSRFServlet']/servlet-class"
 					position="after">
 					<![CDATA[
@@ -3878,6 +3914,9 @@ $HeadURL$
 			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
 				<xmlcatalog refid="installer.catalog"/>
 				<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Context[@path='/@{database.context.path}']"/>
+			</xmltask>
+			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
+				<xmlcatalog refid="installer.catalog"/>
 				<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']">
 					<![CDATA[
 					<Context path="/@{database.context.path}" docBase="@{database.context.path}" reloadable="false">
@@ -4053,14 +4092,23 @@ $HeadURL$
 							<echo message="Skipping configuration of GRID on Tomcat"/>
 						</else>
 					</if>
-
-					<appserver-accesslog-configure
-						appserver.conf.dir="@{tomcat.conf.dir}"
-						appserver.logs.dir="@{tomcat.logs.dir}"
-						appserver.server-xml.file="@{tomcat.server-xml.file}"
-						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
-						appserver.hostname="localhost"
-						/>
+					<if>
+						<not>
+							<equals arg1="${exclude.access-logs}" arg2="true"/>
+						</not>
+						<then>
+							<appserver-accesslog-configure
+								appserver.conf.dir="@{tomcat.conf.dir}"
+								appserver.logs.dir="@{tomcat.logs.dir}"
+								appserver.server-xml.file="@{tomcat.server-xml.file}"
+								appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+								appserver.hostname="localhost"
+								/>
+						</then>
+						<else>
+							<echo message="Skipping configuring access logs for tomcat because exclude.access-logs is set."/>
+						</else>
+					</if>
 				</then>
 				<else>
 					<echo message="Skipping Tomcat Config because exclude.tomcat-config is set"/>
@@ -4258,13 +4306,23 @@ $HeadURL$
 							<echo message="Skipping configuration of GRID on JBos"/>
 						</else>
 					</if>
-					<appserver-accesslog-configure
-						appserver.conf.dir="@{jboss.conf.dir}"
-						appserver.server-xml.file="@{jboss.server-xml.file}"
-						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
-						appserver.hostname="localhost"
-						appserver.logs.dir="@{jboss.logs.dir}"
-						/>
+					<if>
+						<not>
+							<equals arg1="${exclude.access-logs}" arg2="true"/>
+						</not>
+						<then>
+							<appserver-accesslog-configure
+								appserver.conf.dir="@{jboss.conf.dir}"
+								appserver.server-xml.file="@{jboss.server-xml.file}"
+								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+								appserver.hostname="localhost"
+								appserver.logs.dir="@{jboss.logs.dir}"
+								/>
+						</then>
+						<else>
+							<echo message="Skipping configuring access logs for jboss because exclude.access-logs is set."/>
+						</else>
+					</if>
 				</then>
 				<else>
 					<echo message="Skipping jboss configuraiton because exclude.jboss-config is set"/>
