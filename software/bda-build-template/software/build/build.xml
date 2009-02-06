@@ -54,6 +54,7 @@
 	<property name="download.dir" location="${target.dir}/download" />
 	<property name="pt.dir" location="${target.dir}/persistent-transient" />
 	<property name="working.dir" location="${target.dir}/working" />
+	<property name="cacore-sdk.dir" location="${target.dir}/${cacore-sdk.binaries.relative.dir}"/>
 
 
 	<!-- Ivy Related props -->
@@ -289,11 +290,43 @@
 		-->
 	</target>
 
-	<!-- Wrapper build target, call appropriate builds for sub-projects -->
-	<target name="validate:pre:build">
+	<target name="build:retrieve:cacore-sdk">
+		<if>
+			<and>
+				<equals arg1="${cacore-sdk.required}" arg2="true"/>
+				<not>
+					<available file="${download.dir}/${cacore-sdk.binaries.file}"/>
+				</not>
+			</and>
+			<then>
+				<get src="${cacore-sdk.src.url}" dest="${download.dir}/${cacore-sdk.binaries.file}" />
+			</then>
+		</if>
+	</target>
+	<target name="build:extract:cacore-sdk">
+		<if>
+			<and>
+				<equals arg1="${cacore-sdk.required}" arg2="true"/>
+				<not>
+					<available file="${cacore-sdk.dir}"/>
+				</not>
+			</and>
+			<then>
+				<unzip src="${download.dir}/${cacore-sdk.binaries.file}" dest="${target.dir}"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="validate:pre:build"
+		depends="
+		build:retrieve:cacore-sdk,
+		build:extract:cacore-sdk
+		">
 		<validate-pre-build
 			/>
 	</target>
+
+	<!-- Wrapper build target, call appropriate builds for sub-projects -->
 	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends="
 		validate:pre:build,
 		clean,

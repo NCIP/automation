@@ -612,37 +612,59 @@
 		-->
 	</target>
 
-	<!-- Wrapper target to upgrade jboss container. Does not install or configure binaries -->
-	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
+	<!-- Generic targets to call appropriate upgrade path targets, just change the depends to use alternate ugprade path -->
+	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss" depends="upgrade-ncm:jboss">
+	</target>
+
+	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat" depends="upgrade-ncm:tomcat">
+	</target>
+
+	<target name="upgrade" description="Upgrades JBoss and Database" depends="upgrade-ncm">
+	</target>
+
+	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database" depends="upgrade-ncm:with-dbinstall">
+	</target>
+
+	<!-- Upgrade with Disposable Application Conttainer (DAC) -->
+	<target name="upgrade-dac:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
 		depends="
 		install:validation:pre-install,
 		install:jboss:stop,
+		install:validation:pre-install:ports,
+		install:clean:jboss,
 		install:init,
+		install:jboss:binaries,
 		install:jboss:configure,
 		install:jboss:bda-blueprints-webapp:re-configure,
 		install:jboss:bda-blueprints-webapp,
 		install:jboss:bda-blueprints-webapp:configure,
+		install:post:jboss,
 		install:jboss:start
 		">
 	</target>
-	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
+	<target name="upgrade-dac:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
 		depends="
 		install:validation:pre-install,
 		install:tomcat:stop,
+		install:validation:pre-install:ports,
+		install:clean:tomcat,
 		install:init,
+		install:tomcat:binaries,
 		install:tomcat:configure,
 		install:tomcat:bda-blueprints-webapp:re-configure,
 		install:tomcat:bda-blueprints-webapp,
 		install:tomcat:bda-blueprints-webapp:configure,
+		install:post:tomcat,
 		install:tomcat:start
 		">
 	</target>
 
-	<target name="upgrade" description="Upgrades JBoss and Database"
+	<target name="upgrade-dac" description="Upgrades JBoss and Database"
 		depends="
-		upgrade:init,
 		install:validation:pre-install,
 		install:jboss:stop,
+		install:tomcat:stop,
+		upgrade:init,
 		install:init,
 		upgrade:database,
 		upgrade:jboss,
@@ -651,18 +673,133 @@
 		">
 	</target>
 
-	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database"
+	<target name="upgrade-dac:with-dbinstall" description="Upgrades JBoss and Database"
 		depends="
-		upgrade:init,
 		install:validation:pre-install,
 		install:jboss:stop,
+		install:tomcat:stop,
+		upgrade:init,
 		install:init,
 		install:database,
 		upgrade:jboss,
+		upgrade:tomcat,
+		install:validation:post-install
+		">
+	</target>
+	<!-- Upgrade with Container Modification (CM) -->
+	<target name="upgrade-cm:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
+		depends="
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:validation:pre-install:ports,
+		install:init,
+		install:jboss:configure,
+		install:jboss:bda-blueprints-webapp:re-configure,
+		install:jboss:bda-blueprints-webapp,
+		install:jboss:bda-blueprints-webapp:configure,
+		install:post:jboss,
+		install:jboss:start
+		">
+	</target>
+	<target name="upgrade-cm:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
+		depends="
+		install:validation:pre-install,
+		install:tomcat:stop,
+		install:validation:pre-install:ports,
+		install:init,
+		install:tomcat:configure,
+		install:tomcat:bda-blueprints-webapp:re-configure,
+		install:tomcat:bda-blueprints-webapp,
+		install:tomcat:bda-blueprints-webapp:configure,
+		install:post:tomcat,
+		install:tomcat:start
+		">
+	</target>
+
+	<target name="upgrade-cm" description="Upgrades JBoss and Database"
+		depends="
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:tomcat:stop,
+		upgrade:init,
+		install:init,
+		upgrade:database,
+		upgrade:jboss,
+		upgrade:tomcat,
 		install:validation:post-install
 		">
 	</target>
 
+	<target name="upgrade-cm:with-dbinstall" description="Upgrades JBoss and Database"
+		depends="
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:tomcat:stop,
+		upgrade:init,
+		install:init,
+		install:database,
+		upgrade:jboss,
+		upgrade:tomcat,
+		install:validation:post-install
+		">
+	</target>
+	<!-- Upgrade with No Container Modification (NCM) -->
+	<target name="upgrade-ncm:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
+		depends="
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:validation:pre-install:ports,
+		install:init,
+		install:jboss:bda-blueprints-webapp:re-configure,
+		install:jboss:bda-blueprints-webapp,
+		install:jboss:bda-blueprints-webapp:configure,
+		install:post:jboss,
+		install:jboss:start
+		">
+	</target>
+	<target name="upgrade-ncm:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
+		depends="
+		install:validation:pre-install,
+		install:tomcat:stop,
+		install:validation:pre-install:ports,
+		install:init,
+		install:tomcat:bda-blueprints-webapp:re-configure,
+		install:tomcat:bda-blueprints-webapp,
+		install:tomcat:bda-blueprints-webapp:configure,
+		install:post:tomcat,
+		install:tomcat:start
+		">
+	</target>
+
+	<target name="upgrade-ncm" description="Upgrades JBoss and Database"
+		depends="
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:tomcat:stop,
+		upgrade:init,
+		install:init,
+		upgrade:database,
+		upgrade:jboss,
+		upgrade:tomcat,
+		install:validation:post-install
+		">
+	</target>
+
+	<target name="upgrade-ncm:with-dbinstall" description="Upgrades JBoss and Database"
+		depends="
+		install:validation:pre-install,
+		install:jboss:stop,
+		install:tomcat:stop,
+		upgrade:init,
+		install:init,
+		install:database,
+		upgrade:jboss,
+		upgrade:tomcat,
+		install:validation:post-install
+		">
+	</target>
+
+	<!-- static upgrade targets -->
 	<target name="upgrade:database" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
 		depends="
 		upgrade:init,
@@ -857,6 +994,8 @@
 		</if>
 	</target>
 	<target name="install:tomcat:bda-blueprints-webapp" description="Deploy bda-blueprints-webapp and common libraries to tomcat installation" unless="exclude.tomcat">
+		<delete dir="${tomcat.home}/temp"/>
+		<delete dir="${tomcat.home}/work"/>
 		<copy file="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" todir="${tomcat.home}/webapps" overwrite="true" />
 		<!--  Many NCI applications require clm for csm, so you can point this to where you have the version you want to use
 		<copy file="${bda-utils.dir}/clm-3.2.jar" todir="${tomcat.home}/server/${tomcat.server.name}/lib" overwrite="true" />
