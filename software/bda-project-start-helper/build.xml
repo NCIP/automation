@@ -6,10 +6,10 @@
 	<property name="project.build.dir" location="${project.software.dir}/build"/>
 	<property name="project.gui-installer.dir" location="${project.build.dir}/gui-installer"/>
 	<property name="project.common.dir" location="${project.software.dir}/common"/>
-	<property name="project.resource.base.dir" location="${project.common.dir}/resource"/>
-	<property name="project.resource.jboss.dir" location="${project.project.base.dir}/jboss-conf"/>
-	<property name="project.resource.tomcat.dir" location="${project.project.base.dir}/tomcat"/>
-	<property name="project.resource.grid.dir" location="${project.project.base.dir}/grid"/>
+	<property name="project.resource.base.dir" location="${project.common.dir}/resources"/>
+	<property name="project.resource.jboss.dir" location="${project.resource.base.dir}/jboss-conf"/>
+	<property name="project.resource.tomcat.dir" location="${project.resource.base.dir}/tomcat"/>
+	<property name="project.resource.grid.dir" location="${project.resource.base.dir}/grid"/>
 
 
 	<property name="working.dir" location="${basedir}/working"/>

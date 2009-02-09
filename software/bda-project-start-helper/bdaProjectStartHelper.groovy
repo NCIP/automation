@@ -66,6 +66,9 @@ public class bdaProjectStartHelper
 		templateDir=props.get('bda.template.dir') + "/build"
 		projectBuildDir= projectRootDir + "/software/build"
 
+		// Clean up test targets
+		excludeTargetPatternList << "^temp"
+
 		// Conditionally builds exclude patter lists based on settings from props files
 		if (useJboss != "true") 
 		{
