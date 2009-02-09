@@ -526,6 +526,11 @@
 			installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
 			project = new XmlParser().parse(installFile)
 			
+			if(props.getProperty("application.url"))
+			{	
+				String applicationUrl = props.getProperty("application.url");
+				ant.runseliniumtest(hostname:applicationUrl)
+			}			
 			if(project.target.find{it.'@name'=='install'}.'@depends'.contains('install:jboss'))
 			{
 				println "Run the selenium test for the jboss server"
