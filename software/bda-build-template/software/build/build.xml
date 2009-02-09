@@ -910,4 +910,15 @@
 			dist.file="jboss-4.0.5.GA_CP03.zip"
 			/>
 	</target>
+	<target name="test-co">
+		<property name="test-co.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download"/>
+		<property name="test-co.dir" value="${temp.dir}/junk"/>
+		<mkdir dir="${temp.dir}"/>
+		<svn-co
+			svn.checkout.url="${test-co.url}"         
+			svn.checkout.dir="${test-co.dir}"
+			delete="true"                                  
+			/>                    
+	</target>
+
 </project>

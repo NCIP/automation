@@ -1,3 +1,4 @@
 software/bda-build-template/software/blueprints-webapp/target
+software/bda-build-template/software/build/target[!!-~]local.properties
 software/bda-build-template/software/target
 software/heartbeat/target
