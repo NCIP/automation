@@ -13,6 +13,7 @@ public class ProjectCertificationStatus {
 	private String templateValidation;
 	private String privateRepositoryProperties;
 	private String latestCIBuild;
+	private String deploymentShakeout;
 	
 	public int getId() {
 		return id;
@@ -80,5 +81,12 @@ public class ProjectCertificationStatus {
 	public void setLatestCIBuild(String latestCIBuild) {
 		this.latestCIBuild = latestCIBuild;
 	}
+	public String getDeploymentShakeout() {
+		return deploymentShakeout;
+	}
+	public void setDeploymentShakeout(String deploymentShakeout) {
+		this.deploymentShakeout = deploymentShakeout;
+	}
+	
 		
 }
