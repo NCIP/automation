@@ -149,20 +149,6 @@
 	</path>
 
 
-	<taskdef resource="selenium-ant.properties">
-	    <classpath>
-		<pathelement location="../certification-tests/lib/selenium-server.jar"/>
-		<pathelement location="../certification-tests/lib/selenium-server-coreless.jar"/>
-		<pathelement location="../certification-tests/lib/selenium-server-sources.jar"/>
-		<pathelement location="../certification-tests/lib/selenium-server-tests.jar"/>
-		<pathelement location="../certification-tests/lib/selenium-server-test-sources.jar"/>	
-		<pathelement location="../certification-tests/lib/selenium-java-client-driver.jar"/>
-		<pathelement location="../certification-tests/lib/selenium-java-client-driver-sources.jar"/>
-		<pathelement location="../certification-tests/lib/selenium-java-client-driver-tests.jar"/>
-		<pathelement location="../certification-tests/lib/selenium-java-client-driver-test-sources.jar"/>
-	    </classpath>
-	</taskdef>
-
 	<!-- Targets -->
 
 
@@ -515,7 +501,20 @@
 
 	<target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
 	
-	
+		<taskdef resource="selenium-ant.properties">
+		    <classpath>
+			<pathelement location="./selenium-server.jar"/>
+			<pathelement location="./selenium-server-coreless.jar"/>
+			<pathelement location="./selenium-server-sources.jar"/>
+			<pathelement location="./selenium-server-tests.jar"/>
+			<pathelement location="./selenium-server-test-sources.jar"/>	
+			<pathelement location="./selenium-java-client-driver.jar"/>
+			<pathelement location="./selenium-java-client-driver-sources.jar"/>
+			<pathelement location="./selenium-java-client-driver-tests.jar"/>
+			<pathelement location="./selenium-java-client-driver-test-sources.jar"/>
+		    </classpath>
+		</taskdef>
+		
 		<groovy>
 			<arg line="${master.build.location}"/>
 			def buildFileLocation=args[0]
