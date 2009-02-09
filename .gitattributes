@@ -2203,6 +2203,15 @@ software/bda-dashboard/certification-monitor/lib/javassist-3.4.GA.jar -text
 software/bda-dashboard/certification-monitor/lib/jsch-0.1.39.jar -text
 software/bda-dashboard/certification-monitor/lib/jta-1.1.jar -text
 software/bda-dashboard/certification-monitor/lib/mysql-connector-java-5.0.5.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-java-client-driver-sources.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-java-client-driver-test-sources.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-java-client-driver-tests.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-java-client-driver.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-server-coreless.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-server-sources.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-server-test-sources.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-server-tests.jar -text
+software/bda-dashboard/certification-monitor/lib/selenium-server.jar -text
 software/bda-dashboard/certification-monitor/lib/slf4j-api-1.5.2.jar -text
 software/bda-dashboard/certification-monitor/lib/slf4j-simple-1.5.2.jar -text
 software/bda-dashboard/certification-monitor/lib/tools.jar -text
@@ -2224,6 +2233,8 @@ software/bda-dashboard/certification-monitor/src/main/resources/build.xml -text
 software/bda-dashboard/certification-monitor/src/main/resources/hibernate.cfg.xml -text
 software/bda-dashboard/certification-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
 software/bda-dashboard/certification-monitor/src/main/sql/insert_target_lookup.sql -text
+software/bda-dashboard/certification-monitor/src/tests/functional/certification-test-case.html -text
+software/bda-dashboard/certification-monitor/src/tests/functional/certification-test-suite.html -text
 software/bda-dashboard/docs/BDA_Certification_Stories.doc -text
 software/bda-dashboard/docs/BDA_Certification_design.doc -text
 software/bda-dashboard/wiki-cli/.classpath -text

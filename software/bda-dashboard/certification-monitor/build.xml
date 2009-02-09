@@ -9,6 +9,7 @@
 	<property name="classes.dir" value="${software.dir}/classes" />
 	<property name="build.dir" value="${software.dir}/build" />
 	<property name="target.dir" value="${software.dir}/target" />
+	<property name="selenium.tests.src.dir" value="${software.dir}/src/tests/functional" />
 	<property name="dist.dir" value="${target.dir}/dist" />
 	<property name="build.certification.jar" value="build-certification.jar" />
 	
@@ -19,7 +20,8 @@
 	
 	<property name="deploy.dir" value="${user.home}/buildcertification" />
 	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
-	
+	<property name="tests.dir" value="${deploy.dir}/certification-tests/tests" />
+	<property name="results.dir" value="${deploy.dir}/certification-tests/results" />	
 	
 
 	<!-- PATHS -->
@@ -36,7 +38,7 @@
 	<target name="init" depends="clean" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${target.dir}" />
-		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${dist.dir}" />		
 	</target>
 
 	<target name="clean" description="create table and populate data">
@@ -47,6 +49,8 @@
 
 	<target name="deploy:init" depends="deploy:clean" description="create table and populate data">
 		<mkdir dir="${deploy.dir}" />
+		<mkdir dir="${tests.dir}/" />
+		<mkdir dir="${results.dir}/" />
 	</target>
 
 
@@ -99,7 +103,11 @@
 		
 		<copy file="${build.dir}/build.xml" todir="${deploy.dir}/build" />
 		<copy file="${build.dir}/project.properties" todir="${deploy.dir}/build" />
-		
+		<copy todir="${tests.dir}">
+			<fileset dir="${selenium.tests.src.dir}">
+					<include name="**"/>
+			</fileset>		
+		</copy>
 	</target>
 
 	<target name="deploy:configure"  description="Package the build monitor">

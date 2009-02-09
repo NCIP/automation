@@ -149,6 +149,20 @@
 	</path>
 
 
+	<taskdef resource="selenium-ant.properties">
+	    <classpath>
+		<pathelement location="../certification-tests/lib/selenium-server.jar"/>
+		<pathelement location="../certification-tests/lib/selenium-server-coreless.jar"/>
+		<pathelement location="../certification-tests/lib/selenium-server-sources.jar"/>
+		<pathelement location="../certification-tests/lib/selenium-server-tests.jar"/>
+		<pathelement location="../certification-tests/lib/selenium-server-test-sources.jar"/>	
+		<pathelement location="../certification-tests/lib/selenium-java-client-driver.jar"/>
+		<pathelement location="../certification-tests/lib/selenium-java-client-driver-sources.jar"/>
+		<pathelement location="../certification-tests/lib/selenium-java-client-driver-tests.jar"/>
+		<pathelement location="../certification-tests/lib/selenium-java-client-driver-test-sources.jar"/>
+	    </classpath>
+	</taskdef>
+
 	<!-- Targets -->
 
 
@@ -499,5 +513,64 @@
 		</if>
 	</target>
 
+	<target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
+	
+	
+		<groovy>
+			<arg line="${master.build.location}"/>
+			def buildFileLocation=args[0]
+
+			String projectPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();
+			Properties props = new Properties();
+			props.load(new FileInputStream(projectPropertiesFile));			
+
+			installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+			project = new XmlParser().parse(installFile)
+			
+			if(project.target.find{it.'@name'=='install'}.'@depends'.contains('install:jboss'))
+			{
+				println "Run the selenium test for the jboss server"
+				String jbossServerPort = props.getProperty("jboss.server.port");
+				String jbossServerHostName = props.getProperty("jboss.server.hostname");
+				println jbossServerPort;
+				ant.runseliniumtest(hostname:'http://'+jbossServerHostName+':'+jbossServerPort)
+
+			}
+			if(project.target.find{it.'@name'=='install'}.'@depends'.contains('install:tomcat'))
+			{
+				println "Run the selenium test for the tomcat server"
+				String tomcatServerPort = props.getProperty("tomcat.port.http");
+				String tomcatServerHostName = props.getProperty("tomcat.hostname");				
+				println tomcatServerPort;
+				ant.runseliniumtest(hostname:'http://'+tomcatServerHostName+':'+tomcatServerPort)
+				
+			}
+			if(project.target.find{it.'@name'=='install'}.'@depends'.contains('install:grid'))
+			{
+				println "Run the selenium test for the grid server"
+			}
+			
+		</groovy>
+
+	</target>
+
+	<target name="test:seleniumrc:stop">
+		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="C:\Documents and Settings\narram\Desktop\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
+		<sleep seconds="10"/>     
+	</target>
+
+
+	<macrodef name="runseliniumtest" description="run a selenium test">
+	<attribute name="hostname" />
+		<sequential>
+			<selenese 
+				suite="../certification-tests/tests/certification-test-suite.html"
+				browser="*chrome"
+				results="../certification-tests/results/results.html"
+				multiWindow="true"
+				timeoutInSeconds="900"
+				startURL="@{hostname}" />
+		</sequential>
+	</macrodef>
 
 </project>
