@@ -18,11 +18,16 @@ docs/images/bda-components.jpg -text
 docs/images/bda-dashboard-plan.jpg -text
 docs/images/bda-plan.jpg -text
 docs/images/bda-rollout.jpg -text
+docs/images/blockdevice.png -text
 docs/images/bug.png -text
 docs/images/build.png -text
+docs/images/cdwriter_mount.png -text
 docs/images/cert-dash.jpg -text
 docs/images/database.png -text
+docs/images/demo.png -text
+docs/images/doc.png -text
 docs/images/doco.png -text
+docs/images/exec.png -text
 docs/images/globus-grid.gif -text
 docs/images/hudson-logo.png -text
 docs/images/install.png -text
@@ -43,6 +48,7 @@ docs/images/make.png -text
 docs/images/package.png -text
 docs/images/project-plan-template.jpg -text
 docs/images/release-readiness.jpg -text
+docs/images/server.png -text
 docs/images/static-analysis.png -text
 docs/images/subversion-logo.jpg -text
 docs/images/templates.png -text
