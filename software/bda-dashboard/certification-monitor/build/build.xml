@@ -499,6 +499,26 @@
 		</if>
 	</target>
 
+	<target name="build:check-bdafied" depends="init">
+				
+		<groovy>
+			<arg line="${master.build.location}"/>
+			def buildFileLocation=args[0]
+
+			def ant = new AntBuilder()
+			
+			String projectPropertiesFile=new File(buildFileLocation+"/project.properties").getAbsoluteFile();
+			Properties props = new Properties();
+			props.load(new FileInputStream(projectPropertiesFile));			
+			String bdaVersion = props.getProperty("bda.version");
+			println bdaVersion;
+			if(bdaVersion == '')
+			{
+				ant.fail("PROJECT NOT BDA ENABLED")
+			}
+		</groovy>
+	</target>
+
 	<target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
 	
 		<taskdef resource="selenium-ant.properties">

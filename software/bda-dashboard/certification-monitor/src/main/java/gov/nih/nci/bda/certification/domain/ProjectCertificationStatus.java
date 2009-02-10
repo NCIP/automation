@@ -14,6 +14,7 @@ public class ProjectCertificationStatus {
 	private String privateRepositoryProperties;
 	private String latestCIBuild;
 	private String deploymentShakeout;
+	private String bdaEnabled;
 	
 	public int getId() {
 		return id;
@@ -87,6 +88,11 @@ public class ProjectCertificationStatus {
 	public void setDeploymentShakeout(String deploymentShakeout) {
 		this.deploymentShakeout = deploymentShakeout;
 	}
-	
+	public String getBdaEnabled() {
+		return bdaEnabled;
+	}
+	public void setBdaEnabled(String bdaEnabled) {
+		this.bdaEnabled = bdaEnabled;
+	}
 		
 }
