@@ -562,10 +562,9 @@
 		<sequential>
 			<selenese 
 				suite="../certification-tests/tests/certification-test-suite.html"
-				browser="*firefox /usr/lib64/firefox-1.5.0.12/firefox-bin"
+				browser="*chrome /usr/lib64/firefox-1.5.0.12/firefox-bin"
 				results="../certification-tests/results/results.html"
-				multiWindow="true"
-				timeoutInSeconds="900"
+				timeoutInSeconds="90"
 				startURL="@{hostname}" />
 		</sequential>
 	</macrodef>
