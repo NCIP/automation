@@ -552,7 +552,7 @@
 	</target>
 
 	<target name="test:seleniumrc:stop">
-		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="C:\Documents and Settings\narram\Desktop\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
+		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="../certification-tests/shutdown_result.txt" ignoreerrors="true"/>
 		<sleep seconds="10"/>     
 	</target>
 
@@ -562,7 +562,7 @@
 		<sequential>
 			<selenese 
 				suite="../certification-tests/tests/certification-test-suite.html"
-				browser="*chrome /usr/lib64/firefox-1.5.0.12/firefox-bin"
+				browser="*firefox /usr/lib64/firefox-1.5.0.12/firefox-bin"
 				results="../certification-tests/results/results.html"
 				multiWindow="true"
 				timeoutInSeconds="900"
