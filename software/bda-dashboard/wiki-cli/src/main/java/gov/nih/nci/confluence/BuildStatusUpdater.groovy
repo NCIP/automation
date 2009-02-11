@@ -59,7 +59,7 @@ class BuildStatusUpdater {
 
 	// get most recent tempates
 		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")
-		String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,BDA_UTILS_VERSION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES from PROJECT_CERTIFICATION_STATUS "
+		String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,BDA_UTILS_VERSION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT from PROJECT_CERTIFICATION_STATUS "
 
 	List projectRows = connection.rows(statement)	
 	
@@ -77,10 +77,13 @@ class BuildStatusUpdater {
 	    String databaseIntegration = row.DATABASE_INTEGRATION;
 	    String bdaUtilsVersion = row.BDA_UTILS_VERSION;
 	    String templateValidation = row.TEMPLATE_VALIDATION;
-	    String privateProperties = row.PRIVATE_PROPERTIES;
+	    String privateProperties = row.PRIVATE_PROPERTIES;	    
+	    String ciBuild = row.CI_BUILD;
+	    String bdaEnabled = row.BDA_ENABLED;
+	    String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
 	    
 
-			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},BDA-Utils-Version${count}:${bdaUtilsVersion},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties}\""
+			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},BDA-Utils-Version${count}:${bdaUtilsVersion},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout}\""
 
 			println findReplace
 			// update page
