@@ -38,7 +38,7 @@ public class BuildCertificationHelper {
 		System.out.println("bmb.getProjectRepoUrl():::::::" +bmb.getProjectRepoUrl());
 		
 		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
-		String searchProject = projectName+"|";
+		String searchProject = "%"+projectName+"|%";
 		
 	    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();		
 		Session session = HibernateUtil.getSession();
