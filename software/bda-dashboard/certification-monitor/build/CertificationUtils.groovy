@@ -1,10 +1,21 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 String methodName = args[0];
 println methodName;
 
-if (methodName	 != null)
+try
 {
-	this.invokeMethod(methodName, null);
+	if (methodName	 != null)
+	{
+		this.invokeMethod(methodName, null);
+	}
+}
+catch(Exception ex)
+{
+	println "CAN NOT INVOKE THE METHOD ::"+ methodName
 }
 
 void checkBdaEnabled ()
@@ -54,8 +65,6 @@ void checkDeploymentShakeout ()
 
 void formatAndSetDate ()
 {
-	import java.text.SimpleDateFormat;
-	import java.util.Date;
 
 	def latestCIBuild=properties['latest.build.dir']
 
@@ -79,9 +88,6 @@ void formatAndSetDate ()
 
 void checkPrivateRepositoryProperties ()
 {
-       import java.util.regex.Matcher
-       import java.util.regex.Pattern
-
        def privatePropertiesLocation=properties['svn.private.local.checkout']
        try
        {
