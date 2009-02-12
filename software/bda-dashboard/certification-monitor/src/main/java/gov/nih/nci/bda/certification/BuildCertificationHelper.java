@@ -26,19 +26,19 @@ public class BuildCertificationHelper {
 	public void updateProjectBuildStatus()
 	{				
 		ProjectCertificationStatus pbs = null;
-		String projectName = bmb.getProjectName();
-		System.out.println("projectName:::::::" +projectName);
-		String mapName = bmb.getMapName();		
-		System.out.println("mapName:::::::" +mapName);
+		String projectName = bmb.getProjectName();		
+		String mapName = bmb.getMapName();				
 		String methodName = getSetMethodName(mapName);
-		System.out.println("methodName:::::::" +methodName);
+		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
+		String searchProject = "%"+projectName+"|%";
+		
 		
 		System.out.println("bmb.isValue():::::::" +bmb.isValue());
 		System.out.println("bmb.getPropertyValue():::::::" +bmb.getPropertyValue());
 		System.out.println("bmb.getProjectRepoUrl():::::::" +bmb.getProjectRepoUrl());
-		
-		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
-		String searchProject = "%"+projectName+"|%";
+		System.out.println("methodName:::::::" +methodName);
+		System.out.println("mapName:::::::" +mapName);
+		System.out.println("projectName:::::::" +projectName);
 		
 	    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();		
 		Session session = HibernateUtil.getSession();

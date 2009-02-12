@@ -104,7 +104,7 @@
 	<property name="ci-server.username" value="${project.ci-server.username}" />
 	<property name="ci-server.password" value="${project.ci-server.password}" />
 	
-	<property name="directory.name" value="${user.home}/apps"/>
+	<property name="certification.directory.name" value="${user.home}/apps"/>
 	
 	<property name="local.hudson.dir" value="${user.home}/apps/hudson_logs"/>
 	
@@ -213,29 +213,8 @@
 	</target>
 
 	<target name="clean-deployments">		
-		<groovy>
-			<arg line="${directory.name}"/>
-			def directoryName=args[0]
-			proc1 = 'ps -ef'.execute()
-			proc2 = "grep ${directoryName}".execute()
-			proc3 = 'grep java'.execute()
-
-			proc1 | proc2 | proc3
-			proc3.waitFor()
-
-			proc3.in.eachLine { 
-				line -> line.split('\\s+').eachWithIndex {processToken, i -> 
-					if(i == 1)
-						{
-							println "${processToken}"
-							proc4 ="kill -9 ${processToken}".execute()
-							proc4.waitFor()
-							proc4.in.eachLine { 
-								line2 -> println line2
-							}
-						}
-				}
-			 }
+		<groovy src="CertificationUtils.groovy">
+			<arg line="killProcessOnCertificationDir"/>
 		</groovy>
 		<delete dir="${user.home}/apps"/>
 	</target>
@@ -294,107 +273,23 @@
 	</target>
 
 	<target name="build:database-integration" depends="init">
-		<groovy>
-			<arg line="${master.build.location}"/>
-			<arg line="${database.integration.target}"/>
-			<arg line="${database.type}"/>
-			def buildFileLocation=args[0]
-			def targetName=args[1]
-			def databaseType=args[2]
-			
-			def ant = new AntBuilder()						
-			String installPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();			
-			Properties props = new Properties();
-			props.load(new FileInputStream(installPropertiesFile));			
-			String dbFlag = props.getProperty("exclude.database");
-			println dbFlag;
-			println databaseType;
-			if(dbFlag != null)
-			{
-				println "Flag is set skip DB integration Check"
-			}
-			else
-			{
-				println "DB integration Check"
-				installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
-				project = new XmlParser().parse(installFile)				
-				println project.target.'@name'.contains(targetName)
-				println targetName
-				if(project.target.'@name'.contains(targetName))
-				{
-					if(project.target.find{it.'@name'=='install'}.'@depends'.contains(targetName))
-					{
-						def targetUpgrade = project.target.find{it.@name==targetName}.'database-upgrade'
-						if(!targetUpgrade)
-							ant.fail("DATABASE INTEGRATION FAILED: The database-upgrade target is missing")
-							
-						def targetInstall = project.'target'.find{it.@name==targetName}.switch.'case'.find{it.'@value'==databaseType}.'database-install'
-						if(!targetInstall)
-							ant.fail("DATABASE INTEGRATION FAILED: The database-install target is missing")
-						
-						println "CHECK FOR MACROS COMPLETE"
-					}
-					else
-					{				
-						ant.fail("DATABASE INTEGRATION FAILED: The install:database target is not called from the install target")
-					}
-				}
-				else
-				{				
-					ant.fail("DATABASE INTEGRATION FAILED: The install:database target is not found in the install.xml")
-				}
-				
-			}	
+		<groovy src="CertificationUtils.groovy">
+			<arg line="checkDBIntegration"/>
 		</groovy>
 	</target>
 
 
-
-
-	<target name="build:bda-utils" depends="init">
-				
-		<groovy>
-			<arg line="${master.build.location}"/>
-			def buildFileLocation=args[0]
-
-			def ant = new AntBuilder()
-			
-			String projectPropertiesFile=new File(buildFileLocation+"/project.properties").getAbsoluteFile();
-			Properties props = new Properties();
-			props.load(new FileInputStream(projectPropertiesFile));			
-			String bdaVersion = props.getProperty("bda.version");
-			println bdaVersion;
-			project.setProperty("certification.property.value",bdaVersion);
+	<target name="build:bda-utils" depends="init">				
+		<groovy src="CertificationUtils.groovy">
+			<arg line="getBdaUtilsVersion"/>
 		</groovy>
 	</target>
 
 
-	<target name="build:template-properties" depends="init">
-				
-		<groovy>
-			<arg line="${master.build.location}"/>
-			def buildFileLocation=args[0]
-
-			def ant = new AntBuilder()
-			
-			try
-			{
-				String projectPropertiesFile=new File(buildFileLocation+"/install-properties.template").getAbsoluteFile();
-				println projectPropertiesFile
-			}
-			catch(FileNotFoundException ex)
-			{
-				ant.fail("TEMPLATE VALIDATION FAILED: Can not find the install-properties.template file ")
-			}
-
-			installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
-			project = new XmlParser().parse(installFile)				
-			
-			if(!project.switch.find{it.@value=='${properties.file.type}'}.'case'.find{it.@value=='install'}.property.@name.contains('properties.template.file'))
-				ant.fail("TEMPLATE VALIDATION FAILED: properties.template.file property is not set ")
-			
+	<target name="build:template-properties" depends="init">				
+		<groovy src="CertificationUtils.groovy">			
+			<arg line="checkTemplateFiles"/>
 		</groovy>
-
 	</target>
 
 
@@ -404,47 +299,9 @@
 			<checkout url="${svn.private.url}" revision="HEAD" destPath="${svn.private.local.checkout}" />
 		</svn>
 				
-               <groovy>
-
-                       <arg line="${svn.private.local.checkout}"/>
-                       import java.util.regex.Matcher
-                       import java.util.regex.Pattern
-
-                       def privatePropertiesLocation=args[0]
-                       def ant = new AntBuilder()
-
-                       try
-                       {
-                               propertiesDir = new File(args[0] + "/properties").getAbsoluteFile()
-                               java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
-                               java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
-
-                               if(propertiesDir.exists())
-                               {
-                                       flag = false
-                                       propertiesDir.eachFileRecurse
-                                       { file ->
-                                               if (file.isFile())
-                                               {
-                                                       if(upgradePattern.matcher(file.getName()).matches() || installPattern.matcher(file.getName()).matches())
-                                                               flag = true
-                                               }
-                                       }
-                                       if(!flag)
-                                               ant.fail("PRIVATE REPOSITORY FAILED: Can not find the install or upgrade property files ")
-                               }
-                               else
-                               {
-                                       println "directory does not exist"
-                                       ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
-                               }
-                       }
-                       catch(FileNotFoundException ex)
-                       {
-                               ant.fail("PRIVATE REPOSITORY FAILED: Can not find the properties folder ")
-                       }
-
-               </groovy>
+		<groovy src="CertificationUtils.groovy">			
+			<arg line="checkPrivateRepositoryProperties"/>
+		</groovy>
 
 	</target>
 
@@ -468,30 +325,9 @@
 
 				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
 
-				<groovy>
-					<arg line="${latest.build.dir}"/>
-					import java.text.SimpleDateFormat;
-					import java.util.Date;
-					
-					def latestCIBuild=args[0]
-
-					def ant = new AntBuilder()
-					def format = new SimpleDateFormat("yyyy-MM-dd");
-					def formatter = new SimpleDateFormat("EEE, dd MMM yyyy");
-
-					latestCIBuild.split('_').eachWithIndex {processToken, i -> 
-					if(i == 0)
-						{
-							Date dtConverted = format.parse(processToken);
-							println("Time Stamp Format" + dtConverted)
-							parsedDate = formatter.format(dtConverted);
-							println("Time Stamp Format" + parsedDate);
-							project.setProperty("certification.property.value",parsedDate);
-						}
-					}
-				</groovy>
-
-				
+				<groovy src="CertificationUtils.groovy">			
+					<arg line="formatAndSetDate"/>
+				</groovy>				
 			</then>
 			<else>
 				<echo message="Could not reach host ${ci-server.hostname}."/>
@@ -500,23 +336,10 @@
 	</target>
 
 	<target name="build:check-bdafied" depends="init">
-				
-		<groovy>
-			<arg line="${master.build.location}"/>
-			def buildFileLocation=args[0]
-
-			def ant = new AntBuilder()
-			
-			String projectPropertiesFile=new File(buildFileLocation+"/project.properties").getAbsoluteFile();
-			Properties props = new Properties();
-			props.load(new FileInputStream(projectPropertiesFile));			
-			String bdaVersion = props.getProperty("bda.version");
-			println bdaVersion;
-			if(bdaVersion == '')
-			{
-				ant.fail("PROJECT NOT BDA ENABLED")
-			}
-		</groovy>
+		<property name="certification.method.name" value="checkBdaEnabled" />
+		<groovy src="CertificationUtils.groovy" >
+			<arg line="checkBdaEnabled"/>
+		</groovy>	
 	</target>
 
 	<target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
@@ -535,44 +358,14 @@
 		    </classpath>
 		</taskdef>
 		
-		<groovy>
-			<arg line="${master.build.location}"/>
-			def buildFileLocation=args[0]
-
-			String projectPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();
-
-			installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
-			project = new XmlParser().parse(installFile)
-		
-			ant.property(file: projectPropertiesFile)
-			println properties['application.url']	
-			def applicationUrl = properties['application.url']
-			if(applicationUrl)
-			{					
-				ant.runseliniumtest(hostname:applicationUrl)
-			}					
-			if(project.target.find{it.'@name'=='install'}.'@depends'.contains('install:grid'))
-			{
-				println "Run the selenium test for the jboss server"
-				def jbossServerPort = properties['jboss.server.port']
-				def jbossServerHostName = properties['jboss.server.hostname']
-				println jbossServerPort;
-				ant.runseliniumtest(hostname:'http://'+jbossServerHostName+':'+jbossServerPort)
-			}
-			if(project.target.find{it.'@name'=='install'}.'@depends'.contains('install:tomcat'))
-			{
-				println "Run the selenium test for the tomcat server"
-				String tomcatServerPort = properties['tomcat.port.http']
-				String tomcatServerHostName = properties['tomcat.hostname']
-				println tomcatServerPort;
-				ant.runseliniumtest(hostname:'http://'+tomcatServerHostName+':'+tomcatServerPort)				
-			}			
+		<groovy src="CertificationUtils.groovy">			
+			<arg line="checkDeploymentShakeout"/>
 		</groovy>
 
 	</target>
 
 	<target name="test:seleniumrc:stop">
-		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="../certification-tests/shutdown_result.txt" ignoreerrors="true"/>
+		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="C:\Documents and Settings\narram\Desktop\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
 		<sleep seconds="10"/>     
 	</target>
 
@@ -582,9 +375,9 @@
 		<sequential>
 			<selenese 
 				suite="../certification-tests/tests/certification-test-suite.html"
-				browser="*chrome /usr/lib64/firefox-1.5.0.12/firefox-bin"
+				browser="*chrome"
 				results="../certification-tests/results/results.html"
-				timeoutInSeconds="90"
+				timeoutInSeconds="900"
 				startURL="@{hostname}" />
 		</sequential>
 	</macrodef>
