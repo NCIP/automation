@@ -87,18 +87,7 @@ public class SingleCommandListener implements BuildListener {
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl=event.getProject().getProperty(urlProperty);
 		
-	   Collection c = event.getProject().getProperties().values();     
-	   Iterator itr = c.iterator();
-	     
-	   
-		while(itr.hasNext())
-		{
-			System.out.println("PRINT PROPERTY ::" + itr.next());
-		}
-		
-		System.out.println("urlProperty::"+urlProperty);	
-		System.out.println("projectUrl::"+projectUrl);
-		
+
 		if(event.getException() != null)
 			bmb.setBuildSuccessful(false); 
 		else
@@ -136,6 +125,7 @@ public class SingleCommandListener implements BuildListener {
 			bmb.setMapName(null);
 			bmb.setValue(false);
 			bmb.setPropertyValue(null);
+			bmb.setProjectRepoUrl(null);
 		}
 	}
 	

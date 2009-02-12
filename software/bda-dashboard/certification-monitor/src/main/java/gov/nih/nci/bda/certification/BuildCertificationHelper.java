@@ -35,6 +35,7 @@ public class BuildCertificationHelper {
 		
 		System.out.println("bmb.isValue():::::::" +bmb.isValue());
 		System.out.println("bmb.getPropertyValue():::::::" +bmb.getPropertyValue());
+		System.out.println("bmb.getProjectRepoUrl():::::::" +bmb.getProjectRepoUrl());
 		
 		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
 		
@@ -118,8 +119,8 @@ public class BuildCertificationHelper {
 			System.out.println("SINGLE COMMAND SUCCESSFUL");
 			// build successful	 
 
-		    Query query = session.createQuery( " from ProjectCertificationStatus where product like :projectName ");
-		    query.setString("projectName", projectName);
+		    Query query = session.createQuery( " from ProjectCertificationStatus where product like ? ");
+		    query.setString(0, projectName+"|");
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 
 			if(pbs != null )
