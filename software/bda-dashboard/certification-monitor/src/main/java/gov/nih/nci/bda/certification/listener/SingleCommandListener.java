@@ -1,6 +1,7 @@
 package gov.nih.nci.bda.certification.listener;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Iterator;
 
 import gov.nih.nci.bda.certification.BuildCertificationHelper;
@@ -85,7 +86,19 @@ public class SingleCommandListener implements BuildListener {
 		String projectName = event.getProject().getProperty("project.name");
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl=event.getProject().getProperty(urlProperty);
-			
+		
+	   Collection c = event.getProject().getProperties().values();     
+	   Iterator itr = c.iterator();
+	     
+	   
+		while(itr.hasNext())
+		{
+			System.out.println("PRINT PROPERTY ::" + itr.next());
+		}
+		
+		System.out.println("urlProperty::"+urlProperty);	
+		System.out.println("projectUrl::"+projectUrl);
+		
 		if(event.getException() != null)
 			bmb.setBuildSuccessful(false); 
 		else
