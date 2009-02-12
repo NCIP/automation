@@ -38,6 +38,7 @@ public class BuildCertificationHelper {
 		System.out.println("bmb.getProjectRepoUrl():::::::" +bmb.getProjectRepoUrl());
 		
 		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
+		String searchProject = projectName+"|";
 		
 	    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();		
 		Session session = HibernateUtil.getSession();
@@ -50,7 +51,7 @@ public class BuildCertificationHelper {
 			// build failed
 
 		    Query query = session.createQuery( " from ProjectCertificationStatus where product like ?");
-		    query.setString(0, projectName+"|");
+		    query.setString(0, searchProject);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 			if(pbs != null )
 			{	
@@ -118,9 +119,9 @@ public class BuildCertificationHelper {
 		{	
 			System.out.println("SINGLE COMMAND SUCCESSFUL");
 			// build successful	 
-
+			
 		    Query query = session.createQuery( " from ProjectCertificationStatus where product like ? ");
-		    query.setString(0, projectName+"|");
+		    query.setString(0, searchProject);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 
 			if(pbs != null )
