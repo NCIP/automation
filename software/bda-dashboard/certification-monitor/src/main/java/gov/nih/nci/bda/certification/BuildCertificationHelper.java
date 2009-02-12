@@ -47,7 +47,7 @@ public class BuildCertificationHelper {
 			System.out.println("SINGLE COMMAND FAILED");
 			// build failed
 
-		    Query query = session.createQuery( " from ProjectCertificationStatus where product= :projectName");
+		    Query query = session.createQuery( " from ProjectCertificationStatus where product like :projectName");
 		    query.setString("projectName", projectName);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 			if(pbs != null )
@@ -117,7 +117,7 @@ public class BuildCertificationHelper {
 			System.out.println("SINGLE COMMAND SUCCESSFUL");
 			// build successful	 
 
-		    Query query = session.createQuery( " from ProjectCertificationStatus where product= :projectName ");
+		    Query query = session.createQuery( " from ProjectCertificationStatus where product like :projectName ");
 		    query.setString("projectName", projectName);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 
