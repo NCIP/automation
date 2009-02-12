@@ -6,17 +6,9 @@ import java.util.regex.Pattern
 String methodName = args[0];
 println methodName;
 
-try
+if (methodName	 != null)
 {
-	if (methodName	 != null)
-	{
-		this.invokeMethod(methodName, null);
-	}
-}
-catch(Exception ex)
-{
-	println "CAN NOT INVOKE THE METHOD ::"+ methodName
-	println "Exception In the CertificationUtils::" + ex
+	this.invokeMethod(methodName, null);
 }
 
 void checkBdaEnabled ()
