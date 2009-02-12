@@ -82,13 +82,16 @@ public class SingleCommandListener implements BuildListener {
 	private BuildCertificationBean populateBuildCertificationBean(BuildEvent event) {
 
 		BuildCertificationBean bmb = new BuildCertificationBean();
-		
+		String projectName = event.getProject().getProperty("project.name");
+		String urlProperty = projectName + ".svn.project.url";
+		String projectUrl=event.getProject().getProperty(urlProperty);
 			
 		if(event.getException() != null)
 			bmb.setBuildSuccessful(false); 
 		else
 			bmb.setBuildSuccessful(true);
-		bmb.setProjectName(event.getProject().getProperty("project.name"));
+		
+		bmb.setProjectName(projectName);
 		bmb.setTargetName(event.getTarget().getName());
 		bmb.setMapName(event.getProject().getProperty("map.name"));
 
@@ -101,13 +104,12 @@ public class SingleCommandListener implements BuildListener {
 		{
 			bmb.setValue(false);
 		}
-
-		System.out.println("bmb.ProjectName" + bmb.getProjectName());
-		System.out.println("bmb.buildsuccesful" + bmb.isBuildSuccessful());
-		System.out.println("bmb.TagegetName" + bmb.getTargetName());
-		System.out.println("bmb.MAPName" + bmb.getMapName());
-		System.out.println("bmb.VALUE" + bmb.isValue());
-		System.out.println("bmb.PROPERTY VALUE" + bmb.getPropertyValue());
+		
+	
+		if(projectUrl != null)
+		{
+			bmb.setProjectRepoUrl(projectUrl);
+		}
 		return bmb;
 	}
 

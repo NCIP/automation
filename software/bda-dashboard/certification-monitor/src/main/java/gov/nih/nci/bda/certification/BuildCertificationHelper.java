@@ -36,8 +36,9 @@ public class BuildCertificationHelper {
 		System.out.println("bmb.isValue():::::::" +bmb.isValue());
 		System.out.println("bmb.getPropertyValue():::::::" +bmb.getPropertyValue());
 		
+		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
 		
-	    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();		
 		Session session = HibernateUtil.getSession();
 	    session.beginTransaction(); 		    
 	    	    
@@ -47,8 +48,8 @@ public class BuildCertificationHelper {
 			System.out.println("SINGLE COMMAND FAILED");
 			// build failed
 
-		    Query query = session.createQuery( " from ProjectCertificationStatus where product like :projectName");
-		    query.setString("projectName", projectName);
+		    Query query = session.createQuery( " from ProjectCertificationStatus where product like ?");
+		    query.setString(0, projectName+"|");
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 			if(pbs != null )
 			{	
@@ -98,7 +99,7 @@ public class BuildCertificationHelper {
 						}
 		    		}
 		    	}
-		    	pbs.setProduct(projectName);
+		    	pbs.setProduct(projectUrl);
 		    	session.save(pbs);		
 		    }
 /*
@@ -170,7 +171,7 @@ public class BuildCertificationHelper {
 						}
 		    		}
 		    	}
-		    	pbs.setProduct(projectName);
+		    	pbs.setProduct(projectUrl);
 		    	session.save(pbs);		    	
 		    }
 /*

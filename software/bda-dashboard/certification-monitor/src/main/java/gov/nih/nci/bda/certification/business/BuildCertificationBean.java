@@ -9,6 +9,7 @@ public class BuildCertificationBean {
 	private String mapName;
 	private boolean isValue;
 	private String propertyValue;
+	private String projectRepoUrl;
 	public boolean isBuildSuccessful() {
 		return buildSuccessful;
 	}
@@ -45,6 +46,13 @@ public class BuildCertificationBean {
 	public void setPropertyValue(String propertyValue) {
 		this.propertyValue = propertyValue;
 	}
+	public String getProjectRepoUrl() {
+		return projectRepoUrl;
+	}
+	public void setProjectRepoUrl(String projectRepoUrl) {
+		this.projectRepoUrl = projectRepoUrl;
+	}
+	
 	
 	
 }
