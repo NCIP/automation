@@ -16,6 +16,7 @@ try
 catch(Exception ex)
 {
 	println "CAN NOT INVOKE THE METHOD ::"+ methodName
+	println "Exception In the CertificationUtils::" + ex
 }
 
 void checkBdaEnabled ()
