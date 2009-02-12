@@ -217,7 +217,37 @@ $HeadURL$
 					</java>
 				</else>
 			</if>
-			<sleep seconds="15" />
+			<sleep seconds="10" />
+			<if>
+				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
+				<then>
+					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
+						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
+						<classpath>
+							<pathelement location="@{jboss.home}/bin/shutdown.jar" />
+						</classpath>
+					</java>
+				</then>
+			</if>
+			<sleep seconds="10" />
+			<if>
+				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
+				<then>
+					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
+						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u admin -p admin -S" />
+						<classpath>
+							<pathelement location="@{jboss.home}/bin/shutdown.jar" />
+						</classpath>
+					</java>
+				</then>
+			</if>
+			<sleep seconds="10" />
+			<if>
+				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
+				<then>
+					<fail message="Failed to shutdown jboss server at @{jboss.server.hostname}:@{jboss.server.jndi.port}"/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
