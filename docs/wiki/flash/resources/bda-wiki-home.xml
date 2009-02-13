@@ -20,10 +20,10 @@
 		<teaser><![CDATA[<H1>Documentation</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/LwCG">BDA Build Script Standards</a></LI><LI><a href="https://wiki.nci.nih.gov/x/Tpx8">BDA Technology</a></LI><LI><a href="https://wiki.nci.nih.gov/x/yqN8">BDA Utilities (BDA API)</a></LI><LI><a href="https://wiki.nci.nih.gov/x/wqN8">BDA Templates</a></LI></UL>]]></teaser>
 	</button>
 	<button>
-		<name>Downloads</name>
-		<link>https://wiki.nci.nih.gov/x/HRSZ</link>
+		<name>Tutorial</name>
+		<link>https://wiki.nci.nih.gov/x/_Q6Z</link>
 		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/ark2.png</image>
-		<teaser><![CDATA[<H1>Downloads</H1><UL><LI>Download the <a href="https://gforge.nci.nih.gov/frs/download.php/5233/bda-download.zip">latest BDA release</a> from GForge</LI><LI>Change <a href="https://wiki.nci.nih.gov/x/LQCG">project directory layout</a></LI><LI>Add <a href="https://wiki.nci.nih.gov/x/HRSZ">several lines</a> to your <b>build.xml</b></LI><LI>Start using the <a href="https://wiki.nci.nih.gov/x/rAWG">BDA macros</a></LI></UL>]]></teaser>
+		<teaser><![CDATA[<H1>Tutorial</H1><UL><LI>Learn how to use the <a href="https://wiki.nci.nih.gov/x/_Q6Z">BDA "rules and tools"</a> with an example Petstore project]]></teaser>
 	</button>
 	<button>
 		<name>Projects</name>
