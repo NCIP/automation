@@ -169,17 +169,17 @@ void checkDBIntegration ()
 		println "DB integration Check"
 		installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
 		installProject = new XmlParser().parse(installFile)				
-		println project.target.'@name'.contains(targetName)
+		println installProject.target.'@name'.contains(targetName)
 		println targetName
 		if(installProject.target.'@name'.contains(targetName))
 		{
 			if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains(targetName))
 			{
-				def targetUpgrade = project.target.find{it.@name==targetName}.'database-upgrade'
+				def targetUpgrade = installProject.target.find{it.@name==targetName}.'database-upgrade'
 				if(!targetUpgrade)
 					ant.fail("DATABASE INTEGRATION FAILED: The database-upgrade target is missing")
 
-				def targetInstall = project.'target'.find{it.@name==targetName}.switch.'case'.find{it.'@value'==databaseType}.'database-install'
+				def targetInstall = installProject.'target'.find{it.@name==targetName}.switch.'case'.find{it.'@value'==databaseType}.'database-install'
 				if(!targetInstall)
 					ant.fail("DATABASE INTEGRATION FAILED: The database-install target is missing")
 
