@@ -90,7 +90,7 @@ class CertificationUtils
 	       def privatePropertiesLocation=project.properties['svn.private.local.checkout']
 	       try
 	       {
-		       String propertiesDir = new File(privatePropertiesLocation + "/properties").getAbsoluteFile()
+		       def propertiesDir = new File(privatePropertiesLocation + "/properties").getAbsoluteFile()
 		       java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
 		       java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
 
