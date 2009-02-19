@@ -213,9 +213,7 @@
 	</target>
 
 	<target name="clean-deployments">		
-		<groovy src="CertificationUtils.groovy">
-			<arg line="killProcessOnCertificationDir"/>
-		</groovy>
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<delete dir="${user.home}/apps"/>
 	</target>
 
@@ -273,23 +271,17 @@
 	</target>
 
 	<target name="build:database-integration" depends="init">
-		<groovy src="CertificationUtils.groovy">
-			<arg line="checkDBIntegration"/>
-		</groovy>
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkDBIntegration"/>		
 	</target>
 
 
 	<target name="build:bda-utils" depends="init">				
-		<groovy src="CertificationUtils.groovy">
-			<arg line="getBdaUtilsVersion"/>
-		</groovy>
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="getBdaUtilsVersion"/>
 	</target>
 
 
 	<target name="build:template-properties" depends="init">				
-		<groovy src="CertificationUtils.groovy">			
-			<arg line="checkTemplateFiles"/>
-		</groovy>
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkTemplateFiles"/>
 	</target>
 
 
@@ -299,10 +291,7 @@
 			<checkout url="${svn.private.url}" revision="HEAD" destPath="${svn.private.local.checkout}" />
 		</svn>
 				
-		<groovy src="CertificationUtils.groovy">			
-			<arg line="checkPrivateRepositoryProperties"/>
-		</groovy>
-
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkPrivateRepositoryProperties"/>
 	</target>
 
 	<target name="build:ci-server" depends="init">				
@@ -325,9 +314,7 @@
 
 				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
 
-				<groovy src="CertificationUtils.groovy">			
-					<arg line="formatAndSetDate"/>
-				</groovy>				
+				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="formatAndSetDate"/>
 			</then>
 			<else>
 				<echo message="Could not reach host ${ci-server.hostname}."/>
@@ -336,10 +323,7 @@
 	</target>
 
 	<target name="build:check-bdafied" depends="init">
-		<property name="certification.method.name" value="checkBdaEnabled" />
-		<groovy src="CertificationUtils.groovy" >
-			<arg line="checkBdaEnabled"/>
-		</groovy>	
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkBdaEnabled"/>
 	</target>
 
 	<target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
@@ -358,10 +342,7 @@
 		    </classpath>
 		</taskdef>
 		
-		<groovy src="CertificationUtils.groovy">			
-			<arg line="checkDeploymentShakeout"/>
-		</groovy>
-
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkDeploymentShakeout"/>
 	</target>
 
 	<target name="test:seleniumrc:stop">
@@ -381,5 +362,24 @@
 				startURL="@{hostname}" />
 		</sequential>
 	</macrodef>
+	
+	<macrodef name="invokegroovymethod" description="run a selenium test">
+	<attribute name="groovy-file-location" />
+	<attribute name="groovy-file-name" />
+	<attribute name="groovy-method-name" />
+		<sequential>
+			<groovy>
+				import org.codehaus.groovy.runtime.InvokerHelper
+				<arg line="@{groovy-file-location}"/>
+				<arg line="@{groovy-file-name}"/>
+				<arg line="@{groovy-method-name}"/>
+				println "Invoking method: "+args[2]+" on Class: "+args[0]+"/"+args[1]
+				def loader = new GroovyClassLoader(getClass().getClassLoader())
+				def testClass = loader.parseClass(new File(args[0]+"/"+args[1]))			
+				InvokerHelper.invokeMethod(testClass.newInstance(ant,project),args[2],null)
+			</groovy>
+		</sequential>
+	</macrodef>
+
 
 </project>
