@@ -18,7 +18,7 @@ import org.hibernate.Session;
 	public class CertificationManager {
     
 
-    public void executeJADS(String projectName) {
+    public void certifyProjects(String projectName) {
     	
      System.out.println("ENTER THE EXECUTE METHOD");
 
@@ -80,12 +80,20 @@ import org.hibernate.Session;
 			bmb.setMapName(targetLookup.getMapName());
 			
 			BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
-			buildHelper.updateProjectBuildStatus();			
+			try
+			{
+				buildHelper.updateProjectBuildStatus();				
+			}  
+			catch(Exception ex)
+	        {
+				System.out.println("EXCEPTION IN THE CATCH::::" + ex.getMessage());
+				ex.printStackTrace();
+	        }			
           }
      } 
      
-    	session.close();
-        System.out.println("FINISH THE EXECUTE METHOD");
+   	session.close();
+    System.out.println("FINISH THE EXECUTE METHOD");
     }
     
     public static void main(String args[])
@@ -103,7 +111,7 @@ import org.hibernate.Session;
     	}
 
     	CertificationManager cm = new CertificationManager();
-    	cm.executeJADS(projectName);
+    	cm.certifyProjects(projectName);
     }
   
 }

@@ -1,5 +1,6 @@
 package gov.nih.nci.bda.certification;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import gov.nih.nci.bda.certification.business.BuildCertificationBean;
@@ -23,7 +24,7 @@ public class BuildCertificationHelper {
 		this.bmb = bmb;
 	}
 		
-	public void updateProjectBuildStatus()
+	public void updateProjectBuildStatus() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{				
 		ProjectCertificationStatus pbs = null;
 		String projectName = bmb.getProjectName();		
@@ -44,26 +45,18 @@ public class BuildCertificationHelper {
 		Session session = HibernateUtil.getSession();
 	    session.beginTransaction(); 		    
 	    	    
-	    
 		if (!bmb.isBuildSuccessful()) 
 		{	
-			System.out.println("SINGLE COMMAND FAILED");
+			System.out.println("CERTIFICATION FEATURE FAILED");
 			// build failed
 
-		    Query query = session.createQuery( " from ProjectCertificationStatus where product like ?");
+		    Query query = session.createQuery( BuildCertificationConstants.CERTIFICATION_QUERY);
 		    query.setString(0, searchProject);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 			if(pbs != null )
 			{	
-		    	try {
-		    		if(!bmb.isValue())
-		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_FAILED);
-		    		else
-		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
-				}
-		    	catch (Exception e) {				
-					e.printStackTrace();
-				}
+				invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_FAILED);
+
 		    	//update the project URL on update
 		    	pbs.setProduct(projectUrl);
 		    	session.update(pbs);
@@ -71,127 +64,36 @@ public class BuildCertificationHelper {
 		    else
 		    {
 		    	pbs = new ProjectCertificationStatus();
-		    	Method[] methods = pbs.getClass().getMethods();
-		    	for (int i = 0; i < methods.length; i++)
-		    	{
-		    		if(methods[i].getName().equals(methodName))
-    				{
-		    			try 
-		    			{	
-		    				System.out.println("BuildCertificationConstants.WIKI_FAILED::::" + BuildCertificationConstants.WIKI_FAILED);	    						    				
-		    	    		if(!bmb.isValue())
-		    	    			methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_FAILED));
-				    		else
-				    			methods[i].invoke(pbs,new String(bmb.getPropertyValue()));	
-		    			}
-				    	catch (Exception e) {				
-							e.printStackTrace();
-						}
-    				}
-		    		else if(methods[i].getName().startsWith("set"))
-		    		{
-		    			if(!(methods[i].getName().equals("setProduct") || methods[i].getName().equals("setId")))
-						{
-			    			try 
-			    			{			    				
-			    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_NOTBUILD));
-							}
-			    			catch (Exception e) 
-			    			{				
-			    				e.printStackTrace();
-			    			}
-						}
-		    		}
-		    	}		    	
+		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_FAILED);
 		    	pbs.setProduct(projectUrl);
 		    	session.save(pbs);		
-		    }
-/*
-	    	BuildHistory bh = new BuildHistory();
-	    	bh.setProduct(projectName);
-	    	bh.setBuildTier(buildTier);
-	    	bh.setBuildStatus(BuildMonitorConstants.BUILD_FAILED);
-	    	bh.setWikiBuildStatus(BuildMonitorConstants.WIKI_FAILED);
-	    	bh.setLastBuildTime(new Timestamp(System.currentTimeMillis()));
-	    	session.save(bh);	
-		    */	
-		    
+		    }		    
 		}
 		else
 		{	
-			System.out.println("SINGLE COMMAND SUCCESSFUL");
+			System.out.println("CERTIFICATION FEATURE PASSED");
 			// build successful	 
 			
-		    Query query = session.createQuery( " from ProjectCertificationStatus where product like ? ");
+		    Query query = session.createQuery(BuildCertificationConstants.CERTIFICATION_QUERY);
 		    query.setString(0, searchProject);
 			pbs= (ProjectCertificationStatus) query.uniqueResult();
 
 			if(pbs != null )
 			{						    		
-		    	try {
-		    		if(!bmb.isValue())
-		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,BuildCertificationConstants.WIKI_SUCCESSFUL);
-		    		else
-		    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
-
-				}
-		    	catch (Exception e) {				
-					e.printStackTrace();
-				}
+		    	invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
 		    	//update the project URL on update
 		    	pbs.setProduct(projectUrl);
 		    	session.update(pbs);
 		    }
 		    else
 		    {
+		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
 		    	pbs = new ProjectCertificationStatus();
-		    	Method[] methods = pbs.getClass().getMethods();
-		    	for (int i = 0; i < methods.length; i++)
-		    	{
-
-		    		if(methods[i].getName().equals(methodName))
-    				{
-		    			try 
-		    			{	
-				    		if(!bmb.isValue())
-				    			methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_SUCCESSFUL));
-				    		else
-				    			methods[i].invoke(pbs,new String(bmb.getPropertyValue()));		    						    			
-		    			}
-				    	catch (Exception e) {				
-							e.printStackTrace();
-						}
-    				}
-		    		else if(methods[i].getName().startsWith("set"))
-		    		{
-		    			if(!(methods[i].getName().equals("setProduct") || methods[i].getName().equals("setId")))
-						{
-			    			try 
-			    			{
-			    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_NOTBUILD));
-							}
-			    			catch (Exception e) 
-			    			{				
-			    				e.printStackTrace();
-			    			}
-						}
-		    		}
-		    	}
 		    	pbs.setProduct(projectUrl);
 		    	session.save(pbs);		    	
 		    }
-/*
-	    	BuildHistory bh = new BuildHistory();		  
-	    	bh.setProduct(projectName);
-	    	bh.setBuildTier(buildTier);
-	    	bh.setBuildStatus(BuildMonitorConstants.BUILD_SUCCESSFUL);
-	    	bh.setWikiBuildStatus(BuildMonitorConstants.WIKI_SUCCESSFUL);
-	    	bh.setLastBuildTime(new Timestamp(System.currentTimeMillis()));
-	    	session.save(bh);
-		     */
 		}
-	    session.getTransaction().commit();
-	   
+	    session.getTransaction().commit();  
 	}
 	
 	
@@ -199,5 +101,37 @@ public class BuildCertificationHelper {
 		
 		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1); 
 	}
+	
+	private void invokeSetMethodValue(ProjectCertificationStatus pbs,String methodName,String certificationStatus) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
+	{
+    		if(!bmb.isValue())
+    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,certificationStatus);
+    		else
+    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
+	}
 
+	private void invokeSetAllMethods(ProjectCertificationStatus pbs,String methodName,String certificationStatus) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
+	{
+
+    	Method[] methods = pbs.getClass().getMethods();
+    	for (int i = 0; i < methods.length; i++)
+    	{
+
+    		if(methods[i].getName().equals(methodName))
+			{
+		    		if(!bmb.isValue())
+		    			methods[i].invoke(pbs,new String(certificationStatus));
+		    		else
+		    			methods[i].invoke(pbs,new String(bmb.getPropertyValue()));
+			}
+    		else if(methods[i].getName().startsWith("set"))
+    		{
+    			if(!(methods[i].getName().equals("setProduct") || methods[i].getName().equals("setId")))
+				{
+	    				methods[i].invoke(pbs,new String(BuildCertificationConstants.WIKI_NOTBUILD));
+				}
+    		}
+    	}
+	}	
+	
 }
