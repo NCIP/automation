@@ -46,19 +46,23 @@ public class BuildCertificationHelper {
 	    session.beginTransaction(); 		    
 	    	    
 
+	    Query query = session.createQuery( BuildCertificationConstants.CERTIFICATION_QUERY);
+	    query.setString(0, searchProject);
+		pbs= (ProjectCertificationStatus) query.uniqueResult();
+		
 		if (!bmb.isBuildSuccessful()) 
 		{	
 			System.out.println("CERTIFICATION FEATURE FAILED");
 			// build failed
 
-		    Query query = session.createQuery( BuildCertificationConstants.CERTIFICATION_QUERY);
-		    query.setString(0, searchProject);
-			pbs= (ProjectCertificationStatus) query.uniqueResult();
 			if(pbs != null )
 			{	
 				invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_FAILED);
 
 		    	//update the project URL on update
+				
+				System.out.println("projectUrl B4 Set:::::::" +projectUrl);
+				System.out.println("bmb.getProjectRepoUrl() B4 Set:::::::" +bmb.getProjectRepoUrl());
 		    	pbs.setProduct(projectUrl);
 		    	session.update(pbs);
 		    }
@@ -73,15 +77,12 @@ public class BuildCertificationHelper {
 		else
 		{	
 			System.out.println("CERTIFICATION FEATURE PASSED");
-			// build successful	 
-			
-		    Query query = session.createQuery(BuildCertificationConstants.CERTIFICATION_QUERY);
-		    query.setString(0, searchProject);
-			pbs= (ProjectCertificationStatus) query.uniqueResult();
-
+			// build successful			
 			if(pbs != null )
 			{						    		
 		    	invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
+		    	System.out.println("projectUrl B4 Set:::::::" +projectUrl);
+		    	System.out.println("bmb.getProjectRepoUrl() B4 Set:::::::" +bmb.getProjectRepoUrl());
 		    	//update the project URL on update
 		    	pbs.setProduct(projectUrl);
 		    	session.update(pbs);
