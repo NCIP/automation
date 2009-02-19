@@ -76,7 +76,7 @@ class CertificationUtils
 			{
 				Date dtConverted = format.parse(processToken);
 				println("Time Stamp Format" + dtConverted)
-				parsedDate = formatter.format(dtConverted);
+				def parsedDate = formatter.format(dtConverted);
 				println("Time Stamp Format" + parsedDate);
 				project.setProperty("certification.property.value",parsedDate);
 			}
@@ -90,7 +90,7 @@ class CertificationUtils
 	       def privatePropertiesLocation=project.properties['svn.private.local.checkout']
 	       try
 	       {
-		       propertiesDir = new File(privatePropertiesLocation + "/properties").getAbsoluteFile()
+		       String propertiesDir = new File(privatePropertiesLocation + "/properties").getAbsoluteFile()
 		       java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
 		       java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
 
