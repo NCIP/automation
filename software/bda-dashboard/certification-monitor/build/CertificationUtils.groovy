@@ -33,8 +33,8 @@ class CertificationUtils
 
 		String projectPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();
 
-		installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
-		installProject = new XmlParser().parse(installFile)
+		String installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+		def installProject = new XmlParser().parse(installFile)
 
 		ant.property(file: projectPropertiesFile)
 		println project.properties['application.url']	
@@ -135,8 +135,8 @@ class CertificationUtils
 			ant.fail("TEMPLATE VALIDATION FAILED: Can not find the install-properties.template file ")
 		}
 
-		installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
-		installProject = new XmlParser().parse(installFile)				
+		String installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+		def installProject = new XmlParser().parse(installFile)				
 
 		if(!installProject.switch.find{it.@value=='${properties.file.type}'}.'case'.find{it.@value=='install'}.property.@name.contains('properties.template.file'))
 			ant.fail("TEMPLATE VALIDATION FAILED: properties.template.file property is not set ")
@@ -173,8 +173,8 @@ class CertificationUtils
 		else
 		{
 			println "DB integration Check"
-			installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
-			installProject = new XmlParser().parse(installFile)				
+			String installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+			def installProject = new XmlParser().parse(installFile)				
 			println installProject.target.'@name'.contains(targetName)
 			println targetName
 			if(installProject.target.'@name'.contains(targetName))
