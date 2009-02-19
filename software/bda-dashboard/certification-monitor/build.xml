@@ -23,6 +23,9 @@
 	<property name="tests.dir" value="${deploy.dir}/certification-tests/tests" />
 	<property name="results.dir" value="${deploy.dir}/certification-tests/results" />	
 	
+	<property name="tests.unit.source.dir" value="${software.dir}/src/tests/unit/groovy" />
+	<property name="tests.unit.classes.dir" value="${target.dir}/unit/classes" />
+
 
 	<!-- PATHS -->
 	<path id="project.classpath">
@@ -34,11 +37,15 @@
 
 
 	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="project.classpath"/>
+	
+	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="project.classpath"/>
 
 	<target name="init" depends="clean" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${target.dir}" />
-		<mkdir dir="${dist.dir}" />		
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${tests.unit.classes.dir}" />		
 	</target>
 
 	<target name="clean" description="create table and populate data">
@@ -52,7 +59,6 @@
 		<mkdir dir="${tests.dir}/" />
 		<mkdir dir="${results.dir}/" />
 	</target>
-
 
 	<target name="deploy:clean" description="create table and populate data">
 		<delete dir="${deploy.dir}" />
@@ -128,6 +134,16 @@
 
 	<target name="deploy" depends="deploy:artifacts,deploy:configure" description="deploy the build monitor">
 		
+	</target>
+		
+	<target name="test:execute" description="Run the class to update Wiki">
+		<groovy>
+		   <arg line="${tests.unit.source.dir}"/>
+		   def loader = new GroovyClassLoader(getClass().getClassLoader())
+		   def testClass = loader.parseClass(new File(args[0]+"/BDACertificationTest.groovy"))
+		   println testClass
+		   junit.textui.TestRunner.run(testClass)
+		</groovy>		
 	</target>
 
 </project>

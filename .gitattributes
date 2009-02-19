@@ -2250,6 +2250,7 @@ software/bda-dashboard/certification-monitor/src/main/sql/create_schema_buildmon
 software/bda-dashboard/certification-monitor/src/main/sql/insert_target_lookup.sql -text
 software/bda-dashboard/certification-monitor/src/tests/functional/certification-test-case.html -text
 software/bda-dashboard/certification-monitor/src/tests/functional/certification-test-suite.html -text
+software/bda-dashboard/certification-monitor/src/tests/unit/groovy/BDACertificationTest.groovy -text
 software/bda-dashboard/docs/BDA_Certification_Stories.doc -text
 software/bda-dashboard/docs/BDA_Certification_design.doc -text
 software/bda-dashboard/wiki-cli/.classpath -text
