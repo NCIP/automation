@@ -88,6 +88,7 @@ public class BuildCertificationHelper {
 		    	pbs.setProduct(projectUrl);
 		    	System.out.println("pbs.getProduct() After Set:::::::" +pbs.getProduct());
 		    	session.update(pbs);
+		    	
 		    }
 		    else
 		    {
@@ -97,6 +98,7 @@ public class BuildCertificationHelper {
 		    	session.save(pbs);		    	
 		    }
 		}
+		session.clear();
 	    session.getTransaction().commit();  
 	}
 	
