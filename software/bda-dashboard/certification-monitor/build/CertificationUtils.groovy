@@ -96,7 +96,7 @@ class CertificationUtils
 
 		       if(propertiesDir.exists())
 		       {
-			       flag = false
+			       def flag = false
 			       propertiesDir.eachFileRecurse
 			       { file ->
 				       if (file.isFile())
