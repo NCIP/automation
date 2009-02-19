@@ -62,8 +62,9 @@ public class BuildCertificationHelper {
 		    	//update the project URL on update
 				
 				System.out.println("projectUrl B4 Set:::::::" +projectUrl);
-				System.out.println("bmb.getProjectRepoUrl() B4 Set:::::::" +bmb.getProjectRepoUrl());
+				System.out.println("bmb.getProjectRepoUrl() B4 Set:::::::" +bmb.getProjectRepoUrl());				
 		    	pbs.setProduct(projectUrl);
+		    	System.out.println("pbs.getProduct() After Set:::::::" +pbs.getProduct());
 		    	session.update(pbs);
 		    }
 		    else
