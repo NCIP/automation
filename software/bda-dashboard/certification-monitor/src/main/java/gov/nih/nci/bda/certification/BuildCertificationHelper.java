@@ -64,6 +64,8 @@ public class BuildCertificationHelper {
 		    	catch (Exception e) {				
 					e.printStackTrace();
 				}
+		    	//update the project URL on update
+		    	pbs.setProduct(projectUrl);
 		    	session.update(pbs);
 		    }
 		    else
@@ -100,7 +102,7 @@ public class BuildCertificationHelper {
 			    			}
 						}
 		    		}
-		    	}
+		    	}		    	
 		    	pbs.setProduct(projectUrl);
 		    	session.save(pbs);		
 		    }
@@ -136,6 +138,8 @@ public class BuildCertificationHelper {
 		    	catch (Exception e) {				
 					e.printStackTrace();
 				}
+		    	//update the project URL on update
+		    	pbs.setProduct(projectUrl);
 		    	session.update(pbs);
 		    }
 		    else
