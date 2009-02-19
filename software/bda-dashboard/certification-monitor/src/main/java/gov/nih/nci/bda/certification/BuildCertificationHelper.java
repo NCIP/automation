@@ -45,6 +45,7 @@ public class BuildCertificationHelper {
 		Session session = HibernateUtil.getSession();
 	    session.beginTransaction(); 		    
 	    	    
+
 		if (!bmb.isBuildSuccessful()) 
 		{	
 			System.out.println("CERTIFICATION FEATURE FAILED");
@@ -87,8 +88,8 @@ public class BuildCertificationHelper {
 		    }
 		    else
 		    {
-		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
 		    	pbs = new ProjectCertificationStatus();
+		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);		    	
 		    	pbs.setProduct(projectUrl);
 		    	session.save(pbs);		    	
 		    }
