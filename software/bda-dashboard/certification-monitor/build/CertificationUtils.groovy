@@ -208,9 +208,9 @@ class CertificationUtils
 	void killProcessOnCertificationDir ()
 	{
 		def directoryName=project.properties['certification.directory.name']
-		proc1 = 'ps -ef'.execute()
-		proc2 = "grep ${directoryName}".execute()
-		proc3 = 'grep java'.execute()
+		def proc1 = 'ps -ef'.execute()
+		def proc2 = "grep ${directoryName}".execute()
+		def proc3 = 'grep java'.execute()
 
 		proc1 | proc2 | proc3
 		proc3.waitFor()
@@ -220,7 +220,7 @@ class CertificationUtils
 				if(i == 1)
 					{
 						println "${processToken}"
-						proc4 ="kill -9 ${processToken}".execute()
+						def proc4 ="kill -9 ${processToken}".execute()
 						proc4.waitFor()
 						proc4.in.eachLine { 
 							line2 -> println line2
