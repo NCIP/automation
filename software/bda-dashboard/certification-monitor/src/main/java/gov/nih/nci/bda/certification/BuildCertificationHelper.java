@@ -49,7 +49,7 @@ public class BuildCertificationHelper {
 	    Query query = session.createQuery( BuildCertificationConstants.CERTIFICATION_QUERY);
 	    query.setString(0, searchProject);
 		pbs= (ProjectCertificationStatus) query.uniqueResult();
-		session.clear();
+		//session.clear();
 		
 		if (!bmb.isBuildSuccessful()) 
 		{	
