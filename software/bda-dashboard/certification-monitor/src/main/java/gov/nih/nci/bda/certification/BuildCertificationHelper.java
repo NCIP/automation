@@ -32,8 +32,7 @@ public class BuildCertificationHelper {
 		String methodName = getSetMethodName(mapName);
 		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
 		String searchProject = "%"+projectName+"|%";
-		
-		
+				
 		System.out.println("bmb.isValue():::::::" +bmb.isValue());
 		System.out.println("bmb.getPropertyValue():::::::" +bmb.getPropertyValue());
 		System.out.println("bmb.getProjectRepoUrl():::::::" +bmb.getProjectRepoUrl());
@@ -55,19 +54,18 @@ public class BuildCertificationHelper {
 		{	
 			System.out.println("CERTIFICATION FEATURE FAILED");
 			// build failed
-
 			if(pbs != null )
 			{	
 				invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_FAILED);
-		    	//update the project URL on update
-				pbs.setProduct(projectUrl);		    	
+		    	//update the project URL on update					
+				setProductValue(pbs,projectUrl);
 		    	session.update(pbs);
 		    }
 		    else
 		    {
 		    	pbs = new ProjectCertificationStatus();
 		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_FAILED);
-		    	pbs.setProduct(projectUrl);
+		    	setProductValue(pbs,projectUrl);
 		    	session.save(pbs);		
 		    }		    
 		}
@@ -79,7 +77,7 @@ public class BuildCertificationHelper {
 			{						    		
 		    	invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
 		    	//update the project URL on update
-		    	pbs.setProduct(projectUrl);
+		    	setProductValue(pbs,projectUrl);
 		    	session.update(pbs);
 		    	
 		    }
@@ -87,15 +85,20 @@ public class BuildCertificationHelper {
 		    {
 		    	pbs = new ProjectCertificationStatus();
 		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);		    	
-		    	pbs.setProduct(projectUrl);
+		    	setProductValue(pbs,projectUrl);
 		    	session.save(pbs);		    	
 		    }
-		}
-		
+		}		
 	    session.getTransaction().commit();  
 	}
 	
 	
+	private void setProductValue(ProjectCertificationStatus pbs,String projectUrl) 
+	{
+		if(bmb.getProjectRepoUrl() != null)
+			pbs.setProduct(projectUrl);			
+	}
+
 	private String getSetMethodName(String mapName) {
 		
 		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1); 
