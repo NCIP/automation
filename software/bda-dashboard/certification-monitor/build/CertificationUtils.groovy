@@ -10,11 +10,28 @@ class CertificationUtils
 {
 	def ant = new AntBuilder();
 	def project = new Project();
+	HashMap defaultProperties = new HashMap();
 
 	CertificationUtils(AntBuilder ant,Project project )
 	{
 		this.ant = ant
 		this.project = project
+		populateDefaultProperties()
+	}
+
+	void populateDefaultProperties ()
+	{
+		defaultProperties.put("application.base.path.linux","\${user.home}/apps/petstore-webapp");
+		defaultProperties.put("application.base.path.windows","C:/apps/petstore-webapp");
+		defaultProperties.put("database.system.user","mysql")
+		defaultProperties.put("database.system.password","mysql")
+		defaultProperties.put("database.server","localhost")
+		defaultProperties.put("database.port","3306")
+		defaultProperties.put("database.name","genericdb")
+		defaultProperties.put("database.user","genericuser")
+		defaultProperties.put("database.password","password")
+		defaultProperties.put("mail.smtp.host","localhost")
+		defaultProperties.put("jboss.server.hostname","localhost")
 	}
 
 	void checkBdaEnabled ()
@@ -229,5 +246,83 @@ class CertificationUtils
 			}
 		 }
 	}
+	
+	void checkCommandLineInstaller ()
+	{
+		def buildFileLocation=project.properties['master.build.location']	
+		def antFile = new File(buildFileLocation+"/build.xml")
+
+		def build = new Project()
+		build.init()
+		build.setProperty("project.name", "petstore");
+		ProjectHelper.configureProject(build, antFile)	
+
+
+		String installerFile = build.getProperty("dist.dir") + "/" + build.getProperty("petstore-webapp.install.zip.file")
+		String installerworking = "working/installer"
+		println installerFile
+		println installerworking
+		ant.unzip(src: installerFile,dest:installerworking )
+
+		String propertiesList = getListOfobfuscatedProperties()		
+		
+		HashMap installerProperties = getPropertyValuesList(propertiesList.substring(1,propertiesList.length() -1))	
+		println "installerProperties::" + installerProperties
+		
+
+		def deployFile = new File(installerworking+"/build.xml")	
+		def deployProject = new Project()
+		deployProject.init()
+
+		Set entries = installerProperties.entrySet();
+		Iterator it = entries.iterator();
+		while (it.hasNext()) {
+		Map.Entry entry = (Map.Entry) it.next();
+			System.out.println(entry.getKey() + "-->" + entry.getValue());
+			deployProject.setProperty(entry.getKey(), entry.getValue());
+		}
+
+		ProjectHelper.configureProject(deployProject, deployFile)	
+		
+		
+							
+		deployProject.executeTarget("install");
+		
+	}	
+	
+	
+	def getListOfobfuscatedProperties ()	
+	{
+		def buildFileLocation=project.properties['master.build.location']
+		def antFile = new File(buildFileLocation+"/build.xml")
+
+		def installProject = new XmlParser().parse(antFile)
+
+		if(installProject.target.find{it.'@name'=='dist:installer'}.'obfuscate-properties-file')
+		{
+			return installProject.target.find{it.'@name'=='dist:installer'}.'obfuscate-properties-file'.'@required.property.list'
+		}
+	}
+	
+	def getPropertyValuesList (String propertiesList)	
+	{
+	HashMap obfuscatedProperties = new HashMap()
+	propertiesList.split(',').eachWithIndex {processToken, i -> 	
+			if(checkValueFound(processToken))
+			{
+			println("processToken::" + processToken)
+			obfuscatedProperties.put(processToken,defaultProperties.get(processToken))
+			println("obfuscatedProperties::" + obfuscatedProperties.get(processToken))
+			}
+		}
+	return obfuscatedProperties
+	}
+	
+	
+	def checkValueFound (String propertiesList)	
+	{
+		return true
+	}
+	
 
 }

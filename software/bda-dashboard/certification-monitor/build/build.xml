@@ -350,6 +350,11 @@
 		<sleep seconds="10"/>     
 	</target>
 
+	<target name="build:check-commandline-installer" depends="init">
+		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="dist" dir="${master.build.location}"/>
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
+	</target>
+
 
 	<macrodef name="runseliniumtest" description="run a selenium test">
 	<attribute name="hostname" />
