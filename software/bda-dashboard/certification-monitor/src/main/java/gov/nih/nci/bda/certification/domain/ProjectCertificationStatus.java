@@ -15,6 +15,7 @@ public class ProjectCertificationStatus {
 	private String latestCIBuild;
 	private String deploymentShakeout;
 	private String bdaEnabled;
+	private String commandLineInstaller;
 	
 	public int getId() {
 		return id;
@@ -94,5 +95,12 @@ public class ProjectCertificationStatus {
 	public void setBdaEnabled(String bdaEnabled) {
 		this.bdaEnabled = bdaEnabled;
 	}
+	public String getCommandLineInstaller() {
+		return commandLineInstaller;
+	}
+	public void setCommandLineInstaller(String commandLineInstaller) {
+		this.commandLineInstaller = commandLineInstaller;
+	}
+	
 		
 }
