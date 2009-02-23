@@ -262,11 +262,10 @@ class CertificationUtils
 		ProjectHelper.configureProject(build, antFile)	
 
 
-		String installerFile = build.getProperty("dist.dir") + "/" + build.getProperty("petstore-webapp.install.zip.file")
-		String installerworking = "build/working/installer"
+		String installerFile = build.getProperty("dist.dir") + "/" + build.getProperty("petstore-webapp.install.zip.file")		
 		println installerFile
 		println installerworking
-		ant.unzip(src: installerFile,dest:installerworking )
+		ant.unzip(src: installerFile,dest:'working/installer' )
 
 		String propertiesList = getListOfobfuscatedProperties()		
 		
@@ -274,7 +273,7 @@ class CertificationUtils
 		println "installerProperties::" + installerProperties
 		
 
-		def deployFile = new File(installerworking+"/build.xml")	
+		def deployFile = new File("build/working/installer/build.xml")	
 		def deployProject = new Project()
 		deployProject.init()
 
