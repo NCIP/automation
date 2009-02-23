@@ -59,6 +59,7 @@
 	<propertycopy name="project.single-command.deployment.target" from="${project.name}.single-command.deployment.target" />
 	<propertycopy name="project.database.integration.target" from="${project.name}.database.integration.target" />	
 	<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
+	<propertycopy name="project.master.install.file" from="${project.name}.master.install.file" />
 	<propertycopy name="project.exploded.dir.location" from="${project.name}.exploded.dir.location" />
 
 	<propertycopy name="project.svn.username" from="${project.name}.svn.username" />
@@ -90,6 +91,7 @@
 	<property name="single-command.deployment.target" value="${project.single-command.deployment.target}" />
 	<property name="database.integration.target" value="${project.database.integration.target}" />
 	<property name="master.build.file" value="${project.master.build.file}" />
+	<property name="master.install.file" value="${project.master.install.file}" />
 	<property name="exploded.dir.location" value="${project.exploded.dir.location}" />
 
 	<property name="svn.username" value="${project.svn.username}" />
@@ -353,6 +355,7 @@
 	<target name="build:check-commandline-installer" depends="init">
 		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="dist" dir="${master.build.location}"/>
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
+		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="install" dir="${master.install.file}"/>
 	</target>
 
 

@@ -253,7 +253,9 @@ class CertificationUtils
 	
 	void checkCommandLineInstaller ()
 	{
-		def buildFileLocation=project.properties['master.build.location']	
+		def buildFileLocation=project.properties['master.build.location']
+		def installFileLocation=project.properties['master.install.location']
+		
 		def antFile = new File(buildFileLocation+"/build.xml")
 
 		def build = new Project()
@@ -272,15 +274,14 @@ class CertificationUtils
 		println "installerProperties::" + installerProperties
 		
 
-		def deployFile = new File("build/working/installer/build.xml")
+		def deployFile = new File(installFileLocation+"/build.xml")
 
 //		def deployProject = new Project()
 //		deployProject.init()
 
-		String installPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();
+		String installPropertiesFile=new File(installFileLocation+"/install.properties").getAbsoluteFile();
 		Properties props = new Properties();
 		props.load(new FileInputStream(installPropertiesFile));			
-		//String bdaVersion = props.getProperty("bda.version");
 
 
 		Set entries = installerProperties.entrySet();
