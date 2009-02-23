@@ -17,6 +17,7 @@
          <property name="templateValidation" column="TEMPLATE_VALIDATION"/>
          <property name="privateRepositoryProperties" column="PRIVATE_PROPERTIES"/>
          <property name="latestCIBuild" column="CI_BUILD"/>
-         <property name="deploymentShakeout" column="DEPLOYMENT_SHAKEOUT"/>                  
+         <property name="deploymentShakeout" column="DEPLOYMENT_SHAKEOUT"/>
+         <property name="commandLineInstaller" column="COMMANDLINE_INSTALLER"/>                  
      </class>	
 </hibernate-mapping>
