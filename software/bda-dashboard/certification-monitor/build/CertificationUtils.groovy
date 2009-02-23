@@ -272,23 +272,33 @@ class CertificationUtils
 		println "installerProperties::" + installerProperties
 		
 
-		def deployFile = new File("build/working/installer/build.xml")	
-		def deployProject = new Project()
-		deployProject.init()
+		def deployFile = new File("build/working/installer/build.xml")
+
+//		def deployProject = new Project()
+//		deployProject.init()
+
+		String installPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();
+		Properties props = new Properties();
+		props.load(new FileInputStream(installPropertiesFile));			
+		//String bdaVersion = props.getProperty("bda.version");
+
 
 		Set entries = installerProperties.entrySet();
 		Iterator it = entries.iterator();
 		while (it.hasNext()) {
 		Map.Entry entry = (Map.Entry) it.next();
 			System.out.println(entry.getKey() + "-->" + entry.getValue());
-			deployProject.setProperty(entry.getKey(), entry.getValue());
-		}
+//			deployProject.setUserProperty(entry.getKey(), entry.getValue());
+			props.setProperty(entry.getKey(), entry.getValue());
 
-		ProjectHelper.configureProject(deployProject, deployFile)	
+		}
+		props.store(new FileOutputStream(installPropertiesFile),null);		
+
+//		ProjectHelper.configureProject(deployProject, deployFile)	
 		
 		
 							
-		deployProject.executeTarget("install");
+//		deployProject.executeTarget("install");
 		
 	}	
 	
