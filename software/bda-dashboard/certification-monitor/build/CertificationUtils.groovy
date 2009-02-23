@@ -263,7 +263,7 @@ class CertificationUtils
 
 
 		String installerFile = build.getProperty("dist.dir") + "/" + build.getProperty("petstore-webapp.install.zip.file")
-		String installerworking = "working/installer"
+		String installerworking = "build/working/installer"
 		println installerFile
 		println installerworking
 		ant.unzip(src: installerFile,dest:installerworking )
