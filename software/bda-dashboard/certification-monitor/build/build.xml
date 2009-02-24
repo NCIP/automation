@@ -356,7 +356,7 @@
 		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="dist" dir="${master.build.location}"/>
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
 
-		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${master.build.file}"/>
+		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${master.build.location}"/>
 		
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<delete dir="${user.home}/apps"/>
