@@ -356,6 +356,11 @@
 		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="dist" dir="${master.build.location}"/>
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
 
+		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${master.build.file}"/>
+		
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
+		<delete dir="${user.home}/apps"/>
+
 		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandDeployment" />			
@@ -376,7 +381,6 @@
 			<arg value="${build.dir}/.." />
 			<arg value="install" />
 		</exec>
-
 
 	</target>
 

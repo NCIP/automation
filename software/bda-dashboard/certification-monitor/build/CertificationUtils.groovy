@@ -321,20 +321,31 @@ class CertificationUtils
 	{
 	HashMap obfuscatedProperties = new HashMap()
 	propertiesList.split(',').eachWithIndex {processToken, i -> 	
-			if(checkValueFound(processToken))
-			{
+		if(checkValueFound(processToken))
+		{
 			println("processToken::" + processToken)
 			obfuscatedProperties.put(processToken,defaultProperties.get(processToken))
 			println("obfuscatedProperties::" + obfuscatedProperties.get(processToken))
-			}
+		}
+		else
+		{
+			String propertyKey = project.properties['project.name'] +"."+ processToken
+			println "propertyKey::"+propertyKey
+			if(project.properties[propertyKey])
+				obfuscatedProperties.put(processToken,project.properties[propertyKey])
+			else
+				ant.fail("COULD NOT FIND THE VALUE FOR THE KEY :"+propertyKey)			}
 		}
 	return obfuscatedProperties
 	}
 	
 	
-	def checkValueFound (String propertiesList)	
+	def checkValueFound (String propertyKey)	
 	{
-		return true
+		if(defaultProperties.get(propertyKey))
+			return true
+		else
+			return false
 	}
 	
 
