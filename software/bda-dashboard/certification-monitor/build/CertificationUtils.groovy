@@ -27,13 +27,26 @@ class CertificationUtils
 	{
 		defaultProperties.put("application.base.path.linux","\${user.home}/apps/petstore-webapp");
 		defaultProperties.put("application.base.path.windows","C:/apps/petstore-webapp");
-		defaultProperties.put("database.system.user","mysql")
-		defaultProperties.put("database.system.password","mysql")
-		defaultProperties.put("database.server","localhost")
-		defaultProperties.put("database.port","3306")
-		defaultProperties.put("database.name","genericdb")
-		defaultProperties.put("database.user","genericuser")
-		defaultProperties.put("database.password","password")
+		if(project.properties['database.type']=='mysql')
+		{
+			defaultProperties.put("database.system.user",project.properties["mysql.database.system.user"])
+			defaultProperties.put("database.system.password",project.properties["mysql.database.system.password"])
+			defaultProperties.put("database.server",project.properties["mysql.database.server"])
+			defaultProperties.put("database.port",project.properties["mysql.database.port"])
+			defaultProperties.put("database.name",project.properties["mysql.database.name"])
+			defaultProperties.put("database.user",project.properties["mysql.database.user"])
+			defaultProperties.put("database.password",project.properties["mysql.database.password"])
+		}
+		if(project.properties['database.type']=='postgresql')
+		{
+			defaultProperties.put("database.system.user",project.properties["postgresql.database.system.user"])
+			defaultProperties.put("database.system.password",project.properties["postgresql.database.system.password"])
+			defaultProperties.put("database.server",project.properties["postgresql.database.server"])
+			defaultProperties.put("database.port",project.properties["postgresql.database.port"])
+			defaultProperties.put("database.name",project.properties["postgresql.database.name"])
+			defaultProperties.put("database.user",project.properties["postgresql.database.user"])
+			defaultProperties.put("database.password",project.properties["postgresql.database.password"])
+		}
 		defaultProperties.put("mail.smtp.host","localhost")
 		defaultProperties.put("jboss.server.hostname","localhost")
 	}
