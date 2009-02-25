@@ -268,6 +268,7 @@ class CertificationUtils
 	{
 		def buildFileLocation=project.properties['master.build.location']
 		def installFileLocation=project.properties['master.install.location']
+		String installerPropertyName;
 		
 		def antFile = new File(buildFileLocation+"/build.xml")
 
