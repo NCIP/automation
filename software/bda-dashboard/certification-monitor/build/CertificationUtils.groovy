@@ -293,7 +293,9 @@ class CertificationUtils
 
 		String propertiesList = getListOfobfuscatedProperties()		
 		
-		HashMap installerProperties = getPropertyValuesList(propertiesList.substring(1,propertiesList.length() -1))	
+		if(propertiesList != null)
+			HashMap installerProperties = getPropertyValuesList(propertiesList.substring(1,propertiesList.length() -1))	
+			
 		println "installerProperties::" + installerProperties
 		
 
@@ -303,14 +305,16 @@ class CertificationUtils
 		Properties props = new Properties();
 		props.load(new FileInputStream(installPropertiesFile));			
 
+		if(installerProperties != null)
+		{
+			Set entries = installerProperties.entrySet();
+			Iterator it = entries.iterator();
+			while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+				System.out.println(entry.getKey() + "-->" + entry.getValue());
+				props.setProperty(entry.getKey(), entry.getValue());
 
-		Set entries = installerProperties.entrySet();
-		Iterator it = entries.iterator();
-		while (it.hasNext()) {
-		Map.Entry entry = (Map.Entry) it.next();
-			System.out.println(entry.getKey() + "-->" + entry.getValue());
-			props.setProperty(entry.getKey(), entry.getValue());
-
+			}
 		}
 		props.store(new FileOutputStream(installPropertiesFile),null);		
 	}	
