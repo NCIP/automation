@@ -12,36 +12,10 @@
 			<dbms type="postgresql" />                     
 		</or>
 	</preConditions>                                       
-	                                                        
-	<changeSet id="1" author="ssaksa">                            
-		<comment>execute add-ssaksa_one.sql add-ssaksa_two.sql </comment>
-		<sqlFile path="@db-upgrade.run.dir@/add-ssaksa_one.sql"/>
-		<sqlFile path="@db-upgrade.run.dir@/add-ssaksa_two.sql"/>
-		<rollback>
-			<sqlFile path="@db-upgrade.run.dir@/drop-ssaksa_one.sql"/>
-			<sqlFile path="@db-upgrade.run.dir@/drop-ssaksa_two.sql"/>
-		</rollback>
-	</changeSet>                                                                                                           
-	<changeSet id="2" author="ssaksa">                            
-		<comment>execute add-ssaksa_three.sql </comment>
-		<sqlFile path="@db-upgrade.run.dir@/add-ssaksa_three.sql"/>
-		<rollback>
-			<sqlFile path="@db-upgrade.run.dir@/drop-ssaksa_three.sql"/>
-		</rollback>
-	</changeSet>                                                                                                           
-	<changeSet id="3" author="ssaksa">                            
-		<comment>execute add-ssaksa_four.sql </comment>
-		<sqlFile path="@db-upgrade.run.dir@/add-ssaksa_four.sql"/>
-		<rollback>
-			<sqlFile path="@db-upgrade.run.dir@/drop-ssaksa_four.sql"/>
-		</rollback>
-	</changeSet>                                                                                                           
-	<changeSet id="4" author="ssaksa">                            
-		<comment>execute add-ssaksa_five.sql </comment>
-		<sqlFile path="@db-upgrade.run.dir@/add-ssaksa_five.sql"/>
-		<rollback>
-			<sqlFile path="@db-upgrade.run.dir@/drop-ssaksa_five.sql"/>
-		</rollback>
-	</changeSet>                                                                                                           
+	<changeSet id="1" author="bda">
+		<comment>Need to have at least one changeset to allow tagging to work.</comment> 
+		<sql>select now()</sql>
+	</changeSet>
+
 </databaseChangeLog>
 
