@@ -210,8 +210,27 @@
 		<mkdir dir="working"/>
 	</target>
 	
-	<target name="build:single-command-build" depends="init">
-		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.build.target}" dir="${master.build.location}"/>		
+	<target name="build:single-command-build" depends="init">		
+		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
+			<arg value="-Dexecuted.target.name=install" />
+			<arg value="-Dmap.name=singleCommandBuild" />			
+			<arg value="-Dproject.name=${project.name}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
+			<arg value="${single-command.build.target}" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">
+			<arg value="-Dexecuted.target.name=install" />
+			<arg value="-Dmap.name=singleCommandBuild" />			
+			<arg value="-Dproject.name=${project.name}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
+			<arg value="${single-command.build.target}" />
+		</exec>
 	</target>
 
 	<target name="clean-deployments">		
@@ -301,7 +320,7 @@
 			<isreachable host="${ci-server.hostname}" timeout="5"/>
 			<then>
 				<echo message="${ci-server.hostname} reached."/>				
-				
+<!--				
 				<sshexec host="${ci-server.hostname}" username="${ci-server.username}" password="${ci-server.password}" command="cd /usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/;ls -ct1 | head -1 > ../latestdirectory.txt" trust="true"/>
 
 				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/latestdirectory.txt" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
@@ -315,8 +334,13 @@
 				<echo message="${latest.build.dir}"/>
 
 				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
-
+-->				
+				<get src="http://${ci-server.hostname}:48080/hudson/job/${ci-server.hostname}/lastBuild/buildNumber" dest="revisionnumber.txt"/>
+				
+				
+<!--
 				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="formatAndSetDate"/>
+-->
 			</then>
 			<else>
 				<echo message="Could not reach host ${ci-server.hostname}."/>
@@ -365,7 +389,7 @@
 
 		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
 			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandDeployment" />			
+			<arg value="-Dmap.name=commandLineInstaller" />			
 			<arg value="-Dproject.name=${project.name}" />
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
@@ -375,7 +399,7 @@
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">			
 			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandDeployment" />			
+			<arg value="-Dmap.name=commandLineInstaller" />			
 			<arg value="-Dproject.name=${project.name}" />
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
