@@ -334,9 +334,9 @@
 				<echo message="${latest.build.dir}"/>
 
 				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
--->				
-				<get src="http://${ci-server.hostname}:48080/hudson/job/${ci-server.hostname}/lastBuild/buildNumber" dest="revisionnumber.txt"/>
 				
+				<get src="http://${ci-server.hostname}:48080/hudson/job/${ci-server.hostname}/lastBuild/buildNumber" dest="revisionnumber.txt"/>
+-->				
 				
 <!--
 				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="formatAndSetDate"/>
