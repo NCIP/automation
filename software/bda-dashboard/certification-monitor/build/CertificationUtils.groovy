@@ -377,16 +377,24 @@ class CertificationUtils
 		String ciStatusStr = revision.body.table[1].tr.td[1].'h1'.'img'.'@alt'
 		println ciStatusStr
 		if (ciStatusStr=="[Success]")
-			wikiStr = wikiStr.append("(/)|"+"http://"+project.properties['ci-server.hostname']+":"+project.properties['ci-server.portnumber']+"/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+			wikiStr = wikiStr.append("(/)|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
 		else
-			wikiStr = wikiStr.append("(x)|"+"http://"+project.properties['ci-server.hostname']+":"+project.properties['ci-server.portnumber']+"/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+			wikiStr = wikiStr.append("(x)|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
 		String  buildTimeStr = revision.body.table[1].tr.td[1].'h1'.text()
-		if (buildTimeStr!= null)
-			wikiStr = wikiStr.append("|"+buildTimeStr)
-
-		println wikiStr
 		
-		project.setProperty("certification.property.value",wikiStr);
+		StringBuffer sb = new StringBuffer()
+		
+		buildTimeStr.split('\\s+').each {processToken  -> 
+						sb.append("${processToken}")
+					}					
+
+		println sb
+		
+		if (sb!= null)
+			wikiStr = wikiStr.append("|"+sb+"]")
+		
+		println wikiStr
+		project.setProperty("certification.property.value",wikiStr.toString());
 		//println "revision Again::"+ revision.depthFirst().grep{ it.'h1' }.'h1'.'img'.'@alt'
 	}
 
