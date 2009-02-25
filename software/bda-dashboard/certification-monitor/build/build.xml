@@ -208,6 +208,7 @@
 	<target name="svn:init">
 		<delete dir="working"/>
 		<mkdir dir="working"/>
+		<mkdir dir="working/installer"/>
 	</target>
 	
 	<target name="build:single-command-build" depends="init">		
