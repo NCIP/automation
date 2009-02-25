@@ -289,9 +289,6 @@ class CertificationUtils
 
 		def deployFile = new File(installFileLocation+"/build.xml")
 
-//		def deployProject = new Project()
-//		deployProject.init()
-
 		String installPropertiesFile=new File(installFileLocation+"/install.properties").getAbsoluteFile();
 		Properties props = new Properties();
 		props.load(new FileInputStream(installPropertiesFile));			
@@ -302,18 +299,10 @@ class CertificationUtils
 		while (it.hasNext()) {
 		Map.Entry entry = (Map.Entry) it.next();
 			System.out.println(entry.getKey() + "-->" + entry.getValue());
-//			deployProject.setUserProperty(entry.getKey(), entry.getValue());
 			props.setProperty(entry.getKey(), entry.getValue());
 
 		}
 		props.store(new FileOutputStream(installPropertiesFile),null);		
-
-//		ProjectHelper.configureProject(deployProject, deployFile)	
-		
-		
-							
-//		deployProject.executeTarget("install");
-		
 	}	
 	
 	
@@ -344,6 +333,8 @@ class CertificationUtils
 		{
 			String propertyKey = project.properties['project.name'] +"."+ processToken
 			println "propertyKey::"+propertyKey
+			String projectPropertiesFile=new File(project.properties['master.build.location']+"/install.properties").getAbsoluteFile();
+			ant.property(file: projectPropertiesFile)			
 			if(project.properties[propertyKey])
 				obfuscatedProperties.put(processToken,project.properties[propertyKey])
 			else
