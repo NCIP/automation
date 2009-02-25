@@ -208,17 +208,16 @@
 	<target name="svn:init">
 		<delete dir="working"/>
 		<mkdir dir="working"/>
-		<mkdir dir="working/installer"/>
 	</target>
 	
 	<target name="build:single-command-build" depends="init">		
-		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
+		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandBuild" />			
 			<arg value="-Dproject.name=${project.name}" />
 			<arg value="${single-command.build.target}" />
 		</exec>
-		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">
+		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandBuild" />			
 			<arg value="-Dproject.name=${project.name}" />
@@ -362,13 +361,13 @@
 	</target>
 
 	<target name="build:check-commandline-installer" depends="init">				
-		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
+		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandBuild" />			
 			<arg value="-Dproject.name=${project.name}" />
 			<arg value="dist" />
 		</exec>
-		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">
+		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandBuild" />			
 			<arg value="-Dproject.name=${project.name}" />
