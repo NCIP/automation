@@ -215,20 +215,12 @@
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandBuild" />			
 			<arg value="-Dproject.name=${project.name}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<arg value="${single-command.build.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandBuild" />			
 			<arg value="-Dproject.name=${project.name}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<arg value="${single-command.build.target}" />
 		</exec>
 	</target>
@@ -261,10 +253,6 @@
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandDeployment" />			
 			<arg value="-Dproject.name=${project.name}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<arg value="install" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
@@ -282,10 +270,6 @@
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=singleCommandDeployment" />			
 			<arg value="-Dproject.name=${project.name}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<arg value="install" />
 		</exec>
 
@@ -376,8 +360,20 @@
 		<sleep seconds="10"/>     
 	</target>
 
-	<target name="build:check-commandline-installer" depends="init">
-		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="dist" dir="${master.build.location}"/>
+	<target name="build:check-commandline-installer" depends="init">				
+		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
+			<arg value="-Dexecuted.target.name=install" />
+			<arg value="-Dmap.name=singleCommandBuild" />			
+			<arg value="-Dproject.name=${project.name}" />
+			<arg value="dist" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">
+			<arg value="-Dexecuted.target.name=install" />
+			<arg value="-Dmap.name=singleCommandBuild" />			
+			<arg value="-Dproject.name=${project.name}" />
+			<arg value="dist" />
+		</exec>
+		
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
 
 		
@@ -391,20 +387,12 @@
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=commandLineInstaller" />			
 			<arg value="-Dproject.name=${project.name}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<arg value="install" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">			
 			<arg value="-Dexecuted.target.name=install" />
 			<arg value="-Dmap.name=commandLineInstaller" />			
 			<arg value="-Dproject.name=${project.name}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.SingleCommandListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<arg value="install" />
 		</exec>
 
