@@ -226,9 +226,12 @@
 
 
 	<target name="build:single-command-deployment" depends="init">
-
-		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.deployment.target}" dir="${master.build.location}"/>
-
+		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
+			<arg value="${single-command.deployment.target}" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
+			<arg value="${single-command.deployment.target}" />
+		</exec>
 
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
 			<arg value="-Dproperties.file=install.properties" />
