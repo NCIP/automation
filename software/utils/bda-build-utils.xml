@@ -199,28 +199,38 @@ $HeadURL$
 		<attribute name="jboss.web.user" default="${jboss.web.user}" />
 		<attribute name="jboss.web.password" default="${jboss.web.password}" />
 		<sequential>
-			<available file="@{jboss.home}/server/@{jboss.server.name}/bin" property="jboss.bin.exists"/>
 			<if>
-				<isset property="jboss.bin.exists"/>
+				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
-					<echo message="Shutting down jboss with stop_jboss"/>
-					<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/stop_jboss" osfamily="unix"/>
+					<available file="@{jboss.home}/server/@{jboss.server.name}/bin" property="jboss.bin.exists"/>
+					<if>
+						<isset property="jboss.bin.exists"/>
+						<then>
+							<echo message="Shutting down jboss with stop_jboss"/>
+							<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/stop_jboss" osfamily="unix"/>
+						</then>
+						<else>
+							<echo message="Shutting down jboss with shutdown.jar with user and password"/>
+		
+							<java classname="org.jboss.Shutdown" fork="true" spawn="false">
+								<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
+								<classpath>
+									<pathelement location="@{jboss.home}/bin/shutdown.jar" />
+								</classpath>
+							</java>
+						</else>
+					</if>
 				</then>
 				<else>
-					<echo message="Shutting down jboss with shutdown.jar"/>
-
-					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
-						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
-						<classpath>
-							<pathelement location="@{jboss.home}/bin/shutdown.jar" />
-						</classpath>
-					</java>
+					<echo message="JBoss is not running on @{jboss.server.jndi.port}"/>
 				</else>
 			</if>
+
 			<sleep seconds="10" />
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
+					<echo message="Shutting down jboss with no user/password."/>
 					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
 						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
 						<classpath>
@@ -233,6 +243,7 @@ $HeadURL$
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
+					<echo message="Shutting down jboss with default user/password."/>
 					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
 						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u admin -p admin -S" />
 						<classpath>
@@ -247,6 +258,9 @@ $HeadURL$
 				<then>
 					<fail message="Failed to shutdown jboss server at @{jboss.server.hostname}:@{jboss.server.jndi.port}"/>
 				</then>
+				<else>
+					<echo message="We believe we have shutdown JBoss."/>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -602,7 +616,7 @@ $HeadURL$
 							<for list="${all.match.property}" delimiter="${line.separator}" param="matches.line">
 								<sequential>
 									<echo message="Evaluating line in properties file = @{matches.line}"/>
-									<property name="match.tmp" value="@{matches.line}"/>
+									<var name="match.tmp" value="@{matches.line}"/>
 									<var name="is.system.user" unset="true"/>
 									<propertyregex property="is.system.user"
 										input="${match.tmp}"
@@ -686,6 +700,9 @@ $HeadURL$
 					<isset property="validation.pre.port.list"/>
 					<not>
 						<isset property="jboss.port.configuration"/>
+					</not>
+					<not>
+						<isset property="exclude.jboss"/>
 					</not>
 				</and>
 				<then>
@@ -920,19 +937,19 @@ $HeadURL$
 									<fail message="User tereminated the build."/>
 								</then>
 								<else>
-									<property name="force.reinstall" value="true"/>
+									<var name="force.reinstall" value="true"/>
 								</else>
 							</if>
 						</then>
 						<else>
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
-							<property name="force.reinstall" value="true"/>
+							<var name="force.reinstall" value="true"/>
 						</else>
 					</if>
 				</case>
 				<default>
 					<echo message="Database is ${database.type}, warning prompt not displayed."/>
-					<property name="force.reinstall" value="true"/>
+					<var name="force.reinstall" value="true"/>
 				</default>
 			</switch>
 		</sequential>
@@ -1015,7 +1032,7 @@ $HeadURL$
 				<format property="run.date" pattern="yyMMddHHmm"/>
 			</tstamp>
 			<basename file="${properties.file}" property="properties.file.name"/>
-			<property name="backup.properties.file" value="${properties.file.name}-${run.date}"/>
+			<var name="backup.properties.file" value="${properties.file.name}-${run.date}"/>
 			<copy tofile="@{propertyfile.backup.location}/${backup.properties.file}" file="${properties.file}"/>
 
 		</sequential>
@@ -1083,8 +1100,8 @@ $HeadURL$
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<sequential>
 			<!-- Process jboss server.log for errors and warnings and display on screen -->
-			<property name="server.log" value="@{jboss.home}/server/@{jboss.server.name}/log/server.log"/>
-			<property name="boot.log" value="@{jboss.home}/server/@{jboss.server.name}/log/boot.log"/>
+			<var name="server.log" value="@{jboss.home}/server/@{jboss.server.name}/log/server.log"/>
+			<var name="boot.log" value="@{jboss.home}/server/@{jboss.server.name}/log/boot.log"/>
 			<available property="server.log.exists" file="${server.log}"/>
 			<available property="boot.log.exists" file="${boot.log}"/>
 			<if>
@@ -1214,7 +1231,7 @@ $HeadURL$
 					<switch value="${database.type}">
 						<case value="mysql">
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
-							<property name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
+							<var name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
 							<delete dir="${create.sql.dir}"/>
 							<sql    
 								driver="@{database.driver}"
@@ -1299,9 +1316,14 @@ $HeadURL$
 		<sequential>
 			<!-- Only validates connection for oracle -->
 			<if>
-				<not>
-					<isset property="ignore.check.database"/>
-				</not>
+				<and>
+					<not>
+						<isset property="ignore.check.database"/>
+					</not>
+					<not>
+						<isset property="exclude.check.database"/>
+					</not>
+				</and>
 				<then>
 					<echo message="Validating database connection..." />
 					<switch value="${database.type}">
@@ -1529,7 +1551,7 @@ $HeadURL$
 		<attribute name="output.file.name" default="build.xml"/>
 		<attribute name="file.type" default="pdf"/>
 		<sequential>		
-			<property name="grand.output.file" value="${temp.dir}/grand.dot" />
+			<var name="grand.output.file" value="${temp.dir}/grand.dot" />
 			<grand output="${grand.output.file}" buildfile="@{build.file.location}"/>
 			<exec executable="dot" >
 				<arg line="-T@{file.type} -Gsize=11.69,8.27 -o @{output.file.dir}/@{output.file.name}.@{file.type} ${grand.output.file}"/>
@@ -1552,13 +1574,67 @@ $HeadURL$
 		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"/>
 		<attribute name="jboss.server.binding.template.location" default="${bda-utils.resource.dir}/template-binding.xml"/>
 		<attribute name="jboss.server.service.template.location" default="${bda-utils.resource.dir}/template-jboss-service.xml"/>
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
+		<attribute name="jboss.cobraorb.port" default="${jboss.cobraorb.port}"/>
+		<attribute name="jboss.ejbinvoker.port" default="${jboss.ejbinvoker.port}"/>
+		<attribute name="jboss.hajndi.port" default="${jboss.hajndi.port}"/>
+		<attribute name="jboss.hajrmi.port" default="${jboss.hajrmi.port}"/>
+		<attribute name="jboss.jms.port" default="${jboss.jms.port}"/>
+		<attribute name="jboss.jmx-rmi.port" default="${jboss.jmx-rmi.port}"/>
+		<attribute name="jboss.messaging.port" default="${jboss.messaging.port}"/>
+		<attribute name="jboss.pooledha.port" default="${jboss.pooledha.port}"/>
+		<attribute name="jboss.remoting.port" default="${jboss.remoting.port}"/>
+		<attribute name="jboss.server.bind.port" default="${jboss.server.bind.port}"/>
+		<attribute name="jboss.server.rmi.port" default="${jboss.server.rmi.port}"/>
+		<attribute name="jboss.service.rmiobject.port" default="${jboss.service.rmiobject.port}"/>
+		<attribute name="jboss.snmp.port" default="${jboss.snmp.port}"/>
+		<attribute name="jboss.snmp-trapd.port" default="${jboss.snmp-trapd.port}"/>
+		<attribute name="jboss.web.service.port" default="${jboss.web.service.port}"/>
+
 		<sequential>						
 			<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
+
+			<var name="bindings.file.has.tokens" unset="true"/>
+			<loadfile
+				property="bindings.file.has.tokens"
+				srcFile="@{jboss.server.binding.template.location}">
+				<filterchain>                                   
+					<linecontainsregexp>                                    
+						<regexp pattern="\@.+\@"/>                                     
+					</linecontainsregexp>                                   
+				</filterchain>                                  
+			</loadfile>               
+			<if>
+				<isset property="bindings.file.has.tokens"/>
+				<then>
+					<echo message="FYI - @{jboss.server.binding.template.location} has no tokens."/>
+				</then>
+				<else>
+					<echo message="FYI - @{jboss.server.binding.template.location} has no tokens."/>
+				</else>
+			</if>
 			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true">
 				<filterset>
-					<filtersfile file="${properties.file}" />
 					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
 					<filter token="jboss.server.bindingfile.location" value="@{jboss.server.bindingfile.location}"/>
+					<filter token="jboss.server.jndi.port" value="@{jboss.server.jndi.port}"/>
+					<filter token="jboss.server.port" value="@{jboss.server.port}"/>
+					<filter token="jboss.cobraorb.port" value="@{jboss.cobraorb.port}"/>
+					<filter token="jboss.ejbinvoker.port" value="@{jboss.ejbinvoker.port}"/>
+					<filter token="jboss.hajndi.port" value="@{jboss.hajndi.port}"/>
+					<filter token="jboss.hajrmi.port" value="@{jboss.hajrmi.port}"/>
+					<filter token="jboss.jms.port" value="@{jboss.jms.port}"/>
+					<filter token="jboss.jmx-rmi.port" value="@{jboss.jmx-rmi.port}"/>
+					<filter token="jboss.messaging.port" value="@{jboss.messaging.port}"/>
+					<filter token="jboss.pooledha.port" value="@{jboss.pooledha.port}"/>
+					<filter token="jboss.remoting.port" value="@{jboss.remoting.port}"/>
+					<filter token="jboss.server.bind.port" value="@{jboss.server.bind.port}"/>
+					<filter token="jboss.server.rmi.port" value="@{jboss.server.rmi.port}"/>
+					<filter token="jboss.service.rmiobject.port" value="@{jboss.service.rmiobject.port}"/>
+					<filter token="jboss.snmp.port" value="@{jboss.snmp.port}"/>
+					<filter token="jboss.snmp-trapd.port" value="@{jboss.snmp-trapd.port}"/>
+					<filter token="jboss.web.service.port" value="@{jboss.web.service.port}"/>
 				</filterset>
 			</copy> 
 	
@@ -1603,7 +1679,7 @@ $HeadURL$
 		<attribute name="database.server.property.name" default="database.server" />
 		<attribute name="database.port.property.name" default="database.port" />
 		<sequential>
-			<property name="db.property.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name}"/>
+			<var name="db.property.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name}"/>
 			<echo message="Checking required database properties: ${db.property.list}"/>
 			<for list="${db.property.list}" param="prop.list.item" delimiter=",">
 				<sequential>
@@ -1613,7 +1689,7 @@ $HeadURL$
 							<isset property="@{prop.list.item}"/>
 						</not>
 						<then>
-							<property name="read.ds.flag" value="true"/>	
+							<var name="read.ds.flag" value="true"/>	
 						</then>
 					</if>
 				</sequential>
@@ -1703,7 +1779,7 @@ $HeadURL$
 			<svn javahl="false">
 				<status path="@{my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
 			</svn>
-			<property name="lsd.revision" value="${svn.revision}" />
+			<var name="lsd.revision" value="${svn.revision}" />
 			<echo> in macrodef - @{my.path} </echo>
 		</sequential>
 	</macrodef>
@@ -1713,6 +1789,10 @@ $HeadURL$
 		<attribute name="require.build.wscore" default="${require.build.wscore}"/>
 		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
 		<attribute name="wscore.relative.dir" default="ws-core-4.0.3"/>
+		<attribute name="cacore-sdk.required" default="${cacore-sdk.required}"/>
+		<attribute name="cacore-sdk.src.url" default="${cacore-sdk.src.url}"/>
+		<attribute name="download.dir" default="${download.dir}"/>
+		<attribute name="cacore-sdk.dir" default="${cacore-sdk.dir}"/>
 		<sequential>			
 			<if>
 				<equals arg1="@{require.build.wscore}" arg2="true"/>
@@ -1724,6 +1804,12 @@ $HeadURL$
 						/>
 				</then>
 			</if>
+			<get-cacore-sdk
+				cacore-sdk.required="${cacore-sdk.required}"
+				cacore-sdk.src.url="${cacore-sdk.src.url}"
+				download.dir="${download.dir}"
+				cacore-sdk.dir="${cacore-sdk.dir}"
+				/>
 		</sequential>
 	</macrodef>
 
@@ -1733,9 +1819,9 @@ $HeadURL$
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<sequential>			
 			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
-			<property name="wscore.dest.file" value="temp/${wscore.file.name}"/>
+			<var name="wscore.dest.file" value="temp/${wscore.file.name}"/>
 			<echo message="Checking for existence of GLOBUS_LOCATION envrironment variable."/>
-			<echo message="wscore.relative.dir = ${wscore.relative.dir}"/>
+			<echo message="wscore.relative.dir = @{wscore.relative.dir}"/>
 			<mkdir dir="temp"/>
 			<if>
 				<not>
@@ -1763,8 +1849,8 @@ $HeadURL$
 								</else> 
 							</if>   
 							<unzip dest="@{application.base.path}" src="${wscore.dest.file}"/>
-							<property name="env.GLOBUS_LOCATION" value="@{application.base.path}/${wscore.relative.dir}"/>
-							<echo message="Completed install of wscore files into @{application.base.path}/${wscore.relative.dir} "/>
+							<var name="env.GLOBUS_LOCATION" value="@{application.base.path}/@{wscore.relative.dir}"/>
+							<echo message="Completed install of wscore files into @{application.base.path}/@{wscore.relative.dir} "/>
 
 						</then>
 					</if>
@@ -2346,9 +2432,9 @@ $HeadURL$
 		<attribute name="ivy.add.xml.src.location" />
 
 		<sequential>
-			<property name="ivy.org.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}"/>
-			<property name="ivy.module.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}/@{ivy.add.module}"/>
-			<property name="ivy.version.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}/@{ivy.add.module}/@{ivy.add.version}"/>
+			<var name="ivy.org.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}"/>
+			<var name="ivy.module.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}/@{ivy.add.module}"/>
+			<var name="ivy.version.dir" value="@{ivy-repo.base.dir}/@{ivy.add.org}/@{ivy.add.module}/@{ivy.add.version}"/>
 			<available file="${ivy.org.dir}" property="org.dir.exists" />
 			<available file="${ivy.module.dir}" property="module.dir.exists" />
 
@@ -2488,15 +2574,16 @@ $HeadURL$
 		<attribute name="grid.secure.key.file" default="${grid.secure.key.file}"/>
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}"/>
 		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<attribute name="appserver.external.http.host" default="${jboss.external.http.host}"/>
 		<sequential>
 			<switch value="@{grid.secure.enable}">
 				<case value="true">
-					<property name="scheme" value="https"/>
-					<property name="appserver.default.web.port" value="@{grid.secure.port}"/>
+					<var name="scheme" value="https"/>
+					<var name="appserver.default.web.port" value="@{grid.secure.port}"/>
 				</case>
 				<case value="false">
-					<property name="scheme" value="http"/>
-					<property name="appserver.default.web.port" value="@{appserver.port.http}"/>
+					<var name="scheme" value="http"/>
+					<var name="appserver.default.web.port" value="@{appserver.port.http}"/>
 				</case>
 				<default>
 					<fail message="grid.secure.enable must be true or false"/>
@@ -2555,6 +2642,7 @@ $HeadURL$
 				grid.application.relative.dir="@{grid.application.relative.dir}"
 				grid.external.secure.host="@{grid.external.secure.host}"
 				grid.secure.enable="@{grid.secure.enable}"
+				appserver.external.http.host="@{appserver.external.http.host}"
 				/>
 					
 			<!-- POC stuff -->
@@ -2569,14 +2657,14 @@ $HeadURL$
 				</insert>
 			</xmltask>
 			-->
-			<property name="poc.science.string" value=" affiliation=&quot;@{grid.poc.science.affiliation}&quot; email=&quot;@{grid.poc.science.email}&quot; firstName=&quot;@{grid.poc.science.name.first}&quot; lastName=&quot;@{grid.poc.science.name.last}&quot; phoneNumber=&quot;@{grid.poc.science.phone}&quot; role=&quot;@{grid.poc.science.role}&quot; "/>
+			<var name="poc.science.string" value=" affiliation=&quot;@{grid.poc.science.affiliation}&quot; email=&quot;@{grid.poc.science.email}&quot; firstName=&quot;@{grid.poc.science.name.first}&quot; lastName=&quot;@{grid.poc.science.name.last}&quot; phoneNumber=&quot;@{grid.poc.science.phone}&quot; role=&quot;@{grid.poc.science.role}&quot; "/>
 
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
 				match="^(\s+&lt;ns3:PointOfContact).*(xmlns:ns3.*&gt;)"
 				replace="\1${poc.science.string}\2"
 				flags="g" byline="true"/>
 			<!-- Research Center info -->
-			<property name="poc.tech.string" value="${line.separator}
+			<var name="poc.tech.string" value="${line.separator}
 &lt;ns9:ResearchCenter displayName=&quot;@{grid.poc.tech.researchCenter.displayname}&quot; shortName=&quot;@{grid.poc.tech.researchCenter.shortname}&quot; xmlns:ns9=&quot;gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common&quot;&gt;${line.separator}
 &lt;ns9:Address country=&quot;@{grid.poc.tech.addr.country}&quot; locality=&quot;@{grid.poc.tech.addr.locality}&quot; postalCode=&quot;@{grid.poc.tech.addr.postalCode}&quot; stateProvince=&quot;@{grid.poc.tech.addr.stateProvince}&quot; street1=&quot;@{grid.poc.tech.addr.street1}&quot; street2=&quot;@{grid.poc.tech.addr.street2}&quot;/&gt;${line.separator}
 &lt;ns9:pointOfContactCollection&gt;${line.separator}
@@ -2676,7 +2764,7 @@ $HeadURL$
 		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
 		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
 		<sequential>
-			<property name="jmx-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml"/>
+			<var name="jmx-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml"/>
 			<echo message="Updating ${jmx-console.web-xml.file}"/>
 			<xmltask source="${jmx-console.web-xml.file}"
 				dest="${jmx-console.web-xml.file}">
@@ -2723,7 +2811,7 @@ $HeadURL$
 				</insert>
 			</xmltask>
 
-			<property name="jmx-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml"/>
+			<var name="jmx-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${jmx-console.jboss-web-xml.file}"/>
 			<xmltask source="${jmx-console.jboss-web-xml.file}"
 				dest="${jmx-console.jboss-web-xml.file}">
@@ -2739,15 +2827,63 @@ $HeadURL$
 				</insert>
 			</xmltask>
 
-			<property name="jmx-console.password.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-users.properties"/>
-			<echo message="Updating ${jmx-console.password.file}"/>
+			<var name="jmx-console.user.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-users.properties"/>
+			<echo message="Updating ${jmx-console.user.file}"/>
+			<var name="jmx-console.user.matched" unset="true"/>
+			<loadfile
+				property="jmx-console.user.matched"                      
+				srcFile="${jmx-console.user.file}">                   
+				<filterchain>                                   
+					<linecontainsregexp>                                    
+						<regexp pattern="@{jboss.web.user}="/>                                     
+					</linecontainsregexp>                                   
+				</filterchain>                                  
+			</loadfile>               
 
-			<replaceregexp file="${jmx-console.password.file}"
-				match="^(admin)=.*"
-				replace="@{jboss.web.user}=@{jboss.web.password}"
-				flags="g" byline="true"/>
+			<if>
+				<isset property="jmx-console.user.matched"/>
+				<then>
+					<echo message="@{jboss.web.user} found in ${jmx-console.user.file} updating record."/>
+					<replaceregexp file="${jmx-console.user.file}"
+						match="^(@{jboss.web.user})=.*"
+						replace="@{jboss.web.user}=@{jboss.web.password}"
+						flags="g" byline="true"/>
+				</then>
+				<else>
+					<echo message="@{jboss.web.user} not found in ${jmx-console.user.file} inserting record."/>
+					<echo file="${jmx-console.user.file}" append="true" message="@{jboss.web.user}=@{jboss.web.password}"/>
+				</else>
+			</if>
+			<var name="jmx-console.role.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-roles.properties"/>
+			<echo message="Updating ${jmx-console.role.file}"/>
+			<var name="jmx-console.role.matched" unset="true"/>
+			<loadfile
+				property="jmx-console.role.matched"                      
+				srcFile="${jmx-console.role.file}">                   
+				<filterchain>                                   
+					<linecontainsregexp>                                    
+						<regexp pattern="@{jboss.web.user}="/>                                     
+					</linecontainsregexp>                                   
+				</filterchain>                                  
+			</loadfile>               
 
-			<property name="web-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml"/>
+			<if>
+				<isset property="jmx-console.role.matched"/>
+				<then>
+					<echo message="@{jboss.web.user} found in ${jmx-console.role.file} updating record."/>
+					<replaceregexp file="${jmx-console.role.file}"
+						match="^(@{jboss.web.user})=.*"
+						replace="@{jboss.web.user}=JBossAdmin,HttpInvoker"
+						flags="g" byline="true"/>
+				</then>
+				<else>
+					<echo message="@{jboss.web.user} not found in ${jmx-console.role.file} inserting record."/>
+					<echo file="${jmx-console.role.file}" append="true" message="@{jboss.web.user}=JBossAdmin,HttpInvoker"/>
+				</else>
+			</if>
+
+
+			<var name="web-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml"/>
 			<echo message="Updating ${web-console.web-xml.file}"/>
 			<xmltask source="${web-console.web-xml.file}"
 				dest="${web-console.web-xml.file}">
@@ -2794,7 +2930,7 @@ $HeadURL$
 				</insert>
 			</xmltask>
 
-			<property name="web-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml"/>
+			<var name="web-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${web-console.jboss-web-xml.file}"/>
 
 			<xmltask source="${web-console.jboss-web-xml.file}"
@@ -2811,15 +2947,71 @@ $HeadURL$
 				</insert>
 			</xmltask>
 
-			<property name="web-console.classes.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes"/>
-			<property name="jboss.props.dir" value="@{jboss.home}/server/@{jboss.server.name}/conf/props"/>
+			<var name="web-console.classes.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes"/>
+			<var name="jboss.props.dir" value="@{jboss.home}/server/@{jboss.server.name}/conf/props"/>
 			<copy todir="${jboss.props.dir}">
 				<fileset dir="${web-console.classes.dir}">
 					<include name="web-console-*.properties"/>
 				</fileset>
 			</copy>
 
-			<property name="web-console.password.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-users.properties"/>
+			<var name="web-console.user.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-users.properties"/>
+			<echo message="Updating ${web-console.user.file}"/>
+			<var name="web-console.user.matched" unset="true"/>
+			<loadfile
+				property="web-console.user.matched"                      
+				srcFile="${web-console.user.file}">                   
+				<filterchain>                                   
+					<linecontainsregexp>                                    
+						<regexp pattern="@{jboss.web.user}="/>                                     
+					</linecontainsregexp>                                   
+				</filterchain>                                  
+			</loadfile>               
+
+			<if>
+				<isset property="web-console.user.matched"/>
+				<then>
+					<echo message="@{jboss.web.user} found in ${web-console.user.file} updating record."/>
+					<replaceregexp file="${web-console.user.file}"
+						match="^(@{jboss.web.user})=.*"
+						replace="@{jboss.web.user}=@{jboss.web.password}"
+						flags="g" byline="true"/>
+				</then>
+				<else>
+					<echo message="@{jboss.web.user} not found in ${web-console.user.file} inserting record."/>
+					<echo file="${web-console.user.file}" append="true" message="@{jboss.web.user}=@{jboss.web.password}"/>
+				</else>
+			</if>
+			<var name="web-console.role.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-roles.properties"/>
+			<echo message="Updating ${web-console.role.file}"/>
+			<var name="web-console.role.matched" unset="true"/>
+			<loadfile
+				property="web-console.role.matched"                      
+				srcFile="${web-console.role.file}">                   
+				<filterchain>                                   
+					<linecontainsregexp>                                    
+						<regexp pattern="@{jboss.web.user}="/>                                     
+					</linecontainsregexp>                                   
+				</filterchain>                                  
+			</loadfile>               
+
+			<if>
+				<isset property="web-console.role.matched"/>
+				<then>
+					<echo message="@{jboss.web.user} found in ${web-console.role.file} updating record."/>
+					<replaceregexp file="${web-console.role.file}"
+						match="^(@{jboss.web.user})=.*"
+						replace="@{jboss.web.user}=JBossAdmin"
+						flags="g" byline="true"/>
+				</then>
+				<else>
+					<echo message="@{jboss.web.user} not found in ${web-console.role.file} inserting record."/>
+					<echo file="${web-console.role.file}" append="true" message="@{jboss.web.user}=JBossAdmin,HttpInvoker"/>
+				</else>
+			</if>
+
+			<!--
+			<var name="web-console.password.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-users.properties"/>
 			<echo message="Updating ${web-console.password.file}"/>
 
 			<replaceregexp file="${web-console.password.file}"
@@ -2827,13 +3019,14 @@ $HeadURL$
 				replace="@{jboss.web.user}=@{jboss.web.password}"
 				flags="g" byline="true"/>
 
-			<property name="login-config.xml" value="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
+			<var name="login-config.xml" value="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
 			<echo message="Updating ${login-config.xml}"/>
 
 			<replaceregexp file="${login-config.xml}"
 				match="web-console-"
 				replace="props\/web-console-"
 				flags="g" byline="true"/>
+			-->
 		</sequential>
 	</macrodef>
 	<macrodef name="gui-installer-prep">
@@ -2932,7 +3125,7 @@ $HeadURL$
 					<isset  property="@{ldap.url.property}"/>
 				</not>
 				<then>
-					<property name="read.login-config.flag" value="true"/>
+					<var name="read.login-config.flag" value="true"/>
 				</then>
 			</if>
 			<available file="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" property="login-config.exists"/>
@@ -2975,7 +3168,7 @@ $HeadURL$
 					</if>   
 				</then>
 				<else>
-					<property name="authentication.type" value="db"/>
+					<var name="authentication.type" value="db"/>
 				</else>
 			</if>
 		</sequential>
@@ -3180,13 +3373,13 @@ $HeadURL$
 			<if>                            
 				<equals arg1="@{authentication.type}" arg2="ldap"/>
 				<then>                  
-					<property name="login-config.block.file" value="@{login-config.ldap.file}"/>
+					<var name="login-config.block.file" value="@{login-config.ldap.file}"/>
 				</then>                                 
 				<else>                                  
 					<if>                                            
 						<equals arg1="@{authentication.type}" arg2="db"/>
 						<then>                                  
-							<property name="login-config.block.file" value="@{login-config.db.file}"/>
+							<var name="login-config.block.file" value="@{login-config.db.file}"/>
 						</then>                                         
 						<else>
 							<fail message="@{authentication.type} is not a valid authentiation type, please change to db or ldap and re-run the build."/>
@@ -3388,13 +3581,14 @@ $HeadURL$
 			<!-- copy distribution and prop file to remote system -->
 			<remote-scp 
 				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
-			<remote-scp 
-				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 			<!-- Extract zip file -->
 			<remote-ssh 
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
 				remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
+			<!-- copy properties after unzip to ensure that zip does not prompt for file existence if properties file is already in distribution. -->
+			<remote-scp 
+				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 		</sequential>
 	</macrodef>
 	<macrodef name="dist-prep" description="Macro for copying files to dist area">
@@ -3407,7 +3601,6 @@ $HeadURL$
 		<attribute name="default.target" default="install" />
 		<sequential>
 			<!-- Do some cleanup -->
-			<delete dir="@{distexploded.dir}" />
 			<delete>
 				<fileset dir="@{dist.exploded.dir}">
 					<include name="build.xml" />
@@ -3802,6 +3995,7 @@ $HeadURL$
 		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="grid.external.secure.host" default="${grid.external.secure.host}"/>
 		<attribute name="grid.secure.enable" default="true"/>
+		<attribute name="appserver.external.http.host" default="${jboss.external.http.host}"/>
 		<sequential>
 			
 			<var name="grid.external.secure.host.has.value" unset="true"/>
@@ -3810,8 +4004,18 @@ $HeadURL$
 				regexp="\S+"
 				select="true"
 				/>
+			<var name="appserver.external.http.host.has.value" unset="true"/>
+			<propertyregex property="appserver.external.http.host.has.value"
+				input="@{appserver.external.http.host}"
+				regexp="\S+"
+				select="true"
+				/>
+			
 			<if>
-				<isset property="grid.external.secure.host.has.value"/>
+				<and>
+					<equals arg1="@{grid.secure.enable}" arg2="true"/>
+					<isset property="grid.external.secure.host.has.value"/>
+				</and>
 				<then>
 					<echo message="grid.external.secure.host is @{grid.external.secure.host}, proceeding with configuration"/>
 					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
@@ -3836,6 +4040,39 @@ $HeadURL$
 				</then>
 				<else>
 					<echo message="grid.external.secure.host is is not set skipping external host configuration."/>
+				</else>
+			</if>
+			<if>
+				<and>
+					<not>
+						<equals arg1="@{grid.secure.enable}" arg2="true"/>
+					</not>
+					<isset property="appserver.external.http.host.has.value"/>
+				</and>
+				<then>
+					<echo message="appserver.external.http.host is @{appserver.external.http.host}, proceeding with configuration"/>
+					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
+						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
+						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='publishHostName']" />
+					</xmltask>
+					<xmltask source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
+						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
+							<![CDATA[
+							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
+								name="logicalHost"
+								value="@{appserver.external.http.host}"/>
+							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
+										name="publishHostName"
+								value="true"/>
+							<parameter xmlns="http://xml.apache.org/axis/wsdd/"
+								name="disableDNS"
+										value="true"/>
+							]]>
+						</insert>
+					</xmltask>
+				</then>
+				<else>
+					<echo message="appserver.external.http.host is is not set skipping external host configuration."/>
 				</else>
 			</if>
 			<if>
@@ -4162,12 +4399,30 @@ $HeadURL$
 		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
 		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
 		<!-- jboss-update-shutdown -->
-		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}" />
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
+		<attribute name="jboss.cobraorb.port" default="${jboss.cobraorb.port}"/>
+		<attribute name="jboss.ejbinvoker.port" default="${jboss.ejbinvoker.port}"/>
+		<attribute name="jboss.hajndi.port" default="${jboss.hajndi.port}"/>
+		<attribute name="jboss.hajrmi.port" default="${jboss.hajrmi.port}"/>
+		<attribute name="jboss.jms.port" default="${jboss.jms.port}"/>
+		<attribute name="jboss.jmx-rmi.port" default="${jboss.jmx-rmi.port}"/>
+		<attribute name="jboss.messaging.port" default="${jboss.messaging.port}"/>
+		<attribute name="jboss.pooledha.port" default="${jboss.pooledha.port}"/>
+		<attribute name="jboss.remoting.port" default="${jboss.remoting.port}"/>
+		<attribute name="jboss.server.bind.port" default="${jboss.server.bind.port}"/>
+		<attribute name="jboss.server.rmi.port" default="${jboss.server.rmi.port}"/>
+		<attribute name="jboss.service.rmiobject.port" default="${jboss.service.rmiobject.port}"/>
+		<attribute name="jboss.snmp.port" default="${jboss.snmp.port}"/>
+		<attribute name="jboss.snmp-trapd.port" default="${jboss.snmp-trapd.port}"/>
+		<attribute name="jboss.web.service.port" default="${jboss.web.service.port}"/>
+
 		<!-- appserver-ssl-configure -->
 		<attribute name="jboss.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf"/>
 		<attribute name="jboss.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="jboss.server-xml.service.name" default="jboss.web"/>
 		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
+		<!-- This is the value inserted into the connector in server.xml, bindings updates this the real port at runtime. You could use the real value then the bindings would not match  and it would update, so this may change in the future. -->
 		<attribute name="jboss.ssl.port" default="8443"/>
 		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
 		<attribute name="jboss.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
@@ -4214,6 +4469,24 @@ $HeadURL$
 								jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
 								jboss.server.binding.template.location="@{jboss.server.binding.template.location}"
 								jboss.server.service.template.location="@{jboss.server.service.template.location}"
+								jboss.server.jndi.port="@{jboss.server.jndi.port}"
+								jboss.server.port="@{jboss.server.port}"
+								jboss.cobraorb.port="@{jboss.cobraorb.port}"
+								jboss.ejbinvoker.port="@{jboss.ejbinvoker.port}"
+								jboss.hajndi.port="@{jboss.hajndi.port}"
+								jboss.hajrmi.port="@{jboss.hajrmi.port}"
+								jboss.jms.port="@{jboss.jms.port}"
+								jboss.jmx-rmi.port="@{jboss.jmx-rmi.port}"
+								jboss.messaging.port="@{jboss.messaging.port}"
+								jboss.pooledha.port="@{jboss.pooledha.port}"
+								jboss.remoting.port="@{jboss.remoting.port}"
+								jboss.server.bind.port="@{jboss.server.bind.port}"
+								jboss.server.rmi.port="@{jboss.server.rmi.port}"
+								jboss.service.rmiobject.port="@{jboss.service.rmiobject.port}"
+								jboss.snmp.port="@{jboss.snmp.port}"
+								jboss.snmp-trapd.port="@{jboss.snmp-trapd.port}"
+								jboss.web.service.port="@{jboss.web.service.port}"
+
 								/>
 						</then>
 						<else>
@@ -4353,6 +4626,14 @@ $HeadURL$
 							<echo message="Skipping configuring access logs for jboss because exclude.access-logs is set."/>
 						</else>
 					</if>
+					<jboss-configure-java_opts
+						jboss.bin.dir="@{jboss.home}/bin"
+						jboss.java.opts="@{jboss.java.opts}"
+						/>
+					<jboss-configure-java_opts
+						jboss.bin.dir="@{jboss.home}/server/@{jboss.server.name}/bin"
+						jboss.java.opts="@{jboss.java.opts}"
+						/>
 				</then>
 				<else>
 					<echo message="Skipping jboss configuraiton because exclude.jboss-config is set"/>
@@ -4378,35 +4659,44 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-configure-java_opts">
-		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.bin.dir" default="${jboss.home}/bin" />
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}" />
 		<sequential>
-			<osfamily property="os.family"/>
-			<echo message="os.family=${os.family}"/>
-			<switch value="${os.family}">
-				<case value="unix">
-					<replaceregexp file="${jboss.home}/bin/run.conf" byline="true"
-						match="^(\s+JAVA_OPTS)=(.*)"
-						replace="\1='@{jboss.java.opts}'"
-						/>
-				</case>
-				<case value="mac">
-					<replaceregexp file="${jboss.home}/bin/run.conf" byline="true"
-						match="^(\s+JAVA_OPTS)=(.*)"
-						replace="\1='@{jboss.java.opts}'"
-						/>
-				</case>
-				<case value="windows">
-					<replaceregexp file="${jboss.home}/bin/run.bat" byline="true"
-						match="^(set\s+JAVA_OPTS)=(.*)"
-						replace="rem \1=\2"
-						/>
-					<replaceregexp file="${jboss.home}/bin/run.bat" byline="true"
-						match="^(rem JVM memory.*)"
-						replace="rem added by BDA installer${line.separator}set JAVA_OPTS=@{jboss.java.opts}${line.separator}\1"
-						/>
-				</case>
-			</switch>
+			<echo message="Setting JBoss java options"/>
+			<if>
+				<available file="@{jboss.bin.dir}/run.conf"/>
+				<then>
+					<osfamily property="os.family"/>
+					<echo message="os.family=${os.family}"/>
+					<switch value="${os.family}">
+						<case value="unix">
+							<replaceregexp file="${jboss.bin.dir}/run.conf" byline="true"
+								match="^(\s+JAVA_OPTS)=(.*)"
+								replace="#\1=\2${line.separator}# added by macro${line.separator}\1='@{jboss.java.opts}'"
+								/>
+								</case>
+						<case value="mac">
+							<replaceregexp file="${jboss.bin.dir}/run.conf" byline="true"
+								match="^(\s+JAVA_OPTS)=(.*)"
+								replace="#\1=\2${line.separator}# added by macro${line.separator}\1='@{jboss.java.opts}'"
+								/>
+						</case>
+						<case value="windows">
+							<replaceregexp file="${jboss.bin.dir}/run.bat" byline="true"
+								match="^(set\s+JAVA_OPTS)=(.*)"
+								replace="rem \1=\2"
+								/>
+							<replaceregexp file="${jboss.bin.dir}/run.bat" byline="true"
+								match="^(rem JVM memory.*)"
+								replace="rem added by BDA installer${line.separator}set JAVA_OPTS=@{jboss.java.opts}${line.separator}\1"
+								/>
+						</case>
+					</switch>
+				</then>
+				<else>
+					<echo message="Java options not updated because @{jboss.bin.dir} does not exist."/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -4601,6 +4891,42 @@ $HeadURL$
 			<exec executable="${mvn.cmd}" dir="@{maven.dir}" failonerror="true">
 				<arg line="@{maven.profile.list} @{maven.goal.list}"/>
 			</exec>
+		</sequential>
+	</macrodef>
+	<macrodef name="get-cacore-sdk">
+		<attribute name="cacore-sdk.required" default="${cacore-sdk.required}"/>
+		<attribute name="cacore-sdk.src.url" default="${cacore-sdk.src.url}"/>
+		<attribute name="download.dir" default="${download.dir}"/>
+		<attribute name="cacore-sdk.dir" default="${cacore-sdk.dir}"/>
+		<sequential>
+			<basename file="@{cacore-sdk.src.url}" property="cacore-sdk.binaries.file"/>
+			<mkdir dir="@{download.dir}"/>
+			<!-- Download if not already downloaded -->
+			<if>            
+				<and>                   
+					<equals arg1="@{cacore-sdk.required}" arg2="true"/>
+					<not>                           
+						<available file="@{download.dir}/${cacore-sdk.binaries.file}"/>
+					</not>                          
+				</and>                  
+				<then>                  
+					<get src="@{cacore-sdk.src.url}" dest="@{download.dir}/${cacore-sdk.binaries.file}" />
+				</then>                 
+			</if>           
+			<mkdir dir="@{cacore-sdk.dir}"/>
+			<!-- Extract if not already extracted -->
+			<if>
+				<and>
+					<equals arg1="@{cacore-sdk.required}" arg2="true"/>
+					<not>
+						<available file="@{cacore-sdk.dir}"/>
+					</not>
+				</and>
+				<then>
+					<mkdir dir="@{cacore-sdk.dir}"/>
+					<unzip src="@{download.dir}/${cacore-sdk.binaries.file}" dest="@{cacore-sdk.dir}"/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
