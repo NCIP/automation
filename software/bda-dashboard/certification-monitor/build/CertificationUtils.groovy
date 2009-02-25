@@ -269,6 +269,7 @@ class CertificationUtils
 		def buildFileLocation=project.properties['master.build.location']
 		def installFileLocation=project.properties['master.install.location']
 		String installerPropertyName;
+		HashMap installerProperties;
 		
 		def antFile = new File(buildFileLocation+"/build.xml")
 
@@ -294,7 +295,7 @@ class CertificationUtils
 		String propertiesList = getListOfobfuscatedProperties()		
 		
 		if(propertiesList != null)
-			HashMap installerProperties = getPropertyValuesList(propertiesList.substring(1,propertiesList.length() -1))	
+			installerProperties = getPropertyValuesList(propertiesList.substring(1,propertiesList.length() -1))	
 			
 		println "installerProperties::" + installerProperties
 		
@@ -366,5 +367,27 @@ class CertificationUtils
 			return false
 	}
 	
+	def parseAndFormatDate (String propertiesList)
+	{	
+		def buildFileLocation=project.properties['master.build.location']
+		String installFile = new File(buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
+		StringBuffer wikiStr = new StringBuffer("[");
+		def revision = new XmlParser().parse(installFile)
+
+		String ciStatusStr = revision.body.table[1].tr.td[1].'h1'.'img'.'@alt'
+		println ciStatusStr
+		if (ciStatusStr=="[Success]")
+			wikiStr = wikiStr.append("(/)|"+"http://"+project.properties['ci-server.hostname']+":"+project.properties['ci-server.portnumber']+"/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+		else
+			wikiStr = wikiStr.append("(x)|"+"http://"+project.properties['ci-server.hostname']+":"+project.properties['ci-server.portnumber']+"/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+		String  buildTimeStr = revision.body.table[1].tr.td[1].'h1'.text()
+		if (buildTimeStr!= null)
+			wikiStr = wikiStr.append("|"+buildTimeStr)
+
+		println wikiStr
+		
+		project.setProperty("certification.property.value",wikiStr);
+		//println "revision Again::"+ revision.depthFirst().grep{ it.'h1' }.'h1'.'img'.'@alt'
+	}
 
 }

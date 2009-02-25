@@ -70,8 +70,8 @@
 	<propertycopy name="project.local.private.checkout" from="${project.name}.local.private.checkout" />
 	<propertycopy name="project.ci-server.hostname" from="${project.name}.ci-server.hostname" />
 	<propertycopy name="project.ci-server.jobname" from="${project.name}.ci-server.jobname" />
-	<propertycopy name="project.ci-server.username" from="${project.name}.ci-server.username" />
-	<propertycopy name="project.ci-server.password" from="${project.name}.ci-server.password" />
+	<propertycopy name="project.ci-server.portnumber" from="${project.name}.ci-server.portnumber" />
+	
 
 	
 	<echo message="databasetype::${project.database.type}"/>
@@ -103,8 +103,8 @@
 	
 	<property name="ci-server.hostname" value="${project.ci-server.hostname}" />
 	<property name="ci-server.jobname" value="${project.ci-server.jobname}" />
-	<property name="ci-server.username" value="${project.ci-server.username}" />
-	<property name="ci-server.password" value="${project.ci-server.password}" />
+	<property name="ci-server.portnumber" value="${project.ci-server.portnumber}" />
+	
 	
 	<property name="certification.directory.name" value="${user.home}/apps"/>
 	
@@ -212,15 +212,9 @@
 	
 	<target name="build:single-command-build" depends="init">		
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandBuild" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="${single-command.build.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandBuild" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="${single-command.build.target}" />
 		</exec>
 	</target>
@@ -235,8 +229,6 @@
 
 		<ant inheritAll="false" inheritRefs="false" antfile="${master.build.file}" target="${single-command.deployment.target}" dir="${master.build.location}"/>
 
-		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${exploded.dir.location}"/>
-
 
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
 			<arg value="-Dproperties.file=install.properties" />
@@ -250,9 +242,6 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandDeployment" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="install" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
@@ -267,9 +256,6 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandDeployment" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="install" />
 		</exec>
 
@@ -321,7 +307,8 @@
 				
 				<get src="http://${ci-server.hostname}:48080/hudson/job/${ci-server.hostname}/lastBuild/buildNumber" dest="revisionnumber.txt"/>
 -->				
-				
+				<get src="http://${ci-server.hostname}:${ci-server.portnumber}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
+				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
 <!--
 				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="formatAndSetDate"/>
 -->
@@ -362,37 +349,23 @@
 
 	<target name="build:check-commandline-installer" depends="init">				
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandBuild" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="dist" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=singleCommandBuild" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="dist" />
 		</exec>
 		
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
 
-		
-		
+				
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<delete dir="${user.home}/apps"/>
 
-		<copy file="${build.dir}/../hibernate.cfg.xml" todir="${master.install.location}"/>
 
 		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=commandLineInstaller" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="install" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">			
-			<arg value="-Dexecuted.target.name=install" />
-			<arg value="-Dmap.name=commandLineInstaller" />			
-			<arg value="-Dproject.name=${project.name}" />
 			<arg value="install" />
 		</exec>
 
