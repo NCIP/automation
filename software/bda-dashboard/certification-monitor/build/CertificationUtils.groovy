@@ -276,8 +276,17 @@ class CertificationUtils
 		build.setProperty("project.name", "petstore");
 		ProjectHelper.configureProject(build, antFile)	
 
+		def buildProperties=build.properties
 
-		String installerFile = build.getProperty("dist.dir") + "/" + build.getProperty("petstore-webapp.install.zip.file")		
+		buildProperties.each() { key, value -> 
+			if ("${key}".contains('.install.zip.file'))
+				installerPropertyName = "${key}"
+			
+		};
+
+		println installerPropertyName
+		
+		String installerFile = build.getProperty("dist.dir") + "/" + build.getProperty(installerPropertyName)		
 		println installerFile
 		ant.unzip(src: installerFile,dest:'working/installer' )
 
