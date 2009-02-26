@@ -371,7 +371,7 @@ class CertificationUtils
 	{	
 		def buildFileLocation=project.properties['master.build.location']
 		String installFile = new File(buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
-		StringBuffer wikiStr = new StringBuffer("[");
+		StringBuffer wikiStr = new StringBuffer("'[");
 		def revision = new XmlParser().parse(installFile)
 
 		String ciStatusStr = revision.body.table[1].tr.td[1].'h1'.'img'.'@alt'
@@ -391,7 +391,7 @@ class CertificationUtils
 		println sb
 		
 		if (sb!= null)
-			wikiStr = wikiStr.append("|"+sb+"]")
+			wikiStr = wikiStr.append("|"+sb+"]'")
 		
 		println wikiStr
 		project.setProperty("certification.property.value",wikiStr.toString());
