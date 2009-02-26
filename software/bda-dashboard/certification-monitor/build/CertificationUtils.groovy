@@ -336,8 +336,8 @@ class CertificationUtils
 	
 	def getPropertyValuesList (String propertiesList)	
 	{
-	HashMap obfuscatedProperties = new HashMap()
-	propertiesList.split(',').eachWithIndex {processToken, i -> 	
+		HashMap obfuscatedProperties = new HashMap()
+		propertiesList.split(',').eachWithIndex {processToken, i -> 	
 		if(checkValueFound(processToken))
 		{
 			println("processToken::" + processToken)
@@ -345,17 +345,16 @@ class CertificationUtils
 			println("obfuscatedProperties::" + obfuscatedProperties.get(processToken))
 		}
 		else
-		{
-			String propertyKey = project.properties['project.name'] +"."+ processToken
-			println "propertyKey::"+propertyKey
+		{		
+			println "propertyKey::"+processToken
 			String projectPropertiesFile=new File(project.properties['master.build.location']+"/install.properties").getAbsoluteFile();
 			ant.property(file: projectPropertiesFile)			
-			if(project.properties[propertyKey])
-				obfuscatedProperties.put(processToken,project.properties[propertyKey])
+			if(project.properties[processToken])
+				obfuscatedProperties.put(processToken,project.properties[processToken])
 			else
 				ant.fail("COULD NOT FIND THE VALUE FOR THE KEY :"+propertyKey)			}
 		}
-	return obfuscatedProperties
+		return obfuscatedProperties
 	}
 	
 	
