@@ -366,9 +366,11 @@
 
 
 		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
+			<arg value="-Dforce.reinstall=true" />
 			<arg value="install" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">			
+			<arg value="-Dforce.reinstall=true" />
 			<arg value="install" />
 		</exec>
 
