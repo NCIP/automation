@@ -52,10 +52,17 @@ class CertificationUtils
 	}
 
 	void checkBdaEnabled ()
-	{
-		getBdaUtilsVersion()
-		if(project.properties['certification.property.value'] == '')
+	{	
+		String bdaVersion = getBdaUtilsVersion();
+		if( bdaVersion != null)
 		{
+			StringBuffer wikiStr = new StringBuffer("'[");
+			wikiStr = wikiStr.append("(/)|"+"http://http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/"+bdaVersion")
+			wikiStr = wikiStr.append("|"+bdaVersion+"]'")
+			project.setProperty("certification.property.value",wikiStr.toString());			
+		}
+		else
+		{	
 			ant.fail("PROJECT NOT BDA ENABLED")
 		}
 	}
@@ -176,7 +183,7 @@ class CertificationUtils
 			ant.fail("TEMPLATE VALIDATION FAILED: properties.template.file property is not set ")
 	}
 
-	void getBdaUtilsVersion ()
+	def getBdaUtilsVersion ()
 	{
 		def buildFileLocation=project.properties['master.build.location']
 
@@ -185,7 +192,7 @@ class CertificationUtils
 		props.load(new FileInputStream(projectPropertiesFile));			
 		String bdaVersion = props.getProperty("bda.version");
 		println bdaVersion;
-		project.setProperty("certification.property.value",bdaVersion);
+		return bdaVersion;
 	}
 
 	void checkDBIntegration ()
