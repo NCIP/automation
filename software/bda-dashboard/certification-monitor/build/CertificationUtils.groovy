@@ -57,7 +57,7 @@ class CertificationUtils
 		if( bdaVersion != null)
 		{
 			StringBuffer wikiStr = new StringBuffer("'[");
-			wikiStr = wikiStr.append("(/)|"+"http://http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/"+bdaVersion")
+			wikiStr = wikiStr.append("(/)|http://http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/"+bdaVersion)
 			wikiStr = wikiStr.append("|"+bdaVersion+"]'")
 			project.setProperty("certification.property.value",wikiStr.toString());			
 		}
