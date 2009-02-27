@@ -2389,6 +2389,7 @@ software/utils/ivy.xml -text
 software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
+software/utils/resource/groovy/updatePropertiesService.groovy -text
 software/utils/resource/jboss-4.0.5.GA-jems-ejb3/bindings.xml -text
 software/utils/resource/jboss-4.0.5.GA-jems-ejb3/jboss-service.xml -text
 software/utils/resource/jboss-4.0.5/dtd/README-DTD.txt -text

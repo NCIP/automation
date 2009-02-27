@@ -226,7 +226,7 @@ $HeadURL$
 				</else>
 			</if>
 
-			<sleep seconds="10" />
+			<sleep seconds="5" />
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
@@ -239,7 +239,7 @@ $HeadURL$
 					</java>
 				</then>
 			</if>
-			<sleep seconds="10" />
+			<sleep seconds="5" />
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
@@ -252,7 +252,7 @@ $HeadURL$
 					</java>
 				</then>
 			</if>
-			<sleep seconds="10" />
+			<sleep seconds="5" />
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
@@ -4929,5 +4929,53 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
+	<macrodef name="jboss-update-properties-service">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="property.block"/>
+		<sequential>
+			<groovy>
+				println "third debug"
+			</groovy>
+			<var name="properties-service.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/properties-service.xml"/>
+			<var name="property.block.file" value="${working.dir}/property.block.txt"/>
+			<echo message="Creating ${property.block.file}"/>
+			<echo message="property block is @{property.block}"/>
+			<echo file="${property.block.file}" message="@{property.block}"/>
 
+			<var name="read.property.block" unset="true"/>
+			<xmltask source="${properties-service.file}" dest="${properties-service.file}">
+				<copy path="//server/mbean[@name='jboss:type=Service,name=SystemProperties']/attribute[@name='Properties']/text()" property="read.property.block" />
+			</xmltask>
+			<echo message="read.property.block is ${read.property.block}"/>
+			<if>
+				<isset property="read.property.block"/>
+				<then>
+
+					<echo message="Properties found in ${properties-service.file}, updating"/>
+					<copy file="${properties-service.file}" tofile="${properties-service.file}.orig" overwrite="true"/>
+					<groovy src="${bda-utils.resource.dir}/groovy/updatePropertiesService.groovy">
+						<arg line="${property.block.file} ${properties-service.file}"/>
+					</groovy>
+					<echo message="After groovy"/>
+				</then>
+				<else>
+					<echo message="No properties found in ${properties-service.file}, inserting"/>
+					<xmltask failWithoutMatch="true" source="${properties-service.file}" dest="${properties-service.file}">
+						<xmlcatalog refid="installer.catalog"/>
+						<insert path="//server/mbean[@name='jboss:type=Service,name=SystemProperties']">
+							<![CDATA[
+							<attribute name="Properties">
+								@{property.block}
+							</attribute>
+							]]>
+						</insert>
+					</xmltask>
+				</else>
+			</if>
+			<groovy>
+				println "fourth debug"
+			</groovy>
+		</sequential>
+	</macrodef>
 </project>
