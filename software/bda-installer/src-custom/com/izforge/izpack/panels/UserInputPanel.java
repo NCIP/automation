@@ -35,12 +35,19 @@ import com.izforge.izpack.util.*;
 
 import net.n3.nanoxml.*;
 
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+
+import org.apache.tools.ant.DefaultLogger;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -305,6 +312,20 @@ public class UserInputPanel extends IzPanel implements ActionListener
     private static final String FAMILY = "family";
 
     private static final String FIELD_BUTTON = "button";
+    
+    private static final String PANEL_READER_NODE_ID = "panelreader";
+    
+    private static final String PANEL_READER_METHOD_NAME = "methodname";
+    
+    private static final String PANEL_READER_CLASS_NAME = "classname";
+
+    private static final String PANEL_READER_LANGUAGE = "language";
+    
+    private static final String PANEL_READER_PROPERTY_MAP = "propertymap";
+    
+    private static final String PANEL_READER_PROPERTY_NAME = "propertyname";
+    
+    private static final String PANEL_READER_PROPERTY_MAP_NAME = "mapname";
 
     // ------------------------------------------------------------------------
     // Variable Declarations
@@ -537,9 +558,103 @@ public class UserInputPanel extends IzPanel implements ActionListener
                 }
             }
         }
+        XMLElement panelReader = spec.getFirstChildNamed(PANEL_READER_NODE_ID);
+        
+        if (panelReader != null)
+        {
+        	processReader(panelReader);
+        }
     }
 
-    private void addDirectoryField(XMLElement field)
+    @SuppressWarnings("deprecation")
+	private void processReader(XMLElement panelReader) {
+    		String readerClassName = panelReader.getAttribute(PANEL_READER_CLASS_NAME);
+            String readerMethodName = panelReader.getAttribute(PANEL_READER_METHOD_NAME);
+            String readerLanguage = panelReader.getAttribute(PANEL_READER_LANGUAGE);
+            
+            // contains 
+            HashMap propertiesNameMap = new HashMap();
+            HashMap propertiesValueMap = new HashMap();            
+            
+
+            Vector<XMLElement> propertiesMap = panelReader.getChildrenNamed(PANEL_READER_PROPERTY_MAP);
+            for (int i = 0; i < propertiesMap.size(); i++)
+            {
+                XMLElement propertyMap = propertiesMap.elementAt(i);
+                String propertyName = propertyMap.getAttribute(PANEL_READER_PROPERTY_NAME);
+                String mapName = propertyMap.getAttribute(PANEL_READER_PROPERTY_MAP_NAME);
+                propertiesNameMap.put(propertyName, mapName);
+            }
+            
+        
+            if (readerLanguage != null && readerLanguage.equalsIgnoreCase("ant"))
+            {
+                Project project = new Project();
+                project.init();
+                     
+                DefaultLogger logger = new DefaultLogger();
+                logger.setMessageOutputLevel(Project.MSG_INFO);
+                logger.setErrorPrintStream(System.err);
+                logger.setOutputPrintStream(System.out);
+                project.addBuildListener(logger);
+              
+                File buildFile = new File(readerClassName);
+                ProjectHelper.configureProject(project, buildFile);
+              
+                System.out.println("readerMethodName::" + readerMethodName);
+                project.executeTarget(readerMethodName);
+                                
+                Hashtable ht = project.getProperties();
+                Set s = propertiesNameMap.keySet();    
+                Iterator i = s.iterator();
+                while(i.hasNext())
+                {
+	                Object key = i.next();
+	                if(ht.containsKey(key))
+	                {
+	                	System.out.println("KEY ::" + key);
+	                	System.out.println("VALUE ::" + ht.get(key));
+	                	propertiesValueMap.put(propertiesNameMap.get(key), ht.get(key));
+	                }
+                }
+                              
+                ArrayList varialbleList = getAllPanelVariables();
+                Iterator<String> itr = varialbleList.iterator();
+                while (itr.hasNext()) 
+                {
+	            	String key = itr.next();
+	            	if( propertiesValueMap.containsKey(key))
+	        		  {
+	                		System.out.println("IZPACK KEY ::" + key);
+	                		System.out.println("IZPACK VALUE ::" + propertiesValueMap.get(key));
+	        	  			idata.setVariable(key,(String) propertiesValueMap.get(key));
+	        		  }                               
+                }                
+            }
+ 		
+	}
+
+	private ArrayList getAllPanelVariables() {
+		ArrayList varialbles = new ArrayList();
+	       Vector<XMLElement> fields = spec.getChildrenNamed(FIELD_NODE_ID);
+
+	        for (int i = 0; i < fields.size(); i++)
+	        {
+	            XMLElement field = fields.elementAt(i);
+	            String attribute = field.getAttribute(TYPE);
+	            if (attribute != null)
+	            {
+	                if (attribute.equals(TEXT_FIELD))
+	                {
+	                	String variableAttribute = field.getAttribute(VARIABLE);
+	                	varialbles.add(variableAttribute);
+	                }
+	            }
+	        }
+		return varialbles;
+	}
+
+	private void addDirectoryField(XMLElement field)
     {
         Vector<XMLElement> forPacks = field.getChildrenNamed(SELECTEDPACKS);
         Vector<XMLElement> forOs = field.getChildrenNamed(OS);
