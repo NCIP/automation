@@ -12,7 +12,6 @@
 application.base.path.linux=The base path where all files are stored for this application on linux. Example: ${user.home}/apps/bda-blueprints-webapp
 application.base.path.windows=The base path where all files are stored for this application on windows. Example: c:/apps/bda-blueprints-webapp
 authentication.type=Used for setting up the login-config.xml. Acceptable values are ldap|db.
-application.url=The URL to access the application. Example: http://${jboss.server.hostname}:${jboss.server.port}/bda-blueprints-webapp
 ###########################
 ###  DATABASE SETTINGS  ###
 ###########################

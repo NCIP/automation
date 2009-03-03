@@ -86,25 +86,20 @@
 	<property name="jboss-conf.dir.src" value="${basedir}/${jboss-conf.dist.relative.dir}" />
 	<property name="jboss-conf.dir.dest" value="${working.dir}/${jboss-conf.dist.relative.dir}" />
 
-	<!-- Jboss binding configurtion related properties -->
-	<property name="jboss.binding.template.location" value="${bda-utils.dir}/resource/${jboss.template.relative.dir}/bindings.xml"/>
-	<property name="jboss.service.template.location" value="${bda-utils.dir}/resource/${jboss.template.relative.dir}/jboss-service.xml"/>
-
 	<!-- *-ds.xml and WAR -->
 	<property name="bda-blueprints-webapp.dir.dist" value="${basedir}/${bda-blueprints-webapp.dist.relative.dir}" />
 	<property name="bda-blueprints-webapp.ds.file" value="bda-blueprints-ds.xml" />
-	<property name="bda-blueprints-webapp.war.file" value="bda-blueprints-webapp.war" />
+	<property name="bda-blueprints-webapp.name" value="bda-blueprints-webapp" />
+	<property name="bda-blueprints-webapp.war.file" value="${bda-blueprints-webapp.name}.war" />
 
 	<!-- Grid related properties -->
-	<property name="grid.resource.dir" value="${basedir}/${grid.dist.relative.dir}" />
+	<property name="grid.resource.dir" value="${basedir}/${tools.dist.relative.dir}" />
 	<property name="grid.application.dir" value="${basedir}/${grid-sample.dist.relative.dir}" />
 	<property name="grid.artifact.file" value="sample-wsrf-war.zip" />
 	<property name="grid.dir.dest" value="wsrf" />
 	<property name="grid.application.name" value="Sample" />
-	<property name="resource.file.jboss-globus-lib" value="jboss-globus-libs-cagrid1_1.zip" />
-	<property name="resource.file.jboss-globus-war" value="jboss-globus-wsrf-war-cagrid1_1.zip" />
-	<property name="grid.secure.key.file.location" value="${security.dir.src}/${grid.secure.key.file}"/>
-	<property name="grid.secure.cert.file.location" value="${security.dir.src}/${grid.secure.cert.file}"/>
+	<property name="resource.file.jboss-globus-lib" value="${cagrid-libs.binaries.file}" />
+	<property name="resource.file.jboss-globus-war" value="${cagrid-base-war.binaries.file}" />
 
 	<!-- Default to false, properties can override -->
 	<property name="grid.secure.enable" value="false"/>
@@ -150,24 +145,18 @@
 			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.oracle.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.oracle.conf.file}"/>
 			<property name="database.schema" value="${database.name}"/>
 		</case>
 		<case value="mysql">
 			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
 			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.mysql.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.mysql.conf.file}"/>
 			<property name="database.schema" value="${database.name}"/>
 		</case>
 		<case value="postgresql">
 			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
 			<property name="database.driver" value="org.postgresql.Driver"/>
-			<property name="db-upgrade.list.file" value="${db-upgrade.postgresql.list.file}"/>
-			<property name="db-upgrade.conf.file" value="${db-upgrade.postgresql.conf.file}"/>
 			<property name="database.schema" value="public"/>
 		</case>
 		<default>
@@ -221,6 +210,26 @@
 	<dirname file="${grid.secure.cert.location}" property="grid.secure.dir"/>
 	<basename file="${grid.secure.key.location}" property="grid.secure.key.file"/>
 
+	<!-- Moved back out of init -->
+	<filterset id="embedded.filterset">
+		<filter token="application.base.path" value="${application.base.path}"/>
+		<filter token="application.url" value="${application.url}"/>
+		<filter token="database.url" value="${database.url}"/>
+		<filter token="database.user" value="${database.user}"/>
+		<filter token="database.password" value="${database.password}"/>
+		<filter token="database.system.url" value="${database.system.url}"/>
+		<!-- added internal properties that may be used in a filtered copy -->
+		<filter token="database.driver" value="${database.driver}"/>
+		<!-- added for liquibase -->
+		<filter token="db-upgrade.run.dir" value="${db-upgrade.dir.dest}/${database.type}"/>
+		<filter token="jboss.home" value="${jboss.home}"/>
+		<filter token="tomcat.home" value="${jboss.home}"/>
+		<filter token="database.dialect" value="${database.dialect}"/>
+		<filter token="hibernate.cfg.file.path" value="${hibernate.cfg.file.path}"/>
+	</filterset>
+	<!-- Make working dir -->
+	<delete dir="${working.dir}" failonerror="false"/>
+	<mkdir dir="${working.dir}" />
 	<!-- Start logging --> 
 	<property name="install-logs.dir" location="${application.base.path}/change-logs"/>
 	<mkdir dir="${install-logs.dir}"/>
@@ -287,29 +296,6 @@
 	<!-- Does directory management and copy some files with filtering to ensure token expansion -->
 	<target name="install:init" description="Does directory management to initialize install">
 		<math result="jboss.ssl.port" operand1="${jboss.server.port}" operation="+" operand2="363" datatype="int"/>
-		<filterset id="embedded.filterset">
-			<filter token="application.base.path" value="${application.base.path}"/>
-			<filter token="application.url" value="${application.url}"/>
-			<filter token="database.url" value="${database.url}"/>
-			<filter token="database.user" value="${database.user}"/>
-			<filter token="database.password" value="${database.password}"/>
-			<filter token="database.system.url" value="${database.system.url}"/>
-			<!-- added internal properties that may be used in a filtered copy -->
-			<filter token="database.driver" value="${database.driver}"/>
-			<!-- added for liquibase -->
-			<filter token="db-upgrade.run.dir" value="${db-upgrade.dir.dest}/${database.type}"/>
-			<filter token="jboss.home" value="${jboss.home}"/>
-			<filter token="tomcat.home" value="${jboss.home}"/>
-			<filter token="database.dialect" value="${database.dialect}"/>
-			<filter token="hibernate.cfg.file.path" value="${hibernate.cfg.file.path}"/>
-		</filterset>
-	
-		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
-		<echo  message="Checking if database properties exist: ${db.prop.list}"/>
-		<properties-exist properties.list="${db.prop.list}"/>
-		<mkdir dir="${working.dir}" />
-		<delete dir="${working.dir}"/>
-		<mkdir dir="${working.dir}" />
 		<!-- Copy files to ensure values containing variables are expanded, such properties are stored in embedded.filterset and then copy with filter files -->
 		<copy todir="${common.dir.dest}" filtering="true">
 			<fileset dir="${common.dir.src}">
@@ -321,11 +307,17 @@
 				<filtersfile file="project.properties"/>
 			</filterset>
 		</copy> 
+		<groovy>
+			println "install:init debug"
+		</groovy>
 	</target>
 
 	<!-- Wrapper install database target, depends on both MySQL and Oracle sub-targets, ifs should ensure only one is run.  Target path can be skipped by exlude.database also calls upgrade:database -->
 
-	<target name="install:database:prep" description="Copies db files with filtering" unless="exclude.database" depends="install:init">
+	<target name="install:database:prep" description="Copies db files with filtering" unless="exclude.database">
+		<property name="db.prop.list" value="database.url,database.user,database.password,database.name"/>
+		<echo  message="Checking if database properties exist: ${db.prop.list}"/>
+		<properties-exist properties.list="${db.prop.list}"/>
 		<echoproperties prefix="database"/>
 		<copy todir="${db.dir.dest}" filtering="true">
 			<fileset dir="${db.dir.src}">
@@ -343,14 +335,19 @@
 				<include name="**/db-upgrade.xml"/>
 			</fileset>
 		</copy>
+		<groovy>
+			println "install:database:prep debug"
+		</groovy>
 	</target>
 
 	<target name="install:database" description="Runs datbase creation scripts then calls uprade database." unless="exclude.database"
 		depends="
-		install:init,
 		install:database:prep
 		">
 		<!-- Drop all schema objects or re-create the db -->
+		<groovy>
+			println "begin liquibase debug"
+		</groovy>
 		<database-clean/>
 		<!-- Run baseline scripts stored in db.install.create.${database.type}.file.list variable -->
 		<switch value="${database.type}">
@@ -374,18 +371,35 @@
 					/>
 			</case>
 		</switch>
+		<groovy>
+			println "before liquibase debug"
+		</groovy>
 		<database-upgrade
 			database.changelog.file="${os.temp.dir}/${project.name}/db-upgrade.xml"
 			/>
 		<database-tag/>
+		<groovy>
+			println "after liquibase debug"
+		</groovy>
 	</target>
 
 	<target name="install:jboss:binaries" description="Install JBoss binaries" unless="exclude.jboss">
 		<jboss-install-binaries
 			/>
+		<groovy>
+			println "install:jboss:binaries debug"
+		</groovy>
 	</target>
 
-	<target name="install:jboss:bda-blueprints-webapp" description="Deploy bda-blueprints-webapp and common libraries to jboss installation" unless="exclude.jboss">
+	<target name="install:jboss:bda-blueprints-webapp:filesystem-data" >
+		<!-- This target is a place holder for creating a file-system data repository.  If you do not use one you can remove this target and all targets that refer to it. If you require a certain directory structure be sure to create it here.  If you need to copy in files, make sure to check them into svn, copy them into the distribution and then copy them to thier ultimate directory.  If your data needs to be refreshed with each install make sure to delete the base directory, then create the structure and copy in data.  Also you can use an archive file with relative pathing inside to build out the structure if you like, using an archive like zip may shrink the footprint in svn.
+		<mkdir dir="${fs-data.base.dir}"/>
+		<mkdir dir="${fs-data.base.dir}/scratch"/>
+		<copy file="${bda-blueprints-webapp.dir.dist}/${bda-blueprints-webapp.war.file}" todir="${fs-data.base.dir}/scratch" overwrite="true" />
+		-->
+	</target>
+
+	<target name="install:jboss:bda-blueprints-webapp" description="Deploy bda-blueprints-webapp and common libraries to jboss installation" unless="exclude.jboss" depends="install:jboss:bda-blueprints-webapp:filesystem-data">
 		<!-- added to ensure working.dirs are fresh for our install -->
 		<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
 		<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
@@ -407,6 +421,21 @@
 		<!--
 		<copy file="${jboss-conf.dir.dest}/${jboss.web.xml.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 		-->
+		<!-- This code is for updating properties.service.xml, make sure to add ${line.separator} after each property def as the property delimiter, if this is not included you will not get the desired results. If you do not use properties service.xml you can delete this code. -->
+		<groovy>
+			println "First debug"
+		</groovy>
+		<var name="property.block" value="property1=${authentication.type}${line.separator}
+			property2=${env.name}${line.separator}
+			property3=${jboss.home}${line.separator}
+			property4=${tomcat.home}${line.separator}
+			"/>
+		<jboss-update-properties-service
+			property.block="${property.block}"
+			/>
+		<groovy>
+			println "fifth debug"
+		</groovy>
 	</target>
 
 	<target name="install:jboss:configure:log4j" description="Configure custom entries in system wide log4j" unless="exclude.jboss" >
@@ -477,13 +506,7 @@
 		-->
 		<!-- Use below if you are defining all the ports in your install.xml not the NCICB port configuraitons-->
 		<jboss-configure
-			jboss.server.ports.name="bda-ports"
-			jboss.server.binding.template.location="${bda-utils.resource.dir}/template-binding.xml"
 			/>
-		<!-- Default values for all attributes if you are using standard NCICB port configurations
-		<jboss-configure
-			/>
-			-->
 	</target>
 
 
@@ -582,6 +605,7 @@
 
 	<target name="install" description="Installs and configures JBOSS, creates database, and deploys application" 
 		depends="
+		install:validation:pre-install:init,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:tomcat:stop,
@@ -803,7 +827,6 @@
 	<target name="upgrade:database" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
 		depends="
 		upgrade:init,
-		install:init,
 		install:database:prep
 		">
 		<database-upgrade
@@ -916,6 +939,7 @@
 			appserver.port.http="${tomcat.port.http}"
 			appserver.port.ssl="${tomcat.port.ssl}"
 			appserver.hostname="${tomcat.hostname}"
+			appserver.external.http.host="${tomcat.external.http.host}"
 			grid.external.secure.host="${grid.external.secure.host}"
 			grid.external.secure.port="${grid.external.secure.port}"
 			/>
@@ -1007,5 +1031,39 @@
 		<!-- configure datasource -->
 	</target>
 	<target name="install:tomcat:bda-blueprints-webapp:re-configure" description="Configure bda-blueprints-webapp application, copies over externalized properties or configurations that are not part of the tomcat configuration" unless="exclude.tomcat">
+	</target>
+
+	<target name="install:validation:pre-install:init" description="Does any tasks that need to be done prior to validation, like reading properties">
+		<!-- determine if port configurations or port lists are being called -->
+		<if>
+			<isset property="jboss.ncicb-standard.port-config"/>
+			<then>
+				<!-- Read some port properties from standard bindings file -->
+				<echo message="Using JBoss NCICB Standard port configurations"/>
+				<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
+				<jboss-read-ports
+					jboss.bindings.file.location.property.name="jboss.server.binding.template.location"
+					/>
+				<echo message="http -${jboss.server.port} "/>
+				<echo message="http -${jboss.server.jndi.port} "/>
+				<properties-exist
+					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.server.ports.name"
+					/>
+				<!-- Make sure there are not unexpanded tokens and that the jboss.server.ports.name is a configuration in the bindings file. -->
+				<jboss-bindings-validate
+					jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
+					/>
+
+			</then>
+			<else>
+				<!-- else ensure that all ports are set, since these will be removed from install-properties.template we will verify here.  They have to be removed so the validator works with or without the properties or we have to change the format of the file. -->
+				<echo message="Using custom JBoss port configurations"/>
+				<property name="jboss.server.binding.template.location" value="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings.xml"/>
+				<properties-exist
+					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.cobraorb.port,jboss.ejbinvoker.port,jboss.hajndi.port,jboss.hajrmi.port,jboss.jms.port,jboss.jmx-rmi.port,jboss.messaging.port,jboss.pooledha.port,jboss.remoting.port,jboss.server.bind.port,jboss.server.rmi.port,jboss.service.rmiobject.port,jboss.snmp.port,jboss.snmp-trapd.port,jboss.web.service.port"
+					/>
+			</else>
+		</if>
+		<property name="application.url" value="http://${jboss.server.hostname}:${jboss.server.port}/${bda-blueprints-webapp.name}"/>
 	</target>
 </project>
