@@ -699,7 +699,7 @@ $HeadURL$
 				<and>
 					<isset property="validation.pre.port.list"/>
 					<not>
-						<isset property="jboss.port.configuration"/>
+						<isset property="jboss.ncicb-standard.port-config"/>
 					</not>
 					<not>
 						<isset property="exclude.jboss"/>
@@ -984,7 +984,7 @@ $HeadURL$
 				<and>
 					<isset property="validation.post.port.list"/>
 					<not>
-						<isset property="jboss.port.configuration"/>
+						<isset property="jboss.ncicb-standard.port-config"/>
 					</not>
 				</and>
 				<then>
@@ -1441,12 +1441,19 @@ $HeadURL$
 			<for list="@{properties.list}" param="prop.list.item" delimiter=",">
 				<sequential>
 					<echo message="checking for existance of property @{prop.list.item}"/>
+					<propertyregex property="prop.list.item.trimmed"
+						input="@{prop.list.item}"
+						regexp="\s*(\S+)\s*"
+						select="\1"
+						override="true"
+						/>
+					<echo message="Verifying ${prop.list.item.trimmed}"/>
 					<if>
 						<not>
-							<isset property="@{prop.list.item}"/>
+							<isset property="${prop.list.item.trimmed}"/>
 						</not>
 						<then>
-							<fail message="Property @{prop.list.item} is not set, it needs to be set, please set it to continue"/>
+							<fail message="Property ${prop.list.item.trimmed} is not set, it needs to be set, please set it to continue"/>
 						</then>
 					</if>
 				</sequential>
@@ -1570,10 +1577,9 @@ $HeadURL$
 	<macrodef name="jboss-bindings" description="configures the binding.xml and the jboss-service.xml">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="jboss.server.ports.name" default="ports-01"/>
-		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"/>
+		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
 		<attribute name="jboss.server.binding.template.location" default="${bda-utils.resource.dir}/template-binding.xml"/>
-		<attribute name="jboss.server.service.template.location" default="${bda-utils.resource.dir}/template-jboss-service.xml"/>
 		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
 		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
 		<attribute name="jboss.cobraorb.port" default="${jboss.cobraorb.port}"/>
@@ -1594,26 +1600,6 @@ $HeadURL$
 
 		<sequential>						
 			<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
-
-			<var name="bindings.file.has.tokens" unset="true"/>
-			<loadfile
-				property="bindings.file.has.tokens"
-				srcFile="@{jboss.server.binding.template.location}">
-				<filterchain>                                   
-					<linecontainsregexp>                                    
-						<regexp pattern="\@.+\@"/>                                     
-					</linecontainsregexp>                                   
-				</filterchain>                                  
-			</loadfile>               
-			<if>
-				<isset property="bindings.file.has.tokens"/>
-				<then>
-					<echo message="FYI - @{jboss.server.binding.template.location} has no tokens."/>
-				</then>
-				<else>
-					<echo message="FYI - @{jboss.server.binding.template.location} has no tokens."/>
-				</else>
-			</if>
 			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true">
 				<filterset>
 					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
@@ -1637,7 +1623,8 @@ $HeadURL$
 					<filter token="jboss.web.service.port" value="@{jboss.web.service.port}"/>
 				</filterset>
 			</copy> 
-	
+			<jboss-bindings-validate
+				/>
 			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 				<xmlcatalog refid="installer.catalog"/>
 				<remove path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']"/>
@@ -1678,6 +1665,7 @@ $HeadURL$
 		<attribute name="database.password.property.name" default="database.password" />
 		<attribute name="database.server.property.name" default="database.server" />
 		<attribute name="database.port.property.name" default="database.port" />
+		<attribute name="database.type.property.name" default="database.type" />
 		<sequential>
 			<var name="db.property.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name}"/>
 			<echo message="Checking required database properties: ${db.property.list}"/>
@@ -1706,17 +1694,16 @@ $HeadURL$
 							<fail message="Some or all required database properties are not set and @{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file} is not found.   Ensure arguments passed to this macro are correct or set required database properties in your property file."/>
 						</then>
 						<else>
-						<!--
-							<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" verbose="false">
-								<read path="//datasources/local-tx-datasource/connection-url" property="read.database.url" />
-								<read path="//datasources/local-tx-datasource/user-name" property="read.database.user" />
-								<read path="//datasources/local-tx-datasource/password" property="read.database.password" />
-							</xmlconfig>
-						-->
+							<!-- Blank props to be able to run this macro multiple times -->
+							<var name="read.database.url" unset="true"/>
+							<var name="read.database.user" unset="true"/>
+							<var name="read.database.password" unset="true"/>
+							<var name="read.database.driver" unset="true"/>
 							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}">
 								<copy path="//datasources/local-tx-datasource/connection-url/text()" property="read.database.url" />
 								<copy path="//datasources/local-tx-datasource/user-name/text()" property="read.database.user" />
 								<copy path="//datasources/local-tx-datasource/password/text()" property="read.database.password" />
+								<copy path="//datasources/local-tx-datasource/driver-class/text()" property="read.database.driver" />
 							</xmltask>
 						
 							<dbconfig property="db.appuser.works" 
@@ -1726,23 +1713,36 @@ $HeadURL$
 								password="${read.database.password}">
 								<validate />
 							</dbconfig>
-							<var name="read.database.name" unset="true"/>
 							<propertyregex property="read.database.name"
 								input="${read.database.url}"
 								regexp=".*[\/](.*)"
 								select="\1"
 								/>
-							<var name="read.database.server" unset="true"/>
 							<propertyregex property="read.database.server"
 								input="${read.database.url}"
 								regexp=".*\/\/(.*):.*"
 								select="\1"
 								/>
-							<var name="read.database.port" unset="true"/>
 							<propertyregex property="read.database.port"
 								input="${read.database.url}"
 								regexp=".*:(.*)\/.*"
 								select="\1"
+								/>
+							<var name="read.database.type" unset="true"/>
+							<propertyregex property="read.database.type"
+								input="${read.database.driver}"
+								regexp="mysql"
+								select="mysql"
+								/>
+							<propertyregex property="read.database.type"
+								input="${read.database.driver}"
+								regexp="oracle"
+								select="oracle"
+								/>
+							<propertyregex property="read.database.type"
+								input="${read.database.driver}"
+								regexp="postgresql"
+								select="postgresql"
 								/>
 				
 							<property name="@{database.url.property.name}" value="${read.database.url}" />
@@ -1751,14 +1751,15 @@ $HeadURL$
 							<property name="@{database.name.property.name}" value="${read.database.name}" />
 							<property name="@{database.server.property.name}" value="${read.database.server}" />
 							<property name="@{database.port.property.name}" value="${read.database.port}" />
+							<property name="@{database.type.property.name}" value="${read.database.type}" />
 							<if>    
 								<isset property="db.appuser.works"/>
 								<then>  
 									<echo message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-									<echo  message="Value after read of *-ds.xml: URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+									<echo  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
 								</then> 
 								<else>  
-									<fail  message="Failed to connect to database URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+									<fail  message="Failed to connect to database TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
 								</else>
 							</if>
 						</else> 
@@ -1831,7 +1832,7 @@ $HeadURL$
 					<echo message="GLOBUS_LOCATION not set, downloading and installing @{wscore.download.url}"/>
 					<if>
 						<not>
-							<available file="@{wscore.dest.file}"/>
+							<available file="${wscore.dest.file}"/>
 						</not>
 						<then>
 							<get src="@{wscore.download.url}"
@@ -1947,38 +1948,6 @@ $HeadURL$
 			</java>
 		</sequential>
 	</macrodef>
-	<macrodef name="pre-xmlconfig">		
-		<attribute name="search.pattern" default="^&lt;\!DOCTYPE.*" />
-		<attribute name="replace.pattern" default="&lt;\!DOCTYPE server &gt;" />
-		<attribute name="file.location" />
-		<attribute name="old-value.property.name" />
-		<sequential>
-			<loadfile
-				property="@{old-value.property.name}"
-				srcFile="@{file.location}">
-				<filterchain>
-					<linecontainsregexp>
-						<regexp pattern="@{search.pattern}"/>
-					</linecontainsregexp>
-				</filterchain>
-			</loadfile>
-			<replaceregexp file="@{file.location}" byline="true"
-				match="@{search.pattern}"
-				replace="@{replace.pattern}"/>
-		</sequential>
-	</macrodef>
-	<macrodef name="post-xmlconfig">		
-		<attribute name="search.pattern" default="^&lt;\!DOCTYPE.*" />
-		<attribute name="file.location" />
-		<attribute name="old-value.property.value" />
-		<sequential>
-			<echo message="Restoreing old value '@{old-value.property.value}' to @{file.location}"/>
-			<replaceregexp file="@{file.location}" byline="true"
-				match="@{search.pattern}"
-				replace="@{old-value.property.value}"/>
-		</sequential>
-	</macrodef>
-	
 	
 	<!-- 
 	fusebox-metrics macro will generate graphical representation of the static analysis for the project
@@ -2021,16 +1990,6 @@ $HeadURL$
 			<mkdir dir="@{fusebox.output.dir}"/>
 			<mkdir dir="@{fusebox.persist.dir}"/>
 
-<!--
-			<xmlconfig in="@{fusebox.config.file}" verbose="false">			
-				<update path="//config/@project" value="@{fusebox.project.name}" />
-				<update path="//config/@search" value="@{fusebox.search.dir}" />
-				<update path="//config/@output" value="@{fusebox.output.dir}" />
-				<update path="//config/@persist" value="@{fusebox.persist.dir}" />
-				<update path="//config/@template" value="@{fusebox.template.file}" />
-				<update path="//config/@html" value="@{fusebox.output.dir}/dashboard.html" />
-			</xmlconfig>
--->
 			<xmltask source="@{fusebox.config.file}" dest="@{fusebox.config.file}">
 				<replace path="//config/@project" withtext="@{fusebox.project.name}" />
 				<replace path="//config/@search" withtext="@{fusebox.search.dir}" />
@@ -3081,11 +3040,7 @@ $HeadURL$
 				<fileset dir="@{izpack-custom.svn.dir}" />
 			</copy>
 
-			<!-- customize izpack 
-			<xmlconfig in="@{target.dir}/@{izpack.binary.name}/src/build.xml" verbose="false">
-				<insertbranch path="//target[@name='build.listeners']" srcxmlfile="@{izpack-custom.svn.dir}/resources/ProgressBarInstallerListener.xml" srcpath="//build-installer-listener" />
-			</xmlconfig>
--->
+			<!-- customize izpack  -->
 			<xmltask failWithoutMatch="true" source="@{target.dir}/@{izpack.binary.name}/src/build.xml" 
 				dest="@{target.dir}/@{izpack.binary.name}/src/build.xml">		
 				<insert path="//target[@name='build.listeners']" file="@{izpack-custom.svn.dir}/resources/ProgressBarInstallerListener.xml"/>
@@ -3140,13 +3095,6 @@ $HeadURL$
 							<echo message="LDAP properties not set and can't open login-config.xml to see if JBoss is setup to use LDAP for authentication."/>
 						</then>
 						<else>
-<!--					
-							<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" verbose="true">
-								<read path="//module-optio[@name]='ldapHost'" property="read.ldap.url" />
-								<read path="//module-optio[@name]='ldapSearchableBase'" property="read.ldap.basedn" />
-								<read path="//module-optio[@name]='ldapUserIdLabel'" property="read.ldap.searchprefix" />
-							</xmlconfig>
--->							
 							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
 								<copy path="//module-option[@name='ldapHost']/text()" property="read.ldap.url" />
 								<copy path="//module-option[@name='ldapSearchableBase']/text()" property="read.ldap.basedn" />
@@ -3388,11 +3336,6 @@ $HeadURL$
 				</else>         
 			</if>           
 			<echo message="Inserting ${login-config.block.file} into @{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
-<!--
-			<xmlconfig in="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" verbose="false">
-				<insertbranch path="//policy" srcxmlfile="${login-config.block.file}" srcpath="//application-policy" />
-			</xmlconfig>
--->
 			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" 
 				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">		
 				<remove path="//policy/application-policy[@name='@{application.context.name}']"/>
@@ -4176,15 +4119,15 @@ $HeadURL$
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.name" default="${database.name}" />
 		<attribute name="database.jndi.datasource.name" default="${database.jndi.datasource.name}" />
-		<attribute name="database.context.path" default="${database.jndi.datasource.name}" />
+		<attribute name="database.context.path" default="${database.context.path}" />
 		<sequential>
 			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
 				<xmlcatalog refid="installer.catalog"/>
-				<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Context[@path='/@{database.context.path}']"/>
+				<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context[@path='/@{database.context.path}']"/>
 			</xmltask>
 			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
 				<xmlcatalog refid="installer.catalog"/>
-				<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']">
+				<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']">
 					<![CDATA[
 					<Context path="/@{database.context.path}" docBase="@{database.context.path}" reloadable="false">
 						<Resource name="@{database.jndi.datasource.name}" auth="Container" type="javax.sql.DataSource"
@@ -4305,15 +4248,6 @@ $HeadURL$
 					-->
 
 					<echo message="Updating Tomcat Ports"/> 
-<!--					
-					<xmlconfig in="@{tomcat.home}/conf/server.xml" verbose="false">
-						<update path="(//Connector)[@port=8080]/@port" value="@{tomcat.port.http}" />
-						<update path="(//Connector)[@redirectPort=8443]/@redirectPort" value="@{tomcat.port.ssl}" />
-						<update path="(//Connector)[@port=8009]/@port" value="@{tomcat.port.ajp}" />
-						<update path="(//Connector)[@port=8443]/@port" value="@{tomcat.port.ssl}" />
-						<update path="(//Server)[@port=8005]/@port" value="@{tomcat.port.shutdown}" />
-					</xmlconfig>
--->
 					<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
 						<replace path="(//Connector)[@port=8080]/@port" withtext="@{tomcat.port.http}" />
 						<replace path="(//Connector)[@redirectPort=8443]/@redirectPort" withtext="@{tomcat.port.ssl}" />
@@ -4387,10 +4321,9 @@ $HeadURL$
 		<!-- jboss-bindings -->
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
-		<attribute name="jboss.server.ports.name" default="${jboss.port.configuration}"/>
+		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
 		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"/>
-		<attribute name="jboss.server.binding.template.location" default="${basedir}/${jboss-bindings.file}"/>
-		<attribute name="jboss.server.service.template.location" default="${bda-utils.resource.dir}/template-jboss-service.xml"/>
+		<attribute name="jboss.server.binding.template.location" default="${jboss.server.binding.template.location}"/>
 		<!-- jboss-login-config -->
 		<attribute name="authentication.type" default="${authentication.type}"/>
 		<attribute name="login-config.ldap.file" default="${jboss-conf.dir.dest}/login-config.ldap-block.xml"/>
@@ -4468,7 +4401,6 @@ $HeadURL$
 								jboss.server.ports.name="@{jboss.server.ports.name}"
 								jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
 								jboss.server.binding.template.location="@{jboss.server.binding.template.location}"
-								jboss.server.service.template.location="@{jboss.server.service.template.location}"
 								jboss.server.jndi.port="@{jboss.server.jndi.port}"
 								jboss.server.port="@{jboss.server.port}"
 								jboss.cobraorb.port="@{jboss.cobraorb.port}"
@@ -4670,23 +4602,23 @@ $HeadURL$
 					<echo message="os.family=${os.family}"/>
 					<switch value="${os.family}">
 						<case value="unix">
-							<replaceregexp file="${jboss.bin.dir}/run.conf" byline="true"
+							<replaceregexp file="@{jboss.bin.dir}/run.conf" byline="true"
 								match="^(\s+JAVA_OPTS)=(.*)"
 								replace="#\1=\2${line.separator}# added by macro${line.separator}\1='@{jboss.java.opts}'"
 								/>
 								</case>
 						<case value="mac">
-							<replaceregexp file="${jboss.bin.dir}/run.conf" byline="true"
+							<replaceregexp file="@{jboss.bin.dir}/run.conf" byline="true"
 								match="^(\s+JAVA_OPTS)=(.*)"
 								replace="#\1=\2${line.separator}# added by macro${line.separator}\1='@{jboss.java.opts}'"
 								/>
 						</case>
 						<case value="windows">
-							<replaceregexp file="${jboss.bin.dir}/run.bat" byline="true"
+							<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
 								match="^(set\s+JAVA_OPTS)=(.*)"
 								replace="rem \1=\2"
 								/>
-							<replaceregexp file="${jboss.bin.dir}/run.bat" byline="true"
+							<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
 								match="^(rem JVM memory.*)"
 								replace="rem added by BDA installer${line.separator}set JAVA_OPTS=@{jboss.java.opts}${line.separator}\1"
 								/>
@@ -4976,6 +4908,123 @@ $HeadURL$
 			<groovy>
 				println "fourth debug"
 			</groovy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jboss-read-bindings-file-location">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.bindings.file.location.property.name" default="jboss.bindings.file.location"/>
+		<attribute name="jboss.server.ports.name.property.name" default="jboss.server.ports.name"/>
+		<sequential>
+			<var name="read.bindings.file" unset="true"/>
+			<var name="read.bindings.file.raw" unset="true"/>
+			<var name="read.bindings.port.ports.name" unset="true"/>
+			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']/text()" property="read.bindings.file.raw" />
+				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']/text()" property="read.bindings.ports.name" />
+			</xmltask>
+			<propertyregex property="read.bindings.file"
+				input="${read.bindings.file.raw}"
+				regexp="file:(.*)"
+				select="\1"
+				/>
+			<echo message="Bindings file ${read.bindings.file} ${read.bindings.ports.name}"/>
+			<property name="@{jboss.server.ports.name.property.name}" value="${read.bindings.ports.name}"/>
+			<property name="@{jboss.bindings.file.location.property.name}" value="${read.bindings.file}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss-read-ports">
+		<attribute name="jboss.server.jndi.port.property.name" default="jboss.server.jndi.port"/>
+		<attribute name="jboss.server.port.property.name" default="jboss.server.port"/>
+		<attribute name="jboss.bindings.file.location.property.name" default="jboss.bindings.file.location"/>
+		<attribute name="jboss.server.ports.name.property.name" default="jboss.server.ports.name"/>
+		<sequential>
+			<propertycopy name="bindings.file.location" from="@{jboss.bindings.file.location.property.name}" override="true"/>
+			<propertycopy name="server.name" from="@{jboss.server.ports.name.property.name}" override="true"/>
+
+			<var name="read.http.port" unset="true"/>
+			<var name="read.jndi.port" unset="true"/>
+			<xmltask failWithoutMatch="true" source="${bindings.file.location}" dest="${bindings.file.location}">
+				<copy path="/service-bindings/server[@name='${server.name}']/service-config[@name='jboss.web:service=WebServer']/binding/@port" property="read.http.port" attrValue="true"/>
+				<copy path="//service-bindings/server[@name='${server.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
+			</xmltask>
+			<echo message="HTTP port=${read.http.port} = @{jboss.server.port.property.name}"/>
+			<echo message="JNDI port=${read.jndi.port} = @{jboss.server.jndi.port.property.name}"/>
+			<property name="@{jboss.server.port.property.name}" value="${read.http.port}"/>
+			<property name="@{jboss.server.jndi.port.property.name}" value="${read.jndi.port}"/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="properties-missing" description="Check if any of the properties in the list are not set and set the property referenced properties.missing.property.name to true">
+		<attribute name="properties.list" />
+		<attribute name="properties.missing.property.name" default="properties.missing"/>
+		<sequential>
+			<var name="@{properties.missing.property.name}" unset="true"/>
+			<for list="@{properties.list}" param="prop.list.item" delimiter=",">
+				<sequential>
+					<echo message="checking for existance of property @{prop.list.item}"/>
+					<propertyregex property="prop.list.item.trimmed"
+						input="@{prop.list.item}"
+						regexp="\s*(\S+)\s*"
+						select="\1"
+						override="true"
+						/>
+					<if>
+						<not>
+							<isset property="${prop.list.item.trimmed}"/>
+						</not>
+						<then>
+							<echo message="Property ${prop.list.item.trimmed} is not set."/>
+							<property name="@{properties.missing.property.name}" value="true"/>
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jboss-bindings-validate">
+		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
+		<sequential>
+			<var name="bindings.file.has.tokens" unset="true"/>
+			<loadfile
+				property="bindings.file.has.tokens"
+				srcFile="@{jboss.server.bindingfile.location}">
+				<filterchain>                                   
+					<linecontainsregexp>                                    
+						<regexp pattern="\@.+\@"/>                                     
+					</linecontainsregexp>                                   
+				</filterchain>                                  
+			</loadfile>               
+			<if>
+				<isset property="bindings.file.has.tokens"/>
+				<then>
+					<echo message="FYI - @{jboss.server.bindingfile.location} HAS unexpanded  tokens."/>
+				</then>
+				<else>
+					<echo message="FYI - @{jboss.server.bindingfile.location} has no tokens."/>
+				</else>
+			</if>
+			<var name="bindings.file.has.server" unset="true"/>
+			<loadfile
+				property="bindings.file.has.server"
+				srcFile="@{jboss.server.bindingfile.location}">
+				<filterchain>                                   
+					<linecontainsregexp>                                    
+						<regexp pattern="@{jboss.server.ports.name}"/>                                     
+					</linecontainsregexp>                                   
+				</filterchain>                                  
+			</loadfile>               
+			<if>
+				<not>
+					<isset property="bindings.file.has.server"/>
+				</not>
+				<then>
+					<fail message="@{jboss.server.ports.name} not found in @{jboss.server.bindingfile.location}"/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 </project>
