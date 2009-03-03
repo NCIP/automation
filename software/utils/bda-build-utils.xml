@@ -1624,6 +1624,8 @@ $HeadURL$
 				</filterset>
 			</copy> 
 			<jboss-bindings-validate
+				jboss.server.ports.name="@{jboss.server.ports.name}"
+				jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
 				/>
 			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 				<xmlcatalog refid="installer.catalog"/>
