@@ -601,6 +601,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
                 File buildFile = new File(readerClassName);
                 ProjectHelper.configureProject(project, buildFile);
               
+                project.setProperty("application.base.path", idata.getVariable("existing.installation.home"));
                 System.out.println("readerMethodName::" + readerMethodName);
                 project.executeTarget(readerMethodName);
                                 
