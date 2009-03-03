@@ -2,8 +2,8 @@
    <!-- *                          ports-01                      * -->
    <!-- ********************************************************** -->
    <!--
-   $Id$
-   $HeadURL$
+   $Id: template-binding.xml 76 2008-04-21 15:00:08Z narram $
+   $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/utils/resource/template-binding.xml $
    -->
 
   <service-bindings> 
