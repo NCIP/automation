@@ -87,8 +87,6 @@ public class SingleCommandListener implements BuildListener {
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl=event.getProject().getProperty(urlProperty);
 		
-		System.out.println("event.getException():::::::" +event.getException());
-		System.out.println("event.getException().getMessage:::::::" +event.getException().getMessage());
 
 		if(event.getException() != null)
 		{
