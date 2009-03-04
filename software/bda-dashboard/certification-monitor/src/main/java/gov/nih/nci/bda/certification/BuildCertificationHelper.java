@@ -38,7 +38,8 @@ public class BuildCertificationHelper {
 		System.out.println("bmb.getProjectRepoUrl():::::::" +bmb.getProjectRepoUrl());
 		System.out.println("methodName:::::::" +methodName);
 		System.out.println("mapName:::::::" +mapName);
-		System.out.println("projectName:::::::" +projectName);
+		System.out.println("projectName:::::::" +projectName);		
+		System.out.println("FailureMessage:::::::" +bmb.getFailureMessage());
 		
 	    //Session session = HibernateUtil.getSessionFactory().getCurrentSession();		
 		Session session = HibernateUtil.getSession();
