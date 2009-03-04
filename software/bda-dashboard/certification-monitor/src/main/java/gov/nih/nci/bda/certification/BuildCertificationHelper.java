@@ -106,8 +106,17 @@ public class BuildCertificationHelper {
 	}
 
 	private String getWikiLinkTip(String displayName,String link,String message) {
-		
-		return "'[" + displayName +"|"+ link+"|" + message + "]'"; 
+		String wikiLinkTipStr = null;
+		if (message != null)
+		{	
+			message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH).replace("'", "");
+			wikiLinkTipStr = "'[" + displayName +"|"+ link+"|" + message + "]'";
+		}
+		else
+		{
+			wikiLinkTipStr = displayName;
+		}
+		return wikiLinkTipStr;
 	}	
 	
 	private void invokeSetMethodValue(ProjectCertificationStatus pbs,String methodName,String certificationStatus) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
