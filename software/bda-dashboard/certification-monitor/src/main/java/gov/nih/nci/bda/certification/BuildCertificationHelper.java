@@ -110,7 +110,7 @@ public class BuildCertificationHelper {
 		if (message != null)
 		{	
 			if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
-				message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
+				message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH);
 				
 			message=message.replace("'", "");
 			wikiLinkTipStr = "'[" + displayName +"|"+ link+"|" + message + "]'";
