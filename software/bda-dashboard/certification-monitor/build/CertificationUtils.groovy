@@ -12,6 +12,11 @@ import org.codehaus.groovy.runtime.InvokerHelper
 
 class CertificationUtils
 {
+	public static final String WIKI_SUCCESSFUL = "(/)";
+	public static final String WIKI_FAILED = "(x)";
+	public static final String WIKI_MODERATE = "(!)";
+	public static final int CI_BUILD_DAYS = 1;
+	
 	def ant = new AntBuilder();
 	def project = new Project();
 	HashMap defaultProperties = new HashMap();
@@ -394,7 +399,7 @@ class CertificationUtils
 		
 		if (ciStatusStr=="[Success]")
 		{
-			wikiStr = wikiStr.append("(/)|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+			wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
 		}
 		else
 		{
@@ -418,11 +423,11 @@ class CertificationUtils
 	{
 		def dtConverted = new Date(dataStr);		
 		def today= new Date()
-		def yesterday= today - 1		
+		def yesterday= today - this.CI_BUILD_DAYS		
 		if (dtConverted.compareTo(yesterday) > 0)
-			return BuildCertificationConstants.WIKI_FAILED
+			return this.WIKI_MODERATE
 		else
-			return BuildCertificationConstants.WIKI_FAILED
+			return this.WIKI_FAILED
 
 	}
 }
