@@ -381,27 +381,48 @@ class CertificationUtils
 		def revision = new XmlParser().parse(installFile)
 
 		String ciStatusStr = revision.body.table[1].tr.td[1].'h1'.'img'.'@alt'
-		println ciStatusStr
-		if (ciStatusStr=="[Success]")
-			wikiStr = wikiStr.append("(/)|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
-		else
-			wikiStr = wikiStr.append("(x)|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
 		String  buildTimeStr = revision.body.table[1].tr.td[1].'h1'.text()
 		
-		StringBuffer sb = new StringBuffer()
-		
-		buildTimeStr.split('\\s+').each {processToken  -> 
-						sb.append("${processToken}")
+		StringBuffer sb = new StringBuffer()		
+		buildTimeStr.split('\\n').each {processToken  ->
+						println "${processToken}"
+						sb.append("${processToken}".trim())
 					}					
 
-		println sb
+		String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
+		println dataStr	
+		
+		if (ciStatusStr=="[Success]")
+		{
+			wikiStr = wikiStr.append("(/)|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+		}
+		else
+		{
+			wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+		}		
+		
+	
 		
 		if (sb!= null)
 			wikiStr = wikiStr.append("|"+sb+"]'")
 		
 		println wikiStr
+		
+		
 		project.setProperty("certification.property.value",wikiStr.toString());
 		//println "revision Again::"+ revision.depthFirst().grep{ it.'h1' }.'h1'.'img'.'@alt'
 	}
+	
+	
+	def getStatusOnDate (String dataStr)
+	{
+		def dtConverted = new Date(dataStr);		
+		def today= new Date()
+		def yesterday= today - 1		
+		if (dtConverted.compareTo(yesterday) > 0)
+			return BuildCertificationConstants.WIKI_FAILED
+		else
+			return BuildCertificationConstants.WIKI_FAILED
 
+	}
 }
