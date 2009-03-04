@@ -89,10 +89,14 @@ public class SingleCommandListener implements BuildListener {
 		
 
 		if(event.getException() != null)
-			bmb.setBuildSuccessful(false); 
+		{
+			bmb.setBuildSuccessful(false);
+			bmb.setFailureMessage(event.getException().getMessage());
+		}
 		else
+		{
 			bmb.setBuildSuccessful(true);
-		
+		}
 		bmb.setProjectName(projectName);
 		bmb.setTargetName(event.getTarget().getName());
 		bmb.setMapName(event.getProject().getProperty("map.name"));

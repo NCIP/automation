@@ -56,7 +56,7 @@ public class BuildCertificationHelper {
 			// build failed
 			if(pbs != null )
 			{	
-				invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_FAILED);
+				invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,BuildCertificationConstants.ANCHOR_STRING,bmb.getFailureMessage()));
 		    	//update the project URL on update					
 				setProductValue(pbs,projectUrl);
 		    	session.update(pbs);
@@ -64,7 +64,7 @@ public class BuildCertificationHelper {
 		    else
 		    {
 		    	pbs = new ProjectCertificationStatus();
-		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_FAILED);
+		    	invokeSetAllMethods(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,BuildCertificationConstants.ANCHOR_STRING,bmb.getFailureMessage()));
 		    	setProductValue(pbs,projectUrl);
 		    	session.save(pbs);		
 		    }		    
@@ -103,6 +103,11 @@ public class BuildCertificationHelper {
 		
 		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1); 
 	}
+
+	private String getWikiLinkTip(String displayName,String link,String message) {
+		
+		return "'[" + displayName +"|"+ link+"|" + message + "]'"; 
+	}	
 	
 	private void invokeSetMethodValue(ProjectCertificationStatus pbs,String methodName,String certificationStatus) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{

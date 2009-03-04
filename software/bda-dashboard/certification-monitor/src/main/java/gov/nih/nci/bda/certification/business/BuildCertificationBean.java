@@ -10,6 +10,8 @@ public class BuildCertificationBean {
 	private boolean isValue;
 	private String propertyValue;
 	private String projectRepoUrl;
+	private String failureMessage;
+	
 	public boolean isBuildSuccessful() {
 		return buildSuccessful;
 	}
@@ -51,6 +53,12 @@ public class BuildCertificationBean {
 	}
 	public void setProjectRepoUrl(String projectRepoUrl) {
 		this.projectRepoUrl = projectRepoUrl;
+	}
+	public String getFailureMessage() {
+		return failureMessage;
+	}
+	public void setFailureMessage(String failureMessage) {
+		this.failureMessage = failureMessage;
 	}
 	
 	
