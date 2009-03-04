@@ -78,6 +78,7 @@ import org.hibernate.Session;
 			bmb.setProjectName(projectName);
 			bmb.setTargetName(targetLookup.getTargetName());
 			bmb.setMapName(targetLookup.getMapName());
+			bmb.setFailureMessage(e.getMessage());
 			
 			BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
 			try
