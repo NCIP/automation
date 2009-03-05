@@ -293,7 +293,7 @@ class CertificationUtils
 		def buildProperties=build.properties
 
 		buildProperties.each() { key, value -> 
-			if ("${key}".contains('.install.zip.file'))
+			if ("${key}".contains('install.zip.file'))
 				installerPropertyName = "${key}"
 			
 		};
