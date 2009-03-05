@@ -114,7 +114,7 @@ public class BuildCertificationHelper {
 			
 			
 			message=message.replace("'", "");
-			message=message.replace(":", ",");
+			//message=message.replace(":", ",");
 			String[] result=message.split("\\n");
 			StringBuffer sb = new StringBuffer();
 		    for (int x=0; x<result.length; x++)
