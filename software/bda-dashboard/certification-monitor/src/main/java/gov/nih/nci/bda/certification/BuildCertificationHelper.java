@@ -109,18 +109,7 @@ public class BuildCertificationHelper {
 		String wikiLinkTipStr = null;
 		if (message != null)
 		{	
-			if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
-				message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH);
-			
-			
-			message=message.replace("'", "");
-			//message=message.replace(":", ",");
-			String[] result=message.split("\\n");
-			StringBuffer sb = new StringBuffer();
-		    for (int x=0; x<result.length; x++)
-		         sb.append(result[x]);
-
-			wikiLinkTipStr = "'[" + displayName +"|"+ link+"|" + sb.toString() + "]'";			
+			wikiLinkTipStr = "'[" + displayName +"|"+ link+"|" + formatMessage(message) + "]'";			
 		}
 		else
 		{
@@ -130,6 +119,19 @@ public class BuildCertificationHelper {
 		return wikiLinkTipStr;
 	}	
 	
+	private String formatMessage(String message) {
+		StringBuffer sb = new StringBuffer();
+		if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
+			message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH);
+				
+		message=message.replace("'", "");
+		String[] result=message.split("\\n");
+	    for (int x=0; x<result.length; x++)
+	         sb.append(result[x]);
+		
+	    return sb.toString();
+	}
+
 	private void invokeSetMethodValue(ProjectCertificationStatus pbs,String methodName,String certificationStatus) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
     		if(!bmb.isValue())
