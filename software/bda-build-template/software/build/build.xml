@@ -11,6 +11,7 @@
 	<property file="local.properties" />
 	<property file="project.properties" />
 	<property name="properties.file" value="install.properties"/>
+	<property name="upgrade.properties.file" value="upgrade.properties"/>
 	<echo message="Using properties file of ${properties.file}." />
 	<available file="${properties.file}" property="properties.file.exists" />
 	<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail." />
@@ -461,8 +462,15 @@
 				<include name="**/*" />
 			</fileset>
 		</copy>
+		<!-- For non DAC upgrades
 		<dist-prep
 			copy.tools.flag="N"
+			default.target="upgrade"
+			/>
+		-->
+		<!-- For DAC upgrades -->
+		<dist-prep
+			copy.tools.flag="Y"
 			default.target="upgrade"
 			/>
 
@@ -583,6 +591,7 @@
 		-->
 		<deploy-local
 			target.name="${upgrade.target}"
+			properties.file="${upgrade.properties.file}"
 			/>
 	</target>
 
@@ -999,10 +1008,77 @@
 			/>                    
 	</target>
 
-	<target name="temp-jboss-read-ports">
+	<target name="temp-all-readers">
+		<var name="read.properties.list" value=""/>
+		<properties-exist
+			properties.list="jboss.home,tomcat.home,jboss.server.name"
+			/>
+		<jboss-read-dbconfig
+			jboss.ds-xml.file="bda-blueprints-ds.xml"
+			/>
+		<jboss-read-ldapconfig
+			/>
 		<jboss-read-bindings-file-location
 			/>
 		<jboss-read-ports
 			/>
+		<tomcat-read-ports
+			/>
+		<var name="jboss.ssl.keystore.dir" value="${working.dir}/keys/jboss"/>
+		<jboss-read-ssl
+			/>
+		<var name="tomcat.ssl.keystore.dir" value="${working.dir}/keys/tomcat"/>
+		<tomcat-read-ssl
+			/>
+		<jboss-copy-bindings
+			copied.jboss.server.bindingfile.dir="${working.dir}/copied-bindings"
+			copied.jboss.bindings.file.property.name="copied.jboss.bindings.file"
+			/>
+		<var name="jboss.server.binding.template.location" value="${working.dir}/copied-bindings/${copied.jboss.bindings.file}"/>
+		<jboss-read-external-hostname
+			/>
+		<tomcat-read-external-hostname
+			/>
+		<jboss-read-java_opts
+			/>
+		<jboss-read-java_opts
+			jboss.bin.dir="${jboss.home}/server/${jboss.server.name}/bin"
+			/>
+		<jboss-copy-log4j
+			/>
+		<grid-read-index-url
+			/>
+		<grid-read-index-url
+			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
+			/>
+		<jboss-read-grid-secure
+			/>
+		<tomcat-read-grid-secure
+			/>
+		<property name="copied.service-metadata.dir" value="${working.dir}/grid"/>
+		<grid-copy-service-metadata
+			copied.service-metadata.dir="${copied.service-metadata.dir}"
+			/>
+		<property name="copied.service-metadata.dir1" value="${working.dir}/grid1"/>
+		<grid-copy-service-metadata
+			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
+			copied.service-metadata.dir="${copied.service-metadata.dir1}"
+			/>
+		<echo message="All Read Properties"/>
+		<properties-print
+			properties.list="${read.properties.list}"
+			/>
+	</target>
+	<target name="temp-reader">
+		<property name="copied.service-metadata.dir" value="${working.dir}/grid"/>
+		<grid-copy-service-metadata
+			copied.service-metadata.dir="${copied.service-metadata.dir}"
+			/>
+		<property name="copied.service-metadata.dir1" value="${working.dir}/grid1"/>
+		<grid-copy-service-metadata
+			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
+			copied.service-metadata.dir="${copied.service-metadata.dir1}"
+			/>
+
 	</target>
 </project>

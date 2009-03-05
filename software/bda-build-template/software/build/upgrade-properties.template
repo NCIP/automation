@@ -17,24 +17,24 @@
 ##############################
 ###  APPLICATION SETTINGS  ###
 ##############################
-application.base.path=The base path where all files are stored for this application, will be difrerent on different OSes. Example: ${user.home}/apps/bda-blueprints-webapp
-application.url=The URL to access the application. Example: http://${jboss.server.hostname}:${jboss.server.port}/bda-blueprints-webapp
+#application.base.path=The base path where all files are stored for this application, will be difrerent on different OSes. Example: ${user.home}/apps/bda-blueprints-webapp
+#application.url=The URL to access the application. Example: http://${jboss.server.hostname}:${jboss.server.port}/bda-blueprints-webapp
 ###########################
 ###  DATABASE SETTINGS  ###
 ###########################
 # Required for local installs
 # Require for all installs
-database.type==Type of database current database types supported by BDA Templates are Oracle, MySQL or PostgreSQL. Acceptable values are oracle|mysql|postgresql.
+#database.type==Type of database current database types supported by BDA Templates are Oracle, MySQL or PostgreSQL. Acceptable values are oracle|mysql|postgresql.
 ########################
 ###  JBOSS SETTINGS  ###
 ########################
 # jboss.home will be generated as ${application.base.path}/${jboss.relateive.path}
 #jboss.relative.path=
-jboss.home=The path to JBoss home, recommended to be ${application.base.path}/${jboss.binaries.relative.dir}
-jboss.server.hostname=The server name where jboss will be running. Example: localhost
-jboss.server.name=The jboss server instance name, $JBOSS_HOME/server/${jboss.server.name}. Example: default
-jboss.server.port=The port used to connect to the jboss instance via http.
-jboss.server.jndi.port=Port used to connect when shutting down jboss.
+#jboss.home=The path to JBoss home, recommended to be ${application.base.path}/${jboss.binaries.relative.dir}
+#jboss.server.hostname=The server name where jboss will be running. Example: localhost
+#jboss.server.name=The jboss server instance name, $JBOSS_HOME/server/${jboss.server.name}. Example: default
+#jboss.server.port=The port used to connect to the jboss instance via http.
+#jboss.server.jndi.port=Port used to connect when shutting down jboss.
 ##############
 ### TOMCAT ###
 ##############
@@ -81,10 +81,10 @@ jboss.server.jndi.port=Port used to connect when shutting down jboss.
 ########################
 ###  MAIL  SETTINGS  ###
 ########################
-mail.smtp.server=The SMTP relay host name. Example: mailfwd.nih.gov
+#mail.smtp.server=The SMTP relay host name. Example: mailfwd.nih.gov
 ###################################
 #  PRE-POST VALIDATION PROPERTIES #
 ###################################
-validation.pre.port.list=
-validation.post.http.list=
-validation.post.socket.list=
+#validation.pre.port.list=
+#validation.post.http.list=
+#validation.post.socket.list=
