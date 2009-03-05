@@ -111,10 +111,16 @@ public class BuildCertificationHelper {
 		{	
 			if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
 				message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH);
-				
+			
+			
 			message=message.replace("'", "");
 			message=message.replace(":", ",");
-			wikiLinkTipStr = "'[" + displayName +"|"+ link+"|" + message + "]'";			
+			String[] result=message.split("\\n");
+			StringBuffer sb = new StringBuffer();
+		    for (int x=0; x<result.length; x++)
+		         sb.append(result[x]);
+
+			wikiLinkTipStr = "'[" + displayName +"|"+ link+"|" + sb.toString() + "]'";			
 		}
 		else
 		{
