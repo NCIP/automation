@@ -5,6 +5,7 @@ import gov.nih.nci.bda.certification.business.BuildCertificationBean;
 import gov.nih.nci.bda.certification.domain.TargetLookup;
 import gov.nih.nci.bda.certification.listener.SingleCommandListener;
 import gov.nih.nci.bda.certification.util.HibernateUtil;
+import gov.nih.nci.bda.certification.util.PropertyLoader;
 
 import java.io.File;
 import java.util.Iterator;
@@ -24,6 +25,8 @@ import org.hibernate.Session;
 
      //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
      Session session = HibernateUtil.getSession();
+     
+     PropertyLoader.loadProperties(projectName);
      
      Project project = new Project();
      project.init();

@@ -2210,6 +2210,7 @@ software/bda-dashboard/certification-monitor/lib/ant-nodeps.jar -text
 software/bda-dashboard/certification-monitor/lib/ant.jar -text
 software/bda-dashboard/certification-monitor/lib/antlr-2.7.6.jar -text
 software/bda-dashboard/certification-monitor/lib/commons-collections-3.1.jar -text
+software/bda-dashboard/certification-monitor/lib/commons-configuration-1.6.jar -text
 software/bda-dashboard/certification-monitor/lib/dom4j-1.6.1.jar -text
 software/bda-dashboard/certification-monitor/lib/groovy-all-1.6-beta-1.jar -text
 software/bda-dashboard/certification-monitor/lib/hibernate3.jar -text
@@ -2239,10 +2240,14 @@ software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certi
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/BuildHistory.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectCertificationStatus.hbm.xml -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectCertificationStatus.java -text
+software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectProperties.hbm.xml -text
+software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectProperties.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.hbm.xml -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/SingleCommandListener.java -text
+software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/ConfigurationHelper.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/HibernateUtil.java -text
+software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/PropertyLoader.java -text
 software/bda-dashboard/certification-monitor/src/main/resources/build.xml -text
 software/bda-dashboard/certification-monitor/src/main/resources/hibernate.cfg.xml -text
 software/bda-dashboard/certification-monitor/src/main/sql/create_schema_buildmonitordb.sql -text

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>	
+     <class name="gov.nih.nci.bda.certification.domain.ProjectProperties" table="project_properties">
+         <id name="id" column="id"> 
+         	<generator class="increment"/>           
+         </id>
+         <property name="projectName" column="project_name"/>
+         <property name="databaseType" column="database_type"/>
+         <property name="svnUsername" column="svn_username"/>
+         <property name="svnPassword" column="svn_password"/>
+         <property name="svnProjectUrl" column="svn_project_url"/>
+         <property name="svnLocalCheckout" column="svn_local_checkout"/>         
+         <property name="masterBuildLocation" column="master_build_location"/>	
+         <property name="masterInstallLocation" column="master_install_location"/>
+         <property name="singleCommandBuildTarget" column="single-command_build_target"/>
+         <property name="singleCommandDeploymentTarget" column="single-command_deployment_target"/>	
+         <property name="databaseIntegrationTarget" column="database_integration_target"/>
+         <property name="masterBuildFile" column="master_build_file"/>
+         <property name="explodedDirLocation" column="exploded_dir_location"/>	
+         <property name="privateRepository" column="private_repository"/>
+         <property name="localPrivateCheckout" column="local_private_checkout"/>
+         <property name="ciServerHostname" column="ci-server_hostname"/>	
+         <property name="ciServerPortnumber" column="ci-server_portnumber"/>
+         <property name="ciServerJobname" column="ci-server_jobname"/>	
+     </class>    
+</hibernate-mapping>

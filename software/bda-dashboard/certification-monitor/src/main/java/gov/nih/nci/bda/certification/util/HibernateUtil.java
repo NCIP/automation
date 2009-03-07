@@ -9,12 +9,16 @@ import org.hibernate.cfg.Configuration;
   public class HibernateUtil 
   {	  
         private static final SessionFactory sessionFactory;
+        private static Configuration configuration;
+        public static final ThreadLocal session = new ThreadLocal();
+        
         static {
             try {
                 // Create the SessionFactory from hibernate.cfg.xml
             	File f =new File("hibernate.cfg.xml");
             	System.out.println("Absolute Path::"+f.getAbsolutePath());
-                sessionFactory = new Configuration().configure(f).buildSessionFactory();
+            	configuration = new Configuration().configure(f);
+                sessionFactory = configuration.buildSessionFactory();
             } catch (Throwable ex) {
                 // Make sure you log the exception, as it might be swallowed
                 System.err.println("Initial SessionFactory creation failed." + ex);
@@ -24,7 +28,6 @@ import org.hibernate.cfg.Configuration;
         public static SessionFactory getSessionFactory() {
             return sessionFactory;
         }
-        public static final ThreadLocal session = new ThreadLocal();
 
         public static Session getSession() throws HibernateException {
                Session s = (Session) session.get();
@@ -75,6 +78,13 @@ import org.hibernate.cfg.Configuration;
                 	   //handle the exception
                    }
                }
+           }
+
+           /**
+            * @return the configuration
+            */
+           public static Configuration getConfiguration() {
+               return configuration;
            }
 
  
