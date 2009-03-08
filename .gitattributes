@@ -10,9 +10,7 @@ docs/build-architecture-initial-draft.vsd -text
 docs/cbiit-goals.doc -text
 docs/images/ant-logo.gif -text
 docs/images/ant-macro.jpg -text
-docs/images/ant-macro.tiff -text
 docs/images/ant-template.jpg -text
-docs/images/ant-template.tiff -text
 docs/images/anthillpro.png -text
 docs/images/bda-agile-practices.jpg -text
 docs/images/bda-architecture.jpg -text
@@ -23,7 +21,6 @@ docs/images/bda-dashboard-plan.jpg -text
 docs/images/bda-features.jpg -text
 docs/images/bda-plan.jpg -text
 docs/images/bda-project-plan.jpg -text
-docs/images/bda-project-plan.tiff -text
 docs/images/bda-rollout.jpg -text
 docs/images/bda_cal.jpg -text
 docs/images/bda_preso_intro.jpg -text
@@ -72,7 +69,6 @@ docs/images/tutorials.png -text
 docs/images/validator.png -text
 docs/images/webarchiver.png -text
 docs/images/wiki-bda.jpg -text
-docs/images/wiki-bda.tiff -text
 docs/jboss-ports/19080.properties -text
 docs/jboss-ports/19180.properties -text
 docs/jboss-ports/19280.properties -text
