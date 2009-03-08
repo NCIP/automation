@@ -12,11 +12,13 @@ public class PropertyLoader {
 	private static ProjectProperties pp = null;
 	
 	public static void loadProperties(String projectName) {
-		Session session = HibernateUtil.getSession();
-	    session.beginTransaction(); 
+		//Session session = HibernateUtil.getSession();
+	    //session.beginTransaction(); 
 	    
-	    Query query = session.createQuery( " from project_properties where project_name like ?");
+	    //Query query = session.createQuery( " from project_properties where project_name like ?");
 	    
+        System.out.println("VALUE OF KEY::"+ConfigurationHelper.getConfiguration().getString("name"));
+	   /*
 	    query.setString(0, projectName);
 		pp = (ProjectProperties) query.uniqueResult();
 		if(pp != null )
@@ -28,6 +30,12 @@ public class PropertyLoader {
 	    	//throw new Exception("Cannot the properties for the project " + projectName);
 	    }
 		session.clear();
+		*/
+	}
+
+	public static void main(String[] args)
+	{    
+		loadProperties("caarray");
 	}
 
 }
