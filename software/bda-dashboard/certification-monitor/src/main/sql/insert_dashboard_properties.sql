@@ -1,10 +1,3 @@
-/*
-SQLyog Community Edition- MySQL GUI
-MySQL - 5.0.45 
-*********************************************************************
-*/
-/*!40101 SET NAMES utf8 */;
-
 drop table 'dashboard_properties';
 
 create table `dashboard_properties` (
@@ -20,6 +13,15 @@ insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('mysql.database.password','password');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('mysql.database.url','jdbc:mysql://${mysql.database.server}:${mysql.database.port}/${mysql.database.name}');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('mysql.database.system.url','jdbc:mysql://${mysql.database.server}:${mysql.database.port}/');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.system.user','postgresadmin');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.system.password','password');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.server','localhost');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.port','5432');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.name','genericdb');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.user','genericuser');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.password','password');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.url','jdbc:postgresql://${postgresql.database.server}:${postgresql.database.port}/${postgresql.database.name}');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('postgresql.database.system.url','jdbc:postgresql://${postgresql.database.server}:${postgresql.database.port}/template1');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('mysql.minimum.version','5.0.27');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('force.reinstall','true');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ant.minimum.version','1.7.0');
