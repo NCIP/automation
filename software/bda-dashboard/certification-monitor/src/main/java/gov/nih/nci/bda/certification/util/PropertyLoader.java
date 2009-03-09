@@ -1,38 +1,51 @@
 package gov.nih.nci.bda.certification.util;
 
+import java.util.Iterator;
+
 import gov.nih.nci.bda.certification.BuildCertificationConstants;
 import gov.nih.nci.bda.certification.domain.ProjectCertificationStatus;
 import gov.nih.nci.bda.certification.domain.ProjectProperties;
 
+import org.apache.commons.configuration.Configuration;
 import org.hibernate.Query;
 import org.hibernate.Session;
+
+import org.apache.tools.ant.Project;
 
 public class PropertyLoader {
 
 	private static ProjectProperties pp = null;
 	
-	public static void loadProperties(String projectName) {
-		//Session session = HibernateUtil.getSession();
-	    //session.beginTransaction(); 
-	    
-	    //Query query = session.createQuery( " from project_properties where project_name like ?");
-	    
-        System.out.println("VALUE OF KEY::"+ConfigurationHelper.getConfiguration().getString("name"));
-	   /*
-	    query.setString(0, projectName);
-		pp = (ProjectProperties) query.uniqueResult();
-		if(pp != null )
-		{	
-			//
-	    }
-	    else
-	    {
-	    	//throw new Exception("Cannot the properties for the project " + projectName);
-	    }
-		session.clear();
-		*/
+	public static void loadProperties(String projectName,Project project) {
+		Configuration config = ConfigurationHelper.getConfiguration();
+        Iterator it = config.getKeys(projectName);
+       
+        project.setProperty("project.name", projectName);
+        while(it.hasNext())
+        {
+        	String keyName = (String) it.next();
+        	String tempKeyName = keyName.replaceFirst(projectName,"");
+        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));
+        	project.setProperty(tempKeyName.substring(1,tempKeyName.length()), config.getString(keyName));        	        	
+        }
+        
 	}
 
+	public static void loadProperties(String projectName) {
+		Configuration config = ConfigurationHelper.getConfiguration();
+        Iterator it = config.getKeys(projectName);
+        while(it.hasNext())
+        {
+        	String keyName = (String) it.next();
+        	String tempKeyName = keyName.replaceFirst(projectName,"");
+        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));
+      //  	project.setProperty(tempKeyName.substring(1,tempKeyName.length(), config.getString(keyName));        	
+        	
+        }
+        
+	}
+
+	
 	public static void main(String[] args)
 	{    
 		loadProperties("caarray");

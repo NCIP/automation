@@ -26,7 +26,7 @@ import org.hibernate.Session;
      //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
      Session session = HibernateUtil.getSession();
      
-     PropertyLoader.loadProperties(projectName);
+
      
      Project project = new Project();
      project.init();
@@ -36,8 +36,9 @@ import org.hibernate.Session;
      logger.setErrorPrintStream(System.err);
      logger.setOutputPrintStream(System.out);
      project.addBuildListener(logger);
-     project.setProperty("project.name", projectName);
-         
+     
+     PropertyLoader.loadProperties(projectName,project);
+     
      SingleCommandListener scListener = new SingleCommandListener();
      project.addBuildListener(scListener);     
    

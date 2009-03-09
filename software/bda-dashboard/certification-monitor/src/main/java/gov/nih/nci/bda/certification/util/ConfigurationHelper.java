@@ -30,11 +30,11 @@ public final class ConfigurationHelper {
 
     
     private static DataSource getDataSource() {
-        MysqlDataSource ds = new MysqlDataSource();
-        Configuration config = HibernateUtil.getConfiguration();
-        ds.setUrl(config.getProperty(Environment.URL));
-        ds.setUser(config.getProperty(Environment.USER));
-        ds.setPassword(config.getProperty(Environment.PASS));
+    	MysqlDataSource ds = new MysqlDataSource();
+        Configuration hibernateConfig = HibernateUtil.getConfiguration();        
+        ds.setUrl(hibernateConfig.getProperty(Environment.URL));
+        ds.setUser(hibernateConfig.getProperty(Environment.USER));
+        ds.setPassword(hibernateConfig.getProperty(Environment.PASS));
         return ds;
     }
 
