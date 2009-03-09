@@ -28,6 +28,8 @@
 		   <pathelement location="./xercesImpl.jar"/>
 		   <pathelement location="./xmltask-1.15.1.jar"/>
 		   <pathelement location="./commons-configuration-1.6.jar"/>
+		   <pathelement location="./commons-lang-2.4.jar"/>
+		   <pathelement location="./commons-logging-1.1.1.jar"/>		   
 		 </classpath>
 	       </java>
 	</target>
