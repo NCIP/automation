@@ -25,6 +25,9 @@
 
 	<property name="tests.unit.source.dir" value="${software.dir}/src/tests/unit/groovy" />
 	<property name="tests.unit.classes.dir" value="${target.dir}/unit/classes" />
+	
+	<property name="sql.dist.dir" value="${deploy.dir}/sql" />
+	<property name="sql.src.dir" value="${software.dir}/src/main/sql" />
 
 
 	<!-- PATHS -->
@@ -64,7 +67,10 @@
 		<delete dir="${deploy.dir}" />
 	</target>
 
-
+	<target name="deploy:sql" description="create table and populate data">
+		<run-sql-script sql.file="${sql.file.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.file.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+	</target>
 
 	<target name="install:database" description="Runs install scripts">
 		<database-install
@@ -118,6 +124,11 @@
 					<include name="**"/>
 			</fileset>		
 		</copy>
+		<copy todir="${sql.dist.dir}">
+			<fileset dir="${sql.src.dir}">
+					<include name="**"/>
+			</fileset>		
+		</copy>		
 	</target>
 
 	<target name="deploy:configure"  description="Package the build monitor">
@@ -134,7 +145,7 @@
 		</xmltask>
 	</target>
 
-	<target name="deploy" depends="install:database,deploy:artifacts,deploy:configure" description="deploy the build monitor">
+	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
 		
 	</target>
 		
@@ -147,5 +158,23 @@
 		   junit.textui.TestRunner.run(testClass)
 		</groovy>		
 	</target>
+	
+	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
+		<attribute name="sql.file" />
+		<attribute name="sql.delimiter" default=";" />
+		<attribute name="sql.delimitertype" default="normal" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="onerror" default="abort" />
+		<sequential>
+			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+				<classpath>
+					<pathelement location="${database.driver.file}" />
+				</classpath>
+			</sql>
+		</sequential>
+	</macrodef>
+
 
 </project>
