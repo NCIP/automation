@@ -26,7 +26,8 @@
 		   <pathelement location="./slf4j-api-1.5.2.jar"/>
 		   <pathelement location="./slf4j-simple-1.5.2.jar"/>
 		   <pathelement location="./xercesImpl.jar"/>
-		   <pathelement location="./xmltask-1.15.1.jar"/>		   		   
+		   <pathelement location="./xmltask-1.15.1.jar"/>
+		   <pathelement location="./commons-configuration-1.6.jar"/>
 		 </classpath>
 	       </java>
 	</target>
