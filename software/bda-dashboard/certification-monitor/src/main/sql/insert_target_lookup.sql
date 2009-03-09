@@ -5,6 +5,8 @@ MySQL - 5.0.45
 */
 /*!40101 SET NAMES utf8 */;
 
+drop table 'target_lookup';
+
 create table `target_lookup` (
 	`ID` double ,
 	`TARGET_NAME` varchar (150),
@@ -16,6 +18,9 @@ insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values
 insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('3','build:project','singleCommandBuild',NULL);
 insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('4','build:single-command-deployment','singleCommandDeployment',NULL);
 insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('5','build:database-integration','databaseIntegration',NULL);
-insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('6','build:bda-utils','bdaUtilsVersion','true');
+insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('9','build:ci-server','latestCIBuild','true');
+insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('6','build:check-bdafied','bdaEnabled','true');
 insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('7','build:template-properties','templateValidation',NULL);
 insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('8','build:private-repository-properties','privateRepositoryProperties',NULL);
+insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('10','build:validate-app-servers','deploymentShakeout',NULL);
+insert into `target_lookup` (`ID`, `TARGET_NAME`, `MAP_NAME`, `IS_VALUE`) values('11','build:check-commandline-installer','commandLineInstaller',NULL);

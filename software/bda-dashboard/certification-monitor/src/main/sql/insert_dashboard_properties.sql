@@ -5,6 +5,8 @@ MySQL - 5.0.45
 */
 /*!40101 SET NAMES utf8 */;
 
+drop table 'dashboard_properties';
+
 create table `dashboard_properties` (
 	`dashboard_key` varchar (600),
 	`dashboard_value` varchar (600)
