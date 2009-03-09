@@ -43,7 +43,7 @@
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="bda-utils.classpath"/>
 
 	<echo message="${project.name}"/>
-<!--
+
 	<propertycopy name="project.database.type" from="${project.name}.database.type" />
 	<propertycopy name="project.database.system.user" from="${project.database.type}.database.system.user" />
 	<propertycopy name="project.database.system.password" from="${project.database.type}.database.system.password" />
@@ -105,7 +105,7 @@
 	<property name="ci-server.hostname" value="${project.ci-server.hostname}" />
 	<property name="ci-server.jobname" value="${project.ci-server.jobname}" />
 	<property name="ci-server.portnumber" value="${project.ci-server.portnumber}" />
--->	
+
 	
 	<property name="certification.directory.name" value="${user.home}/apps"/>
 	

@@ -24,9 +24,10 @@ public class PropertyLoader {
         while(it.hasNext())
         {
         	String keyName = (String) it.next();
-        	String tempKeyName = keyName.replaceFirst(projectName,"");
-        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));
-        	project.setProperty(tempKeyName.substring(1,tempKeyName.length()), config.getString(keyName));        	        	
+//        	String tempKeyName = keyName.replaceFirst(projectName,"");
+//        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));
+//        	project.setProperty(tempKeyName.substring(1,tempKeyName.length()), config.getString(keyName));
+        	project.setProperty(keyName, config.getString(keyName));
         }
         
 	}
