@@ -68,8 +68,8 @@
 	</target>
 
 	<target name="deploy:sql" description="create table and populate data">
-		<run-sql-script sql.file="${sql.file.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-		<run-sql-script sql.file="${sql.file.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
 	</target>
 
 	<target name="install:database" description="Runs install scripts">
