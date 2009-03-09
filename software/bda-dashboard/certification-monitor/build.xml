@@ -145,7 +145,7 @@
 		</xmltask>
 	</target>
 
-	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
+	<target name="deploy" depends="deploy:artifacts,deploy:configure" description="deploy the build monitor">
 		
 	</target>
 		
