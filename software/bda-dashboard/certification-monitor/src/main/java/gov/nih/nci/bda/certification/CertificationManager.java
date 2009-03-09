@@ -37,7 +37,8 @@ import org.hibernate.Session;
      logger.setOutputPrintStream(System.out);
      project.addBuildListener(logger);
      
-     PropertyLoader.loadProperties(projectName,project);
+     PropertyLoader.loadProjectProperties(projectName,project);
+     PropertyLoader.loadGeneralProperties(project);
      
      SingleCommandListener scListener = new SingleCommandListener();
      project.addBuildListener(scListener);     

@@ -5,7 +5,9 @@
 		This build file is part of the bda-build-template project.  This is the master build file for the project.  It should be placed in project/software/.  This script wrappers sub projects to build, test and inspect code.  Additionally this project manges creation of distributions and deployment locally or remotely.  Deployments will call the install.xml from the distribution to install or upgrade the application.  Lastly this script will run include targets that require manipulation of containers (selenium tests because they require starting the application server container (and require a fully deployed application which this process is responsible for). This build script assumes two sub-projects bda-blueprints-webapp and bda-blueprints-api. The API targets are commented out and can be removed if not needed.  Also support for both tomcat and jboss download, install and configure are included.  These scripts require Java, Ant, Database and SVN to work.
 	</description>
 
+<!--
 	<property file="project.properties" />
+-->
 	<property name="build.dir" location="${basedir}" />
 	<property name="bda-download.dir" location="${build.dir}/bda-download" />
 	<property name="lib.dir" location="${build.dir}/lib" />
@@ -45,15 +47,15 @@
 	<echo message="${project.name}"/>
 
 	<propertycopy name="project.database.type" from="${project.name}.database.type" />
-	<propertycopy name="project.database.system.user" from="${project.database.type}.database.system.user" />
-	<propertycopy name="project.database.system.password" from="${project.database.type}.database.system.password" />
-	<propertycopy name="project.database.server" from="${project.database.type}.database.server" />
-	<propertycopy name="project.database.port" from="${project.database.type}.database.port" />
-	<propertycopy name="project.database.name" from="${project.database.type}.database.name" />
-	<propertycopy name="project.database.user" from="${project.database.type}.database.user" />
-	<propertycopy name="project.database.password" from="${project.database.type}.database.password" />		
-	<propertycopy name="project.database.url" from="${project.database.type}.database.url" />
-	<propertycopy name="project.database.system.url" from="${project.database.type}.database.system.url" />
+	<propertycopy name="project.database.system.user" from="${project.name}.database.system.user" />
+	<propertycopy name="project.database.system.password" from="${project.name}.database.system.password" />
+	<propertycopy name="project.database.server" from="${project.name}.database.server" />
+	<propertycopy name="project.database.port" from="${project.name}.database.port" />
+	<propertycopy name="project.database.name" from="${project.name}.database.name" />
+	<propertycopy name="project.database.user" from="${project.name}.database.user" />
+	<propertycopy name="project.database.password" from="${project.name}.database.password" />		
+	<propertycopy name="project.database.url" from="${project.name}.database.url" />
+	<propertycopy name="project.database.system.url" from="${project.name}.database.system.url" />
 
 	<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
 	<propertycopy name="project.master.install.location" from="${project.name}.master.install.location" />

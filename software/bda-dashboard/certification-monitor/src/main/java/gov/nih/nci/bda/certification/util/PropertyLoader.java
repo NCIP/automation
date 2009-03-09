@@ -16,7 +16,7 @@ public class PropertyLoader {
 
 	private static ProjectProperties pp = null;
 	
-	public static void loadProperties(String projectName,Project project) {
+	public static void loadProjectProperties(String projectName,Project project) {
 		Configuration config = ConfigurationHelper.getConfiguration();
         Iterator it = config.getKeys(projectName);
        
@@ -32,6 +32,16 @@ public class PropertyLoader {
         
 	}
 
+	public static void loadGeneralProperties(Project project) {
+		Configuration config = ConfigurationHelper.getConfiguration();
+       
+        project.setProperty("ant.minimum.version",  config.getString("ant.minimum.version"));
+        project.setProperty("java.major.version",  config.getString("java.major.version"));
+        project.setProperty("java.minor.version",  config.getString("java.minor.version"));
+        project.setProperty("bda.version",  config.getString("bda.version"));
+        project.setProperty("force.reinstall",  config.getString("force.reinstall"));
+        
+	}
 	public static void loadProperties(String projectName) {
 		Configuration config = ConfigurationHelper.getConfiguration();
         Iterator it = config.getKeys(projectName);
@@ -39,9 +49,7 @@ public class PropertyLoader {
         {
         	String keyName = (String) it.next();
         	String tempKeyName = keyName.replaceFirst(projectName,"");
-        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));
-      //  	project.setProperty(tempKeyName.substring(1,tempKeyName.length(), config.getString(keyName));        	
-        	
+        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));        	
         }
         
 	}
