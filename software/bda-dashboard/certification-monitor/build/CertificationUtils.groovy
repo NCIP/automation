@@ -76,10 +76,12 @@ class CertificationUtils
 	{
 
 		def buildFileLocation=project.properties['master.build.location']
+		def basedir=project.properties['basedir']
+		println basedir
 
-		String projectPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();
+		String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install.properties").getAbsoluteFile();
 
-		String installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
 		def installProject = new XmlParser().parse(installFile)
 
 		ant.property(file: projectPropertiesFile)
@@ -134,9 +136,11 @@ class CertificationUtils
 	void checkPrivateRepositoryProperties ()
 	{
 	       def privatePropertiesLocation=project.properties['svn.private.local.checkout']
+	       def basedir=project.properties['basedir']
+	       println basedir
 	       try
 	       {
-		       def propertiesDir = new File(privatePropertiesLocation + "/properties").getAbsoluteFile()
+		       def propertiesDir = new File(basedir +"/"+privatePropertiesLocation + "/properties").getAbsoluteFile()
 		       java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
 		       java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
 
@@ -170,10 +174,12 @@ class CertificationUtils
 	void checkTemplateFiles ()
 	{
 		def buildFileLocation=project.properties['master.build.location']
-
+		def basedir=project.properties['basedir']
+		println basedir
+		
 		try
 		{
-			String projectPropertiesFile=new File(buildFileLocation+"/install-properties.template").getAbsoluteFile();
+			String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install-properties.template").getAbsoluteFile();
 			println projectPropertiesFile
 		}
 		catch(FileNotFoundException ex)
@@ -181,7 +187,7 @@ class CertificationUtils
 			ant.fail("TEMPLATE VALIDATION FAILED: Can not find the install-properties.template file ")
 		}
 
-		String installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
 		def installProject = new XmlParser().parse(installFile)				
 
 		if(!installProject.switch.find{it.@value=='${properties.file.type}'}.'case'.find{it.@value=='install'}.property.@name.contains('properties.template.file'))
@@ -191,8 +197,10 @@ class CertificationUtils
 	def getBdaUtilsVersion ()
 	{
 		def buildFileLocation=project.properties['master.build.location']
+		def basedir=project.properties['basedir']
+		println basedir
 
-		String projectPropertiesFile=new File(buildFileLocation+"/project.properties").getAbsoluteFile();
+		String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/project.properties").getAbsoluteFile();
 		Properties props = new Properties();
 		props.load(new FileInputStream(projectPropertiesFile));			
 		String bdaVersion = props.getProperty("bda.version");
@@ -202,11 +210,13 @@ class CertificationUtils
 
 	void checkDBIntegration ()
 	{
-		def buildFileLocation=project.properties['master.build.location']
+		def buildFileLocation=project.properties['master.build.location']		
 		def targetName=project.properties['database.integration.target']
 		def databaseType=project.properties['database.type']
+		def basedir=project.properties['basedir']
+		println basedir
 
-		String installPropertiesFile=new File(buildFileLocation+"/install.properties").getAbsoluteFile();			
+		String installPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install.properties").getAbsoluteFile();			
 		Properties props = new Properties();
 		props.load(new FileInputStream(installPropertiesFile));			
 		String dbFlag = props.getProperty("exclude.database");
@@ -219,7 +229,7 @@ class CertificationUtils
 		else
 		{
 			println "DB integration Check"
-			String installFile = new File(buildFileLocation+"/install.xml").getAbsoluteFile()
+			String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
 			def installProject = new XmlParser().parse(installFile)				
 			println installProject.target.'@name'.contains(targetName)
 			println targetName
@@ -280,10 +290,12 @@ class CertificationUtils
 	{
 		def buildFileLocation=project.properties['master.build.location']
 		def installFileLocation=project.properties['master.install.location']
+		def basedir=project.properties['basedir']
+		println basedir
 		String installerPropertyName;
 		HashMap installerProperties;
 		
-		def antFile = new File(buildFileLocation+"/build.xml")
+		def antFile = new File(basedir +"/"+buildFileLocation+"/build.xml")
 
 		def build = new Project()
 		build.init()
@@ -312,9 +324,9 @@ class CertificationUtils
 		println "installerProperties::" + installerProperties
 		
 
-		def deployFile = new File(installFileLocation+"/build.xml")
+		def deployFile = new File(basedir +"/"+installFileLocation+"/build.xml")
 
-		String installPropertiesFile=new File(installFileLocation+"/install.properties").getAbsoluteFile();
+		String installPropertiesFile=new File(basedir +"/"+installFileLocation+"/install.properties").getAbsoluteFile();
 		Properties props = new Properties();
 		props.load(new FileInputStream(installPropertiesFile));			
 
@@ -336,7 +348,10 @@ class CertificationUtils
 	def getListOfobfuscatedProperties ()	
 	{
 		def buildFileLocation=project.properties['master.build.location']
-		def antFile = new File(buildFileLocation+"/build.xml")
+		def basedir=project.properties['basedir']
+		println basedir
+		
+		def antFile = new File(basedir +"/"+buildFileLocation+"/build.xml")
 
 		def installProject = new XmlParser().parse(antFile)
 
@@ -349,6 +364,8 @@ class CertificationUtils
 	def getPropertyValuesList (String propertiesList)	
 	{
 		HashMap obfuscatedProperties = new HashMap()
+		def basedir=project.properties['basedir']
+		println basedir		
 		propertiesList.split(',').eachWithIndex {processToken, i -> 	
 		if(checkValueFound(processToken))
 		{
@@ -359,7 +376,7 @@ class CertificationUtils
 		else
 		{		
 			println "propertyKey::"+processToken
-			String projectPropertiesFile=new File(project.properties['master.build.location']+"/install.properties").getAbsoluteFile();
+			String projectPropertiesFile=new File(basedir +"/"+project.properties['master.build.location']+"/install.properties").getAbsoluteFile();
 			ant.property(file: projectPropertiesFile)			
 			if(project.properties[processToken])
 				obfuscatedProperties.put(processToken,project.properties[processToken])
@@ -381,7 +398,9 @@ class CertificationUtils
 	def parseAndFormatDate (String propertiesList)
 	{	
 		def buildFileLocation=project.properties['master.build.location']
-		String installFile = new File(buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
+		def basedir=project.properties['basedir']
+		println basedir
+		String installFile = new File(basedir +"/"+ buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
 		StringBuffer wikiStr = new StringBuffer("'[");
 		def revision = new XmlParser().parse(installFile)
 
