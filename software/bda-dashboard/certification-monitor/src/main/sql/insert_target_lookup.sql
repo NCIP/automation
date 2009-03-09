@@ -1,5 +1,5 @@
 
-drop table target_lookup;
+
 
 create table target_lookup (
 	ID double ,
