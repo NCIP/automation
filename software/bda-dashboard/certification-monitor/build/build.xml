@@ -47,15 +47,15 @@
 	<echo message="${project.name}"/>
 
 	<propertycopy name="project.database.type" from="${project.name}.database.type" />
-	<propertycopy name="project.database.system.user" from="${project.name}.database.system.user" />
-	<propertycopy name="project.database.system.password" from="${project.name}.database.system.password" />
-	<propertycopy name="project.database.server" from="${project.name}.database.server" />
-	<propertycopy name="project.database.port" from="${project.name}.database.port" />
-	<propertycopy name="project.database.name" from="${project.name}.database.name" />
-	<propertycopy name="project.database.user" from="${project.name}.database.user" />
-	<propertycopy name="project.database.password" from="${project.name}.database.password" />		
-	<propertycopy name="project.database.url" from="${project.name}.database.url" />
-	<propertycopy name="project.database.system.url" from="${project.name}.database.system.url" />
+	<propertycopy name="project.database.system.user" from="${project.database.type}.database.system.user" />
+	<propertycopy name="project.database.system.password" from="${project.database.type}.database.system.password" />
+	<propertycopy name="project.database.server" from="${project.database.type}.database.server" />
+	<propertycopy name="project.database.port" from="${project.database.type}.database.port" />
+	<propertycopy name="project.database.name" from="${project.database.type}.database.name" />
+	<propertycopy name="project.database.user" from="${project.database.type}.database.user" />
+	<propertycopy name="project.database.password" from="${project.database.type}.database.password" />		
+	<propertycopy name="project.database.url" from="${project.database.type}.database.url" />
+	<propertycopy name="project.database.system.url" from="${project.database.type}.database.system.url" />
 
 	<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
 	<propertycopy name="project.master.install.location" from="${project.name}.master.install.location" />
