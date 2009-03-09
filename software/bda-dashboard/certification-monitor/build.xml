@@ -22,7 +22,7 @@
 	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
 	<property name="tests.dir" value="${deploy.dir}/certification-tests/tests" />
 	<property name="results.dir" value="${deploy.dir}/certification-tests/results" />	
-	
+
 	<property name="tests.unit.source.dir" value="${software.dir}/src/tests/unit/groovy" />
 	<property name="tests.unit.classes.dir" value="${target.dir}/unit/classes" />
 
@@ -65,9 +65,11 @@
 	</target>
 
 
-	<target name="deploy:sql" description="create table and populate data">
-		<run-sql-script sql.file="${sql.file}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-	
+
+	<target name="install:database" description="Runs install scripts"
+		<database-install
+			db.install.create.file.list="${db.deploy.mysql.file.list}"
+			/>
 	</target>
 
 
@@ -132,7 +134,7 @@
 		</xmltask>
 	</target>
 
-	<target name="deploy" depends="deploy:artifacts,deploy:configure" description="deploy the build monitor">
+	<target name="deploy" depends="install:database,deploy:artifacts,deploy:configure" description="deploy the build monitor">
 		
 	</target>
 		
