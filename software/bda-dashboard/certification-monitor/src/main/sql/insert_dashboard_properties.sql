@@ -28,6 +28,7 @@ insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('java.major.version','1.5');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('java.minor.version','1.5.0_10');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('bda.version','0.9.0');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ci.server.name','http://cbvapp-c1006.nci.nih.gov:48080/hudson/job');
 
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('petstore.database.type','mysql');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('petstore.svn.username','narram');
@@ -271,8 +272,8 @@ insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.exploded.dir.location','${cabio.svn.local.checkout}/software/target/dist/exploded');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cabio');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.local.private.checkout','working/scm_private');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.ci-server.jobname','bda-blueprints-ci');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.ci-server.hostname','ncias-d185-v.nci.nih.gov');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.ci-server.jobname','cabioapi');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('cabio.ci-server.portnumber','48080');
 
 
