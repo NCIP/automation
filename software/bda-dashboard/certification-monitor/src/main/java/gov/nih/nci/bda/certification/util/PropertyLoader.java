@@ -17,18 +17,22 @@ public class PropertyLoader {
 	private static ProjectProperties pp = null;
 	private static Configuration config = ConfigurationHelper.getConfiguration();
 	
-	public static void loadProjectProperties(String projectName,Project project) {
-		
+	public static void loadProjectProperties(String projectName, Project project) {	
         Iterator it = config.getKeys(projectName);
        
         project.setProperty("project.name", projectName);
-        while(it.hasNext())
+        try
         {
-        	String keyName = (String) it.next();
-//        	String tempKeyName = keyName.replaceFirst(projectName,"");
-        	System.out.println("KEY:: " + keyName + " VALUE:: " + config.getString(keyName));
-//        	project.setProperty(tempKeyName.substring(1,tempKeyName.length()), config.getString(keyName));
-        	project.setProperty(keyName, config.getString(keyName));
+		    while(it.hasNext())
+		    {
+		    	String keyName = (String) it.next();
+		    	System.out.println("KEY:: " + keyName + " VALUE:: " + config.getString(keyName));
+		    	project.setProperty(keyName, config.getString(keyName));
+		    }
+        }
+        catch(Exception ex)
+        {
+        	// do nothing 
         }
         System.out.println("PROJECTNAME:::"+projectName );
         System.out.println("KEY:: " + config.getString(projectName + ".database.type") );
@@ -49,25 +53,35 @@ public class PropertyLoader {
         project.setProperty(databaseType+".minimum.version",  config.getString(databaseType+".minimum.version"));
 	}
 
-	public static void loadGeneralProperties(Project project) {       
+	public static void loadGeneralProperties(Project project) {  
         project.setProperty("ant.minimum.version",  config.getString("ant.minimum.version"));
         project.setProperty("java.major.version",  config.getString("java.major.version"));
         project.setProperty("java.minor.version",  config.getString("java.minor.version"));
         project.setProperty("bda.version",  config.getString("bda.version"));
         project.setProperty("force.reinstall",  config.getString("force.reinstall"));        
 	}
-	
-	public static void loadProperties(String projectName) {
-        Iterator it = config.getKeys(projectName);
-        while(it.hasNext())
-        {
-        	String keyName = (String) it.next();
-        	String tempKeyName = keyName.replaceFirst(projectName,"");
-        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));        	
-        }
-        
-	}
 
+	public static void loadProperties(String projectName) {
+		Configuration config = ConfigurationHelper.getConfiguration();
+        Iterator it = config.getKeys(projectName);
+        
+        try{
+	        while(it.hasNext())
+	        {
+	        	String keyName = (String) it.next();
+	        	//String tempKeyName = keyName.replaceFirst(projectName,"");
+	        	System.out.println("KEY:: " + keyName);
+	        			
+	        			//+ "VALUE:: " + config.getString(keyName));        	
+	        }
+        }
+        catch(Exception ex)
+        {
+        	// do nothing 
+        }
+    
+	}
+  
 	
 	public static void main(String[] args)
 	{    
