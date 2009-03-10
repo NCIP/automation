@@ -123,8 +123,8 @@ public class BuildCertificationHelper {
 	private String getLink(String jobName) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(ConfigurationHelper.getConfiguration().getString(BuildCertificationConstants.CI_SERVER_NAME));
-		sb.append(ConfigurationHelper.getConfiguration().getString("/" + BuildCertificationConstants.CI_SERVER_JOB_PREFIX)+"-"+jobName);
-		sb.append(ConfigurationHelper.getConfiguration().getString("/" + BuildCertificationConstants.CI_SERVER_LASTBUILD_CONSOLE));
+		sb.append("/" + BuildCertificationConstants.CI_SERVER_JOB_PREFIX +"-"+jobName);
+		sb.append("/" + BuildCertificationConstants.CI_SERVER_LASTBUILD_CONSOLE);
 		System.out.println("LINK::"+sb.toString());
 		return sb.toString();
 	}
