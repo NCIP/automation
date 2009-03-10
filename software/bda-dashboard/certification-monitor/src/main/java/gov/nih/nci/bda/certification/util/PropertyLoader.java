@@ -26,7 +26,7 @@ public class PropertyLoader {
         {
         	String keyName = (String) it.next();
 //        	String tempKeyName = keyName.replaceFirst(projectName,"");
-//        	System.out.println("KEY:: " + tempKeyName.substring(1,tempKeyName.length()) + "VALUE:: " + config.getString(keyName));
+        	System.out.println("KEY:: " + keyName + " VALUE:: " + config.getString(keyName));
 //        	project.setProperty(tempKeyName.substring(1,tempKeyName.length()), config.getString(keyName));
         	project.setProperty(keyName, config.getString(keyName));
         }
