@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import gov.nih.nci.bda.certification.business.BuildCertificationBean;
 import gov.nih.nci.bda.certification.domain.ProjectCertificationStatus;
+import gov.nih.nci.bda.certification.util.ConfigurationHelper;
 import gov.nih.nci.bda.certification.util.HibernateUtil;
 
 import org.hibernate.Query;
@@ -57,7 +58,7 @@ public class BuildCertificationHelper {
 			// build failed
 			if(pbs != null )
 			{	
-				invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,BuildCertificationConstants.ANCHOR_STRING,bmb.getFailureMessage()));
+				invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
 		    	//update the project URL on update					
 				setProductValue(pbs,projectUrl);
 		    	session.update(pbs);
@@ -65,7 +66,7 @@ public class BuildCertificationHelper {
 		    else
 		    {
 		    	pbs = new ProjectCertificationStatus();
-		    	invokeSetAllMethods(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,BuildCertificationConstants.ANCHOR_STRING,bmb.getFailureMessage()));
+		    	invokeSetAllMethods(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
 		    	setProductValue(pbs,projectUrl);
 		    	session.save(pbs);		
 		    }		    
@@ -105,11 +106,11 @@ public class BuildCertificationHelper {
 		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1); 
 	}
 
-	private String getWikiLinkTip(String displayName,String link,String message) {
+	private String getWikiLinkTip(String displayName,String jobName,String message) {
 		String wikiLinkTipStr = null;
 		if (message != null)
 		{	
-			wikiLinkTipStr = "'[" + displayName +"|"+ link+"|" + formatMessage(message) + "]'";			
+			wikiLinkTipStr = "'[" + displayName +"|"+ getLink(jobName)+"|" + formatMessage(message) + "]'";			
 		}
 		else
 		{
@@ -119,6 +120,15 @@ public class BuildCertificationHelper {
 		return wikiLinkTipStr;
 	}	
 	
+	private String getLink(String jobName) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(ConfigurationHelper.getConfiguration().getString(BuildCertificationConstants.CI_SERVER_NAME));
+		sb.append(ConfigurationHelper.getConfiguration().getString("/" + BuildCertificationConstants.CI_SERVER_JOB_PREFIX)+"-"+jobName);
+		sb.append(ConfigurationHelper.getConfiguration().getString("/" + BuildCertificationConstants.CI_SERVER_LASTBUILD_CONSOLE));
+		System.out.println("LINK::"+sb.toString());
+		return sb.toString();
+	}
+
 	private String formatMessage(String message) {
 		StringBuffer sb = new StringBuffer();
 		if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
