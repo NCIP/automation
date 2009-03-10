@@ -135,6 +135,7 @@ public class BuildCertificationHelper {
 			message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH);
 				
 		message=message.replace("'", "");
+		message=message.replace("\"", "");
 		String[] result=message.split("\\n");
 	    for (int x=0; x<result.length; x++)
 	         sb.append(result[x]);
