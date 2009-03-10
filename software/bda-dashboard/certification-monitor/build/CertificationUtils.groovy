@@ -61,10 +61,16 @@ class CertificationUtils
 		String bdaVersion = getBdaUtilsVersion();
 		if( bdaVersion != null)
 		{
-			StringBuffer wikiStr = new StringBuffer("'[");
-			wikiStr = wikiStr.append("(/)|http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/"+bdaVersion)
-			wikiStr = wikiStr.append("|"+bdaVersion+"]'")
-			project.setProperty("certification.property.value",wikiStr.toString());			
+		        if(bdaVersion.endsWith("beta"))
+		        {
+		        	ant.fail("PROJECT USES THE BETA VERSION OF THE BDA UTILS")
+		        }else
+		        {
+				StringBuffer wikiStr = new StringBuffer("'[");
+				wikiStr = wikiStr.append("(/)|http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/"+bdaVersion)
+				wikiStr = wikiStr.append("|"+bdaVersion+"]'")
+				project.setProperty("certification.property.value",wikiStr.toString());			
+			}
 		}
 		else
 		{	
