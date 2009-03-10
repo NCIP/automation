@@ -30,7 +30,7 @@ public class PropertyLoader {
 //        	project.setProperty(tempKeyName.substring(1,tempKeyName.length()), config.getString(keyName));
         	project.setProperty(keyName, config.getString(keyName));
         }
-        
+        System.out.println("KEY:: " + config.getString(projectName + ".database.type") );
         loadDatabaseProperties(config.getString(projectName + ".database.type"),project);
 	}
 
