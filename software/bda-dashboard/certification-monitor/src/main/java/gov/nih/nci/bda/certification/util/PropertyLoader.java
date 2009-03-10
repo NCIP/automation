@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import gov.nih.nci.bda.certification.BuildCertificationConstants;
 import gov.nih.nci.bda.certification.domain.ProjectCertificationStatus;
-import gov.nih.nci.bda.certification.domain.ProjectProperties;
 
 import org.apache.commons.configuration.Configuration;
 import org.hibernate.Query;
@@ -14,7 +13,6 @@ import org.apache.tools.ant.Project;
 
 public class PropertyLoader {
 
-	private static ProjectProperties pp = null;
 	private static Configuration config = ConfigurationHelper.getConfiguration();
 	
 	public static void loadProjectProperties(String projectName, Project project) {	

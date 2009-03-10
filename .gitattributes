@@ -2249,8 +2249,6 @@ software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certi
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/BuildHistory.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectCertificationStatus.hbm.xml -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectCertificationStatus.java -text
-software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectProperties.hbm.xml -text
-software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectProperties.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.hbm.xml -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/SingleCommandListener.java -text
