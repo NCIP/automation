@@ -68,8 +68,10 @@
 	</target>
 
 	<target name="deploy:sql" description="create table and populate data">
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
 	</target>
 
 	<target name="install:database" description="Runs install scripts">
@@ -145,7 +147,7 @@
 		</xmltask>
 	</target>
 
-	<target name="deploy" depends="deploy:artifacts,deploy:configure" description="deploy the build monitor">
+	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
 		
 	</target>
 		
