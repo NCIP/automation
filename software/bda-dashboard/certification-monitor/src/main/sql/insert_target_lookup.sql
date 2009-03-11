@@ -1,12 +1,4 @@
-
-create table target_lookup (
-	ID int8 ,
-	TARGET_NAME varchar (150),
-	MAP_NAME varchar (150),
-	IS_VALUE varchar (15)
-); 
-
-insert into target_lookup (ID, TARGET_NAME, MAP_NAME) values('1','validate:JAD','singleCommandBuild');
+insert into target_lookup (ID, TARGET_NAME, MAP_NAME) values(1,'validate:JAD','singleCommandBuild');
 insert into target_lookup (ID, TARGET_NAME, MAP_NAME, IS_VALUE) values(2,'validate:svn:checkout-project','singleCommandBuild',NULL);
 insert into target_lookup (ID, TARGET_NAME, MAP_NAME, IS_VALUE) values(3,'build:project','singleCommandBuild',NULL);
 insert into target_lookup (ID, TARGET_NAME, MAP_NAME, IS_VALUE) values(4,'build:single-command-deployment','singleCommandDeployment',NULL);
