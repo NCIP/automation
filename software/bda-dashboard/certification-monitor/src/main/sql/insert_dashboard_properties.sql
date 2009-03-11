@@ -1,4 +1,4 @@
-drop table 'dashboard_properties';
+drop table dashboard_properties;
 
 create table `dashboard_properties` (
 	`dashboard_key` varchar (600),
@@ -82,8 +82,8 @@ insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.exploded.dir.location','${ncia.svn.local.checkout}/software/target/dist/exploded');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ncia');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.local.private.checkout','working/scm_private');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.ci-server.jobname','bda-blueprints-ci');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.ci-server.hostname','cbv-ciweb-base.nci.nih.gov');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.ci-server.jobname','ncia_ci');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('ncia.ci-server.portnumber','48080');
 
 
@@ -158,8 +158,8 @@ insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.exploded.dir.location','${upt.svn.local.checkout}/software/target/dist/exploded');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/csmupt');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.local.private.checkout','working/scm_private');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.ci-server.jobname','bda-blueprints-ci');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.ci-server.hostname','cbvapp-c1002.nci.nih.gov');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.ci-server.jobname','csm-install');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('upt.ci-server.portnumber','48080');
 
 
@@ -177,8 +177,8 @@ insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.exploded.dir.location','${po.svn.local.checkout}/code/target/po/dist/exploded');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/coppa');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.local.private.checkout','working/scm_private');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.ci-server.jobname','bda-blueprints-ci');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.ci-server.hostname','cbvapp-c1005.nci.nih.gov');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.ci-server.jobname','coppa-po-ci-full');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('po.ci-server.portnumber','48080');
 
 
@@ -234,8 +234,8 @@ insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.exploded.dir.location','${pa.svn.local.checkout}/software/target/pa/dist/exploded');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.local.private.checkout','working/scm_private');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
-insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.ci-server.jobname','bda-blueprints-ci');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.ci-server.hostname','cbvapp-c1005.nci.nih.gov');
+insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.ci-server.jobname','pa-bda-ci');
 insert into `dashboard_properties` (`dashboard_key`, `dashboard_value`) values('pa.ci-server.portnumber','48080');
 
 
