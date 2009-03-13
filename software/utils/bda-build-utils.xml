@@ -3588,8 +3588,10 @@ $HeadURL$
 	<macrodef name="jboss-install-binaries">
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="jboss.binaries.file" default="${tools.dir}/${jboss.binaries.file}" />
+		<attribute name="jbosscp.binaries.file" default="${tools.dir}/${jbosscp.binaries.file}" />
 		<attribute name="jems.install.option" default="ejb3" />
 		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<sequential>
 			<var name="jboss.file.is.zip" unset="true"/>
 			<propertyregex property="jboss.file.is.zip"
@@ -3603,31 +3605,44 @@ $HeadURL$
 				regexp=".*.jar"
 				select="true"
 				/>
+			<var name="jboss.file.is.405" unset="true"/>
+			<propertyregex property="jboss.file.is.405"
+				input="@{jboss.binaries.file}"
+				regexp=".*jboss-4.0.5.*"
+				select="true"
+				/>
 			<var name="jboss.base.dir" unset="true"/>
 			<dirname file="@{jboss.home}" property="jboss.base.dir"/>
 			<if>
 				<isset property="jboss.file.is.zip"/>
 				<then>
-					<unzip dest="${jboss.base.dir}" src="${tools.dir}/${jboss.binaries.file}" />
+					<unzip dest="${jboss.base.dir}" src="@{jboss.binaries.file}" />
 				</then>
 			</if>
 			<if>
 				<isset property="jboss.file.is.jar"/>
 				<then>
-					<java jar="${tools.dir}/${jboss.binaries.file}" fork="true">
+					<java jar="@{jboss.binaries.file}" fork="true">
 						<arg line="-installGroup @{jems.install.option} installpath=@{jboss.home}"/>
 					</java>
+				</then>
+			</if>
+			<if>
+				<isset property="jboss.file.is.405"/>
+				<then>
+					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
+					<unzip dest="@{jboss.home}" src="@{jbosscp.binaries.file}" />
 				</then>
 			</if>
 
 			<!-- make sure default server is renamed if applicable -->
 			<if>
 				<not>
-					<equals arg1="${jboss.server.name}" arg2="default"/>
+					<equals arg1="@{jboss.server.name}" arg2="default"/>
 				</not>
 				<then>
-					<move todir="${jboss.home}/server/${jboss.server.name}">
-						<fileset dir="${jboss.home}/server/default"/>
+					<move todir="@{jboss.home}/server/@{jboss.server.name}">
+						<fileset dir="@{jboss.home}/server/default"/>
 					</move>
 				</then>
 			</if>
@@ -3635,7 +3650,7 @@ $HeadURL$
 			<if>
 				<os family="unix"/>
 				<then>
-					<chmod dir="${jboss.home}/bin" perm="ugo+rx"
+					<chmod dir="@{jboss.home}/bin" perm="ugo+rx"
 						includes="**/*.sh"/>
 				</then>
 			</if>
