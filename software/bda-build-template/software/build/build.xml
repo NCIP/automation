@@ -118,6 +118,7 @@
 
 	<!-- Where to write files retrieved by get, into the distribution area.  The file names come from project.properties  -->
 	<property name="jboss.dest.file" value="${download.dir}/${jboss.binaries.file}" />
+	<property name="jbosscp.dest.file" value="${download.dir}/${jbosscp.binaries.file}" />
 	<property name="tomcat.dest.file" value="${download.dir}/${tomcat.binaries.file}" />
 	<property name="cagrid-libs.dest.file" value="${download.dir}/${cagrid-libs.binaries.file}" />
 	<property name="cagrid-base-war.dest.file" value="${download.dir}/${cagrid-base-war.binaries.file}" />
@@ -241,6 +242,7 @@
 		<mkdir dir="${pt.dir}" />
 
 		<available file="${jboss.dest.file}" property="jboss.tools.exists" />
+		<available file="${jbosscp.dest.file}" property="jbosscp.tools.exists" />
 		<available file="${tomcat.dest.file}" property="tomcat.tools.exists" />
 		<available file="${cagrid-libs.dest.file}" property="cagrid-libs.tools.exists" />
 		<available file="${cagrid-base-war.dest.file}" property="cagrid-base-war.tools.exists" />
@@ -376,11 +378,15 @@
 	<target name="dist:tools:retrieve" description="Downloads binary applications from commonlibrary repository" depends="
 		init,
 		dist:tools:retrieve:jboss,
+		dist:tools:retrieve:jbosscp,
 		dist:tools:retrieve:tomcat,
 		dist:tools:retrieve:cagrid
 		" >
 	</target>
 
+	<target name="dist:tools:retrieve:jbosscp" unless="jbosscp.tools.exists" description="Downloads JBOSS Cumulative Patch from binary repository and verifies checksum">
+		<get src="${jbosscp.src.url}" dest="${jbosscp.dest.file}" />
+	</target>
 	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
 		<get src="${jboss.src.url}" dest="${jboss.dest.file}" />
 		<get src="${jboss.src.url}.MD5" dest="${jboss.dest.file}.MD5" />
