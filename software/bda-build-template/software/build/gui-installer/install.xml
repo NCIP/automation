@@ -185,46 +185,43 @@
 					<panel classname="InfoPanel"/>
 					<panel classname="HTMLLicencePanel"/>
 					<panel classname="UserInputPanel"  id="UserInputPanel.0" />
-					<!-- Typical or Custom -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="install"/>
+					<!-- Typical or Custom
+					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="never"/>
+					-->
 					<panel classname="UserPathPanel" id="UserPathPanelInstallation" condition="install"/>
-					<!-- Typical Install passwords and set -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.2" condition="install.typical"/>
+					<!-- Upgrade, specify app homes and read properties -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="upgrade"/>
+					<!-- Upgrade, read props -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="upgrade"/>
 					<!-- Jboss Configuration -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="install.custom"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.3"/>
 					<!-- Jboss Continued -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.4" condition="install.custom"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.4"/>
 					<!-- Jboss SSL 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.5" condition="install.custom"/>
-					<!-- Upgrade Related properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="upgrade"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.5"/>
 					<!-- Authentication Type -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.7" condition="install.custom"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.6"/>
 					<!-- Ldap data entry -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.8" condition="ldap.setup"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.7" condition="ldap.setup"/>
 					<!-- Database Properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.9" condition="install"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.8"/>
 					<!-- Global Configuraiton Options -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.10" condition="install|upgrade"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.9"/>
 					<!-- Grid Global Configuration -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.11" condition="install|upgrade"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.10"/>
 					<!-- Grid Research Center -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.12" condition="install|upgrade" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.11"/>
 					<!-- Grid Tech Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="install|upgrade" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.12"/>
 					<!-- Grid Science Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="install|upgrade" />
-					<!-- Secure Grid Configuration 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.15" condition="install|upgrade" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.13"/>
 					<!-- Application Specific Properties -->
 					<!-- Tomcat Base Config 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.16" condition="install.custom"/>
-					<!-- Tomcat Upgrade 0.9.0-->
-					<panel classname="UserInputPanel"  id="UserInputPanel.17" condition="upgrade"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.14"/>
 					<!-- Tomcat SSL 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.18" condition="install.custom"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.15"/>
 					<!-- Installation Summary -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.19" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.16" />
 					<panel classname="InstallationGroupPanel"/>
 					<panel classname="ExtendedInstallPanel"/>
 					<panel classname="FinishPanel"/>
@@ -255,6 +252,8 @@
 					    <file src="@{this.dir}/property-template" ="yes" targetdir="$SYSTEM_user_home/@{installer.dir}">
 						<excludes>**/.svn/**</excludes>
 					    </file>
+					    <file src="@{this.dir}/../../target/working/install-master.xml" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
+					    <file src="@{this.dir}/../../target/bda-utils" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
 					</pack>
 
 					<pack name="parse-install" required="no" preselected="no" condition="install">

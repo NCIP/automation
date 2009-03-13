@@ -348,6 +348,7 @@
 				<include name="*.jar"/>
 			</fileset>
 		</delete>
+		<copy file="${dist.exploded.dir}/build.xml" tofile="${working.dir}/install-master.xml"/> 
 		<gui-installer-prep
 			/>
 		<ant inheritAll="false" inheritRefs="false" 
@@ -1074,15 +1075,27 @@
 			/>
 	</target>
 	<target name="temp-reader">
-		<property name="copied.service-metadata.dir" value="${working.dir}/grid"/>
-		<grid-copy-service-metadata
-			copied.service-metadata.dir="${copied.service-metadata.dir}"
-			/>
-		<property name="copied.service-metadata.dir1" value="${working.dir}/grid1"/>
-		<grid-copy-service-metadata
+		<!--
+		<grid-read-poc
 			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
-			copied.service-metadata.dir="${copied.service-metadata.dir1}"
+			grid.service.name="Sample"
 			/>
+		<jboss-read-bindings-file-location
+			/>
+		<jboss-read-ports
+			/>
+		-->
+		<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
+		<jboss-read-grid-secure
+			copied.keystore.dir="${jboss.ssl.keystore.dir}"
+			/>
+
+		<!--
+		<var name="tomcat.grid.secure.dir" value="${working.dir}/keys/tomcat"/>
+		<tomcat-read-grid-secure
+			copied.keystore.dir="${tomcat.ssl.keystore.dir}"
+			/>
+		-->
 
 	</target>
 </project>
