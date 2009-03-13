@@ -8,11 +8,11 @@ $HeadURL$
 	<property name="software.dir" value="${basedir}"/>
 	<property name="temp.dir" value="${software.dir}/target/temp"/>
 	<property name="bda-utils.dir" value="${software.dir}/bda-utils"/>
-	<property name="bda-utils.resource.dir" value="${bda-utils.dir}/resource"/>	
+	<property name="bda-utils.resource.dir" value="${bda-utils.dir}/resource"/>
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" value="${bda-utils.resource.dir}/template-db-integrate.xml"/>
 
-	<!-- Supported versions --> 
+	<!-- Supported versions -->
 	<property name="jboss.version.min" value="4.0.4"/>
 	<property name="jboss.version.max" value="4.2.2"/>
 	<property name="tomcat.version.min" value="5.0.0"/>
@@ -39,7 +39,7 @@ $HeadURL$
 
 	<xmlcatalog id="installer.catalog">
 		<!--
-		<dtd 
+		<dtd
 			publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 			location="./resources/web-app_2_3.dtd"/>
 		-->
@@ -59,40 +59,40 @@ $HeadURL$
 			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar "/>
 			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
 			<property name="database.schema" value="${database.name}"/>
-		</case> 
+		</case>
 		<case value="mysql">
 			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="is.mysql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
 			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="database.schema" value="${database.name}"/>
-		</case> 
+		</case>
 		<case value="postgresql">
 			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="is.postgresql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
 			<property name="database.driver" value="org.postgresql.Driver"/>
 			<property name="database.schema" value="public"/>
-			<!-- 
+			<!--
 				driver = org.postgresql.Driver
 				url = jdbc:postgresql://localhost/mydatabase
 			-->
-		</case> 
+		</case>
 		<case value="hsqldb">
 			<property name="database.dialect" value=""/>
 			<property name="is.mysql" value="true"/>
 			<property name="database.driver.file" value="${bda-utils.dir}/hsqldb-1.8.0.7.jar"/>
-		</case> 
-		<default>  
+		</case>
+		<default>
 			<fail message="Invalid or unsupported database type ${database.type}"/>
-		</default> 
+		</default>
 	</switch>
 	<path id="jdbc.driver.classpath">
 		<pathelement location="${database.driver.file}"/>
 	</path>
 
-	
-	<!-- run-junit-tests macro runs the unit test cases  
+
+	<!-- run-junit-tests macro runs the unit test cases
 	usage: <run-junit-tests test.src.dir="${test.src.dir}" xml.output.dir="${target.dir}/junit" instrumented.classes="${instrumented.classes.dir}" classpath="${caarray-client.test.classes.dir};${test.data.files.dir};${test.classes.dir};${commons-lang.jar};${commons-io.jar};${caarray-client.test.files.dir};${caarray-client.classes.dir};${caarray-client.resources.dir};${junit.jar};${nci-commons-core.jar}" />
 	-->
 	<macrodef name="run-junit-tests">
@@ -126,8 +126,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- run-sql-script macro executes the sql scripts for a database 
-	usage: <run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${sql.dir}/create_table.sql" /> 
+	<!-- run-sql-script macro executes the sql scripts for a database
+	usage: <run-sql-script database.url="${database.url}" database.user="${database.user}" database.password="${database.password}" sql.file="${sql.dir}/create_table.sql" />
 	-->
 	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
 		<attribute name="sql.file" />
@@ -147,7 +147,7 @@ $HeadURL$
 	</macrodef>
 
 	<!-- remote-ssh macro is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execure remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.
-	usage: <remote-ssh remotesshcommand="mv ${jboss.temp.dir}/caarray.ear ${jboss.home}/deploy/" /> 
+	usage: <remote-ssh remotesshcommand="mv ${jboss.temp.dir}/caarray.ear ${jboss.home}/deploy/" />
 	-->
 	<macrodef name="remote-ssh" description="This is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execure remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.">
 		<attribute name="remoteSshCommand" />
@@ -163,12 +163,12 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- remote-scp macro copies files in a secure manner using SCP. 
+	<!-- remote-scp macro copies files in a secure manner using SCP.
 	remoteScpToDir and remoteScpFileToCopy are required attributes to this macrodef
-	usage: <remote-scp remoteScpFileToCopy="${caarray.ear}" 
+	usage: <remote-scp remoteScpFileToCopy="${caarray.ear}"
 	remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${jboss.temp.dir}" />
 	-->
-	<macrodef name="remote-scp" description="This task copies files in a secure manner using SCP. 
+	<macrodef name="remote-scp" description="This task copies files in a secure manner using SCP.
 	remoteScpToDir and remoteScpFileToCopy are required attributes to this macrodef.">
 		<attribute name="remoteScpFileToCopy" />
 		<attribute name="remoteScpToDir" />
@@ -184,7 +184,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	jboss-stop-jboss macro will stop the jboss instance
 	usage: 	<jboss-start-jboss jboss.home="${jboss.home}"/>
 		jboss.home is the location where Jboss is installed
@@ -211,7 +211,7 @@ $HeadURL$
 						</then>
 						<else>
 							<echo message="Shutting down jboss with shutdown.jar with user and password"/>
-		
+
 							<java classname="org.jboss.Shutdown" fork="true" spawn="false">
 								<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
 								<classpath>
@@ -265,11 +265,11 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	jboss-check-if-jboss-is-running macro checks if the jboss server is up and listening
 	usage: 	<jboss-check-if-jboss-is-running jboss.server.port="${jboss.server.port}" jboss.server.hostname="${jboss.server.hostname}" jboss.server.jndi.port="${jboss.server.jndi.port}"/>
 		jboss.server.port is the http port number of which the web container listens
-		jboss.server.hostname is the host name where the application server is installed		
+		jboss.server.hostname is the host name where the application server is installed
 	-->
 	<macrodef name="jboss-check-if-jboss-is-running" description="Checks if a local JBoss instance is running">
 		<attribute name="jboss.server.port" default="${jboss.server.port}" />
@@ -281,10 +281,10 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	jboss-start-jboss macro will start the jboss instance
 	usage: 	<jboss-start-jboss jboss.home="${jboss.home}"/>
-		jboss.home is the location where Jboss is installed		
+		jboss.home is the location where Jboss is installed
 	-->
 	<macrodef name="jboss-start-jboss" description="Starts a local JBoss instance">
 		<attribute name="jboss.home" default="${jboss.home}" />
@@ -304,7 +304,7 @@ $HeadURL$
 						<arg file="@{jboss.home}/bin/run.sh" />
 						<arg file="@{jboss.home}/bin/shutdown.sh" />
 					</exec>
-		
+
 					<exec executable="sh" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
 						<arg line="run.sh" />
@@ -320,7 +320,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	jboss-update-shutdown macro updates the shutdown.jar with the host and jndi port information
 	usage: 	<jboss-update-runconf jboss.home="${jboss.home}" jboss.server.hostname="${jboss.server.hostname}" jboss.server.jndi.port="${jboss.server.jndi.port}"/>
 		jboss.home is the location where Jboss is installed
@@ -337,7 +337,7 @@ $HeadURL$
 			<replaceregexp file="${temp.dir}/shutdown/jndi.properties" byline="true"
 				match="^(java.naming.provider.url)=(.*)"
 				replace="\1=jnp://@{jboss.server.hostname}:@{jboss.server.jndi.port}"/>
-			
+
 			<jar jarfile="${temp.dir}/shutdown/shutdown.jar" compress="false" manifest="${temp.dir}/shutdown/META-INF/MANIFEST.MF">
 				<fileset dir="${temp.dir}/shutdown">
 					<include name="*/**" />
@@ -346,8 +346,8 @@ $HeadURL$
 			<copy file="${temp.dir}/shutdown/shutdown.jar" todir="@{jboss.home}/bin" overwrite="true"/>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
+
+	<!--
 	jboss-update-runconf macro updates the configuration of run.conf and sets the desired JAVA_OPTS
 	usage: 	<jboss-update-runconf jboss.home="${jboss.home}" jboss.java.opts="${jboss.java.opts}"/>
 		jboss.home is the location where Jboss is installed
@@ -363,18 +363,18 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	validate-pre-install macro is a wrapper for all the pre-install validations and would vaildate for the environment, properties and directory structure of the host before application installation
 	usage: 	<validate-pre-install />
 		database.driver is the jdbc driver to connect to database
 		database.system.url is the installed host of the database
 		database.system.user is the system user for the database
-		database.system.password is the system password for the database		
+		database.system.password is the system password for the database
 		database.name is the name of the database
 		database.url is the url of the database where it is hosted
 		database.user is the user of the database
 		database.password is the password of the user for the database
-		validate-ports-preinstall is the list of comma seperated port numbers		
+		validate-ports-preinstall is the list of comma seperated port numbers
 		ant.check.version is the version of ant. By default the ant version should be greater than 1.7.0
 		java.check.version.major is the major version of java. By default the major version should be greater than 1.5
 		java.check.version.minor is the minor version of java. By default the minor version should be greater than 1.5.0_10
@@ -482,12 +482,12 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	validate-environment macro validates host environment i.e the version of the installed ant, jdk.
 	usage: 	<validate-environment ant.check.version="1.7.0" java.check.version.major="1.5" java.check.version.minor="1.5.0_10"/>
 		ant.check.version is the version of ant. By default the ant version should be greater than 1.7.0
 		java.check.version.major is the major version of java. By default the major version should be greater than 1.5
-		java.check.version.minor is the minor version of java. By default the minor version should be greater than 1.5.0_10	
+		java.check.version.minor is the minor version of java. By default the minor version should be greater than 1.5.0_10
 	-->
 	<macrodef name="validate-environment" description="Diagnose the host system before the installation">
 		<attribute name="ant.check.version" default="1.7.0" />
@@ -520,7 +520,7 @@ $HeadURL$
 					<echo message="Java version check: WARNING, version is not 1.5.0_10" />
 				</else>
 			</if>
- 			<echo message="Java version check: PASSED" /> 
+ 			<echo message="Java version check: PASSED" />
 
 			<!-- Checks if user running build is root, if so it fails -->
 			<if>
@@ -535,10 +535,10 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	validate-properties macro validates the property values in the property file. The checks include if an REPLACE are left and fails the build,compares database system user and databases users are the same,Checks that hostnames are reachable.
 	usage: 	<validate-properties />
-		properties.file property should be set before calling this macro		
+		properties.file property should be set before calling this macro
 	-->
 	<macrodef name="validate-properties" description="Diagnose the host system before the installation">
 		<sequential>
@@ -567,7 +567,7 @@ $HeadURL$
 				</then>
 				<else>
 					<echo message="Warning: properties.file property is not set"/>
-				</else>	
+				</else>
 			</if>
 			<if>
 				<isset property="properties.file"/>
@@ -584,16 +584,16 @@ $HeadURL$
 					<if>
 						<isset property="warn.properties"/>
 						<then>
-							<echo message="Some properties still have 'replace' in them, this may cause issues."/> 
+							<echo message="Some properties still have 'replace' in them, this may cause issues."/>
 							<echo message="${warn.properties}"/>
 						</then>
 					</if>
 				</then>
 				<else>
 					<echo message="Properties file validation: PASSED"/>
-				</else>	
+				</else>
 			</if>
-			
+
 			<!-- Validate database properties, compares database.system.user to other *databases.*.user  -->
 			<if>
 				<and>
@@ -606,7 +606,7 @@ $HeadURL$
 						srcFile="${properties.file}">
 						<filterchain>
 							<linecontainsregexp>
-								<regexp pattern=".*database.*user=${database.system.user}\r*\n"/> 
+								<regexp pattern=".*database.*user=${database.system.user}\r*\n"/>
 							</linecontainsregexp>
 						</filterchain>
 					</loadfile>
@@ -632,7 +632,7 @@ $HeadURL$
 								</sequential>
 							</for>
 						</then>
-						<else> 
+						<else>
 							<echo message="No other users match database.system.user = ${database.system.user}"/>
 						</else>
 					</if>
@@ -645,8 +645,8 @@ $HeadURL$
 					<propertyselector property="hostname.property.list"
 						delimiter=","
 						match="^(.*hostname)$"
-						select="\1"              
-						casesensitive="true" /> 
+						select="\1"
+						casesensitive="true" />
 
 					<if>
 						<isset property="hostname.property.list"/>
@@ -683,9 +683,9 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
-			
-	<!-- 
-	validate-ports-preinstall macro validates whether the host listens on provided list of comma seperated ports 
+
+	<!--
+	validate-ports-preinstall macro validates whether the host listens on provided list of comma seperated ports
 	usage: 	<validate-ports-preinstall validate-ports-preinstall="${validate-ports-preinstall}" hostname="${jboss.server.hostname}" />
 		validate-ports-preinstall is the list of comma seperated port numbers
 		hostname is the host name of the machine e.x.localhost
@@ -716,7 +716,7 @@ $HeadURL$
 									<fail message="${line.separator}${line.separator}    Port is listening at @{hostname}:@{validate.port}.${line.separator}Verify the JBoss server is not running at @{hostname}:@{validate.port}. If it is not, there may be a different process or application using this port (@{validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing."/>
  								</then>
 								<else>
-									<echo message="Ports check: PASSED" /> 
+									<echo message="Ports check: PASSED" />
 								</else>
 							</if>
 						</sequential>
@@ -725,8 +725,8 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
- 			
-	<!-- 
+
+	<!--
 	check-direct-child-directory macro checks the child directory is the child of the parent directory
 	usage: 	<check-direct-child-directory parent.dir.property="application.base.path" child.dir.property="jboss.home" />
 		parent.dir.property is the property for the parent directory
@@ -757,8 +757,8 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
+
+	<!--
 	check-not-child-directory macro checks the parent and child directories do not have the same name
 	usage: 	<check-not-child-directory parent.dir.property="application.base.path" child.dir.property="basedir" />
 		parent.dir.property is the property for the parent directory
@@ -790,7 +790,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	check-valid-directory-name macro checks for the possible combinations of the directories and should be called before deleting any directories
 	usage: <check-valid-directory-name directory.property="jboss.home" />
 		directory.property is the property for the directory to be checked
@@ -861,7 +861,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	check-application-exists macro checks if the application exists. The property where the applications is installed should be priovided as input
 	usage: <check-application-exists application.dir.property="jboss.home" />
 		application.dir.property is the property for the installation directory of the application
@@ -896,14 +896,14 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
+
+	<!--
 	check-database-exists macro checks if the database exists. The root user name and password should be provided
 	usage: <check-database-exists database.driver="${database.driver}" database.system.url="${database.system.url}" database.system.user="${database.system.user}" database.system.password="${database.system.password} database.name="${database.name}" />
 		database.driver is the jdbc driver to connect to database
 		database.url is the installed host of the database
 		database.user is the user for the database
-		database.password is the password for the database		
+		database.password is the password for the database
 		database.name is the name of the database
 	-->
 	<macrodef name="check-database-exists" description="Checks if the database exists">
@@ -914,8 +914,8 @@ $HeadURL$
 		<attribute name="database.name" default="${database.name}" />
 		<sequential>
 			<switch value="${database.type}">
-				<case value="mysql">	
-					<dbconfig property="database.exists" 
+				<case value="mysql">
+					<dbconfig property="database.exists"
 						driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
 						<validate />
 					</dbconfig>
@@ -955,13 +955,13 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	validate-post-install macro Diagnose the host system after the installation
 	usage: <validate-post-install validation.post.http.list="${validation.post.http.list}" validation.post.socket.list="${validation.post.socket.list}" jboss.home="${jboss.home}" jboss.server.name="${jboss.server.name}"/>
-		validation.post.http.list is the list of all comma seperated ports numbers 
+		validation.post.http.list is the list of all comma seperated ports numbers
 		validation.post.socket.list is the list of all comma seperated sockets
 		jboss.home is the location where Jboss is installed
-		jboss.server.name is the name of the deployed Jboss server 
+		jboss.server.name is the name of the deployed Jboss server
 	-->
 	<macrodef name="validate-post-install" description="Diagnose the host system after the installation">
  		<attribute name="validation.post.http.list" default="${validation.post.http.list}" />
@@ -969,7 +969,7 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<attribute name="application.url" default="${application.url}" />
-		<attribute name="propertyfile.backup.location" default="${jboss.home}" />		
+		<attribute name="propertyfile.backup.location" default="${jboss.home}" />
 		<sequential>
 
 			<!-- Echo the properties for diagnostic purposes -->
@@ -988,7 +988,7 @@ $HeadURL$
 					</not>
 				</and>
 				<then>
-					<validate-ports-postinstall  
+					<validate-ports-postinstall
 						validation.post.http.list="@{validation.post.http.list}"
 						validation.post.socket.list="@{validation.post.socket.list}"
 						/>
@@ -1038,10 +1038,10 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	validate-ports-postinstall macro checks if the application listens on the specified port numbers and is part of postinstall checks
 	usage: <validate-ports-postinstall validation.post.http.list="${validation.post.http.list}" validation.post.socket.list="${validation.post.socket.list}" hostname="${jboss.server.hostname}" />
-		validation.post.http.list is the list of all comma seperated ports numbers 
+		validation.post.http.list is the list of all comma seperated ports numbers
 		validation.post.socket.list is the list of all comma seperated sockets
 		hostname is the deployed host ex. localhost
 	-->
@@ -1084,16 +1084,16 @@ $HeadURL$
 							</if>
 						</sequential>
 					</for>
-				</then>	
+				</then>
 			</if>
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	validate-jboss-logs-postinstall macro is part of postinstall checks and parses the the jboss server.log and boot.log for any warning and errors after the installation.
 	usage: <validate-jboss-logs-postinstall jboss.home="${jboss.home}" jboss.server.name="${jboss.server.name}" />
 		jboss.home is the location where Jboss is installed
-		jboss.server.name is the name of the deployed Jboss server 
+		jboss.server.name is the name of the deployed Jboss server
 	-->
 	<macrodef name="validate-jboss-logs-postinstall" description="Diagnose the host system after the installation">
 		<attribute name="jboss.home" default="${jboss.home}" />
@@ -1126,7 +1126,7 @@ $HeadURL$
 							<echo message="${log.server.errors}"/>
 						</then>
 					</if>
-			
+
 					<loadfile
 						property="log.server.warnings"
 						srcFile="${server.log}">
@@ -1137,7 +1137,7 @@ $HeadURL$
 							<linecontainsregexp>
 								<regexp pattern="^\w+.* WARN "/>
 							</linecontainsregexp>
-	
+
 						</filterchain>
 					</loadfile>
 					<if>
@@ -1149,7 +1149,7 @@ $HeadURL$
 					</if>
 				</then>
 			</if>
-	
+
 			<!-- Process jboss boot.log for errors and warnings and display on screen -->
 			<if>
 				<isset property="boot.log.exists"/>
@@ -1173,7 +1173,7 @@ $HeadURL$
 							<echo message="${log.boot.errors}"/>
 						</then>
 					</if>
-			
+
 					<loadfile
 						property="log.boot.warnings"
 						srcFile="${boot.log}">
@@ -1184,7 +1184,7 @@ $HeadURL$
 							<linecontainsregexp>
 								<regexp pattern="^\w+.* WARN "/>
 							</linecontainsregexp>
-			
+
 						</filterchain>
 					</loadfile>
 					<if>
@@ -1198,14 +1198,14 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
+
+	<!--
 	database-create macro create the mysql database and user and grant priledges to the user
 	usage: <database-create database.driver="${database.driver}" database.system.url="${database.system.url}" database.system.user="${database.system.user}" database.system.password="${database.system.password} database.name="${database.name}" database.url="${database.url}" database.password="${database.password}"/>
 		database.driver is the jdbc driver to connect to database
 		database.system.url is the installed host of the database
 		database.system.user is the system user for the database
-		database.system.password is the system password for the database		
+		database.system.password is the system password for the database
 		database.name is the name of the database
 		database.url is the url of the database where it is hosted
 		database.user is the user of the database
@@ -1233,7 +1233,7 @@ $HeadURL$
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 							<var name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
 							<delete dir="${create.sql.dir}"/>
-							<sql    
+							<sql
 								driver="@{database.driver}"
 								url="@{database.system.url}"
 								userid="@{database.system.user}"
@@ -1248,8 +1248,8 @@ $HeadURL$
 									REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'@{database.server}';
 									REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'%';
 								</transaction>
-							</sql>  
-							<sql    
+							</sql>
+							<sql
 								driver="@{database.driver}"
 								url="@{database.system.url}"
 								userid="@{database.system.user}"
@@ -1265,10 +1265,10 @@ $HeadURL$
 									GRANT ALL ON @{database.name}.* TO '@{database.user}'@'@{database.server}' IDENTIFIED BY '@{database.password}';
 									GRANT ALL ON @{database.name}.* TO '@{database.user}'@'%' IDENTIFIED BY '@{database.password}';
 								</transaction>
-							</sql>  
+							</sql>
 						</case>
 						<case value="postgresql">
-							<sql    
+							<sql
 								driver="@{database.driver}"
 								url="@{database.system.url}"
 								userid="@{database.system.user}"
@@ -1285,7 +1285,7 @@ $HeadURL$
 									create database ${database.name};
 									create user ${database.user} with password '${database.password}';
 									grant all on database ${database.name} to ${database.user};
-							</sql>  
+							</sql>
 						</case>
 					</switch>
 				</then>
@@ -1293,8 +1293,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	
-	<!-- 
+
+	<!--
 	validate-database macro validates the creadentials of the provided system user and the installed version of the database
 	usage: <validate-database database.driver="${database.driver}" database.system.url="${database.system.url}" database.system.user="${database.system.user}" database.system.password="${database.system.password}" database.version="${database.version}"/>
 		database.driver is the jdbc driver to connect to database
@@ -1329,9 +1329,9 @@ $HeadURL$
 					<switch value="${database.type}">
 						<case value="mysql">
 							<if>
-								<isset property="database.re-create"/> 
+								<isset property="database.re-create"/>
 								<then>
-									<dbconfig property="db.connection.success" 
+									<dbconfig property="db.connection.success"
 										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
 										<validate />
 										<!--<checkversion atleast="@{database.version}" />-->
@@ -1340,7 +1340,7 @@ $HeadURL$
 									<echo message="Database Connection: PASSED" />
 								</then>
 								<else>
-									<dbconfig property="db.connection.success" 
+									<dbconfig property="db.connection.success"
 										driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
 										<validate />
 										<!--<checkversion atleast="@{database.version}" />-->
@@ -1351,7 +1351,7 @@ $HeadURL$
 							</if>
 						</case>
 						<case value="oracle">
-							<dbconfig property="oracle.connection.success" 
+							<dbconfig property="oracle.connection.success"
 								driver="@{database.driver}"
 								url="@{database.url}"
 								user="@{database.user}"
@@ -1365,7 +1365,7 @@ $HeadURL$
 							<echo message="Database Connection: PASSED" />
 						</case>
 						<case value="postgresql">
-							<dbconfig property="postgresql.connection.success" 
+							<dbconfig property="postgresql.connection.success"
 								driver="@{database.driver}"
 								url="@{database.url}"
 								user="@{database.user}"
@@ -1388,10 +1388,10 @@ $HeadURL$
 	</macrodef>
 
 
-	<!-- 
-	tomcat-stop macro stops the tomcat instance and can be used in both linux and windows platforms	
+	<!--
+	tomcat-stop macro stops the tomcat instance and can be used in both linux and windows platforms
 	usage: <tomcat-stop tomcat.home="${tomcat.home}"/>
-		The tomcat.home must be set and passed when calling this macro		
+		The tomcat.home must be set and passed when calling this macro
 	-->
 	<macrodef name="tomcat-stop" description="Stops a local tomcat instance">
 		<attribute name="tomcat.home" />
@@ -1408,12 +1408,12 @@ $HeadURL$
 			<sleep seconds="5" />
 		</sequential>
 	</macrodef>
-	
-	<!-- 
-	tomcat-stop macro starts the tomcat instance and can be used in both linux and windows platforms	
+
+	<!--
+	tomcat-stop macro starts the tomcat instance and can be used in both linux and windows platforms
 	usage: <tomcat-start tomcat.home="${tomcat.home}"/>
-		The tomcat.home must be set and passed when calling this macro		
-	-->	
+		The tomcat.home must be set and passed when calling this macro
+	-->
 	<macrodef name="tomcat-start" description="Starts a local tomcat instance">
 		<attribute name="tomcat.home" />
 		<sequential>
@@ -1429,11 +1429,11 @@ $HeadURL$
 			<sleep seconds="5" />
 		</sequential>
 	</macrodef>
-	
-	<!-- 
+
+	<!--
 	properties-exist macro checks if the value of the property is set in the list of properties seperated by ','
 	usage: <properties-exist properties.list="${properties.list}"/>
-		The properties.list must be set and passed when calling this macro		
+		The properties.list must be set and passed when calling this macro
 	-->
 	<macrodef name="properties-exist" description="Check if the value of the property is set">
 		<attribute name="properties.list" />
@@ -1460,7 +1460,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	compare-properties macro checks that there are same number of key for a given property files
 	usage: <compare-properties property.template.file="${property.template.file} envpropertyfile="${envpropertyfile} "/>
 		The property.template.file is the template file to compare with
@@ -1469,7 +1469,7 @@ $HeadURL$
 	<macrodef name="compare-properties" description="validate the properties from the given files">
 		<attribute name="property.template.file" default="${property.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
-		<sequential>		
+		<sequential>
 			<echo message="Checking @{envpropertyfile} against template file @{property.template.file}"/>
 			<if>
 				<available file="@{property.template.file}"/>
@@ -1485,16 +1485,16 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
-	svn-co macro checks out from a subversion repository based on properties passed to macro, clean the destination directory, then check out the tag specified into the destination directory. 
+
+	<!--
+	svn-co macro checks out from a subversion repository based on properties passed to macro, clean the destination directory, then check out the tag specified into the destination directory.
 	The macro assumes that all code required to build the application will be located under the software folder off the project root.  You will not be able to use this macro if you do not adhere to this structure.
 	usage: <svn-co svn.project.base.url="${svn.project.base.url}" svn.project.name="${svn.project.name}" svn.tag="${svn.tag}" svn.co.base.dir="${svn.co.base.dir}"/>
 		The svn.project.base.url is the URL of Subverion reposition to check out from
 		The svn.project.name is the name of the project in the repositiory
 		The svn.tag is the tag of the build ex. trunk
 		The svn.co.base.dir is the local directory to the checkout
-	-->	
+	-->
 
 	<macrodef name="svn-co" description="based on properties passed to macro, clean the destination directory, then check out the tag specified into the destination directory.">
 		<attribute name="svn.checkout.url" />
@@ -1502,7 +1502,7 @@ $HeadURL$
 		<attribute name="svn.checkout.user" default="anonymous"/>
 		<attribute name="svn.checkout.pass" default=""/>
 		<attribute name="delete" default="true"/>
-		<sequential>		
+		<sequential>
 			<if>
 				<equals arg1="@{delete}" arg2="true" />
 				<then>
@@ -1515,26 +1515,26 @@ $HeadURL$
 			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}">
 				<!-- <checkout url="@{svn.checkout.url}" revision="HEAD" destPath="@{svn.checkout.dir}" />-->
 				<checkout url="@{svn.checkout.url}"  destPath="@{svn.checkout.dir}" />
-			</svn> 
+			</svn>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="svn-add" description="">
 		<attribute name="svn.add.dir"/>
-		<sequential>		
+		<sequential>
 			<echo message="Adding @{svn.add.dir} to svn."/>
 			<svn failonerror="false">
 				<add dir="@{svn.add.dir}" force="true"/>
-			</svn> 
+			</svn>
 		</sequential>
 	</macrodef>
 	<macrodef name="svn-update" description="">
 		<attribute name="svn.update.dir"/>
-		<sequential>		
+		<sequential>
 			<echo message="Adding @{svn.update.dir} to svn."/>
 			<svn failonerror="false">
 				<update dir="@{svn.update.dir}"/>
-			</svn> 
+			</svn>
 		</sequential>
 	</macrodef>
 
@@ -1543,11 +1543,11 @@ $HeadURL$
 		<attribute name="svn.commit.user" default="anonymous"/>
 		<attribute name="svn.commit.pass" default=""/>
 		<attribute name="svn.commit.message" default="Added by build process"/>
-		<sequential>		
+		<sequential>
 			<echo message="Commiting @{svn.commit.dir} to svn."/>
 			<svn username="@{svn.commit.user}" password="@{svn.commit.pass}">
 				<commit dir="@{svn.commit.dir}" message="@{svn.commit.message}"/>
-			</svn> 
+			</svn>
 		</sequential>
 	</macrodef>
 
@@ -1556,7 +1556,7 @@ $HeadURL$
 		<attribute name="output.file.dir" default="."/>
 		<attribute name="output.file.name" default="build.xml"/>
 		<attribute name="file.type" default="pdf"/>
-		<sequential>		
+		<sequential>
 			<var name="grand.output.file" value="${temp.dir}/grand.dot" />
 			<grand output="${grand.output.file}" buildfile="@{build.file.location}"/>
 			<exec executable="dot" >
@@ -1564,15 +1564,15 @@ $HeadURL$
 			</exec>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
-	jboss-bindings macro configures the binding.xml and the jboss-service.xml which is used by jboss Binding Manager. 	
+
+	<!--
+	jboss-bindings macro configures the binding.xml and the jboss-service.xml which is used by jboss Binding Manager.
 	usage: <jboss-bindings jboss.home="${jboss.home}" jboss.server.name="${jboss.server.name}" jboss.server.ports.name="${jboss.server.ports.name}" jboss.server.bindingfile.location="${jboss.server.bindingfile.location}"/>
 		The jboss.home is the location where Jboss is installed
-		The jboss.server.name is the name of the deployed Jboss server 
-		The jboss.server.ports.name is the name of the configuration to be used from binding.xml	
+		The jboss.server.name is the name of the deployed Jboss server
+		The jboss.server.ports.name is the name of the configuration to be used from binding.xml
 		jboss.server.bindingfile.location is the location of the binding.xml
-	-->		
+	-->
 	<macrodef name="jboss-bindings" description="configures the binding.xml and the jboss-service.xml">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
@@ -1597,7 +1597,7 @@ $HeadURL$
 		<attribute name="jboss.snmp-trapd.port" default="${jboss.snmp-trapd.port}"/>
 		<attribute name="jboss.web.service.port" default="${jboss.web.service.port}"/>
 
-		<sequential>						
+		<sequential>
 			<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
 			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true">
 				<filterset>
@@ -1621,7 +1621,7 @@ $HeadURL$
 					<filter token="jboss.snmp-trapd.port" value="@{jboss.snmp-trapd.port}"/>
 					<filter token="jboss.web.service.port" value="@{jboss.web.service.port}"/>
 				</filterset>
-			</copy> 
+			</copy>
 			<jboss-bindings-validate
 				jboss.server.ports.name="@{jboss.server.ports.name}"
 				jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
@@ -1649,12 +1649,12 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	jboss-read-dbconfig macro reads the database information from the application ds.xml and makes connection to the database to check is the application and the database is installed
 		usage: <jboss-read-dbconfig jboss.home="${jboss.home} jboss.server.name="${svn.project.name} jboss.ds-xml.file="name if the ds file"/>
 			The jboss.home is the location where Jboss is installed
-			The jboss.server.name is the name of the deployed Jboss server 
-			The jboss.ds-xml.file is the name of the ds.xml file	
+			The jboss.server.name is the name of the deployed Jboss server
+			The jboss.ds-xml.file is the name of the ds.xml file
 	-->
 	<macrodef name="jboss-read-dbconfig" description="check if the application is installed">
 		<attribute name="jboss.home" default="${jboss.home}"/>
@@ -1698,8 +1698,8 @@ $HeadURL$
 								<copy path="//datasources/local-tx-datasource/password/text()" property="read.database.password" />
 								<copy path="//datasources/local-tx-datasource/driver-class/text()" property="read.database.driver" />
 							</xmltask>
-						
-							<dbconfig property="db.appuser.works" 
+
+							<dbconfig property="db.appuser.works"
 										driver="${read.database.driver}"
 								url="${read.database.url}"
 								user="${read.database.user}"
@@ -1737,7 +1737,7 @@ $HeadURL$
 								regexp="postgresql"
 								select="postgresql"
 								/>
-				
+
 							<property name="@{database.url.property.name}" value="${read.database.url}" />
 							<property name="@{database.user.property.name}" value="${read.database.user}" />
 							<property name="@{database.password.property.name}" value="${read.database.password}" />
@@ -1750,26 +1750,26 @@ $HeadURL$
 							<switch value="${db.type}">
 								<case value="oracle">
 									<var name="@{database.schema.property.name}" value="${database.name}"/>
-								</case> 
+								</case>
 								<case value="mysql">
 									<var name="@{database.schema.property.name}" value="${database.name}"/>
-								</case> 
+								</case>
 								<case value="postgresql">
 									<var name="@{database.schema.property.name}" value="public"/>
-								</case> 
+								</case>
 							</switch>
-							<if>    
+							<if>
 								<isset property="db.appuser.works"/>
-								<then>  
+								<then>
 									<echo level="debug" message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
 									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
-								</then> 
-								<else>  
+								</then>
+								<else>
 									<fail  message="Failed to connect to database TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
 								</else>
 							</if>
-						</else> 
-					</if>   
+						</else>
+					</if>
 				</then>
 			</if>
 			<properties-print
@@ -1778,15 +1778,15 @@ $HeadURL$
 			<var name="read.properties.list" value="${read.properties.list},${db.properties.list}"/>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
+
+	<!--
 	svn-getinfo macro gets the latest revision number in the repository for the give path and will set the lsd.revision property
 		usage: <svn-getinfo />
 		my.path is the checked out location of the project
 	-->
-	<macrodef name="svn-getinfo">		
+	<macrodef name="svn-getinfo">
 		<attribute name="my.path" default="${basedir}"/>
-		<sequential>			
+		<sequential>
 			<svn javahl="false">
 				<status path="@{my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
 			</svn>
@@ -1795,7 +1795,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<macrodef name="validate-pre-build">		
+	<macrodef name="validate-pre-build">
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="require.build.wscore" default="${require.build.wscore}"/>
 		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
@@ -1804,7 +1804,7 @@ $HeadURL$
 		<attribute name="cacore-sdk.src.url" default="${cacore-sdk.src.url}"/>
 		<attribute name="download.dir" default="${download.dir}"/>
 		<attribute name="cacore-sdk.dir" default="${cacore-sdk.dir}"/>
-		<sequential>			
+		<sequential>
 			<if>
 				<equals arg1="@{require.build.wscore}" arg2="true"/>
 				<then>
@@ -1824,11 +1824,11 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<macrodef name="check-wscore-exists">		
+	<macrodef name="check-wscore-exists">
 		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
 		<attribute name="wscore.relative.dir" default="ws-core-4.0.3"/>
 		<attribute name="application.base.path" default="${application.base.path}"/>
-		<sequential>			
+		<sequential>
 			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
 			<var name="wscore.dest.file" value="temp/${wscore.file.name}"/>
 			<echo message="Checking for existence of GLOBUS_LOCATION envrironment variable."/>
@@ -1850,15 +1850,15 @@ $HeadURL$
 							<get src="@{wscore.download.url}.MD5"
 								dest="${wscore.dest.file}.MD5"/>
 							<checksum file="${wscore.dest.file}" verifyProperty="wscore.cksum.ok"/>
-							<if>    
+							<if>
 								<equals arg1="${wscore.cksum.ok}" arg2="true"/>
-								<then>  
+								<then>
 									<echo message="Downloaded wscore sucessfully"/>
-								</then> 
-								<else>  
+								</then>
+								<else>
 									<fail message="Failed to download wscore file sucessfully."/>
-								</else> 
-							</if>   
+								</else>
+							</if>
 							<unzip dest="@{application.base.path}" src="${wscore.dest.file}"/>
 							<var name="env.GLOBUS_LOCATION" value="@{application.base.path}/@{wscore.relative.dir}"/>
 							<echo message="Completed install of wscore files into @{application.base.path}/@{wscore.relative.dir} "/>
@@ -1890,22 +1890,22 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	generate-uml macro will generate the UML diagram from the checked in code. It will first create a javadoc HTML report and uses Graphviz to generate the UML graph
-	Pre-Requisites: Graphviz should be present in the Path, 	
+	Pre-Requisites: Graphviz should be present in the Path,
 		usage: <generate-uml />
 		uml.dir is the directory where the UML diagram are generated.
-		src.java.dir is the source of class files. 
+		src.java.dir is the source of class files.
 		uml.source.path is the classpath for the files
 	-->
-	<macrodef name="generate-uml">		
+	<macrodef name="generate-uml">
 		<attribute name="uml.dir" />
 		<attribute name="src.java.dir" />
 		<attribute name="uml.source.path" />
 		<attribute name="UMLGraph.jar" default="umlgraph-4.8.jar" />
-		<sequential>				
-			<mkdir dir="@{uml.dir}"/>			
-			<javadoc sourcepath="@{src.java.dir}" destdir="@{uml.dir}" classpathref="@{uml.source.path}" access="private">				
+		<sequential>
+			<mkdir dir="@{uml.dir}"/>
+			<javadoc sourcepath="@{src.java.dir}" destdir="@{uml.dir}" classpathref="@{uml.source.path}" access="private">
 				<doclet name="gr.spinellis.umlgraph.doclet.UmlGraphDoc" path="${bda-utils.dir}\@{UMLGraph.jar}">
 					<param name="-attributes" />
 					<param name="-enumerations" />
@@ -1915,7 +1915,7 @@ $HeadURL$
 					<param name="-types" />
 					<param name="-visibility" />
 				</doclet>
-			</javadoc>		
+			</javadoc>
 			<apply executable="dot" dest="@{uml.dir}" parallel="false">
 				<arg value="-Tpng"/>
 				<arg value="-o"/>
@@ -1923,16 +1923,16 @@ $HeadURL$
 				<srcfile/>
 				<fileset dir="@{uml.dir}" includes="*.dot"/>
 				<mapper type="glob" from="*.dot" to="*.png"/>
-			</apply>		
+			</apply>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
-	generate-erd macro will generate an ERD from the Database	
+
+	<!--
+	generate-erd macro will generate an ERD from the Database
 		usage: <generate-erd />
 		report.dir is the directory where the ERD is generated.
-	-->	
-	<macrodef name="generate-erd">		
+	-->
+	<macrodef name="generate-erd">
 		<attribute name="report.dir" default="${target.dir}/reports/schema-spy" />
 		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5.jar" />
 		<attribute name="schemaspy.jar" default="schemaspy_3.1.1.jar" />
@@ -1958,17 +1958,17 @@ $HeadURL$
 			</java>
 		</sequential>
 	</macrodef>
-	
-	<!-- 
+
+	<!--
 	fusebox-metrics macro will generate graphical representation of the static analysis for the project
 		usage: <fusebox-matrix fusebox.config.file="${bda-utils.dir}/resource/fusemetrics_config.xml" fusebox.template.file="${bda-utils.dir}/resource/dashboard.tmpl" fusebox.output.dir="${basedir}/target/output" fusebox.persist.dir="${basedir}/target/persist" fusebox.search.dir="${basedir}/reports"/>
 		fusebox.config.file is the location of the config file.
 		fusebox.project.name is the name of the project and the macro configures it into the config file.
 		fusebox.search.dir is the location of the resulted XML files from the static analysis.
-		fusebox.output.file is the location of the output directory.		
+		fusebox.output.file is the location of the output directory.
 		fusebox.persist.dir is the locations of the persisted directory and the data is appended after each build
 		fusebox.template.file is the name of the file that renders data from the persistent file
-	-->	
+	-->
 	<macrodef name="fusebox-metrics" description="generates the fusebox metrics">
 		<attribute name="fusebox.config.file" default="${bda-utils.resource.dir}/fusemetrics_config.xml" />
 		<attribute name="fusebox.project.name" default="Project" />
@@ -1978,22 +1978,22 @@ $HeadURL$
 		<attribute name="fusebox.template.file" default="${bda-utils.resource.dir}/dashboard.tmpl" />
 
 		<sequential>
-			<if>								
+			<if>
 				<equals arg1="@{fusebox.config.file}" arg2="fusemetrics_config.xml"/>
-				<then>				
-					<property name= "fusebox.arg.value" value="fusemetrics_config.xml" />				
+				<then>
+					<property name= "fusebox.arg.value" value="fusemetrics_config.xml" />
 				</then>
 				<else>
-					<property name= "fusebox.arg.value" value="@{fusebox.config.file}" />					
+					<property name= "fusebox.arg.value" value="@{fusebox.config.file}" />
 				</else>
 			</if>
-			<if>								
+			<if>
 				<equals arg1="@{fusebox.config.file}" arg2="fusemetrics_config.xml"/>
-				<then>				
-					<property name= "fusebox.arg.value" value="fusemetrics_config.xml" />				
+				<then>
+					<property name= "fusebox.arg.value" value="fusemetrics_config.xml" />
 				</then>
 				<else>
-					<property name= "fusebox.arg.value" value="@{fusebox.config.file}" />					
+					<property name= "fusebox.arg.value" value="@{fusebox.config.file}" />
 				</else>
 			</if>
 
@@ -2013,7 +2013,7 @@ $HeadURL$
 			<java classname="com.stelligent.fusemetrics.FuseMetrics" >
 			<arg value="-c"/>
 			<arg value="${fusebox.arg.value}"/>
-			<arg value="-d"/>	
+			<arg value="-d"/>
 			 <classpath>
 				   <pathelement location="${bda-utils.dir}/fusemetrics-1.0.jar"/>
 				   <pathelement location="${bda-utils.dir}/xom-1.1.jar"/>
@@ -2026,15 +2026,15 @@ $HeadURL$
 				   <pathelement location="${bda-utils.dir}/groovy-all-1.6.jar"/>
 			 </classpath>
 			</java>
-		</sequential>	
+		</sequential>
 	</macrodef>
 
-	<!-- 
+	<!--
 	diffrevision macro will generate a file will names of the java files that were checked in from the last revision number till the HEAD or the current revision number
 		usage: <diffrevision envpropertyfile="project.properties" differential.file.name="diff_list.txt" />
 		old.revision.number is the old revision number when the static analysis is done
 		differential.file.name is the name of the file to which the differential list is written.
-	-->	
+	-->
 	<macrodef name="diffrevision">
 		<attribute name="old.revision.number" />
 		<attribute name="differential.file.name" default="diff_list.txt" />
@@ -2044,7 +2044,7 @@ $HeadURL$
 			</svn>
 
 			<svn javahl="false">
-				<diff oldUrl="${svn.source.url}" oldTargetRevision="@{old.revision.number}" newTargetRevision="${build.svn.revision}" outFile="${basedir}/patch.txt"/> 
+				<diff oldUrl="${svn.source.url}" oldTargetRevision="@{old.revision.number}" newTargetRevision="${build.svn.revision}" outFile="${basedir}/patch.txt"/>
 			</svn>
 			<loadfile
 				property="diff.file.list"
@@ -2057,11 +2057,11 @@ $HeadURL$
 			</loadfile>
 			<if>
 				<isset property="diff.file.list"/>
-				<then>				
+				<then>
 					<echo file="@{differential.file.name}" append="false" message="${diff.file.list}${line.separator}"/>
 				</then>
 			</if>
-			<replaceregexp file="@{differential.file.name}" byline="true" match="^Index: (.*)" replace="\1"/>			
+			<replaceregexp file="@{differential.file.name}" byline="true" match="^Index: (.*)" replace="\1"/>
 			<delete file="${basedir}/patch.txt"/>
 
 		</sequential>
@@ -2078,7 +2078,7 @@ $HeadURL$
 			<exec osfamily="windows" executable="dir" outputproperty="file.list" dir="@{dot-file.dir}">
 				<arg line="/c dir /b"/>
 			</exec>
-	
+
 			<for list="${file.list}" delimiter="${line.separator}" param="file.name">
 				<sequential>
 					<if>
@@ -2101,7 +2101,7 @@ $HeadURL$
 								<arg value="-o"/>
 								<arg value="${base.file.name}.@{report.type}"/>
 								<arg value="@{file.name}"/>
-							</exec> 
+							</exec>
 						</then>
 					</if>
 				</sequential>
@@ -2207,9 +2207,9 @@ $HeadURL$
 			<for list="@{db.install.create.file.list}" param="db.install.file">
 				<sequential>
 					<run-sql-script database.url="@{database.url}"
-						database.user="@{database.user}" 
-						database.password="@{database.password}" 
-						sql.delimiter="@{sql.delimiter}" 
+						database.user="@{database.user}"
+						database.password="@{database.password}"
+						sql.delimiter="@{sql.delimiter}"
 						sql.delimitertype="@{sql.delimitertype}"
 						sql.file="@{db-install.dir}/${database.type}/@{db.install.file}"
 						onerror="@{onerror}"/>
@@ -2781,9 +2781,9 @@ $HeadURL$
 
 			<!-- Fix service specific jndi-config -->
 			<echo message="Fixing second grid jnid-config"/>
-			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml" 
-				match="(\s+.value.)http://.*\:\d+(\/.*)" 
-				replace="\1${scheme}://@{appserver.hostname}:${appserver.default.web.port}\2" 
+			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml"
+				match="(\s+.value.)http://.*\:\d+(\/.*)"
+				replace="\1${scheme}://@{appserver.hostname}:${appserver.default.web.port}\2"
 				flags="g" byline="true"/>
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
 			<grid-configure-server-config
@@ -2793,7 +2793,7 @@ $HeadURL$
 				grid.secure.enable="@{grid.secure.enable}"
 				appserver.external.http.host="@{appserver.external.http.host}"
 				/>
-					
+
 			<!-- POC stuff -->
 			<echo message="Updateing POC info @{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"/>
 			<!--
@@ -2813,13 +2813,31 @@ $HeadURL$
 				replace="\1${poc.science.string}\2"
 				flags="g" byline="true"/>
 			<!-- Research Center info -->
+			<var name="research.center.lines" unset="true"/>
+			<loadfile
+				property="research.center.lines"
+				srcFile="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml">
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern=":ResearchCenter"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
+			<var name="ns.name" unset="true"/>
+			<propertyregex property="ns.name"
+				input="${research.center.lines}"
+				regexp="^\s*&lt;(.*?):ResearchCenter"
+				select="\1"
+				/>
+			<echo message="Read namespace from :ResearchCenter as ${ns.name}"/>
+
 			<var name="poc.tech.string" value="${line.separator}
-&lt;ns9:ResearchCenter displayName=&quot;@{grid.poc.tech.researchCenter.displayname}&quot; shortName=&quot;@{grid.poc.tech.researchCenter.shortname}&quot; xmlns:ns9=&quot;gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common&quot;&gt;${line.separator}
-&lt;ns9:Address country=&quot;@{grid.poc.tech.addr.country}&quot; locality=&quot;@{grid.poc.tech.addr.locality}&quot; postalCode=&quot;@{grid.poc.tech.addr.postalCode}&quot; stateProvince=&quot;@{grid.poc.tech.addr.stateProvince}&quot; street1=&quot;@{grid.poc.tech.addr.street1}&quot; street2=&quot;@{grid.poc.tech.addr.street2}&quot;/&gt;${line.separator}
-&lt;ns9:pointOfContactCollection&gt;${line.separator}
-&lt;ns9:PointOfContact affiliation=&quot;@{grid.poc.tech.affiliation}&quot; email=&quot;@{grid.poc.tech.email}&quot; firstName=&quot;@{grid.poc.tech.name.first}&quot; lastName=&quot;@{grid.poc.tech.name.last}&quot; phoneNumber=&quot;@{grid.poc.tech.phone}&quot; role=&quot;@{grid.poc.tech.role}&quot;/&gt;${line.separator}
-&lt;/ns9:pointOfContactCollection&gt;${line.separator}
-&lt;/ns9:ResearchCenter&gt;${line.separator}
+&lt;${ns.name}:ResearchCenter displayName=&quot;@{grid.poc.tech.researchCenter.displayname}&quot; shortName=&quot;@{grid.poc.tech.researchCenter.shortname}&quot; xmlns:${ns.name}=&quot;gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common&quot;&gt;${line.separator}
+&lt;${ns.name}:Address country=&quot;@{grid.poc.tech.addr.country}&quot; locality=&quot;@{grid.poc.tech.addr.locality}&quot; postalCode=&quot;@{grid.poc.tech.addr.postalCode}&quot; stateProvince=&quot;@{grid.poc.tech.addr.stateProvince}&quot; street1=&quot;@{grid.poc.tech.addr.street1}&quot; street2=&quot;@{grid.poc.tech.addr.street2}&quot;/&gt;${line.separator}
+&lt;${ns.name}:pointOfContactCollection&gt;${line.separator}
+&lt;${ns.name}:PointOfContact affiliation=&quot;@{grid.poc.tech.affiliation}&quot; email=&quot;@{grid.poc.tech.email}&quot; firstName=&quot;@{grid.poc.tech.name.first}&quot; lastName=&quot;@{grid.poc.tech.name.last}&quot; phoneNumber=&quot;@{grid.poc.tech.phone}&quot; role=&quot;@{grid.poc.tech.role}&quot;/&gt;${line.separator}
+&lt;/${ns.name}:pointOfContactCollection&gt;${line.separator}
+&lt;/${ns.name}:ResearchCenter&gt;${line.separator}
 "/>
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"
 				match="&lt;ns1:hostingResearchCenter&gt;.*&lt;\/ns1:hostingResearchCenter&gt;"
@@ -2827,7 +2845,7 @@ $HeadURL$
 				flags="sg"/>
 
 			<echo message="Updating poll interval grid registration.xml"/>
-			<replaceregexp 
+			<replaceregexp
 				match="(&lt;agg:PollIntervalMillis&gt;).*(&lt;\/agg:PollIntervalMillis&gt;)"
 				replace="\13600000\2"
 				flags="sg">
@@ -2837,7 +2855,7 @@ $HeadURL$
 			</replaceregexp>
 			<!-- Change pointer to index service based on property -->
 			<echo message="Updating grid.index.url - @{grid.index.url}"/>
-			<replaceregexp 
+			<replaceregexp
 				match="(&lt;wsa:Address&gt;).*(&lt;\/wsa:Address&gt;)"
 				replace="\1@{grid.index.url}\2"
 				flags="sg">
@@ -2976,6 +2994,7 @@ $HeadURL$
 				</insert>
 			</xmltask>
 
+			<var name="jmx-console.user.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-users.properties"/>
 			<if>
 				<isset property="jboss.web.user"/>
 				<then>
@@ -2983,15 +3002,15 @@ $HeadURL$
 					<echo message="Updating ${jmx-console.user.file}"/>
 					<var name="jmx-console.user.matched" unset="true"/>
 					<loadfile
-						property="jmx-console.user.matched"                      
-						srcFile="${jmx-console.user.file}">                   
-						<filterchain>                                   
-							<linecontainsregexp>                                    
-								<regexp pattern="@{jboss.web.user}="/>                                     
-							</linecontainsregexp>                                   
-						</filterchain>                                  
-					</loadfile>               
-		
+						property="jmx-console.user.matched"
+						srcFile="${jmx-console.user.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="@{jboss.web.user}="/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+
 					<if>
 						<isset property="jmx-console.user.matched"/>
 						<then>
@@ -3010,15 +3029,15 @@ $HeadURL$
 					<echo message="Updating ${jmx-console.role.file}"/>
 					<var name="jmx-console.role.matched" unset="true"/>
 					<loadfile
-						property="jmx-console.role.matched"                      
-						srcFile="${jmx-console.role.file}">                   
-						<filterchain>                                   
-							<linecontainsregexp>                                    
-								<regexp pattern="@{jboss.web.user}="/>                                     
-							</linecontainsregexp>                                   
-						</filterchain>                                  
-					</loadfile>               
-		
+						property="jmx-console.role.matched"
+						srcFile="${jmx-console.role.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="@{jboss.web.user}="/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+
 					<if>
 						<isset property="jmx-console.role.matched"/>
 						<then>
@@ -3111,6 +3130,7 @@ $HeadURL$
 				</fileset>
 			</copy>
 
+			<var name="web-console.user.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-users.properties"/>
 			<if>
 				<isset property="jboss.web.user"/>
 				<then>
@@ -3118,15 +3138,15 @@ $HeadURL$
 					<echo message="Updating ${web-console.user.file}"/>
 					<var name="web-console.user.matched" unset="true"/>
 					<loadfile
-						property="web-console.user.matched"                      
-						srcFile="${web-console.user.file}">                   
-						<filterchain>                                   
-							<linecontainsregexp>                                    
-								<regexp pattern="@{jboss.web.user}="/>                                     
-							</linecontainsregexp>                                   
-						</filterchain>                                  
-					</loadfile>               
-		
+						property="web-console.user.matched"
+						srcFile="${web-console.user.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="@{jboss.web.user}="/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+
 					<if>
 						<isset property="web-console.user.matched"/>
 						<then>
@@ -3145,15 +3165,15 @@ $HeadURL$
 					<echo message="Updating ${web-console.role.file}"/>
 					<var name="web-console.role.matched" unset="true"/>
 					<loadfile
-						property="web-console.role.matched"                      
-						srcFile="${web-console.role.file}">                   
-						<filterchain>                                   
-							<linecontainsregexp>                                    
-								<regexp pattern="@{jboss.web.user}="/>                                     
-							</linecontainsregexp>                                   
-						</filterchain>                                  
-					</loadfile>               
-		
+						property="web-console.role.matched"
+						srcFile="${web-console.role.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="@{jboss.web.user}="/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+
 					<if>
 						<isset property="web-console.role.matched"/>
 						<then>
@@ -3168,7 +3188,7 @@ $HeadURL$
 							<echo file="${web-console.role.file}" append="true" message="@{jboss.web.user}=JBossAdmin,HttpInvoker"/>
 						</else>
 					</if>
-		
+
 				</then>
 				<else>
 					<echo message="User not added to ${jmx-console.user.file}"/>
@@ -3211,10 +3231,10 @@ $HeadURL$
 			<tstamp>
 				<format property="JAR_STAMP" pattern="MMddyyyyhhmmss" unit="millisecond" />
 			</tstamp>
-		
+
 			<!-- Cleanup target area -->
 			<delete dir="@{target.dir}/@{izpack.binary.name}" />
-			
+
 			<!-- Extract izpack -->
 			<get src="@{izpack.binary.uri}/@{izpack.binary.file}" dest="@{download.dir}/@{izpack.binary.file}" usetimestamp="true"/>
 			<unzip dest="@{target.dir}" src="@{download.dir}/@{izpack.binary.file}" />
@@ -3247,8 +3267,8 @@ $HeadURL$
 			</copy>
 
 			<!-- customize izpack  -->
-			<xmltask failWithoutMatch="true" source="@{target.dir}/@{izpack.binary.name}/src/build.xml" 
-				dest="@{target.dir}/@{izpack.binary.name}/src/build.xml">		
+			<xmltask failWithoutMatch="true" source="@{target.dir}/@{izpack.binary.name}/src/build.xml"
+				dest="@{target.dir}/@{izpack.binary.name}/src/build.xml">
 				<insert path="//target[@name='build.listeners']" file="@{izpack-custom.svn.dir}/resources/ProgressBarInstallerListener.xml"/>
 			</xmltask>
 			<copy file="@{izpack-custom.svn.dir}/resources/eng.xml" todir="@{target.dir}/@{izpack.binary.name}/bin/langpacks/installer" overwrite="true" />
@@ -3304,7 +3324,7 @@ $HeadURL$
 								<copy path="//module-option[@name='ldapHost']/text()" property="read.ldap.url" />
 								<copy path="//module-option[@name='ldapSearchableBase']/text()" property="read.ldap.basedn" />
 								<copy path="//module-option[@name='ldapUserIdLabel']/text()" property="read.ldap.searchprefix" />
-							</xmltask>							
+							</xmltask>
 							<if>
 								<isset property="read.ldap.url"/>
 								<then>
@@ -3320,8 +3340,8 @@ $HeadURL$
 									<property name="@{authentication.type.property.name}" value="db"/>
 								</else>
 							</if>
-						</else> 
-					</if>   
+						</else>
+					</if>
 				</then>
 				<else>
 					<var name="authentication.type" value="db"/>
@@ -3341,8 +3361,8 @@ $HeadURL$
 		<sequential>
 			<if>
 				<or>
-					<os family="unix"/>     
-					<os family="mac"/>     
+					<os family="unix"/>
+					<os family="mac"/>
 				</or>
 				<then>
 
@@ -3367,12 +3387,12 @@ $HeadURL$
 				if (file1.isFile())
 				{
 				// println file1.toString() + " is a file"
-				file1Name = file1.getName() 
+				file1Name = file1.getName()
 				file1Path = file1.getParent()
 				file2Str = dir2.toString() + "/" + file1.toString().substring(dir1Length)
 				file2 = new File(file2Str)
 				// println file2.toString() + " debug"
-				if (!file2.isFile() &amp;&amp; !file2.isDirectory()) 
+				if (!file2.isFile() &amp;&amp; !file2.isDirectory())
 				{
 				println file2.toString() + " is a new file."
 				reportText += "## " + file2.toString() + " is a new file.\n"
@@ -3399,7 +3419,7 @@ $HeadURL$
 				file1Str = dir1.toString() + "/" + file2.toString().substring(dir2Length)
 				file1 = new File(file1Str)
 				//println file2.toString() + " debug"
-				if (!file1.isFile() &amp;&amp; !file1.isDirectory()) 
+				if (!file1.isFile() &amp;&amp; !file1.isDirectory())
 				{
 				println file2.toString() + " is missing in new installation."
 				reportText += "## " + file2.toString() + " is a new file.\n"
@@ -3460,7 +3480,7 @@ $HeadURL$
 			<backup-roll
 				backupDir="@{backup.base.dir}"
 				backupCount="@{backup.count}"
-				/>                      
+				/>
 			<delete dir="@{backup.base.dir}/backup"/>
 			<mkdir dir="@{backup.base.dir}/backup"/>
 			<mkdir dir="@{src.dir}"/>
@@ -3499,29 +3519,29 @@ $HeadURL$
 				<then>
 					<java jar="${tools.dir}/${jboss.binaries.file}" fork="true">
 						<arg line="-installGroup @{jems.install.option} installpath=@{jboss.home}"/>
-					</java>         
+					</java>
 				</then>
 			</if>
 
 			<!-- make sure default server is renamed if applicable -->
-			<if>            
-				<not>                   
+			<if>
+				<not>
 					<equals arg1="${jboss.server.name}" arg2="default"/>
-				</not>                  
-				<then>                  
+				</not>
+				<then>
 					<move todir="${jboss.home}/server/${jboss.server.name}">
 						<fileset dir="${jboss.home}/server/default"/>
-					</move>                         
-				</then>                 
-			</if>           
+					</move>
+				</then>
+			</if>
 
-			<if>            
-				<os family="unix"/>     
-				<then>                  
-					<chmod dir="${jboss.home}/bin" perm="ugo+rx" 
-						includes="**/*.sh"/>                    
-				</then>                 
-			</if>           
+			<if>
+				<os family="unix"/>
+				<then>
+					<chmod dir="${jboss.home}/bin" perm="ugo+rx"
+						includes="**/*.sh"/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-login-config">
@@ -3532,32 +3552,32 @@ $HeadURL$
 		<attribute name="login-config.ldap.file"/>
 		<attribute name="login-config.db.file"/>
 		<sequential>
-			<if>                            
+			<if>
 				<equals arg1="@{authentication.type}" arg2="ldap"/>
-				<then>                  
+				<then>
 					<var name="login-config.block.file" value="@{login-config.ldap.file}"/>
-				</then>                                 
-				<else>                                  
-					<if>                                            
+				</then>
+				<else>
+					<if>
 						<equals arg1="@{authentication.type}" arg2="db"/>
-						<then>                                  
+						<then>
 							<var name="login-config.block.file" value="@{login-config.db.file}"/>
-						</then>                                         
+						</then>
 						<else>
 							<fail message="@{authentication.type} is not a valid authentiation type, please change to db or ldap and re-run the build."/>
-						</else>                         
-					</if>                   
-				</else>         
-			</if>           
+						</else>
+					</if>
+				</else>
+			</if>
 			<echo message="Inserting ${login-config.block.file} into @{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
-			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" 
-				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">		
+			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
+				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
 				<remove path="//policy/application-policy[@name='@{application.context.name}']"/>
 			</xmltask>
-			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" 
-				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">		
+			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
+				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
 				<insert path="//policy" file="${login-config.block.file}"/>
-			</xmltask>   
+			</xmltask>
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-log4j-config">
@@ -3621,7 +3641,7 @@ $HeadURL$
 				//System.exit(exitCode)
 				}
 				// Test Thresholds
-				String fileSize="" 
+				String fileSize=""
 				if (log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxFileSize'})
 				{
 				fileSize = log4j.appender.find{it.'@name'==name}.param.find{it.'@name'=='MaxFileSize'}."@value"
@@ -3639,7 +3659,7 @@ $HeadURL$
 				}
 				else
 				{
-				println "WARNING - Max Files is not set." 
+				println "WARNING - Max Files is not set."
 				//println errorMsg
 				//System.exit(exitCode)
 				}
@@ -3654,8 +3674,8 @@ $HeadURL$
 				String unit = numMatcher.group(2)
 
 
-				Integer maxSize = numUnits 
-				if (unit.length() > 0 ) 
+				Integer maxSize = numUnits
+				if (unit.length() > 0 )
 				{
 				maxSize = numUnits * sizeMap[unit]
 				}
@@ -3684,30 +3704,30 @@ $HeadURL$
 		<attribute name="properties.file" default="${properties.file}" />
 		<attribute name="target.name" />
 		<sequential>
-			<!-- Copies over all files so linux and windows properties are present --> 
+			<!-- Copies over all files so linux and windows properties are present -->
 			<copy todir="@{install.dir}">
 				<fileset dir="@{build.dir}">
-					<include name="*.properties" /> 
-				</fileset>              
-			</copy>         
+					<include name="*.properties" />
+				</fileset>
+			</copy>
 			<exec osfamily="unix" executable="ant" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
 				<arg value="-Dproperties.file=@{properties.file}" />
 				<!-- force reinstall of database and jboss without prompting -->
 				<arg value="-Dforce.reinstall=true" />
 				<arg value="@{target.name}" />
-			</exec>         
+			</exec>
 			<exec osfamily="windows" executable="ant.bat" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
 				<arg value="-Dproperties.file=@{properties.file}" />
 				<!-- force reinstall of database and jboss without prompting -->
 				<arg value="-Dforce.reinstall=true" />
 				<arg value="@{target.name}" />
-			</exec>         
+			</exec>
 			<!-- ant returns exit code zero on failure to psexec, issue still lives on
 			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{install.dir}" failonerror="true">
 				<arg line="ant.bat -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}"/>
-			</exec>         
+			</exec>
 			-->
 		</sequential>
 	</macrodef>
@@ -3725,26 +3745,26 @@ $HeadURL$
 			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" override="true" />
 			<check-valid-directory-name directory.property="remote.dir" />
 			<!-- Delete/re-create remote directory -->
-			<remote-ssh 
+			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
 				remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
 			<!-- work around for issue where basedir is required but is not currently used -->
-			<remote-ssh 
+			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
-				remotesshcommand="mkdir -p ${remote.dir}/lib" /> 
+				remotesshcommand="mkdir -p ${remote.dir}/lib" />
 
 			<!-- copy distribution and prop file to remote system -->
-			<remote-scp 
+			<remote-scp
 				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 			<!-- Extract zip file -->
-			<remote-ssh 
+			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
 				remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
 			<!-- copy properties after unzip to ensure that zip does not prompt for file existence if properties file is already in distribution. -->
-			<remote-scp 
+			<remote-scp
 				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
 		</sequential>
 	</macrodef>
@@ -3778,7 +3798,7 @@ $HeadURL$
 
 			<!-- Set default target and properyties.file to install and install.properties -->
 			<replaceregexp file="@{dist.exploded.dir}/install.xml" byline="true" match="(.project.*default=.)\w+(.\s+.*)" replace="\1@{default.target}\2" />
-			<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.*property name=.properties.file. value=.).*?(&quot;.*)" replace="\1@{default.target}.properties\2" />
+			<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.*)install.properties(.*)" replace="\1@{default.target}.properties\2" />
 
 			<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
 			<move file="@{dist.exploded.dir}/install.xml" tofile="@{dist.exploded.dir}/build.xml" />
@@ -3786,7 +3806,7 @@ $HeadURL$
 			<!-- Copy over BDA macrodefs and librarires -->
 			<echo message="Copying bda-utils dir"/>
 			<copy todir="@{dist.exploded.dir}/bda-utils" overwrite="true">
-				<fileset dir="@{bda-utils.dir}"> 
+				<fileset dir="@{bda-utils.dir}">
 					<include name="**/*" />
 				</fileset>
 			</copy>
@@ -3859,7 +3879,7 @@ $HeadURL$
 								emptySessionPath="true"
 								scheme="https"
 								secure="true"
-							       	clientAuth="false" 
+							       	clientAuth="false"
 								keystoreFile="@{appserver.conf.dir}/@{appserver.ssl.keystore.file}"
 								keystorePass="@{appserver.ssl.keystore.pass}"
 								keyAlias="@{appserver.ssl.keystore.alias}"
@@ -3876,7 +3896,7 @@ $HeadURL$
 								emptySessionPath="true"
 								scheme="https"
 								secure="true"
-							       	clientAuth="false" 
+							       	clientAuth="false"
 								keystoreFile="@{appserver.conf.dir}/@{appserver.ssl.keystore.file}"
 								keystorePass="@{appserver.ssl.keystore.pass}"
 								keyAlias="@{appserver.ssl.keystore.alias}"
@@ -3898,26 +3918,26 @@ $HeadURL$
 		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<sequential>
-			<if>                            
+			<if>
 				<equals arg1="@{appserver.ssl.enable}" arg2="true"/>
-				<then>                                  
+				<then>
 					<var name="keytool.output" unset="true"/>
 					<var name="keytool.error" unset="true"/>
 					<var name="keytool.result" unset="true"/>
 					<echo message="Validating JBoss SSL configurations"/>
 					<exec executable="keytool" outputproperty="keytool.output" errorproperty="keytool.error" resultproperty="keytool.result">
 						<arg line="-list -keystore @{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file} -storepass @{appserver.ssl.keystore.pass} -alias  @{appserver.ssl.keystore.alias} -v"/>
-					</exec>                                 
-					<if>                                            
-						<not>                                                   
-							<equals arg1="${keytool.result}" arg2="0"/>     
-						</not>                                          
-						<then>                                                  
+					</exec>
+					<if>
+						<not>
+							<equals arg1="${keytool.result}" arg2="0"/>
+						</not>
+						<then>
 							<fail message="keytool failed - ${keytool.output} ${keytool.error}"/>
-						</then>                                         
-						<else>                                                  
+						</then>
+						<else>
 							<echo message="debug - ${keytool.result} ${keytool.output} ${keytool.error}"/>
-			<groovy>                
+			<groovy>
 				<arg line="${keytool.output} @{appserver.ssl.fullyqualified.hostname}"/>
 				import java.util.regex.Pattern
 
@@ -3959,13 +3979,13 @@ $HeadURL$
 				}
 				}
 			</groovy>
-						</else>                                       
-					</if>                                   
-				</then>                         
-				<else>                          
+						</else>
+					</if>
+				</then>
+				<else>
 					<echo message="appserver.ssl.enable not set or true so skipping ssl validation"/>
-				</else>                         
-			</if>                   
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -4047,16 +4067,16 @@ $HeadURL$
 						<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']">
 							<![CDATA[
 							<Connector className="org.globus.tomcat.coyote.net.HTTPSConnector"
-								port="@{grid.secure.port}" 
-								maxThreads="150" 
-								minSpareThreads="25" 
-								maxSpareThreads="75" 
+								port="@{grid.secure.port}"
+								maxThreads="150"
+								minSpareThreads="25"
+								maxSpareThreads="75"
 								autoFlush="true"
-								disableUploadTimeout="true" 
+								disableUploadTimeout="true"
 								scheme="https"
-								enableLookups="true" 
-								acceptCount="10" 
-								debug="0" 
+								enableLookups="true"
+								acceptCount="10"
+								debug="0"
 								cert="@{appserver.conf.dir}/@{grid.secure.cert.file}"
 								key="@{appserver.conf.dir}/@{grid.secure.key.file}"
 								${tomcat55.extras}
@@ -4071,12 +4091,12 @@ $HeadURL$
 					<echo message="grid.secure.enable not set so secure grid not configured"/>
 				</else>
 			</if>
-		</sequential>      
+		</sequential>
 	</macrodef>
 	<macrodef name="grid-secure-configure-valve">
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
-		<sequential>    
+		<sequential>
 			<!-- Functionallity moved to grid-secure-configure-connector
 			<switch value="@{appserver.server-xml.service.name}">
 				<case value="jboss.web">
@@ -4093,13 +4113,13 @@ $HeadURL$
 				dest="@{appserver.server-xml.file}">
 				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/ConnenctorEngine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
 				<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']">
-					<![CDATA[                               
+					<![CDATA[
 					<Valve className="${valve.name}"/>
-					]]>                                     
-				</insert>                       
-			</xmltask>              
+					]]>
+				</insert>
+			</xmltask>
 			-->
-		</sequential>   
+		</sequential>
 	</macrodef>
 
 	<macrodef name="grid-secure-configure-secdesc">
@@ -4113,18 +4133,18 @@ $HeadURL$
 			<if>
 				<available file="@{grid.secdesc.file}" />
 				<then>
-					<xmltask source="@{grid.secdesc.file}" 
+					<xmltask source="@{grid.secdesc.file}"
 						dest="@{grid.secdesc.file}">
 						<remove path="/*[local-name()='securityConfig']/*[local-name()='gridmap']" />
 					</xmltask>
-					<xmltask source="@{grid.secdesc.file}" 
+					<xmltask source="@{grid.secdesc.file}"
 						dest="@{grid.secdesc.file}"
 						failWithoutMatch="true">
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='key-file']"
-							attr="value" 
+							attr="value"
 							value="@{appserver.conf.dir}/@{grid.secure.key.file}" />
 						<attr   path="/*[local-name()='securityConfig']/*[local-name()='credential']/*[local-name()='cert-file']"
-							attr="value" 
+							attr="value"
 							value="@{appserver.conf.dir}/@{grid.secure.cert.file}" />
 					</xmltask>
 				</then>
@@ -4155,7 +4175,7 @@ $HeadURL$
 		<attribute name="grid.secure.enable" default="true"/>
 		<attribute name="appserver.external.http.host" default="${jboss.external.http.host}"/>
 		<sequential>
-			
+
 			<var name="grid.external.secure.host.has.value" unset="true"/>
 			<propertyregex property="grid.external.secure.host.has.value"
 				input="@{grid.external.secure.host}"
@@ -4168,7 +4188,7 @@ $HeadURL$
 				regexp="\S+"
 				select="true"
 				/>
-			
+
 			<if>
 				<and>
 					<equals arg1="@{grid.secure.enable}" arg2="true"/>
@@ -4311,11 +4331,11 @@ $HeadURL$
 					<echo message="Grid External Host Name set so configuring proxy settings"/>
 					<xmltask source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}">
-						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{proxy.update.connector.port}']" 
-							attr="proxyPort" 
+						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{proxy.update.connector.port}']"
+							attr="proxyPort"
 							value="@{appserver.external.port}"/>
-						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{proxy.update.connector.port}']" 
-							attr="proxyName" 
+						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{proxy.update.connector.port}']"
+							attr="proxyName"
 							value="@{appserver.external.host}"/>
 					</xmltask>
 				</then>
@@ -4419,7 +4439,7 @@ $HeadURL$
 						database.jndi.datasource.name="@{database.jndi.datasource.name}"
 						database.context.path="@{database.context.path}"
 						/>
-		
+
 					<echo message="Securing tomcat app server"/>
 					<appserver-ssl-configure
 						appserver.conf.dir="@{tomcat.conf.dir}"
@@ -4433,7 +4453,7 @@ $HeadURL$
 						appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
 						appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
 						/>
-		
+
 					<!-- needs to be done before changing ports -->
 					<echo message="Configuring tomcat proxy settings for ssl"/>
 					<appserver-configure-external-hostname
@@ -4442,7 +4462,7 @@ $HeadURL$
 						appserver.external.host="@{tomcat.external.ssl.host}"
 						appserver.external.port="@{tomcat.external.ssl.port}"
 						proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
-						/>                                                                      
+						/>
 					<!-- needs to be done before changing ports -->
 					<echo message="Configuring tomcat proxy settings for http"/>
 					<appserver-configure-external-hostname
@@ -4451,7 +4471,7 @@ $HeadURL$
 						appserver.external.host="@{tomcat.external.http.host}"
 						appserver.external.port="@{tomcat.external.http.port}"
 						proxy.update.connector.port="@{proxy.update.connector.port.http}"
-						/>                                                                      
+						/>
 					<!-- needs to be done before changing ports -->
 					<!--
 					<echo message="Configuring JBoss hostname in server.xml"/>
@@ -4462,16 +4482,16 @@ $HeadURL$
 						/>
 					-->
 
-					<echo message="Updating Tomcat Ports"/> 
+					<echo message="Updating Tomcat Ports"/>
 					<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
 						<replace path="(//Connector)[@port=8080]/@port" withtext="@{tomcat.port.http}" />
 						<replace path="(//Connector)[@redirectPort=8443]/@redirectPort" withtext="@{tomcat.port.ssl}" />
 						<replace path="(//Connector)[@port=8009]/@port" withtext="@{tomcat.port.ajp}" />
 						<replace path="(//Connector)[@port=8443]/@port" withtext="@{tomcat.port.ssl}" />
-						<replace path="(//Server)[@port=8005]/@port" withtext="@{tomcat.port.shutdown}" />				
+						<replace path="(//Server)[@port=8005]/@port" withtext="@{tomcat.port.shutdown}" />
 					</xmltask>
-		
-		
+
+
 					<if>
 						<equals arg1="@{tomcat.grid.configure}" arg2="true"/>
 						<then>
@@ -4497,7 +4517,7 @@ $HeadURL$
 										appserver.external.host="@{tomcat.external.grid.secure.host}"
 										appserver.external.port="@{tomcat.external.grid.secure.port}"
 										proxy.update.connector.port="@{tomcat.grid.secure.port}"
-										/>                                                                      
+										/>
 								</then>
 								<else>
 									<echo message="Skipping configuring tomcat proxy settings for secure grid since secure grid is not set."/>
@@ -4640,7 +4660,7 @@ $HeadURL$
 							<echo message="Skipping configuring JBoss ports (bindings) because exclude.jboss-bindings is set"/>
 						</else>
 					</if>
-		
+
 					<if>
 						<not>
 							<equals arg1="${exclude.jboss-login-config}" arg2="true"/>
@@ -4659,7 +4679,7 @@ $HeadURL$
 							<echo message="Skipping configuring JBoss login-config.xml because exclude.jboss-bindings is set"/>
 						</else>
 					</if>
-		
+
 					<echo message="Adding user and password to JBoss console apps"/>
 					<secure-jboss-console
 						jboss.home="@{jboss.home}"
@@ -4667,14 +4687,14 @@ $HeadURL$
 						jboss.web.user="@{jboss.web.user}"
 						jboss.web.password="@{jboss.web.password}"
 						/>
-		
+
 					<echo message="Updating JBoss shutdown.jar to allow shutdown without command line args"/>
 					<jboss-update-shutdown
 						jboss.home="@{jboss.home}"
 						jboss.server.hostname="@{jboss.server.hostname}"
 						jboss.server.jndi.port="@{jboss.server.jndi.port}"
 						/>
-		
+
 					<echo message="Enableing SSL for JBoss"/>
 					<appserver-ssl-configure
 						appserver.conf.dir="@{jboss.conf.dir}"
@@ -4688,7 +4708,7 @@ $HeadURL$
 						appserver.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
 						appserver.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
 						/>
-		
+
 					<echo message="Configuring JBoss proxy settings for ssl"/>
 					<appserver-configure-external-hostname
 						appserver.server-xml.file="@{jboss.server-xml.file}"
@@ -4696,7 +4716,7 @@ $HeadURL$
 						appserver.external.host="@{jboss.external.ssl.host}"
 						appserver.external.port="@{jboss.external.ssl.port}"
 						proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
-						/>                                                                      
+						/>
 					<echo message="Configuring JBoss proxy settings for http"/>
 					<appserver-configure-external-hostname
 						appserver.server-xml.file="@{jboss.server-xml.file}"
@@ -4704,7 +4724,7 @@ $HeadURL$
 						appserver.external.host="@{jboss.external.http.host}"
 						appserver.external.port="@{jboss.external.http.port}"
 						proxy.update.connector.port="@{proxy.update.connector.port.http}"
-						/>                                                                      
+						/>
 					<!--
 					<echo message="Configuring JBoss hostname in server.xml"/>
 					<appserver-configure-hostname
@@ -4713,7 +4733,7 @@ $HeadURL$
 						appserver.hostname="@{jboss.server.hostname}"
 						/>
 					-->
-		
+
 					<echo message="Configuring secure grid in JBoss"/>
 					<if>
 						<equals arg1="@{jboss.grid.configure}" arg2="true"/>
@@ -4723,6 +4743,7 @@ $HeadURL$
 								appserver.conf.dir="@{jboss.conf.dir}"
 								appserver.server-xml.file="@{jboss.server-xml.file}"
 								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+								grid.secure.port="@{jboss.grid.secure.port}"
 								grid.secure.dir="@{jboss.grid.secure.dir}"
 								grid.secure.enable="@{jboss.grid.secure.enable}"
 								grid.secure.key.file="@{jboss.grid.secure.key.file}"
@@ -4745,7 +4766,7 @@ $HeadURL$
 										appserver.external.host="@{jboss.external.grid.secure.host}"
 										appserver.external.port="@{jboss.external.grid.secure.port}"
 										proxy.update.connector.port="@{jboss.grid.secure.port}"
-										/>                                                                      
+										/>
 								</then>
 								<else>
 									<echo message="Skipping configuring jboss proxy settings for secure grid since secure grid is not set."/>
@@ -4796,12 +4817,12 @@ $HeadURL$
 			<echo message="Updateing hostname in server.xml"/>
 			<xmltask source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
-				<attr path="//Engine[@name='@{appserver.server-xml.service.name}']" 
-					attr="defaultHost"                    
-					value="@{appserver.hostname}" />              
+				<attr path="//Engine[@name='@{appserver.server-xml.service.name}']"
+					attr="defaultHost"
+					value="@{appserver.hostname}" />
 				<attr path="//Engine[@name='@{appserver.server-xml.service.name}']/Host"
-					attr="name"                           
-					value="@{appserver.hostname}" />              
+					attr="name"
+					value="@{appserver.hostname}" />
 			</xmltask>
 		</sequential>
 	</macrodef>
@@ -4819,13 +4840,13 @@ $HeadURL$
 						<case value="unix">
 							<replaceregexp file="@{jboss.bin.dir}/run.conf" byline="true"
 								match="^(\s+JAVA_OPTS)=(.*)"
-								replace="#\1=\2${line.separator}# added by macro${line.separator}\1='@{jboss.java.opts}'"
+								replace="#\1=\2${line.separator}# added by macro${line.separator}\1=&quot;@{jboss.java.opts}&quot;"
 								/>
 								</case>
 						<case value="mac">
 							<replaceregexp file="@{jboss.bin.dir}/run.conf" byline="true"
 								match="^(\s+JAVA_OPTS)=(.*)"
-								replace="#\1=\2${line.separator}# added by macro${line.separator}\1='@{jboss.java.opts}'"
+								replace="#\1=\2${line.separator}# added by macro${line.separator}\1=&quot;@{jboss.java.opts}&quot;"
 								/>
 						</case>
 						<case value="windows">
@@ -4857,7 +4878,7 @@ $HeadURL$
 		<sequential>
 			<basename property="changelog.file" file="@{database.changelog.file}"/>
 			<echo message="Updateing liquibase metadata file name to @{database.changelog.file}  where filename includes ${changelog.file}"/>
-			<sql    
+			<sql
 				driver="@{database.driver}"
 				url="@{database.url}"
 				userid="@{database.user}"
@@ -4870,7 +4891,7 @@ $HeadURL$
 					<pathelement location="${database.driver.file}" />
 				</classpath>
 				update databasechangelog set filename='@{database.changelog.file}' where filename like '%${changelog.file}';
-			</sql>  
+			</sql>
 		</sequential>
 	</macrodef>
 	<macrodef name="appserver-accesslog-configure" description="macro for enabling ssl in jboss">
@@ -4918,7 +4939,7 @@ $HeadURL$
 				input="@{tomcat.binaries.relative.dir}"
 				regexp="(\d+\.\d+\.\d+).*"
 				select="\1"
-				/>                      
+				/>
 			<echo message="checking jboss version - ${jboss.version.check}."/>
 			<if>
 				<isset property="jboss.version.check"/>
@@ -5049,17 +5070,17 @@ $HeadURL$
 			<basename file="@{cacore-sdk.src.url}" property="cacore-sdk.binaries.file"/>
 			<mkdir dir="@{download.dir}"/>
 			<!-- Download if not already downloaded -->
-			<if>            
-				<and>                   
+			<if>
+				<and>
 					<equals arg1="@{cacore-sdk.required}" arg2="true"/>
-					<not>                           
+					<not>
 						<available file="@{download.dir}/${cacore-sdk.binaries.file}"/>
-					</not>                          
-				</and>                  
-				<then>                  
+					</not>
+				</and>
+				<then>
 					<get src="@{cacore-sdk.src.url}" dest="@{download.dir}/${cacore-sdk.binaries.file}" />
-				</then>                 
-			</if>           
+				</then>
+			</if>
 			<mkdir dir="@{cacore-sdk.dir}"/>
 			<!-- Extract if not already extracted -->
 			<if>
@@ -5156,18 +5177,109 @@ $HeadURL$
 		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
 		<attribute name="jboss.server.jndi.port.property.name" default="jboss.server.jndi.port"/>
 		<attribute name="jboss.server.port.property.name" default="jboss.server.port"/>
+		<attribute name="jboss.ejbinvoker.port.property.name" default="jboss.ejbinvoker.port"/>
+		<attribute name="jboss.server.rmi.port.property.name" default="jboss.server.rmi.port"/>
+		<attribute name="jboss.web.service.port.property.name" default="jboss.web.service.port"/>
+		<attribute name="jboss.service.rmiobject.port.property.name" default="jboss.service.rmiobject.port"/>
+		<attribute name="jboss.server.bind.port.property.name" default="jboss.server.bind.port"/>
+		<attribute name="jboss.hajndi.port.property.name" default="jboss.hajndi.port"/>
+		<attribute name="jboss.hajrmi.port.property.name" default="jboss.hajrmi.port"/>
+		<attribute name="jboss.pooledha.port.property.name" default="jboss.pooledha.port"/>
+		<attribute name="jboss.cobraorb.port.property.name" default="jboss.cobraorb.port"/>
+		<attribute name="jboss.jmx-rmi.port.property.name" default="jboss.jmx-rmi.port"/>
+		<attribute name="jboss.snmp-trapd.port.property.name" default="jboss.snmp-trapd.port"/>
+		<attribute name="jboss.snmp.port.property.name" default="jboss.snmp.port"/>
+		<attribute name="jboss.jms.port.property.name" default="jboss.jms.port"/>
+		<attribute name="jboss.remoting.port.property.name" default="jboss.remoting.port"/>
+		<attribute name="jboss.messaging.port.property.name" default="jboss.messaging.port"/>
+
 		<sequential>
-			<var name="jboss-read-ports.properties.list" value="@{jboss.server.jndi.port.property.name},@{jboss.server.port.property.name}"/>
+			<var name="jboss-read-ports.properties.list" value="@{jboss.server.jndi.port.property.name},@{jboss.server.port.property.name},@{jboss.ejbinvoker.port.property.name},@{jboss.server.rmi.port.property.name},@{jboss.web.service.port.property.name},@{jboss.service.rmiobject.port.property.name},@{jboss.server.bind.port.property.name},@{jboss.hajndi.port.property.name},@{jboss.hajrmi.port.property.name},@{jboss.pooledha.port.property.name},@{jboss.cobraorb.port.property.name},@{jboss.jmx-rmi.port.property.name},@{jboss.snmp-trapd.port.property.name},@{jboss.snmp.port.property.name},@{jboss.jms.port.property.name},@{jboss.remoting.port.property.name},@{jboss.messaging.port.property.name}"/>
 			<var name="read.http.port" unset="true"/>
 			<var name="read.jndi.port" unset="true"/>
 			<xmltask failWithoutMatch="true" source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
 				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.web:service=WebServer']/binding/@port" property="read.http.port" attrValue="true"/>
 				<copy path="//service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
 			</xmltask>
+			<var name="read.ejb.port" unset="true"/>
+			<var name="read.jndi.port" unset="true"/>
+			<var name="read.rmi.port" unset="true"/>
+			<var name="read.ws.port" unset="true"/>
+			<var name="read.rmiobj.port" unset="true"/>
+			<var name="read.bind.port" unset="true"/>
+			<var name="read.hajndi.port" unset="true"/>
+			<var name="read.harmi.port" unset="true"/>
+			<var name="read.harmihttp.port" unset="true"/>
+			<var name="read.pooledha.port" unset="true"/>
+			<var name="read.corba.port" unset="true"/>
+			<var name="read.jmx-rmi.port" unset="true"/>
+			<var name="read.snmp-trapd.port" unset="true"/>
+			<var name="read.snmp.port" unset="true"/>
+			<var name="read.jms.port" unset="true"/>
+			<var name="read.remoting.port" unset="true"/>
+			<var name="read.messaging.port" unset="true"/>
+			<xmltask source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.remoting:type=Connector,name=DefaultEjb3Connector,handler=ejb3']/binding/@port" property="read.ejb.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/delegate-config/attribute[@name='RmiPort']/text()" property="read.rmi.port"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=WebService']/binding/@port" property="read.ws.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=jrmp']/binding/@port" property="read.rmiobj.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=pooled']/binding/@port" property="read.bind.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=HAJNDI']/binding/@port" property="read.hajndi.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=HAJNDI']/delegate-config/attribute[@name='RmiPort']/text()" property="read.harmi.port"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=jrmpha']/binding/@port" property="read.harmihttp.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=pooledha']/binding/@port" property="read.pooledha.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=CorbaORB']/binding/@port" property="read.corba.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.jmx:type=Connector,name=RMI']/binding/@port" property="read.jmx-rmi.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.jmx:name=SnmpAgent,service=trapd,type=logger']/binding/@port" property="read.snmp-trapd.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor']/binding/@port" property="read.snmp.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.mq:service=InvocationLayer,type=UIL2']/binding/@port" property="read.jms.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.remoting:service=Connector,transport=socket']/binding/@port" property="read.remoting.port" attrValue="true"/>
+				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.messaging:service=Connector,transport=bisocket']/binding/@port" property="read.messaging.port" attrValue="true"/>
+			</xmltask>
 			<echo level="debug" message="HTTP port=${read.http.port} = @{jboss.server.port.property.name}"/>
 			<echo level="debug" message="JNDI port=${read.jndi.port} = @{jboss.server.jndi.port.property.name}"/>
+
+			<echo  level="debug" message="read.ejb.port=${read.ejb.port}."/>
+			<echo  level="debug" message="read.jndi.port=${read.jndi.port}."/>
+			<echo  level="debug" message="read.rmi.port=${read.rmi.port}."/>
+			<echo  level="debug" message="read.ws.port=${read.ws.port}."/>
+			<echo  level="debug" message="read.rmiobj.port=${read.rmiobj.port}."/>
+			<echo  level="debug" message="read.bind.port=${read.bind.port}."/>
+			<echo  level="debug" message="read.hajndi.port=${read.hajndi.port}."/>
+			<echo  level="debug" message="read.harmi.port=${read.harmi.port}."/>
+			<echo  level="debug" message="read.harmihttp.port=${read.harmihttp.port}."/>
+			<echo  level="debug" message="read.pooledha.port=${read.pooledha.port}."/>
+			<echo  level="debug" message="read.corba.port=${read.corba.port}."/>
+			<echo  level="debug" message="read.jmx-rmi.port=${read.jmx-rmi.port}."/>
+			<echo  level="debug" message="read.snmp-trapd.port=${read.snmp-trapd.port}."/>
+			<echo  level="debug" message="read.snmp.port=${read.snmp.port}."/>
+			<echo  level="debug" message="read.jms.port=${read.jms.port}."/>
+			<echo  level="debug" message="read.remoting.port=${read.remoting.port}."/>
+			<echo  level="debug" message="read.messaging.port=${read.messaging.port}."/>
+
 			<property name="@{jboss.server.port.property.name}" value="${read.http.port}"/>
 			<property name="@{jboss.server.jndi.port.property.name}" value="${read.jndi.port}"/>
+			<property name="@{jboss.ejbinvoker.port.property.name}" value="${read.ejb.port}"/>
+			<property name="@{jboss.server.rmi.port.property.name}" value="${read.rmi.port}"/>
+			<property name="@{jboss.web.service.port.property.name}" value="${read.ws.port}"/>
+			<property name="@{jboss.service.rmiobject.port.property.name}" value="${read.rmiobj.port}"/>
+			<property name="@{jboss.server.bind.port.property.name}" value="${read.bind.port}"/>
+			<property name="@{jboss.hajndi.port.property.name}" value="${read.hajndi.port}"/>
+			<property name="@{jboss.hajrmi.port.property.name}" value="${read.harmi.port}"/>
+			<property name="@{jboss.service.rmiobject.port.property.name}" value="${read.harmihttp.port}"/>
+			<property name="@{jboss.pooledha.port.property.name}" value="${read.pooledha.port}"/>
+			<property name="@{jboss.cobraorb.port.property.name}" value="${read.corba.port}"/>
+			<property name="@{jboss.jmx-rmi.port.property.name}" value="${read.jmx-rmi.port}"/>
+			<property name="@{jboss.snmp-trapd.port.property.name}" value="${read.snmp-trapd.port}"/>
+			<property name="@{jboss.snmp.port.property.name}" value="${read.snmp.port}"/>
+			<property name="@{jboss.jms.port.property.name}" value="${read.jms.port}"/>
+			<property name="@{jboss.remoting.port.property.name}" value="${read.remoting.port}"/>
+			<property name="@{jboss.messaging.port.property.name}" value="${read.messaging.port}"/>
+			<properties-print
+				properties.list="${jboss-read-ports.properties.list}"
+				/>
+
 			<var name="read.properties.list" value="${read.properties.list},${jboss-read-ports.properties.list}"/>
 		</sequential>
 	</macrodef>
@@ -5181,12 +5293,12 @@ $HeadURL$
 			<loadfile
 				property="bindings.file.has.tokens"
 				srcFile="@{jboss.server.bindingfile.location}">
-				<filterchain>                                   
-					<linecontainsregexp>                                    
-						<regexp pattern="\@.+\@"/>                                     
-					</linecontainsregexp>                                   
-				</filterchain>                                  
-			</loadfile>               
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="\@.+\@"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
 			<if>
 				<isset property="bindings.file.has.tokens"/>
 				<then>
@@ -5200,12 +5312,12 @@ $HeadURL$
 			<loadfile
 				property="bindings.file.has.server"
 				srcFile="@{jboss.server.bindingfile.location}">
-				<filterchain>                                   
-					<linecontainsregexp>                                    
-						<regexp pattern="@{jboss.server.ports.name}"/>                                     
-					</linecontainsregexp>                                   
-				</filterchain>                                  
-			</loadfile>               
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="@{jboss.server.ports.name}"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
 			<if>
 				<not>
 					<isset property="bindings.file.has.server"/>
@@ -5217,18 +5329,6 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jboss-copy-bindings">
-		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
-		<attribute name="copied.jboss.server.bindingfile.dir" default="${working.dir}/copied-bindings"/>
-		<attribute name="copied.jboss.bindings.file.property.name" default="copied.jboss.bindings.file"/>
-		<sequential>
-			<mkdir dir="@{copied.jboss.server.bindingfile.dir}"/>
-			<var name="copied.bindings.file" unset="true"/>
-			<basename file="@{jboss.server.bindingfile.location}" property="copied.bindings.file"/>
-			<copy file="@{jboss.server.bindingfile.location}" tofile="@{copied.jboss.server.bindingfile.dir}/${copied.bindings.file}"/>
-			<property name="@{copied.jboss.bindings.file.property.name}" value="${copied.bindings.file}"/>
-		</sequential>
-	</macrodef>
 	<macrodef name="jboss-read-ssl" description="macro for enabling ssl in jboss">
 		<attribute name="jboss.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="jboss.server-xml.service.name" default="jboss.web"/>
@@ -5238,10 +5338,11 @@ $HeadURL$
 		<attribute name="jboss.ssl.keystore.dir.property.name" default="jboss.ssl.keystore.dir"/>
 		<attribute name="jboss.ssl.keystore.pass.property.name" default="jboss.ssl.keystore.pass"/>
 		<attribute name="jboss.ssl.keystore.alias.property.name" default="jboss.ssl.keystore.alias"/>
+		<attribute name="jboss.ssl.keystore.location.property.name" default="jboss.ssl.keystore.location"/>
 		<attribute name="jboss.ssl.fullyqualified.hostname.property.name" default="jboss.ssl.fullyqualified.hostname"/>
 		<attribute name="copied.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<sequential>
-			<var name="jboss-read-ssl.properties.list" value="@{jboss.ssl.enable.property.name},@{jboss.ssl.port.property.name},@{jboss.ssl.keystore.file.property.name},@{jboss.ssl.keystore.dir.property.name},@{jboss.ssl.keystore.pass.property.name},@{jboss.ssl.keystore.alias.property.name},@{jboss.ssl.fullyqualified.hostname.property.name}"/>
+			<var name="jboss-read-ssl.properties.list" value="@{jboss.ssl.enable.property.name},@{jboss.ssl.port.property.name},@{jboss.ssl.keystore.file.property.name},@{jboss.ssl.keystore.dir.property.name},@{jboss.ssl.keystore.pass.property.name},@{jboss.ssl.keystore.alias.property.name},@{jboss.ssl.fullyqualified.hostname.property.name},@{jboss.ssl.keystore.location.property.name}"/>
 			<appserver-read-ssl
 				appserver.server-xml.file="@{jboss.server-xml.file}"
 				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
@@ -5251,6 +5352,7 @@ $HeadURL$
 				appserver.ssl.keystore.pass.property.name="@{jboss.ssl.keystore.pass.property.name}"
 				appserver.ssl.keystore.alias.property.name="@{jboss.ssl.keystore.alias.property.name}"
 				appserver.ssl.fullyqualified.hostname.property.name="@{jboss.ssl.fullyqualified.hostname.property.name}"
+				appserver.ssl.keystore.location.property.name="@{jboss.ssl.keystore.location.property.name}"
 				copied.keystore.dir="@{copied.keystore.dir}"
 				/>
 			<var name="read.properties.list" value="${read.properties.list},${jboss-read-ssl.properties.list}"/>
@@ -5267,10 +5369,11 @@ $HeadURL$
 		<attribute name="tomcat.ssl.keystore.file.property.name" default="tomcat.ssl.keystore.file"/>
 		<attribute name="tomcat.ssl.keystore.pass.property.name" default="tomcat.ssl.keystore.pass"/>
 		<attribute name="tomcat.ssl.keystore.alias.property.name" default="tomcat.ssl.keystore.alias"/>
+		<attribute name="tomcat.ssl.keystore.location.property.name" default="tomcat.ssl.keystore.location"/>
 		<attribute name="tomcat.ssl.fullyqualified.hostname.property.name" default="tomcat.ssl.fullyqualified.hostname"/>
 		<attribute name="copied.keystore.dir" default="${tomcat.ssl.keystore.dir}"/>
 		<sequential>
-			<var name="tomcat-read-ssl.properties.list" value="@{tomcat.ssl.enable.property.name},@{tomcat.ssl.port.property.name},@{tomcat.ssl.keystore.file.property.name},@{tomcat.ssl.keystore.pass.property.name},@{tomcat.ssl.keystore.alias.property.name},@{tomcat.ssl.fullyqualified.hostname.property.name}"/>
+			<var name="tomcat-read-ssl.properties.list" value="@{tomcat.ssl.enable.property.name},@{tomcat.ssl.port.property.name},@{tomcat.ssl.keystore.file.property.name},@{tomcat.ssl.keystore.pass.property.name},@{tomcat.ssl.keystore.alias.property.name},@{tomcat.ssl.fullyqualified.hostname.property.name},@{tomcat.ssl.keystore.location.property.name}"/>
 			<appserver-read-ssl
 				appserver.server-xml.file="@{tomcat.server-xml.file}"
 				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
@@ -5280,6 +5383,7 @@ $HeadURL$
 				appserver.ssl.keystore.pass.property.name="@{tomcat.ssl.keystore.pass.property.name}"
 				appserver.ssl.keystore.alias.property.name="@{tomcat.ssl.keystore.alias.property.name}"
 				appserver.ssl.fullyqualified.hostname.property.name="@{tomcat.ssl.fullyqualified.hostname.property.name}"
+				appserver.ssl.keystore.location.property.name="@{tomcat.ssl.keystore.location.property.name}"
 				copied.keystore.dir="@{copied.keystore.dir}"
 				/>
 			<var name="read.properties.list" value="${read.properties.list},${tomcat-read-ssl.properties.list}"/>
@@ -5298,6 +5402,7 @@ $HeadURL$
 		<attribute name="appserver.ssl.keystore.file.property.name" default="jboss.ssl.keystore.file"/>
 		<attribute name="appserver.ssl.keystore.pass.property.name" default="jboss.ssl.keystore.pass"/>
 		<attribute name="appserver.ssl.keystore.alias.property.name" default="jboss.ssl.keystore.alias"/>
+		<attribute name="appserver.ssl.keystore.location.property.name" default="jboss.ssl.keystore.location"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname.property.name" default="jboss.ssl.fullyqualified.hostname"/>
 		<attribute name="copied.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<sequential>
@@ -5336,13 +5441,14 @@ $HeadURL$
 					<property name="@{appserver.ssl.keystore.file.property.name}" value="${read.keystore.file}"/>
 					<property name="@{appserver.ssl.keystore.pass.property.name}" value="${read.keystore.password}"/>
 					<property name="@{appserver.ssl.keystore.alias.property.name}" value="${read.keystore.alias}"/>
+					<property name="@{appserver.ssl.keystore.location.property.name}" value="@{copied.keystore.dir}/${read.keystore.file}"/>
 					<property name="@{appserver.ssl.enable.property.name}" value="true"/>
 					<var name="keytool.output" unset="true"/>
 					<var name="keytool.error" unset="true"/>
 					<var name="keytool.result" unset="true"/>
 					<exec executable="keytool" outputproperty="keytool.output" errorproperty="keytool.error" resultproperty="keytool.result">
 						<arg line="-list -keystore @{copied.keystore.dir}/${read.keystore.file} -storepass ${read.keystore.password} -alias  ${read.keystore.alias}  -v"/>
-					</exec>                                 
+					</exec>
 					<var name="read.fqhn" unset="true"/>
 					<propertyregex property="read.fqhn"
 						input="${keytool.output}"
@@ -5662,15 +5768,15 @@ $HeadURL$
 					<loadfile
 						property="run.conf.matches"
 						srcFile="@{jboss.bin.dir}/run.conf">
-						<filterchain>                                   
-							<linecontainsregexp>                                    
+						<filterchain>
+							<linecontainsregexp>
 								<regexp pattern="^\s*JAVA_OPTS="/>
-							</linecontainsregexp>                                   
-						</filterchain>                                  
-					</loadfile>               
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
 					<propertyregex property="read.java.opts"
 						input="${run.conf.matches}"
-						regexp="^\s*JAVA_OPTS=(.*)"
+						regexp="^\s*JAVA_OPTS=&quot;(.*)&quot;"
 						select="\1"
 						/>
 					<if>
@@ -5695,12 +5801,12 @@ $HeadURL$
 					<loadfile
 						property="run.bat.matches"
 						srcFile="@{jboss.bin.dir}/run.bat">
-						<filterchain>                                   
-							<linecontainsregexp>                                    
+						<filterchain>
+							<linecontainsregexp>
 								<regexp pattern="^\s*set JAVA_OPTS="/>
-							</linecontainsregexp>                                   
-						</filterchain>                                  
-					</loadfile>               
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
 					<propertyregex property="read.java.opts"
 						input="${run.bat.matches}"
 						regexp="^\s*set JAVA_OPTS=(.*)"
@@ -5786,9 +5892,11 @@ $HeadURL$
 		<attribute name="jboss.grid.secure.port.property.name" default="jboss.grid.secure.port"/>
 		<attribute name="jboss.grid.secure.cert.file.property.name" default="jboss.grid.secure.cert.file"/>
 		<attribute name="jboss.grid.secure.key.file.property.name" default="jboss.grid.secure.key.file"/>
+		<attribute name="jboss.grid.secure.cert.location.property.name" default="jboss.grid.secure.cert.location"/>
+		<attribute name="jboss.grid.secure.key.location.property.name" default="jboss.grid.secure.key.location"/>
 		<attribute name="copied.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<sequential>
-			<var name="jboss.grid.secure.properties.list" value="@{jboss.grid.secure.enable.property.name},@{jboss.grid.secure.port.property.name},@{jboss.grid.secure.cert.file.property.name},@{jboss.grid.secure.key.file.property.name}"/>
+			<var name="jboss.grid.secure.properties.list" value="@{jboss.grid.secure.enable.property.name},@{jboss.grid.secure.port.property.name},@{jboss.grid.secure.cert.file.property.name},@{jboss.grid.secure.key.file.property.name},@{jboss.grid.secure.cert.location.property.name},@{jboss.grid.secure.key.location.property.name}"/>
 			<appserver-read-grid-secure
 				appserver.server-xml.file="@{jboss.server-xml.file}"
 				appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
@@ -5796,6 +5904,8 @@ $HeadURL$
 				appserver.grid.secure.port.property.name="@{jboss.grid.secure.port.property.name}"
 				appserver.grid.secure.cert.file.property.name="@{jboss.grid.secure.cert.file.property.name}"
 				appserver.grid.secure.key.file.property.name="@{jboss.grid.secure.key.file.property.name}"
+				appserver.grid.secure.cert.location.property.name="@{jboss.grid.secure.cert.location.property.name}"
+				appserver.grid.secure.key.location.property.name="@{jboss.grid.secure.key.location.property.name}"
 				copied.keystore.dir="@{copied.keystore.dir}"
 				/>
 			<var name="read.grid.port" unset="true"/>
@@ -5812,9 +5922,11 @@ $HeadURL$
 		<attribute name="tomcat.grid.secure.port.property.name" default="tomcat.grid.secure.port"/>
 		<attribute name="tomcat.grid.secure.cert.file.property.name" default="tomcat.grid.secure.cert.file"/>
 		<attribute name="tomcat.grid.secure.key.file.property.name" default="tomcat.grid.secure.key.file"/>
+		<attribute name="tomcat.grid.secure.cert.location.property.name" default="tomcat.grid.secure.cert.location"/>
+		<attribute name="tomcat.grid.secure.key.location.property.name" default="tomcat.grid.secure.key.location"/>
 		<attribute name="copied.keystore.dir" default="${tomcat.ssl.keystore.dir}"/>
 		<sequential>
-			<var name="tomcat.grid.secure.properties.list" value="@{tomcat.grid.secure.enable.property.name},@{tomcat.grid.secure.port.property.name},@{tomcat.grid.secure.cert.file.property.name},@{tomcat.grid.secure.key.file.property.name}"/>
+			<var name="tomcat.grid.secure.properties.list" value="@{tomcat.grid.secure.enable.property.name},@{tomcat.grid.secure.port.property.name},@{tomcat.grid.secure.cert.file.property.name},@{tomcat.grid.secure.key.file.property.name},@{tomcat.grid.secure.cert.location.property.name},@{tomcat.grid.secure.key.location.property.name}"/>
 			<appserver-read-grid-secure
 				appserver.server-xml.file="@{tomcat.server-xml.file}"
 				appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
@@ -5822,6 +5934,8 @@ $HeadURL$
 				appserver.grid.secure.port.property.name="@{tomcat.grid.secure.port.property.name}"
 				appserver.grid.secure.cert.file.property.name="@{tomcat.grid.secure.cert.file.property.name}"
 				appserver.grid.secure.key.file.property.name="@{tomcat.grid.secure.key.file.property.name}"
+				appserver.grid.secure.cert.location.property.name="@{tomcat.grid.secure.cert.location.property.name}"
+				appserver.grid.secure.key.location.property.name="@{tomcat.grid.secure.key.location.property.name}"
 				copied.keystore.dir="@{copied.keystore.dir}"
 				/>
 			<var name="read.grid.port" unset="true"/>
@@ -5839,6 +5953,8 @@ $HeadURL$
 		<attribute name="appserver.grid.secure.port.property.name" default="jboss.grid.secure.port"/>
 		<attribute name="appserver.grid.secure.cert.file.property.name" default="jboss.grid.secure.cert.file"/>
 		<attribute name="appserver.grid.secure.key.file.property.name" default="jboss.grid.secure.key.file"/>
+		<attribute name="appserver.grid.secure.cert.location.property.name" default="jboss.grid.secure.cert.location"/>
+		<attribute name="appserver.grid.secure.key.location.property.name" default="jboss.grid.secure.key.location"/>
 		<attribute name="copied.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<sequential>
 			<var name="read.grid.port" unset="true"/>
@@ -5876,6 +5992,8 @@ $HeadURL$
 					<property name="@{appserver.grid.secure.port.property.name}" value="${read.grid.port}"/>
 					<property name="@{appserver.grid.secure.key.file.property.name}" value="${read.key.file}"/>
 					<property name="@{appserver.grid.secure.cert.file.property.name}" value="${read.cert.file}"/>
+					<property name="@{appserver.grid.secure.key.location.property.name}" value="@{copied.keystore.dir}/${read.key.file}"/>
+					<property name="@{appserver.grid.secure.cert.location.property.name}" value="@{copied.keystore.dir}/${read.cert.file}"/>
 				</then>
 				<else>
 					<echo message="SSL port not configured setting @{appserver.grid.secure.enable.property.name}=false"/>
@@ -5883,25 +6001,311 @@ $HeadURL$
 					<property name="@{appserver.grid.secure.port.property.name}" value=""/>
 					<property name="@{appserver.grid.secure.key.file.property.name}" value=""/>
 					<property name="@{appserver.grid.secure.cert.file.property.name}" value=""/>
+					<property name="@{appserver.grid.secure.key.location.property.name}" value=""/>
+					<property name="@{appserver.grid.secure.cert.location.property.name}" value=""/>
 				</else>
 			</if>
 		</sequential>
 	</macrodef>
-	<macrodef name="grid-copy-service-metadata">
+	<macrodef name="grid-read-poc">
 		<attribute name="grid.wsrf.dir" default="${jboss.home}/server/${jboss.server.name}/deploy/wsrf.war" />
-		<attribute name="copied.service-metadata.dir" default="${working.dir}/grid"/>
+		<attribute name="grid.service.name" />
+		<attribute name="grid.poc.tech.researchCenter.displayname.property.name" default="grid.poc.tech.researchCenter.displayname"/>
+		<attribute name="grid.poc.tech.researchCenter.shortname.property.name" default="grid.poc.tech.researchCenter.shortname"/>
+		<attribute name="grid.poc.tech.addr.country.property.name" default="grid.poc.tech.addr.country"/>
+		<attribute name="grid.poc.tech.addr.locality.property.name" default="grid.poc.tech.addr.locality"/>
+		<attribute name="grid.poc.tech.addr.postalCode.property.name" default="grid.poc.tech.addr.postalCode"/>
+		<attribute name="grid.poc.tech.addr.stateProvince.property.name" default="grid.poc.tech.addr.stateProvince"/>
+		<attribute name="grid.poc.tech.addr.street1.property.name" default="grid.poc.tech.addr.street1"/>
+		<attribute name="grid.poc.tech.addr.street2.property.name" default="grid.poc.tech.addr.street2"/>
+		<attribute name="grid.poc.tech.affiliation.property.name" default="grid.poc.tech.affiliation"/>
+		<attribute name="grid.poc.tech.name.last.property.name" default="grid.poc.tech.name.last"/>
+		<attribute name="grid.poc.tech.name.first.property.name" default="grid.poc.tech.name.first"/>
+		<attribute name="grid.poc.tech.phone.property.name" default="grid.poc.tech.phone"/>
+		<attribute name="grid.poc.tech.email.property.name" default="grid.poc.tech.email"/>
+		<attribute name="grid.poc.tech.role.property.name" default="grid.poc.tech.role"/>
+		<attribute name="grid.poc.science.affiliation.property.name" default="grid.poc.science.affiliation"/>
+		<attribute name="grid.poc.science.name.last.property.name" default="grid.poc.science.name.last"/>
+		<attribute name="grid.poc.science.name.first.property.name" default="grid.poc.science.name.first"/>
+		<attribute name="grid.poc.science.phone.property.name" default="grid.poc.science.phone"/>
+		<attribute name="grid.poc.science.email.property.name" default="grid.poc.science.email"/>
+		<attribute name="grid.poc.science.role.property.name" default="grid.poc.science.role"/>
 		<sequential>
 			<if>
 				<available file="@{grid.wsrf.dir}"/>
 				<then>
-					<mkdir dir="@{copied.service-metadata.dir}"/>
-					<copy todir="@{copied.service-metadata.dir}">
-						<fileset dir="@{grid.wsrf.dir}/WEB-INF/etc">
-							<include name="**/serviceMetadata.xml"/>
-						</fileset>
-					</copy>
+					<var name="grid.poc.properties.list" value="@{grid.poc.tech.researchCenter.displayname.property.name},@{grid.poc.tech.researchCenter.shortname.property.name},@{grid.poc.tech.addr.country.property.name},@{grid.poc.tech.addr.locality.property.name},@{grid.poc.tech.addr.postalCode.property.name},@{grid.poc.tech.addr.stateProvince.property.name},@{grid.poc.tech.addr.street1.property.name},@{grid.poc.tech.addr.street2.property.name},@{grid.poc.tech.affiliation.property.name},@{grid.poc.tech.name.last.property.name},@{grid.poc.tech.name.first.property.name},@{grid.poc.tech.phone.property.name},@{grid.poc.tech.email.property.name},@{grid.poc.tech.role.property.name},@{grid.poc.science.affiliation.property.name},@{grid.poc.science.name.last.property.name},@{grid.poc.science.name.first.property.name},@{grid.poc.science.phone.property.name},@{grid.poc.science.email.property.name},@{grid.poc.science.role.property.name}"/>
+					<!-- Read ns3:Point of Contact Lines -->
+					<var name="science.poc.lines" unset="true"/>
+					<loadfile
+						property="science.poc.lines"
+						srcFile="@{grid.wsrf.dir}/WEB-INF/etc/cagrid_@{grid.service.name}/serviceMetadata.xml">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="ns3:PointOfContact"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<!-- Parse out each value from string buffer -->
+					<var name="read.science.affiliation" unset="true"/>
+					<propertyregex property="read.science.affiliation"
+						input="${science.poc.lines}"
+						regexp="affiliation=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.science.email" unset="true"/>
+					<propertyregex property="read.science.email"
+						input="${science.poc.lines}"
+						regexp="email=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.science.fname" unset="true"/>
+					<propertyregex property="read.science.fname"
+						input="${science.poc.lines}"
+						regexp="firstName=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.science.lname" unset="true"/>
+					<propertyregex property="read.science.lname"
+						input="${science.poc.lines}"
+						regexp="lastName=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.science.phone" unset="true"/>
+					<propertyregex property="read.science.phone"
+						input="${science.poc.lines}"
+						regexp="phoneNumber=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.science.role" unset="true"/>
+					<propertyregex property="read.science.role"
+						input="${science.poc.lines}"
+						regexp="role=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<!-- Set any properties that are unset to ="" -->
+					<properties-default-blank
+						properties.list="read.science.affiliation,read.science.email,read.science.fname,read.science.lname,read.science.phone,read.science.role"
+						/>
+					<echo level="debug" message="read.science.affiliation= ${read.science.affiliation}"/>
+					<echo level="debug" message="read.science.email= ${read.science.email}"/>
+					<echo level="debug" message="read.science.fname= ${read.science.fname}"/>
+					<echo level="debug" message="read.science.lname= ${read.science.lname}"/>
+					<echo level="debug" message="read.science.phone= ${read.science.phone}"/>
+					<echo level="debug" message="read.science.role= ${read.science.role}"/>
+
+					<!-- Parse ResearchCenter lines -->
+					<var name="research.center.lines" unset="true"/>
+					<loadfile
+						property="research.center.lines"
+						srcFile="@{grid.wsrf.dir}/WEB-INF/etc/cagrid_@{grid.service.name}/serviceMetadata.xml">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern=":ResearchCenter"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<echo message="${research.center.lines}"/>
+					<!-- Parse out the ns used by this one since it will vary -->
+					<var name="ns.name" unset="true"/>
+					<propertyregex property="ns.name"
+						input="${research.center.lines}"
+						regexp="^.*&lt;(.*?):ResearchCenter"
+						select="\1"
+						/>
+					<echo level="info" message="Read namespace from :ResearchCenter as ${ns.name}"/>
+					<!-- Parse out properties from Research Center line -->
+					<var name="read.rc.sname" unset="true"/>
+					<propertyregex property="read.rc.sname"
+						input="${research.center.lines}"
+						regexp="shortName=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.rc.dname" unset="true"/>
+					<propertyregex property="read.rc.dname"
+						input="${research.center.lines}"
+						regexp="displayName=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<properties-default-blank
+						properties.list="read.rc.sname,read.rc.dname"
+						/>
+					<echo level="debug" message="read.rc.sname= ${read.rc.sname}"/>
+					<echo level="debug" message="read.rc.dname= ${read.rc.dname}"/>
+
+					<!-- Parse out address line from same NS as research center -->
+					<var name="address.lines" unset="true"/>
+					<loadfile
+						property="address.lines"
+						srcFile="@{grid.wsrf.dir}/WEB-INF/etc/cagrid_@{grid.service.name}/serviceMetadata.xml">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern=":Address"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<!-- Process out address values -->
+					<var name="read.addr.country" unset="true"/>
+					<propertyregex property="read.addr.country"
+						input="${address.lines}"
+						regexp="country=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.addr.locality" unset="true"/>
+					<propertyregex property="read.addr.locality"
+						input="${address.lines}"
+						regexp="locality=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.addr.zip" unset="true"/>
+					<propertyregex property="read.addr.zip"
+						input="${address.lines}"
+						regexp="postalCode=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.addr.state" unset="true"/>
+					<propertyregex property="read.addr.state"
+						input="${address.lines}"
+						regexp="stateProvince=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.addr.street1" unset="true"/>
+					<propertyregex property="read.addr.street1"
+						input="${address.lines}"
+						regexp="street1=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.addr.street2" unset="true"/>
+					<propertyregex property="read.addr.street1"
+						input="${address.lines}"
+						regexp="street2=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+
+					<properties-default-blank
+						properties.list="read.addr.country,read.addr.locality,read.addr.zip,read.addr.state,read.addr.street1,read.addr.street2"
+						/>
+					<echo level="debug" message="read.addr.country= ${read.addr.country}"/>
+					<echo level="debug" message="read.addr.locality= ${read.addr.locality}"/>
+					<echo level="debug" message="read.addr.zip= ${read.addr.zip}"/>
+					<echo level="debug" message="read.addr.state= ${read.addr.state}"/>
+					<echo level="debug" message="read.addr.street1= ${read.addr.street1}"/>
+					<echo level="debug" message="read.addr.street2= ${read.addr.street2}"/>
+
+					<!-- Parse out POC lines for same NS as RC -->
+					<var name="tech.poc.lines" unset="true"/>
+					<loadfile
+						property="tech.poc.lines"
+						srcFile="@{grid.wsrf.dir}/WEB-INF/etc/cagrid_@{grid.service.name}/serviceMetadata.xml">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="${ns.name}:PointOfContact"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<!--  Parse out values -->
+					<var name="read.tech.affiliation" unset="true"/>
+					<propertyregex property="read.tech.affiliation"
+						input="${tech.poc.lines}"
+						regexp="affiliation=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.tech.email" unset="true"/>
+					<propertyregex property="read.tech.email"
+						input="${tech.poc.lines}"
+						regexp="email=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.tech.fname" unset="true"/>
+					<propertyregex property="read.tech.fname"
+						input="${tech.poc.lines}"
+						regexp="firstName=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.tech.lname" unset="true"/>
+					<propertyregex property="read.tech.lname"
+						input="${tech.poc.lines}"
+						regexp="lastName=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.tech.phone" unset="true"/>
+					<propertyregex property="read.tech.phone"
+						input="${tech.poc.lines}"
+						regexp="phoneNumber=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<var name="read.tech.role" unset="true"/>
+					<propertyregex property="read.tech.role"
+						input="${tech.poc.lines}"
+						regexp="role=&quot;(.*?)&quot;"
+						select="\1"
+						/>
+					<properties-default-blank
+						properties.list="read.tech.affiliation,read.tech.email,read.tech.fname,read.tech.lname,read.tech.phone,read.tech.role"
+						/>
+					<echo level="debug" message="read.tech.affiliation= ${read.tech.affiliation}"/>
+					<echo level="debug" message="read.tech.email= ${read.tech.email}"/>
+					<echo level="debug" message="read.tech.fname= ${read.tech.fname}"/>
+					<echo level="debug" message="read.tech.lname= ${read.tech.lname}"/>
+					<echo level="debug" message="read.tech.phone= ${read.tech.phone}"/>
+					<echo level="debug" message="read.tech.role= ${read.tech.role}"/>
+
+					<!-- Set properties to parsed values -->
+					<property name="@{grid.poc.tech.addr.country.property.name}" value="${read.addr.country}"/>
+					<property name="@{grid.poc.tech.addr.locality.property.name}" value="${read.addr.locality}"/>
+					<property name="@{grid.poc.tech.addr.postalCode.property.name}" value="${read.addr.zip}"/>
+					<property name="@{grid.poc.tech.addr.stateProvince.property.name}" value="${read.addr.state}"/>
+					<property name="@{grid.poc.tech.addr.street1.property.name}" value="${read.addr.street1}"/>
+					<property name="@{grid.poc.tech.addr.street2.property.name}" value="${read.addr.street2}"/>
+					<property name="@{grid.poc.tech.researchCenter.shortname.property.name}" value="${read.rc.sname}"/>
+					<property name="@{grid.poc.tech.researchCenter.displayname.property.name}" value="${read.rc.dname}"/>
+					<property name="@{grid.poc.science.affiliation.property.name}" value="${read.science.affiliation}"/>
+					<property name="@{grid.poc.science.email.property.name}" value="${read.science.email}"/>
+					<property name="@{grid.poc.science.name.first.property.name}" value="${read.science.fname}"/>
+					<property name="@{grid.poc.science.name.last.property.name}" value="${read.science.lname}"/>
+					<property name="@{grid.poc.science.phone.property.name}" value="${read.science.phone}"/>
+					<property name="@{grid.poc.science.role.property.name}" value="${read.science.role}"/>
+					<property name="@{grid.poc.tech.affiliation.property.name}" value="${read.tech.affiliation}"/>
+					<property name="@{grid.poc.tech.email.property.name}" value="${read.tech.email}"/>
+					<property name="@{grid.poc.tech.name.first.property.name}" value="${read.tech.fname}"/>
+					<property name="@{grid.poc.tech.name.last.property.name}" value="${read.tech.lname}"/>
+					<property name="@{grid.poc.tech.phone.property.name}" value="${read.tech.phone}"/>
+					<property name="@{grid.poc.tech.role.property.name}" value="${read.tech.role}"/>
+
+					<!-- Print discovered props and values add these props to list -->
+					<properties-print
+						properties.list="${grid.poc.properties.list}"
+						/>
+					<var name="read.properties.list" value="${read.properties.list},${grid.poc.properties.list}"/>
 				</then>
+				<else>
+					<echo message="Grid installation not found."/>
+				</else>
 			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="properties-default-blank" description="prints list of propeties">
+		<attribute name="properties.list" />
+		<sequential>
+			<for list="@{properties.list}" param="prop.list.item" delimiter=",">
+				<sequential>
+					<propertyregex property="prop.list.item.trimmed"
+						input="@{prop.list.item}"
+						regexp="\s*(\S+)\s*"
+						select="\1"
+						override="true"
+						/>
+					<echo level="debug" message="propname=${prop.list.item.trimmed}"/>
+					<if>
+						<not>
+							<isset property="${prop.list.item.trimmed}"/>
+						</not>
+						<then>
+							<property name="${prop.list.item.trimmed}" value=""/>
+						</then>
+					</if>
+				</sequential>
+			</for>
 		</sequential>
 	</macrodef>
 </project>
