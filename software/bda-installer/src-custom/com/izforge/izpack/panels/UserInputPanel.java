@@ -752,9 +752,11 @@ public class UserInputPanel extends IzPanel implements ActionListener
 	                	System.out.println("KEY ::" + key);
 	                	System.out.println("VALUE ::" + ht.get(key));
 	                	propertiesValueMap.put(propertiesNameMap.get(key), ht.get(key));
+	        	  	idata.setVariable((String) key,(String) propertiesValueMap.get(key));
 	                }
                 }
                               
+		/*
                 ArrayList varialbleList = getAllPanelVariables();
                 Iterator<String> itr = varialbleList.iterator();
                 while (itr.hasNext()) 
@@ -767,6 +769,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
 	        	  			idata.setVariable(key,(String) propertiesValueMap.get(key));
 	        		  }                               
                 }                
+		*/
             }
  		
 	}
