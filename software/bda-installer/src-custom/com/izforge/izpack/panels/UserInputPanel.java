@@ -19,6 +19,64 @@
 
 package com.izforge.izpack.panels;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+
+import net.n3.nanoxml.NonValidator;
+import net.n3.nanoxml.StdXMLParser;
+import net.n3.nanoxml.StdXMLReader;
+import net.n3.nanoxml.XMLBuilderFactory;
+import net.n3.nanoxml.XMLElement;
+
+import org.apache.tools.ant.DefaultLogger;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+
 import com.izforge.izpack.LocaleDatabase;
 import com.izforge.izpack.Pack;
 import com.izforge.izpack.Panel;
@@ -31,31 +89,11 @@ import com.izforge.izpack.installer.InstallerFrame;
 import com.izforge.izpack.installer.IzPanel;
 import com.izforge.izpack.installer.ResourceManager;
 import com.izforge.izpack.rules.RulesEngine;
-import com.izforge.izpack.util.*;
-
-import net.n3.nanoxml.*;
-
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-
-import org.apache.tools.ant.DefaultLogger;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.ProjectHelper;
-
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.InputStream;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.List;
+import com.izforge.izpack.util.Debug;
+import com.izforge.izpack.util.MultiLineLabel;
+import com.izforge.izpack.util.OsConstraint;
+import com.izforge.izpack.util.OsVersion;
+import com.izforge.izpack.util.VariableSubstitutor;
 
 /*---------------------------------------------------------------------------*/
 /**
@@ -326,7 +364,19 @@ public class UserInputPanel extends IzPanel implements ActionListener
     private static final String PANEL_READER_PROPERTY_NAME = "propertyname";
     
     private static final String PANEL_READER_PROPERTY_MAP_NAME = "mapname";
+    
+    private static final String FILE_EXTRACTOR_NODE_ID = "fileextractor";
+    
+    private static final String FILE_EXTRACTOR_EXTRACT_FILE = "extractfile"; 
+    
+    private static final String FILE_EXTRACTOR_FILE_NAME = "filename";
+    
+    private static final String PANEL_READER_IN_PROPERTY = "inpropertymap";
 
+    private static final String PANEL_READER_IN_PROPERTY_NAME = "inpropertyname";
+    
+    private static final String PANEL_READER_IN_PROPERTY_VALUE = "inpropertyvalue";
+    
     // ------------------------------------------------------------------------
     // Variable Declarations
     // ------------------------------------------------------------------------
@@ -558,6 +608,14 @@ public class UserInputPanel extends IzPanel implements ActionListener
                 }
             }
         }
+        XMLElement fileExtractor = spec.getFirstChildNamed(FILE_EXTRACTOR_NODE_ID);
+        
+        if (fileExtractor != null)
+        {
+        	extractUtilsFromJar(fileExtractor);
+        }
+        
+        
         XMLElement panelReader = spec.getFirstChildNamed(PANEL_READER_NODE_ID);
         
         if (panelReader != null)
@@ -566,6 +624,75 @@ public class UserInputPanel extends IzPanel implements ActionListener
         }
     }
 
+    
+	private void extractUtilsFromJar(XMLElement fileExtractor) 
+	{
+		try 
+		{
+            Vector<XMLElement> extractorMap = fileExtractor.getChildrenNamed(FILE_EXTRACTOR_EXTRACT_FILE);
+            for (int i = 0; i < extractorMap.size(); i++)
+            {
+            	XMLElement extractFile = extractorMap.elementAt(i);
+            	String extractorFileName = extractFile.getAttribute(FILE_EXTRACTOR_FILE_NAME);
+            	System.out.println("extractorFileName ::" +extractorFileName);
+            	extractFiles(idata.info.getInstallerBase()+".jar",extractorFileName);
+            }
+		} 
+		catch (Exception e1) {
+			e1.printStackTrace();
+		}                
+	}
+	
+	private void extractFiles(String jarFile,String fileToExtract)
+	{
+        
+        // GET FROM JAR
+        JarFile jar;
+		try 
+		{
+			jar = new JarFile(jarFile);
+			Enumeration en = jar.entries();
+			while(en.hasMoreElements())
+			{
+				JarEntry fileName = (JarEntry) en.nextElement();
+				if(fileName.toString().startsWith(fileToExtract))
+				{
+					ZipEntry entry = jar.getEntry(fileName.toString());						
+					if (!fileName.isDirectory())
+					{
+						File efile = new File(entry.getName());
+		
+						String fullFile = efile.getPath();
+						String stripedFileName = fullFile.substring(0, fullFile.lastIndexOf(File.separator));
+		
+						if(!(new File(stripedFileName).exists()))
+						{
+							new File(stripedFileName).mkdirs();
+						}
+					
+				        InputStream is = 
+					           new BufferedInputStream(jar.getInputStream(entry));
+					        OutputStream os = 
+					           new BufferedOutputStream(new FileOutputStream(efile));
+					        byte[] buffer = new byte[2048];
+					        for (;;)  {
+					          int nBytes = is.read(buffer);
+					          if (nBytes <= 0) break;
+					          os.write(buffer, 0, nBytes);
+					        }
+					        os.flush();
+					        os.close();
+					        is.close();	
+					}
+				}	
+			}               
+		}	
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
     @SuppressWarnings("deprecation")
 	private void processReader(XMLElement panelReader) {
     		String readerClassName = panelReader.getAttribute(PANEL_READER_CLASS_NAME);
@@ -600,8 +727,17 @@ public class UserInputPanel extends IzPanel implements ActionListener
               
                 File buildFile = new File(readerClassName);
                 ProjectHelper.configureProject(project, buildFile);
-              
-                project.setProperty("application.base.path", idata.getVariable("existing.installation.home"));
+                
+                Vector<XMLElement> inProperties = panelReader.getChildrenNamed(PANEL_READER_IN_PROPERTY);
+                for (int i = 0; i < inProperties.size(); i++)
+                {
+                    XMLElement inProperty = inProperties.elementAt(i);
+                    String inPropertyName = inProperty.getAttribute(PANEL_READER_IN_PROPERTY_NAME);
+                    String inPropertyValue = inProperty.getAttribute(PANEL_READER_IN_PROPERTY_VALUE);
+                    project.setProperty(inPropertyName, idata.getVariable(inPropertyValue));
+                }
+                	
+                
                 System.out.println("readerMethodName::" + readerMethodName);
                 project.executeTarget(readerMethodName);
                                 
@@ -636,7 +772,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
 	}
 
 	private ArrayList getAllPanelVariables() {
-		ArrayList varialbles = new ArrayList();
+		ArrayList variables = new ArrayList();
 	       Vector<XMLElement> fields = spec.getChildrenNamed(FIELD_NODE_ID);
 
 	        for (int i = 0; i < fields.size(); i++)
@@ -648,11 +784,16 @@ public class UserInputPanel extends IzPanel implements ActionListener
 	                if (attribute.equals(TEXT_FIELD))
 	                {
 	                	String variableAttribute = field.getAttribute(VARIABLE);
-	                	varialbles.add(variableAttribute);
+	                	variables.add(variableAttribute);
 	                }
 	            }
 	        }
-		return varialbles;
+		return variables;
+	}
+	
+	private Properties getAllVariables() {
+	    Properties props = idata.getVariables();  
+		return props;
 	}
 
 	private void addDirectoryField(XMLElement field)
