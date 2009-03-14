@@ -38,11 +38,11 @@
 			<spec txt="Application Root Directory:" id="text.label" size="25" set="c:/apps/bda"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Application Root Directory is a required field" />
 		</field>
-		<field type="dir" variable="existing.jboss.home">
+		<field type="dir" variable="jboss.home">
 			<spec txt="JBoss Home:" id="text.label" size="25" set="c:/apps/bda/${jboss.binaries.relative.dir}"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="JBoss Home is a required field" />
 		</field>
-		<field type="dir" variable="existing.tomcat.home">
+		<field type="dir" variable="tomcat.home">
 			<spec txt="Tomcat Home:" id="text.label" size="25" set="c:/apps/bda/${tomcat.binaries.relative.dir}"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Tomcat Home is a required field" />
 		</field>
@@ -50,12 +50,17 @@
 			<spec txt="JBoss Server name:" id="text.label" size="15" set="default"/>
 			<validator class="com.izforge.izpack.util.NotEmptyValidator" txt="JBoss Server Name is a required field" />
 		</field>
-	</panel>
+		<fileextractor>
+			<extractfile filename="pre-install"/>
+		</fileextractor>
 
-	<!-- Upgrade page required to work past issue -->
+	</panel>
 	<panel order="2">
-		<field type="title" txt="Reading properties from existing installation" bold="true" size="1" />
-		<panelreader classname="install-master.xml" methodname="init:upgrade" language="ant">
+		<panelreader classname="pre-install/install.xml" methodname="init:upgrade" language="ant">
+			<inpropertymap inpropertyname="application.base.path" inpropertyvalue="application.base.path"/>
+			<inpropertymap inpropertyname="jboss.home" inpropertyvalue="jboss.home"/>
+			<inpropertymap inpropertyname="jboss.server.name" inpropertyvalue="jboss.server.name"/>
+			<inpropertymap inpropertyname="tomcat.home" inpropertyvalue="tomcat.home"/>
 			<propertymap propertyname="authentication.type" mapname="authentication.type"/>
 			<propertymap propertyname="database.name" mapname="database.name"/>
 			<propertymap propertyname="database.password" mapname="database.password"/>

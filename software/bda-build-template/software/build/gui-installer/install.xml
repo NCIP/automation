@@ -286,5 +286,21 @@
 			</installation>
 		]]></config>
 		</IzPack>
+		<property name="pre-install.dir" value="working/pre-install"/>
+		<property name="build.dir" value="${software.location}/build"/>
+		<mkdir dir="${pre-install.dir}"/>
+		<copy tofile="${pre-install.dir}/install.xml" file="${build.dir}/install.xml" overwrite="true"/>
+		<copy tofile="${pre-install.dir}/project.properties" file="${build.dir}/project.properties" overwrite="true"/>
+		<echo file="${pre-install.dir}/install.properties" message=""/>
+
+		<copy todir="${pre-install.dir}/bda-utils" overwrite="true">
+			<fileset dir="${bda-utils.dir}">
+				<include name="**/*" />                 
+			</fileset>                      
+		</copy>                 
+		<jar update="true" destfile="${dist.location}/${gui-installer.dist.base.name}-${build.time}.jar"
+			basedir="working"        
+			includes="pre-install/**/*"     
+			/>                              
 	</target>
 </project>
