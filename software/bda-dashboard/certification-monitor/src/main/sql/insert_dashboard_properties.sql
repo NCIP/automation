@@ -75,7 +75,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.exploded.dir.location','${ncia.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ncia');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/ncia');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.hostname','cbv-ciweb-base.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.jobname','ncia_ci');
