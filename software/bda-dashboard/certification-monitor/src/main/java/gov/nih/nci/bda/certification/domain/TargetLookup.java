@@ -5,6 +5,8 @@ private int id;
 private String targetName;
 private String mapName;
 private String isValue;
+private String isOptional;
+
 public int getId() {
 	return id;
 }
@@ -29,6 +31,11 @@ public String getIsValue() {
 public void setIsValue(String isValue) {
 	this.isValue = isValue;
 }
-
+public String getIsOptional() {
+	return isOptional;
+}
+public void setIsOptional(String isOptional) {
+	this.isOptional = isOptional;
+}
 
 }

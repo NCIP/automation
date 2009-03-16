@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import gov.nih.nci.bda.certification.BuildCertificationHelper;
+import gov.nih.nci.bda.certification.CertificationManager;
 import gov.nih.nci.bda.certification.business.BuildCertificationBean;
 import gov.nih.nci.bda.certification.domain.BuildHistory;
 import gov.nih.nci.bda.certification.util.HibernateUtil;
@@ -87,15 +88,34 @@ public class SingleCommandListener implements BuildListener {
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl=event.getProject().getProperty(urlProperty);
 		
+		if(event.getProject().getProperty("is.optional") != null && event.getProject().getProperty("is.optional").equals("true"))
+		{
+			bmb.setOptional(true);
+		}
+		else
+		{
+			bmb.setOptional(false);
+		}
 
 		if(event.getException() != null)
 		{
 			bmb.setBuildSuccessful(false);
 			bmb.setFailureMessage(event.getException().getMessage());
+			if(!bmb.isOptional())
+			{
+				bmb.setCertificationStatus(false);
+				CertificationManager.projectCertificationStatus = false;				
+			}
 		}
 		else
 		{
 			bmb.setBuildSuccessful(true);
+			System.out.println("CertificationManager.projectCertificationStatus:::::"+CertificationManager.projectCertificationStatus);
+			if(CertificationManager.projectCertificationStatus)
+			{
+				bmb.setCertificationStatus(true);
+				CertificationManager.projectCertificationStatus = true;
+			}
 		}
 		bmb.setProjectName(projectName);
 		bmb.setTargetName(event.getTarget().getName());
@@ -116,6 +136,7 @@ public class SingleCommandListener implements BuildListener {
 		{
 			bmb.setProjectRepoUrl(projectUrl);
 		}
+		
 		return bmb;
 	}
 

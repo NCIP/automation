@@ -11,6 +11,8 @@ public class BuildCertificationBean {
 	private String propertyValue;
 	private String projectRepoUrl;
 	private String failureMessage;
+	private boolean certificationStatus;
+	private boolean optional;
 	
 	public boolean isBuildSuccessful() {
 		return buildSuccessful;
@@ -60,7 +62,17 @@ public class BuildCertificationBean {
 	public void setFailureMessage(String failureMessage) {
 		this.failureMessage = failureMessage;
 	}
-	
-	
-	
+	public boolean isCertificationStatus() {
+		return certificationStatus;
+	}
+	public void setCertificationStatus(boolean certificationStatus) {
+		this.certificationStatus = certificationStatus;
+	}
+	public boolean isOptional() {
+		return optional;
+	}
+	public void setOptional(boolean optional) {
+		this.optional = optional;
+	}
+		
 }

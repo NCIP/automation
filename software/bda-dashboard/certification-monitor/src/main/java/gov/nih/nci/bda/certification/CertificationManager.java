@@ -18,6 +18,7 @@ import org.hibernate.Session;
 
 	public class CertificationManager {
     
+	public static boolean projectCertificationStatus = true; 
 
     public void certifyProjects(String projectName) {
     	
@@ -70,6 +71,15 @@ import org.hibernate.Session;
         	  project.setProperty("is.value", "false");
         	  project.setProperty("certification.property.value", "");
           }
+ 
+          if(targetLookup.getIsOptional() != null)
+          {
+        	  project.setProperty("is.optional", targetLookup.getIsValue());
+          }        	  
+          else
+          {
+        	  project.setProperty("is.optional", "false");
+          }
           
           try
           {
@@ -79,7 +89,8 @@ import org.hibernate.Session;
           {
 			System.out.println("EXCEPTION::::" + e.getMessage());
 			BuildCertificationBean bmb = new BuildCertificationBean();
-			bmb.setBuildSuccessful(false); 
+			bmb.setBuildSuccessful(false);
+			bmb.setOptional(false); 
 			bmb.setProjectName(projectName);
 			bmb.setTargetName(targetLookup.getTargetName());
 			bmb.setMapName(targetLookup.getMapName());

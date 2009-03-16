@@ -90,11 +90,28 @@ public class BuildCertificationHelper {
 		    	setProductValue(pbs,projectUrl);
 		    	session.save(pbs);		    	
 		    }
-		}		
+		}
+		// update the project certification status 
+		invokeSetMethodValue(pbs,"setCertificationStatus",getWikiProjectCertificationStatus());
+		session.update(pbs);
+		//commit
 	    session.getTransaction().commit();  
 	}
 	
 	
+	private String getWikiProjectCertificationStatus() {
+		if(bmb.isCertificationStatus())
+		{
+			return BuildCertificationConstants.WIKI_SUCCESSFUL;
+		}
+		else
+		{
+			return BuildCertificationConstants.WIKI_FAILED;
+		}
+			
+
+	}
+
 	private void setProductValue(ProjectCertificationStatus pbs,String projectUrl) 
 	{
 		if(bmb.getProjectRepoUrl() != null)
