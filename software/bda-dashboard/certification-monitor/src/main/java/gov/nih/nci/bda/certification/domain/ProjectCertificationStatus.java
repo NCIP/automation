@@ -5,11 +5,9 @@ public class ProjectCertificationStatus {
 	private int id;
 	private String product;
 	private String certificationStatus;
-	private String certificationWikiStatus;
 	private String singleCommandBuild;
 	private String singleCommandDeployment;
 	private String databaseIntegration;
-	private String bdaUtilsVersion;
 	private String templateValidation;
 	private String privateRepositoryProperties;
 	private String latestCIBuild;
@@ -35,12 +33,6 @@ public class ProjectCertificationStatus {
 	public void setCertificationStatus(String certificationStatus) {
 		this.certificationStatus = certificationStatus;
 	}
-	public String getCertificationWikiStatus() {
-		return certificationWikiStatus;
-	}
-	public void setCertificationWikiStatus(String certificationWikiStatus) {
-		this.certificationWikiStatus = certificationWikiStatus;
-	}
 	public String getSingleCommandBuild() {
 		return singleCommandBuild;
 	}
@@ -58,12 +50,6 @@ public class ProjectCertificationStatus {
 	}
 	public void setDatabaseIntegration(String databaseIntegration) {
 		this.databaseIntegration = databaseIntegration;
-	}
-	public String getBdaUtilsVersion() {
-		return bdaUtilsVersion;
-	}
-	public void setBdaUtilsVersion(String bdaUtilsVersion) {
-		this.bdaUtilsVersion = bdaUtilsVersion;
 	}
 	public String getTemplateValidation() {
 		return templateValidation;
