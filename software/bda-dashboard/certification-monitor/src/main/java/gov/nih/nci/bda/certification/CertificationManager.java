@@ -108,10 +108,7 @@ import org.hibernate.Session;
 		{
 		  project.setProperty("is.optional", "true");
 		}        	  
-		else
-		{
-		  project.setProperty("is.optional", "false");
-		}		
+	
 	}
 
 	private ArrayList getListOfOptionalFeaturesForProject(String projectName, Project project) {
