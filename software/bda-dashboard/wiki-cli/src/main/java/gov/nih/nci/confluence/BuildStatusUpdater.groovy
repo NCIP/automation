@@ -75,7 +75,6 @@ class BuildStatusUpdater {
 	    String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
 	    String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
 	    String databaseIntegration = row.DATABASE_INTEGRATION;
-	    String bdaUtilsVersion = row.BDA_UTILS_VERSION;
 	    String templateValidation = row.TEMPLATE_VALIDATION;
 	    String privateProperties = row.PRIVATE_PROPERTIES;	    
 	    String ciBuild = row.CI_BUILD;
@@ -84,7 +83,7 @@ class BuildStatusUpdater {
 	    String commandLineInstaller = row.COMMANDLINE_INSTALLER;
 	    
 
-			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},BDA-Utils-Version${count}:${bdaUtilsVersion},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
+			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
 
 			println findReplace
 			// update page
