@@ -102,6 +102,7 @@ public class SingleCommandListener implements BuildListener {
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl=event.getProject().getProperty(urlProperty);
 		
+		
 		if(event.getProject().getProperty("is.optional") != null && event.getProject().getProperty("is.optional").equals("true"))
 		{
 			bmb.setOptional(true);

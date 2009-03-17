@@ -8,6 +8,7 @@ import gov.nih.nci.bda.certification.util.HibernateUtil;
 import gov.nih.nci.bda.certification.util.PropertyLoader;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.tools.ant.DefaultLogger;
@@ -41,6 +42,8 @@ import org.hibernate.Session;
      PropertyLoader.loadProjectProperties(projectName,project);
      PropertyLoader.loadGeneralProperties(project);
      
+     ArrayList optionalFeaturesList = getListOfOptionalFeaturesForProject(projectName,project);
+     
      SingleCommandListener scListener = new SingleCommandListener();
      project.addBuildListener(scListener);     
    
@@ -59,27 +62,8 @@ import org.hibernate.Session;
     {
           TargetLookup targetLookup= (TargetLookup)  targets.next();
           System.out.println("targetName::"+targetLookup.getMapName()+"::MAPNAME::" + targetLookup.getTargetName()+ "::projectName::" +projectName+ "::ISVALUE::" +targetLookup.getIsValue());
-          project.setProperty("map.name", targetLookup.getMapName());          
-          project.setProperty("executed.target.name", targetLookup.getTargetName());
           
-          if(targetLookup.getIsValue() != null)
-          {
-        	  project.setProperty("is.value", targetLookup.getIsValue());
-          }        	  
-          else
-          {
-        	  project.setProperty("is.value", "false");
-        	  project.setProperty("certification.property.value", "");
-          }
- 
-          if(targetLookup.getIsOptional() != null)
-          {
-        	  project.setProperty("is.optional", targetLookup.getIsValue());
-          }        	  
-          else
-          {
-        	  project.setProperty("is.optional", "false");
-          }
+          populateAditionalAntProperties(targetLookup,project,optionalFeaturesList);
           
           try
           {
@@ -95,7 +79,55 @@ import org.hibernate.Session;
     System.out.println("FINISH THE EXECUTE METHOD");
     }
     
-    public static void main(String args[])
+    private void populateAditionalAntProperties(TargetLookup targetLookup,
+			Project project, ArrayList optionalFeaturesList) {
+		project.setProperty("map.name", targetLookup.getMapName());          
+		project.setProperty("executed.target.name", targetLookup.getTargetName());
+		
+		if(targetLookup.getIsValue() != null && targetLookup.getIsValue().equals("true"))
+		{
+		  project.setProperty("is.value", "true");
+		}        	  
+		else
+		{
+		  project.setProperty("is.value", "false");
+		  project.setProperty("certification.property.value", "");
+		}
+		
+		if( optionalFeaturesList.contains(targetLookup.getTargetName()))
+		{
+		  project.setProperty("is.optional", "true");
+		}        	  
+		else
+		{
+		  project.setProperty("is.optional", "false");
+		} 
+		
+		if(targetLookup.getIsOptional() != null && targetLookup.getIsValue().equals("true"))
+		{
+		  project.setProperty("is.optional", "true");
+		}        	  
+		else
+		{
+		  project.setProperty("is.optional", "false");
+		}		
+	}
+
+	private ArrayList getListOfOptionalFeaturesForProject(String projectName, Project project) {
+    	ArrayList optionalList = new ArrayList();
+    	String optionalStr = project.getProperty(projectName + ".optional.features");
+    	if(optionalStr != null)
+    	{
+		    String[] result = optionalStr.split(",");		
+			for(int i= 0; i< result.length; i++ )
+			{
+			optionalList.add(result[0]);
+			}
+    	}
+    	return optionalList;
+	}
+
+	public static void main(String args[])
     {	
     	String projectName = null;
     	System.out.println("args.length::" + args.length);
