@@ -58,8 +58,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.exploded.dir.location','${caarray.svn.local.checkout}/software/target');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caarray2');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.jobname','bda-blueprints-ci');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.hostname','cbvapp-c1003.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.jobname','caarray2-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.portnumber','48080');
 
 
@@ -80,6 +80,24 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.hostname','cbv-ciweb-base.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.jobname','ncia_ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.portnumber','48080');
+
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.project.url','http://gforge.nci.nih.gov/svnroot/cagwas/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.build.location','${cagwas.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.exploded.dir.location','${cagwas.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cagwas');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.jobname','bda-blueprints-ci');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.portnumber','48080');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.database.type','postgresql');
@@ -191,8 +209,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.exploded.dir.location','${caintegrator2.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/cai2');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.jobname','bda-blueprints-ci');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.hostname','cbvapp-c1004.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.jobname','caintegrator2-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.portnumber','48080');
 
 

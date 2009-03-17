@@ -443,21 +443,28 @@ class CertificationUtils
 		if (ciStatusStr=="[Success]")
 		{
 			wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+			if (sb!= null)
+				wikiStr = wikiStr.append("|"+sb+"]'")
+
+			println wikiStr
+			project.setProperty("certification.property.value",wikiStr.toString());
 		}
 		else
 		{
 			wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+			if (sb!= null)
+				wikiStr = wikiStr.append("|"+sb+"]'")
+
+			println wikiStr
+
+			project.setProperty("certification.property.value",wikiStr.toString());
+			if(getStatusOnDate(dataStr).equals(WIKI_FAILED)
+				ant.fail("CI Builds failing for more than a day")
 		}		
 		
 	
 		
-		if (sb!= null)
-			wikiStr = wikiStr.append("|"+sb+"]'")
-		
-		println wikiStr
-		
-		
-		project.setProperty("certification.property.value",wikiStr.toString());
+
 
 	}
 	
