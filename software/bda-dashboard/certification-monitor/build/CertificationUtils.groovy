@@ -408,16 +408,34 @@ class CertificationUtils
 		println basedir
 		String installFile = new File(basedir +"/"+ buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
 		StringBuffer wikiStr = new StringBuffer("'[");
-		def revision = new XmlParser().parse(installFile)
 
-		String ciStatusStr = revision.body.table[1].tr.td[1].'h1'.'img'.'@alt'
-		String  buildTimeStr = revision.body.table[1].tr.td[1].'h1'.text()
-		
-		StringBuffer sb = new StringBuffer()		
-		buildTimeStr.split('\\n').each {processToken  ->
-						println "${processToken}"
-						sb.append("${processToken}".trim())
-					}					
+	        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #.*/)
+		java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9][0-9], [0-9][0-9][0-9][0-9].*/)
+		java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
+
+		StringBuffer sb = new StringBuffer()
+		def ciStatusStr 
+		def file = new File(installFile);
+		file.eachLine {line->
+			def matcher = ciStatusPattern.matcher(line)
+			
+			if(pattern.matcher(line))
+			{
+				sb.append(line.trim())
+				println line
+			}
+			if(datePattern.matcher(line))
+			{
+				sb.append(line.trim())
+				println line
+			}
+			if(matcher.find())
+			{				
+				ciStatusStr = matcher.group(2)
+			}
+
+		}
+
 
 		String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
 		println dataStr	
@@ -440,7 +458,7 @@ class CertificationUtils
 		
 		
 		project.setProperty("certification.property.value",wikiStr.toString());
-		//println "revision Again::"+ revision.depthFirst().grep{ it.'h1' }.'h1'.'img'.'@alt'
+
 	}
 	
 	
