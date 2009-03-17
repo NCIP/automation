@@ -87,25 +87,7 @@ import org.hibernate.Session;
           } 
           catch(Exception e)
           {
-			System.out.println("EXCEPTION::::" + e.getMessage());
-			BuildCertificationBean bmb = new BuildCertificationBean();
-			bmb.setBuildSuccessful(false);
-			bmb.setOptional(false); 
-			bmb.setProjectName(projectName);
-			bmb.setTargetName(targetLookup.getTargetName());
-			bmb.setMapName(targetLookup.getMapName());
-			bmb.setFailureMessage(e.getMessage());
-			
-			BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
-			try
-			{
-				buildHelper.updateProjectBuildStatus();				
-			}  
-			catch(Exception ex)
-	        {
-				System.out.println("EXCEPTION IN THE CATCH::::" + ex.getMessage());
-				ex.printStackTrace();
-	        }			
+			System.out.println("EXCEPTION::::" + e.getMessage());		
           }
      } 
      

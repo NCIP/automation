@@ -28,11 +28,6 @@ public class SingleCommandListener implements BuildListener {
 
 	public void buildFinished(BuildEvent event) {
 		// TODO Auto-generated method stub
-	/*	
-		BuildCertificationBean bmb = populateBuildCertificationBean(event);
-		BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
-		buildHelper.updateProjectBuildStatus();
-	*/
 	}
 
 	public void buildStarted(BuildEvent arg0) {
@@ -62,6 +57,25 @@ public class SingleCommandListener implements BuildListener {
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
+			// On exception update with default values 
+			BuildCertificationBean bmb = new BuildCertificationBean();
+			bmb.setBuildSuccessful(false);
+			bmb.setOptional(false); 
+			bmb.setProjectName(event.getProject().getProperty("project.name"));
+			bmb.setTargetName(event.getProject().getProperty("executed.target.name"));
+			bmb.setMapName(event.getProject().getProperty("map.name"));
+			bmb.setFailureMessage(ex.getMessage());
+			
+			BuildCertificationHelper buildHelper = new BuildCertificationHelper(bmb);
+			try
+			{
+				buildHelper.updateProjectBuildStatus();				
+			}  
+			catch(Exception exp)
+	        {
+				System.out.println("EXCEPTION IN THE CATCH::::" + exp.getMessage());
+				exp.printStackTrace();
+	        }	
 		}		
 	}
 
