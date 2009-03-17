@@ -96,6 +96,7 @@ import org.hibernate.Session;
 		
 		if( optionalFeaturesList.contains(targetLookup.getTargetName()))
 		{
+			System.out.println("CHECK THE OPTIONAL" + targetLookup.getTargetName());
 		  project.setProperty("is.optional", "true");
 		}        	  
 		else
@@ -121,7 +122,8 @@ import org.hibernate.Session;
 		    String[] result = optionalStr.split(",");		
 			for(int i= 0; i< result.length; i++ )
 			{
-			optionalList.add(result[0]);
+				System.out.println("ADDING OPTION LIST " + i + " : " + result[i] );
+				optionalList.add(result[i]);
 			}
     	}
     	return optionalList;
