@@ -5898,7 +5898,7 @@ $HeadURL$
 			<if>
 				<and>
 					<available file="@{jboss.bin.dir}/run.bat"/>
-					<equals arg1="${os.family}" arg2="unix"/>
+					<equals arg1="${os.family}" arg2="windows"/>
 				</and>
 				<then>
 					<var name="run.bat.matches" unset="true"/>
