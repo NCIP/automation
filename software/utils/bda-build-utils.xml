@@ -4621,7 +4621,10 @@ $HeadURL$
 
 
 					<if>
-						<equals arg1="@{tomcat.grid.configure}" arg2="true"/>
+						<and>
+							<equals arg1="@{tomcat.grid.configure}" arg2="true"/>
+							<equals arg1="@{tomcat.grid.secure.enable}" arg2="true"/>
+						</and>
 						<then>
 							<echo message="Configuring secure grid in tomcat"/>
 							<grid-secure-configure-connector
@@ -4864,7 +4867,10 @@ $HeadURL$
 
 					<echo message="Configuring secure grid in JBoss"/>
 					<if>
-						<equals arg1="@{jboss.grid.configure}" arg2="true"/>
+						<and>
+							<equals arg1="@{jboss.grid.configure}" arg2="true"/>
+							<equals arg1="@{jboss.grid.secure.enable}" arg2="true"/>
+						</and>
 						<then>
 							<echo message="Configuring grid on JBoss"/>
 							<grid-secure-configure-connector
@@ -5609,7 +5615,13 @@ $HeadURL$
 				</then>
 				<else>
 					<echo message="SSL port not configured setting @{appserver.ssl.enable.property.name}=false"/>
-					<property name="@{jboss.ssl.enable.property.name}" value="false"/>
+					<property name="@{appserver.ssl.enable.property.name}" value="false"/>
+					<property name="@{appserver.ssl.port.property.name}" value=""/>
+					<property name="@{appserver.ssl.keystore.file.property.name}" value=""/>
+					<property name="@{appserver.ssl.keystore.pass.property.name}" value=""/>
+					<property name="@{appserver.ssl.keystore.alias.property.name}" value=""/>
+					<property name="@{appserver.ssl.keystore.location.property.name}" value=""/>
+					<property name="@{appserver.ssl.fullyqualified.hostname.property.name}" value=""/>
 				</else>
 			</if>
 		</sequential>
@@ -5697,11 +5709,11 @@ $HeadURL$
 			<xmltask source="@{appserver.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.ssl.port}']/@proxyPort" property="read.ssl.port" attrValue="true"/>
-				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.ssl.port}']/@proxyHost" property="read.ssl.host" attrValue="true"/>
+				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.ssl.port}']/@proxyName" property="read.ssl.host" attrValue="true"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.http.port}']/@proxyPort" property="read.http.port" attrValue="true"/>
-				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.http.port}']/@proxyHost" property="read.http.host" attrValue="true"/>
+				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.http.port}']/@proxyName" property="read.http.host" attrValue="true"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@className]/@proxyPort" property="read.grid.port" attrValue="true"/>
-				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@className]/@proxyHost" property="read.grid.host" attrValue="true"/>
+				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@className]/@proxyName" property="read.grid.host" attrValue="true"/>
 			</xmltask>
 			<echo level="debug" message="read.ssl.port = ${read.ssl.port}"/>
 			<echo level="debug" message="read.ssl.host = ${read.ssl.host}"/>
@@ -5709,60 +5721,15 @@ $HeadURL$
 			<echo level="debug" message="read.http.host = ${read.http.host}"/>
 			<echo level="debug" message="read.grid.port = ${read.grid.port}"/>
 			<echo level="debug" message="read.grid.host = ${read.grid.host}"/>
-			<if>
-				<isset property="read.ssl.port"/>
-				<then>
-					<property name="@{appserver.external.ssl.port.property.name}" value="${read.ssl.port}"/>
-				</then>
-				<else>
-					<property name="@{appserver.external.ssl.port.property.name}" value=""/>
-				</else>
-			</if>
-			<if>
-				<isset property="read.ssl.host"/>
-				<then>
-					<property name="@{appserver.external.ssl.host.property.name}" value="${read.ssl.host}"/>
-				</then>
-				<else>
-					<property name="@{appserver.external.ssl.host.property.name}" value=""/>
-				</else>
-			</if>
-			<if>
-				<isset property="read.http.port"/>
-				<then>
-					<property name="@{appserver.external.http.port.property.name}" value="${read.http.port}"/>
-				</then>
-				<else>
-					<property name="@{appserver.external.http.port.property.name}" value=""/>
-				</else>
-			</if>
-			<if>
-				<isset property="read.http.host"/>
-				<then>
-					<property name="@{appserver.external.http.host.property.name}" value="${read.http.host}"/>
-				</then>
-				<else>
-					<property name="@{appserver.external.http.host.property.name}" value=""/>
-				</else>
-			</if>
-			<if>
-				<isset property="read.grid.port"/>
-				<then>
-					<property name="@{appserver.external.grid.secure.port.property.name}" value="${read.grid.port}"/>
-				</then>
-				<else>
-					<property name="@{appserver.external.grid.secure.port.property.name}" value=""/>
-				</else>
-			</if>
-			<if>
-				<isset property="read.grid.host"/>
-				<then>
-					<property name="@{appserver.external.grid.secure.host.property.name}" value="${read.grid.host}"/>
-				</then>
-				<else>
-					<property name="@{appserver.external.grid.secure.host.property.name}" value=""/>
-				</else>
-			</if>
+			<properties-default-blank
+				properties.list="read.ssl.port,read.ssl.host,read.http.port,read.http.host,read.grid.port,read.grid.host"
+				/>
+			<property name="@{appserver.external.ssl.port.property.name}" value="${read.ssl.port}"/>
+			<property name="@{appserver.external.ssl.host.property.name}" value="${read.ssl.host}"/>
+			<property name="@{appserver.external.http.port.property.name}" value="${read.http.port}"/>
+			<property name="@{appserver.external.http.host.property.name}" value="${read.http.host}"/>
+			<property name="@{appserver.external.grid.secure.port.property.name}" value="${read.grid.port}"/>
+			<property name="@{appserver.external.grid.secure.host.property.name}" value="${read.grid.host}"/>
 		</sequential>
 	</macrodef>
 
