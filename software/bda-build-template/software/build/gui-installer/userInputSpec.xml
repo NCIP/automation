@@ -53,9 +53,10 @@
 		<fileextractor>
 			<extractfile filename="pre-install"/>
 		</fileextractor>
-
+		
 	</panel>
 	<panel order="2">
+		<field type="title" txt="Reading property values from installations specified in previous screen." bold="true" size="1" />
 		<panelreader classname="pre-install/install.xml" methodname="init:upgrade" language="ant">
 			<inpropertymap inpropertyname="application.base.path" inpropertyvalue="application.base.path"/>
 			<inpropertymap inpropertyname="jboss.home" inpropertyvalue="jboss.home"/>

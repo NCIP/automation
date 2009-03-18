@@ -59,9 +59,11 @@
 			 <path location="${upgrade.application.base.path}"/>
 		</pathconvert>
 
+		<!--
 		<replaceregexp file="${install.path}/${application_installer}/upgrade.properties" byline="true"
 				match="^(application.base.path.*)=(.*)"
 				replace="\1=${application.base.path.convert}"/>
+			-->
 		<replaceregexp file="${install.path}/${application_installer}/build.xml" byline="true"
 			match="(&lt;property name=&quot;properties.file.*)install.properties(.*)"
 			replace="\1upgrade.properties\2"

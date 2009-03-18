@@ -3,7 +3,7 @@
 		<antcall buildfile="$SYSTEM_user_home/${installer.dir}/build.xml"
 			order="afterpack"
 			verbose="yes"
-			logfile="$SYSTEM_user_home/${installer.dir}/antlog_installer.txt"
+			logfile="$SYSTEM_user_home/${installer.dir}/download_install-antlog_installer.txt"
 			inheritall="false"
 			messageid="AntAction.download-install"			
 			>
@@ -16,7 +16,7 @@
 		<antcall buildfile="$SYSTEM_user_home/${installer.dir}/build.xml"
 			order="afterpack"
 			verbose="yes"
-			logfile="$SYSTEM_user_home/${installer.dir}/antlog_installer.txt"
+			logfile="$SYSTEM_user_home/${installer.dir}/download-upgrade-antlog_installer.txt"
 			inheritall="false"
 			messageid="AntAction.download-upgrade"			
 			>
@@ -29,7 +29,7 @@
 		<antcall buildfile="$SYSTEM_user_home/${installer.dir}/build.xml"
 			order="afterpack"
 			verbose="yes"
-			logfile="$SYSTEM_user_home/${installer.dir}/antlog_installer.txt"
+			logfile="$SYSTEM_user_home/${installer.dir}/convert-install-path-antlog_installer.txt"
 			inheritall="false"
 			messageid="AntAction.convert-install-path"			
 			>
@@ -43,7 +43,7 @@
 		<antcall buildfile="$SYSTEM_user_home/${installer.dir}/build.xml"
 			order="afterpack"
 			verbose="yes"
-			logfile="$SYSTEM_user_home/${installer.dir}/antlog_installer.txt"
+			logfile="$SYSTEM_user_home/${installer.dir}/convert-upgrade-path-antlog_installer.txt"
 			inheritall="false"
 			messageid="AntAction.convert-upgrade-path"			
 			>
@@ -57,7 +57,7 @@
 		<antcall buildfile="$SYSTEM_user_home/${installer.dir}/build.xml"
 			order="afterpacks"
 			verbose="yes"
-			logfile="$SYSTEM_user_home/${installer.dir}/antlog_installer.txt"
+			logfile="$SYSTEM_user_home/${installer.dir}/install-application-antlog_installer.txt"
 			inheritall="false"
 			messageid="AntAction.install-application"		
 			>
