@@ -3631,7 +3631,7 @@ $HeadURL$
 				<isset property="jboss.file.is.405"/>
 				<then>
 					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
-					<unzip dest="@{jboss.home}" src="@{jbosscp.binaries.file}" />
+					<unzip dest="${jboss.base.dir}" src="@{jbosscp.binaries.file}" />
 				</then>
 			</if>
 
