@@ -64,7 +64,7 @@ class CertificationUtils
 		        if(bdaVersion.endsWith("beta"))
 		        {
 		        	project.setProperty("is.value","false");
-		        	ant.fail("PROJECT USES THE BETA VERSION OF THE BDA UTILS")
+		        	ant.fail("PROJECT USES THE " + bdaVersion+ " BETA VERSION OF THE BDA UTILS")
 		        }else
 		        {
 				StringBuffer wikiStr = new StringBuffer("'[");
