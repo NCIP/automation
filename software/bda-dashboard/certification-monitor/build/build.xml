@@ -293,38 +293,33 @@
 
 	<target name="build:ci-server" depends="init">				
 		<if>
-			<isreachable host="${ci-server.hostname}" timeout="5"/>
+			<not>
+				<equals arg1="${ci-server.hostname}" arg2=""/>
+			</not>
 			<then>
-				<echo message="${ci-server.hostname} reached."/>				
-<!--				
-				<sshexec host="${ci-server.hostname}" username="${ci-server.username}" password="${ci-server.password}" command="cd /usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/;ls -ct1 | head -1 > ../latestdirectory.txt" trust="true"/>
+				<if>
+					<isreachable host="${ci-server.hostname}" timeout="5"/>
+					<then>
+						<echo message="${ci-server.hostname} reached."/>				
 
-				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/latestdirectory.txt" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
-
-				<loadfile property="latest.build.dir" srcFile="${local.hudson.dir}\latestdirectory.txt">
-				  <filterchain>
-				    <striplinebreaks/>
-				  </filterchain>
-				</loadfile>
-				
-				<echo message="${latest.build.dir}"/>
-
-				<scp  file="${ci-server.username}@${ci-server.hostname}:/usr/local/hudsonuser/hudson_data/jobs/${ci-server.jobname}/builds/${latest.build.dir}/*" todir="${local.hudson.dir}" password="${ci-server.password}" trust="true" sftp="true"/>
-				
-				<get src="http://${ci-server.hostname}:48080/hudson/job/${ci-server.hostname}/lastBuild/buildNumber" dest="revisionnumber.txt"/>
--->				
-				<get src="http://${ci-server.hostname}:${ci-server.portnumber}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
-				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
-<!--
-				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="formatAndSetDate"/>
--->
+						<get src="http://${ci-server.hostname}:${ci-server.portnumber}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
+						
+					</then>
+					<else>
+						<property name="is.value" value="false" />
+						<echo message="Could not reach host ${ci-server.hostname}."/>
+					</else>
+				</if>
 			</then>
 			<else>
-				<echo message="Could not reach host ${ci-server.hostname}."/>
+				<property name="is.value" value="false" />
+				<echo message="hostname is null "/>
 			</else>
 		</if>
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
 	</target>
-
+	
+	
 	<target name="build:check-bdafied" depends="init">
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkBdaEnabled"/>
 	</target>
