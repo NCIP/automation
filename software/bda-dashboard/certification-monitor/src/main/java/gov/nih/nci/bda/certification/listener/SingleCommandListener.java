@@ -96,7 +96,7 @@ public class SingleCommandListener implements BuildListener {
 	}
 	
 	private BuildCertificationBean populateBuildCertificationBean(BuildEvent event) {
-
+		System.out.println(" Error Message in populate " + event.getException());
 		BuildCertificationBean bmb = new BuildCertificationBean();
 		String projectName = event.getProject().getProperty("project.name");
 		String urlProperty = projectName + ".svn.project.url";
