@@ -306,13 +306,11 @@
 						
 					</then>
 					<else>
-						<property name="is.value" value="false" />
 						<echo message="Could not reach host ${ci-server.hostname}."/>
 					</else>
 				</if>
 			</then>
-			<else>
-				<property name="is.value" value="false" />
+			<else>				
 				<echo message="hostname is null "/>
 			</else>
 		</if>
