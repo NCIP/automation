@@ -46,6 +46,7 @@ public class SingleCommandListener implements BuildListener {
 			String targetName=event.getTarget().getName();
 			String executedTargetName=event.getProject().getProperty("executed.target.name");
 			System.out.println("Target " + targetName +  " finished!");
+			System.out.println(" executedTargetName " + executedTargetName);
 		    if(targetName != null && targetName.equals(executedTargetName))
 			{
 		    	BuildCertificationBean bmb  = populateBuildCertificationBean(event);
