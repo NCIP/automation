@@ -63,6 +63,7 @@ class CertificationUtils
 		{
 		        if(bdaVersion.endsWith("beta"))
 		        {
+		        	project.setProperty("is.value","false");
 		        	ant.fail("PROJECT USES THE BETA VERSION OF THE BDA UTILS")
 		        }else
 		        {
@@ -74,6 +75,7 @@ class CertificationUtils
 		}
 		else
 		{	
+			project.setProperty("is.value","false");
 			ant.fail("PROJECT NOT BDA ENABLED")
 		}
 	}

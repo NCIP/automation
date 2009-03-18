@@ -104,7 +104,7 @@ import org.hibernate.Session;
 		  project.setProperty("is.optional", "false");
 		} 
 		
-		if(targetLookup.getIsOptional() != null && targetLookup.getIsValue().equals("true"))
+		if(targetLookup.getIsOptional() != null && targetLookup.getIsOptional().equals("true"))
 		{
 		  project.setProperty("is.optional", "true");
 		}        	  
