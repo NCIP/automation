@@ -204,16 +204,24 @@ class CertificationUtils
 
 	def getBdaUtilsVersion ()
 	{
-		def buildFileLocation=project.properties['master.build.location']
-		def basedir=project.properties['basedir']
-		println basedir
+		try
+		{
+			def buildFileLocation=project.properties['master.build.location']
+			def basedir=project.properties['basedir']
+			println basedir
 
-		String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/project.properties").getAbsoluteFile();
-		Properties props = new Properties();
-		props.load(new FileInputStream(projectPropertiesFile));			
-		String bdaVersion = props.getProperty("bda.version");
-		println bdaVersion;
-		return bdaVersion;
+			String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/project.properties").getAbsoluteFile();
+			Properties props = new Properties();
+			props.load(new FileInputStream(projectPropertiesFile));			
+			String bdaVersion = props.getProperty("bda.version");
+			println bdaVersion;
+			return bdaVersion;
+		}
+		catch(Exception ex)
+		{	
+			project.setProperty("is.value","false")
+			ant.fail("Exception while geting the version of bdauitls::" + ex.getMessage())
+		}
 	}
 
 	void checkDBIntegration ()
@@ -405,67 +413,75 @@ class CertificationUtils
 	
 	def parseAndFormatDate (String propertiesList)
 	{	
-		def buildFileLocation=project.properties['master.build.location']
-		def basedir=project.properties['basedir']
-		println basedir
-		String installFile = new File(basedir +"/"+ buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
-		StringBuffer wikiStr = new StringBuffer("'[");
-
-	        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #.*/)
-		java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9][0-9], [0-9][0-9][0-9][0-9].*/)
-		java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
-
-		StringBuffer sb = new StringBuffer()
-		def ciStatusStr 
-		def file = new File(installFile);
-		file.eachLine {line->
-			def matcher = ciStatusPattern.matcher(line)
-			
-			if(pattern.matcher(line))
-			{
-				sb.append(line.trim())
-				println line
-			}
-			if(datePattern.matcher(line))
-			{
-				sb.append(line.trim())
-				println line
-			}
-			if(matcher.find())
-			{				
-				ciStatusStr = matcher.group(2)
-			}
-
-		}
-
-
-		String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
-		println dataStr	
-		
-		if (ciStatusStr=="[Success]")
+		try
 		{
-			wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
-			if (sb!= null)
-				wikiStr = wikiStr.append("|"+sb+"]'")
+			def buildFileLocation=project.properties['master.build.location']
+			def basedir=project.properties['basedir']
+			println basedir
+			String installFile = new File(basedir +"/"+ buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
+			StringBuffer wikiStr = new StringBuffer("'[");
 
-			println wikiStr
-			project.setProperty("certification.property.value",wikiStr.toString());
-		}
-		else
-		{
-			wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
-			if (sb!= null)
-				wikiStr = wikiStr.append("|"+sb+"]'")
+			java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #.*/)
+			java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9][0-9], [0-9][0-9][0-9][0-9].*/)
+			java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
 
-			println wikiStr
+			StringBuffer sb = new StringBuffer()
+			def ciStatusStr 
+			def file = new File(installFile);
+			file.eachLine {line->
+				def matcher = ciStatusPattern.matcher(line)
 
-			project.setProperty("certification.property.value",wikiStr.toString());
-			if(getStatusOnDate(dataStr).equals(this.WIKI_FAILED))
-			{
-				ant.fail("CI Builds failing for more than a day")
+				if(pattern.matcher(line))
+				{
+					sb.append(line.trim())
+					println line
+				}
+				if(datePattern.matcher(line))
+				{
+					sb.append(line.trim())
+					println line
+				}
+				if(matcher.find())
+				{				
+					ciStatusStr = matcher.group(2)
+				}
+
 			}
-		}		
+
+
+			String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
+			println "Date of the build:" + dataStr	
+			println "Status of the build:" + ciStatusStr	
+			if (ciStatusStr=="Success")
+			{
+				wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+				if (sb!= null)
+					wikiStr = wikiStr.append("|"+sb+"]'")
+
+				println wikiStr
+				project.setProperty("certification.property.value",wikiStr.toString());
+			}
+			else
+			{
+				wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+				if (sb!= null)
+					wikiStr = wikiStr.append("|"+sb+"]'")
+
+				println wikiStr
+
+				project.setProperty("certification.property.value",wikiStr.toString());
+				if(getStatusOnDate(dataStr).equals(this.WIKI_FAILED))
+				{
+					ant.fail("CI Builds failing for more than a day")
+				}
+			}		
 		
+		}
+		catch(Exception ex)
+		{	
+			project.setProperty("is.value","false")
+			ant.fail("Exception occured while evalation the ci build::" + ex.getMessage())
+		}
 	}
 	
 	
