@@ -350,33 +350,33 @@ public class UserInputPanel extends IzPanel implements ActionListener
     private static final String FAMILY = "family";
 
     private static final String FIELD_BUTTON = "button";
-    
+
     private static final String PANEL_READER_NODE_ID = "panelreader";
-    
+
     private static final String PANEL_READER_METHOD_NAME = "methodname";
-    
+
     private static final String PANEL_READER_CLASS_NAME = "classname";
 
     private static final String PANEL_READER_LANGUAGE = "language";
-    
+
     private static final String PANEL_READER_PROPERTY_MAP = "propertymap";
-    
+
     private static final String PANEL_READER_PROPERTY_NAME = "propertyname";
-    
+
     private static final String PANEL_READER_PROPERTY_MAP_NAME = "mapname";
-    
+
     private static final String FILE_EXTRACTOR_NODE_ID = "fileextractor";
-    
-    private static final String FILE_EXTRACTOR_EXTRACT_FILE = "extractfile"; 
-    
+
+    private static final String FILE_EXTRACTOR_EXTRACT_FILE = "extractfile";
+
     private static final String FILE_EXTRACTOR_FILE_NAME = "filename";
-    
+
     private static final String PANEL_READER_IN_PROPERTY = "inpropertymap";
 
     private static final String PANEL_READER_IN_PROPERTY_NAME = "inpropertyname";
-    
+
     private static final String PANEL_READER_IN_PROPERTY_VALUE = "inpropertyvalue";
-    
+
     // ------------------------------------------------------------------------
     // Variable Declarations
     // ------------------------------------------------------------------------
@@ -609,25 +609,25 @@ public class UserInputPanel extends IzPanel implements ActionListener
             }
         }
         XMLElement fileExtractor = spec.getFirstChildNamed(FILE_EXTRACTOR_NODE_ID);
-        
+
         if (fileExtractor != null)
         {
         	extractUtilsFromJar(fileExtractor);
         }
-        
-        
+
+
         XMLElement panelReader = spec.getFirstChildNamed(PANEL_READER_NODE_ID);
-        
+
         if (panelReader != null)
         {
         	processReader(panelReader);
         }
     }
 
-    
-	private void extractUtilsFromJar(XMLElement fileExtractor) 
+
+	private void extractUtilsFromJar(XMLElement fileExtractor)
 	{
-		try 
+		try
 		{
             Vector<XMLElement> extractorMap = fileExtractor.getChildrenNamed(FILE_EXTRACTOR_EXTRACT_FILE);
             for (int i = 0; i < extractorMap.size(); i++)
@@ -637,18 +637,18 @@ public class UserInputPanel extends IzPanel implements ActionListener
             	System.out.println("extractorFileName ::" +extractorFileName);
             	extractFiles(idata.info.getInstallerBase()+".jar",extractorFileName);
             }
-		} 
+		}
 		catch (Exception e1) {
 			e1.printStackTrace();
-		}                
+		}
 	}
-	
+
 	private void extractFiles(String jarFile,String fileToExtract)
 	{
-        
+
         // GET FROM JAR
         JarFile jar;
-		try 
+		try
 		{
 			jar = new JarFile(jarFile);
 			Enumeration en = jar.entries();
@@ -657,22 +657,22 @@ public class UserInputPanel extends IzPanel implements ActionListener
 				JarEntry fileName = (JarEntry) en.nextElement();
 				if(fileName.toString().startsWith(fileToExtract))
 				{
-					ZipEntry entry = jar.getEntry(fileName.toString());						
+					ZipEntry entry = jar.getEntry(fileName.toString());
 					if (!fileName.isDirectory())
 					{
 						File efile = new File(entry.getName());
-		
+
 						String fullFile = efile.getPath();
 						String stripedFileName = fullFile.substring(0, fullFile.lastIndexOf(File.separator));
-		
+
 						if(!(new File(stripedFileName).exists()))
 						{
 							new File(stripedFileName).mkdirs();
 						}
-					
-				        InputStream is = 
+
+				        InputStream is =
 					           new BufferedInputStream(jar.getInputStream(entry));
-					        OutputStream os = 
+					        OutputStream os =
 					           new BufferedOutputStream(new FileOutputStream(efile));
 					        byte[] buffer = new byte[2048];
 					        for (;;)  {
@@ -682,27 +682,27 @@ public class UserInputPanel extends IzPanel implements ActionListener
 					        }
 					        os.flush();
 					        os.close();
-					        is.close();	
+					        is.close();
 					}
-				}	
-			}               
-		}	
+				}
+			}
+		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
     @SuppressWarnings("deprecation")
 	private void processReader(XMLElement panelReader) {
     		String readerClassName = panelReader.getAttribute(PANEL_READER_CLASS_NAME);
             String readerMethodName = panelReader.getAttribute(PANEL_READER_METHOD_NAME);
             String readerLanguage = panelReader.getAttribute(PANEL_READER_LANGUAGE);
-            
-            // contains 
+
+            // contains
             HashMap propertiesNameMap = new HashMap();
-            HashMap propertiesValueMap = new HashMap();            
-            
+            HashMap propertiesValueMap = new HashMap();
+
 
             Vector<XMLElement> propertiesMap = panelReader.getChildrenNamed(PANEL_READER_PROPERTY_MAP);
             for (int i = 0; i < propertiesMap.size(); i++)
@@ -712,22 +712,22 @@ public class UserInputPanel extends IzPanel implements ActionListener
                 String mapName = propertyMap.getAttribute(PANEL_READER_PROPERTY_MAP_NAME);
                 propertiesNameMap.put(propertyName, mapName);
             }
-            
-        
+
+
             if (readerLanguage != null && readerLanguage.equalsIgnoreCase("ant"))
             {
                 Project project = new Project();
                 project.init();
-                     
+
                 DefaultLogger logger = new DefaultLogger();
                 logger.setMessageOutputLevel(Project.MSG_INFO);
                 logger.setErrorPrintStream(System.err);
                 logger.setOutputPrintStream(System.out);
                 project.addBuildListener(logger);
-              
+
                 File buildFile = new File(readerClassName);
                 ProjectHelper.configureProject(project, buildFile);
-                
+
                 Vector<XMLElement> inProperties = panelReader.getChildrenNamed(PANEL_READER_IN_PROPERTY);
                 for (int i = 0; i < inProperties.size(); i++)
                 {
@@ -736,13 +736,20 @@ public class UserInputPanel extends IzPanel implements ActionListener
                     String inPropertyValue = inProperty.getAttribute(PANEL_READER_IN_PROPERTY_VALUE);
                     project.setProperty(inPropertyName, idata.getVariable(inPropertyValue));
                 }
-                	
-                
+
+
                 System.out.println("readerMethodName::" + readerMethodName);
-                project.executeTarget(readerMethodName);
-                                
+				try
+				{
+					project.executeTarget(readerMethodName);
+				}
+				catch(Exception err)
+				{
+					showWarningMessageDialog(parentFrame, err.getMessage());
+				}
+
                 Hashtable ht = project.getProperties();
-                Set s = propertiesNameMap.keySet();    
+                Set s = propertiesNameMap.keySet();
                 Iterator i = s.iterator();
                 while(i.hasNext())
                 {
@@ -755,11 +762,11 @@ public class UserInputPanel extends IzPanel implements ActionListener
 	        	  	idata.setVariable((String) key,(String) propertiesValueMap.get(key));
 	                }
                 }
-                              
+
 		/*
                 ArrayList varialbleList = getAllPanelVariables();
                 Iterator<String> itr = varialbleList.iterator();
-                while (itr.hasNext()) 
+                while (itr.hasNext())
                 {
 	            	String key = itr.next();
 	            	if( propertiesValueMap.containsKey(key))
@@ -767,11 +774,11 @@ public class UserInputPanel extends IzPanel implements ActionListener
 	                		System.out.println("IZPACK KEY ::" + key);
 	                		System.out.println("IZPACK VALUE ::" + propertiesValueMap.get(key));
 	        	  			idata.setVariable(key,(String) propertiesValueMap.get(key));
-	        		  }                               
-                }                
+	        		  }
+                }
 		*/
             }
- 		
+
 	}
 
 	private ArrayList getAllPanelVariables() {
@@ -793,9 +800,9 @@ public class UserInputPanel extends IzPanel implements ActionListener
 	        }
 		return variables;
 	}
-	
+
 	private Properties getAllVariables() {
-	    Properties props = idata.getVariables();  
+	    Properties props = idata.getVariables();
 		return props;
 	}
 
