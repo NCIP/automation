@@ -44,7 +44,7 @@
 	<target name="convert-install-path" >
 		<echo message="${install.base.path}"/>
 		<pathconvert targetos="unix" property="application.base.path.convert">
-			 <path location="${install.base.path}"/>
+			<path location="${install.base.path}"/>
 		</pathconvert>
 
 		<replaceregexp file="${install.path}/${application_installer}/install.properties" byline="true"

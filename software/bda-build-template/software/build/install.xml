@@ -43,33 +43,33 @@
 	<!-- Generic properties -->
 	<property name="project.name" value="bda-blueprints"/>
 	<property name="env.name" value="local"/>
-	<property name="log.dir" value="${basedir}/logs" />
-	<property name="working.dir" value="${basedir}/working" />
-	<property name="temp.dir" value="${working.dir}/temp" />
+	<property name="log.dir" location="${basedir}/logs" />
+	<property name="working.dir" location="${basedir}/working" />
+	<property name="temp.dir" location="${working.dir}/temp" />
 
 
 	<!-- Install Time properties -->
 	<!-- Source and target directories -->
-	<property name="bda-utils.dir" value="bda-utils" />
-	<property name="tools.dir" value="${basedir}/${tools.dist.relative.dir}" />
-	<property name="common.dir.src" value="${basedir}/${common.dist.relative.dir}" />
-	<property name="common.dir.dest" value="${working.dir}/${common.dist.relative.dir}" />
-	<property name="db.dir.src" value="${basedir}/${db.dist.relative.dir}" />
-	<property name="db.dir.dest" value="${working.dir}/${db.dist.relative.dir}" />
-	<property name="db-install.dir.dest" value="${working.dir}/${db-install.dist.relative.dir}" />
-	<property name="db-upgrade.dir.dest" value="${working.dir}/${db-upgrade.dist.relative.dir}" />
-	<property name="jboss-conf.dir.src" value="${basedir}/${jboss-conf.dist.relative.dir}" />
-	<property name="jboss-conf.dir.dest" value="${working.dir}/${jboss-conf.dist.relative.dir}" />
+	<property name="bda-utils.dir" location="bda-utils" />
+	<property name="tools.dir" location="${basedir}/${tools.dist.relative.dir}" />
+	<property name="common.dir.src" location="${basedir}/${common.dist.relative.dir}" />
+	<property name="common.dir.dest" location="${working.dir}/${common.dist.relative.dir}" />
+	<property name="db.dir.src" location="${basedir}/${db.dist.relative.dir}" />
+	<property name="db.dir.dest" location="${working.dir}/${db.dist.relative.dir}" />
+	<property name="db-install.dir.dest" location="${working.dir}/${db-install.dist.relative.dir}" />
+	<property name="db-upgrade.dir.dest" location="${working.dir}/${db-upgrade.dist.relative.dir}" />
+	<property name="jboss-conf.dir.src" location="${basedir}/${jboss-conf.dist.relative.dir}" />
+	<property name="jboss-conf.dir.dest" location="${working.dir}/${jboss-conf.dist.relative.dir}" />
 
 	<!-- *-ds.xml and WAR -->
-	<property name="bda-blueprints-webapp.dir.dist" value="${basedir}/${bda-blueprints-webapp.dist.relative.dir}" />
+	<property name="bda-blueprints-webapp.dir.dist" location="${basedir}/${bda-blueprints-webapp.dist.relative.dir}" />
 	<property name="bda-blueprints-webapp.ds.file" value="bda-blueprints-ds.xml" />
 	<property name="bda-blueprints-webapp.name" value="bda-blueprints-webapp" />
 	<property name="bda-blueprints-webapp.war.file" value="${bda-blueprints-webapp.name}.war" />
 
 	<!-- Grid related properties -->
-	<property name="grid.resource.dir" value="${basedir}/${tools.dist.relative.dir}" />
-	<property name="grid.application.dir" value="${basedir}/${grid-sample.dist.relative.dir}" />
+	<property name="grid.resource.dir" location="${basedir}/${tools.dist.relative.dir}" />
+	<property name="grid.application.dir" location="${basedir}/${grid-sample.dist.relative.dir}" />
 	<property name="grid.artifact.file" value="sample-wsrf-war.zip" />
 	<property name="grid.dir.dest" value="wsrf" />
 	<property name="grid.application.name" value="Sample" />
@@ -1143,7 +1143,22 @@
 			properties.list="application.base.path,jboss.home,tomcat.home,jboss.server.name"
 			/>
 		<!-- Set these -->
-		<property name="jboss.server.hostname" value="${env.HOSTNAME}"/>
+		<osfamily property="os.family"/>
+		<if>
+			<or>
+				<equals arg1="${os.family}" arg2="unix"/>
+				<equals arg1="${os.family}" arg2="mac"/>
+			</or>
+			<then>
+				<property name="jboss.server.hostname" value="${env.HOSTNAME}"/>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<property name="jboss.server.hostname" value="${env.COMPUTERNAME}"/>
+			</then>
+		</if>
 		<!-- Begin JBoss Readers -->
 		<var name="read.properties.list" value=""/>
 		<!-- Reader reqiures that you have only one data source defined in each *-ds.xml file -->
@@ -1200,7 +1215,22 @@
 			/>                      
 
 		<!-- Begin Tomcat readers, delete if you don't need -->
-		<property name="tomcat.hostname" value="${env.HOSTNAME}"/>
+		<osfamily property="os.family"/>
+		<if>
+			<or>
+				<equals arg1="${os.family}" arg2="unix"/>
+				<equals arg1="${os.family}" arg2="mac"/>
+			</or>
+			<then>
+				<property name="tomcat.hostname" value="${env.HOSTNAME}"/>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<property name="tomcat.hostname" value="${env.COMPUTERNAME}"/>
+			</then>
+		</if>
 		<tomcat-read-ports
 			/>
 		<var name="tomcat.ssl.keystore.dir" value="${working.dir}/keys/tomcat"/>
