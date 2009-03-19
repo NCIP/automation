@@ -5,12 +5,12 @@ $HeadURL$
 -->
 
  	<!-- Properties -->
-	<property name="software.dir" value="${basedir}"/>
-	<property name="temp.dir" value="${software.dir}/target/temp"/>
-	<property name="bda-utils.dir" value="${software.dir}/bda-utils"/>
-	<property name="bda-utils.resource.dir" value="${bda-utils.dir}/resource"/>
+	<property name="software.dir" location="${basedir}"/>
+	<property name="temp.dir" location="${software.dir}/target/temp"/>
+	<property name="bda-utils.dir" location="${software.dir}/bda-utils"/>
+	<property name="bda-utils.resource.dir" location="${bda-utils.dir}/resource"/>
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
-	<property name="template.dbintegrate.file" value="${bda-utils.resource.dir}/template-db-integrate.xml"/>
+	<property name="template.dbintegrate.file" location="${bda-utils.resource.dir}/template-db-integrate.xml"/>
 
 	<!-- Supported versions -->
 	<property name="jboss.version.min" value="4.0.4"/>
@@ -1507,6 +1507,7 @@ $HeadURL$
 				<env key="NOPAUSE" value="true" />
 				<arg line="startup.sh" />
 			</exec>
+			<echo message="executing ${bda-utils.dir}/resource/psexec.exe"/>
 			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
 				<arg line="-d -i -w @{tomcat.home}/bin @{tomcat.home}/bin/startup.bat" />
@@ -4041,8 +4042,34 @@ $HeadURL$
 					<var name="keytool.error" unset="true"/>
 					<var name="keytool.result" unset="true"/>
 					<echo message="Validating JBoss SSL configurations"/>
+					<osfamily property="os.family"/>
+					<property name="os.tmp.dir" value="/tmp"/>
+					<if>
+						<and>
+							<equals arg1="${os.family}" arg2="unix"/>
+							<equals arg1="${os.family}" arg2="mac"/>
+						</and>
+						<then>
+							<property name="os.tmp.dir" value="/tmp"/>
+						</then>
+					</if>
+					<if>
+						<equals arg1="${os.family}" arg2="windows"/>
+						<then>
+							<property name="os.tmp.dir" value="c:/tmp"/>
+						</then>
+					</if>
+					<mkdir dir="${os.tmp.dir}"/>
+					<copy file="@{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file}" tofile="${os.tmp.dir}/@{appserver.ssl.keystore.file}"/>
 					<exec executable="keytool" outputproperty="keytool.output" errorproperty="keytool.error" resultproperty="keytool.result">
-						<arg line="-list -keystore @{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file} -storepass @{appserver.ssl.keystore.pass} -alias  @{appserver.ssl.keystore.alias} -v"/>
+						<arg value="-list"/>
+						<arg value="-keystore"/>
+						<arg value="${os.tmp.dir}/@{appserver.ssl.keystore.file}"/>
+						<arg value="-storepass"/>
+						<arg value="@{appserver.ssl.keystore.pass}"/>
+						<arg value="-alias"/>
+						<arg value="@{appserver.ssl.keystore.alias}"/>
+						<arg value="-v"/>
 					</exec>
 					<if>
 						<not>
@@ -5588,8 +5615,28 @@ $HeadURL$
 					<var name="keytool.output" unset="true"/>
 					<var name="keytool.error" unset="true"/>
 					<var name="keytool.result" unset="true"/>
+					<osfamily property="os.family"/>
+					<property name="os.tmp.dir" value="/tmp"/>
+					<if>
+						<and>
+							<equals arg1="${os.family}" arg2="unix"/>
+							<equals arg1="${os.family}" arg2="mac"/>
+						</and>
+						<then>
+							<property name="os.tmp.dir" value="/tmp"/>
+						</then>
+					</if>
+					<if>
+						<equals arg1="${os.family}" arg2="windows"/>
+						<then>
+							<property name="os.tmp.dir" value="c:/tmp"/>
+						</then>
+					</if>
+					<mkdir dir="${os.tmp.dir}"/>
+					<echo message="found keystore file ${read.keystore.file.location}"/>
+					<copy file="${read.keystore.file.location}" tofile="${os.tmp.dir}/${read.keystore.file}"/>
 					<exec executable="keytool" outputproperty="keytool.output" errorproperty="keytool.error" resultproperty="keytool.result">
-						<arg line="-list -keystore @{copied.keystore.dir}/${read.keystore.file} -storepass ${read.keystore.password} -alias  ${read.keystore.alias}  -v"/>
+						<arg line="-list -keystore ${os.tmp.dir}/${read.keystore.file} -storepass ${read.keystore.password} -alias  ${read.keystore.alias}  -v"/>
 					</exec>
 					<var name="read.fqhn" unset="true"/>
 					<propertyregex property="read.fqhn"
