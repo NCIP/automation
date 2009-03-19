@@ -152,9 +152,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.exploded.dir.location','${lexevs.svn.local.checkout}/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/lexevs/v5');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.hostname','ncias-c112-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.jobname','LexEVS.4.3');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.portnumber','48080');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.type','mysql');
