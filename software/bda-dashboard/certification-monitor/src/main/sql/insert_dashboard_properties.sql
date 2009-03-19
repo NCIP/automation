@@ -150,7 +150,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.exploded.dir.location','${lexevs.svn.local.checkout}/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/lexevs');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/lexevs/v5');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.jobname','');
@@ -188,7 +188,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.sin
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.exploded.dir.location','${po.svn.local.checkout}/code/target/po/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/coppa');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.hostname','cbvapp-c1005.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.jobname','coppa-po-ci-full');
