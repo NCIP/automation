@@ -350,7 +350,6 @@
 				<include name="*.jar"/>
 			</fileset>
 		</delete>
-		<copy file="${dist.exploded.dir}/build.xml" tofile="${working.dir}/install-master.xml"/> 
 		<gui-installer-prep
 			/>
 		<ant inheritAll="false" inheritRefs="false" 
