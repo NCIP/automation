@@ -470,10 +470,7 @@ class CertificationUtils
 				println wikiStr
 
 				project.setProperty("certification.property.value",wikiStr.toString());
-				if(getStatusOnDate(dataStr).equals(this.WIKI_FAILED))
-				{
-					ant.fail("CI Builds failing for more than a day")
-				}
+
 			}		
 		
 		}

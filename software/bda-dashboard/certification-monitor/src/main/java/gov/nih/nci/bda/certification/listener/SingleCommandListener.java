@@ -122,6 +122,7 @@ public class SingleCommandListener implements BuildListener {
 				bmb.setCertificationStatus(false);
 				CertificationManager.projectCertificationStatus = false;				
 			}
+			bmb.setValue(false);
 		}
 		else
 		{
@@ -132,20 +133,19 @@ public class SingleCommandListener implements BuildListener {
 				bmb.setCertificationStatus(true);
 				CertificationManager.projectCertificationStatus = true;
 			}
+			if(event.getProject().getProperty("is.value") != null && event.getProject().getProperty("is.value").equals("true"))
+			{
+					bmb.setValue(true);
+					bmb.setPropertyValue(event.getProject().getProperty("certification.property.value"));
+			}			
+			else
+			{
+				bmb.setValue(false);
+			}
 		}
 		bmb.setProjectName(projectName);
 		bmb.setTargetName(event.getTarget().getName());
 		bmb.setMapName(event.getProject().getProperty("map.name"));
-
-		if(event.getProject().getProperty("is.value") != null && event.getProject().getProperty("is.value").equals("true"))
-		{
-				bmb.setValue(true);
-				bmb.setPropertyValue(event.getProject().getProperty("certification.property.value"));
-		}			
-		else
-		{
-			bmb.setValue(false);
-		}
 		
 	
 		if(projectUrl != null)
