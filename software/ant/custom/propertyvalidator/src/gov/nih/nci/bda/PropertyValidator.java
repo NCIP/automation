@@ -78,6 +78,7 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 			StringBuffer msgExcKeys = new StringBuffer("");
 			pKeyProperties.load(new FileInputStream(new File(this.keyFile)));
 			pCompareProperties.load(new FileInputStream(new File(this.compareFile)));
+			loadDefinedProperties(pCompareProperties);
 
 			SortedSet sortedKeyProperties = new TreeSet(pKeyProperties.keySet());
 			SortedSet sortedCompareProperties = new TreeSet(pCompareProperties.keySet());
@@ -116,6 +117,10 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 		} catch (IOException e) {
 			throw new BuildException(e);
 		}
+	}
+
+	private void loadDefinedProperties(Properties compareProperties) {
+		compareProperties.putAll(this.getProject().getProperties());
 	}
 
 	public void execute() throws BuildException {
