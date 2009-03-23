@@ -3632,7 +3632,14 @@ $HeadURL$
 				<isset property="jboss.file.is.405"/>
 				<then>
 					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
-					<unzip dest="${jboss.base.dir}" src="@{jbosscp.binaries.file}" />
+					<unzip dest="${jboss.home}" src="@{jbosscp.binaries.file}" />
+					<!-- Copy of patched configuration files -->
+					<copy file="${jboss.home}/config-patches/jboss-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/> 
+					<copy file="${jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jmxinvoker-service.xml"/> 
+					<copy file="${jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/> 
+					<copy file="${jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/> 
+					<copy file="${jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/> 
+					<copy file="${jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/> 
 				</then>
 			</if>
 
@@ -3906,7 +3913,7 @@ $HeadURL$
 				<fileset dir="@{build.dir}">
 					<include name="install.xml" />
 					<include name="install.properties" />
-					<include name="*properties.template" />
+					<include name="properties.template" />
 					<include name="project.properties" />
 				</fileset>
 			</copy>

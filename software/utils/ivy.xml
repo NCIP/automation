@@ -37,7 +37,7 @@
 	  <dependency org="org.tigris" name="AntelopeApp" rev="3.4.1" conf="runtime" />
 	  <dependency org="org.tigris" name="svnant" rev="1.2.1" conf="runtime" />
 	  <dependency org="xmlconfig" name="xmlconfig" rev="0.1.9" conf="runtime" />
-	  <dependency org="ncicb" name="propertyvalidator" rev="0.1.6" conf="runtime" />		  
+	  <dependency org="ncicb" name="propertyvalidator" rev="0.1.7" conf="runtime" />		  
 	  <dependency org="redhillconsulting" name="simian" rev="2.2.24" conf="runtime" />		  
 	  <dependency org="ggtools" name="grand" rev="1.8" conf="runtime" />
 	  <dependency org="umlgraph" name="umlgraph" rev="4.8" conf="runtime" />
