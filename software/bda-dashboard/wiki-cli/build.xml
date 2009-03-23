@@ -17,6 +17,10 @@
 	<property name="deploy.dir" value="${user.home}/wiki-cli" />
 	<property name="wiki_cli_jar" value="wiki_cli_nci.jar" />
 	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
+	<property name="properties.file" value="build.properties" />
+	<property name="wiki.properties.file" value="wiki.properties" />
+	
+	<property file="${properties.file}"/>
 	
 	
 	
@@ -50,7 +54,7 @@
 	</target>
 
 
-	<target name="run" depends="init,build,package,deploy" description="Run the class to update Wiki">
+	<target name="run" depends="init,build,package,deploy,configure" description="Run the class to update Wiki">
 		
 	</target>
 	
@@ -78,9 +82,23 @@
 		</copy>
 
 		<copy file="${dist.dir}/${wiki_cli_jar}" todir="${deploy.dir}" />
-		<copy file="${software.dir}/wiki.properties" todir="${deploy.dir}" />
+		<copy file="${resources.dir}/${wiki.properties.file}" todir="${deploy.dir}" />
 		<copy file="${resources.dir}/build.xml" todir="${deploy.dir}" />
 	</target>
+
+
+	<target name="configure" description="Run the class to update Wiki">
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(database.name)=.*" replace="\1=${database.name}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(database.url)=.*" replace="\1=${database.url}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(database.user)=.*" replace="\1=${database.user}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(database.password)=.*" replace="\1=${database.password}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(wiki.server)=.*" replace="\1=${wiki.server}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(wiki.user)=.*" replace="\1=${wiki.user}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(wiki.password)=.*" replace="\1=${wiki.password}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(deployment-status.page.file)=.*" replace="\1=${deployment-status.page.file}" />
+		<replaceregexp file="${resources.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.file)=.*" replace="\1=${certification.page.file}" />		
+	</target>
+
 
 
 	<target name="execute" description="Run the class to update Wiki">
