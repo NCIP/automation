@@ -1,4 +1,4 @@
-drop table target_lookup;
+drop table IF EXISTS target_lookup;
 create table target_lookup (
 	ID int8 ,
 	TARGET_NAME varchar (150),
