@@ -450,6 +450,7 @@
 	<target name="dist:installer" depends="dist:installer:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
 		<delete file="${dist.dir}/${bda-blueprints-webapp.install.zip.file}" />
 		<!-- Set environment name to external -->
+		<delete file="${dist.exploded.dir}/upgrade.properties"/>
 		<replaceregexp file="${dist.exploded.dir}/install.properties" byline="true" match="^(env.name)=.*" replace="\1=external" />
 		<obfuscate-properties-file
 			properties.file="${dist.exploded.dir}/install.properties"
@@ -489,19 +490,22 @@
 	<target name="dist:upgrader" depends="dist:upgrader:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
 		<delete file="${dist.dir}/${bda-blueprints-webapp.upgrade.zip.file}" />
 		<!-- Set environment name to external -->
-		<replaceregexp file="${dist.exploded.dir}/install.properties" byline="true" match="^(env.name)=.*" replace="\1=external" />
-
-		<obfuscate-properties-file
-			properties.file="${dist.exploded.dir}/install.properties"
-			required.property.list="application.base.path.linux,application.base.path.windows,database.system.user,database.system.password,database.server,database.port,database.name,database.user,database.password,mail.smtp.host,jboss.server.hostname"
-			optional.property.list="ldap.url,ldap.basedn"
-			delete.property.list="exclude.jboss.backup"
-			/>
 		<copy todir="${dist.exploded.dir}" overwrite="true">
 			<fileset dir="${build.dir}">
 				<include name="upgrade.properties" />
 			</fileset>              
 		</copy>         
+		<delete file="${dist.exploded.dir}/install.properties"/>
+		<replaceregexp file="${dist.exploded.dir}/upgrade.properties" byline="true" match="^(env.name)=.*" replace="\1=external" />
+
+		<obfuscate-properties-file
+			properties.file="${dist.exploded.dir}/upgrade.properties"
+			comment.property.list="application.base.path.windows,application.base.path.linux,jboss.relative.path,tomcat.relative.path"
+			uncomment.property.list="application.base.path,tomcat.home,jboss.home"
+			required.property.list="application.base.path,jboss.home,jboss.server.name,tomcat.home"
+			optional.property.list=""
+			delete.property.list=""
+			/>
 		<replaceregexp file="${dist.exploded.dir}/build.xml" byline="true" match="(&lt;property name=&quot;properties.file&quot;\s+value=&quot;).*(&quot;\s*\/&gt;)" replace="\1upgrade.properties\2" />
 		<zip destfile="${dist.dir}/${bda-blueprints-webapp.upgrade.zip.file}" basedir="${dist.exploded.dir}" />
 
