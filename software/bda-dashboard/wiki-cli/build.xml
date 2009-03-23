@@ -2,6 +2,7 @@
 <project name="wikimod" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
 
 	<!-- PROPERTIES -->
+	<property file="${properties.file}"/>
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="sql.dir" value="${software.dir}/sql" />
@@ -19,9 +20,6 @@
 	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
 	<property name="properties.file" value="build.properties" />
 	<property name="wiki.properties.file" value="wiki.properties" />
-	
-	<property file="${properties.file}"/>
-	
 	
 	
 	<echo message="${lib.dir}"/>
