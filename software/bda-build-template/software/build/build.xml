@@ -601,6 +601,7 @@
 		-->
 		<deploy-local
 			target.name="${upgrade.target}"
+			properties.file="${upgrade.properties.file}"
 			/>
 	</target>
 
