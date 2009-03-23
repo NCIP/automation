@@ -1111,8 +1111,11 @@
 	</target>
 	<target name="init:upgrade" unless="install.running"
 		depends="
+		init:upgrade:prep,
 		init:readers:all
 		">
+	</target>
+	<target name="init:upgrade:prep">
 		<!-- Set application.base.path based on platform -->
 		<condition property="application.base.path" value="${application.base.path.linux}">
 			<or>
