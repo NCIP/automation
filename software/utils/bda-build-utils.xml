@@ -3912,8 +3912,9 @@ $HeadURL$
 			</copy>
 
 			<!-- Set default target and properyties.file to install and install.properties -->
+			<basename file="@{properties.file}" property="properties.file.name"/>
 			<replaceregexp file="@{dist.exploded.dir}/install.xml" byline="true" match="(.project.*default=.)\w+(.\s+.*)" replace="\1@{default.target}\2" />
-			<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.*)install.properties(.*)" replace="\1@{default.target}.properties\2" />
+			<replaceregexp file="${dist.exploded.dir}/install.xml" byline="true" match="(.*)install.properties(.*)" replace="\1${properties.file.name}\2" />
 
 			<!-- Rename install.xml to build.xml so manual installs will not need to include the -f optoin on ant, simplifying the install proces. -->
 			<move file="@{dist.exploded.dir}/install.xml" tofile="@{dist.exploded.dir}/build.xml" />
