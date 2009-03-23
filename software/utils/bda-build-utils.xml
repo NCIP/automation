@@ -1562,6 +1562,7 @@ $HeadURL$
 				<then>
 					<propertyvalidator keyFile="@{property.template.file}"
 						compareFile="@{envpropertyfile}"
+						readInMemory="true"
 						match="atleast"
 						/>
 				</then>
