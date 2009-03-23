@@ -18,6 +18,8 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 	private String compareFile;
 
 	private String match = "exactly";
+	
+	private boolean readInMemory = false;
 
 	public void setCompareFile(String pCompareFile) {
 		this.compareFile = pCompareFile;
@@ -31,6 +33,10 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 		this.match = pMatch;
 	}
 
+	public void setReadInMemory(boolean readInMemory) {
+		this.readInMemory = readInMemory;
+	}
+	
 	private void matchExactly(Properties pKeyProperties, Properties pCompareProperties) {
 		try {
 			pKeyProperties.load(new FileInputStream(new File(this.keyFile)));
@@ -78,7 +84,8 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 			StringBuffer msgExcKeys = new StringBuffer("");
 			pKeyProperties.load(new FileInputStream(new File(this.keyFile)));
 			pCompareProperties.load(new FileInputStream(new File(this.compareFile)));
-			loadDefinedProperties(pCompareProperties);
+			if(readInMemory)
+				loadDefinedProperties(pCompareProperties);
 
 			SortedSet sortedKeyProperties = new TreeSet(pKeyProperties.keySet());
 			SortedSet sortedCompareProperties = new TreeSet(pCompareProperties.keySet());
