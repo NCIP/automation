@@ -2983,10 +2983,28 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="obfuscate-properties-file" description="Diagnose the host system before the installation">
 		<attribute name="properties.file"/>
-		<attribute name="required.property.list"/>
+		<attribute name="comment.property.list" default=""/>
+		<attribute name="uncomment.property.list" default=""/>
+		<attribute name="required.property.list" default=""/>
 		<attribute name="optional.property.list" default=""/>
 		<attribute name="delete.property.list" default=""/>
 		<sequential>
+			<for list="@{comment.property.list}" param="property.name" delimiter=",">
+				<sequential>
+					<replaceregexp file="@{properties.file}"
+						match="^(@{property.name})=(.*)"
+						replace="#\1=\2"
+						flags="g" byline="true"/>
+				</sequential>
+			</for>
+			<for list="@{uncomment.property.list}" param="property.name" delimiter=",">
+				<sequential>
+					<replaceregexp file="@{properties.file}"
+						match="^#(@{property.name})=(.*)"
+						replace="\1=\2"
+						flags="g" byline="true"/>
+				</sequential>
+			</for>
 			<for list="@{required.property.list}" param="property.name" delimiter=",">
 				<sequential>
 					<replaceregexp file="@{properties.file}"
@@ -3913,6 +3931,7 @@ $HeadURL$
 				<fileset dir="@{build.dir}">
 					<include name="install.xml" />
 					<include name="install.properties" />
+					<include name="upgrade.properties" />
 					<include name="properties.template" />
 					<include name="project.properties" />
 				</fileset>
