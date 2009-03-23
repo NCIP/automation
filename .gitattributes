@@ -2211,6 +2211,7 @@ software/bda-dashboard/certification-monitor/build.xml -text
 software/bda-dashboard/certification-monitor/build/CertificationUtils.groovy -text
 software/bda-dashboard/certification-monitor/build/build.xml -text
 software/bda-dashboard/certification-monitor/build/project.properties -text
+software/bda-dashboard/certification-monitor/dev-install.properties -text
 software/bda-dashboard/certification-monitor/install.properties -text
 software/bda-dashboard/certification-monitor/lib/ant-jsch.jar -text
 software/bda-dashboard/certification-monitor/lib/ant-launcher.jar -text
@@ -2242,6 +2243,7 @@ software/bda-dashboard/certification-monitor/lib/slf4j-simple-1.5.2.jar -text
 software/bda-dashboard/certification-monitor/lib/tools.jar -text
 software/bda-dashboard/certification-monitor/lib/xercesImpl.jar -text
 software/bda-dashboard/certification-monitor/lib/xmltask-1.15.1.jar -text
+software/bda-dashboard/certification-monitor/prod-install.properties -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationConstants.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationHelper.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/CertificationManager.java -text

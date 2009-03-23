@@ -13,7 +13,8 @@
 	<property name="dist.dir" value="${target.dir}/dist" />
 	<property name="build.certification.jar" value="build-certification.jar" />
 	
-	<property file="${basedir}/install.properties"/>
+	<property name="properties.file" value="dev-install.properties" />
+	<property file="${basedir}/${properties.file}"/>
 
 		
 	
