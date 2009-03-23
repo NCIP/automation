@@ -13,7 +13,7 @@ class BuildStatusUpdater {
 		buildStatus.loadProperties();
 		buildStatus.setDBConnection();
 		buildStatus.setDefaultConfluenceString();
-		buildStatus.updateBuildStatus();
+		//buildStatus.updateBuildStatus();
 		buildStatus.updateCertificationStatus();
 		buildStatus.closeDBConnection();
 	}
