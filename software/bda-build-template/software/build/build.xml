@@ -522,7 +522,7 @@
 			<zipfileset dir="${dist.exploded.dir}">
 				<include name="build.xml" />
 				<include name="install.properties" />
-				<include name="*properties.template" />
+				<include name="properties.template" />
 				<include name="project.properties" />
 			</zipfileset>
 			<!--  might want to add this
@@ -546,7 +546,7 @@
 			<zipfileset dir="${dist.exploded.dir}">
 				<include name="build.xml" />
 				<include name="install.properties" />
-				<include name="*properties.template" />
+				<include name="properties.template" />
 				<include name="project.properties" />
 			</zipfileset>
 		</zip>          
@@ -565,7 +565,7 @@
 			<zipfileset dir="${dist.exploded.dir}">
 				<include name="build.xml" />
 				<include name="install.properties" />
-				<include name="*properties.template" />
+				<include name="properties.template" />
 				<include name="project.properties" />
 			</zipfileset>
 		</zip>          
