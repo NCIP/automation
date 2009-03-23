@@ -252,8 +252,6 @@
 					    <file src="@{this.dir}/property-template" ="yes" targetdir="$SYSTEM_user_home/@{installer.dir}">
 						<excludes>**/.svn/**</excludes>
 					    </file>
-					    <file src="@{this.dir}/../../target/working/install-master.xml" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
-					    <file src="@{this.dir}/../../target/bda-utils" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
 					</pack>
 
 					<pack name="parse-install" required="no" preselected="no" condition="install">
