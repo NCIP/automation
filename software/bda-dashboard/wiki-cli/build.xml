@@ -93,8 +93,10 @@
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(wiki.server)=.*" replace="\1=${wiki.server}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(wiki.user)=.*" replace="\1=${wiki.user}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(wiki.password)=.*" replace="\1=${wiki.password}" />
-		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(deployment-status.page.file)=.*" replace="\1=${deployment-status.page.file}" />
-		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.file)=.*" replace="\1=${certification.page.file}" />		
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.template.space)=.*" replace="\1=${certification.template.space}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.template.file)=.*" replace="\1=${certification.template.file}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.space)=.*" replace="\1=${certification.page.space}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.file)=.*" replace="\1=${certification.page.file}" />
 	</target>
 
 
