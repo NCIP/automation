@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- bda-build-template version 0.10.0-beta -->
+<!-- bda-build-template version 0.11.1 -->
 <project name="bda-blueprints-installer" default="upgrade" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
