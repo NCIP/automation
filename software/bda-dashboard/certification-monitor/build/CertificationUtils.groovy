@@ -241,6 +241,7 @@ class CertificationUtils
 		if(dbFlag != null)
 		{
 			println "Flag is set skip DB integration Check"
+			ant.fail("DATABASE INTEGRATION FAILED: exclude.database flag is set ")
 		}
 		else
 		{
