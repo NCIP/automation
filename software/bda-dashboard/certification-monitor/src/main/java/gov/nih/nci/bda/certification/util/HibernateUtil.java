@@ -54,10 +54,10 @@ public class HibernateUtil {
 
 	public static Session getSession() throws HibernateException {
 		Session s = session.get();
-		certLogger.error("Open a new Session, if this thread has none yet");
+		certLogger.info("Open a new Session, if this thread has none yet");
 		if (s == null) {
 			s = sessionFactory.openSession();
-			certLogger.error("Store session in  ThreadLocal variable");
+			certLogger.info("Store session in  ThreadLocal variable");
 			session.set(s);
 		}
 		return s;
