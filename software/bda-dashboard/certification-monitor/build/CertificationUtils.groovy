@@ -414,6 +414,7 @@ class CertificationUtils
 	
 	def parseAndFormatDate (String propertiesList)
 	{	
+		String dataStr = null;
 		try
 		{
 			def buildFileLocation=project.properties['master.build.location']
@@ -454,7 +455,7 @@ class CertificationUtils
 			}
 
 
-			String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
+			dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
 			println "Date of the build:" + dataStr	
 			println "Status of the build:" + ciStatusStr	
 			if (ciStatusStr=="Success")
@@ -476,10 +477,6 @@ class CertificationUtils
 
 				project.setProperty("certification.property.value",wikiStr.toString());
 
-				if(getStatusOnDate(dataStr).equals(this.WIKI_FAILED))
-				{
-					ant.fail("CI Builds failing for more than a day")
-				}
 			}		
 		
 		}
@@ -487,6 +484,11 @@ class CertificationUtils
 		{	
 			project.setProperty("is.value","false")
 			ant.fail("Exception occured while evalation the ci build::" + ex.getMessage())
+		}
+		if(getStatusOnDate(dataStr).equals(this.WIKI_FAILED))
+		{
+			project.setProperty("is.value","true")
+			ant.fail("CI Builds failing for more than a day")
 		}
 	}
 	
