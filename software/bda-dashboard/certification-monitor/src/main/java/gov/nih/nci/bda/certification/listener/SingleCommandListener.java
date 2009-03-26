@@ -65,7 +65,7 @@ public class SingleCommandListener implements BuildListener {
 				bmb.setCertificationStatus(false);
 				CertificationManager.projectCertificationStatus = false;
 			}
-			bmb.setValue(false);
+			//bmb.setValue(false);
 		} else {
 			bmb.setBuildSuccessful(true);
 			certLogger.info(" Update the projectCertificationStatus to true only when the status is not false" + CertificationManager.projectCertificationStatus);
@@ -73,17 +73,20 @@ public class SingleCommandListener implements BuildListener {
 				bmb.setCertificationStatus(true);
 				CertificationManager.projectCertificationStatus = true;
 			}
-			certLogger.info(" Check and Set certification.property.value only when the feature build is successful" );
-			if (event.getProject().getProperty("is.value") != null
-					&& event.getProject().getProperty("is.value")
-							.equals("true")) {
-				bmb.setValue(true);
-				bmb.setPropertyValue(event.getProject().getProperty(
-						"certification.property.value"));
-			} else {
-				bmb.setValue(false);
-			}
+			certLogger.info(" Check and Set certification.property.value only when the feature build is successful :" +event.getProject().getProperty("certification.property.value"));
+			
 		}
+		if (event.getProject().getProperty("is.value") != null
+				&& event.getProject().getProperty("is.value")
+						.equals("true")) {
+			bmb.setValue(true);
+			certLogger.info(" certification.property.value: " +event.getProject().getProperty("certification.property.value"));
+			bmb.setPropertyValue(event.getProject().getProperty(
+					"certification.property.value"));
+		} else {
+			bmb.setValue(false);
+		}
+
 		certLogger.info(" Set ProjectName:" + projectName +" TargetName:"+event.getTarget().getName()+ " MapName:" +event.getProject().getProperty("map.name"));
 		bmb.setProjectName(projectName);
 		bmb.setTargetName(event.getTarget().getName());

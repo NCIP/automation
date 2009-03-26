@@ -422,20 +422,24 @@ class CertificationUtils
 			String installFile = new File(basedir +"/"+ buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
 			StringBuffer wikiStr = new StringBuffer("'[");
 
-			java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #.*/)
+			java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #(.*)/)
 			java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9][0-9], [0-9][0-9][0-9][0-9].*/)
 			java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
 
 			StringBuffer sb = new StringBuffer()
 			def ciStatusStr 
+			def buildNumber 
 			def file = new File(installFile);
 			file.eachLine {line->
 				def matcher = ciStatusPattern.matcher(line)
-
-				if(pattern.matcher(line))
+				def buildMatcher = pattern.matcher(line)
+				
+				if(buildMatcher)
 				{
 					sb.append(line.trim())
+					buildNumber = buildMatcher.group(1)
 					println line
+					println buildNumber
 				}
 				if(datePattern.matcher(line))
 				{
@@ -455,7 +459,7 @@ class CertificationUtils
 			println "Status of the build:" + ciStatusStr	
 			if (ciStatusStr=="Success")
 			{
-				wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+				wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
 				if (sb!= null)
 					wikiStr = wikiStr.append("|"+sb+"]'")
 
@@ -464,7 +468,7 @@ class CertificationUtils
 			}
 			else
 			{
-				wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/lastBuild")
+				wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
 				if (sb!= null)
 					wikiStr = wikiStr.append("|"+sb+"]'")
 
@@ -472,6 +476,10 @@ class CertificationUtils
 
 				project.setProperty("certification.property.value",wikiStr.toString());
 
+				if(getStatusOnDate(dataStr).equals(this.WIKI_FAILED))
+				{
+					ant.fail("CI Builds failing for more than a day")
+				}
 			}		
 		
 		}
