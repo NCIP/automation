@@ -181,7 +181,7 @@
 			<!-- added for liquibase -->
 			<filter token="db-upgrade.run.dir" value="${db-upgrade.dir.dest}/${database.type}"/>
 			<filter token="jboss.home" value="${jboss.home}"/>
-			<filter token="tomcat.home" value="${jboss.home}"/>
+			<filter token="tomcat.home" value="${tomcat.home}"/>
 			<filter token="database.dialect" value="${database.dialect}"/>
 			<filter token="hibernate.cfg.file.path" value="${hibernate.cfg.file.path}"/>
 		</filterset>

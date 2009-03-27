@@ -192,7 +192,7 @@
 					<!-- Upgrade, specify app homes and read properties -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="upgrade"/>
 					<!-- Upgrade, read props -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="upgrade"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.2" condition="upgrade"/>
 					<!-- Jboss Configuration -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.3"/>
 					<!-- Jboss Continued -->

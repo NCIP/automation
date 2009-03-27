@@ -384,7 +384,15 @@
 	</target>
 
 	<target name="dist:tools:retrieve:jbosscp" unless="jbosscp.tools.exists" description="Downloads JBOSS Cumulative Patch from binary repository and verifies checksum">
-		<get src="${jbosscp.src.url}" dest="${jbosscp.dest.file}" />
+		<if>
+			<isset property="${jbosscp.src.url}"/>
+			<then>
+				<get src="${jbosscp.src.url}" dest="${jbosscp.dest.file}" />
+			</then>
+			<else>
+				<echo message="jbosscp.src.url not set skipping download of jboss cumulative patch"/>
+			</else>
+		</if>
 	</target>
 	<target name="dist:tools:retrieve:jboss" unless="jboss.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
 		<get src="${jboss.src.url}" dest="${jboss.dest.file}" />
