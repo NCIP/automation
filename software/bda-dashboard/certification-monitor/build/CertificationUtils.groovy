@@ -414,7 +414,7 @@ class CertificationUtils
 	
 	def parseAndFormatDate (String propertiesList)
 	{	
-		String dataStr = null;
+		def ciStatusStr 
 		try
 		{
 			def buildFileLocation=project.properties['master.build.location']
@@ -428,7 +428,7 @@ class CertificationUtils
 			java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
 
 			StringBuffer sb = new StringBuffer()
-			def ciStatusStr 
+			
 			def buildNumber 
 			def file = new File(installFile);
 			file.eachLine {line->
@@ -455,7 +455,7 @@ class CertificationUtils
 			}
 
 
-			dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
+			String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
 			println "Date of the build:" + dataStr	
 			println "Status of the build:" + ciStatusStr	
 			if (ciStatusStr=="Success")
@@ -485,7 +485,7 @@ class CertificationUtils
 			project.setProperty("is.value","false")
 			ant.fail("Exception occured while evalation the ci build::" + ex.getMessage())
 		}
-		if(getStatusOnDate(dataStr).equals(this.WIKI_FAILED) || getStatusOnDate(dataStr).equals(this.WIKI_MODERATE))
+		if(ciStatusStr!="Success")
 		{
 			project.setProperty("is.value","true")
 			ant.fail("CI Builds failing")
