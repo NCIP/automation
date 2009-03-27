@@ -1977,6 +1977,7 @@ software/bda-build-template/software/build/gui-installer/windir.txt -text
 software/bda-build-template/software/build/install.properties -text
 software/bda-build-template/software/build/install.xml -text
 software/bda-build-template/software/build/project.properties -text
+software/bda-build-template/software/build/properties.template -text
 software/bda-build-template/software/build/upgrade.properties -text
 software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
 software/bda-build-template/software/common/bda-download/ivy-bda-settings.xml -text
