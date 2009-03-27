@@ -3647,8 +3647,13 @@ $HeadURL$
 					</java>
 				</then>
 			</if>
+
+			<available file="@{jbosscp.binaries.file}" property="jbosscp.exists"/>
 			<if>
-				<isset property="jboss.file.is.405"/>
+				<and>
+					<isset property="jboss.file.is.405"/>
+					<isset property="jbosscp.exists"/>
+				</and>
 				<then>
 					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
 					<unzip dest="${jboss.home}" src="@{jbosscp.binaries.file}" />
@@ -5273,7 +5278,6 @@ $HeadURL$
 					<get src="@{cacore-sdk.src.url}" dest="@{download.dir}/${cacore-sdk.binaries.file}" />
 				</then>
 			</if>
-			<mkdir dir="@{cacore-sdk.dir}"/>
 			<!-- Extract if not already extracted -->
 			<if>
 				<and>
