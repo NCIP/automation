@@ -17,6 +17,19 @@ $HeadURL$
 	<property name="jboss.version.max" value="4.2.2"/>
 	<property name="tomcat.version.min" value="5.0.0"/>
 	<property name="tomcat.version.max" value="5.5.999"/>
+	<!-- conditionals -->
+	<condition property="os.temp.dir" value="/tmp">
+		<or>                    
+			<os family="unix" />            
+			<os family="mac" />             
+		</or>                   
+	</condition>    
+
+	<condition property="os.temp.dir" value="c:/temp">
+		<os family="windows" /> 
+	</condition>    
+
+	<mkdir dir="${os.temp.dir}"/>
 	<!-- PATHS -->
 	<path id="macrodef.classpath">
 		<fileset dir="${bda-utils.dir}">
@@ -5319,7 +5332,8 @@ $HeadURL$
 
 					<echo message="Properties found in ${properties-service.file}, updating"/>
 					<copy file="${properties-service.file}" tofile="${properties-service.file}.orig" overwrite="true"/>
-					<groovy src="${bda-utils.resource.dir}/groovy/updatePropertiesService.groovy">
+					<copy tofile="${os.temp.dir}/updatePropertiesService.groovy" file="${bda-utils.resource.dir}/groovy/updatePropertiesService.groovy" overwrite="true"/>
+					<groovy src="${os.temp.dir}/updatePropertiesService.groovy">
 						<arg line="${property.block.file} ${properties-service.file}"/>
 					</groovy>
 					<echo message="After groovy"/>
