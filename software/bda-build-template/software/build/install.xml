@@ -291,9 +291,6 @@
 				<filtersfile file="project.properties"/>
 			</filterset>
 		</copy> 
-		<groovy>
-			println "install:init debug"
-		</groovy>
 	</target>
 
 	<!-- Wrapper install database target, depends on both MySQL and Oracle sub-targets, ifs should ensure only one is run.  Target path can be skipped by exlude.database also calls upgrade:database -->
@@ -319,9 +316,6 @@
 				<include name="**/db-upgrade.xml"/>
 			</fileset>
 		</copy>
-		<groovy>
-			println "install:database:prep debug"
-		</groovy>
 	</target>
 
 	<target name="install:database" description="Runs datbase creation scripts then calls uprade database." unless="exclude.database"
@@ -331,9 +325,6 @@
 		install:database:prep
 		">
 		<!-- Drop all schema objects or re-create the db -->
-		<groovy>
-			println "begin liquibase debug"
-		</groovy>
 		<database-clean/>
 		<!-- Run baseline scripts stored in db.install.create.${database.type}.file.list variable -->
 		<switch value="${database.type}">
@@ -357,24 +348,15 @@
 					/>
 			</case>
 		</switch>
-		<groovy>
-			println "before liquibase debug"
-		</groovy>
 		<database-upgrade
 			database.changelog.file="${os.temp.dir}/${project.name}/db-upgrade.xml"
 			/>
 		<database-tag/>
-		<groovy>
-			println "after liquibase debug"
-		</groovy>
 	</target>
 
 	<target name="install:jboss:binaries" description="Install JBoss binaries" unless="exclude.jboss" depends="init:install,init:common">
 		<jboss-install-binaries
 			/>
-		<groovy>
-			println "install:jboss:binaries debug"
-		</groovy>
 	</target>
 
 	<target name="install:jboss:bda-blueprints-webapp:filesystem-data"  depends="init:install,init:common">
@@ -408,9 +390,6 @@
 		<copy file="${jboss-conf.dir.dest}/${jboss.web.xml.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 		-->
 		<!-- This code is for updating properties.service.xml, make sure to add ${line.separator} after each property def as the property delimiter, if this is not included you will not get the desired results. If you do not use properties service.xml you can delete this code. -->
-		<groovy>
-			println "First debug"
-		</groovy>
 		<var name="property.block" value="property1=${authentication.type}${line.separator}
 			property2=${env.name}${line.separator}
 			property3=${jboss.home}${line.separator}
@@ -419,9 +398,6 @@
 		<jboss-update-properties-service
 			property.block="${property.block}"
 			/>
-		<groovy>
-			println "fifth debug"
-		</groovy>
 	</target>
 
 	<target name="install:jboss:configure:log4j" description="Configure custom entries in system wide log4j" unless="exclude.jboss"  depends="init:install,init:common">

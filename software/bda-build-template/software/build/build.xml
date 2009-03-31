@@ -1115,4 +1115,14 @@
 		-->
 
 	</target>
+	<target name="temp-properties-service">
+		<var name="property.block" value="property1=${authentication.type}${line.separator}
+			property2=${env.name}${line.separator}
+			property3=${jboss.home}${line.separator}
+			property4=${tomcat.home}${line.separator}
+			"/>
+		<jboss-update-properties-service
+			property.block="${property.block}"
+			/>
+	</target>
 </project>
