@@ -1432,7 +1432,7 @@ $HeadURL$
 									<dbconfig property="db.connection.success"
 										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
 										<validate />
-										<!--<checkversion atleast="@{database.version}" />-->
+										<checkversion atleast="@{database.version}" />
 									</dbconfig>
 									<antunit:assertPropertyEquals message="Database connection failed for @{database.url}. Verify that your database.user and database.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
 									<echo message="Database Connection: PASSED" />
@@ -1441,7 +1441,7 @@ $HeadURL$
 									<dbconfig property="db.connection.success"
 										driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
 										<validate />
-										<!--<checkversion atleast="@{database.version}" />-->
+										<checkversion atleast="@{database.version}" />
 									</dbconfig>
 									<antunit:assertPropertyEquals message="Database connection failed for @{database.url}. Verify that your database.user and database.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
 									<echo message="Database Connection: PASSED" />
@@ -3355,6 +3355,9 @@ $HeadURL$
 		<attribute name="izpack-custom.svn.dir" default="${target.dir}/izpack-custom"/>
 		<attribute name="product.name" default="caArray-installer" />
 		<attribute name="product.version" default="2.1.0" />
+		<attribute name="ant.binary.file" default="apache-ant-1.7.0-bin.zip"/>
+		<attribute name="ant.binary.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/apache-ant-1.7.0-bin.zip"/>
+		<attribute name="ant.binary.dir" default="${target.dir}/apache-ant-1.7.0"/>
 		<sequential>
 			<tstamp>
 				<format property="JAR_STAMP" pattern="MMddyyyyhhmmss" unit="millisecond" />
@@ -3421,6 +3424,8 @@ $HeadURL$
 					<chmod dir="@{target.dir}/@{izpack.binary.name}/bin" perm="ugo+rx" includes="compile" />
 				</then>
 			</if>
+			<get src="@{ant.binary.url}" dest="@{download.dir}/@{ant.binary.file}" usetimestamp="true"/>
+			<unzip dest="@{target.dir}" src="@{download.dir}/@{ant.binary.file}" />
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-read-ldapconfig" description="check if the application is installed">
@@ -5311,9 +5316,6 @@ $HeadURL$
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="property.block"/>
 		<sequential>
-			<groovy>
-				println "third debug"
-			</groovy>
 			<var name="properties-service.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/properties-service.xml"/>
 			<var name="property.block.file" value="${working.dir}/property.block.txt"/>
 			<echo message="Creating ${property.block.file}"/>
@@ -5352,9 +5354,6 @@ $HeadURL$
 					</xmltask>
 				</else>
 			</if>
-			<groovy>
-				println "fourth debug"
-			</groovy>
 		</sequential>
 	</macrodef>
 
@@ -5759,8 +5758,8 @@ $HeadURL$
 		<attribute name="tomcat.external.http.port.property.name" default="tomcat.external.http.port"/>
 		<attribute name="tomcat.external.grid.secure.host.property.name" default="tomcat.external.grid.secure.host"/>
 		<attribute name="tomcat.external.grid.secure.port.property.name" default="tomcat.external.grid.secure.port"/>
-		<attribute name="search.ssl.port" default="8443"/>
-		<attribute name="search.http.port" default="8080"/>
+		<attribute name="search.ssl.port" default="${tomcat.port.ssl}"/>
+		<attribute name="search.http.port" default="${tomcat.port.http}"/>
 		<sequential>
 			<var name="tomcat-read-external.properties.list" value="@{tomcat.external.ssl.host.property.name},@{tomcat.external.ssl.port.property.name},@{tomcat.external.http.host.property.name},@{tomcat.external.http.port.property.name},@{tomcat.external.grid.secure.host.property.name},@{tomcat.external.grid.secure.port.property.name}"/>
 			<appserver-read-external-hostname
