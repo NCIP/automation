@@ -316,7 +316,7 @@
 			</installation>
 		]]></config>
 		</IzPack>
-		<property name="pre-install.dir" value="working/pre-install"/>
+		<property name="pre-install.dir" value="${target.location}/working/pre-install"/>
 		<property name="build.dir" value="${software.location}/build"/>
 		<mkdir dir="${pre-install.dir}"/>
 		<copy tofile="${pre-install.dir}/install.xml" file="${build.dir}/install.xml" overwrite="true"/>
@@ -329,7 +329,7 @@
 			</fileset>                      
 		</copy>                 
 		<jar update="true" destfile="${dist.location}/${gui-installer.dist.base.name}-${build.time}.jar"
-			basedir="working"        
+			basedir="${target.location}/working"        
 			includes="pre-install/**/*"     
 			/>                              
 	</target>

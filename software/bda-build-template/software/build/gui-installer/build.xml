@@ -9,7 +9,7 @@
 		<delete dir="${install.path}/${application_installer}" />
 		<unzip src="${install.path}/${application_installer_zip}" dest="${install.path}/${application_installer}" />
 		<copy file="${install.path}/property-template/installer.template.properties" tofile="${install.path}/${application_installer}/install.properties" overwrite="true"/>
-		<copy file="${install.path}/property-template/upgrade.template.properties" tofile="${install.path}/${application_installer}/upgrade.properties" />
+		<copy file="${install.path}/property-template/upgrade.template.properties" tofile="${install.path}/${application_installer}/upgrade.properties" overwrite="true"/>
 		<replace dir="${install.path}/${application_installer}" token="basedir}" value="install.path}/${application_installer}">
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />

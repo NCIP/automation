@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- bda-build-template version 0.11.1 -->
+<!-- bda-build-template version 0.11.3 -->
 <project name="bda-blueprints-installer" default="upgrade" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	>
@@ -536,8 +536,6 @@
 		depends="
 		init:install,
 		init:common,
-		init:install,
-		init:common,
 		install:validation:pre-install,
 		install:jboss:stop,
 		install:validation:pre-install:ports,
@@ -550,7 +548,7 @@
 		install:jboss:configure,
 		install:jboss:grid,
 		install:jboss:grid:configure,
-		install:post,
+		install:post:jboss,
 		install:jboss:start
 		" >
 	</target>
@@ -571,6 +569,7 @@
 		install:tomcat:bda-blueprints-webapp:configure,
 		install:tomcat:grid,
 		install:tomcat:grid:configure,
+		install:post:tomcat,
 		install:tomcat:start
 		">
 	</target>
