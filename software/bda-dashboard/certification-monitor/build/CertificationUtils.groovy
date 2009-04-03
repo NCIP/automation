@@ -424,7 +424,7 @@ class CertificationUtils
 			StringBuffer wikiStr = new StringBuffer("'[");
 
 			java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #(.*)/)
-			java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9][0-9], [0-9][0-9][0-9][0-9].*/)
+			java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9]?[0-9], [0-9][0-9][0-9][0-9].*/)
 			java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
 
 			StringBuffer sb = new StringBuffer()
