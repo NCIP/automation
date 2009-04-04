@@ -2613,6 +2613,7 @@ $HeadURL$
 		<attribute name="jboss.port.ssl" default="${jboss.ssl.port}"/>
 		<attribute name="jboss.hostname" default="${jboss.server.hostname}"/>
 		<attribute name="jboss.external.http.host" default="${jboss.external.http.host}"/>
+		<attribute name="jboss.external.http.port" default="${jboss.external.http.port}"/>
 		<attribute name="search.host" default="localhost"/>
 		<attribute name="search.port" default="8080"/>
 		<attribute name="jboss.external.grid.secure.host" default="${jboss.external.grid.secure.host}"/>
@@ -2657,6 +2658,7 @@ $HeadURL$
 				appserver.port.ssl="@{jboss.port.ssl}"
 				appserver.hostname="@{jboss.hostname}"
 				appserver.external.http.host="@{jboss.external.http.host}"
+				appserver.external.http.port="@{jboss.external.http.port}"
 				search.host="@{search.host}"
 				search.port="@{search.port}"
 				grid.external.secure.host="@{jboss.external.grid.secure.host}"
@@ -2703,6 +2705,7 @@ $HeadURL$
 		<attribute name="tomcat.port.ssl" default="${tomcat.port.ssl}"/>
 		<attribute name="tomcat.hostname" default="${tomcat.hostname}"/>
 		<attribute name="tomcat.external.http.host" default="${tomcat.external.http.host}"/>
+		<attribute name="tomcat.external.http.port" default="${tomcat.external.http.port}"/>
 		<attribute name="search.host" default="localhost"/>
 		<attribute name="search.port" default="8080"/>
 		<attribute name="tomcat.external.grid.secure.host" default="${tomcat.external.grid.secure.host}"/>
@@ -2747,6 +2750,7 @@ $HeadURL$
 				appserver.port.ssl="@{tomcat.port.ssl}"
 				appserver.hostname="@{tomcat.hostname}"
 				appserver.external.http.host="@{tomcat.external.http.host}"
+				appserver.external.http.port="@{tomcat.external.http.port}"
 				search.host="@{search.host}"
 				search.port="@{search.port}"
 				grid.external.secure.host="@{tomcat.external.grid.secure.host}"
@@ -2826,15 +2830,44 @@ $HeadURL$
 		<attribute name="grid.secure.cert.file" default="${grid.secure.cert.file}"/>
 		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="appserver.external.http.host" default="${jboss.external.http.host}"/>
+		<attribute name="appserver.external.http.port" default="${jboss.external.http.port}"/>
 		<sequential>
 			<switch value="@{grid.secure.enable}">
 				<case value="true">
 					<var name="scheme" value="https"/>
-					<var name="appserver.default.web.port" value="@{grid.secure.port}"/>
+					<var name="ext.grid.ssl.port.is.set" unset="true"/>
+					<propertyregex property="ext.grid.ssl.port.is.set"
+						input="@{grid.external.secure.port}"
+						regexp="\S+"
+						select="true"
+						/>
+					<if>
+						<isset property="ext.grid.ssl.port.is.set"/>
+						<then>
+							<var name="appserver.default.web.port" value="@{grid.external.secure.port}"/>
+						</then>
+						<else>
+							<var name="appserver.default.web.port" value="@{grid.secure.port}"/>
+						</else>
+					</if>
 				</case>
 				<case value="false">
 					<var name="scheme" value="http"/>
-					<var name="appserver.default.web.port" value="@{appserver.port.http}"/>
+					<var name="ext.http.port.is.set" unset="true"/>
+					<propertyregex property="ext.http.port.is.set"
+						input="@{appserver.external.http.port}"
+						regexp="\S+"
+						select="true"
+						/>
+					<if>
+						<isset property="ext.http.port.is.set"/>
+						<then>
+							<var name="appserver.default.web.port" value="@{appserver.external.http.host}"/>
+						</then>
+						<else>
+							<var name="appserver.default.web.port" value="@{appserver.port.http}"/>
+						</else>
+					</if>
 				</case>
 				<default>
 					<fail message="grid.secure.enable must be true or false"/>
@@ -4613,7 +4646,7 @@ $HeadURL$
 		<attribute name="tomcat.external.ssl.port" default="${tomcat.external.ssl.port}"/>
 		<attribute name="tomcat.external.http.host" default="${tomcat.external.http.host}"/>
 		<attribute name="tomcat.external.http.port" default="${tomcat.external.http.port}"/>
-		<attribute name="proxy.update.connector.port.ssl" default="8443"/>
+		<attribute name="proxy.update.connector.port.ssl" default="${tomcat.port.ssl}"/>
 		<attribute name="proxy.update.connector.port.http" default="8080"/>
 		<attribute name="tomcat.external.grid.secure.host" default="${tomcat.external.grid.secure.host}"/>
 		<attribute name="tomcat.external.grid.secure.port" default="${tomcat.external.grid.secure.port}"/>
@@ -4661,6 +4694,7 @@ $HeadURL$
 
 					<!-- needs to be done before changing ports -->
 					<echo message="Configuring tomcat proxy settings for ssl"/>
+					<copy file="@{tomcat.server-xml.file}" tofile="@{tomcat.server-xml.file}.saksa"/>
 					<appserver-configure-external-hostname
 						appserver.server-xml.file="@{tomcat.server-xml.file}"
 						appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
@@ -5064,12 +5098,8 @@ $HeadURL$
 						</case>
 						<case value="windows">
 							<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
-								match="^(set\s+JAVA_OPTS)=(.*)"
-								replace="rem \1=\2"
-								/>
-							<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
-								match="^(rem JVM memory.*)"
-								replace="rem added by BDA installer${line.separator}set JAVA_OPTS=@{jboss.java.opts}${line.separator}\1"
+								match="^(echo\s+JAVA_OPTS(.*)"
+								replace=" \1rem Overriding JAVA_OPTS, added by bda${line.separator}set JAVA_OPTS= -Dprogram.name=%PROGNAME% @{jboss.java.opts}${line.separator}"
 								/>
 						</case>
 					</switch>
@@ -6000,7 +6030,7 @@ $HeadURL$
 						srcFile="@{jboss.bin.dir}/run.bat">
 						<filterchain>
 							<linecontainsregexp>
-								<regexp pattern="^\s*set JAVA_OPTS="/>
+								<regexp pattern="^\s*set JAVA_OPTS= -Dprogram.name"/>
 							</linecontainsregexp>
 						</filterchain>
 					</loadfile>
