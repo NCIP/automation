@@ -6045,6 +6045,7 @@ $HeadURL$
 							<property name="@{jboss.java.opts.property.name}" value="${read.java.opts}"/>
 						</then>
 						<else>
+							<property name="@{jboss.java.opts.property.name}" value=""/>
 							<echo message="Could not find JAVA_OPTS in @{jboss.bin.dir}/run.bat"/>
 						</else>
 					</if>
