@@ -5099,7 +5099,7 @@ $HeadURL$
 						<case value="windows">
 							<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
 								match="^(echo\s+JAVA_OPTS(.*)"
-								replace=" \1rem Overriding JAVA_OPTS, added by bda${line.separator}set JAVA_OPTS= -Dprogram.name=%PROGNAME% @{jboss.java.opts}${line.separator}"
+								replace=" rem Overriding JAVA_OPTS, added by bda${line.separator}set JAVA_OPTS= -Dprogram.name=%PROGNAME% @{jboss.java.opts}${line.separator}\1"
 								/>
 						</case>
 					</switch>
