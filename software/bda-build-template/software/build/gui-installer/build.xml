@@ -53,17 +53,29 @@
 	</target>
 
 	<target name="convert-upgrade-path" >
-	<echo message="${upgrade.base.path}"/>
-		<dirname file="${upgrade.base.path}" property="upgrade.application.base.path"/>
+	<echo message="${upgrade.application.base.path}"/>
+	<!--
+		<dirname file="${application.base.path}" property="upgrade.application.base.path"/>
+	-->
 		<pathconvert targetos="unix" property="application.base.path.convert">
-			 <path location="${upgrade.application.base.path}"/>
+			 <path location="${application.base.path}"/>
+		</pathconvert>
+		<pathconvert targetos="unix" property="jboss.home.convert">
+			 <path location="${jboss.home}"/>
+		</pathconvert>
+		<pathconvert targetos="unix" property="tomcat.home.convert">
+			 <path location="${tomcat.home}"/>
 		</pathconvert>
 
-		<!--
 		<replaceregexp file="${install.path}/${application_installer}/upgrade.properties" byline="true"
-				match="^(application.base.path.*)=(.*)"
-				replace="\1=${application.base.path.convert}"/>
-			-->
+			match="^(application.base.path.*)=(.*)"
+			replace="\1=${application.base.path.convert}"/>
+		<replaceregexp file="${install.path}/${application_installer}/upgrade.properties" byline="true"
+			match="^(jboss.home)=(.*)"
+			replace="\1=${jboss.home.convert}"/>
+		<replaceregexp file="${install.path}/${application_installer}/upgrade.properties" byline="true"
+			match="^(tomcat.home)=(.*)"
+			replace="\1=${tomcat.home.convert}"/>
 		<replaceregexp file="${install.path}/${application_installer}/build.xml" byline="true"
 			match="(&lt;property name=&quot;properties.file.*)install.properties(.*)"
 			replace="\1upgrade.properties\2"

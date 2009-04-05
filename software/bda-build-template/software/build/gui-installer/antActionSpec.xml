@@ -48,7 +48,9 @@
 			messageid="AntAction.convert-upgrade-path"			
 			>
 			<target name="convert-upgrade-path"/>
-			<property name="upgrade.base.path" value="${existing.jboss.home}"/>
+			<property name="application.base.path" value="${application.base.path}"/>
+			<property name="jboss.home" value="${jboss.home}"/>
+			<property name="tomcat.home" value="${tomcat.home}"/>
 			<property name="install.path" value="$SYSTEM_user_home/${installer.dir}"/>
 		</antcall>		
 	</pack>
