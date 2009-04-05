@@ -50,7 +50,7 @@
 
 	<!-- Install Time properties -->
 	<!-- Source and target directories -->
-	<property name="bda-utils.dir" location="bda-utils" />
+	<property name="bda-utils.dir" location="${basedir}/bda-utils" />
 	<property name="tools.dir" location="${basedir}/${tools.dist.relative.dir}" />
 	<property name="common.dir.src" location="${basedir}/${common.dist.relative.dir}" />
 	<property name="common.dir.dest" location="${working.dir}/${common.dist.relative.dir}" />
