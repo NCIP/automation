@@ -5108,7 +5108,7 @@ $HeadURL$
 							<var name="run.bat.match" unset="true"/>
 							<loadfile
 								property="run.bat.match"
-								srcFile="@{jboss.bin.dir}/run.bat"
+								srcFile="@{jboss.bin.dir}/run.bat">
 								<filterchain>
 									<linecontainsregexp>
 										<regexp pattern="JAVA_OPTS.*Dbda=bda"/>
