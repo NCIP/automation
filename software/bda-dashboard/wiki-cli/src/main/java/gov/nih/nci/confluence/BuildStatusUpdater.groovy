@@ -14,7 +14,6 @@ class BuildStatusUpdater {
 		buildStatus.setDBConnection();
 		buildStatus.setDefaultConfluenceString();
 		//buildStatus.updateBuildStatus();
-		buildStatus.updateDashboardRelease();
 		buildStatus.updateCertificationStatus();
 		buildStatus.closeDBConnection();
 	}
@@ -54,50 +53,6 @@ class BuildStatusUpdater {
 	doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplaceVersion}")
 
 	}
-	
-
-	public void updateDashboardRelease()
-	{	 
-	    
-
-	// get most recent tempates
-		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")		
-
-	List projectRows = connection.rows(statement)	
-	
-	
-	int count =projectRows.size()
-	
-	
-	connection.eachRow(statement) { row ->
-	    
-
-	    String productName    = row.PRODUCT;
-	    String certificationStatus = row.CERTIFICATION_STATUS;	    
-	    String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
-	    String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
-	    String databaseIntegration = row.DATABASE_INTEGRATION;
-	    String templateValidation = row.TEMPLATE_VALIDATION;
-	    String privateProperties = row.PRIVATE_PROPERTIES;	    
-	    String ciBuild = row.CI_BUILD;
-	    String bdaEnabled = row.BDA_ENABLED;
-	    String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
-	    String commandLineInstaller = row.COMMANDLINE_INSTALLER;
-	    
-
-			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
-
-			println findReplace
-			// update page
-			doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplace}")
-			doCmd("${confluence} -a getPageSource --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"    --file "+certificationTemplateFile+"_temp.txt")
-			count--
-		}
-	   	
-	
-	}
-	
-
 	
 	public void loadProperties()
 	{
