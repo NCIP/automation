@@ -2863,7 +2863,7 @@ $HeadURL$
 					<if>
 						<isset property="ext.http.port.is.set"/>
 						<then>
-							<var name="appserver.default.web.port" value="@{appserver.external.http.host}"/>
+							<var name="appserver.default.web.port" value="@{appserver.external.http.port}"/>
 						</then>
 						<else>
 							<var name="appserver.default.web.port" value="@{appserver.port.http}"/>
