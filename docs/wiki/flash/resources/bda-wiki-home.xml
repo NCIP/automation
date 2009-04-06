@@ -41,7 +41,7 @@
 		<image>
 			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/kservices.png
 		</image>
-		<teaser><![CDATA[<H2>Learn how to use BDA tools</H2><UL><LI><a href="https://wiki.nci.nih.gov/x/FgPj"</a></LI></UL>]]></teaser>
+		<teaser><![CDATA[<H2></H2><UL><LI><a href="https://wiki.nci.nih.gov/x/FgPj">Learn how to use BDA tools</a></LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>About</name>
