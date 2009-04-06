@@ -5105,10 +5105,31 @@ $HeadURL$
 								/>
 						</case>
 						<case value="windows">
-							<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
-								match="^(echo\s+JAVA_OPTS.*)"
-								replace=" rem Overriding JAVA_OPTS, added by bda${line.separator}set JAVA_OPTS= -Dprogram.name=%PROGNAME% @{jboss.java.opts}${line.separator}\1"
-								/>
+							<var name="run.bat.match" unset="true"/>
+							<loadfile
+								property="run.bat.match"
+								srcFile="@{jboss.bin.dir}/run.bat"
+								<filterchain>
+									<linecontainsregexp>
+										<regexp pattern="JAVA_OPTS.*Dbda=bda"/>
+									</linecontainsregexp>
+								</filterchain>
+							</loadfile>
+							<if>
+								<isset property="run.bat.match"/>
+								<then>
+									<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
+										match="(.*JAVA_OPTS.*)-Dbda=bda -Dprogram.name=%PROGNAME% (.*)"
+										replace="\1 -Dbda=bda -Dprogram.name=%PROGNAME% @{jboss.java.opts}"
+										/>
+								</then>
+								<else>
+									<replaceregexp file="@{jboss.bin.dir}/run.bat" byline="true"
+										match="^(echo\s+JAVA_OPTS.*)"
+										replace=" rem Overriding JAVA_OPTS, added by bda${line.separator}set JAVA_OPTS= -Dbda=bda -Dprogram.name=%PROGNAME% @{jboss.java.opts}${line.separator}\1"
+										/>
+								</else>
+							</if>
 						</case>
 					</switch>
 				</then>
