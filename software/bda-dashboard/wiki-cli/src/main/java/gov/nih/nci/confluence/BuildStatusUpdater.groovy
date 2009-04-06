@@ -14,6 +14,7 @@ class BuildStatusUpdater {
 		buildStatus.setDBConnection();
 		buildStatus.setDefaultConfluenceString();
 		//buildStatus.updateBuildStatus();
+		buildStatus.updateDashboardRelease();
 		buildStatus.updateCertificationStatus();
 		buildStatus.closeDBConnection();
 	}
@@ -24,7 +25,7 @@ class BuildStatusUpdater {
 	    String deploymentStatusTemplateSpace = properties.getProperty("deployment-status.template.space");//"test"
 	    String deploymentStatusPageFile = properties.getProperty("deployment-status.page.file");//"page1"
 	    String deploymentStatusPageSpace = properties.getProperty("deployment-status.page.space");//"confluence-cli-1.3.0.jar"
-
+	    String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
         // get most recent tempates
 		doCmd("${confluence} -a getPageSource --space \""+deploymentStatusTemplateSpace+"\" --title \"" + deploymentStatusTemplateFile+ "\" --file _temp.txt")
 		String statement   = "select PRODUCT,DEV,QA,STAGE,PROD from PROJECT_BUILD_STATUS "
@@ -47,19 +48,20 @@ class BuildStatusUpdater {
 			doCmd("${confluence} -a storePage --space \""+deploymentStatusPageSpace+"\" --title \""+deploymentStatusPageFile+"\"   --file _temp.txt ${findReplace}")
 			doCmd("${confluence} -a getPageSource --space \""+deploymentStatusPageSpace+"\" --title \""+deploymentStatusPageFile+"\"    --file _temp.txt")
 		}
+		
+	// Update the release version
+	String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardVersion}\""
+	doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplaceVersion}")
+
 	}
 	
-	
-	public void updateCertificationStatus()
+
+	public void updateDashboardRelease()
 	{	 
-	    String certificationTemplateFile = properties.getProperty("certification.template.file");//"Deployment_Status_Template"
-	    String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
-	    String certificationPageFile = properties.getProperty("certification.page.file");//"page1"
-	    String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
+	    
 
 	// get most recent tempates
-		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")
-		String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS "
+		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")		
 
 	List projectRows = connection.rows(statement)	
 	
@@ -95,6 +97,7 @@ class BuildStatusUpdater {
 	
 	}
 	
+
 	
 	public void loadProperties()
 	{
