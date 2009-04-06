@@ -2832,8 +2832,9 @@ $HeadURL$
 		<attribute name="appserver.external.http.host" default="${jboss.external.http.host}"/>
 		<attribute name="appserver.external.http.port" default="${jboss.external.http.port}"/>
 		<sequential>
-			<switch value="@{grid.secure.enable}">
-				<case value="true">
+			<if>
+				<equals arg1="@{grid.secure.enable}" arg2="true"/>
+				<then>
 					<var name="scheme" value="https"/>
 					<var name="ext.grid.ssl.port.is.set" unset="true"/>
 					<propertyregex property="ext.grid.ssl.port.is.set"
@@ -2850,8 +2851,8 @@ $HeadURL$
 							<var name="appserver.default.web.port" value="@{grid.secure.port}"/>
 						</else>
 					</if>
-				</case>
-				<case value="false">
+				</then>
+				<else>
 					<var name="scheme" value="http"/>
 					<var name="ext.http.port.is.set" unset="true"/>
 					<propertyregex property="ext.http.port.is.set"
@@ -2868,11 +2869,8 @@ $HeadURL$
 							<var name="appserver.default.web.port" value="@{appserver.port.http}"/>
 						</else>
 					</if>
-				</case>
-				<default>
-					<fail message="grid.secure.enable must be true or false"/>
-				</default>
-			</switch>
+				</else>
+			</if>
 
 			<!-- Fix all wsdl files that refer to statically defined host and port -->
 			<echo message="Cleaning up hostname:port refereces in **/*.wsdl"/>
@@ -5077,10 +5075,20 @@ $HeadURL$
 		<attribute name="jboss.bin.dir" default="${jboss.home}/bin" />
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}" />
 		<sequential>
-			<echo message="Setting JBoss java options"/>
+
+			<propertyregex property="jboss.java.opts.is.set"
+				input="@{jboss.java.opts}"
+				regexp="^([^\$]\S+)"
+				select="\1"
+				/>
+			<echo message="jboss.java.opts.is.set = ${jboss.java.opts.is.set}"/>
 			<if>
-				<available file="@{jboss.bin.dir}/run.conf"/>
+				<and>
+					<available file="@{jboss.bin.dir}/run.conf"/>
+					<isset property="jboss.java.opts.is.set"/>
+				</and>
 				<then>
+					<echo message="Setting JBoss java options"/>
 					<osfamily property="os.family"/>
 					<echo message="os.family=${os.family}"/>
 					<switch value="${os.family}">
@@ -5105,7 +5113,7 @@ $HeadURL$
 					</switch>
 				</then>
 				<else>
-					<echo message="Java options not updated because @{jboss.bin.dir} does not exist."/>
+					<echo message="Java options not updated because @{jboss.bin.dir} does not exist or jboss.java.opts has not value (@{jboss.java.opts})."/>
 				</else>
 			</if>
 		</sequential>
