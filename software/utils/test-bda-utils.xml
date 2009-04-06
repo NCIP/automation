@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-$Id:  $
+$Id$
 -->
 <project name="ncia-wrapper" default="build-all" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"

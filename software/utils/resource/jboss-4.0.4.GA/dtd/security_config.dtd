@@ -8,8 +8,8 @@ The DOCTYPE is:
       "-//JBoss//DTD JBOSS Security Config 3.0//EN"
       "http://www.jboss.org/j2ee/dtd/security_config.dtd">
 
-$Id: security_config.dtd,v 1.1 2004/04/17 13:28:15 tdiesler Exp $
-$Revision: 1.1 $
+$Id$
+$Revision$
 
 The outline of the application-policy is:
 <policy>

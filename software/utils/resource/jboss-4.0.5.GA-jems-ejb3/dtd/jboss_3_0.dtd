@@ -9,8 +9,8 @@ The DOCTYPE is:
       "-//JBoss//DTD JBOSS 3.0//EN"
       "http://www.jboss.org/j2ee/dtd/jboss_3_0.dtd">
 
-$Id: jboss_3_0.dtd 23138 2004-08-22 08:08:27Z pilhuhn $
-$Revision: 23138 $
+$Id$
+$Revision$
 
 Overview of the architecture of jboss.xml
 

@@ -1,4 +1,4 @@
-# $Id: README-DTD.txt 30415 2005-04-14 06:27:48Z  $
+# $Id$
 The following files contained witin this folder are covered by license terms
 documented in docs/licenses/sun-specs.txt of the distribution.
 

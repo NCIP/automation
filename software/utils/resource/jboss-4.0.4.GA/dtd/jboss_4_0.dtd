@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 
 <!--
-$Id: jboss_4_0.dtd,v 1.20.2.18 2006/04/21 10:09:46 aloubyansky Exp $
+$Id$
 
 This is the XML DTD for the JBoss 4.0 EJB deployment descriptor.
 The DOCTYPE is:

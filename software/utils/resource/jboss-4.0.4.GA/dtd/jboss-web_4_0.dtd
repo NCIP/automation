@@ -4,7 +4,7 @@
 elements into a JBoss deployment. This version applies to the JBoss 3.2.x
 releases.
 
-$Id: jboss-web_4_0.dtd,v 1.9.2.5 2006/03/13 17:46:09 tdiesler Exp $
+$Id$
 
   <!DOCTYPE jboss-web PUBLIC
     "-//JBoss//DTD Web Application 2.4//EN"

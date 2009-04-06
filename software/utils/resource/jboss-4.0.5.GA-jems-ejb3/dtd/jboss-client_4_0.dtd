@@ -4,7 +4,7 @@
 This version applies to the JBoss 4.x releases and the
 j2ee-1.4 application-client_1_4.xsd.
 
-$Id: jboss-client_4_0.dtd 42140 2006-03-13 17:38:56Z tdiesler $
+$Id$
 
    <!DOCTYPE jboss-client PUBLIC
        "-//JBoss//DTD Application Client 4.0//EN"

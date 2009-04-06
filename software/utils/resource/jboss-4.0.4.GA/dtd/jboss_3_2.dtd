@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 
 <!--
-$Id: jboss_3_2.dtd,v 1.8.2.6 2006/04/21 10:09:46 aloubyansky Exp $
+$Id$
 
 This is the XML DTD for the JBoss 3.2 EJB deployment descriptor.
 The DOCTYPE is:

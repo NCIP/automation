@@ -1,4 +1,4 @@
-# $Id: README-DTD.txt,v 1.1 2005/04/07 16:46:30 starksm Exp $
+# $Id$
 The following files contained witin this folder are covered by license terms
 documented in docs/licenses/sun-specs.txt of the distribution.
 
