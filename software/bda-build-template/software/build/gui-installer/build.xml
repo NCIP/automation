@@ -1,3 +1,7 @@
+<!--
+$Id$
+$HeadURL$
+-->
 <project name="Installer" default="install" basedir="." >
 	<!-- Generic properties -->
 	<property name="application_installer" value="bda-blueprints_installer" />

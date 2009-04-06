@@ -1,3 +1,8 @@
+<!--
+$Id$
+$HeadURL$
+-->
+
 <userInput>
 	<panel order="0">
 		<field type="title" txt="Install or Upgrade software" bold="true" size="1" />
