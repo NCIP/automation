@@ -25,7 +25,7 @@
 		<image>
 			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/Community_Help.png
 		</image>
-		<teaser><![CDATA[<H1>Documentation</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/LwCG">BDA Build Script Standards</a></LI><LI><a href="https://wiki.nci.nih.gov/x/Tpx8">BDA Technology</a></LI><LI><a href="https://wiki.nci.nih.gov/x/yqN8">BDA Utilities (BDA API)</a></LI><LI><a href="https://wiki.nci.nih.gov/x/wqN8">BDA Templates</a></LI><LI><a href="https://wiki.nci.nih.gov/x/cgPO">BDA Systems Request Guide</a></LI></UL>]]></teaser>
+		<teaser><![CDATA[<H1>Documentation</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/LwCG">BDA Build Script Standards</a></LI><LI><a href="https://wiki.nci.nih.gov/x/Ghmy">BDA Technology</a></LI><LI><a href="https://wiki.nci.nih.gov/x/yqN8">BDA Utilities (BDA API)</a></LI><LI><a href="https://wiki.nci.nih.gov/x/wqN8">BDA Templates</a></LI><LI><a href="https://wiki.nci.nih.gov/x/cgPO">BDA Systems Request Guide</a></LI></UL>]]></teaser>
 	</button>
 	<button>
 		<name>Tutorial</name>
