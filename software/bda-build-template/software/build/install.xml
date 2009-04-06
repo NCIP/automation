@@ -609,10 +609,10 @@
 	</target>
 
 	<!-- Generic targets to call appropriate upgrade path targets, just change the depends to use alternate ugprade path -->
-	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss" depends="init:upgrade,init:common,upgrade-dac:jboss">
+	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss" depends="init:upgrade:jboss,init:common,upgrade-dac:jboss">
 	</target>
 
-	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat" depends="init:upgrade,init:common,upgrade-dac:tomcat">
+	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat" depends="init:upgrade:tomcat,init:common,upgrade-dac:tomcat">
 	</target>
 
 	<target name="upgrade" description="Upgrades JBoss and Database" depends="init:upgrade,init:common,upgrade-dac">
@@ -624,7 +624,7 @@
 	<!-- Upgrade with Disposable Application Conttainer (DAC) -->
 	<target name="upgrade-dac:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
 		depends="
-		init:upgrade,
+		init:upgrade:jboss,
 		init:common,
 		install:validation:pre-install,
 		install:jboss:stop,
@@ -643,7 +643,7 @@
 	</target>
 	<target name="upgrade-dac:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
 		depends="
-		init:upgrade,
+		init:upgrade:tomcat,
 		init:common,
 		install:validation:pre-install,
 		install:tomcat:stop,
@@ -695,7 +695,7 @@
 	<!-- Upgrade with Container Modification (CM) -->
 	<target name="upgrade-cm:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
 		depends="
-		init:upgrade,
+		init:upgrade:jboss,
 		init:common,
 		install:validation:pre-install,
 		install:jboss:stop,
@@ -712,7 +712,7 @@
 	</target>
 	<target name="upgrade-cm:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
 		depends="
-		init:upgrade,
+		init:upgrade:tomcat,
 		init:common,
 		install:validation:pre-install,
 		install:tomcat:stop,
@@ -762,7 +762,7 @@
 	<!-- Upgrade with No Container Modification (NCM) -->
 	<target name="upgrade-ncm:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
 		depends="
-		init:upgrade,
+		init:upgrade:jboss,
 		init:common,
 		install:validation:pre-install,
 		install:jboss:stop,
@@ -777,7 +777,7 @@
 	</target>
 	<target name="upgrade-ncm:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
 		depends="
-		init:upgrade,
+		init:upgrade:tomcat,
 		init:common,
 		install:validation:pre-install,
 		install:tomcat:stop,
@@ -1085,10 +1085,20 @@
 			</else>
 		</if>
 	</target>
-	<target name="init:upgrade" unless="install.running"
+	<target name="init:upgrade" depends="init:upgrade:jboss, init:upgrade:tomcat" unless="install.running">
+	</target>
+	<target name="init:upgrade:jboss" unless="install.running"
 		depends="
 		init:upgrade:prep,
-		init:readers:all
+		init:readers:bda:jboss,
+		init:readers:custom:jboss
+		">
+	</target>
+	<target name="init:upgrade:tomcat" unless="install.running"
+		depends="
+		init:upgrade:prep,
+		init:readers:bda:tomcat,
+		init:readers:custom:tomcat
 		">
 	</target>
 	<target name="init:upgrade:prep">
@@ -1131,21 +1141,24 @@
 		<property name="upgrade.running" value="true"/>
 		<!-- Upgrades always use port configs -->
 		<property name="jboss.ncicb-standard.port-config" value="true"/>
+		<available file="${jboss.home}" property="jboss.exists"/>
+		<available file="${tomcat.home}" property="tomcat.exists"/>
 	</target>
-	<target name="init:readers:all" unless="install.running"
-		depends="
-		init:readers:bda,
-		init:readers:custom
-		">
-	</target>
-	<target name="init:readers:custom" unless="install.running">
+
+	<target name="init:readers:custom:jboss" unless="install.running">
 		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
 	</target>
 
-	<target name="init:readers:bda" unless="install.running">
+	<target name="init:readers:custom:tomcat" unless="install.running">
+		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
+
+	</target>
+
+	<target name="init:readers:bda:jboss" if="jboss.exists">
+
 		<!-- Make sure the ${properties.file} has at least the following props -->
 		<properties-exist
-			properties.list="application.base.path,jboss.home,tomcat.home,jboss.server.name"
+			properties.list="application.base.path,jboss.home,jboss.server.name"
 			/>
 		<!-- Set these -->
 		<osfamily property="os.family"/>
@@ -1219,6 +1232,13 @@
 			grid.service.name="Sample"
 			/>                      
 
+	</target>
+	<target name="init:readers:bda:tomcat" if="tomcat.exists">
+
+		<!-- Make sure the ${properties.file} has at least the following props -->
+		<properties-exist
+			properties.list="application.base.path,tomcat.home"
+			/>
 		<!-- Begin Tomcat readers, delete if you don't need -->
 		<osfamily property="os.family"/>
 		<if>
