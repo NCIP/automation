@@ -97,6 +97,7 @@
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.template.file)=.*" replace="\1=${certification.template.file}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.space)=.*" replace="\1=${certification.page.space}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.file)=.*" replace="\1=${certification.page.file}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.release.version)=.*" replace="\1=${dashboard.release.version}" />
 	</target>
 
 
