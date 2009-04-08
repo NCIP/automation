@@ -21,7 +21,6 @@
 	<property name="properties.file" value="build.properties" />
 	<property name="wiki.properties.file" value="wiki.properties" />
 	
-	
 	<echo message="${lib.dir}"/>
 
 	<!-- PATHS -->
@@ -32,7 +31,8 @@
 	</path>
 
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
-
+	<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask" classpathref="project.classpath"/>
+	
 	<target name="init" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${target.dir}" />
