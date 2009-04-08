@@ -57,6 +57,9 @@ class BuildStatusUpdater {
 	    String certificationPageFile = properties.getProperty("certification.page.file");//"page1"
 	    String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
 	    String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
+	    String dashboardRevision = properties.getProperty("dashboard.revision.number");//"100"
+	    
+	    String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
 
 	// get most recent tempates
 		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")
@@ -93,7 +96,7 @@ class BuildStatusUpdater {
 			count--
 		}
 	// Update the release version
-	String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardVersion}\""
+	String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardRelease}\""
 	doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplaceVersion}")	
 	}
 	
