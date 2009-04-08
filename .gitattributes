@@ -2297,8 +2297,10 @@ software/bda-dashboard/wiki-cli/lib/logkit-1.0.1.jar -text
 software/bda-dashboard/wiki-cli/lib/mail-1.4.jar -text
 software/bda-dashboard/wiki-cli/lib/mysql-connector-java-5.0.5.jar -text
 software/bda-dashboard/wiki-cli/lib/servlet-api-2.3.jar -text
+software/bda-dashboard/wiki-cli/lib/svnClientAdapter-1.2.1.jar -text
 software/bda-dashboard/wiki-cli/lib/svnant-1.2.1.jar -text
 software/bda-dashboard/wiki-cli/lib/svnjavahl-1.2.1.jar -text
+software/bda-dashboard/wiki-cli/lib/svnkit-1.2.1.jar -text
 software/bda-dashboard/wiki-cli/license/LICENSE-APACHE.txt -text
 software/bda-dashboard/wiki-cli/license/LICENSE-DOLBY.txt -text
 software/bda-dashboard/wiki-cli/license/LICENSE-JSAP.txt -text
