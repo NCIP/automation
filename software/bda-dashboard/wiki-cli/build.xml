@@ -114,8 +114,9 @@
 	
 	<target name="configure:revision-number" description="Run the class to update Wiki">
 		<svn javahl="false">
-			<status path="@{basedir}" revisionProperty="svn.revision" urlProperty="svn.url"/>
+			<status path="${basedir}" revisionProperty="svn.revision" urlProperty="svn.url"/>
 		</svn>
+		<echo message="${svn.revision}"/>
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.revision.number)=.*" replace="\1=${svn.revision}" />
 	</target>
 	
