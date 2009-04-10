@@ -118,6 +118,15 @@ $HeadURL$
 	<delete dir="${working.dir}" failonerror="false"/>
 	<mkdir dir="${working.dir}" />
 
+	<!-- Start logging moved out of target so all targets are logged --> 
+	<!--<property name="install-logs.dir" location="${application.base.path}/change-logs"/> -->
+	<property name="install-logs.dir" location="${log.dir}"/>
+	<mkdir dir="${install-logs.dir}"/>
+	<tstamp>
+		<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
+	</tstamp>
+	<record name="${install-logs.dir}/install-${install.time}.log" action="start"/>
+
 	<!-- Targets begin -->
 
 	<target name="init:common">
@@ -190,14 +199,6 @@ $HeadURL$
 			<filter token="database.dialect" value="${database.dialect}"/>
 			<filter token="hibernate.cfg.file.path" value="${hibernate.cfg.file.path}"/>
 		</filterset>
-		<!-- Start logging --> 
-		<!--<property name="install-logs.dir" location="${application.base.path}/change-logs"/> -->
-		<property name="install-logs.dir" location="${log.dir}"/>
-		<mkdir dir="${install-logs.dir}"/>
-		<tstamp>
-			<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
-		</tstamp>
-		<record name="${install-logs.dir}/install-${install.time}.log" action="start"/>
 
 		<!-- Added to convert location to file and path -->
 		<basename file="${jboss.ssl.keystore.location}" property="jboss.ssl.keystore.file"/>
@@ -422,7 +423,7 @@ $HeadURL$
 			dest="${jboss.home}/server/${jboss.server.name}/conf/${log4j.file.name}">
 			<xmlcatalog refid="installer.catalog"/>
 			<remove path="/log4j:configuration/appender[@name='TestAppender']"/>
-			<insert path="/log4j:configuration">
+			<insert path="/log4j:configuration/category"i position="before">
 				<![CDATA[
 				<appender name="TestAppender" class="org.jboss.logging.appender.RollingFileAppender">
 					<errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
@@ -438,7 +439,7 @@ $HeadURL$
 				]]>
 			</insert>
 			<remove path="/log4j:configuration/category[@name='org.nih.nci']"/>
-			<insert path="/log4j:configuration">
+			<insert path="/log4j:configuration/root" position="before">
 				<![CDATA[
 				<category name="org.nih.nci">
 					<priority value="${log4j.level}"/>
