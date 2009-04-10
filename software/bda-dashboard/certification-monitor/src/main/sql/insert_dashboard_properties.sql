@@ -271,7 +271,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('rembra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.ci-server.portnumber','');
 
 
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.password','Test123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.project.url','http://gforge.nci.nih.gov/svnroot/cabiodb/cabioapi/trunk/');
@@ -283,7 +283,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.exploded.dir.location','${cabio.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cabio');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.private.repository','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cabio/cabioapi');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.hostname','ncias-d185-v.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.jobname','cabioapi');
