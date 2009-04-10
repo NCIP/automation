@@ -149,46 +149,6 @@ $HeadURL$
 
 	<!-- init tasks -->
 	<mkdir dir="${temp.dir}"/>
-	<property name="database.type" value="mysql"/>
-	<switch value="${database.type}">
-		<case value="oracle">
-			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
-			<property name="is.oracle" value="true"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar "/>
-			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
-			<property name="database.schema" value="${database.name}"/>
-		</case>
-		<case value="mysql">
-			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-			<property name="is.mysql" value="true"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
-			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="database.schema" value="${database.name}"/>
-		</case>
-		<case value="postgresql">
-			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-			<property name="is.postgresql" value="true"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
-			<property name="database.driver" value="org.postgresql.Driver"/>
-			<property name="database.schema" value="public"/>
-			<!--
-				driver = org.postgresql.Driver
-				url = jdbc:postgresql://localhost/mydatabase
-			-->
-		</case>
-		<case value="hsqldb">
-			<property name="database.dialect" value=""/>
-			<property name="is.mysql" value="true"/>
-			<property name="database.driver.file" value="${bda-utils.dir}/hsqldb-1.8.0.7.jar"/>
-		</case>
-		<default>
-			<fail message="Invalid or unsupported database type ${database.type}"/>
-		</default>
-	</switch>
-	<path id="jdbc.driver.classpath">
-		<pathelement location="${database.driver.file}"/>
-	</path>
-
 
 	<!-- run-junit-tests macro runs the unit test cases
 	usage: <run-junit-tests test.src.dir="${test.src.dir}" xml.output.dir="${target.dir}/junit" instrumented.classes="${instrumented.classes.dir}" classpath="${caarray-client.test.classes.dir};${test.data.files.dir};${test.classes.dir};${commons-lang.jar};${commons-io.jar};${caarray-client.test.files.dir};${caarray-client.classes.dir};${caarray-client.resources.dir};${junit.jar};${nci-commons-core.jar}" />
@@ -536,6 +496,7 @@ $HeadURL$
 				directory.property="application.base.path"
 				/>
 
+			<!-- Not required with dac
 			<check-direct-child-directory
 				parent.dir.property="application.base.path"
 				child.dir.property="jboss.home"
@@ -544,6 +505,7 @@ $HeadURL$
 				parent.dir.property="application.base.path"
 				child.dir.property="basedir"
 				/>
+			-->
 			<check-valid-directory-name
 				directory.property="application.base.path"
 				/>
@@ -1678,7 +1640,7 @@ $HeadURL$
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
 		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
-		<attribute name="jboss.server.binding.template.location" default="${bda-utils.resource.dir}/template-binding.xml"/>
+		<attribute name="jboss.server.binding.template.location" default="${jboss.server.binding.template.location}"/>
 		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
 		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
 		<attribute name="jboss.cobraorb.port" default="${jboss.cobraorb.port}"/>
@@ -1931,10 +1893,10 @@ $HeadURL$
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<sequential>
 			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
-			<var name="wscore.dest.file" value="temp/${wscore.file.name}"/>
+			<var name="wscore.dest.file" value="${temp.dir}/${wscore.file.name}"/>
 			<echo message="Checking for existence of GLOBUS_LOCATION envrironment variable."/>
 			<echo message="wscore.relative.dir = @{wscore.relative.dir}"/>
-			<mkdir dir="temp"/>
+			<mkdir dir="${temp.dir}"/>
 			<if>
 				<not>
 					<isset property="env.GLOBUS_LOCATION"/>
@@ -4720,12 +4682,11 @@ $HeadURL$
 					-->
 
 					<echo message="Updating Tomcat Ports"/>
-					<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
+					<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
-						<replace path="(//Connector)[@port=8080]/@port" withtext="@{tomcat.port.http}" />
+						<replace path="(//Connector)[not(@Protocol)]/@port" withtext="@{tomcat.port.http}" />
 						<replace path="(//Connector)[@redirectPort=8443]/@redirectPort" withtext="@{tomcat.port.ssl}" />
-						<replace path="(//Connector)[@port=8009]/@port" withtext="@{tomcat.port.ajp}" />
-						<replace path="(//Connector)[@port=8443]/@port" withtext="@{tomcat.port.ssl}" />
+						<replace path="(//Connector)[@protocol='AJP/1.3']/@port" withtext="@{tomcat.port.ajp}" />
 						<replace path="(//Server)[@port=8005]/@port" withtext="@{tomcat.port.shutdown}" />
 					</xmltask>
 
@@ -5431,9 +5392,10 @@ $HeadURL$
 				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']/text()" property="read.bindings.file.raw" />
 				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']/text()" property="read.bindings.ports.name" />
 			</xmltask>
+			<echo message="${read.bindings.file.raw}"/>
 			<propertyregex property="read.bindings.file"
 				input="${read.bindings.file.raw}"
-				regexp="file:(.*)"
+				regexp="[file:]*(.*)"
 				select="\1"
 				/>
 			<echo message="Found bindings file ${read.bindings.file} ${read.bindings.ports.name}"/>
