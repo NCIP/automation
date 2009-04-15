@@ -1,3 +1,7 @@
+automation-1.0.0/software/bda-build-template/software/blueprints-webapp/target
+automation-1.0.0/software/bda-build-template/software/build/target[!!-~]local.properties
+automation-1.0.0/software/bda-build-template/software/target
+automation-1.0.0/software/heartbeat/target
 software/bda-build-template/software/blueprints-webapp/target
 software/bda-build-template/software/build/target[!!-~]local.properties
 software/bda-build-template/software/target

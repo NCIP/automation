@@ -1,0 +1,51 @@
+<project name="build-cai2" default="bda2local" basedir=".">
+	<property file="build.properties" />
+	<property name="bda.local.repo.dir" location="../../../bda-local-ivy-repo"/>
+	<property name="bda.local.org.dir" location="${bda.local.repo.dir}/ncicb"/>
+	<property name="bda.ivy.relative.dir" value="ncicb/bda-utils/${bda.version}"/>
+	<property name="bda.local.version.dir" location="${bda.local.repo.dir}/${bda.ivy.relative.dir}"/>
+	<property name="ivy.def.file" value="ivy.xml"/>
+	<property name="bda-utils.xml.file" value="bda-build-utils-${bda.version}.xml"/>
+	<property name="bda-utils.zip.file" value="bda-build-utils-${bda.version}.zip"/>
+	<property name="commonlibrary.dir" location="../../../commonlibrary/"/>
+	<property name="bda-utils.beta.dir" location="${commonlibrary.dir}/ivy-repo/${bda.ivy.relative.dir}"/>
+	<property name="bda-templates.src.dir" location="../bda-build-template"/>
+	<property name="bda-templates.dest.location" location="${bda-utils.beta.dir}/bda-build-templates-${bda.version}.zip"/>
+	<tstamp>
+		<format property="run.time" pattern="yyyyMMddHHmm" />
+	</tstamp>
+
+
+	<target name="bda2local" >
+		<mkdir dir="${bda.local.version.dir}"/>
+		<mkdir dir="${bda.local.version.dir}"/>
+		<zip destfile="${bda.local.version.dir}/${bda-utils.zip.file}">
+			<zipfileset dir="resource" prefix="resource" />
+		</zip>
+		<copy tofile="${bda.local.version.dir}/${bda-utils.xml.file}" file="bda-build-utils.xml"/>
+		<copy todir="${bda.local.version.dir}" file="${ivy.def.file}"/>
+	</target>
+	<target name="local2bda" >
+		<copy file="${bda.local.version.dir}/${bda-utils.xml.file}" tofile="bda-build-utils.xml" overwrite="true"/>
+		<copy file="${bda.local.version.dir}/${ivy.def.file}" todir="." overwrite="true"/>
+		<zip destfile="${bda.local.repo.dir}/ncicb-${run.time}.zip" basedir="${bda.local.org.dir}"/>
+		<delete dir="${bda.local.org.dir}"/>
+	</target>
+	<target name="bda2ivy">
+		<copy overwrite="true" tofile="${bda-utils.beta.dir}/ivy.xml" file="${basedir}/ivy.xml"/>
+		<copy overwrite="true" tofile="${bda-utils.beta.dir}/${bda-utils.xml.file}" file="${basedir}/bda-build-utils.xml"/>
+		<delete file="${bda-utils.beta.dir}/${bda-utils.zip.file}"/>
+		<zip destfile="${bda-utils.beta.dir}/${bda-utils.zip.file}">
+			<zipfileset dir="resource" prefix="resource" />
+		</zip>
+	</target>
+	<target name="templates2ivy">
+		<delete file="${bda-templates.dest.location}"/>
+		<zip destfile="${bda-templates.dest.location}">
+			<zipfileset dir="${bda-templates.src.dir}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${bda-templates.src.dir}/software/common" excludes="**/.svn/*" prefix="common"/>
+		</zip>
+	</target>
+</project>
+
+

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="property-validator-ant-task" default="all" basedir=".">
+
+	<property name="version" value="0.1.5" />
+	<property name="classes.dir" value="classes" />
+	<property name="lib.dir" value="lib" />
+	<property name="src.dir" value="src" />
+	<property name="jar.file.name" value="propertyvalidator-${version}.jar" />
+	<property name="ant.lib.dir" value="${ant.home}/lib" />
+	<property name="properties.dir" value="properties" />
+	<property name="keyfile.file" value="keyfile.properties" />
+	<property name="envproperties.file" value="dev.properties" />
+
+	<target name="validate-properties">
+		<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator">
+			<classpath>
+				<pathelement location="${lib.dir}/${jar.file.name}" />
+			</classpath>
+		</taskdef>
+		<propertyvalidator keyFile="${properties.dir}/${keyfile.file}" 
+			compareFile="${properties.dir}/${envproperties.file}" match="exactly"/>
+	</target>
+
+	<target name="application-version">
+		<taskdef name="appversion" classname="gov.nih.nci.bda.ApplicationVersion">
+			<classpath>
+				<pathelement location="${lib.dir}/${jar.file.name}" />
+			</classpath>
+		</taskdef>
+		<appversion version="1.0.0.b1" buildTag="BUILD8" />
+	</target>
+
+	<path id="project.class.path">
+		<pathelement location="." />
+		<pathelement location="${classes.dir}" />
+		<pathelement location="${ant.lib.dir}/ant.jar" />
+	</path>
+
+	<target name="all">
+		<antcall target="pre-clean" />
+		<antcall target="init" />
+		<antcall target="compile" />
+		<antcall target="jar" />
+		<antcall target="validate-properties" />
+		<antcall target="application-version" />
+		<antcall target="post-clean" />
+	</target>
+
+	<target name="pre-clean">
+		<delete dir="${classes.dir}" />
+		<delete file="${lib.dir}/${jar.file.name}" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${classes.dir}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}" />
+		<javac destdir="${classes.dir}" source="1.5" target="1.5" debug="true">
+			<src path="${src.dir}" />
+			<classpath refid="project.class.path" />
+		</javac>
+	</target>
+
+	<target name="jar">
+		<jar jarfile="${lib.dir}/${jar.file.name}" basedir="${classes.dir}" />
+	</target>
+
+	<target name="post-clean">
+		<delete dir="${classes.dir}" />
+		<delete dir="${lib.dir}" />
+	</target>
+
+	<target name="usage">
+		<echo>The following properties should be provided (via -D or other mechanism):
+				properties.dir (location of .properties' files), keyfile.file ('Protocol'
+				that must be adhered to), and envproperties.file (the specific implementation
+				.properties file)</echo>
+	</target>
+
+</project>
