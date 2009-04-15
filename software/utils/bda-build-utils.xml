@@ -6542,6 +6542,7 @@ $HeadURL$
 		<attribute name="filterset.name" default="jboss.nci.custom"/>
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
 		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="start.jboss" default="Y"/>
 		<sequential>
 			<if>
 				<or>
@@ -6611,6 +6612,30 @@ $HeadURL$
 							<echo message="Database.type is not oracle, skipping pad"/>
 						</else>
 					</if>
+							<!-- Write to apptab -->
+					<if>
+						<not>
+							<available file="@{application.base.path}/../apptab"/>
+						</not>
+						<then>
+							<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+						</then>
+					</if>
+					<switch value="@{start.jboss}">
+						<case value="Y"/>
+						<case value="N"/>
+						<!-- not supported
+						<case value="y"/>
+						<case value="n"/>
+						-->
+						<default>
+							<fail message="start.jboss must be Y/N or y/n"/>
+						</default>
+					</switch>
+					<replaceregexp file="@{application.base.path}/../apptab" byline="true"
+						match="^@{logname}.*"
+						replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
+						/>
 				</then>
 				<else>
 					<echo message="NOT setting up jboss-nci-customizations because this system is not Unix or Mac"/>
