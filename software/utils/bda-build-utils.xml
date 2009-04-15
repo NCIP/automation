@@ -365,12 +365,12 @@ $HeadURL$
 
 					<exec executable="sh" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
-						<arg line="run.sh" />
+						<arg line="run.sh -c @{jboss.server.name}" />
 					</exec>
 
 					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
-						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat" />
+						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat -c @{jboss.server.name}" />
 					</exec>
 					<sleep seconds="15" />
 				</else>
