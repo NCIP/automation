@@ -1,5 +1,0 @@
-!path *.jar
-!path ../bin
-
-
-!contents -R

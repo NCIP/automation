@@ -1,9 +1,0 @@
-|'''Date: '''|!-11:10:58 AM (EDT) on Thursday, August 14, 2008-!|
-|'''Command: '''|!-java -cp C:\tools\webtest-complete-20080213\java\fitlibrary.jar;C:\tools\webtest-complete-20080213\java\fitnesse.jar;C:\tools\webtest-complete-20080213\java\selenium-java-client-driver.jar;C:\tools\webtest-complete-20080213\java\selenium-server.jar;C:\tools\webtest-complete-20080213\java\webfixture.jar;impl/java/bin;impl/java/lib/*.jar;../bin fit.FitServer lenovo 8085 6-!|
-|'''Exit code: '''|!-0-!|
-|'''Time elapsed: '''|!-5.25 seconds-!|
-----'''Standard Output:'''
-{{{Checking:xpath=//input[@type='text' and @id='text1']
-Checking:identifier=text1
-Checking:identifier=div1
-}}}

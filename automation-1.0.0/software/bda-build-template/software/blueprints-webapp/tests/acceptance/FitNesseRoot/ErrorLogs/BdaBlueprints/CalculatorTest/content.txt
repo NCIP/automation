@@ -1,4 +1,0 @@
-|'''Date: '''|!-12:03:51 PM (EDT) on Thursday, August 14, 2008-!|
-|'''Command: '''|!-java -cp /tools/nci-projects/bda/software/bda-build-template/software/target/lib/test-acceptance/bda-blueprints-acceptance-tests.jar;C:\tools\webtest-complete-20080213\java\fitlibrary.jar;C:\tools\webtest-complete-20080213\java\fitnesse.jar;C:\tools\webtest-complete-20080213\java\selenium-java-client-driver.jar;C:\tools\webtest-complete-20080213\java\selenium-server.jar;C:\tools\webtest-complete-20080213\java\webfixture.jar;impl/java/bin;impl/java/lib/*.jar;../bin fit.FitServer lenovo 8085 19-!|
-|'''Exit code: '''|!-1-!|
-|'''Time elapsed: '''|!-4.719 seconds-!|

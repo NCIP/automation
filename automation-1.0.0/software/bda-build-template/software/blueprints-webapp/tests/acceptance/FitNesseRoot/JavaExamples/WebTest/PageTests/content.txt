@@ -1,7 +1,0 @@
-|user clicks on|loadnext|
-
-|page reloads in less than|3|seconds|
-
-!|page URL is|${server}/VariableDefinitions|
-
-|page contains text|to change browser|
