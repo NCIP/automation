@@ -1089,7 +1089,7 @@ $HeadURL$
 				<echo message="Using JBoss NCICB Standard port configurations"/>
 				<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
 				<jboss-read-ports
-					jboss.bindings.file.location.property.name="jboss.server.binding.template.location"
+					jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
 					/>
 				<echo message="http -${jboss.server.port} "/>
 				<echo message="http -${jboss.server.jndi.port} "/>
