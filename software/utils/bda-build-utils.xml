@@ -1029,7 +1029,8 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<attribute name="application.url" default="${application.url}" />
-		<attribute name="propertyfile.backup.location" default="${jboss.home}" />
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="propertyfile.backup.location" default="@{application.base.path}/change-logs" />
 		<sequential>
 
 			<!-- Echo the properties for diagnostic purposes -->
@@ -1093,6 +1094,7 @@ $HeadURL$
 			</tstamp>
 			<basename file="${properties.file}" property="properties.file.name"/>
 			<var name="backup.properties.file" value="${properties.file.name}-${run.date}"/>
+			<mkdir dir="@{propertyfile.backup.location}"/>
 			<copy tofile="@{propertyfile.backup.location}/${backup.properties.file}" file="${properties.file}"/>
 
 		</sequential>
@@ -3528,13 +3530,13 @@ $HeadURL$
 				if (file2.isFile())
 				{
 				// println file2.toString() + " is a file"
-				diffCmd = "diff -c --ignore-all-space --ignore-blank-lines " + file1 + " " + file2
+				diffCmd = "diff --ignore-all-space --ignore-blank-lines " + file1 + " " + file2
 				String diffText = diffCmd.execute().text
 				if (diffText.length() > 0)
 				{
 				println file2.toString() + " differences found"
 				reportText += "## Differences found between " + file1 + " " + file2 + "\n"
-				diffText.eachLine {reportText += "\t" + it + "\n"}
+				diffText.eachLine {reportText += it + "\n"}
 				}
 				}
 				}
@@ -6527,6 +6529,93 @@ $HeadURL$
 					</if>
 				</sequential>
 			</for>
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss-nci-customizations" description="deploys customized jboss management files, this target only works for linux">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="project.name" default="${project.name}"/>
+		<attribute name="logname" default="${env.LOGNAME}"/>
+		<attribute name="java.home" default="${env.JAVA_HOME}"/>
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="filterset.name" default="jboss.nci.custom"/>
+		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
+		<attribute name="database.type" default="${database.type}"/>
+		<sequential>
+			<if>
+				<or>
+					<os family="unix"/>
+					<os family="mac"/>
+				</or>
+				<then>
+					<echo message="Setting up jboss-nci-customizations (this system is Unix or Mac)"/>
+					<filterset id="@{filterset.name}">
+						<filter token="application.base.path" value="@{application.base.path}"/>
+						<filter token="project.name" value="@{project.name}"/>
+						<filter token="jboss.home" value="@{jboss.home}"/>
+						<filter token="env.LOGNAME" value="@{logname}"/>
+						<filter token="jboss.server.name" value="@{jboss.server.name}"/>
+						<filter token="env.JAVA_HOME" value="@{java.home}"/>
+						<filter token="jboss.server.jndi.port" value="@{jboss.server.jndi.port}"/>
+					</filterset>
+					<mkdir dir="@{jboss.home}/server/@{jboss.server.name}/bin"/>
+					<copy todir="@{jboss.home}/server/@{jboss.server.name}/bin">
+								<filterset refid="@{filterset.name}"/>
+						<fileset dir="${bda-utils.resource.dir}/ncicb/jboss-custom/bin">
+							<include name="*"/>
+						</fileset>
+					</copy>
+		
+					<chmod dir="@{jboss.home}/server/@{jboss.server.name}/bin" perm="ug+x" includes="*"/>
+					<jboss-configure-java_opts
+						jboss.bin.dir="@{jboss.home}/bin"
+						jboss.java.opts="@{jboss.java.opts}"
+						/>
+					<copy tofile="@{jboss.home}/server/@{jboss.server.name}/conf/log4j.xml" file="${bda-utils.resource.dir}/ncicb/jboss-custom/conf/log4j.xml" overwrite="true"/>
+					<if>
+						<equals arg1="@{database.type}" arg2="oracle"/>
+						<then>
+							<echo message="Database.type is oracle, setting pad=true"/>
+							<var name="read.pad" unset="true"/>
+							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+								<xmlcatalog refid="bda.xml.catalog"/>
+								<copy path="/server/mbean[@code='org.jboss.tm.XidFactory']/attribute[@name='Pad']/text()" property="read.pad"/>
+							</xmltask>
+							
+							<var name="pad.is.set" unset="true"/>
+							<propertyregex property="pad.is.set"
+								input="${read.pad}"
+								regexp="^[^\$]\S+"
+								select="\0"
+								/>
+							<echo message="read.pad = ${read.pad}"/>
+							<if>
+								<not>
+									<isset property="pad.is.set"/>
+								</not>
+								<then>
+									<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+										<xmlcatalog refid="bda.xml.catalog"/>
+										<insert path="/server/mbean[@code='org.jboss.tm.XidFactory']">
+											<![CDATA[ <attribute name="Pad">true</attribute>]]>
+										</insert>
+									</xmltask>
+								</then>
+								<else>
+									<echo message="Pad already set"/>
+								</else>
+							</if>
+						</then>
+						<else>
+							<echo message="Database.type is not oracle, skipping pad"/>
+						</else>
+					</if>
+				</then>
+				<else>
+					<echo message="NOT setting up jboss-nci-customizations because this system is not Unix or Mac"/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 </project>
