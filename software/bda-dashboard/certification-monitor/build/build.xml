@@ -13,14 +13,6 @@
 	<property name="lib.dir" location="${build.dir}/lib" />
 	<property name="bda-utils.dir" location="${build.dir}/bda-utils" />
 	<property name="log.dir" location="${build.dir}/logs" />
-<!--
-
--->
-	<taskdef name="antfetch" classname="net.sf.antcontrib.logic.AntFetch">
-		<classpath>
-			<pathelement location="../ant-contrib.jar"/>
-		</classpath>
-	</taskdef>
 
 	
 	<!-- retrive ivy files then retrieve bda files and librarires -->
@@ -36,26 +28,20 @@
 		<property name="software.dir" location="${build.dir}" />
 	</ant>
 
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
-
-	<!-- Paths -->
-	<path id="bda-utils.classpath">
-		<fileset dir="${bda-utils.dir}">
-			<include name="**/*.jar" />
-		</fileset>
-	</path>
-	<path id="ivy.classpath">
-		<fileset dir="${lib.dir}">
-			<include name="${ivy.file}" />
-			<include name="${ivy-core.file}" />
-		</fileset>
-	</path>
-	
+	<taskdef name="antfetch" classname="net.sf.antcontrib.logic.AntFetch">
+		<classpath>
+			<pathelement location="../ant-contrib.jar"/>
+		</classpath>
+	</taskdef>
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
 			<pathelement location="../ant-contrib.jar"/>
 		</classpath>
 	</taskdef>
+
 
 	<echo message="${project.name}"/>
 
@@ -156,9 +142,7 @@
 			<fail message="Invalid database type ${database.type}"/>
 		</default>
 	</switch>	
-	
-	<!-- Includes- include BDA marcos -->
-	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+
 
 	<!-- Start logging -->
 	<mkdir dir="${log.dir}" />
