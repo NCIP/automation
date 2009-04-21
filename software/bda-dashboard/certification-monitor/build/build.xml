@@ -290,10 +290,10 @@
 	<target name="build:template-properties" depends="init">
 
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.package.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.package.target}" />
 		</exec>
 
 		<antfetch dir="${exploded.dir.location}" target="${install.init.target}" return="properties.template.file"/>
