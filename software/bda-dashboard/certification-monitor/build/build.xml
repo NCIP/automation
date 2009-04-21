@@ -13,6 +13,12 @@
 	<property name="lib.dir" location="${build.dir}/lib" />
 	<property name="bda-utils.dir" location="${build.dir}/bda-utils" />
 	<property name="log.dir" location="${build.dir}/logs" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="../ant-contrib.jar"/>
+		</classpath>
+	</taskdef>
 	
 	<!-- retrive ivy files then retrieve bda files and librarires -->
 	<property name="bda-download.file" value="bda-ivy-build.xml" />
@@ -42,11 +48,6 @@
 		</fileset>
 	</path>
 	
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-		<classpath>
-			<pathelement location="../ant-contrib.jar"/>
-		</classpath>
-	</taskdef>
 
 	<echo message="${project.name}"/>
 
