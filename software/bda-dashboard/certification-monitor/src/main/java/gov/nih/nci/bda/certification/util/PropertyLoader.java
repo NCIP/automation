@@ -18,6 +18,22 @@ public class PropertyLoader {
 
 	private static void loadDatabaseProperties(String databaseType,
 			Project project) {
+		certLogger.info("Loading database properties ");
+		Iterator<Object> it = config.getKeys(databaseType);
+		try {
+			while (it.hasNext()) {
+				String keyName = (String) it.next();
+				certLogger.info("Key: " + keyName + " Value: "
+						+ config.getString(keyName));
+				project.setProperty(keyName, config.getString(keyName));
+			}
+		} catch (Exception ex) {
+			// do nothing
+			certLogger
+					.info("Exception Occured while loading database properties "
+							+ ex.getMessage());
+		}
+		/*
 		project.setProperty(databaseType + ".database.system.user", config
 				.getString(databaseType + ".database.system.user"));
 		project.setProperty(databaseType + ".database.system.password", config
@@ -39,6 +55,7 @@ public class PropertyLoader {
 				.getString(databaseType + ".database.system.url"));
 		project.setProperty(databaseType + ".minimum.version", config
 				.getString(databaseType + ".minimum.version"));
+			*/
 	}
 
 	public static void loadGeneralProperties(Project project) {
