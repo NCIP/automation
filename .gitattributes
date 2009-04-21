@@ -2528,6 +2528,7 @@ software/bda-dashboard/certification-monitor/build/build.xml -text
 software/bda-dashboard/certification-monitor/build/project.properties -text
 software/bda-dashboard/certification-monitor/dev-install.properties -text
 software/bda-dashboard/certification-monitor/install.properties -text
+software/bda-dashboard/certification-monitor/lib/ant-contrib.jar -text
 software/bda-dashboard/certification-monitor/lib/ant-jsch.jar -text
 software/bda-dashboard/certification-monitor/lib/ant-launcher.jar -text
 software/bda-dashboard/certification-monitor/lib/ant-nodeps.jar -text
