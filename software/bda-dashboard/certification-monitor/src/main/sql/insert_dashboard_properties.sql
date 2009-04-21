@@ -31,7 +31,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('force.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ant.minimum.version','1.7.0');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('java.major.version','1.5');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('java.minor.version','1.5.0_10');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('bda.version','0.9.0');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bda.version','1.0.0');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ci.server.name','http://cbvapp-c1007.nci.nih.gov:48080/hudson/job');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.database.type','mysql');
