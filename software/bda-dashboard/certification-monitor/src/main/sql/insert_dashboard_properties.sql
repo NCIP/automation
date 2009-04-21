@@ -33,7 +33,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.master.build.location','${petstore.svn.local.checkout}/trunk/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.exploded.dir.location','${petstore.svn.local.checkout}/trunk/software/target/dist/exploded');
@@ -42,6 +42,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.hostname','cbvapp-c1007.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.jobname','bda-blueprints-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.portnumber','48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.install.init.target','install:init');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.type','mysql');
@@ -52,7 +55,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.location','${caarray.svn.local.checkout}/software');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.exploded.dir.location','${caarray.svn.local.checkout}/software/target');
@@ -61,7 +64,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.hostname','cbvapp-c1003.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.jobname','caarray2-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.portnumber','48080');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.svn.username','narram');
@@ -71,7 +76,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.master.build.location','${ncia.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.exploded.dir.location','${ncia.svn.local.checkout}/software/target/dist/exploded');
@@ -80,6 +85,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.hostname','cbv-ciweb-base.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.jobname','ncia_ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.portnumber','48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
@@ -89,7 +97,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.build.location','${cagwas.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.exploded.dir.location','${cagwas.svn.local.checkout}/software/target/dist/exploded');
@@ -98,7 +106,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.username','narram');
@@ -108,7 +118,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('protex
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.master.build.location','${protexpress.svn.local.checkout}/software/build-prot');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.exploded.dir.location','${protexpress.svn.local.checkout}/software/install-target/protExpress/dist/exploded');
@@ -117,7 +127,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('protex
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.username','narram');
@@ -127,7 +139,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('biopor
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.master.build.location','${bioportal.svn.local.checkout}/software');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.exploded.dir.location','${bioportal.svn.local.checkout}/software/target/dist/exploded');
@@ -136,7 +148,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('biopor
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.username','narram');
@@ -146,7 +160,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.master.build.location','${lexevs.svn.local.checkout}/lexevs_bda/Lexevs_build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.exploded.dir.location','${lexevs.svn.local.checkout}/target/dist/exploded');
@@ -155,7 +169,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.hostname','nciaas-c112-v.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.jobname','LexEVS.4.3');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.portnumber','48080');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.username','narram');
@@ -165,7 +181,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.sv
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.build.location','${upt.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.exploded.dir.location','${upt.svn.local.checkout}/software/target/dist/exploded');
@@ -174,7 +190,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.lo
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci-server.hostname','cbvapp-c1002.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci-server.jobname','csm-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci-server.portnumber','48080');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.username','narram');
@@ -184,7 +202,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.build.location','${po.svn.local.checkout}/code/build-po');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.exploded.dir.location','${po.svn.local.checkout}/code/target/po/dist/exploded');
@@ -193,7 +211,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.loc
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.hostname','cbvapp-c1005.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.jobname','coppa-po-ci-full');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.portnumber','48080');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.username','narram');
@@ -203,7 +223,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.master.build.location','${caintegrator2.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.exploded.dir.location','${caintegrator2.svn.local.checkout}/software/target/dist/exploded');
@@ -212,7 +232,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.hostname','cbvapp-c1004.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.jobname','caintegrator2-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.portnumber','48080');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.username','narram');
@@ -222,7 +244,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('canano
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.master.build.location','${cananolab.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.exploded.dir.location','${cananolab.svn.local.checkout}/software/target/dist/exploded');
@@ -231,7 +253,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('canano
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.username','narram');
@@ -241,7 +265,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.master.build.location','${pa.svn.local.checkout}/code/build-pa');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.exploded.dir.location','${pa.svn.local.checkout}/software/target/pa/dist/exploded');
@@ -250,7 +274,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.loc
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.ci-server.hostname','cbvapp-c1005.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.ci-server.jobname','pa-bda-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.ci-server.portnumber','48080');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.username','narram');
@@ -260,7 +286,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('rembra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.master.build.location','${rembrandt.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.exploded.dir.location','${rembrandt.svn.local.checkout}/software/target/dist/exploded');
@@ -269,7 +295,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('rembra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.username','narram');
@@ -279,7 +307,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.master.build.location','${cabio.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.exploded.dir.location','${cabio.svn.local.checkout}/software/target/dist/exploded');
@@ -288,7 +316,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.hostname','ncias-d185-v.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.jobname','cabioapi');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.portnumber','48080');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.username','narram');
@@ -298,7 +328,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.master.build.location','${ispy.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.exploded.dir.location','${ispy.svn.local.checkout}/software/target/dist/exploded');
@@ -307,7 +337,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.username','narram');
@@ -317,7 +349,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.master.build.location','${cpas.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.exploded.dir.location','${cpas.svn.local.checkout}/software/target/dist/exploded');
@@ -326,7 +358,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.username','narram');
@@ -336,7 +370,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.build.location','${ccts.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.exploded.dir.location','${ccts.svn.local.checkout}/software/target/dist/exploded');
@@ -345,7 +379,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.username','narram');
@@ -355,7 +391,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.master.build.location','${c3prv2.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.exploded.dir.location','${c3prv2.svn.local.checkout}/software/target/dist/exploded');
@@ -364,7 +400,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.username','narram');
@@ -374,7 +412,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.master.build.location','${cadsr.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.exploded.dir.location','${cadsr.svn.local.checkout}/software/target/dist/exploded');
@@ -383,7 +421,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.username','narram');
@@ -393,7 +433,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.build.location','${camod.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.exploded.dir.location','${camod.svn.local.checkout}/software/target/dist/exploded');
@@ -402,7 +442,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.username','narram');
@@ -412,7 +454,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('catiss
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.master.build.location','${catissue.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.exploded.dir.location','${catissue.svn.local.checkout}/software/target/dist/exploded');
@@ -421,7 +463,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('catiss
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.username','narram');
@@ -431,7 +475,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.build.location','${cab2b.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.exploded.dir.location','${cab2b.svn.local.checkout}/software/target/dist/exploded');
@@ -440,7 +484,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.username','narram');
@@ -450,7 +496,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.master.build.location','${cagrid.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.exploded.dir.location','${cagrid.svn.local.checkout}/software/target/dist/exploded');
@@ -459,6 +505,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.username','narram');
@@ -468,7 +517,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.master.build.location','${ncit.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.exploded.dir.location','${ncit.svn.local.checkout}/software/target/dist/exploded');
@@ -477,7 +526,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.username','narram');
@@ -487,7 +538,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.master.build.location','${reportwriter.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.exploded.dir.location','${reportwriter.svn.local.checkout}/software/target/dist/exploded');
@@ -496,7 +547,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.portnumber','');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.username','narram');
@@ -506,7 +559,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('genepa
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.master.build.location','${genepattern.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.exploded.dir.location','${genepattern.svn.local.checkout}/software/target/dist/exploded');
@@ -515,6 +568,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('genepa
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.username','narram');
@@ -524,7 +580,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.sv
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.master.build.location','${tfs.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.deployment.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.exploded.dir.location','${tfs.svn.local.checkout}/software/target/dist/exploded');
@@ -533,3 +589,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.lo
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.install.init.target','install:init');

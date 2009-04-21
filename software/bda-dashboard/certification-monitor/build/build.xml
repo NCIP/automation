@@ -42,7 +42,11 @@
 		</fileset>
 	</path>
 	
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="bda-utils.classpath"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="../ant-contrib.jar"/>
+		</classpath>
+	</taskdef>
 
 	<echo message="${project.name}"/>
 
@@ -59,11 +63,14 @@
 
 	<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
 	<propertycopy name="project.master.install.location" from="${project.name}.master.install.location" />
-	<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />
+	<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />	
+	<propertycopy name="project.single-command.package.target" from="${project.name}.single-command.package.target" />
 	<propertycopy name="project.single-command.deployment.target" from="${project.name}.single-command.deployment.target" />
+	<propertycopy name="project.single-command.distribution.target" from="${project.name}.single-command.distribution.target" />
 	<propertycopy name="project.database.integration.target" from="${project.name}.database.integration.target" />	
 	<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
 	<propertycopy name="project.exploded.dir.location" from="${project.name}.exploded.dir.location" />
+	<propertycopy name="project.install.init.target" from="${project.name}.install.init.target" />
 
 	<propertycopy name="project.svn.username" from="${project.name}.svn.username" />
 	<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
@@ -92,10 +99,13 @@
 	<property name="master.build.location" value="${project.master.build.location}" />
 	<property name="single-command.build.target" value="${project.single-command.build.target}" />
 	<property name="single-command.deployment.target" value="${project.single-command.deployment.target}" />
+	<property name="single-command.package.target" value="${project.single-command.package.target}" />
+	<property name="single-command.distribution.target" value="${project.single-command.distribution.target}" />
 	<property name="database.integration.target" value="${project.database.integration.target}" />
 	<property name="master.build.file" value="${project.master.build.file}" />
 	<property name="master.install.location" value="${project.master.install.location}" />
 	<property name="exploded.dir.location" value="${project.exploded.dir.location}" />
+	<property name="install.init.target" value="${project.install.init.target}" />
 
 	<property name="svn.username" value="${project.svn.username}" />
 	<property name="svn.password" value="${project.svn.password}" />	
@@ -230,10 +240,10 @@
 
 	<target name="build:single-command-deployment" depends="init">
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.package.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.package.target}" />
 		</exec>
 
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
@@ -248,7 +258,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
@@ -262,7 +272,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 
 	</target>
@@ -277,8 +287,20 @@
 	</target>
 
 
-	<target name="build:template-properties" depends="init">				
+	<target name="build:template-properties" depends="init">
+
+		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
+			<arg value="${single-command.deployment.target}" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
+			<arg value="${single-command.deployment.target}" />
+		</exec>
+
+		<antfetch dir="${exploded.dir.location}" target="${install.init.target}" return="properties.template.file"/>
+		<echo message="${properties.template.file}"/>
+
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkTemplateFiles"/>
+
 	</target>
 
 
@@ -348,10 +370,10 @@
 
 	<target name="build:check-commandline-installer" depends="init">				
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="dist" />
+			<arg value="${single-command.distribution.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="dist" />
+			<arg value="${single-command.distribution.target}" />
 		</exec>
 		
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
@@ -363,11 +385,11 @@
 
 		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
 			<arg value="-Dforce.reinstall=true" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">			
 			<arg value="-Dforce.reinstall=true" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 
 	</target>
