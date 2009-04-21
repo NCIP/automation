@@ -16,12 +16,15 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('postgr
 insert into dashboard_properties (dashboard_key, dashboard_value) values('postgresql.database.password','password');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('postgresql.database.url','jdbc:postgresql://${postgresql.database.server}:${postgresql.database.port}/${postgresql.database.name}');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('postgresql.database.system.url','jdbc:postgresql://${postgresql.database.server}:${postgresql.database.port}/template1');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.system.user','root');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.system.password','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.server','cbdb-d1001.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.port','1553');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.name','genericdb');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.user','cabiodev');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.password','cabiodev506');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.url','jdbc:oracle:thin:@${oracle.database.server}:${oracle.database.port}/${oracle.database.name}');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('postgresql.database.system.url','jdbc:oracle:thin:@//${oracle.database.server}:${oracle.database.port}');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('mysql.minimum.version','5.0.27');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('postgresql.minimum.version','8.0.20');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('force.reinstall','true');
