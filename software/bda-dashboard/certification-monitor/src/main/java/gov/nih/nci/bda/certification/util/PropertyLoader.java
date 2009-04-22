@@ -47,7 +47,7 @@ public class PropertyLoader {
 				certLogger.info("Key: " + keyName + " Value: "
 						+ fileConfig.getString(keyName));
 				certLogger.info("SUB Key: " + keyName.substring(projectName.length()+1));
-				//project.setProperty(keyName.substring(projectName.length()+1), config.getString(keyName));
+				project.setProperty(keyName.substring(projectName.length()+1), fileConfig.getString(keyName));
 			}
 		} catch (Exception ex) {
 			// do nothing
