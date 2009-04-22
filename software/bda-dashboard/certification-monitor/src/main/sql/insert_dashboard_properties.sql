@@ -24,7 +24,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.user','cabiodev');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.password','cabiodev506');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.url','jdbc:oracle:thin:@${oracle.database.server}:${oracle.database.port}/${oracle.database.name}');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.system.url','jdbc:oracle:thin:@//${oracle.database.server}:${oracle.database.port}');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('oracle.database.system.url','jdbc:oracle:thin:@${oracle.database.server}:${oracle.database.port}');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('mysql.minimum.version','5.0.27');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('postgresql.minimum.version','8.0.20');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('force.reinstall','true');
