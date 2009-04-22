@@ -46,9 +46,8 @@ public class PropertyLoader {
 				String keyName = (String) it.next();
 				certLogger.info("Key: " + keyName + " Value: "
 						+ fileConfig.getString(keyName));
-				certLogger.info("INDEX: " + keyName.indexOf(projectName)+1);
-				certLogger.info("SUB Key: " + keyName.substring(keyName.indexOf(projectName)+1));
-				project.setProperty(keyName.substring(projectName.length()+1), config.getString(keyName));
+				certLogger.info("SUB Key: " + keyName.substring(projectName.length()+1));
+				//project.setProperty(keyName.substring(projectName.length()+1), config.getString(keyName));
 			}
 		} catch (Exception ex) {
 			// do nothing
