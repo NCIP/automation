@@ -328,6 +328,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.username','narram');
