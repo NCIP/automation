@@ -45,7 +45,7 @@ public class PropertyLoader {
 			while (it.hasNext()) {
 				String keyName = (String) it.next();
 				certLogger.info("Key: " + keyName + " Value: "
-						+ config.getString(keyName));
+						+ fileConfig.getString(keyName));
 				project.setProperty(keyName.substring(keyName.indexOf(projectName)+1), config.getString(keyName));
 			}
 		} catch (Exception ex) {
@@ -86,14 +86,14 @@ public class PropertyLoader {
 							+ ex.getMessage());
 		}
 
-		certLogger
-				.info("Exception Occured while loading properties from the database ");
 		System.out.println("Database Type:: "
 				+ config.getString(projectName + ".database.type"));
-		if(config.getString(projectName + ".use.genericDB") != null && config.getString(projectName + ".use.genericDB").equalsIgnoreCase("true"))
-			loadDatabaseProperties(config.getString(projectName + ".database.type"), project);
-		else
+		System.out.println("Database Type:: "
+				+ config.getString(projectName + ".use.genericDB"));
+		if(config.getString(projectName + ".use.genericDB") != null && config.getString(projectName + ".use.genericDB").equalsIgnoreCase("false"))			
 			loadDatabasePropertiesFromFile(projectName,project);
+		else
+			loadDatabaseProperties(config.getString(projectName + ".database.type"), project);
 	}
 
 	public static void loadProperties(String projectName) {
