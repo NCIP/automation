@@ -90,10 +90,15 @@ public class PropertyLoader {
 				+ config.getString(projectName + ".database.type"));
 		System.out.println("Database Type:: "
 				+ config.getString(projectName + ".use.genericDB"));
-		if(config.getString(projectName + ".use.genericDB") != null && config.getString(projectName + ".use.genericDB").equalsIgnoreCase("false"))			
+		if(config.getString(projectName + ".use.genericDB") != null && config.getString(projectName + ".use.genericDB").equalsIgnoreCase("false"))
+		{
 			loadDatabasePropertiesFromFile(projectName,project);
-		else
 			loadDatabaseProperties(config.getString(projectName + ".database.type"), project);
+		}
+		else
+		{
+			loadDatabaseProperties(config.getString(projectName + ".database.type"), project);
+		}
 	}
 
 	public static void loadProperties(String projectName) {
