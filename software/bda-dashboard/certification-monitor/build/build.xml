@@ -178,18 +178,19 @@
 			<not>
 				<equals arg1="${database.type}" arg2="oracle"/>
 			</not>
-		<then>	
-			<database-create
-				database.driver="${database.driver}"
-				database.system.url="${database.system.url}"
-				database.system.user="${database.system.user}"
-				database.system.password="${database.system.password}"
-				database.url="${database.url}"
-				database.user="${database.user}"
-				database.password="${database.password}"
-				database.name="${database.name}"
-				/>
-		</then>
+			<then>	
+				<database-create
+					database.driver="${database.driver}"
+					database.system.url="${database.system.url}"
+					database.system.user="${database.system.user}"
+					database.system.password="${database.system.password}"
+					database.url="${database.url}"
+					database.user="${database.user}"
+					database.password="${database.password}"
+					database.name="${database.name}"
+					/>
+			</then>
+		</if>
 		<validate-database
 			database.driver="${database.driver}"
 			database.system.url="${database.system.url}"
