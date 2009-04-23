@@ -27,7 +27,7 @@ public class PropertyLoader {
 				String keyName = (String) it.next();
 				certLogger.info("Key: " + keyName + " Value: "
 						+ config.getString(keyName));
-				project.setProperty(keyName, config.getString(keyName));
+				project.setProperty(keyName.substring(databaseType.length()+1), config.getString(keyName));
 			}
 		} catch (Exception ex) {
 			// do nothing
@@ -78,7 +78,7 @@ public class PropertyLoader {
 				String keyName = (String) it.next();
 				certLogger.info("Key: " + keyName + " Value: "
 						+ config.getString(keyName));
-				project.setProperty(keyName, config.getString(keyName));
+				project.setProperty(keyName.substring(projectName.length()+1), config.getString(keyName));
 			}
 		} catch (Exception ex) {
 			// do nothing
@@ -93,8 +93,7 @@ public class PropertyLoader {
 				+ config.getString(projectName + ".use.genericDB"));
 		if(config.getString(projectName + ".use.genericDB") != null && config.getString(projectName + ".use.genericDB").equalsIgnoreCase("false"))
 		{
-			loadDatabasePropertiesFromFile(projectName,project);
-			loadDatabaseProperties(config.getString(projectName + ".database.type"), project);
+			loadDatabasePropertiesFromFile(projectName,project);			
 		}
 		else
 		{
