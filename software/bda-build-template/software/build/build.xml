@@ -361,8 +361,9 @@ $HeadURL$
 	</target>
 
 	<target name="dist:tools:retrieve:jbosscp" unless="jbosscp.tools.exists" description="Downloads JBOSS Cumulative Patch from binary repository and verifies checksum">
+		<echoproperties prefix="jbosscp"/>
 		<if>
-			<isset property="${jbosscp.src.url}"/>
+			<isset property="jbosscp.src.url"/>
 			<then>
 				<get src="${jbosscp.src.url}" dest="${jbosscp.dest.file}" />
 			</then>
