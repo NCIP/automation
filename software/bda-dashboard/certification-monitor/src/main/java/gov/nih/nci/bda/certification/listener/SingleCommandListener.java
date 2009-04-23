@@ -1,5 +1,7 @@
 package gov.nih.nci.bda.certification.listener;
 
+import java.util.ArrayList;
+
 import gov.nih.nci.bda.certification.BuildCertificationHelper;
 import gov.nih.nci.bda.certification.CertificationManager;
 import gov.nih.nci.bda.certification.business.BuildCertificationBean;
@@ -16,6 +18,8 @@ import org.apache.tools.ant.BuildListener;
 public class SingleCommandListener implements BuildListener {
 	private Log certLogger = LogFactory.getLog(SingleCommandListener.class);
 
+	ArrayList taskList = new ArrayList();
+	
 	public void buildFinished(BuildEvent event) {
 	}
 
@@ -45,9 +49,11 @@ public class SingleCommandListener implements BuildListener {
 		String projectName = event.getProject().getProperty("project.name");
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl = event.getProject().getProperty(urlProperty);
-
+		String macroList = event.getProject().getProperty( event.getTarget().getName() + "macro.list");
+		
 		certLogger.info(" Populating  projectName :" + projectName);
 		certLogger.info(" Populating ProjectUrl " + projectUrl);
+		certLogger.info(" macroList " + macroList);
 		
 		certLogger.info(" Check and populate if the feature is optional ");
 		if (event.getProject().getProperty("is.optional") != null
@@ -58,7 +64,7 @@ public class SingleCommandListener implements BuildListener {
 		}
 		
 		certLogger.info(" Check and populate the status of the feature and the certification ");
-		if (event.getException() != null) {
+		if (event.getException() != null || !checkMacroList(macroList)) {
 			bmb.setBuildSuccessful(false);
 			bmb.setFailureMessage(event.getException().getMessage());
 			if (!bmb.isOptional()) {
@@ -66,8 +72,9 @@ public class SingleCommandListener implements BuildListener {
 				CertificationManager.projectCertificationStatus = false;
 			}
 			//bmb.setValue(false);
-		} else {
+		} else {		
 			bmb.setBuildSuccessful(true);
+			
 			certLogger.info(" Update the projectCertificationStatus to true only when the status is not false" + CertificationManager.projectCertificationStatus);
 			if (CertificationManager.projectCertificationStatus) {
 				bmb.setCertificationStatus(true);
@@ -97,6 +104,21 @@ public class SingleCommandListener implements BuildListener {
 		}
 
 		return bmb;
+	}
+
+	private boolean checkMacroList(String macroList) {
+		if (macroList != null)
+		{
+			String macroArray[] = macroList.split(",");
+			for ( int i =0 ; i < macroArray.length ; i++){
+				if (!taskList.contains(macroArray[i])){
+					certLogger.info("NOT FOUND SO Return FALSE ");
+					return false;					
+				}
+
+			}
+		}
+		return true;
 	}
 
 	public void targetFinished(BuildEvent event) {
@@ -144,6 +166,11 @@ public class SingleCommandListener implements BuildListener {
 
 	public void taskFinished(BuildEvent event) {
 		System.out.println("TASK "+event.getTask().getTaskName()+" FINISHED....");
+		addTask(event.getTask().getTaskName());
+	}
+
+	private void addTask(String taskName) {
+		taskList.add(taskName);		
 	}
 
 	public void taskStarted(BuildEvent event) {
