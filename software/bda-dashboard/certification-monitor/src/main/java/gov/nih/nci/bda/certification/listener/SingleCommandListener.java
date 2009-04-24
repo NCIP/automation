@@ -109,16 +109,16 @@ public class SingleCommandListener implements BuildListener {
 		return bmb;
 	}
 
-	private boolean checkMacroList(String macroList) {
+	private boolean checkMacroList(String macroList,BuildEvent event) {
 		if (macroList != null)
 		{
 			String macroArray[] = macroList.split(",");
 			for ( int i =0 ; i < macroArray.length ; i++){
 				if (!taskList.contains(macroArray[i])){
-					certLogger.info("NOT FOUND SO Return FALSE ");
+					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
+					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
 					return false;					
 				}
-
 			}
 		}
 		return true;
