@@ -66,6 +66,7 @@ public class SingleCommandListener implements BuildListener {
 		
 		certLogger.info(" Check and populate the status of the feature and the certification ");
 		if (event.getException() != null || !checkMacroList(macroList)) {
+			certLogger.info(" macro list value False " + checkMacroList(macroList));
 			bmb.setBuildSuccessful(false);
 			bmb.setFailureMessage(event.getException().getMessage());
 			if (!bmb.isOptional()) {
@@ -75,7 +76,8 @@ public class SingleCommandListener implements BuildListener {
 			//bmb.setValue(false);
 		} else {		
 			bmb.setBuildSuccessful(true);
-			
+			certLogger.info(" macro list value TURE " + checkMacroList(macroList));
+			certLogger.info(" Check and populate the status of the feature and the certification ");
 			certLogger.info(" Update the projectCertificationStatus to true only when the status is not false" + CertificationManager.projectCertificationStatus);
 			if (CertificationManager.projectCertificationStatus) {
 				bmb.setCertificationStatus(true);
