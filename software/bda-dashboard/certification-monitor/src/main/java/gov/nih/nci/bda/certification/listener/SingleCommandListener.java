@@ -49,12 +49,12 @@ public class SingleCommandListener implements BuildListener {
 		String projectName = event.getProject().getProperty("project.name");
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl = event.getProject().getProperty(urlProperty);
-		String macroList = event.getProject().getProperty( event.getTarget().getName() + "macro.list");
+		String macroList = event.getProject().getProperty( event.getTarget().getName() + ".macro.list");
 		
 		certLogger.info(" Populating  projectName :" + projectName);
 		certLogger.info(" Populating ProjectUrl " + projectUrl);
 		certLogger.info(" macroList " + macroList);
-		certLogger.info(" property name " + event.getProject().getProperty( event.getTarget().getName() + "macro.list"));
+		certLogger.info(" property name " + event.getProject().getProperty( event.getTarget().getName() + ".macro.list"));
 		
 		certLogger.info(" Check and populate if the feature is optional ");
 		if (event.getProject().getProperty("is.optional") != null
