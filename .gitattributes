@@ -2845,6 +2845,8 @@ software/utils/resource/ncicb/jboss-custom/bin/start_jboss -text
 software/utils/resource/ncicb/jboss-custom/bin/status_jboss -text
 software/utils/resource/ncicb/jboss-custom/bin/stop_jboss -text
 software/utils/resource/ncicb/jboss-custom/conf/log4j.xml -text
+software/utils/resource/other-dtds/hibernate-configuration-3.0.dtd -text
+software/utils/resource/other-dtds/hibernate-mapping-3.0.dtd -text
 software/utils/resource/psexec.exe -text
 software/utils/resource/template-db-integrate.xml -text
 software/utils/resource/version.properties -text
