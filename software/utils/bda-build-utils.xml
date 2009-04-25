@@ -141,6 +141,18 @@ $HeadURL$
 			/>
 			/>
 		-->
+		<!--
+		<dtd
+			publicId="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+			location="${bda-utils.resource.dir}/other-dtds/hibernate-configuration-3.0.dtd"
+			/>    
+
+		<dtd
+			publicId="-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+			location="${bda-utils.resource.dir}/other-dtds/hibernate-mapping-3.0.dtd"
+			/>    
+		-->
+
 	</xmlcatalog>
 
  	<tstamp>
@@ -1690,11 +1702,11 @@ $HeadURL$
 				jboss.server.ports.name="@{jboss.server.ports.name}"
 				jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
 				/>
-			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']"/>
 			</xmltask>
-			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<insert path="/server/mbean[@code='org.jboss.util.property.jmx.SystemPropertyClassValue']"
 					position="after">
@@ -1756,7 +1768,7 @@ $HeadURL$
 							<var name="read.database.user" unset="true"/>
 							<var name="read.database.password" unset="true"/>
 							<var name="read.database.driver" unset="true"/>
-							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}">
+							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}">
 								<xmlcatalog refid="bda.xml.catalog"/>
 								<copy path="//datasources/local-tx-datasource/connection-url/text()" property="read.database.url" />
 								<copy path="//datasources/local-tx-datasource/user-name/text()" property="read.database.user" />
@@ -2065,7 +2077,7 @@ $HeadURL$
 			<mkdir dir="@{fusebox.output.dir}"/>
 			<mkdir dir="@{fusebox.persist.dir}"/>
 
-			<xmltask source="@{fusebox.config.file}" dest="@{fusebox.config.file}">
+			<xmltask preservetype="true" source="@{fusebox.config.file}" dest="@{fusebox.config.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<replace path="//config/@project" withtext="@{fusebox.project.name}" />
 				<replace path="//config/@search" withtext="@{fusebox.search.dir}" />
@@ -2894,7 +2906,7 @@ $HeadURL$
 			<!-- POC stuff -->
 			<echo message="Updateing POC info @{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml"/>
 			<!--
-			<xmltask source="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml" dest="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml">
+			<xmltask preservetype="true" source="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml" dest="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/serviceMetadata.xml">
 				<remove path="/:ServiceMetadata/:serviceDescription/:Service/:pointOfContactCollection/:PointOfContact" />
 				<insert path="/:ServiceMetadata/:serviceDescription/:Service/:pointOfContactCollection">
 					<![CDATA[
@@ -3048,14 +3060,14 @@ $HeadURL$
 		<sequential>
 			<var name="jmx-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml"/>
 			<echo message="Updating ${jmx-console.web-xml.file}"/>
-			<xmltask source="${jmx-console.web-xml.file}"
+			<xmltask preservetype="true" source="${jmx-console.web-xml.file}"
 				dest="${jmx-console.web-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="/web-app/security-constraint"/>
 				<remove path="/web-app/login-config"/>
 				<remove path="/web-app/security-role"/>
 			</xmltask>
-			<xmltask source="${jmx-console.web-xml.file}"
+			<xmltask preservetype="true" source="${jmx-console.web-xml.file}"
 				dest="${jmx-console.web-xml.file}"
 				failWithoutMatch="true" >
 				<xmlcatalog refid="bda.xml.catalog"/>
@@ -3097,12 +3109,12 @@ $HeadURL$
 
 			<var name="jmx-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${jmx-console.jboss-web-xml.file}"/>
-			<xmltask source="${jmx-console.jboss-web-xml.file}"
+			<xmltask preservetype="true" source="${jmx-console.jboss-web-xml.file}"
 				dest="${jmx-console.jboss-web-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="/jboss-web/security-domain"/>
 			</xmltask>
-			<xmltask source="${jmx-console.jboss-web-xml.file}"
+			<xmltask preservetype="true" source="${jmx-console.jboss-web-xml.file}"
 				dest="${jmx-console.jboss-web-xml.file}"
 				failWithoutMatch="true" >
 				<xmlcatalog refid="bda.xml.catalog"/>
@@ -3179,14 +3191,14 @@ $HeadURL$
 
 			<var name="web-console.web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml"/>
 			<echo message="Updating ${web-console.web-xml.file}"/>
-			<xmltask source="${web-console.web-xml.file}"
+			<xmltask preservetype="true" source="${web-console.web-xml.file}"
 				dest="${web-console.web-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="/web-app/security-constraint"/>
 				<remove path="/web-app/login-config"/>
 				<remove path="/web-app/security-role"/>
 			</xmltask>
-			<xmltask source="${web-console.web-xml.file}"
+			<xmltask preservetype="true" source="${web-console.web-xml.file}"
 				dest="${web-console.web-xml.file}"
 				failWithoutMatch="true" >
 				<xmlcatalog refid="bda.xml.catalog"/>
@@ -3229,12 +3241,12 @@ $HeadURL$
 			<var name="web-console.jboss-web-xml.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml"/>
 			<echo message="Updating ${web-console.jboss-web-xml.file}"/>
 
-			<xmltask source="${web-console.jboss-web-xml.file}"
+			<xmltask preservetype="true" source="${web-console.jboss-web-xml.file}"
 				dest="${web-console.jboss-web-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="/jboss-web/security-domain"/>
 			</xmltask>
-			<xmltask source="${web-console.jboss-web-xml.file}"
+			<xmltask preservetype="true" source="${web-console.jboss-web-xml.file}"
 				dest="${web-console.jboss-web-xml.file}"
 				failWithoutMatch="true" >
 				<xmlcatalog refid="bda.xml.catalog"/>
@@ -3393,7 +3405,7 @@ $HeadURL$
 			</copy>
 
 			<!-- customize izpack  -->
-			<xmltask failWithoutMatch="true" source="@{target.dir}/@{izpack.binary.name}/src/build.xml"
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{target.dir}/@{izpack.binary.name}/src/build.xml"
 				dest="@{target.dir}/@{izpack.binary.name}/src/build.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<insert path="//target[@name='build.listeners']" file="@{izpack-custom.svn.dir}/resources/ProgressBarInstallerListener.xml"/>
@@ -3449,7 +3461,7 @@ $HeadURL$
 						</then>
 						<else>
 							<echo message="Reading LDAP properties ${ldap.properties.list}"/>
-							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
+							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
 								<xmlcatalog refid="bda.xml.catalog"/>
 								<copy path="//module-option[@name='ldapHost']/text()" property="read.ldap.url" />
 								<copy path="//module-option[@name='ldapSearchableBase']/text()" property="read.ldap.basedn" />
@@ -3727,12 +3739,12 @@ $HeadURL$
 				</else>
 			</if>
 			<echo message="Inserting ${login-config.block.file} into @{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
-			<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
 				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="//policy/application-policy[@name='@{application.context.name}']"/>
 			</xmltask>
-			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
 				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<insert path="//policy" file="${login-config.block.file}"/>
@@ -4024,12 +4036,12 @@ $HeadURL$
 					<copy todir="@{appserver.conf.dir}" file="@{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file}"/>
 
 					<!-- modify ${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml -->
-					<xmltask source="@{appserver.server-xml.file}"
+					<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{appserver.ssl.port}']" />
 					</xmltask>
-					<xmltask source="@{appserver.server-xml.file}"
+					<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}"
 						failWithoutMatch="true" >
 						<xmlcatalog refid="bda.xml.catalog"/>
@@ -4246,12 +4258,12 @@ $HeadURL$
 							<fail message="Unkown server.xml service name - @{appserver.server-xml.service.name}, don't know how to handle"/>
 						</default>
 					</switch>
-					<xmltask source="@{appserver.server-xml.file}"
+					<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}" >
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{grid.secure.port}']" />
 					</xmltask>
-					<xmltask source="@{appserver.server-xml.file}"
+					<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}"
 						failWithoutMatch="true" >
 						<xmlcatalog refid="bda.xml.catalog"/>
@@ -4300,7 +4312,7 @@ $HeadURL$
 					<fail message="Unkown server.xml service name - @{appserver.server-xml.service.name}, don't know how to handle"/>
 				</default>
 			</switch>
-			<xmltask source="@{appserver.server-xml.file}"
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
 				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/ConnenctorEngine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
 				<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']">
@@ -4324,12 +4336,12 @@ $HeadURL$
 			<if>
 				<available file="@{grid.secdesc.file}" />
 				<then>
-					<xmltask source="@{grid.secdesc.file}"
+					<xmltask preservetype="true" source="@{grid.secdesc.file}"
 						dest="@{grid.secdesc.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<remove path="/*[local-name()='securityConfig']/*[local-name()='gridmap']" />
 					</xmltask>
-					<xmltask source="@{grid.secdesc.file}"
+					<xmltask preservetype="true" source="@{grid.secdesc.file}"
 						dest="@{grid.secdesc.file}"
 						failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
@@ -4389,12 +4401,12 @@ $HeadURL$
 				</and>
 				<then>
 					<echo message="grid.external.secure.host is @{grid.external.secure.host}, proceeding with configuration"/>
-					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
+					<xmltask preservetype="true" source="@{server-config.file}" dest="@{server-config.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='publishHostName']" />
 					</xmltask>
-					<xmltask source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
+					<xmltask preservetype="true" source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
 							<![CDATA[
@@ -4424,12 +4436,12 @@ $HeadURL$
 				</and>
 				<then>
 					<echo message="appserver.external.http.host is @{appserver.external.http.host}, proceeding with configuration"/>
-					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
+					<xmltask preservetype="true" source="@{server-config.file}" dest="@{server-config.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='logicalHost']" />
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='publishHostName']" />
 					</xmltask>
-					<xmltask source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
+					<xmltask preservetype="true" source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
 							<![CDATA[
@@ -4453,12 +4465,12 @@ $HeadURL$
 			<if>
 				<equals arg1="@{grid.secure.enable}" arg2="true" trim="true" />
 				<then>
-					<xmltask source="@{server-config.file}" dest="@{server-config.file}">
+					<xmltask preservetype="true" source="@{server-config.file}" dest="@{server-config.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='parameter' and @name='containerSecDesc']" />
 						<remove path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']/*[local-name()='requestFlow']/*[local-name()='handler' and @type='java:org.globus.wsrf.impl.security.authentication.transport.TomcatTransportSecurityHandler']" />
 					</xmltask>
-					<xmltask source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
+					<xmltask preservetype="true" source="@{server-config.file}" dest="@{server-config.file}" failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<insert path="/*[local-name()='deployment']/*[local-name()='globalConfiguration']">
 							<![CDATA[
@@ -4488,12 +4500,12 @@ $HeadURL$
 		<attribute name="scheme" default="http" />
 		<attribute name="port" default="${jboss.server.port}"/>
 		<sequential>
-			<xmltask source="@{web-xml.location}" dest="@{web-xml.location}">
+			<xmltask preservetype="true" source="@{web-xml.location}" dest="@{web-xml.location}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="/web-app/servlet[servlet-name='WSRFServlet']/init-param[param-name='defaultProtocol']" />
 				<remove path="/web-app/servlet[servlet-name='WSRFServlet']/init-param[param-name='defaultPort']" />
 			</xmltask>
-			<xmltask source="@{web-xml.location}" dest="@{web-xml.location}" failWithoutMatch="true">
+			<xmltask preservetype="true" source="@{web-xml.location}" dest="@{web-xml.location}" failWithoutMatch="true">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<insert path="/web-app/servlet[servlet-name='WSRFServlet']/servlet-class"
 					position="after">
@@ -4528,7 +4540,7 @@ $HeadURL$
 				<equals arg1="${appserver.external.host.has.value}" arg2="true"/>
 				<then>
 					<echo message="Grid External Host Name set so configuring proxy settings"/>
-					<xmltask source="@{appserver.server-xml.file}"
+					<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<attr path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{proxy.update.connector.port}']"
@@ -4556,11 +4568,11 @@ $HeadURL$
 		<attribute name="database.jndi.datasource.name" default="${database.jndi.datasource.name}" />
 		<attribute name="database.context.path" default="${database.context.path}" />
 		<sequential>
-			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
+			<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context[@path='/@{database.context.path}']"/>
 			</xmltask>
-			<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
+			<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']">
 					<![CDATA[
@@ -4684,12 +4696,12 @@ $HeadURL$
 					-->
 
 					<echo message="Updating Tomcat Ports"/>
-					<xmltask source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
+					<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<replace path="(//Connector)[not(@Protocol)]/@port" withtext="@{tomcat.port.http}" />
 						<replace path="(//Connector)[@redirectPort=8443]/@redirectPort" withtext="@{tomcat.port.ssl}" />
 						<replace path="(//Connector)[@protocol='AJP/1.3']/@port" withtext="@{tomcat.port.ajp}" />
-						<replace path="(//Server)[@port=8005]/@port" withtext="@{tomcat.port.shutdown}" />
+						<replace path="(//Server)/@port" withtext="@{tomcat.port.shutdown}" />
 					</xmltask>
 
 
@@ -5022,7 +5034,7 @@ $HeadURL$
 		<attribute name="appserver.hostname" default="${jboss.server.hostname}"/>
 		<sequential>
 			<echo message="Updateing hostname in server.xml"/>
-			<xmltask source="@{appserver.server-xml.file}"
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<attr path="//Engine[@name='@{appserver.server-xml.service.name}']"
@@ -5137,12 +5149,12 @@ $HeadURL$
 		<attribute name="appserver.hostname" default="${jboss.server.hostname}"/>
 		<sequential>
 			<echo message="access log @{appserver.conf.dir} @{appserver.server-xml.file} @{appserver.server-xml.service.name} @{appserver.hostname}"/>
-			<xmltask source="@{appserver.server-xml.file}"
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove	path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']/Host[@name='@{appserver.hostname}']/Valve[@className='org.apache.catalina.valves.AccessLogValve']"/>
 			</xmltask>
-			<xmltask source="@{appserver.server-xml.file}"
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}"
 				failWithoutMatch="true">
 				<xmlcatalog refid="bda.xml.catalog"/>
@@ -5345,7 +5357,7 @@ $HeadURL$
 			<echo file="${property.block.file}" message="@{property.block}"/>
 
 			<var name="read.property.block" unset="true"/>
-			<xmltask source="${properties-service.file}" dest="${properties-service.file}">
+			<xmltask source="${properties-service.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="//server/mbean[@name='jboss:type=Service,name=SystemProperties']/attribute[@name='Properties']/text()" property="read.property.block" />
 			</xmltask>
@@ -5364,7 +5376,7 @@ $HeadURL$
 				</then>
 				<else>
 					<echo message="No properties found in ${properties-service.file}, inserting"/>
-					<xmltask failWithoutMatch="true" source="${properties-service.file}" dest="${properties-service.file}">
+					<xmltask  failWithoutMatch="true" source="${properties-service.file}" dest="${properties-service.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<insert path="//server/mbean[@name='jboss:type=Service,name=SystemProperties']">
 							<![CDATA[
@@ -5389,7 +5401,7 @@ $HeadURL$
 			<var name="read.bindings.file" unset="true"/>
 			<var name="read.bindings.file.raw" unset="true"/>
 			<var name="read.bindings.port.ports.name" unset="true"/>
-			<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']/text()" property="read.bindings.file.raw" />
 				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']/text()" property="read.bindings.ports.name" />
@@ -5431,7 +5443,7 @@ $HeadURL$
 			<var name="jboss-read-ports.properties.list" value="@{jboss.server.jndi.port.property.name},@{jboss.server.port.property.name},@{jboss.ejbinvoker.port.property.name},@{jboss.server.rmi.port.property.name},@{jboss.web.service.port.property.name},@{jboss.service.rmiobject.port.property.name},@{jboss.server.bind.port.property.name},@{jboss.hajndi.port.property.name},@{jboss.hajrmi.port.property.name},@{jboss.pooledha.port.property.name},@{jboss.cobraorb.port.property.name},@{jboss.jmx-rmi.port.property.name},@{jboss.snmp-trapd.port.property.name},@{jboss.snmp.port.property.name},@{jboss.jms.port.property.name},@{jboss.remoting.port.property.name},@{jboss.messaging.port.property.name}"/>
 			<var name="read.http.port" unset="true"/>
 			<var name="read.jndi.port" unset="true"/>
-			<xmltask failWithoutMatch="true" source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.web:service=WebServer']/binding/@port" property="read.http.port" attrValue="true"/>
 				<copy path="//service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
@@ -5453,7 +5465,7 @@ $HeadURL$
 			<var name="read.jms.port" unset="true"/>
 			<var name="read.remoting.port" unset="true"/>
 			<var name="read.messaging.port" unset="true"/>
-			<xmltask source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
+			<xmltask preservetype="true" source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.remoting:type=Connector,name=DefaultEjb3Connector,handler=ejb3']/binding/@port" property="read.ejb.port" attrValue="true"/>
 				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
@@ -5646,7 +5658,7 @@ $HeadURL$
 			<var name="read.keystore.alias" unset="true"/>
 			<var name="read.keystore.password" unset="true"/>
 			<var name="read.keystore.file.location" unset="true"/>
-			<xmltask source="@{appserver.server-xml.file}">
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']/@port" property="read.ssl.port" attrValue="true"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']/@keystoreFile" property="read.keystore.file.location" attrValue="true"/>
@@ -5821,7 +5833,7 @@ $HeadURL$
 			<var name="read.http.port" unset="true"/>
 			<var name="read.grid.host" unset="true"/>
 			<var name="read.grid.port" unset="true"/>
-			<xmltask source="@{appserver.server-xml.file}">
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.ssl.port}']/@proxyPort" property="read.ssl.port" attrValue="true"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{search.ssl.port}']/@proxyName" property="read.ssl.host" attrValue="true"/>
@@ -5951,7 +5963,7 @@ $HeadURL$
 			<var name="read.ssl.port" unset="true"/>
 			<var name="read.ajp.port" unset="true"/>
 			<var name="read.shutdown.port" unset="true"/>
-			<xmltask failWithoutMatch="true" source="@{tomcat.server-xml.file}">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{tomcat.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/Server/@port" property="read.shutdown.port" attrValue="true"/>
 				<copy path="/Server/Service[@name='@{tomcat.server-xml.service.name}']/Connector[@protocol='AJP/1.3']/@port" property="read.ajp.port" attrValue="true"/>
@@ -6080,7 +6092,7 @@ $HeadURL$
 						</not>
 						<then>
 							<var name="read.grid.index.url" unset="true"/>
-							<xmltask source="@{registration.file}">
+							<xmltask preservetype="true" source="@{registration.file}">
 								<xmlcatalog refid="bda.xml.catalog"/>
 								<copy path="/:ServiceGroupRegistrationParameters/:ServiceGroupEPR/wsa:Address/text()" property="read.grid.index.url"/>
 							</xmltask>
@@ -6182,7 +6194,7 @@ $HeadURL$
 			<var name="read.grid.port" unset="true"/>
 			<var name="read.key.file.location" unset="true"/>
 			<var name="read.cert.file.location" unset="true"/>
-			<xmltask source="@{appserver.server-xml.file}">
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@className]/@port" property="read.grid.port" attrValue="true"/>
 				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@className]/@key" property="read.key.file.location" attrValue="true"/>
@@ -6579,7 +6591,7 @@ $HeadURL$
 						<then>
 							<echo message="Database.type is oracle, setting pad=true"/>
 							<var name="read.pad" unset="true"/>
-							<xmltask source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 								<xmlcatalog refid="bda.xml.catalog"/>
 								<copy path="/server/mbean[@code='org.jboss.tm.XidFactory']/attribute[@name='Pad']/text()" property="read.pad"/>
 							</xmltask>
@@ -6596,7 +6608,7 @@ $HeadURL$
 									<isset property="pad.is.set"/>
 								</not>
 								<then>
-									<xmltask failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+									<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 										<xmlcatalog refid="bda.xml.catalog"/>
 										<insert path="/server/mbean[@code='org.jboss.tm.XidFactory']">
 											<![CDATA[ <attribute name="Pad">true</attribute>]]>
