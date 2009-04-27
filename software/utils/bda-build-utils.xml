@@ -141,7 +141,6 @@ $HeadURL$
 			/>
 			/>
 		-->
-		<!--
 		<dtd
 			publicId="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 			location="${bda-utils.resource.dir}/other-dtds/hibernate-configuration-3.0.dtd"
@@ -151,7 +150,6 @@ $HeadURL$
 			publicId="-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 			location="${bda-utils.resource.dir}/other-dtds/hibernate-mapping-3.0.dtd"
 			/>    
-		-->
 
 	</xmlcatalog>
 
