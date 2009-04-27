@@ -18,7 +18,7 @@
   <dependencies>               
 	  <dependency org="javax.activation" name="activation" rev="1.0.2" conf="runtime" />
 	  <dependency org="apache" name="antunit" rev="1.0" conf="runtime" />
-	  <dependency org="apache" name="ant-contrib" rev="1.0b3" conf="runtime" />
+	  <dependency org="apache" name="ant-contrib" rev="1.0nci" conf="runtime" />
 	  <dependency org="jakarta" name="bcel" rev="5.1" conf="runtime" />
 	  <dependency org="ncicb" name="clm" rev="3.2" conf="runtime" />
 	  <dependency org="jakarta" name="commons-httpclient" rev="3.0.1" conf="runtime" />
