@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- bda-build-template version 1.1.0-beta -->
+<!-- bda-build-template version 1.0.1 -->
 <!--
 $Id$
 $HeadURL$
@@ -405,6 +405,7 @@ $HeadURL$
 			property3=${jboss.home}${line.separator}
 			property4=${tomcat.home}${line.separator}
 			"/>
+		<copy file="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml" tofile="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml.orig" overwrite="true"/>
 		<jboss-update-properties-service
 			property.block="${property.block}"
 			/>
