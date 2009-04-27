@@ -71,7 +71,7 @@
 	<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
 	<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
 	<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
-	<propertycopy name="project.svn.private.url" from="${project.name}.private.repository" />
+	<propertycopy name="project.svn.private.url" from="${project.name}.svn.private.url" />
 	<propertycopy name="project.local.private.checkout" from="${project.name}.local.private.checkout" />
 	<propertycopy name="project.ci-server.hostname" from="${project.name}.ci-server.hostname" />
 	<propertycopy name="project.ci-server.jobname" from="${project.name}.ci-server.jobname" />
