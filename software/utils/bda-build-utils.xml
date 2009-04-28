@@ -29,7 +29,102 @@ $HeadURL$
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="macrodef.classpath"/>
 	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator" classpathref="macrodef.classpath"/>
 	<taskdef resource="liquibasetasks.properties" classpathref="macrodef.classpath"/>
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="macrodef.classpath"/>
 
+	<xmlcatalog id="bda.xml.catalog">
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application Client 1.3//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/application-client_1_3.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/application_1_3.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/ejb-jar_2_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JAWS 2.4//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jaws_2_4.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Application Client 3.2//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-client_3_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Application Client 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-client_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Application 2.4//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-web_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 2.4//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_2_4.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 3.0//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_3_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 3.2//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_3_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSSCMP-JDBC 3.0//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jbosscmp-jdbc_3_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSSCMP-JDBC 3.2//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jbosscmp-jdbc_3_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSSCMP-JDBC 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jbosscmp-jdbc_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS Security Config 3.0//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/security_config.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/web-app_2_3.dtd"
+			/>
+		<!--
+		The following dtds are included in the jboss.jar but do not have public ids so they are not included here
+			application_1_2.dtd
+			connector_1_0.dtd
+			datatypes.dtd
+			ejb-jar.dtd
+			jaws.dtd
+			jboss-app_3_0.dtd
+			jboss-app_3_2.dtd
+			jboss-app_4_0.dtd
+			jboss-web.dtd
+			jboss-web_3_0.dtd
+			jboss-web_3_2.dtd
+			web-app_2_2.dtd
+		-->
+		<!--
+		<dtd
+			publicId=""
+			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/"
+			/>
+			/>
+		-->
+	</xmlcatalog>
+
+	
  	<tstamp>
  		<format property="run.date" pattern="yyMMddHHmm"/>
  	</tstamp>

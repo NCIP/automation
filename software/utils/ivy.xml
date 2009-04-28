@@ -45,7 +45,8 @@
 	  <dependency org="postgresql" name="postgresql-jdbc3" rev="8.3-603" conf="runtime" />	
 	  <dependency org="fusemetrics" name="fusemetrics" rev="1.0" conf="runtime" />
 	  <dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" conf="runtime" />		  
-	  <dependency org="liquibase" name="liquibase" rev="1.7.0" conf="runtime" />		  
+	  <dependency org="liquibase" name="liquibase" rev="1.7.0" conf="runtime" />
+	  <dependency org="com.oopsconsultancy" name="xmltask" rev="1.15.1" conf="runtime" />
 	  <!--
 	  <dependency org="pmd"
 		  name="pmd"                 
