@@ -154,6 +154,7 @@ class CertificationUtils
 
 		       if(propertiesDir.exists())
 		       {
+		       		println privatePropertiesLocation
 			       def flag = false
 			       propertiesDir.eachFileRecurse
 			       { file ->

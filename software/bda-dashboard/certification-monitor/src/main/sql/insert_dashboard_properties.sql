@@ -54,6 +54,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:private-repository-properties.macro.list','svn');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.type','mysql');
