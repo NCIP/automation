@@ -107,7 +107,7 @@
 	<property name="svn.project.url" value="${project.svn.project.url}" />
 	<property name="svn.local.checkout" value="${project.svn.local.checkout}" />
 	<property name="svn.private.url" value="${project.svn.private.url}" />
-	<property name="svn.private.local.checkout" value="${project.local.private.checkout}" />
+	<property name="local.private.checkout" value="${project.local.private.checkout}" />
 	
 	<property name="ci-server.hostname" value="${project.ci-server.hostname}" />
 	<property name="ci-server.jobname" value="${project.ci-server.jobname}" />
@@ -305,7 +305,7 @@
 	<target name="build:private-repository-properties" depends="init">
 
 		<svn username="${svn.username}" password="${svn.password}">
-			<checkout url="${svn.private.url}" revision="HEAD" destPath="${svn.private.local.checkout}" />
+			<checkout url="${svn.private.url}" revision="HEAD" destPath="${local.private.checkout}" />
 		</svn>
 				
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkPrivateRepositoryProperties"/>
