@@ -151,10 +151,9 @@ class CertificationUtils
 		       def propertiesDir = new File(basedir +"/"+privatePropertiesLocation + "/properties").getAbsoluteFile()
 		       java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
 		       java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
-
+println privatePropertiesLocation
 		       if(propertiesDir.exists())
-		       {
-		       		println privatePropertiesLocation
+		       {		       		
 			       def flag = false
 			       propertiesDir.eachFileRecurse
 			       { file ->
