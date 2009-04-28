@@ -143,7 +143,7 @@ class CertificationUtils
 
 	void checkPrivateRepositoryProperties ()
 	{
-	       def privatePropertiesLocation=project.properties['svn.private.local.checkout']
+	       def privatePropertiesLocation=project.properties['local.private.checkout']
 	       def basedir=project.properties['basedir']
 	       println basedir
 	       try
