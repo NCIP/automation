@@ -63,21 +63,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<!-- Includes- include BDA marcos -->
 	<import file="${bda-utils.dir}/${bda.utils.filename}-${bda.version}.xml" />
 	
-	
-	<math result="dev.minor.release" operand1="${minor.release}" operation="+" operand2="1" datatype="int"/>
-	<if>
-		<not>
-			<equals arg1="${minor.release}" arg2="0" />
-		</not>	
-		<then>
-			
-			<math result="prev.minor.release" operand1="${minor.release}" operation="-" operand2="1" datatype="int"/>
-		</then>
-	</if>
-
-	<!-- need to work on the determining the development release and previous beta release -->
-	<property name="beta.development.version" value="${major.release}.${dev.minor.release}.${patch.release}-beta"/>
-	<property name="previous.beta.release.version" value="${major.release}.${prev.minor.release}.${patch.release}-beta"/>
 
 	<!-- Taskdefs -->
 	<taskdef name="svn" classpathref="bda-utils.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
@@ -85,7 +70,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 	<!-- Targets -->
 	<target name="release:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles,release:mail-teams">
-		<echo message="Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. " />
+		<echo message="Released BDA revision '${release.version}' and '${next.beta.release.version}'. The beta version '${next.beta.release.version}' is in development and is not supported. " />
 	</target>
 
 
@@ -116,59 +101,59 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="release:copy-rename" depends="release-manager:get-latest-automation">
-		<copy todir="${svn.local.checkout}/${beta.development.version}">
-			<fileset dir="${svn.local.checkout}/${beta.release.version}"/>
+		<copy todir="${svn.local.checkout}/${next.beta.release.version}">
+			<fileset dir="${svn.local.checkout}/${current.beta.release.version}"/>
 		</copy>
 
 		<copy todir="${svn.local.checkout}/${release.version}" >
-			 <fileset dir="${svn.local.checkout}/${beta.release.version}"/>
+			 <fileset dir="${svn.local.checkout}/${current.beta.release.version}"/>
 		</copy>
 
 
-		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${beta.release.version}.xml" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.xml"/>
-		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.zip"/>
+		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.xml"/>
+		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.zip"/>
 
 		<xmlconfig in="${svn.local.checkout}/${release.version}/ivy.xml" verbose="false">			
 			<update path="//ivy-module/info/@revision" value="${release.version}" />			
 		</xmlconfig>
 
 		
-		<move file="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.release.version}.xml" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml"/>
-		<move file="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.release.version}.zip" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.zip"/>
+		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml"/>
+		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip"/>
 		
-		<xmlconfig in="${svn.local.checkout}/${beta.development.version}/ivy.xml" verbose="false">
-			<update path="//ivy-module/info/@revision" value="${beta.development.version}" />
+		<xmlconfig in="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" verbose="false">
+			<update path="//ivy-module/info/@revision" value="${next.beta.release.version}" />
 		</xmlconfig>
-		
-		<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
-				
+		<!--
+		<delete dir="${svn.local.checkout}/${previous.current.beta.release.version}"/>
+	-->				
 	</target>
 
 	<target name="release-manager:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
-		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.xml"/>
-		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.xml" overwrite="true"/>
+		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml"/>
+		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" overwrite="true"/>
 		
 
-		<delete file="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.zip"/>
-		<zip destfile="${svn.local.checkout}/${beta.release.version}/${bda.utils.filename}-${beta.release.version}.zip">
+		<delete file="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip"/>
+		<zip destfile="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip">
 			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
 		</zip>
 
-		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${beta.release.version}/ivy.xml" overwrite="true"/>
+		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/ivy.xml" overwrite="true"/>
 
 	</target>
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
-		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml"/>
-		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.xml" overwrite="true"/>
+		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml"/>
+		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml" overwrite="true"/>
 		
 
-		<delete file="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.zip"/>
-		<zip destfile="${svn.local.checkout}/${beta.development.version}/${bda.utils.filename}-${beta.development.version}.zip">
+		<delete file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip"/>
+		<zip destfile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip">
 			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
 		</zip>
 
-		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${beta.development.version}/ivy.xml" overwrite="true"/>
+		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" overwrite="true"/>
 	</target>
 
 
@@ -187,16 +172,18 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<target name="svn:checkin">		
 		<svn username="${svn.username}" password="${svn.password}">		
 			<add dir="${svn.local.checkout}/${release.version}"/>
-			<add dir="${svn.local.checkout}/${beta.development.version}"/>
-			<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
-			<commit message="Latest BDA revision ${release.version} and beta revision ${beta.development.version}" dir="${svn.local.checkout}"/>
+			<add dir="${svn.local.checkout}/${next.beta.release.version}"/>
+			<!--
+			<delete dir="${svn.local.checkout}/${previous.current.beta.release.version}"/>
+			-->
+			<commit message="Latest BDA revision ${release.version} and beta revision ${next.beta.release.version}" dir="${svn.local.checkout}"/>
 		</svn>	
 	</target>
 
 
 	<target name="svn:automation:checkin">	
 		<svn username="${svn.username}" password="${svn.password}">		
-			<commit message="Latest BDA revision " dir="${svn.local.checkout}/${beta.development.version}"/>
+			<commit message="Latest BDA revision " dir="${svn.local.checkout}/${next.beta.release.version}"/>
 		</svn>	
 	</target>
 
@@ -226,7 +213,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<target name="release:mail-teams">	
 		<mail mailhost="${mail.server.host}" mailport="${mail.server.port}"  tolist="${tolist}" subject="BDA ${release.version} released">
 			<from address="${fromaddress}"/>						
-			<message>Released BDA revision '${release.version}' and '${beta.development.version}'. The beta version '${beta.development.version}' is in development and is not supported. </message>
+			<message>Released BDA revision '${release.version}' and '${next.beta.release.version}'. The beta version '${next.beta.release.version}' is in development and is not supported. </message>
 		</mail>	
 	</target>
 
