@@ -182,12 +182,15 @@ println privatePropertiesLocation
 	void checkTemplateFiles ()
 	{
 		String templateFileStr=project.properties['properties.template.file']
+		def buildFileLocation=project.properties['master.build.location']
+		def basedir=project.properties['basedir']
+		
 		println templateFileStr
 		if(templateFileStr == null || templateFileStr.length() == 0)
 			ant.fail("TEMPLATE VALIDATION FAILED: Can not find the properties.template.file property ")
 		try
 		{
-			def templateFile = new File(templateFileStr)		
+			def templateFile = new File(basedir +"/"+buildFileLocation+"/"+templateFileStr)		
 			if(!templateFile.exists())
 				ant.fail("TEMPLATE VALIDATION FAILED: Can not find the template file ")
 		}
