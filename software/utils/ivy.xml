@@ -52,6 +52,7 @@
 		  <include name="ant-launcher" type="jar" conf="runtime"/>
 		  <include name="ant" type="jar" conf="runtime"/>
 	  </dependency>
+	  <dependency org="com.oopsconsultancy" name="xmltask" rev="1.15.1" conf="runtime" />	  
 	  <!--
 	  <dependency org="jaxen" name="jaxen" rev="1.1.1" conf="runtime" />
 	  -->
