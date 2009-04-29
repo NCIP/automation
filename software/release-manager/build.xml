@@ -26,22 +26,19 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 	<property name="working.dir" value="${basedir}/working"/>
 	<property name="lib.dir" value="${working.dir}/lib" />
-	<property name="bda-utils.dir" value="${working.dir}/bda-utils" />
-	<property name="bda-download.dir" value="${working.dir}/bda-download" />
-	
-	
-	<mkdir dir="${working.dir}"/>
-	<get src="${svn.automation.url}/${svn.ivy.project}/bda-ivy-build.xml" dest="${bda-download.dir}/bda-ivy-build.xml"/>
 
-	<!--
-	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda.xml" dest="${basedir}/ivy-bda.xml"/>
-	<get src="${svn.automation.url}/${svn.automation.project}/${automation.ivy}/ivy-bda-settings.xml" dest="${basedir}/ivy-bda-settings.xml"/>
-	-->
+
 	<!-- retrive ivy files then retrieve bda files and librarires -->
-	<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml" dir="${bda-download.dir}"  target="retrieve-bda">
+	<property name="bda-download.dir" location="${working.dir}/bda-download" />
+	<property name="bda-utils.dir" value="${working.dir}/bda-utils" />	
+	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<mkdir dir="${bda-download.dir}" />
+	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
-		<property name="bda-utils.dir" value="${bda-utils.dir}"/>
-		<property name="lib.dir" value="${lib.dir}"/>
+		<property name="bda-utils.dir" location="${bda-utils.dir}" />
+		<property name="lib.dir" location="${lib.dir}" />
 	</ant>
 	
 	<!-- Paths -->
@@ -125,7 +122,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			<update path="//ivy-module/info/@revision" value="${next.beta.release.version}" />
 		</xmlconfig>
 		<!--
-		<delete dir="${svn.local.checkout}/${previous.current.beta.release.version}"/>
+		<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
 	-->				
 	</target>
 
