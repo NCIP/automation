@@ -1802,7 +1802,7 @@ $HeadURL$
 							<var name="read.database.user" unset="true"/>
 							<var name="read.database.password" unset="true"/>
 							<var name="read.database.driver" unset="true"/>
-							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}">
+							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file}" >
 								<xmlcatalog refid="bda.xml.catalog"/>
 								<copy path="//datasources/local-tx-datasource/connection-url/text()" property="read.database.url" />
 								<copy path="//datasources/local-tx-datasource/user-name/text()" property="read.database.user" />
@@ -3495,7 +3495,7 @@ $HeadURL$
 						</then>
 						<else>
 							<echo message="Reading LDAP properties ${ldap.properties.list}"/>
-							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
+							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml" >
 								<xmlcatalog refid="bda.xml.catalog"/>
 								<copy path="//module-option[@name='ldapHost']/text()" property="read.ldap.url" />
 								<copy path="//module-option[@name='ldapSearchableBase']/text()" property="read.ldap.basedn" />
@@ -5435,7 +5435,7 @@ $HeadURL$
 			<var name="read.bindings.file" unset="true"/>
 			<var name="read.bindings.file.raw" unset="true"/>
 			<var name="read.bindings.port.ports.name" unset="true"/>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']/text()" property="read.bindings.file.raw" />
 				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']/text()" property="read.bindings.ports.name" />
@@ -5477,7 +5477,7 @@ $HeadURL$
 			<var name="jboss-read-ports.properties.list" value="@{jboss.server.jndi.port.property.name},@{jboss.server.port.property.name},@{jboss.ejbinvoker.port.property.name},@{jboss.server.rmi.port.property.name},@{jboss.web.service.port.property.name},@{jboss.service.rmiobject.port.property.name},@{jboss.server.bind.port.property.name},@{jboss.hajndi.port.property.name},@{jboss.hajrmi.port.property.name},@{jboss.pooledha.port.property.name},@{jboss.cobraorb.port.property.name},@{jboss.jmx-rmi.port.property.name},@{jboss.snmp-trapd.port.property.name},@{jboss.snmp.port.property.name},@{jboss.jms.port.property.name},@{jboss.remoting.port.property.name},@{jboss.messaging.port.property.name}"/>
 			<var name="read.http.port" unset="true"/>
 			<var name="read.jndi.port" unset="true"/>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.server.bindingfile.location}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.web:service=WebServer']/binding/@port" property="read.http.port" attrValue="true"/>
 				<copy path="//service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
@@ -5499,7 +5499,7 @@ $HeadURL$
 			<var name="read.jms.port" unset="true"/>
 			<var name="read.remoting.port" unset="true"/>
 			<var name="read.messaging.port" unset="true"/>
-			<xmltask preservetype="true" source="@{jboss.server.bindingfile.location}" dest="@{jboss.server.bindingfile.location}">
+			<xmltask preservetype="true" source="@{jboss.server.bindingfile.location}">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.remoting:type=Connector,name=DefaultEjb3Connector,handler=ejb3']/binding/@port" property="read.ejb.port" attrValue="true"/>
 				<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
