@@ -45,8 +45,9 @@ sub setUsers ()
 	foreach my $userid (@userList)
 	{
 		my $name="user$userid";
-		my $email="email$userid";
-		my $update_handle= $dbh->prepare_cached('update users set user_name=?, email=? where user_id=?');
-		$update_handle->execute($name, $email,$userid) or  die "Couldn't update: " . $dbh->errstr;
+		my $email="email$userid\@mail.com";
+		my $realname="first$userid last$userid";
+		my $update_handle= $dbh->prepare_cached('update users set user_name=?, email=?, realname=? where user_id=?');
+		$update_handle->execute($name, $email,$realname,$userid) or  die "Couldn't update: " . $dbh->errstr;
 	}
 }
