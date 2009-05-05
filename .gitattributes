@@ -2730,6 +2730,9 @@ software/svn-utilities/project.properties -text
 software/utils/bda-build-utils.xml -text
 software/utils/build.properties -text
 software/utils/build.xml -text
+software/utils/gforge2jira/gforge-tasks2jira.pl -text
+software/utils/gforge2jira/gforge-tracker2jira.pl -text
+software/utils/gforge2jira/gforge-utils.pl -text
 software/utils/ivy.xml -text
 software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
