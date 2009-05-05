@@ -13,8 +13,8 @@ mkdir("target");
 #my $dbh = DBI->connect('dbi:Pg:host=192.168.1.116;database=gforgeprod', 'user', 'password') or die "Couldn't connect to database: " . DBI->errstr;
 my $dbh = DBI->connect('dbi:Pg:database=gforgeprod') or die "Couldn't connect to database: " . DBI->errstr;
 
-open (DUMP, ">target/dump.log") || die "Could not write dump.log\n";
-open (LOG, ">target/out.log") || die "Could not write dump.log\n";
+open (DUMP, ">target/gforge-tasks2jira.dmp") || die "Could not write dump.log\n";
+open (LOG, ">target/gforge-tasks2jira.log") || die "Could not write dump.log\n";
 
 #&setUsers();
 #exit 0;
@@ -240,7 +240,7 @@ sub generateCSVs()
 	foreach my $queue (sort keys %queueHash)
 	{
 		mkdir("target");
-		my $fname="target/exp-${groupName}-${queue}.csv";
+		my $fname="target/tasks-exp-${groupName}-${queue}.csv";
 		$fname=~s/\s+//g;
 		open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
 		print OUTFILE "IssueID, ";

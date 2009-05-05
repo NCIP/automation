@@ -13,8 +13,9 @@ my %queueFieldList;
 #my $dbh = DBI->connect('dbi:Pg:host=localhost;database=gforgeprod', 'user', 'password') or die "Couldn't connect to database: " . DBI->errstr;
 my $dbh = DBI->connect('dbi:Pg:database=gforgeprod') or die "Couldn't connect to database: " . DBI->errstr;
 
-open (DUMP, ">dump.log") || die "Could not write dump.log\n";
-open (LOG, ">out.log") || die "Could not write dump.log\n";
+mkdir("target");
+open (DUMP, ">target/gforge-tracker2jira.dmp") || die "Could not write dump.log\n";
+open (LOG, ">target/gforge-tracker2jira.log") || die "Could not write dump.log\n";
 
 #&setUsers();
 #exit 0;
@@ -321,7 +322,7 @@ sub generateCSVs()
 	my $fieldValue;
 	foreach my $queue (sort keys %queueFieldList)
 	{
-		my $fname="exp-${groupName}-${queue}.csv";
+		my $fname="target/tracker-exp-${groupName}-${queue}.csv";
 		$fname=~s/\s+//g;
 		open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
 		print OUTFILE "IssueID, ";
