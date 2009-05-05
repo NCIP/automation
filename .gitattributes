@@ -2713,6 +2713,7 @@ software/easyb/lib/groovy-1.6.0.jar -text
 software/gforge2jira/gforge-obfuscate-users.pl -text
 software/gforge2jira/gforge-tasks2jira.pl -text
 software/gforge2jira/gforge-tracker2jira.pl -text
+software/gforge2jira/gforge-users2jira.pl -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
