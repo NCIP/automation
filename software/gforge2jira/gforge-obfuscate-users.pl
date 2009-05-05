@@ -1,4 +1,12 @@
 #!/usr/bin/perl
+#######################################################
+#  Name:  gforge-obfuscate-users.pl
+#  Author: Steven S. Saksa
+#  $Id$
+#  Description:   This script is used to obfuscate the user and password in a gforge dump. Requires perl is installed.
+#  Usage: "./gforge-obfuscate-users.pl"
+#
+#######################################################
 use Data::Dumper;
 use DBI;
 

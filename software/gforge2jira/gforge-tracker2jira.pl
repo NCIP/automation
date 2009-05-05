@@ -1,4 +1,14 @@
 #!/usr/bin/perl
+#######################################################
+#  Name:  gforge-tracerk2jira.pl
+#  Author:  Steven S. Saksa
+#  $Id$
+#  Description:   This script is used to produce a csv file containing all trackers in a given "queue" for a given group.  Most groups
+#                       will have multiple queues so there will be multiple output files with the group and queue in the name.
+#  Usage: ./gforge-tracker2jira.pl "group name" # " are recommended when group names contain spaces
+#
+#######################################################
+
 use Data::Dumper;
 use DBI;
 
