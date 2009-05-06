@@ -210,7 +210,7 @@ sub getHistory()
 	while( my ($id, $fieldName, $oldValue, $modBy, $modepoch) = $sth->fetchrow_array)
 	{
 		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($modepoch);
-		my $modDate=sprintf("%02d/%02d/%02d %02d:%02d:%02d",$mon+1,$mday,$year-100,$hour,$min,$sec);
+		my $modDate=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
 
 		my $user=$userHash{$modBy};
 		$taskHistory= "${user} - ${modDate} - ${fieldName} old value '${oldValue}'\n";
@@ -253,7 +253,7 @@ sub generateCSVs()
 		my $fname="target/tasks-exp-${groupName}-${queue}.csv";
 		$fname=~s/\s+//g;
 		open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
-		print OUTFILE "IssueID, ";
+		print OUTFILE "GforgeID, ";
 		my @fieldList=();
 		my $firstId=@artifactIDList[1];
 		foreach my $fieldName (sort keys %{$artifactHash{$firstId}})

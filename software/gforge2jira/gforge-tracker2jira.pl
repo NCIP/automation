@@ -125,31 +125,31 @@ sub getArtifacts()
 	$sth->execute;
 	while( my ($trackerQue,$trackerStatus,$trackerId,$trackerSummary,$trackerDetails, $trackerPriority, $trackerSubmitId, $trackerAssignedId, $trackerOpenEpoch, $trackerClosedEpoch, $trackerLastEpoch) = $sth->fetchrow_array)
 	{
-		$artifactHash{$trackerId}{"Queue"}=$trackerQue;
+		$artifactHash{$trackerId}{"TrackerQueue"}=$trackerQue;
 		$artifactHash{$trackerId}{"TrackerStatus"}=$trackerStatus;
-		$artifactHash{$trackerId}{"Summary"}=$trackerSummary;
-		$artifactHash{$trackerId}{"Details"}=$trackerDetails;
-		$artifactHash{$trackerId}{"Priority"}=$trackerPriority;
-		$artifactHash{$trackerId}{"SubmittedBy"}=$userHash{$trackerSubmitId};
-		$artifactHash{$trackerId}{"AssignedTo"}=$userHash{$trackerAssignedId};
-		$artifactHash{$trackerId}{"OpenEpoch"}=$trackerOpenEpoch;
-		$artifactHash{$trackerId}{"ClosedEpoch"}=$trackerClosedEpoch;
-		$artifactHash{$trackerId}{"LastEpoch"}=$trackerLastEpoch;
-		$artifactHash{$trackerId}{"TicketHistory"}="";
-		$artifactHash{$trackerId}{"TicketFollowup"}="";
+		$artifactHash{$trackerId}{"TrackerSummary"}=$trackerSummary;
+		$artifactHash{$trackerId}{"TrackerDetails"}=$trackerDetails;
+		$artifactHash{$trackerId}{"TrackerPriority"}=$trackerPriority;
+		$artifactHash{$trackerId}{"TrackerSubmittedBy"}=$userHash{$trackerSubmitId};
+		$artifactHash{$trackerId}{"TrackerAssignedTo"}=$userHash{$trackerAssignedId};
+		$artifactHash{$trackerId}{"TrackerOpenEpoch"}=$trackerOpenEpoch;
+		$artifactHash{$trackerId}{"TrackerClosedEpoch"}=$trackerClosedEpoch;
+		$artifactHash{$trackerId}{"TrackerLastEpoch"}=$trackerLastEpoch;
+		$artifactHash{$trackerId}{"TrackerHistory"}="";
+		$artifactHash{$trackerId}{"TrackerFollowup"}="";
 		push @artifactIDList, $trackerId;
 
 		$queueFieldList{$trackerQue}{"TrackerStatus"}++;
-		$queueFieldList{$trackerQue}{"Summary"}++;
-		$queueFieldList{$trackerQue}{"Details"}++;
-		$queueFieldList{$trackerQue}{"Priority"}++;
-		$queueFieldList{$trackerQue}{"SubmittedBy"}++;
-		$queueFieldList{$trackerQue}{"AssignedTo"}++;
-		$queueFieldList{$trackerQue}{"OpenEpoch"}++;
-		$queueFieldList{$trackerQue}{"ClosedEpoch"}++;
-		$queueFieldList{$trackerQue}{"LastEpoch"}++;
-		$queueFieldList{$trackerQue}{"TicketHistory"}++;
-		$queueFieldList{$trackerQue}{"TicketFollowup"}++;
+		$queueFieldList{$trackerQue}{"TrackerSummary"}++;
+		$queueFieldList{$trackerQue}{"TrackerDetails"}++;
+		$queueFieldList{$trackerQue}{"TrackerPriority"}++;
+		$queueFieldList{$trackerQue}{"TrackerSubmittedBy"}++;
+		$queueFieldList{$trackerQue}{"TrackerAssignedTo"}++;
+		$queueFieldList{$trackerQue}{"TrackerOpenEpoch"}++;
+		$queueFieldList{$trackerQue}{"TrackerClosedEpoch"}++;
+		$queueFieldList{$trackerQue}{"TrackerLastEpoch"}++;
+		$queueFieldList{$trackerQue}{"TrackerHistory"}++;
+		$queueFieldList{$trackerQue}{"TrackerFollowup"}++;
 	}
 	$sth->finish();
 }
@@ -298,7 +298,7 @@ sub getHistory()
 
 		my $user=$userHash{$modBy};
 		$ticketHistory= "${user} - ${modDate} - ${fieldName} old value '${oldValue}'\n";
-		$artifactHash{$id}{"TicketHistory"}.=$ticketHistory;
+		$artifactHash{$id}{"TrackerHistory"}.=$ticketHistory;
 	}
 	$sth->finish();
 }
@@ -323,7 +323,7 @@ sub getMessages()
 
 		my $user=$userHash{$submittedby};
 		$ticketMessages= "${user} - ${email} - ${addDate}\n${body}\n\n";
-		$artifactHash{$id}{"TicketFollowup"}.=$ticketMessages;
+		$artifactHash{$id}{"TrackerFollowup"}.=$ticketMessages;
 	}
 	$sth->finish();
 }
@@ -335,17 +335,18 @@ sub generateCSVs()
 		my $fname="target/tracker-exp-${groupName}-${queue}.csv";
 		$fname=~s/\s+//g;
 		open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
-		print OUTFILE "IssueID, ";
+		print OUTFILE "GforgeID,";
 		my @fieldList=();
 		foreach my $fieldName (sort keys %{$queueFieldList{$queue}})
 		{
-			print OUTFILE "$fieldName, ";
 			push (@fieldList,$fieldName);
+			$fieldName=~ s/epoch/Date/i;
+			print OUTFILE "$fieldName, ";
 		}
 		print OUTFILE "\n";
 		foreach my $id (@artifactIDList)
 		{
-			next if($artifactHash{$id}{"Queue"} ne $queue);
+			next if($artifactHash{$id}{"TrackerQueue"} ne $queue);
 			print OUTFILE "$id, ";
 			foreach my $fieldName (@fieldList)
 			{
@@ -354,19 +355,19 @@ sub generateCSVs()
 				if ($fieldName =~ /epoch/i)
 				{
 					my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($fieldValue);
-					my $tmpDate=sprintf("%02d/%02d/%02d %02d:%02d:%02d",$mon+1,$mday,$year-100,$hour,$min,$sec);
+					my $tmpDate=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
 					$fieldValue=$tmpDate;
 				}
 				if ($fieldValue =~ /\"|\n|,/)
 				{
-					$fieldValue=~s/\"/\\\"/g;
+					$fieldValue=~s/\"/'/g;
 					#$fieldValue=~s/\'/\\\'/g;
 					$fieldValue=~s/\,//g;
 					$fieldValue=~s/\n|\r/\\n/g;
 					$fieldValue=~s/^/\"/;
 					$fieldValue=~s/$/\"/;
 				}
-				print OUTFILE "$fieldValue, ";
+				print OUTFILE "$fieldValue,";
 			}
 			print OUTFILE "\n";
 		}
