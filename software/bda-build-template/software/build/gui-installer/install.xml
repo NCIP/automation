@@ -255,7 +255,7 @@ $HeadURL$
 					    <description>The base files</description>
 					    <file src="@{dist.location}/@{install.zip.file}" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
 					    <file src="@{this.dir}/build.xml" targetdir="$SYSTEM_user_home/@{installer.dir}"/>
-					    <file src="@{this.dir}/property-template" ="yes" targetdir="$SYSTEM_user_home/@{installer.dir}">
+					    <file src="@{this.dir}/property-template"override ="true" targetdir="$SYSTEM_user_home/@{installer.dir}">
 						<excludes>**/.svn/**</excludes>
 					    </file>
 					</pack>
