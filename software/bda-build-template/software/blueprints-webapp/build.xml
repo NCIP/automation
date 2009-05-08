@@ -79,7 +79,8 @@
 	<property name="reports.dir" value="${software.dir}/reports" />
 	<property name="reports.simian.dir" value="${reports.dir}/simian" />
 	<property name="reports.pmd.dir" value="${reports.dir}/pmd" />
-	<property name="reports.checkstyle.dir" value="${reports.dir}/checkstyle" />
+	<property name="reports.checkstyle.dir" value="${reports.dir}/checkstyle/all" />
+	<property name="reports.checkstyle.dir.diff" value="${reports.dir}/checkstyle/diff" />
 	<property name="reports.javancss.dir" value="${reports.dir}/javancss" />
 	<property name="reports.findbugs.dir" value="${reports.dir}/findbugs" />
 
@@ -383,7 +384,7 @@
 			static-analysis:diff:checkstyle
 			">
 		<fail if="checkstyle.failure" message="There were Checkstyle failures." />
-		<fail if="pmd.failure" message="There were PMD failures." />
+		<fail if="pmd.failure.diff" message="There were PMD failures." />
 	</target>
 
 	<target name="ivy:setup-static-analysis" depends="ivy:init">
@@ -473,6 +474,7 @@
 		<mkdir dir="${reports.simian.dir}" />
 		<mkdir dir="${reports.pmd.dir}" />
 		<mkdir dir="${reports.checkstyle.dir}" />
+		<mkdir dir="${reports.checkstyle.dir.diff}" />
 		<mkdir dir="${reports.javancss.dir}" />
 		<mkdir dir="${reports.findbugs.dir}" />
 	</target>
@@ -543,7 +545,7 @@
 		<attribute name="pmd.xml.name" default="pmd.xml" />
 		<attribute name="pmd.html.name" default="pmd.html" />
 		<sequential>
-			<property name="pmd.sub-project.rpt.dir" value="@{pmd.rpt.dir}/@{pmd.sub-project.name}/target" />
+			<property name="pmd.sub-project.rpt.dir" value="@{pmd.rpt.dir}/@{pmd.sub-project.name}/target/all" />
 			<mkdir dir="${pmd.sub-project.rpt.dir}" />
 			<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="project.test.pmd.classpath" />
 			<pmd rulesetfiles="@{pmd.rule-set.file}" shortFilenames="true" failonerror="false" failurespropertyname="pmd.failure" targetjdk="1.5">
@@ -582,25 +584,27 @@
 		<attribute name="pmd.xml.name" default="pmd.xml" />
 		<attribute name="pmd.html.name" default="pmd.html" />
 		<sequential>
-			<property name="pmd.sub-project.rpt.dir" value="@{pmd.rpt.dir}/@{pmd.sub-project.name}/target" />
-			<mkdir dir="${pmd.sub-project.rpt.dir}" />
+			<delete file="@{differential.file.name}"/>
+			<touch file="@{differential.file.name}"/>
+			<property name="pmd.sub-project.rpt.dir.diff" value="@{pmd.rpt.dir}/@{pmd.sub-project.name}/target/diff" />
+			<mkdir dir="${pmd.sub-project.rpt.dir.diff}" />
 			<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="project.test.pmd.classpath" />
 
 			<diffrevision old.revision.number="${pmd.revision.number}" differential.file.name="@{differential.file.name}" />
-			<pmd rulesetfiles="@{pmd.rule-set.file}" shortFilenames="true" failonerror="false" failurespropertyname="pmd.failure" targetjdk="1.5">
-				<formatter type="xml" toFile="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}" />
+			<pmd rulesetfiles="@{pmd.rule-set.file}" shortFilenames="true" failonerror="false" failurespropertyname="pmd.failure.diff" targetjdk="1.5">
+				<formatter type="xml" toFile="${pmd.sub-project.rpt.dir.diff}/@{pmd.xml.name}" />
 				<fileset dir="@{pmd.src.dir}">
 					<patternset>
 						<includesfile name="@{differential.file.name}" />
 					</patternset>
 				</fileset>
 			</pmd>
-			<move file="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}" tofile="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}.bak" />
-			<xslt taskname="pmd" in="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}.bak" out="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}" style="@{pmd.report-preprocessor.file}">
+			<move file="${pmd.sub-project.rpt.dir.diff}/@{pmd.xml.name}" tofile="${pmd.sub-project.rpt.dir.diff}/@{pmd.xml.name}.bak" />
+			<xslt taskname="pmd" in="${pmd.sub-project.rpt.dir.diff}/@{pmd.xml.name}.bak" out="${pmd.sub-project.rpt.dir.diff}/@{pmd.xml.name}" style="@{pmd.report-preprocessor.file}">
 				<param name="relative.path" expression="@{pmd.root-dir.name}/@{pmd.sub-project.name}" />
 			</xslt>
 
-			<xslt taskname="pmd" in="${pmd.sub-project.rpt.dir}/@{pmd.xml.name}.bak" out="${pmd.sub-project.rpt.dir}/@{pmd.html.name}" style="@{pmd.report-xsl.file}" />
+			<xslt taskname="pmd" in="${pmd.sub-project.rpt.dir.diff}/@{pmd.xml.name}.bak" out="${pmd.sub-project.rpt.dir.diff}/@{pmd.html.name}" style="@{pmd.report-xsl.file}" />
 		</sequential>
 	</macrodef>
 
@@ -635,6 +639,7 @@
 		http://findbugs.sourceforge.net/
 		-->
 	<target name="static-analysis:findbugs" depends="
+		compile:application-code,
 		static-analysis:ivy-init,
 		static-analysis:findbugs-init,
 		static-analysis:init
@@ -711,7 +716,7 @@
 		static-analysis:ivy-init,
 		static-analysis:init
 		">
-		<static-analysis-diff-checkstyle differential.file.name="diff_list.txt" checkstyle.src.dir="${blueprints-webapp.java.src.dir}" checkstyle.rpt.dir="${reports.checkstyle.dir}/changeset" checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-simple.xsl" checkstyle.config.file="${checkstyle.config}" checkstyle.xml.name="checkstyle.xml" checkstyle.html.name="checkstyle.html" checkstyle.classpath.ref.name="project.full.classpath" />
+		<static-analysis-diff-checkstyle differential.file.name="diff_list.txt" checkstyle.src.dir="${blueprints-webapp.java.src.dir}" checkstyle.rpt.dir="${reports.checkstyle.dir.diff}/changeset" checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-simple.xsl" checkstyle.config.file="${checkstyle.config}" checkstyle.xml.name="checkstyle.xml" checkstyle.html.name="checkstyle.html" checkstyle.classpath.ref.name="project.test.checkstyle.classpath" />
 		<replaceregexp file="${project.properties.file}" byline="true" match="^(checkstyle.revision.number)=(.*)" replace="\1=${build.svn.revision}" />
 	</target>
 
@@ -726,6 +731,8 @@
 		<attribute name="checkstyle.classpath.ref.name" />
 
 		<sequential>
+			<delete file="@{differential.file.name}"/>
+			<touch file="@{differential.file.name}"/>
 			<diffrevision old.revision.number="${checkstyle.revision.number}" differential.file.name="@{differential.file.name}" />
 
 			<taskdef resource="checkstyletask.properties" uri="antlib:com.puppycrawl.tools.checkstyle" classpathref="project.test.checkstyle.classpath" />
