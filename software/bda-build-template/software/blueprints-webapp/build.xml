@@ -529,7 +529,7 @@
 		static-analysis:ivy-init,
 		static-analysis:init
 		">
-		<static-analysis-pmd pmd.src.dir="${blueprints-webapp.java.src.dir}" pmd.rpt.dir="${reports.pmd.dir}" pmd.root-dir.name="software" pmd.sub-project.name="blueprints-webapp" pmd.report-xsl.file="${common.dir}/pmd/pmd-report-per-class.xslt" pmd.report-preprocessor.file="${common.dir}/pmd/pmd-hudson-preprocessor.xlst" pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset.xml" pmd.xml.name="pmd-report.xml" pmd.html.name="pmd-report.html" />
+		<static-analysis-pmd pmd.src.dir="${blueprints-webapp.java.src.dir}" pmd.rpt.dir="${reports.pmd.dir}" pmd.root-dir.name="software" pmd.sub-project.name="blueprints-webapp" pmd.report-xsl.file="${common.dir}/pmd/pmd-report.xslt" pmd.report-preprocessor.file="${common.dir}/pmd/pmd-hudson-preprocessor.xlst" pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset-basic.xml" pmd.xml.name="pmd-report.xml" pmd.html.name="pmd-report.html" />
 	</target>
 
 	<macrodef name="static-analysis-pmd">
@@ -565,7 +565,7 @@
 		static-analysis:ivy-init,
 		static-analysis:init
 		">
-		<static-analysis-diff-pmd differential.file.name="diff_list.txt" pmd.src.dir="${blueprints-webapp.java.src.dir}" pmd.rpt.dir="${reports.pmd.dir}" pmd.root-dir.name="software" pmd.sub-project.name="blueprints-webapp" pmd.report-xsl.file="${common.dir}/pmd/pmd-report-per-class.xslt" pmd.report-preprocessor.file="${common.dir}/pmd/pmd-hudson-preprocessor.xlst" pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset.xml" pmd.xml.name="pmd-report.xml" pmd.html.name="pmd-report.html" />
+		<static-analysis-diff-pmd differential.file.name="diff_list.txt" pmd.src.dir="${blueprints-webapp.java.src.dir}" pmd.rpt.dir="${reports.pmd.dir}" pmd.root-dir.name="software" pmd.sub-project.name="blueprints-webapp" pmd.report-xsl.file="${common.dir}/pmd/pmd-report.xslt" pmd.report-preprocessor.file="${common.dir}/pmd/pmd-hudson-preprocessor.xlst" pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset-basic.xml" pmd.xml.name="pmd-report.xml" pmd.html.name="pmd-report.html" />
 		<replaceregexp file="${project.properties.file}" byline="true" match="^(pmd.revision.number)=(.*)" replace="\1=${build.svn.revision}" />
 	</target>
 
@@ -641,7 +641,7 @@
 		">
 		<mkdir dir="${reports.findbugs.dir}/bda-blueprints-webapp" />
 
-		<static-analysis-findbugs findbugs.home.dir="${findbugs.home.dir}" findbugs.src.dir="${blueprints-webapp.java.src.dir}" findbugs.classes.dir="${blueprints-webapp.java.classes.dir}" findbugs.rpt.dir="${reports.findbugs.dir}/bda-blueprints-webapp" findbugs.report-xsl.file="${findbugs.home.dir}/src/xsl/fancy.xsl" findbugs.app.classpath.ref="bda-blueprints-webapp.full.classpath" findbugs.xml.name="findbugs.xml" findbugs.html.name="findbugs.html" />
+		<static-analysis-findbugs findbugs.home.dir="${findbugs.home.dir}" findbugs.src.dir="${blueprints-webapp.java.src.dir}" findbugs.classes.dir="${blueprints-webapp.classes.dir}" findbugs.rpt.dir="${reports.findbugs.dir}/bda-blueprints-webapp" findbugs.report-xsl.file="${findbugs.home.dir}/src/xsl/fancy.xsl" findbugs.app.classpath.ref="project.compile.classpath" findbugs.xml.name="findbugs.xml" findbugs.html.name="findbugs.html" />
 	</target>
 
 	<macrodef name="static-analysis-findbugs">
