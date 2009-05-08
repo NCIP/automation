@@ -51,7 +51,10 @@
 
 	<property name="blueprints-webapp.java.dir" value="${basedir}/src" />
 	<property name="blueprints-webapp.web.src.dir" location="${blueprints-webapp.java.dir}/web" />
+	<property name="blueprints-webapp.java.src.dir" location="${blueprints-webapp.java.dir}/java" />	
 	<property name="blueprints-webapp.classes.dir" value="${basedir}/target/classes" />
+
+	<property name="checkstyle.config" value="${common.dir}/checkstyle/checkstyle_minimal.xml"/>
 
 	<!-- Get the three BDA files needed to set the Ivy environment up -->
 	<get src="${build.bda.src.url}" dest="${bda-download.dir}/bda-ivy-build.xml" />
@@ -678,7 +681,7 @@
 		static-analysis:ivy-init,
 		static-analysis:init
 		">
-		<static-analysis-checkstyle checkstyle.src.dir="${blueprints-webapp.java.src.dir}" checkstyle.rpt.dir="${reports.checkstyle.dir}" checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-frames.xsl" checkstyle.config.file="${checkstyle.config}" checkstyle.xml.name="checkstyle.xml" checkstyle.html.name="checkstyle.html" checkstyle.classpath.ref.name="bda-blueprints-webapp.full.classpath" />
+		<static-analysis-checkstyle checkstyle.src.dir="${blueprints-webapp.java.src.dir}" checkstyle.rpt.dir="${reports.checkstyle.dir}" checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-simple.xsl" checkstyle.config.file="${checkstyle.config}" checkstyle.xml.name="checkstyle.xml" checkstyle.html.name="checkstyle.html" checkstyle.classpath.ref.name="project.test.checkstyle.classpath" />
 	</target>
 
 	<macrodef name="static-analysis-checkstyle">
@@ -708,7 +711,7 @@
 		static-analysis:ivy-init,
 		static-analysis:init
 		">
-		<static-analysis-diff-checkstyle differential.file.name="diff_list.txt" checkstyle.src.dir="${blueprints-webapp.java.src.dir}" checkstyle.rpt.dir="${reports.checkstyle.dir}/changeset" checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-frames.xsl" checkstyle.config.file="${checkstyle.config}" checkstyle.xml.name="checkstyle.xml" checkstyle.html.name="checkstyle.html" checkstyle.classpath.ref.name="project.full.classpath" />
+		<static-analysis-diff-checkstyle differential.file.name="diff_list.txt" checkstyle.src.dir="${blueprints-webapp.java.src.dir}" checkstyle.rpt.dir="${reports.checkstyle.dir}/changeset" checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-simple.xsl" checkstyle.config.file="${checkstyle.config}" checkstyle.xml.name="checkstyle.xml" checkstyle.html.name="checkstyle.html" checkstyle.classpath.ref.name="project.full.classpath" />
 		<replaceregexp file="${project.properties.file}" byline="true" match="^(checkstyle.revision.number)=(.*)" replace="\1=${build.svn.revision}" />
 	</target>
 
