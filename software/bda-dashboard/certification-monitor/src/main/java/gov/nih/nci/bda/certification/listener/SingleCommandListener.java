@@ -121,6 +121,18 @@ public class SingleCommandListener implements BuildListener {
 				}
 			}
 		}
+		String execTaskList = event.getProject().getProperty("task.list");
+		if(execTaskList != null && execTaskList.equals(""))
+		{
+			String macroArray[] = macroList.split(",");
+			for ( int i =0 ; i < macroArray.length ; i++){
+				if (!execTaskList.contains(macroArray[i])){
+					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
+					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
+					return false;					
+				}
+			}			
+		}
 		return true;
 	}
 

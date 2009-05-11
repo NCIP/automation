@@ -2572,6 +2572,7 @@ software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certi
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.hbm.xml -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/SingleCommandListener.java -text
+software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/TaskListener.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/ConfigurationHelper.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/HibernateUtil.java -text
 software/bda-dashboard/certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/PropertyLoader.java -text
