@@ -36,7 +36,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ci.ser
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.project.url','http://gforge.nci.nih.gov/svnroot/bda-petstore');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.master.build.location','${petstore.svn.local.checkout}/trunk/software/build');
@@ -60,7 +60,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.project.url','http://gforge.nci.nih.gov/svnroot/caarray2/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.location','${caarray.svn.local.checkout}/software');
@@ -81,7 +81,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.svn.project.url','http://gforge.nci.nih.gov/svnroot/ncia/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.master.build.location','${ncia.svn.local.checkout}/software/build');
@@ -102,7 +102,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.i
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.project.url','http://gforge.nci.nih.gov/svnroot/cagwas/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.build.location','${cagwas.svn.local.checkout}/software/build');
@@ -123,7 +123,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.project.url','http://gforge.nci.nih.gov/svnroot/gpsxar/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.master.build.location','${protexpress.svn.local.checkout}/software/build-prot');
@@ -144,7 +144,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('protex
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.project.url','http://gforge.nci.nih.gov/svnroot/lex-browser/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.master.build.location','${bioportal.svn.local.checkout}/software');
@@ -165,7 +165,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('biopor
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.project.url','http://gforge.nci.nih.gov/svnroot/lexevs/base/v5/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.master.build.location','${lexevs.svn.local.checkout}/lexevs_bda/Lexevs_build');
@@ -186,7 +186,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.project.url','http://gforge.nci.nih.gov/svnroot/security/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.build.location','${upt.svn.local.checkout}/software/build');
@@ -207,7 +207,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.in
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.project.url','http://gforge.nci.nih.gov/svnroot/coppa/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.build.location','${po.svn.local.checkout}/code/build-po');
@@ -228,7 +228,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ins
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.project.url','http://gforge.nci.nih.gov/svnroot/caintegrator2/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.master.build.location','${caintegrator2.svn.local.checkout}/software/build');
@@ -249,7 +249,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.project.url','http://gforge.nci.nih.gov/svnroot/calab/cananolab/trunk/');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.master.build.location','${cananolab.svn.local.checkout}/software/build');
@@ -270,7 +270,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('canano
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.project.url','http://gforge.nci.nih.gov/svnroot/coppa/trunk/');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.master.build.location','${pa.svn.local.checkout}/code/build-pa');
@@ -291,7 +291,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.ins
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.project.url','http://gforge.nci.nih.gov/svnroot/rembrandt/trunk/');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.master.build.location','${rembrandt.svn.local.checkout}/software/build');
@@ -312,7 +312,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('rembra
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.project.url','http://gforge.nci.nih.gov/svnroot/cabiodb/cabioapi/trunk/');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.master.build.location','${cabio.svn.local.checkout}/software/build');
@@ -334,7 +334,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.project.url','http://gforge.nci.nih.gov/svnroot/ispy/trunk/');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.master.build.location','${ispy.svn.local.checkout}/software/build');
@@ -355,7 +355,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.i
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.project.url','http://gforge.nci.nih.gov/svnroot/cpas/trunk/cpas');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.master.build.location','${cpas.svn.local.checkout}/software/build');
@@ -376,7 +376,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.i
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.project.url','http://gforge.nci.nih.gov/svnroot/ccts/trunk/ccts/codebase');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.build.location','${ccts.svn.local.checkout}/software/build');
@@ -397,7 +397,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.i
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.project.url','http://gforge.nci.nih.gov/svnroot/c3prv2/trunk/c3prv2/codebase');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.master.build.location','${c3prv2.svn.local.checkout}/software/build');
@@ -418,7 +418,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.master.build.location','${cadsr.svn.local.checkout}/software/build');
@@ -439,7 +439,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.project.url','http://gforge.nci.nih.gov/svnroot/camod/trunk/camod');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.build.location','${camod.svn.local.checkout}/software/build');
@@ -460,7 +460,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.project.url','http://gforge.nci.nih.gov/svnroot/catissue/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.master.build.location','${catissue.svn.local.checkout}/software/build');
@@ -481,7 +481,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('catiss
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.project.url','http://gforge.nci.nih.gov/svnroot/cab2b/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.build.location','${cab2b.svn.local.checkout}/software/build');
@@ -502,7 +502,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.project.url','http://gforge.nci.nih.gov/svnroot/cagrid/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.master.build.location','${cagrid.svn.local.checkout}/software/build');
@@ -523,7 +523,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.project.url','http://gforge.nci.nih.gov/svnroot/ncit/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.master.build.location','${ncit.svn.local.checkout}/software/build');
@@ -544,7 +544,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.i
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.project.url','http://gforge.nci.nih.gov/svnroot/reportwriter/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.master.build.location','${reportwriter.svn.local.checkout}/software/build');
@@ -565,7 +565,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.project.url','http://gforge.nci.nih.gov/svnroot/genepattern/trunk/wrong');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.master.build.location','${genepattern.svn.local.checkout}/software/build');
@@ -586,7 +586,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('genepa
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.password','Test123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.project.url','http://gforge.nci.nih.gov/svnroot/tfs/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.master.build.location','${tfs.svn.local.checkout}/software/build');
