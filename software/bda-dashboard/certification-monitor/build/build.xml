@@ -228,6 +228,8 @@
 			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
 			<arg value="-lib" />
 			<arg value="${build.dir}/.." />
+			<redirector outputproperty="redirector.out">
+			</redirector>
 		</exec>
 		<echo message="START BUILD"/>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
