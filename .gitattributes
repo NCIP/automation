@@ -2727,6 +2727,7 @@ software/hudson-manager/build.xml -text
 software/hudson-manager/install.properties -text
 software/release-manager/build.xml -text
 software/release-manager/release.properties -text
+software/scripts/maven-rsync.pl -text
 software/single-command-build/build.bat -text
 software/single-command-build/default.properties -text
 software/single-command-build/environment.xml -text
