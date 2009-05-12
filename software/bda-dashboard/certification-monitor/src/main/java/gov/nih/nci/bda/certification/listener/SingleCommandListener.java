@@ -180,7 +180,6 @@ public class SingleCommandListener implements BuildListener {
 	}
 
 	public void taskFinished(BuildEvent event) {
-		System.out.println("TASK "+event.getTask().getTaskName()+" FINISHED....");
 		addTask(event.getTask().getTaskName());
 	}
 
@@ -188,8 +187,7 @@ public class SingleCommandListener implements BuildListener {
 		taskList.add(taskName);		
 	}
 
-	public void taskStarted(BuildEvent event) {
-		System.out.println("TASK "+event.getTask().getTaskName()+" STARTED....");
+	public void taskStarted(BuildEvent event) {		
 	}
 
 }
