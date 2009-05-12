@@ -190,7 +190,7 @@ println privatePropertiesLocation
 			ant.fail("TEMPLATE VALIDATION FAILED: Can not find the properties.template.file property ")
 		try
 		{
-			def templateFile = new File(basedir +"/"+buildFileLocation+"/"+templateFileStr)		
+			def templateFile = new File(templateFileStr)		
 			if(!templateFile.exists())
 				ant.fail("TEMPLATE VALIDATION FAILED: Can not find the template file ")
 		}

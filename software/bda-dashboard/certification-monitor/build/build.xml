@@ -317,7 +317,7 @@
 			<arg value="${single-command.package.target}" />
 		</exec>
 
-		<antfetch dir="${exploded.dir.location}" target="${install.init.target}" return="properties.template.file"/>
+		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="properties.template.file"/>
 		<echo message="${properties.template.file}"/>
 
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkTemplateFiles"/>
