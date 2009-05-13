@@ -62,12 +62,16 @@
     <property name="reports.checkstyle.dir" value="${reports.dir}/checkstyle"/>
     <property name="reports.javancss.dir" value="${reports.dir}/javancss"/>
     <property name="reports.findbugs.dir" value="${reports.dir}/findbugs"/>
+    <property name="reports.jdepend.dir" value="${reports.dir}/jdepend"/>
 
     <path id="ivy.classpath">
 	    <fileset dir="${software.dir}/target/lib">
 		    <include name="*.jar" />
 	    </fileset>      
     </path> 
+
+
+    
     <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath" />
 
 	<target name="init:ivy">
@@ -112,13 +116,45 @@
 	    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
 	</target>
 
+	<target name="ivy:setup-static-analysis" depends="ivy:init">
+		<ivy:resolve refresh="true" conf="test-javancss" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-javancss" />
+		<path id="javancss.classpath">
+			<fileset dir="${lib.dir}/test-javancss">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<ivy:resolve refresh="true" conf="test-checkstyle" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-checkstyle" />
+		<path id="project.test.checkstyle.classpath">
+			<fileset dir="${lib.dir}/test-checkstyle">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<ivy:resolve refresh="true" conf="test-pmd" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-pmd" />
+		<path id="project.test.pmd.classpath">
+			<fileset dir="${lib.dir}/test-pmd">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<ivy:resolve refresh="true" conf="test-simian" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-simian" />
+		<path id="project.test.simian.classpath">
+			<fileset dir="${lib.dir}/test-simian">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+	</target>
+
 	<target name="static-analysis:ivy-init" 
 		depends="
 		init:ivy,
 		static-analysis:ivy-test-javancss,
 		static-analysis:ivy-test-checkstyle,
 		static-analysis:ivy-test-simian,
-		static-analysis:ivy-test-pmd
+		static-analysis:ivy-test-pmd,
+		static-analysis:ivy-test-jdepend
 		"/>
 	<target name="static-analysis:ivy-test-javancss" depends="init:ivy" description="Updates the local ivy repository">
 		<ivy:resolve refresh="true" conf="test-javancss" />
@@ -156,7 +192,15 @@
 			</fileset>
 		</path>
 	</target>
-
+	<target name="static-analysis:ivy-test-jdepend" depends="init:ivy" description="Updates the local ivy repository">
+		<ivy:resolve refresh="true" conf="test-jdepend" />
+		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-jdepend" />
+		<path id="project.test.jdepend.classpath">
+			<fileset dir="${lib.dir}/test-jdepend">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+	</target>
 
 	<!-- This is a wrapper target for all static analysis targets -->
 	<target name="static-analysis" description="Performs static analysis"
@@ -184,6 +228,7 @@
 		<mkdir dir="${reports.checkstyle.dir}"/>
 		<mkdir dir="${reports.javancss.dir}"/>
 		<mkdir dir="${reports.findbugs.dir}"/>
+		<mkdir dir="${reports.jdepend.dir}" /> 
 	</target>
 
 	<!-- Findbugs is realy a full application that has ant support.  This target downloads the binaries for this distribution for use by ant target.  Additionaly setups a jboss installation to uses in the classpath of findbugs to cover runtime libraries -->
@@ -325,9 +370,9 @@
 			pmd.rpt.dir="${reports.pmd.dir}"
 			pmd.root-dir.name="software"
 			pmd.sub-project.name="bda-blueprints-webapp"
-			pmd.report-xsl.file="${common.dir}/pmd/pmd-report-per-class.xslt"
+			pmd.report-xsl.file="${common.dir}/pmd/pmd-report.xslt"
 			pmd.report-preprocessor.file="${common.dir}/pmd/pmd-hudson-preprocessor.xlst"
-			pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset.xml"
+			pmd.rule-set.file="${common.dir}/pmd/pmd-ruleset-basic.xml"
 			pmd.xml.name="pmd-report.xml"
 			pmd.html.name="pmd-report.html"
 			/>
@@ -347,6 +392,8 @@
 		<attribute name="pmd.xml.name" default="pmd.xml"/>
 		<attribute name="pmd.html.name" default="pmd.html"/>
 		<sequential>
+			<delete file="@{differential.file.name}"/>
+			<touch file="@{differential.file.name}"/>
 			<property name="pmd.sub-project.rpt.dir" value="@{pmd.rpt.dir}/@{pmd.sub-project.name}/target"/>			
 			<mkdir dir="${pmd.sub-project.rpt.dir}"/>
 			<taskdef name="pmd" 
@@ -456,10 +503,10 @@
 		<static-analysis-findbugs
 			findbugs.home.dir="${findbugs.home.dir}"
 			findbugs.src.dir="${bda-blueprints-webapp.java.src.dir}"
-			findbugs.classes.dir="${bda-blueprints-webapp.java.classes.dir}"
+			findbugs.classes.dir="${bda-blueprints-webapp.classes.dir}"
 			findbugs.rpt.dir="${reports.findbugs.dir}/bda-blueprints-webapp"
 			findbugs.report-xsl.file="${findbugs.home.dir}/src/xsl/fancy.xsl"
-			findbugs.app.classpath.ref="bda-blueprints-webapp.full.classpath" 
+			findbugs.app.classpath.ref="project.compile.classpath" 
 			findbugs.xml.name="findbugs.xml"
 			findbugs.html.name="findbugs.html"
 			/>
@@ -518,7 +565,7 @@
 			checkstyle.config.file="${common.dir}/checkstyle/checkstyle_minimal.xml"
 			checkstyle.xml.name="checkstyle.xml"
 			checkstyle.html.name="checkstyle.html"
-			checkstyle.classpath.ref.name="bda-blueprints-webapp.full.classpath"
+			checkstyle.classpath.ref.name="project.test.checkstyle.classpath"
 			/>
 	</target>
 
@@ -567,11 +614,11 @@
 			differential.file.name="diff_list.txt"
 			checkstyle.src.dir="${bda-blueprints-webapp.java.src.dir}"
 			checkstyle.rpt.dir="${reports.checkstyle.dir}/changeset"
-			checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-frames.xsl"
+			checkstyle.report-xsl.file="${common.dir}/checkstyle/checkstyle-simple.xsl"
 			checkstyle.config.file="${checkstyle.config}"
 			checkstyle.xml.name="checkstyle.xml"
 			checkstyle.html.name="checkstyle.html"
-			checkstyle.classpath.ref.name="project.full.classpath"
+			checkstyle.classpath.ref.name="project.test.checkstyle.classpath"
 			/>
 		<replaceregexp file="${project.properties.file}" byline="true" match="^(checkstyle.revision.number)=(.*)" replace="\1=${build.svn.revision}"/> 	
 	</target>
@@ -587,6 +634,9 @@
 		<attribute name="checkstyle.classpath.ref.name" />
 
 		<sequential>
+			<delete file="@{differential.file.name}"/>
+			<touch file="@{differential.file.name}"/>
+		
 			<diffrevision old.revision.number="${checkstyle.revision.number}" differential.file.name="@{differential.file.name}" />
 
 			<taskdef resource="checkstyletask.properties"
@@ -679,5 +729,38 @@
 			<cobertura-check failureproperty="cobertura.failure" datafile="@{cobertura.instrumented.dir}/@{cobertura.ser.file}" haltonfailure="false" linerate="0" packagebranchrate="0" packagelinerate="0" totalbranchrate="25" totallinerate="30" />
 		</sequential>
 	</macrodef>
+	
+	<target name="static-analysis:jdepend" 
+		depends="
+		static-analysis:ivy-init,
+		static-analysis:init
+		">
+		<static-analysis-jdepend
+			reports.jdepend.dir="${reports.jdepend.dir}"
+			jdepend.classes.dir="${bda-blueprints-webapp.classes.dir}"
+			/>
+	</target>
+	
+	<macrodef name="static-analysis-jdepend">
+		<attribute name="reports.jdepend.dir"/>
+		<attribute name="jdepend.classes.dir"/>
+		<sequential>
+<!--
+<taskdef name="jdepend" 
+	loaderref="ant.classpath"	
+	classname="org.apache.tools.ant.taskdefs.optional.jdepend.JDependTask">
+	<classpath>
+		<pathelement location="${lib.dir}/test-jdepend/jdepend-2.9.jar" />	
+	</classpath>		
+</taskdef>
+-->
+			<jdepend format="xml" outputfile="@{reports.jdepend.dir}/jdepend-report.xml"> 
+				<classespath> 
+					<pathelement location="@{jdepend.classes.dir}" /> 
+				</classespath> 
+			</jdepend> 
+			<xslt taskname="jdepend" in="@{reports.jdepend.dir}/jdepend-report.xml" out="@{reports.jdepend.dir}/jdepend/index.html" style="${ant.home}/etc/jdepend.xsl" /> 
+		</sequential>
+	</macrodef> 	
 	
 </project>
