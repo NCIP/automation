@@ -35,7 +35,7 @@
     <property name="ivy-cacore.file" value="${software.dir}/target/lib/ivy-cacore-2.0.0-beta2.jar"/>
     <property name="ivy.settings.file" location="${common.dir}/ivy/ivy-settings.xml" />
     <!--<property name="ivy.def.file" location="ivy-sub-project.xml" />-->
-    <property name="ivy.def.file" location="${common.dir}/ivy/ivy-test.xml" />
+    <property name="ivy.static.def.file" location="${common.dir}/ivy/ivy-test.xml" />
 
     <property name="local.repo.dir" location="${software.dir}/local-ivy-repo" />
     <property name="bda-utils.dir" location="${software.dir}/target/bda-utils" />
@@ -76,7 +76,8 @@
 
 	<target name="init:ivy">
 		<mkdir dir="${local.repo.dir}"/>
-		<property name="ivy.dep.file" value="${ivy.def.file}"/>
+		<property name="ivy.dep.file" value="${ivy.static.def.file}"/>
+		<echo message="IN STATIC:: ${ivy.dep.file}"/> 
 		<ivy:settings file="${ivy.settings.file}" />
 	</target>
             
@@ -116,7 +117,7 @@
 	    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
 	</target>
 
-	<target name="ivy:setup-static-analysis" depends="ivy:init">
+	<target name="ivy:setup-static-analysis" depends="init:ivy">
 		<ivy:resolve refresh="true" conf="test-javancss" />
 		<ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" conf="test-javancss" />
 		<path id="javancss.classpath">
@@ -494,6 +495,7 @@
 		-->
 	<target name="static-analysis:findbugs" 
 		depends="
+		compile:application-code,		
 		static-analysis:ivy-init,
 		static-analysis:findbugs-init,
 		static-analysis:init
