@@ -613,14 +613,14 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
     }
 
 
-	private void extractUtilsFromJar(IIXMLElement fileExtractor)
+	private void extractUtilsFromJar(IXMLElement fileExtractor)
 	{
 		try
 		{
-            Vector<IIXMLElement> extractorMap = fileExtractor.getChildrenNamed(FILE_EXTRACTOR_EXTRACT_FILE);
+            Vector<IXMLElement> extractorMap = fileExtractor.getChildrenNamed(FILE_EXTRACTOR_EXTRACT_FILE);
             for (int i = 0; i < extractorMap.size(); i++)
             {
-            	IIXMLElement extractFile = extractorMap.elementAt(i);
+            	IXMLElement extractFile = extractorMap.elementAt(i);
             	String extractorFileName = extractFile.getAttribute(FILE_EXTRACTOR_FILE_NAME);
             	System.out.println("extractorFileName ::" +extractorFileName);
             	extractFiles(idata.info.getInstallerBase()+".jar",extractorFileName);
