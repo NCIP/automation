@@ -39,6 +39,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Properties;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -534,7 +551,7 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
                 }
             }
         }
-		XMLElement fileExtractor = spec.getFirstChildNamed(FILE_EXTRACTOR_NODE_ID);
+		IXMLElement fileExtractor = spec.getFirstChildNamed(FILE_EXTRACTOR_NODE_ID);
 
 		if (fileExtractor != null)
 		{
@@ -542,7 +559,7 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 		}
 
 
-		XMLElement panelReader = spec.getFirstChildNamed(PANEL_READER_NODE_ID);
+		IXMLElement panelReader = spec.getFirstChildNamed(PANEL_READER_NODE_ID);
 
 		if (panelReader != null)
 		{
@@ -596,14 +613,14 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
     }
 
 
-	private void extractUtilsFromJar(XMLElement fileExtractor)
+	private void extractUtilsFromJar(IIXMLElement fileExtractor)
 	{
 		try
 		{
-            Vector<XMLElement> extractorMap = fileExtractor.getChildrenNamed(FILE_EXTRACTOR_EXTRACT_FILE);
+            Vector<IIXMLElement> extractorMap = fileExtractor.getChildrenNamed(FILE_EXTRACTOR_EXTRACT_FILE);
             for (int i = 0; i < extractorMap.size(); i++)
             {
-            	XMLElement extractFile = extractorMap.elementAt(i);
+            	IIXMLElement extractFile = extractorMap.elementAt(i);
             	String extractorFileName = extractFile.getAttribute(FILE_EXTRACTOR_FILE_NAME);
             	System.out.println("extractorFileName ::" +extractorFileName);
             	extractFiles(idata.info.getInstallerBase()+".jar",extractorFileName);
@@ -665,7 +682,7 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 	}
 
     @SuppressWarnings("deprecation")
-	private void processReader(XMLElement panelReader) {
+	private void processReader(IXMLElement panelReader) {
     		String readerClassName = panelReader.getAttribute(PANEL_READER_CLASS_NAME);
             String readerMethodName = panelReader.getAttribute(PANEL_READER_METHOD_NAME);
             String readerLanguage = panelReader.getAttribute(PANEL_READER_LANGUAGE);
@@ -675,10 +692,10 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
             HashMap propertiesValueMap = new HashMap();
 
 
-            Vector<XMLElement> propertiesMap = panelReader.getChildrenNamed(PANEL_READER_PROPERTY_MAP);
+            Vector<IXMLElement> propertiesMap = panelReader.getChildrenNamed(PANEL_READER_PROPERTY_MAP);
             for (int i = 0; i < propertiesMap.size(); i++)
             {
-                XMLElement propertyMap = propertiesMap.elementAt(i);
+                IXMLElement propertyMap = propertiesMap.elementAt(i);
                 String propertyName = propertyMap.getAttribute(PANEL_READER_PROPERTY_NAME);
                 String mapName = propertyMap.getAttribute(PANEL_READER_PROPERTY_MAP_NAME);
                 propertiesNameMap.put(propertyName, mapName);
@@ -699,10 +716,10 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
                 File buildFile = new File(readerClassName);
                 ProjectHelper.configureProject(project, buildFile);
 
-                Vector<XMLElement> inProperties = panelReader.getChildrenNamed(PANEL_READER_IN_PROPERTY);
+                Vector<IXMLElement> inProperties = panelReader.getChildrenNamed(PANEL_READER_IN_PROPERTY);
                 for (int i = 0; i < inProperties.size(); i++)
                 {
-                    XMLElement inProperty = inProperties.elementAt(i);
+                    IXMLElement inProperty = inProperties.elementAt(i);
                     String inPropertyName = inProperty.getAttribute(PANEL_READER_IN_PROPERTY_NAME);
                     String inPropertyValue = inProperty.getAttribute(PANEL_READER_IN_PROPERTY_VALUE);
                     project.setProperty(inPropertyName, idata.getVariable(inPropertyValue));
@@ -754,11 +771,11 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 
 	private ArrayList getAllPanelVariables() {
 		ArrayList variables = new ArrayList();
-	       Vector<XMLElement> fields = spec.getChildrenNamed(FIELD_NODE_ID);
+	       Vector<IXMLElement> fields = spec.getChildrenNamed(FIELD_NODE_ID);
 
 	        for (int i = 0; i < fields.size(); i++)
 	        {
-	            XMLElement field = fields.elementAt(i);
+	            IXMLElement field = fields.elementAt(i);
 	            String attribute = field.getAttribute(TYPE);
 	            if (attribute != null)
 	            {
