@@ -98,6 +98,11 @@ import com.izforge.izpack.util.OsVersion;
 import com.izforge.izpack.util.VariableSubstitutor;
 import com.izforge.izpack.util.HyperlinkHandler;
 
+import org.apache.tools.ant.DefaultLogger;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+
+
 public class UserInputPanel extends IzPanel implements ActionListener, ItemListener, FocusListener
 {
 
