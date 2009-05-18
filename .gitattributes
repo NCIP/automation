@@ -2298,7 +2298,15 @@ software/bda-build-template/software/build/upgrade.properties -text
 software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
 software/bda-build-template/software/common/bda-download/ivy-bda-settings.xml -text
 software/bda-build-template/software/common/bda-download/ivy-bda.xml -text
+software/bda-build-template/software/common/checkstyle/checkstyle-author.xsl -text
+software/bda-build-template/software/common/checkstyle/checkstyle-csv.xsl -text
+software/bda-build-template/software/common/checkstyle/checkstyle-frames-errors.xsl -text
+software/bda-build-template/software/common/checkstyle/checkstyle-frames.xsl -text
+software/bda-build-template/software/common/checkstyle/checkstyle-noframes-sorted.xsl -text
+software/bda-build-template/software/common/checkstyle/checkstyle-noframes.xsl -text
 software/bda-build-template/software/common/checkstyle/checkstyle-simple.xsl -text
+software/bda-build-template/software/common/checkstyle/checkstyle-text.xsl -text
+software/bda-build-template/software/common/checkstyle/checkstyle_checks.xml -text
 software/bda-build-template/software/common/checkstyle/checkstyle_minimal.xml -text
 software/bda-build-template/software/common/findbugs/default.xsl -text
 software/bda-build-template/software/common/findbugs/fancy-hist.xsl -text
