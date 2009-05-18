@@ -29,6 +29,7 @@ anthill-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
 certification-monitor/build.xml -text
 certification-monitor/build/CertificationUtils.groovy -text
 certification-monitor/build/build.xml -text
+certification-monitor/build/lookup.properties -text
 certification-monitor/build/project.properties -text
 certification-monitor/dev-install.properties -text
 certification-monitor/install.properties -text
@@ -74,6 +75,7 @@ certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/Project
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.hbm.xml -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/SingleCommandListener.java -text
+certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/TaskListener.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/ConfigurationHelper.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/HibernateUtil.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/PropertyLoader.java -text

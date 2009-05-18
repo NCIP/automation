@@ -143,7 +143,7 @@ class CertificationUtils
 
 	void checkPrivateRepositoryProperties ()
 	{
-	       def privatePropertiesLocation=project.properties['svn.private.local.checkout']
+	       def privatePropertiesLocation=project.properties['local.private.checkout']
 	       def basedir=project.properties['basedir']
 	       println basedir
 	       try
@@ -151,9 +151,9 @@ class CertificationUtils
 		       def propertiesDir = new File(basedir +"/"+privatePropertiesLocation + "/properties").getAbsoluteFile()
 		       java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
 		       java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
-
+println privatePropertiesLocation
 		       if(propertiesDir.exists())
-		       {
+		       {		       		
 			       def flag = false
 			       propertiesDir.eachFileRecurse
 			       { file ->
@@ -181,25 +181,23 @@ class CertificationUtils
 
 	void checkTemplateFiles ()
 	{
+		String templateFileStr=project.properties['properties.template.file']
 		def buildFileLocation=project.properties['master.build.location']
 		def basedir=project.properties['basedir']
-		println basedir
 		
+		println templateFileStr
+		if(templateFileStr == null || templateFileStr.length() == 0)
+			ant.fail("TEMPLATE VALIDATION FAILED: Can not find the properties.template.file property ")
 		try
 		{
-			String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install-properties.template").getAbsoluteFile();
-			println projectPropertiesFile
+			def templateFile = new File(templateFileStr)		
+			if(!templateFile.exists())
+				ant.fail("TEMPLATE VALIDATION FAILED: Can not find the template file ")
 		}
 		catch(FileNotFoundException ex)
 		{
-			ant.fail("TEMPLATE VALIDATION FAILED: Can not find the install-properties.template file ")
+			ant.fail("TEMPLATE VALIDATION FAILED: Can not find the template file ")
 		}
-
-		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
-		def installProject = new XmlParser().parse(installFile)				
-
-		if(!installProject.switch.find{it.@value=='${properties.file.type}'}.'case'.find{it.@value=='install'}.property.@name.contains('properties.template.file'))
-			ant.fail("TEMPLATE VALIDATION FAILED: properties.template.file property is not set ")
 	}
 
 	def getBdaUtilsVersion ()

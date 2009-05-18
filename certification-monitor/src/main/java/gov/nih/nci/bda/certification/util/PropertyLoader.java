@@ -15,32 +15,48 @@ public class PropertyLoader {
 	private static Log certLogger = LogFactory.getLog(PropertyLoader.class);
 	private static Configuration config = ConfigurationHelper
 			.getConfiguration();
-
+	private static Configuration fileConfig = ConfigurationHelper
+	.getFileConfiguration();
+	
 	private static void loadDatabaseProperties(String databaseType,
 			Project project) {
-		project.setProperty(databaseType + ".database.system.user", config
-				.getString(databaseType + ".database.system.user"));
-		project.setProperty(databaseType + ".database.system.password", config
-				.getString(databaseType + ".database.system.password"));
-		project.setProperty(databaseType + ".database.server", config
-				.getString(databaseType + ".database.server"));
-		project.setProperty(databaseType + ".database.port", config
-				.getString(databaseType + ".database.port"));
-		project.setProperty(databaseType + ".database.name", config
-				.getString(databaseType + ".database.name"));
-
-		project.setProperty(databaseType + ".database.user", config
-				.getString(databaseType + ".database.user"));
-		project.setProperty(databaseType + ".database.password", config
-				.getString(databaseType + ".database.password"));
-		project.setProperty(databaseType + ".database.url", config
-				.getString(databaseType + ".database.url"));
-		project.setProperty(databaseType + ".database.system.url", config
-				.getString(databaseType + ".database.system.url"));
-		project.setProperty(databaseType + ".minimum.version", config
-				.getString(databaseType + ".minimum.version"));
+		certLogger.info("Loading database properties ");
+		Iterator<Object> it = config.getKeys(databaseType);
+		try {
+			while (it.hasNext()) {
+				String keyName = (String) it.next();
+				certLogger.info("Key: " + keyName + " Value: "
+						+ config.getString(keyName));
+				project.setProperty(keyName.substring(databaseType.length()+1), config.getString(keyName));
+			}
+		} catch (Exception ex) {
+			// do nothing
+			certLogger
+					.info("Exception Occured while loading database properties "
+							+ ex.getMessage());
+		}
 	}
 
+	private static void loadDatabasePropertiesFromFile(String projectName,
+			Project project) {
+		certLogger.info("Loading database properties ");
+		Iterator<Object> it = fileConfig.getKeys(projectName);
+		try {
+			while (it.hasNext()) {
+				String keyName = (String) it.next();
+				certLogger.info("Key: " + keyName + " Value: "
+						+ fileConfig.getString(keyName));
+				certLogger.info("SUB Key: " + keyName.substring(projectName.length()+1));
+				project.setProperty(keyName.substring(projectName.length()+1), fileConfig.getString(keyName));
+			}
+		} catch (Exception ex) {
+			// do nothing
+			certLogger
+					.info("Exception Occured while loading database properties from file"
+							+ ex.getMessage());
+		}
+	}
+	
 	public static void loadGeneralProperties(Project project) {
 		project.setProperty("ant.minimum.version", config
 				.getString("ant.minimum.version"));
@@ -62,7 +78,7 @@ public class PropertyLoader {
 				String keyName = (String) it.next();
 				certLogger.info("Key: " + keyName + " Value: "
 						+ config.getString(keyName));
-				project.setProperty(keyName, config.getString(keyName));
+				project.setProperty(keyName.substring(projectName.length()+1), config.getString(keyName));
 			}
 		} catch (Exception ex) {
 			// do nothing
@@ -71,12 +87,18 @@ public class PropertyLoader {
 							+ ex.getMessage());
 		}
 
-		certLogger
-				.info("Exception Occured while loading properties from the database ");
 		System.out.println("Database Type:: "
 				+ config.getString(projectName + ".database.type"));
-		loadDatabaseProperties(
-				config.getString(projectName + ".database.type"), project);
+		System.out.println("Database Type:: "
+				+ config.getString(projectName + ".use.genericDB"));
+		if(config.getString(projectName + ".use.genericDB") != null && config.getString(projectName + ".use.genericDB").equalsIgnoreCase("false"))
+		{
+			loadDatabasePropertiesFromFile(projectName,project);			
+		}
+		else
+		{
+			loadDatabaseProperties(config.getString(projectName + ".database.type"), project);
+		}
 	}
 
 	public static void loadProperties(String projectName) {

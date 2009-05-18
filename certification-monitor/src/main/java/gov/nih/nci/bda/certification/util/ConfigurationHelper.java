@@ -2,13 +2,14 @@ package gov.nih.nci.bda.certification.util;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.DataConfiguration;
 import org.apache.commons.configuration.DatabaseConfiguration;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
@@ -46,4 +47,15 @@ public final class ConfigurationHelper {
 		return ds;
 	}
 
+	public static org.apache.commons.configuration.Configuration getFileConfiguration() {
+		PropertiesConfiguration config = null;
+		certLogger.info(" Set the FileConfiguration " );
+		try {
+			config = new PropertiesConfiguration("build/lookup.properties");
+		} catch (ConfigurationException e) {
+			certLogger.error(" Could not load the  properties from the file" );	
+			e.printStackTrace();
+		}		
+		return config;
+	}
 }

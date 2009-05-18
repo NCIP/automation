@@ -1,5 +1,7 @@
 package gov.nih.nci.bda.certification.listener;
 
+import java.util.ArrayList;
+
 import gov.nih.nci.bda.certification.BuildCertificationHelper;
 import gov.nih.nci.bda.certification.CertificationManager;
 import gov.nih.nci.bda.certification.business.BuildCertificationBean;
@@ -16,6 +18,8 @@ import org.apache.tools.ant.BuildListener;
 public class SingleCommandListener implements BuildListener {
 	private Log certLogger = LogFactory.getLog(SingleCommandListener.class);
 
+	ArrayList taskList = new ArrayList();
+	
 	public void buildFinished(BuildEvent event) {
 	}
 
@@ -45,9 +49,12 @@ public class SingleCommandListener implements BuildListener {
 		String projectName = event.getProject().getProperty("project.name");
 		String urlProperty = projectName + ".svn.project.url";
 		String projectUrl = event.getProject().getProperty(urlProperty);
-
+		String macroList = event.getProject().getProperty( event.getTarget().getName() + ".macro.list");
+		
 		certLogger.info(" Populating  projectName :" + projectName);
 		certLogger.info(" Populating ProjectUrl " + projectUrl);
+		certLogger.info(" macroList " + macroList);
+		certLogger.info(" property name " + event.getProject().getProperty( event.getTarget().getName() + ".macro.list"));
 		
 		certLogger.info(" Check and populate if the feature is optional ");
 		if (event.getProject().getProperty("is.optional") != null
@@ -58,7 +65,8 @@ public class SingleCommandListener implements BuildListener {
 		}
 		
 		certLogger.info(" Check and populate the status of the feature and the certification ");
-		if (event.getException() != null) {
+		if (event.getException() != null || !checkMacroList(macroList,event)) {
+			certLogger.info(" macro list value False " + checkMacroList(macroList,event));
 			bmb.setBuildSuccessful(false);
 			bmb.setFailureMessage(event.getException().getMessage());
 			if (!bmb.isOptional()) {
@@ -66,8 +74,10 @@ public class SingleCommandListener implements BuildListener {
 				CertificationManager.projectCertificationStatus = false;
 			}
 			//bmb.setValue(false);
-		} else {
+		} else {		
 			bmb.setBuildSuccessful(true);
+			certLogger.info(" macro list value TURE " + checkMacroList(macroList,event));
+			certLogger.info(" Check and populate the status of the feature and the certification ");
 			certLogger.info(" Update the projectCertificationStatus to true only when the status is not false" + CertificationManager.projectCertificationStatus);
 			if (CertificationManager.projectCertificationStatus) {
 				bmb.setCertificationStatus(true);
@@ -97,6 +107,33 @@ public class SingleCommandListener implements BuildListener {
 		}
 
 		return bmb;
+	}
+
+	private boolean checkMacroList(String macroList,BuildEvent event) {
+		if (macroList != null)
+		{
+			String macroArray[] = macroList.split(",");
+			for ( int i =0 ; i < macroArray.length ; i++){
+				if (!taskList.contains(macroArray[i])){
+					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
+					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
+					return false;					
+				}
+			}
+		}
+		String execTaskList = event.getProject().getProperty("task.list");
+		if(execTaskList != null && execTaskList.equals(""))
+		{
+			String macroArray[] = macroList.split(",");
+			for ( int i =0 ; i < macroArray.length ; i++){
+				if (!execTaskList.contains(macroArray[i])){
+					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
+					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
+					return false;					
+				}
+			}			
+		}
+		return true;
 	}
 
 	public void targetFinished(BuildEvent event) {
@@ -138,16 +175,19 @@ public class SingleCommandListener implements BuildListener {
 		}
 	}
 
-	public void targetStarted(BuildEvent arg0) {
-
+	public void targetStarted(BuildEvent event) {	
+		System.out.println("TARGET "+event.getTarget().getName()+" STARTED....");
 	}
 
-	public void taskFinished(BuildEvent arg0) {
-
+	public void taskFinished(BuildEvent event) {
+		addTask(event.getTask().getTaskName());
 	}
 
-	public void taskStarted(BuildEvent arg0) {
+	private void addTask(String taskName) {
+		taskList.add(taskName);		
+	}
 
+	public void taskStarted(BuildEvent event) {		
 	}
 
 }

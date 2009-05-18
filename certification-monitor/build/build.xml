@@ -13,6 +13,7 @@
 	<property name="lib.dir" location="${build.dir}/lib" />
 	<property name="bda-utils.dir" location="${build.dir}/bda-utils" />
 	<property name="log.dir" location="${build.dir}/logs" />
+
 	
 	<!-- retrive ivy files then retrieve bda files and librarires -->
 	<property name="bda-download.file" value="bda-ivy-build.xml" />
@@ -27,25 +28,23 @@
 		<property name="software.dir" location="${build.dir}" />
 	</ant>
 
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
+	<taskdef name="antfetch" classname="net.sf.antcontrib.logic.AntFetch">
+		<classpath>
+			<pathelement location="../ant-contrib.jar"/>
+		</classpath>
+	</taskdef>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="../ant-contrib.jar"/>
+		</classpath>
+	</taskdef>
 
-	<!-- Paths -->
-	<path id="bda-utils.classpath">
-		<fileset dir="${bda-utils.dir}">
-			<include name="**/*.jar" />
-		</fileset>
-	</path>
-	<path id="ivy.classpath">
-		<fileset dir="${lib.dir}">
-			<include name="${ivy.file}" />
-			<include name="${ivy-core.file}" />
-		</fileset>
-	</path>
-	
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="bda-utils.classpath"/>
 
 	<echo message="${project.name}"/>
-
+<!--
 	<propertycopy name="project.database.type" from="${project.name}.database.type" />
 	<propertycopy name="project.database.system.user" from="${project.database.type}.database.system.user" />
 	<propertycopy name="project.database.system.password" from="${project.database.type}.database.system.password" />
@@ -59,17 +58,20 @@
 
 	<propertycopy name="project.master.build.location" from="${project.name}.master.build.location" />
 	<propertycopy name="project.master.install.location" from="${project.name}.master.install.location" />
-	<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />
+	<propertycopy name="project.single-command.build.target" from="${project.name}.single-command.build.target" />	
+	<propertycopy name="project.single-command.package.target" from="${project.name}.single-command.package.target" />
 	<propertycopy name="project.single-command.deployment.target" from="${project.name}.single-command.deployment.target" />
+	<propertycopy name="project.single-command.distribution.target" from="${project.name}.single-command.distribution.target" />
 	<propertycopy name="project.database.integration.target" from="${project.name}.database.integration.target" />	
 	<propertycopy name="project.master.build.file" from="${project.name}.master.build.file" />
 	<propertycopy name="project.exploded.dir.location" from="${project.name}.exploded.dir.location" />
+	<propertycopy name="project.install.init.target" from="${project.name}.install.init.target" />
 
 	<propertycopy name="project.svn.username" from="${project.name}.svn.username" />
 	<propertycopy name="project.svn.password" from="${project.name}.svn.password" />
 	<propertycopy name="project.svn.project.url" from="${project.name}.svn.project.url" />
 	<propertycopy name="project.svn.local.checkout" from="${project.name}.svn.local.checkout" />
-	<propertycopy name="project.svn.private.url" from="${project.name}.private.repository" />
+	<propertycopy name="project.svn.private.url" from="${project.name}.svn.private.url" />
 	<propertycopy name="project.local.private.checkout" from="${project.name}.local.private.checkout" />
 	<propertycopy name="project.ci-server.hostname" from="${project.name}.ci-server.hostname" />
 	<propertycopy name="project.ci-server.jobname" from="${project.name}.ci-server.jobname" />
@@ -92,22 +94,25 @@
 	<property name="master.build.location" value="${project.master.build.location}" />
 	<property name="single-command.build.target" value="${project.single-command.build.target}" />
 	<property name="single-command.deployment.target" value="${project.single-command.deployment.target}" />
+	<property name="single-command.package.target" value="${project.single-command.package.target}" />
+	<property name="single-command.distribution.target" value="${project.single-command.distribution.target}" />
 	<property name="database.integration.target" value="${project.database.integration.target}" />
 	<property name="master.build.file" value="${project.master.build.file}" />
 	<property name="master.install.location" value="${project.master.install.location}" />
 	<property name="exploded.dir.location" value="${project.exploded.dir.location}" />
+	<property name="install.init.target" value="${project.install.init.target}" />
 
 	<property name="svn.username" value="${project.svn.username}" />
 	<property name="svn.password" value="${project.svn.password}" />	
 	<property name="svn.project.url" value="${project.svn.project.url}" />
 	<property name="svn.local.checkout" value="${project.svn.local.checkout}" />
 	<property name="svn.private.url" value="${project.svn.private.url}" />
-	<property name="svn.private.local.checkout" value="${project.local.private.checkout}" />
+	<property name="local.private.checkout" value="${project.local.private.checkout}" />
 	
 	<property name="ci-server.hostname" value="${project.ci-server.hostname}" />
 	<property name="ci-server.jobname" value="${project.ci-server.jobname}" />
 	<property name="ci-server.portnumber" value="${project.ci-server.portnumber}" />
-
+-->
 	
 	<property name="certification.directory.name" value="${user.home}/apps"/>
 	
@@ -137,9 +142,7 @@
 			<fail message="Invalid database type ${database.type}"/>
 		</default>
 	</switch>	
-	
-	<!-- Includes- include BDA marcos -->
-	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+
 
 	<!-- Start logging -->
 	<mkdir dir="${log.dir}" />
@@ -171,18 +174,23 @@
 			java.check.version.major="${java.major.version}"
 			java.check.version.minor="${java.minor.version}"		
 			/>
-	
-		<database-create
-			database.driver="${database.driver}"
-			database.system.url="${database.system.url}"
-			database.system.user="${database.system.user}"
-			database.system.password="${database.system.password}"
-			database.url="${database.url}"
-			database.user="${database.user}"
-			database.password="${database.password}"
-			database.name="${database.name}"
-			/>
-
+		<if>
+			<not>
+				<equals arg1="${database.type}" arg2="oracle"/>
+			</not>
+			<then>	
+				<database-create
+					database.driver="${database.driver}"
+					database.system.url="${database.system.url}"
+					database.system.user="${database.system.user}"
+					database.system.password="${database.system.password}"
+					database.url="${database.url}"
+					database.user="${database.user}"
+					database.password="${database.password}"
+					database.name="${database.name}"
+					/>
+			</then>
+		</if>
 		<validate-database
 			database.driver="${database.driver}"
 			database.system.url="${database.system.url}"
@@ -215,11 +223,34 @@
 	
 	<target name="build:single-command-build" depends="init">		
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.build.target}" />
+			<arg value="${single-command.build.target}" />			
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
+			<redirector outputproperty="redirector.out">
+			</redirector>
 		</exec>
+		<echo message="START BUILD"/>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
 			<arg value="${single-command.build.target}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
+			<redirector outputproperty="redirector.out">
+			</redirector>
 		</exec>
+
+		<echo message="REDIRECTOR::::${redirector.out}"/>
+
+		<propertyregex property="task.list"
+		      input="${redirector.out}"
+		      regexp="(?s).*START FROM THE TASKLISTENER(.*)END FROM THE TASKLISTENER.*$"
+		      select="\1"/>
+
+		<echo message="TASK LIST::::${task.list}"/>
+
 	</target>
 
 	<target name="clean-deployments">		
@@ -230,10 +261,10 @@
 
 	<target name="build:single-command-deployment" depends="init">
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.package.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.package.target}" />
 		</exec>
 
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
@@ -248,7 +279,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
@@ -262,7 +293,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 
 	</target>
@@ -277,15 +308,27 @@
 	</target>
 
 
-	<target name="build:template-properties" depends="init">				
+	<target name="build:template-properties" depends="init">
+
+		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
+			<arg value="${single-command.package.target}" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
+			<arg value="${single-command.package.target}" />
+		</exec>
+
+		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="properties.template.file"/>
+		<echo message="${properties.template.file}"/>
+
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkTemplateFiles"/>
+
 	</target>
 
 
 	<target name="build:private-repository-properties" depends="init">
 
 		<svn username="${svn.username}" password="${svn.password}">
-			<checkout url="${svn.private.url}" revision="HEAD" destPath="${svn.private.local.checkout}" />
+			<checkout url="${svn.private.url}" revision="HEAD" destPath="${local.private.checkout}" />
 		</svn>
 				
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkPrivateRepositoryProperties"/>
@@ -348,10 +391,10 @@
 
 	<target name="build:check-commandline-installer" depends="init">				
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="dist" />
+			<arg value="${single-command.distribution.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="dist" />
+			<arg value="${single-command.distribution.target}" />
 		</exec>
 		
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkCommandLineInstaller"/>
@@ -363,11 +406,11 @@
 
 		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
 			<arg value="-Dforce.reinstall=true" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">			
 			<arg value="-Dforce.reinstall=true" />
-			<arg value="install" />
+			<arg value="${single-command.deployment.target}" />
 		</exec>
 
 	</target>
