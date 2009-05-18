@@ -33,6 +33,7 @@ certification-monitor/build/lookup.properties -text
 certification-monitor/build/project.properties -text
 certification-monitor/dev-install.properties -text
 certification-monitor/install.properties -text
+certification-monitor/lib/ant-contrib.jar -text
 certification-monitor/lib/ant-jsch.jar -text
 certification-monitor/lib/ant-launcher.jar -text
 certification-monitor/lib/ant-nodeps.jar -text
