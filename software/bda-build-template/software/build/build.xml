@@ -65,8 +65,7 @@ $HeadURL$
 
 	<!-- Ivy Related props -->
 	<property name="ivy.settings.file" value="ivy-settings.xml" />
-	<property name="ivy.file" value="ivy-2.0.0-beta2.jar" />
-	<property name="ivy-cacore.file" value="ivy-cacore-2.0.0-beta2.jar" />
+	<property name="ivy.jar.file" value="ivy-2.0.0.jar" />
 
 	<!-- Properties that relate to how to call build targets from sub-projects-->
 	<!-- Working directory passed to Ant tasks -->
@@ -141,9 +140,9 @@ $HeadURL$
 	<property name="bda-blueprints-webapp.src.dir" value="${bda-blueprints-webapp.base.dir}/src/web"/>
 
 
-	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<!-- retrive ivy.jar.files then retrieve bda files and librarires -->
 	<property name="commonlibrary.dir" value="" />
-	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
 	<mkdir dir="${bda-download.dir}" />
 	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
 	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
@@ -153,6 +152,7 @@ $HeadURL$
 		<property name="lib.dir" location="${lib.dir}" />
 		<property name="software.dir" location="${software.dir}" />
 		<property name="commonlibrary.dir" location="${commonlibrary.dir}" />
+		<property name="target.dir" location="${target.dir}"/>
 	</ant>
 	
 	<!-- Paths -->
@@ -163,8 +163,7 @@ $HeadURL$
 	</path>
 	<path id="ivy.classpath">
 		<fileset dir="${lib.dir}">
-			<include name="${ivy.file}" />
-			<include name="${ivy-core.file}" />
+			<include name="${ivy.jar.file}" />
 		</fileset>
 	</path>
 
@@ -259,7 +258,7 @@ $HeadURL$
 	<target name="ivy:clean" description="Cleans up the ivy cache of this project and all sub-projects">
 		<ivy:settings file="${ivy.settings.dir}/${ivy.settings.file}" />
 		<ivy:cleancache />
-		<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-build.xml" target="ivy-cleancache" dir="${bda-download.dir}">
+		<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-2.0.0-build.xml" target="ivy-cleancache" dir="${bda-download.dir}">
 			<property name="bda-utils.dir" value="${bda-utils.dir}" />
 			<property name="lib.dir" value="${lib.dir}" />
 			<property name="software.dir" value="${software.dir}" />

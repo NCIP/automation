@@ -31,28 +31,42 @@
 
     
     <!-- Ivy -->
-    <property name="ivy.jar" location="${software.dir}/target/lib/ivy-2.0.0-beta2.jar" />
-    <property name="ivy-cacore.file" value="${software.dir}/target/lib/ivy-cacore-2.0.0-beta2.jar"/>
+    <property name="ivy.jar" location="${software.dir}/target/lib/ivy-2.0.0.jar" />
     <property name="ivy.settings.file" location="${common.dir}/ivy/ivy-settings.xml" />
     <!--<property name="ivy.def.file" location="ivy-sub-project.xml" />-->
     <property name="ivy.static.def.file" location="${common.dir}/ivy/ivy-test.xml" />
 
     <property name="local.repo.dir" location="${software.dir}/local-ivy-repo" />
     <property name="bda-utils.dir" location="${software.dir}/target/bda-utils" />
+    <property name="bda-download.dir" location="${software.dir}/target/bda-download" />
 
     <property name="bda-blueprints-webapp.java.dir" value="${build.dir}/src" />
     <property name="bda-blueprints-webapp.java.src.dir" value="${build.dir}/src" />
     <property name="bda-blueprints-webapp.classes.dir" value="${build.dir}/target/classes" />
 
 
-    <mkdir dir="${lib.dir}" />
-    <ant inheritAll="false" inheritRefs="false" dir="${software.dir}/common/bda-download"
-	    antfile="bda-ivy-build.xml" target="retrieve-bda">
-        <property name="bda-utils.dir" location="${bda-utils.dir}" />
-        <property name="lib.dir" location="${lib.dir}" />
-        <property name="software.dir" location="${software.dir}" />
-	<property name="bda.local.repo.dir" location="${software.dir}/../../bda-local-ivy-repo" />
-    </ant>
+    <!-- Get the three BDA files needed to set the Ivy environment up -->
+    <!--<get src="${build.bda.src.url}" dest="${bda-download.dir}/bda-ivy-build.xml" />
+    <get src="${ivy.bda.settings.src.url}" dest="${bda-download.dir}/ivy-bda-settings.xml" />
+    <get src="${ivy.bda.src.url}" dest="${bda-download.dir}/ivy-bda.xml" />
+    -->     
+
+    <!-- Run the DBA build script to get the remaining Ivy dependencies needed for BDA --> 
+    <mkdir dir="${bda-download.dir}" />
+    <property name="commonlibrary.dir" value="" />
+    <echo message="commonlibrary.dir = ${commonlibrary.dir}"/>
+    <property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
+    <property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+    <get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+
+    <ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
+	    <property name="bda.version" value="${bda.version}" />
+	    <property name="bda-utils.dir" location="${bda-utils.dir}" />
+	    <property name="lib.dir" location="${lib.dir}" />
+	    <property name="software.dir" location="${software.dir}" />
+	    <property name="commonlibrary.dir" location="${commonlibrary.dir}" />
+	    <property name="target.dir" location="${target.dir}"/>
+    </ant>  
 
     <import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
@@ -204,6 +218,7 @@
 	</target>
 
 	<!-- This is a wrapper target for all static analysis targets -->
+	<!--
 	<target name="static-analysis" description="Performs static analysis"
 		depends="
 		static-analysis:ivy-init,
@@ -217,8 +232,22 @@
 		static-analysis:diff:pmd,
 		static-analysis:diff:checkstyle
 		">
+		-->
+	<target name="static-analysis" description="Performs static analysis"
+		depends="
+		static-analysis:ivy-init,
+		static-analysis:init,
+		static-analysis:findbugs-init,
+		static-analysis:simian,
+		static-analysis:pmd,
+		static-analysis:checkstyle,
+		static-analysis:javancss,
+		static-analysis:findbugs
+		">
+		<!--
         	<fail if="checkstyle.failure" message="There were Checkstyle failures." />
         	<fail if="pmd.failure" message="There were PMD failures." />
+		-->
 	</target>
 
 	<!-- Creates paths and  directories -->
@@ -401,7 +430,7 @@
 				classname="net.sourceforge.pmd.ant.PMDTask"
 				classpathref="project.test.pmd.classpath"/>
 				
-			<diffrevision old.revision.number="${pmd.revision.number}" differential.file.name="@{differential.file.name}" />	
+			<diffrevision old.revision.number="${pmd.revision.number}" differential.file.name="@{differential.file.name}" />
 			<pmd 
 				rulesetfiles="@{pmd.rule-set.file}"
 				shortFilenames="true" 
@@ -472,7 +501,8 @@
 		<attribute name="javancss.xml.name" default="javancss.xml"/>
 		<attribute name="javancss.html.name" default="javancss.html"/>
 		<sequential>
-			<taskdef name="javancss" classpathref="project.test.javancss.classpath" classname="javancss.JavancssAntTask" />
+			<!--<taskdef name="javancss" classpathref="project.test.javancss.classpath" classname="javancss.JavancssAntTask" />-->
+			<taskdef name="javancss" classpathref="project.test.javancss.classpath" classname="org.apache.tools.ant.taskdefs.optional.javancss.JavancssTask" />
 			<javancss
 				srcdir="@{javancss.src.dir}"
 				includes="**/*.java"
