@@ -32,7 +32,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ant.mi
 insert into dashboard_properties (dashboard_key, dashboard_value) values('java.major.version','1.5');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('java.minor.version','1.5.0_10');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bda.version','1.0.0');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ci.server.name','http://cbvapp-c1007.nci.nih.gov:48080/hudson/job');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ci.server.name','http://cbvapp-c1006.nci.nih.gov:48080/hudson/job');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.username','narram');
