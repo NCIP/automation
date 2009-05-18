@@ -121,6 +121,7 @@
 		<copy file="${build.dir}/build.xml" todir="${deploy.dir}/build" />
 		<copy file="${build.dir}/project.properties" todir="${deploy.dir}/build" />
 		<copy file="${build.dir}/CertificationUtils.groovy" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/lookup.properties" todir="${deploy.dir}/build" />
 		
 		<copy todir="${tests.dir}">
 			<fileset dir="${selenium.tests.src.dir}">
