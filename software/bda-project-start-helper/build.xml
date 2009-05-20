@@ -145,7 +145,12 @@
 		<groovy src="bdaProjectStartHelper.groovy" classpathref="bda-utils.classpath"/>
 	</target>
 	<target name="finalize">
-		<copy file="${project.resource.jboss.dir}/bda-blueprints-ds.xml" tofile="${project.resource.jboss.dir}/${project.prefix}-ds.xml"/>
+		<if>
+			<equals arg1="${use.jboss}" arg2="true"/>
+			<then>
+				<copy file="${project.resource.jboss.dir}/bda-blueprints-ds.xml" tofile="${project.resource.jboss.dir}/${project.prefix}-ds.xml"/>
+			</then>
+		</if>
 	</target>
 	<target name="run"
 		depends="
