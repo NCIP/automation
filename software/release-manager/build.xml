@@ -21,6 +21,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
 
 	<property name="bda.utils.filename" value="bda-build-utils" />
+	<property name="bda.templates.filename" value="bda-build-templates" />
+	
 	<property name="automation.resource.dir" value="resource" />
 
 
@@ -61,9 +63,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<import file="${bda-utils.dir}/${bda.utils.filename}-${bda.version}.xml" />
 	
 
-	<!-- Taskdefs -->
-	<taskdef name="svn" classpathref="bda-utils.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
-	<taskdef name="xmlconfig" classpathref="bda-utils.classpath" classname="com.xmlconfig.anttask.XmlConfig"  />
 
 	<!-- Targets -->
 	<target name="release:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles,release:mail-teams">
@@ -78,11 +77,20 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</svn>
 	</target>
 
-	<target name="svn:automation:checkout" depends="svn-scorch,svn:ivy:checkout">	
+	<target name="svn:automation:checkout" depends="svn:automation-utils:checkout,svn:automation-templates:checkout">	
+	</target>
+
+
+	<target name="svn:automation-utils:checkout" depends="svn-scorch,svn:ivy:checkout">	
 		<svn username="${svn.username}" password="${svn.password}">
-			<checkout url="${svn.automation.url}/${svn.automation.project}" revision="${default.automation.revision}" destPath="${svn.automation.checkout}" />
+			<checkout url="${svn.automation.url}/${svn.automation.project}" revision="${default.automation.revision}" destPath="${svn.automation-utils.checkout}" />
 		</svn>	
 	</target>
+	<target name="svn:automation-templates:checkout" depends="svn-scorch,svn:ivy:checkout">	
+		<svn username="${svn.username}" password="${svn.password}">
+			<checkout url="${svn.automation.url}/${svn.templates.project}" revision="${default.automation.revision}" destPath="${svn.automation-templates.checkout}" />
+		</svn>	
+	</target>	
 	<target name="svn:ivy:checkout" depends="svn-scorch">	
 		<svn username="${svn.username}" password="${svn.password}">
 			<checkout url="${svn.automation.url}/${svn.ivy.project}" revision="${default.automation.revision}" destPath="${svn.ivy.checkout}" />
@@ -109,48 +117,66 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.xml"/>
 		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.zip"/>
+		<move file="${svn.local.checkout}/${release.version}/${bda.templates.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.templates.filename}-${release.version}.zip"/>
 
-		<xmlconfig in="${svn.local.checkout}/${release.version}/ivy.xml" verbose="false">			
-			<update path="//ivy-module/info/@revision" value="${release.version}" />			
-		</xmlconfig>
+		<xmltask source="${svn.local.checkout}/${release.version}/ivy.xml" dest="${svn.local.checkout}/${release.version}/ivy.xml">			
+			<replace path="//ivy-module/info/@revision" withtext="${release.version}" />			
+		</xmltask>
 
 		
 		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml"/>
 		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip"/>
+		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${next.beta.release.version}.zip"/>
 		
-		<xmlconfig in="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" verbose="false">
-			<update path="//ivy-module/info/@revision" value="${next.beta.release.version}" />
-		</xmlconfig>
+		<xmltask source="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" dest="${svn.local.checkout}/${next.beta.release.version}/ivy.xml">
+			<replace path="//ivy-module/info/@revision" withtext="${next.beta.release.version}" />
+		</xmltask>
+		
 		<!--
 		<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
 	-->				
 	</target>
 
 	<target name="release-manager:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
-		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml"/>
-		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" overwrite="true"/>
+		<echo message="cp ${svn.automation-utils.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml"/>
+		<copy file="${svn.automation-utils.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" overwrite="true"/>
 		
 
 		<delete file="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip"/>
 		<zip destfile="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip">
-			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
+			<zipfileset dir="${svn.automation-utils.checkout}/${automation.resource.dir}" prefix="resource" />
 		</zip>
 
-		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/ivy.xml" overwrite="true"/>
+		<copy file="${svn.automation-utils.checkout}/ivy.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/ivy.xml" overwrite="true"/>
+		
+		<replaceregexp match="^(.*bda-build-template version.*)([0-9].[0-9].[0-9])(.*)" replace="\1${release.version} \3" flags="g" byline="true">
+			<fileset dir="${svn.automation-templates.checkout}/software/build" includes="**/*.xml"/>
+		</replaceregexp>
+
+		<zip destfile="${svn.local.checkout}/${current.beta.release.version}/${bda.templates.filename}-${current.beta.release.version}.zip">
+			<zipfileset dir="${svn.automation-templates.checkout}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${svn.automation-templates.checkout}/software/common" excludes="**/.svn/*" prefix="common"/>
+		</zip>
 
 	</target>
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
-		<echo message="cp ${svn.automation.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml"/>
-		<copy file="${svn.automation.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml" overwrite="true"/>
+		<echo message="cp ${svn.automation-utils.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml"/>
+		<copy file="${svn.automation-utils.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml" overwrite="true"/>
 		
 
 		<delete file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip"/>
 		<zip destfile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip">
-			<zipfileset dir="${svn.automation.checkout}/${automation.resource.dir}" prefix="resource" />
+			<zipfileset dir="${svn.automation-utils.checkout}/${automation.resource.dir}" prefix="resource" />
 		</zip>
 
-		<copy file="${svn.automation.checkout}/ivy.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" overwrite="true"/>
+		<copy file="${svn.automation-utils.checkout}/ivy.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" overwrite="true"/>
+		
+
+		<zip destfile="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${next.beta.release.version}.zip">
+			<zipfileset dir="${svn.automation-templates.checkout}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${svn.automation-templates.checkout}/software/common" excludes="**/.svn/*" prefix="common"/>
+		</zip>
 	</target>
 
 
@@ -192,10 +218,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<zip destfile="${basedir}/working/bda-download.zip">
 			<zipfileset dir="${svn.ivy.checkout}" />
 		</zip>
-
+<!--
 		<svn username="${svn.username}" password="${svn.password}">			
 			<commit message="Latest BDA released revision " dir="${svn.ivy.checkout}"/>
 		</svn>	
+-->
 	</target>
 	
 	<target name="release:post-release">	
@@ -234,17 +261,5 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<!-- TODO: Need to check in local changes to SVN repository -->
 	</target>
 
-	<target name="svn:templates:checkout" depends="svn-scorch,svn:ivy:checkout">	
-		<svn username="${svn.username}" password="${svn.password}">
-			<checkout url="${svn.automation.url}/${svn.templates.project}" revision="${default.automation.revision}" destPath="${svn.automation.checkout}/${svn.templates.project}" />
-		</svn>	
-	</target>
-	<target name="release:templates" depends="svn:checkout,svn:templates:checkout">
-		<delete file="${svn.local.checkout}/${release.version}}/bda-templates-${release.version}.zip"/>
-		<zip destfile="${svn.local.checkout}/${release.version}/bda-templates-${release.version}.zip" >
-			<zipfileset dir="${svn.automation.checkout}/${svn.templates.project}/software/build" prefix="build"/>
-			<zipfileset dir="${svn.automation.checkout}/${svn.templates.project}/software/common" prefix="common"/>
-		</zip>
-	</target>
 
 </project>
