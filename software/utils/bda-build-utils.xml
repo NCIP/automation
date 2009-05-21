@@ -19,15 +19,15 @@ $HeadURL$
 	<property name="tomcat.version.max" value="5.5.999"/>
 	<!-- conditionals -->
 	<condition property="os.temp.dir" value="/tmp">
-		<or>                    
-			<os family="unix" />            
-			<os family="mac" />             
-		</or>                   
-	</condition>    
+		<or>
+			<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
 
 	<condition property="os.temp.dir" value="c:/temp">
-		<os family="windows" /> 
-	</condition>    
+		<os family="windows" />
+	</condition>
 
 	<mkdir dir="${os.temp.dir}"/>
 	<!-- PATHS -->
@@ -43,7 +43,6 @@ $HeadURL$
 	<taskdef name="svn" classpathref="macrodef.classpath" classname="org.tigris.subversion.svnant.SvnTask" />
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="macrodef.classpath"/>
 	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml" classpathref="macrodef.classpath"/>
-	<taskdef name="elopeif" classname="ise.antelope.tasks.IfTask" classpathref="macrodef.classpath"/>
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="macrodef.classpath"/>
 	<taskdef name="propertyvalidator" classname="gov.nih.nci.bda.PropertyValidator" classpathref="macrodef.classpath"/>
 	<taskdef resource="liquibasetasks.properties" classpathref="macrodef.classpath"/>
@@ -180,12 +179,12 @@ $HeadURL$
 		<dtd
 			publicId="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 			location="${bda-utils.resource.dir}/other-dtds/hibernate-configuration-3.0.dtd"
-			/>    
+			/>
 
 		<dtd
 			publicId="-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 			location="${bda-utils.resource.dir}/other-dtds/hibernate-mapping-3.0.dtd"
-			/>    
+			/>
 
 	</xmlcatalog>
 
@@ -411,11 +410,13 @@ $HeadURL$
 
 					<exec executable="sh" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
+						<env key="JBOSS_HOME" value=""/> 
 						<arg line="run.sh -c @{jboss.server.name}" />
 					</exec>
 
 					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
+						<env key="JBOSS_HOME" value=""/> 
 						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat -c @{jboss.server.name}" />
 					</exec>
 					<sleep seconds="15" />
@@ -584,6 +585,10 @@ $HeadURL$
 			<validate-appserver-versions
 				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
 				tomcat.binaries.relative.dir="@{tomcat.binaries.relative.dir}"
+				/>
+			<validate-env-name
+				/>
+			<validate-jboss-home
 				/>
 		</sequential>
 	</macrodef>
@@ -1528,11 +1533,17 @@ $HeadURL$
 			<echo message="Starting Tomcat instance at @{tomcat.home}" />
 			<exec executable="sh" osfamily="unix" dir="@{tomcat.home}/bin" spawn="true">
 				<env key="NOPAUSE" value="true" />
+				<env key="CATALINA_BASE" value=""/> 
+				<env key="CATALINA_HOME" value=""/> 
+				<env key="CATALINA_TMPDIR" value=""/> 
 				<arg line="startup.sh" />
 			</exec>
 			<echo message="executing ${bda-utils.dir}/resource/psexec.exe"/>
 			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
+				<env key="CATALINA_BASE" value=""/> 
+				<env key="CATALINA_HOME" value=""/> 
+				<env key="CATALINA_TMPDIR" value=""/> 
 				<arg line="-d -i -w @{tomcat.home}/bin @{tomcat.home}/bin/startup.bat" />
 			</exec>
 			<sleep seconds="5" />
@@ -1939,9 +1950,10 @@ $HeadURL$
 		<attribute name="wscore.download.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
 		<attribute name="wscore.relative.dir" default="ws-core-4.0.3"/>
 		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="download.dir" default="${download.dir}"/>
 		<sequential>
 			<basename property="wscore.file.name" file="@{wscore.download.url}"/>
-			<var name="wscore.dest.file" value="${temp.dir}/${wscore.file.name}"/>
+			<var name="wscore.dest.file" value="@{download.dir}/${wscore.file.name}"/>
 			<echo message="Checking for existence of GLOBUS_LOCATION envrironment variable."/>
 			<echo message="wscore.relative.dir = @{wscore.relative.dir}"/>
 			<mkdir dir="${temp.dir}"/>
@@ -1970,12 +1982,22 @@ $HeadURL$
 									<fail message="Failed to download wscore file sucessfully."/>
 								</else>
 							</if>
-							<unzip dest="@{application.base.path}" src="${wscore.dest.file}"/>
-							<var name="env.GLOBUS_LOCATION" value="@{application.base.path}/@{wscore.relative.dir}"/>
-							<echo message="Completed install of wscore files into @{application.base.path}/@{wscore.relative.dir} "/>
-
 						</then>
 					</if>
+					<var name="env.GLOBUS_LOCATION" value="@{application.base.path}/@{wscore.relative.dir}"/>
+					<if>
+						<not>
+							<available file="${env.GLOBUS_LOCATION}"/>
+						</not>
+						<then>
+							<unzip dest="@{application.base.path}" src="${wscore.dest.file}"/>
+							<echo message="Completed install of wscore files into ${env.GLOBUS_LOCATION} "/>
+						</then>
+						<else>
+							<echo message="${env.GLOBUS_LOCATION} already exists."/>
+						</else>
+					</if>
+
 					<!-- no longer needed
 					<osfamily property="os.family"/>
 					<echo message="os.family=${os.family}"/>
@@ -2045,7 +2067,7 @@ $HeadURL$
 	-->
 	<macrodef name="generate-erd">
 		<attribute name="report.dir" default="${target.dir}/reports/schema-spy" />
-		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.5.jar" />
+		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.8.jar" />
 		<attribute name="schemaspy.jar" default="schemaspy_3.1.1.jar" />
 		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.port" default="${database.port}" />
@@ -3389,10 +3411,10 @@ $HeadURL$
 		<attribute name="target.dir" default="${target.dir}"/>
 		<attribute name="download.dir" default="${download.dir}" />
 		<attribute name="dist.dir" default="${dist.dir}"/>
-		<attribute name="izpack.binary.name" default="izpack-4.0.1" />
-		<attribute name="izpack.binary.file" default="izpack-4.0.1.zip" />
+		<attribute name="izpack.binary.name" default="izpack-4.3" />
+		<attribute name="izpack.binary.file" default="izpack-4.3.zip" />
 		<attribute name="izpack.binary.uri" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2008/os-independent" />
-		<attribute name="izpack-custom.svn.url" default="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-installer/src-custom"/>
+		<attribute name="izpack-custom.svn.url" default="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-installer/src-custom-4.3"/>
 		<attribute name="izpack-custom.svn.dir" default="${target.dir}/izpack-custom"/>
 		<attribute name="product.name" default="caArray-installer" />
 		<attribute name="product.version" default="2.1.0" />
@@ -3717,12 +3739,12 @@ $HeadURL$
 					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
 					<unzip dest="${jboss.home}" src="@{jbosscp.binaries.file}" />
 					<!-- Copy of patched configuration files -->
-					<copy file="${jboss.home}/config-patches/jboss-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/> 
-					<copy file="${jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jmxinvoker-service.xml"/> 
-					<copy file="${jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/> 
-					<copy file="${jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/> 
-					<copy file="${jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/> 
-					<copy file="${jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/> 
+					<copy file="${jboss.home}/config-patches/jboss-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
+					<copy file="${jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jmxinvoker-service.xml"/>
+					<copy file="${jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
+					<copy file="${jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
+					<copy file="${jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
+					<copy file="${jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/>
 				</then>
 			</if>
 
@@ -4732,7 +4754,7 @@ $HeadURL$
 					<echo message="Updating Tomcat Ports"/>
 					<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
-						<replace path="(//Connector)[not(@Protocol)]/@port" withtext="@{tomcat.port.http}" />
+						<replace path="(//Connector)[1]/@port" withtext="@{tomcat.port.http}" />
 						<replace path="(//Connector)/@redirectPort" withtext="@{tomcat.port.ssl}" />
 						<replace path="(//Connector)[@protocol='AJP/1.3']/@port" withtext="@{tomcat.port.ajp}" />
 						<replace path="(//Server)/@port" withtext="@{tomcat.port.shutdown}" />
@@ -4807,7 +4829,7 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
-		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/server/${jboss.server.name}/conf/bindings.xml"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.home}/bindings/bindings.xml"/>
 		<attribute name="jboss.server.binding.template.location" default="${jboss.server.binding.template.location}"/>
 		<!-- jboss-login-config -->
 		<attribute name="authentication.type" default="${authentication.type}"/>
@@ -6613,7 +6635,7 @@ $HeadURL$
 							<include name="*"/>
 						</fileset>
 					</copy>
-		
+
 					<chmod dir="@{jboss.home}/server/@{jboss.server.name}/bin" perm="ug+x" includes="*"/>
 					<jboss-configure-java_opts
 						jboss.bin.dir="@{jboss.home}/bin"
@@ -6629,7 +6651,7 @@ $HeadURL$
 								<xmlcatalog refid="bda.xml.catalog"/>
 								<copy path="/server/mbean[@code='org.jboss.tm.XidFactory']/attribute[@name='Pad']/text()" property="read.pad"/>
 							</xmltask>
-							
+
 							<var name="pad.is.set" unset="true"/>
 							<propertyregex property="pad.is.set"
 								input="${read.pad}"
@@ -6689,4 +6711,125 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
+	<macrodef name="read-property-from-properties-service">
+		<attribute name="properties-service-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml"/>
+		<attribute name="property.name"/>
+		<sequential>
+			<var name="prop-service.prop.list" value="@{property.name}"/>
+			<var name="@{property.name}.read" unset="true"/>
+			<xmltask source="@{properties-service-xml.file}">
+				<!-- no xmlcatalog necessary -->
+				<!-- trim + starts-with would be better than contains, but requires xpath 2 -->
+				<copy path="//attribute[@name='Properties']/text()[contains(.,'@{property.name}=')]"
+					property="@{property.name}.read"/>
+			</xmltask>
+			<if>
+				<and>
+					<not>
+						<isset property="@{property.name}"/>
+					</not>
+					<isset property="@{property.name}.read"/>
+				</and>
+				<then>
+					<groovy>
+						def tempProperty = properties["@{property.name}.read"]
+						tempProperty.eachLine
+						{ line ->
+						if(line.contains("@{property.name}="))
+						{
+						def equalIndex = line.indexOf('=');
+						if(equalIndex==-1) {
+						println "Warning: malformed property @{property.name} has no equal";
+						}
+						else {
+						properties["@{property.name}"] = line.substring(equalIndex+1).trim();
+						}
+						}
+						}
+					</groovy>
+				</then>
+			</if>
+			<property name="@{property.name}" value=""/>
+			<properties-print
+				properties.list="${prop-service.prop.list}"
+				/>
+			<var name="read.properties.list" value="${read.properties.list},${prop-service.prop.list}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="validate-env-name">
+		<sequential>
+			<switch value="${env.name}">
+				<case value="local">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="dev">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="qa">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="stage">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="prod">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="train">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="data-refresh">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="data-validation">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="external">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="custom">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<case value="infrastructure">
+					<echo message="Environment name validated as ${env.name}"/>
+				</case>
+				<default>
+					<fail message="Please make sure to set the env.name property in your ${properties.file}.  Also please set it to one of the values below that best describes your target environment.  If you are not sure what to set this to send an email to ncicbiitbda@mail.nih.gov.${line.separator}
+						local - workstation or ci ${line.separator}
+						dev - dev tier at nci ${line.separator}
+						qa - qa tier at nci ${line.separator}
+						stage - stage tier at nci ${line.separator}
+						prod - prod tier at nci ${line.separator}
+						train - training tier at nci ${line.separator}
+						data-refresh - a data refresh tier at nci ${line.separator}
+						data-validation - a data validation tier at nci ${line.separator}
+						external - an install at a site other than nci  ${line.separator}
+						infrastructure - a infrastructure tier, shared service used by other projects in pre-produciton environments (like UPT) ${line.separator}
+						"/>
+				</default>
+			</switch>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-jboss-home">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
+		<sequential>
+			<var name="jboss.home.good" unset="true"/>
+			<propertyregex property="jboss.home.good"
+				input="@{jboss.home}"
+				regexp="\S+@{jboss.binaries.relative.dir}$"
+				select="true"
+				/>
+			<if>
+				<isset property="jboss.home.good"/>
+				<then>
+					<echo message="Validated jboss.home '${jboss.home}' ends in jboss.binaries.relative.dir '@{jboss.binaries.relative.dir}'"/>
+				</then>
+				<else>
+					<fail message="Error- jboss.home '${jboss.home}' must end with jboss.binaries.relative.dir '@{jboss.binaries.relative.dir}'"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 </project>
