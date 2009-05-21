@@ -168,7 +168,6 @@ $HeadURL$
 	</path>
 
 	<!-- Task definitions -->
-	<taskdef name="xmlconfig" classname="com.xmlconfig.anttask.XmlConfig" classpathref="bda-utils.classpath" />
 	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath" />
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda-utils.classpath"/>
 
@@ -323,13 +322,15 @@ $HeadURL$
 			</fileset>
 		</delete>
 		<gui-installer-prep
+			product.name="${bda-blueprints-webapp.install.name}"
+			product.version="${bda-blueprints-webapp.version}"
 			/>
 		<ant inheritAll="false" inheritRefs="false" 
 			antfile="install.xml"
 			target="build:installer"
 			dir="${build.dir}/gui-installer"
 			>
-			<property name="compile.jar.dir" value="${target.dir}/izpack-4.0.1"/>
+			<property name="compile.jar.dir" value="${target.dir}/izpack-4.3"/>
 		</ant>
 	</target>
 
@@ -923,19 +924,19 @@ $HeadURL$
 		<switch value="${database.type}">
 			<case value="oracle">
 				<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.4.0.jar"/>
 				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
 				<property name="database.schema" value="${database.name}"/>
 			</case>
 			<case value="mysql">
 				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.5.jar"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.8.jar"/>
 				<property name="database.driver" value="com.mysql.jdbc.Driver"/>
 				<property name="database.schema" value="${database.name}"/>
 			</case>
 			<case value="postgresql">
 				<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-604.jar"/>
 				<property name="database.driver" value="org.postgresql.Driver"/>
 				<property name="database.schema" value="public"/>
 			</case>
@@ -1008,131 +1009,4 @@ $HeadURL$
 			/>                      
 	</target>
 
-	<target name="temp-deploy-files">
-		<property name="rem.dir" value="/tmp/ssaksa-junk"/>
-		<property name="ssh.key.file" value="/data/home/ssaksa/.ssh/id_dsa_bda"/>
-		<deploy-files
-			ssh.user="ssaksa"
-			ssh.host="localhost"
-			remote.directory.property.name="rem.dir"
-			properties.file="install.properties"
-			dist.dir="/data/home/ssaksa"
-			dist.file="jboss-4.0.5.GA_CP03.zip"
-			/>
-	</target>
-	<target name="temp-co">
-		<property name="test-co.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download"/>
-		<property name="test-co.dir" value="${temp.dir}/junk"/>
-		<mkdir dir="${temp.dir}"/>
-		<svn-co
-			svn.checkout.url="${test-co.url}"         
-			svn.checkout.dir="${test-co.dir}"
-			delete="true"                                  
-			/>                    
-	</target>
-
-	<target name="temp-all-readers">
-		<var name="read.properties.list" value=""/>
-		<properties-exist
-			properties.list="jboss.home,tomcat.home,jboss.server.name"
-			/>
-		<jboss-read-dbconfig
-			jboss.ds-xml.file="bda-blueprints-ds.xml"
-			/>
-		<jboss-read-ldapconfig
-			/>
-		<jboss-read-bindings-file-location
-			/>
-		<jboss-read-ports
-			/>
-		<tomcat-read-ports
-			/>
-		<var name="jboss.ssl.keystore.dir" value="${working.dir}/keys/jboss"/>
-		<jboss-read-ssl
-			/>
-		<var name="tomcat.ssl.keystore.dir" value="${working.dir}/keys/tomcat"/>
-		<tomcat-read-ssl
-			/>
-		<jboss-copy-bindings
-			copied.jboss.server.bindingfile.dir="${working.dir}/copied-bindings"
-			copied.jboss.bindings.file.property.name="copied.jboss.bindings.file"
-			/>
-		<var name="jboss.server.binding.template.location" value="${working.dir}/copied-bindings/${copied.jboss.bindings.file}"/>
-		<jboss-read-external-hostname
-			/>
-		<tomcat-read-external-hostname
-			/>
-		<jboss-read-java_opts
-			/>
-		<jboss-read-java_opts
-			jboss.bin.dir="${jboss.home}/server/${jboss.server.name}/bin"
-			/>
-		<jboss-copy-log4j
-			/>
-		<grid-read-index-url
-			/>
-		<grid-read-index-url
-			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
-			/>
-		<jboss-read-grid-secure
-			/>
-		<tomcat-read-grid-secure
-			/>
-		<property name="copied.service-metadata.dir" value="${working.dir}/grid"/>
-		<grid-copy-service-metadata
-			copied.service-metadata.dir="${copied.service-metadata.dir}"
-			/>
-		<property name="copied.service-metadata.dir1" value="${working.dir}/grid1"/>
-		<grid-copy-service-metadata
-			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
-			copied.service-metadata.dir="${copied.service-metadata.dir1}"
-			/>
-		<echo message="All Read Properties"/>
-		<properties-print
-			properties.list="${read.properties.list}"
-			/>
-	</target>
-	<target name="temp-reader">
-		<!--
-		<grid-read-poc
-			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
-			grid.service.name="Sample"
-			/>
-		<jboss-read-bindings-file-location
-			/>
-		<jboss-read-ports
-			/>
-		-->
-		<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
-		<jboss-read-grid-secure
-			copied.keystore.dir="${jboss.ssl.keystore.dir}"
-			/>
-
-		<!--
-		<var name="tomcat.grid.secure.dir" value="${working.dir}/keys/tomcat"/>
-		<tomcat-read-grid-secure
-			copied.keystore.dir="${tomcat.ssl.keystore.dir}"
-			/>
-		-->
-
-	</target>
-	<target name="temp-properties-service">
-		<var name="property.block" value="property1=${authentication.type}${line.separator}
-			property2=${env.name}${line.separator}
-			property3=${jboss.home}${line.separator}
-			property4=${tomcat.home}${line.separator}
-			"/>
-		<jboss-update-properties-service
-			property.block="${property.block}"
-			/>
-	</target>
-	<target name="temp-read-bindings-loc">
-		<jboss-read-bindings-file-location
-			/>
-	</target>
-	<target name="temp-nci">
-		<jboss-nci-customizations
-			database.type="oracle"
-			/>
-	</target>
 </project>
