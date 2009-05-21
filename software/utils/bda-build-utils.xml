@@ -5407,7 +5407,7 @@ $HeadURL$
 		<attribute name="property.block"/>
 		<sequential>
 			<var name="properties-service.file" value="@{jboss.home}/server/@{jboss.server.name}/deploy/properties-service.xml"/>
-			<var name="property.block.file" value="${working.dir}/property.block.txt"/>
+			<var name="property.block.file" value="${os.temp.dir}/property.block.txt"/>
 			<echo message="Creating ${property.block.file}"/>
 			<echo message="property block is @{property.block}"/>
 			<echo file="${property.block.file}" message="@{property.block}"/>
@@ -6091,7 +6091,7 @@ $HeadURL$
 						srcFile="@{jboss.bin.dir}/run.bat">
 						<filterchain>
 							<linecontainsregexp>
-								<regexp pattern="^\s*set JAVA_OPTS= -Dprogram.name"/>
+								<regexp pattern="^\s*set JAVA_OPTS= -Dbda=bda -Dprogram.name"/>
 							</linecontainsregexp>
 						</filterchain>
 					</loadfile>
