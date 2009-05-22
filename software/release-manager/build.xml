@@ -233,6 +233,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<delete file="${basedir}/${automation.ivy}/ivy-bda-settings.xml" />
 	</target>
 	
+	<target name="svn:delete-beta" >	
+		<svn username="${svn.username}" password="${svn.password}">			
+			<delete url="${svn.project.url}/${svn.delete-beta.version}" message="Delete the beta revision " />
+		</svn>
+	</target>
 
 	<target name="release:mail-teams">	
 		<mail mailhost="${mail.server.host}" mailport="${mail.server.port}"  tolist="${tolist}" subject="BDA ${release.version} released">
