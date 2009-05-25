@@ -1,8 +1,6 @@
 package gov.nih.nci.bda.certification.listener;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
 
 import gov.nih.nci.bda.certification.BuildCertificationHelper;
 import gov.nih.nci.bda.certification.CertificationManager;
