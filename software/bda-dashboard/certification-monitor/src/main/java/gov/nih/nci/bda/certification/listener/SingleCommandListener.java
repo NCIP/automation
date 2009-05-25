@@ -48,9 +48,14 @@ public class SingleCommandListener implements BuildListener {
 		BuildCertificationBean bmb = new BuildCertificationBean();
 		String projectName = event.getProject().getProperty("project.name");
 		String urlProperty = projectName + ".svn.project.url";
+		certLogger.info(" urlProperty " + urlProperty);
 		String projectUrl = event.getProject().getProperty(urlProperty);
 		String macroList = event.getProject().getProperty( event.getTarget().getName() + ".macro.list");
 		
+		while (event.getProject().getProperties().elements().hasMoreElements())
+		{
+			certLogger.info(" Key value :" + event.getProject().getProperties().elements().nextElement());
+		}
 		certLogger.info(" Populating  projectName :" + projectName);
 		certLogger.info(" Populating ProjectUrl " + projectUrl);
 		certLogger.info(" macroList " + macroList);
