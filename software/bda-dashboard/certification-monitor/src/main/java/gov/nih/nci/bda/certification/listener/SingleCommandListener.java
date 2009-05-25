@@ -1,6 +1,8 @@
 package gov.nih.nci.bda.certification.listener;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 import gov.nih.nci.bda.certification.BuildCertificationHelper;
 import gov.nih.nci.bda.certification.CertificationManager;
@@ -52,9 +54,15 @@ public class SingleCommandListener implements BuildListener {
 		String projectUrl = event.getProject().getProperty(urlProperty);
 		String macroList = event.getProject().getProperty( event.getTarget().getName() + ".macro.list");
 		
-		while (event.getProject().getProperties().elements().hasMoreElements())
-		{
-			certLogger.info(" Key value :" + event.getProject().getProperties().elements().nextElement());
+		Iterator<Object> it = event.getProject().getProperties().keySet().iterator();
+		while (it.hasNext()) {
+				String keyName = (String) it.next();
+				certLogger.info("Key: " + keyName );
+		}
+		Iterator<Object> ite = event.getProject().getProperties().values().iterator();
+		while (ite.hasNext()) {
+				String keyName = (String) ite.next();
+				certLogger.info("Key: " + keyName );
 		}
 		certLogger.info(" Populating  projectName :" + projectName);
 		certLogger.info(" Populating ProjectUrl " + projectUrl);
