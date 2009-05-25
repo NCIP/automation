@@ -171,7 +171,8 @@ public class BuildCertificationHelper {
 		    	pbs = new ProjectCertificationStatus();
 		    	invokeSetAllMethods(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
 		    	setProductValue(pbs,projectUrl);
-		    	session.save(pbs);		
+		    	session.save(pbs);
+		    	session.getTransaction().commit();
 		    }		    
 		}
 		else
@@ -193,7 +194,8 @@ public class BuildCertificationHelper {
 		    	pbs = new ProjectCertificationStatus();
 		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);		    	
 		    	setProductValue(pbs,projectUrl);
-		    	session.save(pbs);		    	
+		    	session.save(pbs);
+		    	session.getTransaction().commit();
 		    }
 		}
 		certLogger.info("Update the Project Certification Status");
