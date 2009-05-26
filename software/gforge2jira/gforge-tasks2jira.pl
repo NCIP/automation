@@ -12,17 +12,27 @@
 use Data::Dumper;
 use DBI;
 
-my $requestGroup=@ARGV[0];
+my $requestGroup, $dbServer, $dbPort, $dbUser,$dbPass="";
 my $groupName="";
 my %userHash;
 my %artifactHash;
 my @artifactIDList;
 my %queueHash;
 
-mkdir("target");
-#my $dbh = DBI->connect('dbi:Pg:host=192.168.1.116;database=gforgeprod', 'user', 'password') or die "Couldn't connect to database: " . DBI->errstr;
-my $dbh = DBI->connect('dbi:Pg:database=gforgeprod') or die "Couldn't connect to database: " . DBI->errstr;
+print "Verifying command line options\n";
+&verifyOptions();
 
+my $dbh;
+if (defined $dbServer)
+{
+	$dbh = DBI->connect("dbi:Pg:host=$dbServer;port=$dbPort;database=$dbName", "$dbUser", "$dbPass") or die "Couldn't connect to database: " . DBI->errstr;
+}
+else
+{
+	$dbh = DBI->connect("dbi:Pg:database=$dbName") or die "Couldn't connect to database: " . DBI->errstr;
+}
+
+mkdir("target");
 open (DUMP, ">target/gforge-tasks2jira.dmp") || die "Could not write dump.log\n";
 open (LOG, ">target/gforge-tasks2jira.log") || die "Could not write dump.log\n";
 
@@ -152,8 +162,21 @@ sub getArtifacts()
 		$artifactHash{$taskID}{"ModEpoch"}=$taskModEpoch; 
 		$artifactHash{$taskID}{"AssignedTo"}=$userHash{$taskAssignedTo}; 
 		$artifactHash{$taskID}{"DependsOn"}=$taskDependsOn; 
+		$artifactHash{$taskID}{"TaskHistory"}="";
+		$artifactHash{$taskID}{"TaskMessages"}="";
+		$artifactHash{$taskID}{"JiraIssueType"}="Task";
 		push @artifactIDList, $taskID;
 		$queueHash{$taskQueue}++;
+
+		$artifactHash{$taskID}{"CustomFields"}="";
+
+		$artifactHash{$taskID}{"CustomFields"}.="#####\nCategory\t:  $taskCategory\n######\n\n";
+		$artifactHash{$taskID}{"CustomFields"}.="#####\nDuration\t:  $taskDuration\n######\n\n";
+		$artifactHash{$taskID}{"CustomFields"}.="#####\nHours\t:  $taskHours\n######\n\n";
+		$artifactHash{$taskID}{"CustomFields"}.="#####\nPercentComplete\t:  $taskPercentComplete\n######\n\n";
+		
+		$artifactHash{$taskID}{"CustomFields"}.="#####\nParentId\t:  $taskParentId\n######\n\n";
+		$artifactHash{$taskID}{"CustomFields"}.="#####\nDependsOn\t:  $taskDependsOn\n######\n\n";
 	}
 	$sth->finish();
 }
@@ -212,6 +235,12 @@ sub getHistory()
 		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($modepoch);
 		my $modDate=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
 
+		if ($fieldName =~ /date/i)
+		{               
+			my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($oldValue);
+			$oldValue=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
+		}               
+
 		my $user=$userHash{$modBy};
 		$taskHistory= "${user} - ${modDate} - ${fieldName} old value '${oldValue}'\n";
 		$artifactHash{$id}{"TaskHistory"}.=$taskHistory;
@@ -236,7 +265,7 @@ sub getMessages()
 	while( my ($id, $postedBy, $postEpoch,$body) = $sth->fetchrow_array)
 	{
 		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($postEpoch);
-		my $postDate=sprintf("%02d/%02d/%02d %02d:%02d:%02d",$mon+1,$mday,$year-100,$hour,$min,$sec);
+		my $postDate=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
 
 		my $user=$userHash{$postedBy};
 		$taskMessages= "${user} - ${postDate}\n${body}\n\n";
@@ -252,14 +281,16 @@ sub generateCSVs()
 		mkdir("target");
 		my $fname="target/tasks-exp-${groupName}-${queue}.csv";
 		$fname=~s/\s+//g;
+		&createJiraCnf($queue);
 		open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
 		print OUTFILE "GforgeID, ";
 		my @fieldList=();
 		my $firstId=@artifactIDList[1];
 		foreach my $fieldName (sort keys %{$artifactHash{$firstId}})
 		{
-			print OUTFILE "$fieldName, ";
 			push (@fieldList,$fieldName);
+			$fieldName=~ s/epoch/Date/i;
+			print OUTFILE "$fieldName, ";
 		}
 		print OUTFILE "\n";
 		foreach my $id (@artifactIDList)
@@ -273,19 +304,19 @@ sub generateCSVs()
 				if ($fieldName =~ /epoch/i)
 				{
 					my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($fieldValue);
-					my $tmpDate=sprintf("%02d/%02d/%02d %02d:%02d:%02d",$mon+1,$mday,$year-100,$hour,$min,$sec);
+					my $tmpDate=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
 					$fieldValue=$tmpDate;
 				}
 				if ($fieldValue =~ /\"|\n|,/)
 				{
-					$fieldValue=~s/\"/\\\"/g;
+					$fieldValue=~s/\"/'/g;
 					#$fieldValue=~s/\'/\\\'/g;
 					$fieldValue=~s/\,//g;
-					$fieldValue=~s/\n|\r/\\n/g;
+					$fieldValue=~s/[\n\r]+/\r/g;
 					$fieldValue=~s/^/\"/;
 					$fieldValue=~s/$/\"/;
 				}
-				print OUTFILE "$fieldValue, ";
+				print OUTFILE "$fieldValue,";
 			}
 			print OUTFILE "\n";
 		}
@@ -293,3 +324,105 @@ sub generateCSVs()
 	}
 
 }
+sub createJiraCnf ($)
+{
+	my $queue=$_[0];
+	my $fname="target/tasks-exp-${groupName}-${queue}.cnf";
+	$fname=~s/\s+//g;
+	open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
+
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($fieldValue);
+	my $tmpDate=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
+
+	# project level details
+	print OUTFILE "# Written by gforge-tasks2jira.pl\n";
+	print OUTFILE "# $(tmpDate)\n";
+	print OUTFILE "delimiter = \\,\n";
+	print OUTFILE "existingprojectkey = NCIA\n"; 
+	print OUTFILE "importsingleproject = false\n"; 
+	print OUTFILE "importexistingproject = true\n"; 
+	print OUTFILE "mapfromcsv = false\n"; 
+	print OUTFILE "user.email.suffix = \@mail.nih.gov\n"; 
+
+	# fields
+	print OUTFILE "field.GforgeID = customfield_10001\n"; 
+	print OUTFILE "field.JiraIssueType = type\n"; 
+	print OUTFILE "field.EndDate = duedate\n"; 
+	print OUTFILE "field.Details = description\n"; 
+	print OUTFILE "field.Queue = components\n"; 
+	print OUTFILE "field.Status = status\n"; 
+	print OUTFILE "field.TaskMessages = comment\n"; 
+	print OUTFILE "field.TaskHistory = comment\n"; 
+	print OUTFILE "field.CustomFields = comment\n"; 
+	print OUTFILE "field.Summary = summary\n"; 
+	print OUTFILE "field.StartDate = updated\n"; 
+	print OUTFILE "field.ModDate = updated\n"; 
+	print OUTFILE "field.AssignedTo = assignee\n"; 
+	print OUTFILE "field.CreatedBy = reporter\n"; 
+	print OUTFILE "field.Priority = priority\n"; 
+
+	# mappings
+	print OUTFILE "value.JiraIssueType.Bug = 1\n"; 
+	print OUTFILE "value.JiraIssueType.Task = 3\n"; 
+	print OUTFILE "value.TrackerPriority.1 = 1\n"; 
+	print OUTFILE "value.TrackerPriority.2 = 2\n"; 
+	print OUTFILE "value.TrackerPriority.3 = 3\n"; 
+	print OUTFILE "value.TrackerPriority.4 = 4\n"; 
+	print OUTFILE "value.TrackerPriority.5 = 5\n"; 
+	print OUTFILE "value.TrackerStatus.Open = 1\n"; 
+	print OUTFILE "value.TrackerStatus.Closed = 6\n"; 
+	print OUTFILE "value.Queue.BDA = BDA\n"; 
+	print OUTFILE "value.Priority.1 = 1\n"; 
+	print OUTFILE "value.Priority.3 = 3\n"; 
+	print OUTFILE "value.Priority.5 = 5\n"; 
+	print OUTFILE "value.Priority.4 = 4\n"; 
+	print OUTFILE "value.Status.Closed = 6\n"; 
+	print OUTFILE "value.Status.Open = 1\n"; 
+
+	# date info
+	print OUTFILE "date.import.format = MM\/dd\/yyyyy hh:mm:ss\n"; 
+	print OUTFILE "date.fields = EndDate\n"; 
+	print OUTFILE "date.fields = StartDate\n"; 
+	print OUTFILE "date.fields = ModDate\n"; 
+
+
+	close(OUTFILE);
+}
+sub verifyOptions ()
+{
+	use Getopt::Long;
+
+	(my $cmd = $0) =~ s/^.*\///;
+	my $cwd = `pwd`; chomp $cwd;
+	my $usage = "\n$cmd: $cmd -g group name -d dbname [-s dbserver -p dbport -u dbuser -w dbpassword]
+	-h      Display this USAGE message and exit.
+	-g      Gforge Group Name (required) if exact match is not found other matches will be suggested and program will exit
+	-d      Database Name (required)
+	-s      Database Server (optional db), enter all optional db or none, none will use local user authentication, not entering all will cause failure
+	-p      Database Port (optional db)
+	-u      Database User (optional db)
+	-w      Database Password (optional db)\n\n";
+
+	my $optrequestGroup,$optdbName,$optdbServer,$optdbPort,$optdbUser,$optdbPass;
+	Getopt::Long::Configure ("bundling", "ignore_case_always");
+	my $rt=GetOptions(
+		"g=s"=>\$optrequestGroup,
+		"d=s"=>\$optdbName,
+		"s=s"=>\$optdbServer,
+		"p=s"=>\$optdbPort,
+		"u=s"=>\$optdbUser,
+		"w=s"=>\$optdbPass
+	);              
+
+	die "$usage" if  ! $rt  ;
+	die "$usage" if ! defined $optrequestGroup || ! defined $optdbName;
+	die "$usage" if ((defined  $optdbServer || defined $optdbPort || defined $optdbUser || defined $optdbPass) && (! defined  $optdbServer || ! defined $optdbPort || ! defined $optdbUser || ! defined $optdbPass));
+
+	$requestGroup=$optrequestGroup;
+	$dbName=$optdbName;
+	$dbServer=$optdbServer;
+	$dbPort=$optdbPort;
+	$dbUser=$optdbUser;
+	$dbPass=$optdbPass;
+}
+
