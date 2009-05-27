@@ -6611,12 +6611,33 @@ $HeadURL$
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
 		<attribute name="database.type" default="${database.type}"/>
 		<attribute name="start.jboss" default="Y"/>
+		<attribute name="env.name" default="${env.name}"/>
 		<sequential>
+			<var name="nci.env" unset="true"/>
 			<if>
 				<or>
-					<os family="unix"/>
-					<os family="mac"/>
+					<equals arg1="@{env.name}" arg2="dev"/>
+					<equals arg1="@{env.name}" arg2="qa"/>
+					<equals arg1="@{env.name}" arg2="stage"/>
+					<equals arg1="@{env.name}" arg2="prod"/>
+					<equals arg1="@{env.name}" arg2="train"/>
+					<equals arg1="@{env.name}" arg2="data-refresh"/>
+					<equals arg1="@{env.name}" arg2="data-validation"/>
+					<equals arg1="@{env.name}" arg2="infrastructure"/>
 				</or>
+				<then>
+					<property name="nci.env" value="true"/>
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<or>
+						<os family="unix"/>
+						<os family="mac"/>
+					</or>
+					<equals arg1="${nci.env}" arg2="true"/>
+				</and>
 				<then>
 					<echo message="Setting up jboss-nci-customizations (this system is Unix or Mac)"/>
 					<filterset id="@{filterset.name}">
@@ -6706,7 +6727,7 @@ $HeadURL$
 						/>
 				</then>
 				<else>
-					<echo message="NOT setting up jboss-nci-customizations because this system is not Unix or Mac"/>
+					<echo message="NOT setting up jboss-nci-customizations because this system is not Unix or Mac NCI environment"/>
 				</else>
 			</if>
 		</sequential>
