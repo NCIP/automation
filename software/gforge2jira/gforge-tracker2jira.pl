@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #######################################################
 #  Name:  gforge-tracerk2jira.pl
 #  Author:  Steven S. Saksa
@@ -12,6 +12,8 @@
 use Data::Dumper;
 use DBI;
 use Switch;
+use Cwd 'abs_path';
+
 
 my $requestGroup, $dbServer, $dbPort, $dbUser,$dbPass="";
 my $groupName="";
@@ -54,7 +56,7 @@ print "Processing Followups\n";
 &getMessages();
 print "Processing History\n";
 &getHistory();
-print "Generate CSVs\n";
+print "Generate CSVs and CNFs\n";
 &generateCSVs();
 
 #print DUMP Dumper(%userHash);
@@ -363,7 +365,9 @@ sub generateCSVs()
 	{
 		my $fname="target/tracker-exp-${groupName}-${queue}.csv";
 		$fname=~s/\s+//g;
-		 &createJiraCnf($queue);
+		$absFname=abs_path($fname);
+		print "\t${absFname}\n";
+		&createJiraCnf($queue);
 		open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
 		print OUTFILE "GforgeID,";
 		my @fieldList=();
@@ -410,6 +414,8 @@ sub createJiraCnf ($)
 	my $queue=$_[0];
 	my $fname="target/tracker-exp-${groupName}-${queue}.cnf";
 	$fname=~s/\s+//g;
+	$absFname=abs_path($fname);
+	print "\t${absFname}\n";
 	open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
 
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($fieldValue);

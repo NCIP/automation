@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #######################################################
 #  Name:  gforge-tasks2jira.pl
 #  Author:  Steven S. Saksa
@@ -11,6 +11,7 @@
 
 use Data::Dumper;
 use DBI;
+use Cwd 'abs_path';
 
 my $requestGroup, $dbServer, $dbPort, $dbUser,$dbPass="";
 my $groupName="";
@@ -49,7 +50,7 @@ print "Processing Followups\n";
 &getMessages();
 print "Processing History\n";
 &getHistory();
-print "Generating CSVs\n";
+print "Generating CSVs and CNFs\n";
 &generateCSVs();
 
 #print DUMP Dumper(%userHash);
@@ -281,6 +282,8 @@ sub generateCSVs()
 		mkdir("target");
 		my $fname="target/tasks-exp-${groupName}-${queue}.csv";
 		$fname=~s/\s+//g;
+		$absFname=abs_path($fname);
+		print "\t${absFname}\n";
 		&createJiraCnf($queue);
 		open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
 		print OUTFILE "GforgeID, ";
@@ -329,6 +332,8 @@ sub createJiraCnf ($)
 	my $queue=$_[0];
 	my $fname="target/tasks-exp-${groupName}-${queue}.cnf";
 	$fname=~s/\s+//g;
+	$absFname=abs_path($fname);
+	print "\t${absFname}\n";
 	open (OUTFILE, ">$fname") ||die "Could not create $fname\n";
 
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($fieldValue);
