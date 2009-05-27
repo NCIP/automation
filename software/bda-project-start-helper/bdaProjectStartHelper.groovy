@@ -36,8 +36,7 @@ public class bdaProjectStartHelper
 		filterPropertiesFile('project.properties')
 		filterPropertiesFile('install.properties')
 		filterPropertiesFile('upgrade.properties')
-		filterPropertiesFile('install-properties.template')
-		filterPropertiesFile('upgrade-properties.template')
+		filterPropertiesFile('properties.template')
 	}
 
 	private static void readProperties ()
