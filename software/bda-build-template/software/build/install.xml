@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- bda-build-template version 1.0.1 -->
+<!-- bda-build-template version 1.1.0 -->
 <!--
 $Id$
 $HeadURL$
@@ -350,23 +350,8 @@ $HeadURL$
 	<target name="install:jboss:binaries" description="Install JBoss binaries" unless="exclude.jboss" depends="init:install,init:common">
 		<jboss-install-binaries
 			/>
-		<if>            
-			<or>                    
-				<equals arg1="${env.name}" arg2="dev"/> 
-				<equals arg1="${env.name}" arg2="qa"/>
-				<equals arg1="${env.name}" arg2="stg"/> 
-				<equals arg1="${env.name}" arg2="prod"/>
-			</or>                   
-			<then>                  
-				<echo message="Begining NCICB JBoss customations because this is tier build  (${env.name})"/>
-				<jboss-nci-customizations       
-					/>                                      
-			</then>                 
-			<else>                  
-				<echo message="Skipping NCICB JBoss customizations because this is a tier build (${env.name})"/>
-			</else>                 
-		</if>           
-
+		<jboss-nci-customizations       
+			/>                                      
 	</target>
 
 	<target name="install:jboss:bda-blueprints-webapp:filesystem-data"  depends="init:install,init:common">
