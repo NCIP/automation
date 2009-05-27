@@ -131,12 +131,23 @@ public class BuildCertificationHelper {
 	public void updateProjectBuildStatus() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{				
 		ProjectCertificationStatus pbs = null;
-		
+		String searchProject = null;
+		String projectUrl = null;
 		String projectName = bmb.getProjectName();		
 		String mapName = bmb.getMapName();				
 		String methodName = getSetMethodName(mapName);
-		String projectUrl = getProjectUrl(projectName,bmb.getProjectRepoUrl());//"'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
-		String searchProject = "%"+projectName+"|%";
+		
+		if(isReachble(bmb.getProjectRepoUrl()))
+		{
+			searchProject = "%"+projectName+"|%";
+			projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";			
+		}
+		else
+		{
+			searchProject = "%"+projectName+"{color}|%";
+			projectUrl = "'[{color:red}" + projectName +"{color}|"+ bmb.getProjectRepoUrl()+"]'";
+		}
+
 		
 		certLogger.info("Update the Build Status for the feature :::::::" + mapName);
 		certLogger.info("check isValue:::::::" +bmb.isValue());
@@ -203,17 +214,6 @@ public class BuildCertificationHelper {
 		session.update(pbs);
 		certLogger.info("Commit to Database");
 	    session.getTransaction().commit();  
-	}
-
-	private String getProjectUrl(String projectName, String projectRepoUrl) {
-		
-		if(isReachble(projectRepoUrl))
-		{
-			return "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
-		}else
-		{
-			return "'[{color:red}" + projectName +"{color}|"+ bmb.getProjectRepoUrl()+"]'";
-		}
 	}
 
 	private boolean isReachble(String projectRepoUrl) {
