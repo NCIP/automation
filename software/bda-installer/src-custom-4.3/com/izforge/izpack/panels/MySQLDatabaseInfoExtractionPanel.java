@@ -6,12 +6,9 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import net.n3.nanoxml.NonValidator;
-import net.n3.nanoxml.StdXMLParser;
-import net.n3.nanoxml.StdXMLReader;
-import net.n3.nanoxml.XMLBuilderFactory;
-import net.n3.nanoxml.XMLElement;
-
+import com.izforge.izpack.adaptator.IXMLElement;
+import com.izforge.izpack.adaptator.IXMLParser;
+import com.izforge.izpack.adaptator.impl.XMLParser;
 import com.izforge.izpack.installer.InstallData;
 import com.izforge.izpack.installer.InstallerFrame;
 import com.izforge.izpack.installer.IzPanel;
@@ -107,14 +104,14 @@ public class MySQLDatabaseInfoExtractionPanel extends IzPanel {
 
     private void extractMySqlDatabaseInfo() {
         Properties instanceProperties = getInstancePtoperties();
-        XMLElement datasourcesXMLElement = parseDatasourceXmlFile(instanceProperties);
-        XMLElement localTxDatasourceXMLElement = datasourcesXMLElement.getChildrenNamed(LOCAL_TX_DATASOURCE_ELEMENT_NAME).get(0);
-        XMLElement connectionUrlXMLElement = localTxDatasourceXMLElement.getChildrenNamed(CONNECTION_URL_ELEMENT_NAME).get(0);
+        IXMLElement datasourcesXMLElement = parseDatasourceXmlFile(instanceProperties);
+        IXMLElement localTxDatasourceXMLElement = datasourcesXMLElement.getChildrenNamed(LOCAL_TX_DATASOURCE_ELEMENT_NAME).get(0);
+        IXMLElement connectionUrlXMLElement = localTxDatasourceXMLElement.getChildrenNamed(CONNECTION_URL_ELEMENT_NAME).get(0);
         String connectionUrl = connectionUrlXMLElement.getContent();
-        XMLElement userNameXMLElement = localTxDatasourceXMLElement.getChildrenNamed(USER_NAME_ELEMENT_NAME).get(0);
+        IXMLElement userNameXMLElement = localTxDatasourceXMLElement.getChildrenNamed(USER_NAME_ELEMENT_NAME).get(0);
         String userName = userNameXMLElement.getContent();
         String databaseUserIzPackVariableName = instanceProperties.getProperty(DATABASE_USER_VARIABLE_NAME_PROPERTY_NAME);
-        XMLElement passwordXMLElement = localTxDatasourceXMLElement.getChildrenNamed(PASSWORD_ELEMENT_NAME).get(0);
+        IXMLElement passwordXMLElement = localTxDatasourceXMLElement.getChildrenNamed(PASSWORD_ELEMENT_NAME).get(0);
         String password = passwordXMLElement.getContent();
         String databasePasswordIzPackVariableName = instanceProperties.getProperty(DATABASE_PASSWORD_VARIABLE_NAME_PROPERTY_NAME);
         String hostName = getHostNameFromConnectionUrl(connectionUrl);
@@ -130,18 +127,24 @@ public class MySQLDatabaseInfoExtractionPanel extends IzPanel {
         idata.setVariable(databaseNameIzPackVariableName, databaseName);
     }
 
-    private XMLElement parseDatasourceXmlFile(Properties instanceProperties) {
-        XMLElement rootXMLElement = null;
+    private IXMLElement parseDatasourceXmlFile(Properties instanceProperties) {
+    	IXMLElement rootXMLElement = null;
         FileInputStream fileInputStream = null;
         try {
             String applicationBasePath = idata.getVariable(instanceProperties.getProperty(APP_BASE_PATH_VARIABLE_NAME_PROPERTY_NAME));
             String datasourceXmlFilePathRelativeToApplicationBasePath = instanceProperties.getProperty(DATASOURCE_XML_FILE_PATH_RELATIVE_TO_APP_BASE_PATH_PROPERTY_NAME);
             fileInputStream = new FileInputStream(new File(applicationBasePath + File.separator + datasourceXmlFilePathRelativeToApplicationBasePath));
+
+            /*
             StdXMLParser parser = new StdXMLParser();
+
             parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
             parser.setValidator(new NonValidator());
             parser.setReader(new StdXMLReader(fileInputStream));
-            rootXMLElement = (XMLElement) parser.parse();
+            rootXMLElement = (IXMLElement) parser.parse();
+            */
+            IXMLParser parser = new XMLParser();
+            rootXMLElement = parser.parse(fileInputStream);
         }
         catch(Exception exception) {
             System.err.println("Cannot parse datasource XML file: " + exception.getMessage());
