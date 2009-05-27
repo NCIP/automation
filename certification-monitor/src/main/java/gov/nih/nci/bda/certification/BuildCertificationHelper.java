@@ -7,6 +7,8 @@ import gov.nih.nci.bda.certification.util.HibernateUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -133,7 +135,7 @@ public class BuildCertificationHelper {
 		String projectName = bmb.getProjectName();		
 		String mapName = bmb.getMapName();				
 		String methodName = getSetMethodName(mapName);
-		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
+		String projectUrl = getProjectUrl(projectName,bmb.getProjectRepoUrl());//"'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
 		String searchProject = "%"+projectName+"|%";
 		
 		certLogger.info("Update the Build Status for the feature :::::::" + mapName);
@@ -193,7 +195,7 @@ public class BuildCertificationHelper {
 		    	pbs = new ProjectCertificationStatus();
 		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);		    	
 		    	setProductValue(pbs,projectUrl);
-		    	session.save(pbs);		    	
+		    	session.save(pbs);
 		    }
 		}
 		certLogger.info("Update the Project Certification Status");
@@ -201,6 +203,43 @@ public class BuildCertificationHelper {
 		session.update(pbs);
 		certLogger.info("Commit to Database");
 	    session.getTransaction().commit();  
+	}
+
+	private String getProjectUrl(String projectName, String projectRepoUrl) {
+		
+		if(isReachble(projectRepoUrl))
+		{
+			return "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
+		}else
+		{
+			return "'[{color:red}" + projectName +"{color}|"+ bmb.getProjectRepoUrl()+"]'";
+		}
+	}
+
+	private boolean isReachble(String projectRepoUrl) {
+      try
+        {	
+	  	  URL url = new URL(projectRepoUrl);    	  
+	      System.out.println("Testing to see if URL connects::"+ projectRepoUrl);
+	      HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+	      System.out.println("Created HttpURLConnection object");
+	      conn.connect();
+	      System.out.println("connecting..");
+	      int code  =conn.getResponseCode();
+	      if (code >= 400)
+	      {
+	    	  return false;
+	      }
+	      System.out.println("disconnecting..");
+	      conn.disconnect();
+	      System.out.println("disconnected");
+	      return true;
+	   }
+      catch (Exception ex)
+      {
+      	ex.printStackTrace(); 
+      	return false;      	 
+      }
 	}	
 	
 }
