@@ -211,9 +211,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="release:update-bda-ivyfiles" depends="svn:automation:checkout">	
-		<xmlconfig in="${svn.ivy.checkout}/bda-ivy-build.xml" verbose="false">
-			<update path="//project/property[@name='bda.version']/@value" value="${release.version}" />
-		</xmlconfig>
+		<xmltask source="${svn.ivy.checkout}/bda-ivy-build.xml" dest="${svn.ivy.checkout}/bda-ivy-build.xml">
+			<replace path="//project/property[@name='bda.version']/@value" withtext="${release.version}" />
+		</xmltask>
+
+		<xmltask source="${svn.ivy.checkout}/bda-ivy-2.0.0-build.xml" dest="${svn.ivy.checkout}/bda-ivy-build.xml">
+			<replace path="//project/property[@name='bda.version']/@value" withtext="${release.version}" />
+		</xmltask>
 
 		<zip destfile="${basedir}/working/bda-download.zip">
 			<zipfileset dir="${svn.ivy.checkout}" />
