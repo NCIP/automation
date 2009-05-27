@@ -218,11 +218,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<zip destfile="${basedir}/working/bda-download.zip">
 			<zipfileset dir="${svn.ivy.checkout}" />
 		</zip>
-<!--
+
 		<svn username="${svn.username}" password="${svn.password}">			
 			<commit message="Latest BDA released revision " dir="${svn.ivy.checkout}"/>
 		</svn>	
--->
+
 	</target>
 	
 	<target name="release:post-release">	
