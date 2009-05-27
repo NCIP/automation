@@ -158,6 +158,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			<zipfileset dir="${svn.automation-templates.checkout}/software/common" excludes="**/.svn/*" prefix="common"/>
 		</zip>
 
+<!-- prepare the automation area for the development -->		
+		<xmltask source="${svn.automation-utils.checkout}/ivy.xml" dest="${svn.automation-utils.checkout}/ivy.xml">
+			<replace path="//ivy-module/info/@revision" withtext="${release.version}" />			
+		</xmltask>		
+
+		<replaceregexp file="${svn.automation-utils.checkout}/build.properties" byline="true"
+			match="^(bda.version)=(.*)"
+			replace="\1=${release.version}"/>
+
+
 	</target>
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
@@ -192,7 +202,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 
-	<target name="svn:checkin">		
+	<target name="svn:checkin">
+		<svn username="${svn.username}" password="${svn.password}">		
+			<commit message="Prepare the BDA release for development" dir="${svn.automation-utils.checkout}"/>
+		</svn>
 		<svn username="${svn.username}" password="${svn.password}">		
 			<add dir="${svn.local.checkout}/${release.version}"/>
 			<add dir="${svn.local.checkout}/${next.beta.release.version}"/>
