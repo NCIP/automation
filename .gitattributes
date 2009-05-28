@@ -2790,6 +2790,7 @@ software/release-manager/buildSrc/src/main/resources/org/gradle/build/startscrip
 software/release-manager/buildSrc/src/main/resources/org/gradle/build/startscripts/windowsStartScriptHead.txt -text
 software/release-manager/buildSrc/src/main/resources/org/gradle/build/startscripts/windowsStartScriptTail.txt -text
 software/release-manager/buildSrc/src/test/groovy/org/gradle/build/release/VersionTest.groovy -text
+software/release-manager/local.properties -text
 software/release-manager/release.properties -text
 software/release-manager/settings.gradle -text
 software/scripts/maven-rsync.pl -text
