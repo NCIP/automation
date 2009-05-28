@@ -2295,7 +2295,9 @@ software/bda-build-template/software/build/install.xml -text
 software/bda-build-template/software/build/project.properties -text
 software/bda-build-template/software/build/properties.template -text
 software/bda-build-template/software/build/upgrade.properties -text
+software/bda-build-template/software/common/bda-download/bda-ivy-2.0.0-build.xml -text
 software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
+software/bda-build-template/software/common/bda-download/ivy-bda-2.0.0.xml -text
 software/bda-build-template/software/common/bda-download/ivy-bda-settings.xml -text
 software/bda-build-template/software/common/bda-download/ivy-bda.xml -text
 software/bda-build-template/software/common/checkstyle/checkstyle-author.xsl -text
