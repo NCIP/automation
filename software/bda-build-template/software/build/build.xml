@@ -49,7 +49,7 @@ $HeadURL$
 	<property name="common.dir" location="${software.dir}/common" />
 	<property name="local.repo.dir" location="${software.dir}/local-ivy-repo" />
 	<property name="target.dir" location="${software.dir}/target" />
-	<property name="bda-download.dir" location="${target.dir}/bda-download" />
+	<property name="bda-download.dir" location="${common.dir}/bda-download" />
 	<property name="ivy.settings.dir" location="${common.dir}/ivy" />
 	<property name="lib.dir" location="${target.dir}/lib" />
 	<property name="temp.dir" location="${target.dir}/temp" />
@@ -65,7 +65,6 @@ $HeadURL$
 
 	<!-- Ivy Related props -->
 	<property name="ivy.settings.file" value="ivy-settings.xml" />
-	<property name="ivy.jar.file" value="ivy-2.0.0.jar" />
 
 	<!-- Properties that relate to how to call build targets from sub-projects-->
 	<!-- Working directory passed to Ant tasks -->
@@ -143,9 +142,11 @@ $HeadURL$
 	<!-- retrive ivy.jar.files then retrieve bda files and librarires -->
 	<property name="commonlibrary.dir" value="" />
 	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
+	<!--
 	<mkdir dir="${bda-download.dir}" />
 	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
 	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	-->
 	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" location="${bda-utils.dir}" />
@@ -163,7 +164,7 @@ $HeadURL$
 	</path>
 	<path id="ivy.classpath">
 		<fileset dir="${lib.dir}">
-			<include name="${ivy.jar.file}" />
+			<include name="*.jar" />
 		</fileset>
 	</path>
 
