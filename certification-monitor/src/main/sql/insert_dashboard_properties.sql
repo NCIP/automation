@@ -629,7 +629,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.project.url','https://gforge.nci.nih.gov/svnroot/c3prv2/trunk/c3prv2');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.project.url','http://gforge.nci.nih.gov/svnroot/c3prv2/trunk/c3prv2');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.master.build.location','${ccts-c3pr.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.master.install.location','working/installer');
@@ -651,7 +651,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.project.url','https://gforge.nci.nih.gov/svnroot/caaersappdev/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.project.url','http://gforge.nci.nih.gov/svnroot/caaersappdev/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.build.location','${ccts-caaers.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.install.location','working/installer');
