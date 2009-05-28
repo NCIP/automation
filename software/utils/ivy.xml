@@ -1,71 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl"
-                 href="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-xsl/ivy.xsl"?><ivy-module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">  
+                 href="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-xsl/ivy.xsl"?>
 
-  <info organisation="ncicb" module="bda-utils" revision="1.2.0-beta" />
+<ivy-module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">  
+
+  <info module="bda-utils" organisation="ncicb" revision="1.2.0-beta"/>
         
   <configurations>
-    <conf name="master" />
-    <conf name="compile" />
-    <conf name="runtime" />
+    <conf name="master"/>
+    <conf name="compile"/>
+    <conf name="runtime"/>
   </configurations>
   
   <publications>
-	  <artifact name="bda-build-utils" type="xml" conf="master, compile, runtime" />
-	  <artifact name="bda-build-utils" type="zip" conf="master, compile, runtime" />
+	  <artifact conf="master, compile, runtime" name="bda-build-utils" type="xml"/>
+	  <artifact conf="master, compile, runtime" name="bda-build-utils" type="zip"/>
   </publications>
   
   <dependencies>               
 	  <!-- for sending mail from ant -->
-	  <dependency org="javax.activation" name="activation" rev="1.0.2" conf="runtime" />
+	  <dependency conf="runtime" name="activation" org="javax.activation" rev="1.0.2"/>
 	  <!-- used in ant scripts -->
-	  <dependency org="apache" name="antunit" rev="1.1" conf="runtime" />
+	  <dependency conf="runtime" name="antunit" org="apache" rev="1.1"/>
 	  <!-- used extensively in ant -->
-	  <dependency org="apache" name="ant-contrib" rev="1.0nci" conf="runtime" />
+	  <dependency conf="runtime" name="ant-contrib" org="apache" rev="1.0nci"/>
 	  <!-- Deployed to applications -->
-	  <dependency org="ncicb" name="clm" rev="3.2" conf="runtime" />
+	  <dependency conf="runtime" name="clm" org="ncicb" rev="3.2"/>
 	  <!-- used in ant scripts to verify connectivity/version of databases -->
-	  <dependency org="dbconfig" name="dbconfig" rev="0.1.8" conf="runtime" />
+	  <dependency conf="runtime" name="dbconfig" org="dbconfig" rev="0.1.8"/>
 	  <!-- copied to deployment and used by ant for db tasks -->
-	  <dependency org="mysql" name="mysql-connector-java" rev="5.0.8" conf="runtime" />
+	  <dependency conf="runtime" name="mysql-connector-java" org="mysql" rev="5.0.8"/>
 	  <!-- copied to deployment and used by ant for db tasks -->
-	  <dependency org="postgresql" name="postgresql-jdbc3" rev="8.3-604" conf="runtime" />	
+	  <dependency conf="runtime" name="postgresql-jdbc3" org="postgresql" rev="8.3-604"/>	
 	  <!-- copied to deployment and used by ant for db tasks -->
-	  <dependency org="oracle" name="ojdbc14" rev="10.2.0.4.0" conf="runtime" />
+	  <dependency conf="runtime" name="ojdbc14" org="oracle" rev="10.2.0.4.0"/>
 	  <!-- copied to deployment and used by ant for db tasks -->
-	  <dependency org="hsqldb" name="hsqldb" rev="1.8.0.10" conf="runtime" />		  
+	  <dependency conf="runtime" name="hsqldb" org="hsqldb" rev="1.8.0.10"/>		  
 	  <!-- for sending mail from ant -->
-	  <dependency org="javax.mail" name="mail" rev="1.3" conf="runtime" />
+	  <dependency conf="runtime" name="mail" org="javax.mail" rev="1.3"/>
 	  <!-- for ssh/scp from ant -->
-	  <dependency org="jcraft" name="jsch" rev="0.1.41" conf="runtime" />
+	  <dependency conf="runtime" name="jsch" org="jcraft" rev="0.1.41"/>
 	  <!-- for svn tasks from ant -->
-	  <dependency org="org.tigris" name="svnant" rev="1.2.1" conf="runtime" />
+	  <dependency conf="runtime" name="svnant" org="org.tigris" rev="1.2.1"/>
 	  <!-- Custom taks for comparing template to file or memeory -->
-	  <dependency org="ncicb" name="propertyvalidator" rev="0.1.7" conf="runtime" />		  
+	  <dependency conf="runtime" name="propertyvalidator" org="ncicb" rev="0.1.7"/>		  
 	  <!-- Add grand functionality to ant -->
-	  <dependency org="ggtools" name="grand" rev="1.8" conf="runtime" />
+	  <dependency conf="runtime" name="grand" org="ggtools" rev="1.8"/>
 	  <!-- Adds umlgraph functionality to ant -->
-	  <dependency org="umlgraph" name="umlgraph" rev="5.2" conf="runtime" />
+	  <dependency conf="runtime" name="umlgraph" org="umlgraph" rev="5.2"/>
 	  <!-- Adds schema spy functionality to ant -->
-	  <dependency org="schemaspy" name="schemaspy" rev="4.1.1" conf="runtime" />		  
+	  <dependency conf="runtime" name="schemaspy" org="schemaspy" rev="4.1.1"/>		  
 	  <!-- Custom task for build/test/static-analysis reporting -->
-	  <dependency org="fusemetrics" name="fusemetrics" rev="1.0" conf="runtime" />
+	  <dependency conf="runtime" name="fusemetrics" org="fusemetrics" rev="1.0"/>
 	  <!-- Adds liquibase functionality to ant -->
-	  <dependency org="liquibase" name="liquibase" rev="1.9.3" conf="runtime" />		  
+	  <dependency conf="runtime" name="liquibase" org="liquibase" rev="1.9.3"/>		  
 	  <!-- Allows ant to execute groovy -->
-	  <dependency org="codehaus" name="groovy" rev="1.6.3" conf="runtime" />		  
+	  <dependency conf="runtime" name="groovy" org="codehaus" rev="1.6.3"/>		  
 	  <!-- Ant lib files -->
-	  <dependency org="apache" name="ant" rev="1.7.0" conf="runtime" >		  
-		  <include name="ant-nodeps" type="jar" conf="runtime"/>
-		  <include name="ant-launcher" type="jar" conf="runtime"/>
-		  <include name="ant" type="jar" conf="runtime"/>
+	  <dependency conf="runtime" name="ant" org="apache" rev="1.7.0">		  
+		  <include conf="runtime" name="ant-nodeps" type="jar"/>
+		  <include conf="runtime" name="ant-launcher" type="jar"/>
+		  <include conf="runtime" name="ant" type="jar"/>
 	  </dependency>
 	  <!-- Adds xmltask functionality to ant -->
-	  <dependency org="com.oopsconsultancy" name="xmltask" rev="1.15.1" conf="runtime" />
+	  <dependency conf="runtime" name="xmltask" org="com.oopsconsultancy" rev="1.15.1"/>
 	  <!-- Adds bean scripting framework to ant -->
-	  <dependency org="jakarta" name="bsf" rev="2.4.0" conf="runtime" />
+	  <dependency conf="runtime" name="bsf" org="jakarta" rev="2.4.0"/>
 	  <!-- Added to make xmlcatalog stuff work -->
-	  <dependency org="apache" name="xml-commons-resolver" rev="1.2" conf="runtime" />
+	  <dependency conf="runtime" name="xml-commons-resolver" org="apache" rev="1.2"/>
   </dependencies>
   
 </ivy-module>
