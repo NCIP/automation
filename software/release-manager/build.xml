@@ -14,9 +14,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<property name="project.name" value="bda_release"/>
 	<property environment="env" />	
 	
+	<property file="local.properties" />
 	<property file="release.properties" />
-
-
 	
 	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
 
@@ -119,7 +118,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.zip"/>
 		<move file="${svn.local.checkout}/${release.version}/${bda.templates.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.templates.filename}-${release.version}.zip"/>
 
-		<xmltask source="${svn.local.checkout}/${release.version}/ivy.xml" dest="${svn.local.checkout}/${release.version}/ivy.xml">			
+		<xmltask preservetype="true" outputter="default" source="${svn.local.checkout}/${release.version}/ivy.xml" dest="${svn.local.checkout}/${release.version}/ivy.xml">			
 			<replace path="//ivy-module/info/@revision" withtext="${release.version}" />			
 		</xmltask>
 
@@ -128,7 +127,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip"/>
 		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${next.beta.release.version}.zip"/>
 		
-		<xmltask source="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" dest="${svn.local.checkout}/${next.beta.release.version}/ivy.xml">
+		<xmltask preservetype="true" outputter="default" source="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" dest="${svn.local.checkout}/${next.beta.release.version}/ivy.xml">
 			<replace path="//ivy-module/info/@revision" withtext="${next.beta.release.version}" />
 		</xmltask>
 		
@@ -150,7 +149,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<copy file="${svn.automation-utils.checkout}/ivy.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/ivy.xml" overwrite="true"/>
 		
 		<replaceregexp match="^(.*bda-build-template version.*)([0-9].[0-9].[0-9])(.*)" replace="\1${release.version} \3" flags="g" byline="true">
-			<fileset dir="${svn.automation-templates.checkout}/software/build" includes="**/*.xml"/>
+			<fileset dir="${svn.automation-templates.checkout}/software/build">
+				<include name="**/*.xml"/>
+				<include name="**/*.properties"/>
+				<include name="**/*.template"/>
+			</fileset>
 		</replaceregexp>
 
 		<zip destfile="${svn.local.checkout}/${current.beta.release.version}/${bda.templates.filename}-${current.beta.release.version}.zip">
@@ -159,15 +162,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</zip>
 
 <!-- prepare the automation area for the development -->		
-		<xmltask source="${svn.automation-utils.checkout}/ivy.xml" dest="${svn.automation-utils.checkout}/ivy.xml">
-			<replace path="//ivy-module/info/@revision" withtext="${release.version}" />			
+		<xmltask preservetype="true" outputter="default" source="${svn.automation-utils.checkout}/ivy.xml" dest="${svn.automation-utils.checkout}/ivy.xml">
+			<replace path="//ivy-module/info/@revision" withtext="${next.beta.release.version}" />			
 		</xmltask>		
 
 		<replaceregexp file="${svn.automation-utils.checkout}/build.properties" byline="true"
 			match="^(bda.version)=(.*)"
 			replace="\1=${release.version}"/>
-
-
 	</target>
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
@@ -224,11 +225,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="release:update-bda-ivyfiles" depends="svn:automation:checkout">	
-		<xmltask source="${svn.ivy.checkout}/bda-ivy-build.xml" dest="${svn.ivy.checkout}/bda-ivy-build.xml">
+		<xmltask preservetype="true" outputter="default" source="${svn.ivy.checkout}/bda-ivy-build.xml" dest="${svn.ivy.checkout}/bda-ivy-build.xml">
 			<replace path="//project/property[@name='bda.version']/@value" withtext="${release.version}" />
 		</xmltask>
 
-		<xmltask source="${svn.ivy.checkout}/bda-ivy-2.0.0-build.xml" dest="${svn.ivy.checkout}/bda-ivy-2.0.0-build.xml">
+		<xmltask preservetype="true" outputter="default" source="${svn.ivy.checkout}/bda-ivy-2.0.0-build.xml" dest="${svn.ivy.checkout}/bda-ivy-2.0.0-build.xml">
 			<replace path="//project/property[@name='bda.version']/@value" withtext="${release.version}" />
 		</xmltask>
 
