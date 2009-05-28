@@ -72,22 +72,39 @@ class BuildStatusUpdater {
 	
 	
 	connection.eachRow(statement) { row ->
+	  
+			String productString    = row.PRODUCT;
+			String certificationStatus = row.CERTIFICATION_STATUS;	    
+			String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
+			String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
+			String databaseIntegration = row.DATABASE_INTEGRATION;
+			String templateValidation = row.TEMPLATE_VALIDATION;
+			String privateProperties = row.PRIVATE_PROPERTIES;	    
+			String ciBuild = row.CI_BUILD;
+			String bdaEnabled = row.BDA_ENABLED;
+			String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
+			String commandLineInstaller = row.COMMANDLINE_INSTALLER;
 	    
+	    		String productUrl  = productString.substring(productString.indexOf("|"+1, productString.indexOf("]")-1));
+	    		String productName  = productString.substring(productString.indexOf("["+1, productString.indexOf("|")-1));
+	    		String replaceProductString = null
+			
 
-	    String productName    = row.PRODUCT;
-	    String certificationStatus = row.CERTIFICATION_STATUS;	    
-	    String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
-	    String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
-	    String databaseIntegration = row.DATABASE_INTEGRATION;
-	    String templateValidation = row.TEMPLATE_VALIDATION;
-	    String privateProperties = row.PRIVATE_PROPERTIES;	    
-	    String ciBuild = row.CI_BUILD;
-	    String bdaEnabled = row.BDA_ENABLED;
-	    String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
-	    String commandLineInstaller = row.COMMANDLINE_INSTALLER;
-	    
+			
+			if(isReachble(productUrl))
+			{
+				replaceProductString = "'[" + projectName +"|"+ productUrl+"]'";			
+			}
+			else
+			{
+				replaceProductString = "'[{color:red}" + projectName +"{color}|"+ productUrl +"]'";
+			}
 
-			String findReplace = "--findReplace \"Product${count}:${productName},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
+			println  productUrl
+			println  productName
+			println  replaceProductString
+			
+			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
 
 			println findReplace
 			// update page
@@ -100,6 +117,32 @@ class BuildStatusUpdater {
 	doCmd("${confluence} -a storePage --space \""+certificationPageSpace+"\" --title \""+certificationPageFile+"\"   --file "+certificationTemplateFile+"_temp.txt ${findReplaceVersion}")	
 	}
 	
+	private boolean isReachble(String projectRepoUrl) 
+	{
+		try
+		{	
+			URL url = new URL(projectRepoUrl);    	  
+			System.out.println("Testing to see if URL connects::"+ projectRepoUrl);
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			System.out.println("Created HttpURLConnection object");
+			conn.connect();
+			System.out.println("connecting..");
+			int code  =conn.getResponseCode();
+			if (code >= 400)
+			{
+			return false;
+			}
+			System.out.println("disconnecting..");
+			conn.disconnect();
+			System.out.println("disconnected");
+			return true;
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace(); 
+			return false;      	 
+		}
+	}	
 	
 	public void loadProperties()
 	{
