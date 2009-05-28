@@ -85,8 +85,8 @@ class BuildStatusUpdater {
 			String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
 			String commandLineInstaller = row.COMMANDLINE_INSTALLER;
 	    
-	    		String productUrl  = productString.substring(productString.indexOf("|")+1, productString.indexOf("]")-1));
-	    		String productName  = productString.substring(productString.indexOf("[")+1, productString.indexOf("|")-1));
+			String productUrl  = productString.substring(productString.indexOf("|")+1, productString.indexOf("]"));
+			String productName  = productString.substring(productString.indexOf("[")+1, productString.indexOf("|"));
 	    		String replaceProductString = null
 		
 			println  productUrl
@@ -95,11 +95,11 @@ class BuildStatusUpdater {
 			
 			if(isReachble(productUrl))
 			{
-				replaceProductString = "'[" + projectName +"|"+ productUrl+"]'";			
+				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
 			}
 			else
 			{
-				replaceProductString = "'[{color:red}" + projectName +"{color}|"+ productUrl +"]'";
+				replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
 			}
 
 			println  productUrl
