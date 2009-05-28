@@ -168,7 +168,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 		<replaceregexp file="${svn.automation-utils.checkout}/build.properties" byline="true"
 			match="^(bda.version)=(.*)"
-			replace="\1=${release.version}"/>
+			replace="\1=${next.beta.release.version}"/>
 	</target>
 
 	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
@@ -207,12 +207,30 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<svn username="${svn.username}" password="${svn.password}">		
 			<commit message="Prepare the BDA release for development" dir="${svn.automation-utils.checkout}"/>
 		</svn>
+		<!-- added by ssaksa -->
+		<svn username="${svn.username}" password="${svn.password}">		
+			<commit message="Prepare the BDA release for development" dir="${svn.automation-templates.checkout}"/>
+		</svn>
 		<svn username="${svn.username}" password="${svn.password}">		
 			<add dir="${svn.local.checkout}/${release.version}"/>
-			<add dir="${svn.local.checkout}/${next.beta.release.version}"/>
-			<!--
-			<delete dir="${svn.local.checkout}/${previous.current.beta.release.version}"/>
-			-->
+		</svn>
+
+		
+		<svn username="${svn.username}" password="${svn.password}">		
+			<status path="${svn.local.checkout}/${next.beta.release.version}" textStatusProperty="next.beta.version.svn.status"/>
+		</svn>
+		<if>
+			<equals arg1="${next.beta.version.svn.status}" arg2="unversioned"/>
+			<then>
+				<svn username="${svn.username}" password="${svn.password}">		
+					<add dir="${svn.local.checkout}/${next.beta.release.version}"/>
+					<!--
+					<delete dir="${svn.local.checkout}/${previous.current.beta.release.version}"/>
+					-->
+				</svn>
+			</then>
+		</if>
+		<svn username="${svn.username}" password="${svn.password}">		
 			<commit message="Latest BDA revision ${release.version} and beta revision ${next.beta.release.version}" dir="${svn.local.checkout}"/>
 		</svn>	
 	</target>
@@ -284,5 +302,11 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<!-- TODO: Need to check in local changes to SVN repository -->
 	</target>
 
+	<target name="temp-svn-status">
+		<svn username="${svn.username}" password="${svn.password}">		
+			<status path="target" textStatusProperty="release.version.svn.status"/>
+		</svn>
+		<echo message="Target's status is ${release.version.svn.status}"/>
+	</target>
 
 </project>
