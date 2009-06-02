@@ -182,6 +182,8 @@ $HeadURL$
 	</tstamp>
 	<record name="${log.dir}/install-${install.time}.log" action="start" />
 
+	<!-- Fix first time build issue -->
+	<mkdir dir="${download.dir}"/>
 
 	<!-- Targets -->
 	<target name="diagnostics" description="diagnostics">
