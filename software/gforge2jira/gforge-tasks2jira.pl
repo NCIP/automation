@@ -343,7 +343,7 @@ sub createJiraCnf ($)
 	print OUTFILE "# Written by gforge-tasks2jira.pl\n";
 	print OUTFILE "# $(tmpDate)\n";
 	print OUTFILE "delimiter = \\,\n";
-	print OUTFILE "existingprojectkey = NCIA\n"; 
+	print OUTFILE "existingprojectkey = ${groupName}\n"; 
 	print OUTFILE "importsingleproject = false\n"; 
 	print OUTFILE "importexistingproject = true\n"; 
 	print OUTFILE "mapfromcsv = false\n"; 
