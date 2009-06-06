@@ -7,7 +7,7 @@ This file is the is the settings file used by IVY.  It is a good starting point 
 
 <ivysettings>
 	<property name="ivy.project.repo" value="${target.dir}/local-repo-dir"/>
-	<property name="ivy.system.repo" value="${bda.local.repo.dir}"/>
+	<property name="ivy.system.repo" value="${software.dir}/../../system-ivy-repo"/>
 	<property name="ivy.local-enterprise.repo" value="${commonlibrary.dir}/ivy-repo"/>
 	<settings defaultResolver="ncicb-chain" />
 	<!-- defaultCacheDir causes the bda-utils module to use it's own cache directory -->

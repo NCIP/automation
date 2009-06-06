@@ -315,6 +315,7 @@ $HeadURL$
 		<ant inheritAll="false" inheritRefs="false" antfile="${bda-blueprints-webapp.build.file}" target="${bda-blueprints-webapp.build.target}" dir="${bda-blueprints-webapp.base.dir}">
 			<property name="dist.dir" value="${bda-blueprints-webapp.dist.dir}" />
 			<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
+			<property name="commonlibrary.dir" value="${commonlibrary.dir}"/>
 		</ant>
 	</target>
 
