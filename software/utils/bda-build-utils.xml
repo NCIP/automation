@@ -556,9 +556,6 @@ $HeadURL$
 			<check-valid-directory-name
 				directory.property="application.base.path"
 				/>
-			<check-application-exists
-				application.dir.property="jboss.home"
-				/>
 			<check-database-exists
 				database.driver="@{database.driver}"
 				database.url="@{database.url}"
@@ -566,30 +563,43 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.name="@{database.name}"
 				/>
-			<verify-keystore
-				appserver.ssl.enable="@{jboss.ssl.enable}"
-				appserver.ssl.keystore.file="@{jboss.ssl.keystore.file}"
-				appserver.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
-				appserver.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
-				appserver.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
-				appserver.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
-				/>
-			<verify-keystore
-				appserver.ssl.enable="@{tomcat.ssl.enable}"
-				appserver.ssl.keystore.file="@{tomcat.ssl.keystore.file}"
-				appserver.ssl.keystore.pass="@{tomcat.ssl.keystore.pass}"
-				appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
-				appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
-				appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
-				/>
 			<validate-appserver-versions
 				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
 				tomcat.binaries.relative.dir="@{tomcat.binaries.relative.dir}"
 				/>
 			<validate-env-name
 				/>
-			<validate-jboss-home
-				/>
+			<if>
+				<isset property="jboss.home"/>
+				<then>
+					<check-application-exists
+						application.dir.property="jboss.home"
+						/>
+					<verify-keystore
+						appserver.ssl.enable="@{jboss.ssl.enable}"
+						appserver.ssl.keystore.file="@{jboss.ssl.keystore.file}"
+						appserver.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
+						appserver.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
+						appserver.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
+						appserver.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
+						/>
+					<validate-jboss-home
+						/>
+				</then>
+			</if>
+			<if>
+				<isset property="tomcat.home"/>
+				<then>
+					<verify-keystore
+						appserver.ssl.enable="@{tomcat.ssl.enable}"
+						appserver.ssl.keystore.file="@{tomcat.ssl.keystore.file}"
+						appserver.ssl.keystore.pass="@{tomcat.ssl.keystore.pass}"
+						appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
+						appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
+						appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
+						/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -5234,20 +5244,23 @@ $HeadURL$
 		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
 		<sequential>
 			<var name="jboss.version.check" unset="true"/>
+			<var name="jboss.isset" unset="true"/>
+			<propertyregex property="jboss.isset"
+				input="@{jboss.binaries.relative.dir}"
+				regexp="\S+"
+				select="true"
+				/>
 			<propertyregex property="jboss.version.check"
 				input="@{jboss.binaries.relative.dir}"
 				regexp="(\d+\.\d+\.\d+).*"
 				select="\1"
 				/>
-			<var name="tomcat.version.check" unset="true"/>
-			<propertyregex property="tomcat.version.check"
-				input="@{tomcat.binaries.relative.dir}"
-				regexp="(\d+\.\d+\.\d+).*"
-				select="\1"
-				/>
 			<echo message="checking jboss version - ${jboss.version.check}."/>
 			<if>
-				<isset property="jboss.version.check"/>
+				<and>
+					<equals arg1="${jboss.isset}" arg2="true"/>
+					<isset property="jboss.version.check"/>
+				</and>
 				<then>
 					<compare-version-major-min-patch
 						version.check="${jboss.version.check}"
@@ -5256,9 +5269,25 @@ $HeadURL$
 						/>
 				</then>
 			</if>
+
+			<var name="tomcat.version.check" unset="true"/>
+			<var name="tomcat.isset" unset="true"/>
+			<propertyregex property="tomcat.isset"
+				input="@{tomcat.binaries.relative.dir}"
+				regexp="\S+"
+				select="true"
+				/>
+			<propertyregex property="tomcat.version.check"
+				input="@{tomcat.binaries.relative.dir}"
+				regexp="(\d+\.\d+\.\d+).*"
+				select="\1"
+				/>
 			<echo message="checking tomcat version - ${tomcat.version.check}."/>
 			<if>
-				<isset property="tomcat.version.check"/>
+				<and>
+					<isset property="tomcat.version.check"/>
+					<equals arg1="${jboss.isset}" arg2="true"/>
+				</and>
 				<then>
 					<compare-version-major-min-patch
 						version.check="${tomcat.version.check}"
