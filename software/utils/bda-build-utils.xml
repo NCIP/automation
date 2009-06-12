@@ -5351,7 +5351,7 @@ $HeadURL$
 		<attribute name="maven.profile.list"/>
 		<attribute name="maven.goal.list"/>
 		<attribute name="maven.dir"/>
-		<attribute name="maven.cmdline.opts" value=""/>
+		<attribute name="maven.cmdline.opts" default=""/>
 		<sequential>
 			<condition property="mvn.cmd" value="mvn">
 				<or>
