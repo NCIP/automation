@@ -5351,6 +5351,7 @@ $HeadURL$
 		<attribute name="maven.profile.list"/>
 		<attribute name="maven.goal.list"/>
 		<attribute name="maven.dir"/>
+		<attribute name="maven.cmdline.opts" value=""/>
 		<sequential>
 			<condition property="mvn.cmd" value="mvn">
 				<or>
@@ -5362,7 +5363,7 @@ $HeadURL$
 				<os family="windows" />
 			</condition>
 			<exec executable="${mvn.cmd}" dir="@{maven.dir}" failonerror="true">
-				<arg line="@{maven.profile.list} @{maven.goal.list}"/>
+				<arg line="@{maven.cmdline.opts} @{maven.profile.list} @{maven.goal.list}"/>
 			</exec>
 		</sequential>
 	</macrodef>
