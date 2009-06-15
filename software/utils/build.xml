@@ -15,7 +15,6 @@
 		<format property="run.time" pattern="yyyyMMddHHmm" />
 	</tstamp>
 
-
 	<target name="bda2local" >
 		<mkdir dir="${bda.local.version.dir}"/>
 		<mkdir dir="${bda.local.version.dir}"/>
@@ -45,6 +44,14 @@
 			<zipfileset dir="${bda-templates.src.dir}/software/build" excludes="**/.svn/*" prefix="build"/>
 			<zipfileset dir="${bda-templates.src.dir}/software/common" excludes="**/.svn/*" prefix="common"/>
 		</zip>
+	</target>
+	<target name="diff" >
+		<exec executable="diff" osfamily="unix" output="bda-build-utils.diff">
+			<arg line=" -c --ignore-all-space --ignore-blank-lines bda-build-utils.xml ${bda.local.version.dir}/${bda-utils.xml.file}"/>
+		</exec>
+		<exec executable="diff" osfamily="mac" output="bda-build-utils.diff">
+			<arg line=" -c --ignore-all-space --ignore-blank-lines bda-build-utils.xml ${bda.local.version.dir}/${bda-utils.xml.file}"/>
+		</exec>
 	</target>
 </project>
 
