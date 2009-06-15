@@ -87,7 +87,7 @@ sub loadGforge ()
 		and     ug.user_id=u.user_id
 		and	r.role_id=rs.role_id
 		and	rs.section_name='scm'
-		and	rs.value=1
+		and	rs.value='1'
 		and     r.role_name in ('Admin','Developer')
 		and	p.plugin_name='scmsvn'
 		and 	u.status='A'
