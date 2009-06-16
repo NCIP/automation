@@ -3750,7 +3750,7 @@ $HeadURL$
 					<unzip dest="${jboss.home}" src="@{jbosscp.binaries.file}" />
 					<!-- Copy of patched configuration files -->
 					<copy file="${jboss.home}/config-patches/jboss-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
-					<copy file="${jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jmxinvoker-service.xml"/>
+					<copy file="${jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jmx-invoker-service.xml"/>
 					<copy file="${jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
 					<copy file="${jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
 					<copy file="${jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
@@ -4634,25 +4634,51 @@ $HeadURL$
 		<attribute name="database.jndi.datasource.name" default="${database.jndi.datasource.name}" />
 		<attribute name="database.context.path" default="${database.context.path}" />
 		<sequential>
-			<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
-				<xmlcatalog refid="bda.xml.catalog"/>
-				<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context[@path='/@{database.context.path}']"/>
-			</xmltask>
-			<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
-				<xmlcatalog refid="bda.xml.catalog"/>
-				<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']">
-					<![CDATA[
-					<Context path="/@{database.context.path}" docBase="@{database.context.path}" reloadable="false">
-						<Resource name="@{database.jndi.datasource.name}" auth="Container" type="javax.sql.DataSource"
-							username="@{database.user}"
-							password="@{database.password}"
-							driverClassName="@{database.driver}"
-							url="@{database.url}?autoReconnect=true"
-							maxActive="20" />
-					</Context>
-					]]>
-				</insert>
-			</xmltask>
+			<var name="datasource.has.value" unset="true"/>
+			<propertyregex property="datasource.has.value"
+				input="@{database.jndi.datasource.name}"
+				regexp="\S+"
+				select="true"
+				/>
+			<var name="datasource.not.variable" unset="true"/>
+			<propertyregex property="datasource.not.variable"
+				input="@{database.jndi.datasource.name}"
+				regexp="\$"
+				select="true"
+				/>
+			<if>
+				<and>
+					<equals arg1="${datasource.has.value}" arg2="true"/>
+					<not>
+						<equals arg1="${datasource.not.variable}" arg2="true"/>
+					</not>
+				</and>
+				<then>	
+					<echo message="Configuring tomcat datasource"/>
+					<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<remove path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context[@path='/@{database.context.path}']"/>
+					</xmltask>
+					<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<insert path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']">
+							<![CDATA[
+							<Context path="/@{database.context.path}" docBase="@{database.context.path}" reloadable="false">
+								<Resource name="@{database.jndi.datasource.name}" auth="Container" type="javax.sql.DataSource"
+									username="@{database.user}"
+									password="@{database.password}"
+									driverClassName="@{database.driver}"
+									url="@{database.url}?autoReconnect=true"
+									maxActive="20" />
+									</Context>
+							]]>
+						</insert>
+					</xmltask>
+				</then>
+				<else>
+					<echo message="Not configuring tomcat datasource because database.jndi.datasource.name is not set"/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 
