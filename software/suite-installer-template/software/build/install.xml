@@ -59,27 +59,8 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	<property name="tools.dir" location="${basedir}/${tools.dist.relative.dir}" />
 	<property name="common.dir.src" location="${basedir}/${common.dist.relative.dir}" />
 	<property name="common.dir.dest" location="${working.dir}/${common.dist.relative.dir}" />
-	<property name="db.dir.src" location="${basedir}/${db.dist.relative.dir}" />
-	<property name="db.dir.dest" location="${working.dir}/${db.dist.relative.dir}" />
-	<property name="db-install.dir.dest" location="${working.dir}/${db-install.dist.relative.dir}" />
-	<property name="db-upgrade.dir.dest" location="${working.dir}/${db-upgrade.dist.relative.dir}" />
 	<property name="jboss-conf.dir.src" location="${basedir}/${jboss-conf.dist.relative.dir}" />
 	<property name="jboss-conf.dir.dest" location="${working.dir}/${jboss-conf.dist.relative.dir}" />
-
-	<!-- *-ds.xml and WAR -->
-	<property name="bda-blueprints-webapp.dir.dist" location="${basedir}/${bda-blueprints-webapp.dist.relative.dir}" />
-	<property name="bda-blueprints-webapp.ds.file" value="bda-blueprints-ds.xml" />
-	<property name="bda-blueprints-webapp.name" value="bda-blueprints-webapp" />
-	<property name="bda-blueprints-webapp.war.file" value="${bda-blueprints-webapp.name}.war" />
-
-	<!-- Grid related properties -->
-	<property name="grid.resource.dir" location="${basedir}/${tools.dist.relative.dir}" />
-	<property name="grid.application.dir" location="${basedir}/${grid-sample.dist.relative.dir}" />
-	<property name="grid.artifact.file" value="sample-wsrf-war.zip" />
-	<property name="grid.dir.dest" value="wsrf" />
-	<property name="grid.application.name" value="Sample" />
-	<property name="resource.file.jboss-globus-lib" value="${cagrid-libs.binaries.file}" />
-	<property name="resource.file.jboss-globus-war" value="${cagrid-base-war.binaries.file}" />
 
 	<!-- Paths -->
 	<path id="bda-utils.classpath">
