@@ -1089,6 +1089,15 @@ $HeadURL$
 		init:readers:bda:jboss,
 		init:readers:custom:jboss
 		">
+		<properties-print
+			properties.list="${read.properties.list}"
+			/>
+		<properties-exist
+			properties.list="${read.properties.list}"
+			/>
+		<properties-write
+			properties.list="${read.properties.list}"
+			/>
 	</target>
 	<target name="init:upgrade:tomcat" unless="install.running"
 		depends="
@@ -1139,6 +1148,8 @@ $HeadURL$
 		<property name="jboss.ncicb-standard.port-config" value="true"/>
 		<available file="${jboss.home}" property="jboss.exists"/>
 		<available file="${tomcat.home}" property="tomcat.exists"/>
+		<property name="read.jboss.home" value="${jboss.home}"/>
+		<property name="read.tomcat.home" value="${tomcat.home}"/>
 	</target>
 
 	<target name="init:readers:custom:jboss" unless="install.running">
@@ -1177,17 +1188,21 @@ $HeadURL$
 		<var name="read.properties.list" value=""/>
 		<!-- Reader reqiures that you have only one data source defined in each *-ds.xml file -->
 		<jboss-read-dbconfig
+			jboss.home="${read.jboss.home}"
 			jboss.ds-xml.file="bda-blueprints-ds.xml"
 			/>
 		<jboss-read-ldapconfig
+			jboss.home="${read.jboss.home}"
 			/>
 		<jboss-read-bindings-file-location
+			jboss.home="${read.jboss.home}"
 			/>
 		<jboss-read-ports
 			/>
 		<!-- Setting this variable will cause install to copy it into place if using CM/DAC, not modified in NCM -->
 		<var name="jboss.ssl.keystore.dir" value="${working.dir}/keys/jboss"/>
 		<jboss-read-ssl
+			jboss.home="${read.jboss.home}"
 			copied.keystore.dir="${jboss.ssl.keystore.dir}"
 			/>
 		<!-- No longer needed now reading all the ports
@@ -1199,22 +1214,27 @@ $HeadURL$
 		<var name="jboss.server.binding.template.location" value="${working.dir}/copied-bindings/${copied.jboss.bindings.file}"/>
 		-->
 		<jboss-read-external-hostname
+			jboss.home="${read.jboss.home}"
 			/>
 		<!-- for tier installs, should be done first, since it is set first it will be the one used if it exists -->
 		<jboss-read-java_opts
-			jboss.bin.dir="${jboss.home}/server/${jboss.server.name}/bin"
+			jboss.bin.dir="${read.jboss.home}/server/${jboss.server.name}/bin"
 			/>              
 		<jboss-read-java_opts
+			jboss.home="${read.jboss.home}"
 			/>
 		<!-- will have to add code to install:post:jboss to copy this back if exists -->
 		<property name="copied.jboss.log4j.dir" value="${working.dir}/copied-log4j"/>
 		<jboss-copy-log4j
+			jboss.home="${read.jboss.home}"
 			copied.jboss.log4j.dir="${copied.jboss.log4j.dir}"
 			/>
 		<grid-read-index-url
+			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
 			/>              
 		<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
 		<jboss-read-grid-secure
+			jboss.home="${read.jboss.home}"
 			copied.keystore.dir="${jboss.grid.secure.dir}"
 			/>
 		<!-- will have to add code to install:post:jboss to copy this back if exists -->
@@ -1225,16 +1245,17 @@ $HeadURL$
 			/>
 		-->
 		<grid-read-poc
+			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
 			grid.service.name="Sample"
 			/>                      
 		<read-property-from-properties-service
+			jboss.home="${read.jboss.home}"
 			property.name="property1"
 			/>
 		<read-property-from-properties-service
+			jboss.home="${read.jboss.home}"
 			property.name="property2"
 			/>
-
-
 	</target>
 	<target name="init:readers:bda:tomcat" if="tomcat.exists">
 
@@ -1260,18 +1281,22 @@ $HeadURL$
 			</then>
 		</if>
 		<tomcat-read-ports
+			tomcat.home="${read.tomcat.home}"
 			/>
 		<var name="tomcat.ssl.keystore.dir" value="${working.dir}/keys/tomcat"/>
 		<tomcat-read-ssl
+			tomcat.home="${read.tomcat.home}"
 			copied.keystore.dir="${tomcat.ssl.keystore.dir}"
 			/>              
 		<tomcat-read-external-hostname
+			tomcat.home="${read.tomcat.home}"
 			/>
 		<grid-read-index-url
-			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
+			grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
 			/>
 		<var name="tomcat.grid.secure.dir" value="${working.dir}/keys/tomcat"/>
 		<tomcat-read-grid-secure
+			tomcat.home="${read.tomcat.home}"
 			copied.keystore.dir="${tomcat.grid.secure.dir}"
 			/>
 		<!--
@@ -1282,22 +1307,13 @@ $HeadURL$
 			/>
 		-->
 		<grid-read-poc
-			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
+			grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
 			grid.service.name="Sample"
 			/>                      
 
 
 		<!-- Fail if any read properties are not set -->
 		<echo message="All properties after readers"/>
-		<properties-print
-			properties.list="${read.properties.list},jboss.server.hostname,tomcat.hostname"
-			/>
-		<properties-exist
-			properties.list="${read.properties.list},jboss.server.hostname,tomcat.hostname"
-			/>
-		<properties-write
-			properties.list="${read.properties.list},jboss.server.hostname,tomcat.hostname"
-			/>
 	</target>
 	<target name="upgrade:post:jboss">
 		<copy file="${copied.jboss.log4j.dir}/log4j.xml" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
