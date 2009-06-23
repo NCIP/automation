@@ -1106,7 +1106,7 @@ $HeadURL$
 		init:readers:custom:tomcat
 		">
 	</target>
-	<target name="init:upgrade:prep">
+	<target name="init:upgrade:prep" unless="install.running">
 	
 		<properties-print
 			properties.list="application.base.path,jboss.home,tomcat.home,jboss.server.name"
