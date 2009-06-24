@@ -2292,10 +2292,32 @@ $HeadURL$
 				<then>
 					<switch value="${database.type}">
 						<case value="postgresql">
-							<database-create/>
+							<database-create
+								database.driver="@{database.driver}"
+								database.system.url="@{database.system.url}"
+								database.system.user="@{database.system.user}"
+								database.system.password="@{database.system.password}"
+								database.version="@{database.version}"
+								database.name="@{database.name}"
+								database.server="@{database.server}"
+								database.url="@{database.url}"
+								database.user="@{database.user}"
+								database.password="@{database.password}"
+								/>
 						</case>
 						<case value="mysql">
-							<database-create/>
+							<database-create
+								database.driver="@{database.driver}"
+								database.system.url="@{database.system.url}"
+								database.system.user="@{database.system.user}"
+								database.system.password="@{database.system.password}"
+								database.version="@{database.version}"
+								database.name="@{database.name}"
+								database.server="@{database.server}"
+								database.url="@{database.url}"
+								database.user="@{database.user}"
+								database.password="@{database.password}"								
+							/>
 						</case>
 						<default>
 							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
