@@ -1315,7 +1315,7 @@ $HeadURL$
 		<!-- Fail if any read properties are not set -->
 		<echo message="All properties after readers"/>
 	</target>
-	<target name="upgrade:post:jboss">
+	<target name="upgrade:post:jboss" unless="install.running">
 		<copy file="${copied.jboss.log4j.dir}/log4j.xml" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
 	</target>
 	<target name="upgrade:post:tomcat">
