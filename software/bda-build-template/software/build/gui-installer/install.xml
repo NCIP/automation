@@ -134,37 +134,105 @@ $HeadURL$
 						</java>
 						<returnvalue type="boolean">true</returnvalue>
 					</condition>
-					<condition type="and" id="install.onwindows">
-						<condition type="ref" refid="install"/>
-						<condition type="ref" refid="installonwindows" />
-					</condition>
-					<condition type="and" id="upgrade.onwindows">
-						<condition type="ref" refid="upgrade"/>
-						<condition type="ref" refid="installonwindows" />
-					</condition>
 					<condition type="variable" id="ldap.setup">
 						<name>authentication.type</name>
 						<value>ldap</value>
 					</condition>
-					<!-- Custom/typical conditional vars -->
-					<condition type="variable" id="options.custom">
-						<name>setup.options.type</name>
-						<value>custom</value>
+					<!-- Container selection -->
+					<condition type="variable" id="container.all">
+						<name>install.selection</name>
+						<value>install.all</value>
 					</condition>
-					<condition type="variable" id="options.typical">
-						<name>setup.options.type</name>
-						<value>typical</value>
+					<condition type="variable" id="container.jboss">
+						<name>install.selection</name>
+						<value>install.jboss</value>
+					</condition>
+					<condition type="variable" id="container.tomcat">
+						<name>install.selection</name>
+						<value>install.tomcat</value>
+					</condition>
+					<condition type="variable" id="container.database">
+						<name>install.selection</name>
+						<value>install.database</value>
 					</condition>
 
-					<condition type="and" id="install.custom">
-						<condition type="ref" refid="install"/>
-						<condition type="ref" refid="options.custom" />
-					</condition>
-					<condition type="and" id="install.typical">
-						<condition type="ref" refid="install"/>
-						<condition type="ref" refid="options.typical" />
-					</condition>
 				</conditions>
+				<!-- Identify your build targets for each of the contaiers for both install and upgrade -->
+				<dynamicvariables>
+					<variable name="build.file.target" value="install" condition="install+container.all" />
+					<variable name="build.file.target" value="install:jboss" condition="install+container.jboss" />
+					<variable name="build.file.target" value="install:tomcat" condition="install+container.tomcat" />
+					<variable name="build.file.target" value="install:database" condition="install+container.database" />
+					<variable name="build.file.target" value="upgrade" condition="upgrade+container.all" />
+					<variable name="build.file.target" value="upgrade:jboss" condition="upgrade+container.jboss" />
+					<variable name="build.file.target" value="upgrade:tomcat" condition="upgrade+container.tomcat" />
+					<variable name="build.file.target" value="upgrade:database" condition="upgrade+container.database" />
+
+					<!-- conditionals for containers not chosen -->
+					<variable name="jboss.relative.path" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.server.hostname" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.server.name" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.web.user" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.web.password" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.server.ports.name" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.server.jndi.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.server.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.cobraorb.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.ejbinvoker.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.hajndi.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.hajrmi.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.jms.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.jmx-rmi.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.messaging.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.pooledha.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.remoting.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.server.bind.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.server.rmi.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.service.rmiobject.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.snmp.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.snmp-trapd.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.web.service.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.ssl.enable" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.ssl.keystore.location" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.ssl.keystore.pass" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.ssl.keystore.alias" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.ssl.fullyqualified.hostname" value="" condition="container.database|container.tomcat"/>
+					<variable name="exclude.jboss.backup" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.java.opts" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.external.http.host" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.external.http.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.external.ssl.host" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.external.ssl.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.external.grid.secure.host" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.external.grid.secure.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.grid.secure.enable" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.grid.secure.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.grid.secure.cert.location" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.grid.secure.key.location" value="" condition="container.database|container.tomcat"/>
+					<variable name="tomcat.relative.path" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.hostname" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.port.http" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.port.ajp" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.port.ssl" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.port.shutdown" value="" condition="container.database|container.jboss"/>
+					<variable name="exclude.tomcat.backup" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.ssl.enable" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.ssl.keystore.location" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.ssl.keystore.pass" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.ssl.keystore.alias" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.ssl.fullyqualified.hostname" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.external.http.host" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.external.http.port" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.external.ssl.host" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.external.ssl.port" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.external.grid.secure.host" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.external.grid.secure.port" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.grid.secure.enable" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.grid.secure.port" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.grid.secure.cert.location" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.grid.secure.key.location" value="" condition="container.database|container.jboss"/>
+
+				</dynamicvariables>
 
 				<!--
 				The resources section.
@@ -195,39 +263,41 @@ $HeadURL$
 					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="never"/>
 					-->
 					<panel classname="UserPathPanel" id="UserPathPanelInstallation" condition="install"/>
+					<!-- Contaner selection -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.1"/>
 					<!-- Upgrade, specify app homes and read properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="upgrade"/>
-					<!-- Upgrade, read props -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.2" condition="upgrade"/>
+					<!-- Upgrade, read props -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.3" condition="upgrade"/>
 					<!-- Jboss Configuration -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.3"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.4" condition="container.jboss|container.all"/>
 					<!-- Jboss Continued -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.4"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.5" condition="container.jboss|container.all"/>
 					<!-- Jboss SSL 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.5"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.6" condition="container.jboss|container.all"/>
 					<!-- Authentication Type -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.6"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.7"/>
 					<!-- Ldap data entry -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.7" condition="ldap.setup"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.8" condition="ldap.setup"/>
 					<!-- Database Properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.8"/>
-					<!-- Global Configuraiton Options -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.9"/>
-					<!-- Grid Global Configuration -->
+					<!-- Global Configuraiton Options -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.10"/>
+					<!-- Grid Global Configuration -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.11" condition="!container.database"/>
 					<!-- Grid Research Center -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.11"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.12" condition="!container.database"/>
 					<!-- Grid Tech Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.12"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="!container.database"/>
 					<!-- Grid Science Contact -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.13"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="!container.database"/>
 					<!-- Application Specific Properties -->
 					<!-- Tomcat Base Config 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.14"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.15" condition="container.tomcat|container.all"/>
 					<!-- Tomcat SSL 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.15"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.16" condition="container.tomcat|container.all"/>
 					<!-- Installation Summary -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.16" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.17" />
 					<panel classname="InstallationGroupPanel"/>
 					<panel classname="ExtendedInstallPanel"/>
 					<panel classname="FinishPanel"/>

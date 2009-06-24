@@ -94,6 +94,7 @@ $HeadURL$
 		<echo message="${install.path}"/>
 		<ant inheritAll="false" inheritRefs="false"
 			antfile="build.xml"
+			target="${build.file.target}"
 			dir="${install.path}/${application_installer}"
 			>
 			<property name="install.path" value="${install.path}"/>

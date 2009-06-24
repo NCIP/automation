@@ -69,6 +69,7 @@ $HeadURL$
 			>
 			<target name="install-application"/>
 			<property name="install.path" value="$SYSTEM_user_home/${installer.dir}"/>   
+			<property name="build.file.target" value="${build.file.target}"/>   
 		</antcall>
 	</pack>	
 </antactions>   
