@@ -338,6 +338,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		install:validation:pre-install:ports,
 		install:clean,
 		install:init,
+		install:database:sub-project,
 		install:tomcat,
 		install:jboss,
 		install:post,
@@ -382,6 +383,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		install:jboss:stop,
 		install:tomcat:stop,
 		install:init,
+		upgrade:database:sub-project,
 		upgrade:jboss,
 		upgrade:tomcat,
 		install:validation:post-install
@@ -789,8 +791,8 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		<!-- place holder -->
 	</target>
 	<target name="install:tomcat:sub-project">
-		<!-- Append your "${sub-project.dist.relative.dir}:${sub-project.install.tomcat.target.list}" to this property value using comma as a delimeter-->
-		<property name="tomcat.target.list" value="${sub-project.dist.relative.dir}:${sub-project.install.tomcat.target.list}"/>
+		<!-- Append your "${sub-project.dist.relative.dir}:${sub-project.properties.file}:${sub-project.install.tomcat.target.list}" to this property value using comma as a delimeter-->
+		<property name="tomcat.target.list" value="${sub-project.dist.relative.dir}:${sub-project.properties.file}:${sub-project.install.tomcat.target.list}"/>
 		<echo message="List- ${tomcat.target.list}"/>
 		<!-- work around for issue with reader in sub-project related to keystore/cert files -->
 		<copy file="${tomcat.ssl.keystore.location}" todir="${tomcat.home}/conf"/>
@@ -802,14 +804,20 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<var name="dist.relative.dir" unset="true"/>
 				<propertyregex property="dist.relative.dir"
 					input="@{dir.and.targetlist}"
-					regexp="(.*?):(.*)"
+					regexp="(.*?):(.*?):(.*)"
 					select="\1"
+					/>
+				<var name="prop.file" unset="true"/>
+				<propertyregex property="prop.file"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\2"
 					/>
 				<var name="tomcat.target.list" unset="true"/>
 				<propertyregex property="tomcat.target.list"
 					input="@{dir.and.targetlist}"
-					regexp="(.*?):(.*)"
-					select="\2"
+					regexp="(.*?):(.*?):(.*)"
+					select="\3"
 					/>
 				<echo message="dir- '${dist.relative.dir}' target.list- '${tomcat.target.list}'"/>
 				
@@ -819,11 +827,20 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${sub-project.dist.relative.dir}">
 							<property name="application.base.path.linux" value="${application.base.path.linux}"/>
 							<property name="application.base.path.windows" value="${application.base.path.windows}"/>
+							<!-- Cause readers to read from backup area -->
 							<property name="read.tomcat.home" value="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"/>
+							<!-- Backups only need to be run at suite level -->
 							<property name="exclude.tomcat.backup" value="true"/>
 							<property name="exclude.start.servers" value="true"/>
-							<property name="cacore-sdk.required" value="falsie"/>
+							<!-- not sure why this is there -->
+							<property name="cacore-sdk.required" value="false"/>
+							<!-- Get grid binaries from suite-level -->
 							<property name="grid.resource.dir" location="${grid.resource.dir}"/>
+							<!-- To cause readers to not run during install -->
+							<property name="install.running" value="true"/>
+							<!-- Since upgrade target is being called this ensures all props set for install. -->
+							<property name="properties.file" value="${prop.file}"/>
+							<!-- App server Props -->
 							<property name="tomcat.relative.path" value="${tomcat.relative.path}"/>
 							<property name="tomcat.hostname" value="${tomcat.hostname}"/>
 							<property name="tomcat.port.http" value="${tomcat.port.http}"/>
@@ -852,28 +869,41 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		</for>
 	</target>
 	<target name="install:jboss:sub-project">
-		<!-- Append your "${sub-project.dist.relative.dir}:${sub-project.install.jboss.target.list}" to this property value using comma as a delimeter-->
-		<property name="jboss.target.list" value="${sub-project.dist.relative.dir}:${sub-project.install.jboss.target.list}"/>
+		<!-- Append your "${sub-project.dist.relative.dir}:${sub-project.properties.file}:${sub-project.install.jboss.target.list}" to this property value using comma as a delimeter-->
+		<property name="jboss.target.list" value="${sub-project.dist.relative.dir}:${sub-project.properties.file}:${sub-project.install.jboss.target.list}"/>
 		<echo message="List- ${jboss.target.list}"/>
 		<!-- work around for issue with reader in sub-project related to keystore/cert files -->
+		<!-- no longer needed since readers have been disabled 
 		<copy file="${jboss.ssl.keystore.location}" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
 		<copy file="${security.dist.relative.dir}/165.112.132.171-cert.pem" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
 		<copy file="${security.dist.relative.dir}/165.112.132.171-key.pem" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
-		<copy dir="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}/bindings" todir="${jboss.home}"/>
+		<mkdir dir="${jboss.home}/bindings"/>
+		<copy todir="${jboss.home}/bindings">
+			<fileset dir="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}/bindings">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		-->
 
 		<for list="${jboss.target.list}" param="dir.and.targetlist" delimiter=",">
 			<sequential>
 				<var name="dist.relative.dir" unset="true"/>
 				<propertyregex property="dist.relative.dir"
 					input="@{dir.and.targetlist}"
-					regexp="(.*?):(.*)"
+					regexp="(.*?):(.*?):(.*)"
 					select="\1"
+					/>
+				<var name="prop.file" unset="true"/>
+				<propertyregex property="prop.file"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\2"
 					/>
 				<var name="jboss.target.list" unset="true"/>
 				<propertyregex property="jboss.target.list"
 					input="@{dir.and.targetlist}"
-					regexp="(.*?):(.*)"
-					select="\2"
+					regexp="(.*?):(.*?):(.*)"
+					select="\3"
 					/>
 				<echo message="dir- '${dist.relative.dir}' target.list- '${jboss.target.list}'"/>
 				
@@ -888,6 +918,10 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 							<property name="exclude.start.servers" value="true"/>
 							<property name="cacore-sdk.required" value="false"/>
 							<property name="grid.resource.dir" location="${grid.resource.dir}"/>
+							<!-- To cause readers to not run during install -->
+							<property name="install.running" value="true"/>
+							<!-- Since upgrade target is being called this ensures all props set for install. -->
+							<property name="properties.file" value="${prop.file}"/>
 							<property name="jboss.relative.path" value="${jboss.relative.path}"/>
 							<property name="jboss.server.hostname" value="${jboss.server.hostname}"/>
 							<property name="jboss.server.name" value="${jboss.server.name}"/>
@@ -934,5 +968,82 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 			</sequential>
 		</for>
 	</target>
+	<target name="install:database:sub-project">
+		<!-- Append your "${sub-project.dist.relative.dir}:${sub-project.properties.file}:${sub-project.install.database.target.list}" to this property value using comma as a delimeter-->
+		<property name="database.target.list" value="${sub-project.dist.relative.dir}:${sub-project.properties.file}:${sub-project.install.database.target.list}"/>
+		<echo message="List- ${database.target.list}"/>
+		<for list="${database.target.list}" param="dir.and.targetlist" delimiter=",">
+			<sequential>
+				<var name="dist.relative.dir" unset="true"/>
+				<propertyregex property="dist.relative.dir"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\1"
+					/>
+				<var name="prop.file" unset="true"/>
+				<propertyregex property="prop.file"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\2"
+					/>
+				<var name="database.target.list" unset="true"/>
+				<propertyregex property="database.target.list"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\3"
+					/>
+				<echo message="dir- '${dist.relative.dir}' target.list- '${database.target.list}'"/>
+				
+				<for list="${database.target.list}" param="target.name" delimiter=",">
+					<sequential>
+						<echo  message="Calling @{target.name} from ${dist.relative.dir}"/>
+						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${sub-project.dist.relative.dir}">
+							<!-- To cause readers to not run during install -->
+							<property name="install.running" value="true"/>
+							<property name="properties.file" value="${prop.file}"/>
+						</ant>
+					</sequential>
+				</for>
+			</sequential>
+		</for>
+	</target>
+	<target name="upgrade:database:sub-project">
+		<!-- Append your "${sub-project.dist.relative.dir}:${sub-project.install.database.target.list}" to this property value using comma as a delimeter-->
+		<property name="database.target.list" value="${sub-project.dist.relative.dir}:${sub-project.properties.file}:${sub-project.upgrade.database.target.list}"/>
+		<echo message="List- ${database.target.list}"/>
+		<for list="${database.target.list}" param="dir.and.targetlist" delimiter=",">
+			<sequential>
+				<var name="dist.relative.dir" unset="true"/>
+				<propertyregex property="dist.relative.dir"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\1"
+					/>
+				<var name="prop.file" unset="true"/>
+				<propertyregex property="prop.file"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\2"
+					/>
+				<var name="database.target.list" unset="true"/>
+				<propertyregex property="database.target.list"
+					input="@{dir.and.targetlist}"
+					regexp="(.*?):(.*?):(.*)"
+					select="\3"
+					/>
+				<echo message="dir- '${dist.relative.dir}' target.list- '${database.target.list}'"/>
+				
+				<for list="${database.target.list}" param="target.name" delimiter=",">
+					<sequential>
+						<echo  message="Calling @{target.name} from ${dist.relative.dir} using prop file ${prop.file}"/>
+						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${sub-project.dist.relative.dir}">
+							<!-- To cause readers to not run during install -->
+							<property name="install.running" value="true"/>
+							<property name="properties.file" value="${prop.file}"/>
+						</ant>
+					</sequential>
+				</for>
+			</sequential>
+		</for>
+	</target>
 </project>
-
