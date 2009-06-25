@@ -31,6 +31,9 @@ $HeadURL$
 				<choice txt="Database" value="install.database" />
 			</spec>
 		</field>
+		<variable name="validation.pre.port.list" value=""/>
+		<variable name="validation.post.http.list" value=""/>
+		<variable name="validation.post.socket.list" value=""/>
 	</panel>
 
 	<!-- Upgrade, specify app homes and read properties -->
@@ -166,6 +169,9 @@ $HeadURL$
 			<propertymap propertyname="tomcat.grid.secure.cert.location" mapname="tomcat.grid.secure.cert.location"/>
 			<propertymap propertyname="tomcat.grid.secure.key.location" mapname="tomcat.grid.secure.key.location"/>
 		</panelreader>
+		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.server.port},${jboss.web.service.port}"/>
+		<variable name="validation.post.http.list" value="${jboss.server.port}"/>
+		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
 	</panel>
 	<!-- Jboss Configuration -->
 	<panel order="4">
@@ -379,6 +385,10 @@ $HeadURL$
 		<field type="text" variable="jboss.external.grid.secure.port">
 			<spec txt="Grid External Port Number:" size="5" set=""/>
 		</field>
+
+		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.server.port},${jboss.web.service.port}"/>
+		<variable name="validation.post.http.list" value="${jboss.server.port}"/>
+		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
 
 	</panel>
 
