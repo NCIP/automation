@@ -1369,7 +1369,7 @@ $HeadURL$
 			/>
 		-->
 		<grid-read-poc
-			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
+			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf"
 			grid.service.name="Sample"
 			/>                      
 		<read-property-from-properties-service
