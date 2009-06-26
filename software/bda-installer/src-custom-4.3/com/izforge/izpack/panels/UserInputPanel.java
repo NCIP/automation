@@ -294,6 +294,8 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
     private static final String FILE_EXTRACTOR_EXTRACT_FILE = "extractfile";
 
     private static final String FILE_EXTRACTOR_FILE_NAME = "filename";
+    
+    private static final String FILE_EXTRACTOR_DESTINATION_NAME = "toDirName";
 
     private static final String PANEL_READER_IN_PROPERTY = "inpropertymap";
 
@@ -627,9 +629,22 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
             {
             	IXMLElement extractFile = extractorMap.elementAt(i);
             	String extractorFileName = extractFile.getAttribute(FILE_EXTRACTOR_FILE_NAME);
+            	String toDirName = extractFile.getAttribute(FILE_EXTRACTOR_DESTINATION_NAME);
             	System.out.println("extractorFileName ::" +extractorFileName);
-		System.out.println("jarFileName ::"+idata.info.getInstallerBase()+".jar");
-            	extractFiles(idata.info.getInstallerBase()+".jar",extractorFileName);
+            	System.out.println("DestinationFile ::" +toDirName);
+            	System.out.println("classpath ::" +System.getProperty("java.class.path"));
+            	System.out.println("jarFileName ::"+idata.info.getInstallerBase()+".jar");
+            	for (String jarFile : System.getProperty("java.class.path").split(System.getProperty("path.separator"))) 
+            	{   
+            	    if (jarFile.endsWith(".jar")) 
+            	    {   
+                    	if(checkIfExists(jarFile,extractorFileName))
+                    	{
+                    		extractFiles(jarFile,extractorFileName,toDirName);
+                    	}
+            	    }
+            	}   
+
             }
 		}
 		catch (Exception e1) {
@@ -637,12 +652,10 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 		}
 	}
 
-	private void extractFiles(String jarFile,String fileToExtract)
-	{
-
-        // GET FROM JAR
+	private boolean checkIfExists(String jarFile,String fileToExtract)
+	{        
         JarFile jar;
-		try
+		try 
 		{
 			jar = new JarFile(jarFile);
 			Enumeration en = jar.entries();
@@ -651,23 +664,55 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 				JarEntry fileName = (JarEntry) en.nextElement();
 				if(fileName.toString().startsWith(fileToExtract))
 				{
-					ZipEntry entry = jar.getEntry(fileName.toString());
+					System.out.println("fileName matches true ::" +fileName.toString());	
+					return true;
+				}
+			}
+		}	
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	private static void extractFiles(String jarFile,String fileToExtract,String toDirName)
+	{
+        
+        // GET FROM JAR
+        JarFile jar;
+		try 
+		{
+			jar = new JarFile(jarFile);
+			Enumeration en = jar.entries();
+			File destinationDir = null;
+			while(en.hasMoreElements())
+			{
+				JarEntry fileName = (JarEntry) en.nextElement();
+				if(fileName.toString().startsWith(fileToExtract))
+				{
+					ZipEntry entry = jar.getEntry(fileName.toString());						
 					if (!fileName.isDirectory())
 					{
 						File efile = new File(entry.getName());
-
-						String fullFile = efile.getPath();
+						if(toDirName!= null)
+							destinationDir = new File(toDirName);
+						else
+							destinationDir = new File(System.getProperty("user.home"));
+						
+						String filePath = efile.getPath();
+						String fullFile = destinationDir +"/"+ filePath;
+						
 						String stripedFileName = fullFile.substring(0, fullFile.lastIndexOf(File.separator));
-
+		
 						if(!(new File(stripedFileName).exists()))
 						{
 							new File(stripedFileName).mkdirs();
 						}
-
-				        InputStream is =
+					
+				        InputStream is = 
 					           new BufferedInputStream(jar.getInputStream(entry));
-					        OutputStream os =
-					           new BufferedOutputStream(new FileOutputStream(efile));
+					        OutputStream os = 
+					           new BufferedOutputStream(new FileOutputStream(fullFile));
 					        byte[] buffer = new byte[2048];
 					        for (;;)  {
 					          int nBytes = is.read(buffer);
@@ -676,11 +721,11 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 					        }
 					        os.flush();
 					        os.close();
-					        is.close();
+					        is.close();	
 					}
-				}
-			}
-		}
+				}	
+			}               
+		}	
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
