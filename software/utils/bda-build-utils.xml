@@ -1350,7 +1350,7 @@ $HeadURL$
 			<if>
 				<isset property="force.reinstall"/>
 				<then>
-					<echo message="Creating ${database.type} database named ${database.name}."/>
+					<echo message="Creating ${database.type} database named @{database.name}."/>
 					<switch value="${database.type}">
 						<case value="mysql">
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
@@ -1403,11 +1403,11 @@ $HeadURL$
 								<classpath>
 									<pathelement location="${database.driver.file}" />
 								</classpath>
-									drop database if exists ${database.name};
-									drop user if exists ${database.user};
-									create database ${database.name};
-									create user ${database.user} with password '${database.password}';
-									grant all on database ${database.name} to ${database.user};
+									drop database if exists @{database.name};
+									drop user if exists @{database.user};
+									create database @{database.name};
+									create user @{database.user} with password '@{database.password}';
+									grant all on database @{database.name} to @{database.user};
 							</sql>
 						</case>
 					</switch>
@@ -2292,32 +2292,32 @@ $HeadURL$
 				<then>
 					<switch value="${database.type}">
 						<case value="postgresql">
-							<database-create
-								database.driver="@{database.driver}"
-								database.system.url="@{database.system.url}"
-								database.system.user="@{database.system.user}"
-								database.system.password="@{database.system.password}"
-								database.version="@{database.version}"
-								database.name="@{database.name}"
-								database.server="@{database.server}"
-								database.url="@{database.url}"
-								database.user="@{database.user}"
-								database.password="@{database.password}"
-								/>
+							<database-create                                       
+								database.driver="@{database.driver}"                            
+								database.system.url="@{database.system.url}"                    
+								database.system.user="@{database.system.user}"                  
+								database.system.password="@{database.system.password}"          
+								database.version="@{database.version}"                          
+								database.name="@{database.name}"                                
+								database.server="@{database.server}"                            
+								database.url="@{database.url}"                                  
+								database.user="@{database.user}"                                
+								database.password="@{database.password}"                        
+								/>                                                  
 						</case>
 						<case value="mysql">
-							<database-create
-								database.driver="@{database.driver}"
-								database.system.url="@{database.system.url}"
-								database.system.user="@{database.system.user}"
-								database.system.password="@{database.system.password}"
-								database.version="@{database.version}"
-								database.name="@{database.name}"
-								database.server="@{database.server}"
-								database.url="@{database.url}"
-								database.user="@{database.user}"
-								database.password="@{database.password}"								
-							/>
+							<database-create                                       
+								database.driver="@{database.driver}"                            
+								database.system.url="@{database.system.url}"                    
+								database.system.user="@{database.system.user}"                  
+								database.system.password="@{database.system.password}"          
+								database.version="@{database.version}"                          
+								database.name="@{database.name}"                                
+								database.server="@{database.server}"                            
+								database.url="@{database.url}"                                  
+								database.user="@{database.user}"                                
+								database.password="@{database.password}"                        
+								/>                                                  
 						</case>
 						<default>
 							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
@@ -2976,12 +2976,13 @@ $HeadURL$
 
 			</if>
 
-			<!-- Fix service specific jndi-config -->
+			<!-- Fix service specific jndi-config- don't think this is needed, ssaksa090626
 			<echo message="Fixing second grid jnid-config"/>
 			<replaceregexp file="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/cagrid_@{grid.application.name}/jndi-config.xml"
 				match="(\s+.value.)http://.*\:\d+(\/.*)"
 				replace="\1${scheme}://@{appserver.hostname}:${appserver.default.web.port}\2"
 				flags="g" byline="true"/>
+			-->
 			<!-- Configure grid service to advertise the external URL if server is protected by a NAT -->
 			<grid-configure-server-config
 				appserver.webapp.dir="@{appserver.webapp.dir}"
@@ -5712,7 +5713,8 @@ $HeadURL$
 	</macrodef>
 
 	<macrodef name="jboss-read-ssl" description="macro for enabling ssl in jboss">
-		<attribute name="jboss.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server-xml.file" default="@{jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="jboss.server-xml.service.name" default="jboss.web"/>
 		<attribute name="jboss.ssl.enable.property.name" default="jboss.ssl.enable"/>
 		<attribute name="jboss.ssl.port.property.name" default="jboss.ssl.port"/>
@@ -5744,7 +5746,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="tomcat-read-ssl" description="macro for enabling ssl in tomcat">
-		<attribute name="tomcat.server-xml.file" default="${tomcat.home}/conf/server.xml"/>
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="tomcat.server-xml.file" default="@{tomcat.home}/conf/server.xml"/>
 		<attribute name="tomcat.server-xml.service.name" default="Catalina"/>
 		<attribute name="tomcat.ssl.enable.property.name" default="tomcat.ssl.enable"/>
 		<attribute name="tomcat.ssl.port.property.name" default="tomcat.port.ssl"/>
@@ -5888,7 +5891,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-read-external-hostname">
-		<attribute name="jboss.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server-xml.file" default="@{jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="jboss.server-xml.service.name" default="jboss.web"/>
 		<attribute name="jboss.external.ssl.host.property.name" default="jboss.external.ssl.host"/>
 		<attribute name="jboss.external.ssl.port.property.name" default="jboss.external.ssl.port"/>
@@ -5919,7 +5923,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="tomcat-read-external-hostname">
-		<attribute name="tomcat.server-xml.file" default="${tomcat.home}/conf/server.xml"/>
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="tomcat.server-xml.file" default="@{tomcat.home}/conf/server.xml"/>
 		<attribute name="tomcat.server-xml.service.name" default="Catalina"/>
 		<attribute name="tomcat.external.ssl.host.property.name" default="tomcat.external.ssl.host"/>
 		<attribute name="tomcat.external.ssl.port.property.name" default="tomcat.external.ssl.port"/>
@@ -6085,7 +6090,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="tomcat-read-ports">
-		<attribute name="tomcat.server-xml.file" default="${tomcat.home}/conf/server.xml"/>
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="tomcat.server-xml.file" default="@{tomcat.home}/conf/server.xml"/>
 		<attribute name="tomcat.server-xml.service.name" default="Catalina"/>
 		<attribute name="tomcat.port.http.property.name" default="tomcat.port.http"/>
 		<attribute name="tomcat.port.ssl.property.name" default="tomcat.port.ssl"/>
@@ -6115,7 +6121,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-read-java_opts">
-		<attribute name="jboss.bin.dir" default="${jboss.home}/bin" />
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.bin.dir" default="@{jboss.home}/bin" />
 		<attribute name="jboss.java.opts.property.name" default="jboss.java.opts" />
 		<sequential>
 			<echo message="Reading JBoss java options"/>
@@ -6198,7 +6205,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-copy-log4j">
-		<attribute name="jboss.log4j.location" default="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.log4j.location" default="@{jboss.home}/server/${jboss.server.name}/conf/log4j.xml"/>
 		<attribute name="copied.jboss.log4j.dir" default="${working.dir}/copied-log4j"/>
 		<sequential>
 			<mkdir dir="@{copied.jboss.log4j.dir}"/>
@@ -6254,7 +6262,8 @@ $HeadURL$
 	</macrodef>
 
 	<macrodef name="jboss-read-grid-secure" description="macro for enabling ssl in jboss">
-		<attribute name="jboss.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server-xml.file" default="@{jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="jboss.server-xml.service.name" default="jboss.web"/>
 		<attribute name="jboss.grid.secure.enable.property.name" default="jboss.grid.secure.enable"/>
 		<attribute name="jboss.grid.secure.port.property.name" default="jboss.grid.secure.port"/>
@@ -6284,7 +6293,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="tomcat-read-grid-secure" description="macro for enabling ssl in jboss">
-		<attribute name="tomcat.server-xml.file" default="${tomcat.home}/conf/server.xml"/>
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="tomcat.server-xml.file" default="@{tomcat.home}/conf/server.xml"/>
 		<attribute name="tomcat.server-xml.service.name" default="Catalina"/>
 		<attribute name="tomcat.grid.secure.enable.property.name" default="tomcat.grid.secure.enable"/>
 		<attribute name="tomcat.grid.secure.port.property.name" default="tomcat.grid.secure.port"/>
@@ -6811,7 +6821,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="read-property-from-properties-service">
-		<attribute name="properties-service-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="properties-service-xml.file" default="@{jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml"/>
 		<attribute name="property.name"/>
 		<sequential>
 			<var name="prop-service.prop.list" value="@{property.name}"/>
@@ -6931,4 +6942,441 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 
+	<macrodef name="validate-pre-install-database" description="Diagnose the host system before the installation">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.system.url" default="${database.system.url}" />
+		<attribute name="database.system.user" default="${database.system.user}" />
+		<attribute name="database.system.password" default="${database.system.password}" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.version" default="5.0.27" />
+		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.type" default="${database.type}"/>
+		<sequential>
+
+			<echo message="
+				database.driver=@{database.driver}
+				database.system.url=@{database.system.url}
+				database.system.user=@{database.system.user}
+				database.system.password=@{database.system.password}
+				database.url=@{database.url}
+				database.user=@{database.user}
+				database.password=@{database.password}
+				database.version=@{database.version}
+				database.name=@{database.name}
+				"/>
+
+			<validate-database
+				database.driver="@{database.driver}"
+				database.system.url="@{database.system.url}"
+				database.system.user="@{database.system.user}"
+				database.system.password="@{database.system.password}"
+				database.url="@{database.url}"
+				database.user="@{database.user}"
+				database.password="@{database.password}"
+				database.version="@{database.version}"
+				database.name="@{database.name}"
+				/>
+			<!-- Make sure system and app user are different -->
+			<if>
+				<equals arg1="@{database.system.user}" arg2="@{database.user}"/>
+				<then>
+					<fail message="The database.system.user and database.user properties cannot be the same.  The database.system.user drops the database.user if you are using database.re-create=true, the user would in effect drop and re-create himself, which could cause build failures."/>
+				</then>
+				<else>
+					<echo message="database.system.user and database.system are not the same, passed."/>
+				</else>
+			</if>
+			<switch value="@{database.type}">
+				<case value="mysql">
+					<switch  value="@{database.name}">
+						<case value="mysql">
+							<fail  message="database name of mysql not allowed"/>
+						</case>
+						<case value="information_schema">
+							<fail  message="database name of information_schema not allowed"/>
+						</case>
+						<case value="test">
+							<fail  message="database name of test not allowed"/>
+						</case>
+						<default>
+							<echo message="database.name of @{database.name} okay"/>
+						</default>
+					</switch>
+				</case>
+			</switch>
+			<check-database-exists
+				database.driver="@{database.driver}"
+				database.url="@{database.url}"
+				database.user="@{database.user}"
+				database.password="@{database.password}"
+				database.name="@{database.name}"
+				/>
+
+		</sequential>
+	</macrodef>
+
+
+	<macrodef name="validate-pre-install-common" description="Diagnose the host system before the installation">
+		<attribute name="ant.check.version" default="1.7.0" />
+		<attribute name="java.check.version.major" default="1.5" />
+		<attribute name="java.check.version.minor" default="1.5.0_10" />
+		<attribute name="property.template.file" default="${properties.template.file}"/>
+		<attribute name="envpropertyfile" default="${properties.file}"/>
+		<sequential>
+			<validate-environment
+				ant.check.version="@{ant.check.version}"
+				java.check.version.major="@{java.check.version.major}"
+				java.check.version.minor="@{java.check.version.minor}"
+				/>
+			<validate-properties/>
+			<compare-properties
+				property.template.file="@{property.template.file}"
+				envpropertyfile="@{envpropertyfile}"
+				/>
+			<check-absolute-directory
+				directory.property="application.base.path"
+				/>
+			<check-valid-directory-name
+				directory.property="application.base.path"
+				/>
+			<validate-env-name
+				 />
+
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-pre-install-jboss" description="Diagnose the host system before the installation">
+		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
+		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
+		<attribute name="jboss.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
+		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
+		<attribute name="jboss.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
+		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
+		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
+
+		<sequential>
+			<validate-appserver-versions
+				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
+				tomcat.binaries.relative.dir=""
+				/>
+			<validate-jboss-home
+				/>
+			<verify-keystore
+				appserver.ssl.enable="@{jboss.ssl.enable}"
+				appserver.ssl.keystore.file="@{jboss.ssl.keystore.file}"
+				appserver.ssl.keystore.pass="@{jboss.ssl.keystore.pass}"
+				appserver.ssl.keystore.alias="@{jboss.ssl.keystore.alias}"
+				appserver.ssl.fullyqualified.hostname="@{jboss.ssl.fullyqualified.hostname}"
+				appserver.ssl.keystore.dir="@{jboss.ssl.keystore.dir}"
+				/>
+			<check-application-exists
+				application.dir.property="jboss.home"
+				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="validate-pre-install-tomcat" description="Diagnose the host system before the installation">
+		<attribute name="tomcat.ssl.enable" default="${tomcat.ssl.enable}"/>
+		<attribute name="tomcat.ssl.keystore.file" default="${tomcat.ssl.keystore.file}"/>
+		<attribute name="tomcat.ssl.keystore.dir" default="${tomcat.ssl.keystore.dir}"/>
+		<attribute name="tomcat.ssl.keystore.pass" default="${tomcat.ssl.keystore.pass}"/>
+		<attribute name="tomcat.ssl.keystore.alias" default="${tomcat.ssl.keystore.alias}"/>
+		<attribute name="tomcat.ssl.fullyqualified.hostname" default="${tomcat.ssl.fullyqualified.hostname}"/>
+		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
+		<sequential>
+			<validate-appserver-versions
+				jboss.binaries.relative.dir=""
+				tomcat.binaries.relative.dir="@{tomcat.binaries.relative.dir}"
+				/>
+			<verify-keystore
+				appserver.ssl.enable="@{tomcat.ssl.enable}"
+				appserver.ssl.keystore.file="@{tomcat.ssl.keystore.file}"
+				appserver.ssl.keystore.pass="@{tomcat.ssl.keystore.pass}"
+				appserver.ssl.keystore.alias="@{tomcat.ssl.keystore.alias}"
+				appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
+				appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
+				/>
+
+
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-post-jboss" description="Diagnose the host system after the installation">
+		<attribute name="jboss.socket.list" default="${jboss.socket.list}" />
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="jboss.application.url" default="${jboss.application.url}" />
+		<sequential>
+			<!-- Give JBOSS another couple of seconds to come up -->
+			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
+				<http url="@{jboss.application.url}"/> 
+			</waitfor>
+
+			<!-- For each socket port call validate:post:socket -->
+			<if>
+				<isset property="validation.post.socket.list"/>
+				<then>
+					<for list="${validation.post.socket.list}" param="validate.port" >
+						<sequential>
+							<echo message="Checking if @{validate.port} is running."/>
+							<if>
+								<socket server="@{hostname}" port="@{validate.port}" />
+								<then>
+									<echo message="Port is @{validate.port} RUNNNING as expected."/>
+								</then>
+								<else>
+									<echo message="Unable to reach @{hostname}:@{validate.port}. You may experience problems using the application."/>
+								</else>
+							</if>
+						</sequential>
+					</for>
+				</then>
+			</if>
+			<echo message="******* INSTALLATION COMPLETED SUCESSFULLY *******"/>
+			<echo message="${line.separator}To view your application goto ${jboss.application.url}."/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-post-tomcat" description="Diagnose the host system after the installation">
+		<attribute name="tomcat.socket.list" default="${tomcat.socket.list}" />
+		<attribute name="tomcat.home" default="${tomcat.home}" />
+		<attribute name="tomcat.server.name" default="${tomcat.server.name}" />
+		<attribute name="tomcat.application.url" default="${tomcat.application.url}" />
+		<sequential>
+			<!-- Give JBOSS another couple of seconds to come up -->
+			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
+				<http url="@{tomcat.application.url}"/> 
+			</waitfor>
+
+			<!-- For each socket port call validate:post:socket -->
+			<if>
+				<isset property="validation.post.socket.list"/>
+				<then>
+					<for list="${validation.post.socket.list}" param="validate.port" >
+						<sequential>
+							<echo message="Checking if @{validate.port} is running."/>
+							<if>
+								<socket server="@{hostname}" port="@{validate.port}" />
+								<then>
+									<echo message="Port is @{validate.port} RUNNNING as expected."/>
+								</then>
+								<else>
+									<echo message="Unable to reach @{hostname}:@{validate.port}. You may experience problems using the application."/>
+								</else>
+							</if>
+						</sequential>
+					</for>
+				</then>
+			</if>
+			<echo message="******* INSTALLATION COMPLETED SUCESSFULLY *******"/>
+			<echo message="${line.separator}To view your application goto ${tomcat.application.url}."/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-post-common" description="Diagnose the host system after the installation">
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="propertyfile.backup.location" default="@{application.base.path}/change-logs" />
+		<sequential>
+			<echoproperties/>
+			<tstamp>
+				<format property="run.date" pattern="yyMMddHHmm"/>
+			</tstamp>
+			<basename file="${properties.file}" property="properties.file.name"/>
+			<var name="backup.properties.file" value="${properties.file.name}-${run.date}"/>
+			<mkdir dir="@{propertyfile.backup.location}"/>
+			<copy tofile="@{propertyfile.backup.location}/${backup.properties.file}" file="${properties.file}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="validate-pre-jboss-ports" description="Diagnose the host system before the installation">
+		<attribute name="jboss.socket.ports" default="${jboss.socket.ports}" />
+		<attribute name="hostname" default="${jboss.server.hostname}" />
+		<sequential>
+ 			<echo message="Validationg Ports Are not in use..."/>
+ 			<for list="@{jboss.socket.ports}" param="validate.port">
+				<sequential>
+					<var name="is.number" unset="true"/>
+					<propertyregex property="is.number"
+						input="@{validate.port}"
+						regexp="^\d+$"
+						select="true"
+						/>
+
+					<if>
+						<isset property="is.number"/>
+						<then>
+				 			<echo message="Checking if @{validate.port} is running."/>
+							<if>
+		 						<socket server="@{hostname}" port="@{validate.port}" />
+								<then>
+									<fail message="${line.separator}${line.separator}    Port is listening at @{hostname}:@{validate.port}.${line.separator}Verify the JBoss server is not running at @{hostname}:@{validate.port}. If it is not, there may be a different process or application using this port (@{validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing."/>
+ 								</then>
+								<else>
+									<echo message="Ports check: PASSED" />
+								</else>
+							</if>
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+	<macrodef name="validate-pre-tomcat-ports" description="Diagnose the host system before the installation">
+		<attribute name="tomcat.socket.ports" default="${tomcat.socket.ports}" />
+		<attribute name="hostname" default="${tomcat.hostname}" />
+		<sequential>
+ 			<echo message="Validationg Ports Are not in use..."/>
+ 			<for list="@{tomcat.socket.ports}" param="validate.port">
+				<sequential>
+					<var name="is.number" unset="true"/>
+					<propertyregex property="is.number"
+						input="@{validate.port}"
+						regexp="^\d+$"
+						select="true"
+						/>
+
+					<if>
+						<isset property="is.number"/>
+						<then>
+				 			<echo message="Checking if @{validate.port} is running."/>
+							<if>
+		 						<socket server="@{hostname}" port="@{validate.port}" />
+								<then>
+									<fail message="${line.separator}${line.separator}    Port is listening at @{hostname}:@{validate.port}.${line.separator}Verify the JBoss server is not running at @{hostname}:@{validate.port}. If it is not, there may be a different process or application using this port (@{validate.port}).  You can either change the port this application uses by updating your *-install.properties file or change your other application to resolve this issue and continue installing."/>
+ 								</then>
+								<else>
+									<echo message="Ports check: PASSED" />
+								</else>
+							</if>
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="tomcat-read-dbconfig" description="macro for enabling ssl in jboss">
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="tomcat.server-xml.file" default="@{tomcat.home}/conf/server.xml"/>
+		<attribute name="tomcat.server-xml.service.name" default="Catalina"/>
+		<attribute name="database.url.property.name" default="database.url" />
+		<attribute name="database.name.property.name" default="database.name" />
+		<attribute name="database.user.property.name" default="database.user" />
+		<attribute name="database.password.property.name" default="database.password" />
+		<attribute name="database.server.property.name" default="database.server" />
+		<attribute name="database.port.property.name" default="database.port" />
+		<attribute name="database.type.property.name" default="database.type" />
+		<attribute name="database.schema.property.name" default="database.schema" />
+		<sequential>
+			<var name="db.properties.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name},@{database.type.property.name},@{database.schema.property.name}"/>
+			<properties-missing
+				properties.list="${db.properties.list}"
+				properties.missing.property.name="db.properties.missing"
+				/>
+			<available file="@{tomcat.home}/conf/server.xml" property="ds.exists"/>
+			<if>
+				<isset property="db.properties.missing"/>
+				<then>
+					<if>
+						<not>
+							<isset property="ds.exists" />
+						</not>
+						<then>
+							<fail message="Some or all required database properties are not set and @{jboss.home}/server/@{jboss.server.name}/deploy/@{jboss.ds-xml.file} is not found.   Ensure arguments passed to this macro are correct or set required database properties in your property file."/>
+						</then>
+						<else>
+							<echo message="Reading database properties: ${db.properties.list}"/>
+							<!-- Blank props to be able to run this macro multiple times -->
+							<var name="read.database.url" unset="true"/>
+							<var name="read.database.user" unset="true"/>
+							<var name="read.database.password" unset="true"/>
+							<var name="read.database.driver" unset="true"/>
+							<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml">
+								<xmlcatalog refid="bda.xml.catalog"/>
+								<copy path="/Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context/Resource/@url" property="read.database.url" attrValue="true"/>
+								<copy path="//Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context/Resource/@username" property="read.database.user" attrValue="true"/>
+								<copy path="//Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context/Resource/@password" property="read.database.password" attrValue="true"/>
+								<copy path="//Server/Service[@name='Catalina']/Engine[@name='Catalina']/Host[@name='localhost']/Context/Resource/@driverClassName" property="read.database.driver" attrValue="true"/>
+							</xmltask>
+
+							<dbconfig property="db.appuser.works"
+										driver="${read.database.driver}"
+								url="${read.database.url}"
+								user="${read.database.user}"
+								password="${read.database.password}">
+								<validate />
+							</dbconfig>
+							<propertyregex property="read.database.name"
+								input="${read.database.url}"
+								regexp=".*[\/](.*)"
+								select="\1"
+								/>
+							<propertyregex property="read.database.server"
+								input="${read.database.url}"
+								regexp=".*\/\/(.*):.*"
+								select="\1"
+								/>
+							<propertyregex property="read.database.port"
+								input="${read.database.url}"
+								regexp=".*:(.*)\/.*"
+								select="\1"
+								/>
+							<var name="read.database.type" unset="true"/>
+							<propertyregex property="read.database.type"
+								input="${read.database.driver}"
+								regexp="mysql"
+								select="mysql"
+								/>
+							<propertyregex property="read.database.type"
+								input="${read.database.driver}"
+								regexp="oracle"
+								select="oracle"
+								/>
+							<propertyregex property="read.database.type"
+								input="${read.database.driver}"
+								regexp="postgresql"
+								select="postgresql"
+								/>
+
+							<property name="@{database.url.property.name}" value="${read.database.url}" />
+							<property name="@{database.user.property.name}" value="${read.database.user}" />
+							<property name="@{database.password.property.name}" value="${read.database.password}" />
+							<property name="@{database.name.property.name}" value="${read.database.name}" />
+							<property name="@{database.server.property.name}" value="${read.database.server}" />
+							<property name="@{database.port.property.name}" value="${read.database.port}" />
+							<property name="@{database.type.property.name}" value="${read.database.type}" />
+
+							<propertycopy name="db.type" from="@{database.type.property.name}" override="true"/>
+							<switch value="${db.type}">
+								<case value="oracle">
+									<var name="@{database.schema.property.name}" value="${database.name}"/>
+								</case>
+								<case value="mysql">
+									<var name="@{database.schema.property.name}" value="${database.name}"/>
+								</case>
+								<case value="postgresql">
+									<var name="@{database.schema.property.name}" value="public"/>
+								</case>
+							</switch>
+							<if>
+								<isset property="db.appuser.works"/>
+								<then>
+									<echo level="debug" message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
+									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+								</then>
+								<else>
+									<fail  message="Failed to connect to database TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+								</else>
+							</if>
+						</else>
+					</if>
+				</then>
+			</if>
+			<properties-print
+				properties.list="${db.properties.list}"
+				/>
+			<var name="read.properties.list" value="${read.properties.list},${db.properties.list}"/>
+		</sequential>
+	</macrodef>
 </project>
