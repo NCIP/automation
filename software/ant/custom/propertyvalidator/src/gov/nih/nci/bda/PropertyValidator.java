@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import org.apache.tools.ant.BuildException;
 
@@ -20,6 +21,8 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 	private String match = "exactly";
 	
 	private boolean readInMemory = false;
+	
+	private String excludePattern;
 
 	public void setCompareFile(String pCompareFile) {
 		this.compareFile = pCompareFile;
@@ -96,13 +99,28 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 			} else {
 				Iterator keyIterator = sortedKeyProperties.iterator();
 				Iterator compareIterator = sortedCompareProperties.iterator();
-
+				System.out.println("Exclude Pattern ::"+ excludePattern);				
+				
 				while (keyIterator.hasNext()) {
 					String key = (String) keyIterator.next();
-					if (!sortedCompareProperties.contains(key)) {						
-						msgExcKeys.append(key).append(" ");
+					if(excludePattern != null)
+					{
+						Pattern regPattern = Pattern.compile(excludePattern);
+						System.out.println("Exclude Pattern is not null ");
+						if(!regPattern.matcher(key).matches())
+						{
+							if (!sortedCompareProperties.contains(key)) {						
+								msgExcKeys.append(key).append(" ");
+							}	
+						}
+					}else
+					{
+						System.out.println("Exclude Pattern is null ");
+						if (!sortedCompareProperties.contains(key)) {						
+							msgExcKeys.append(key).append(" ");
+						}							
 					}
-				
+						
 				if (msgExcKeys.length() != 0)
 					throw new BuildException("\n" + this.compareFile + " does not match " + this.keyFile + ". \n"
 							+"Excess key(s) in template file " + this.keyFile +"\n" + msgExcKeys.toString() + "\n" + "Operation aborted.");					
@@ -140,5 +158,13 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 			this.matchExactly(keyProperties, compareProperties);
 		}
 
+	}
+
+	public String getExcludePattern() {
+		return excludePattern;
+	}
+
+	public void setExcludePattern(String excludePattern) {
+		this.excludePattern = excludePattern;
 	}
 }
