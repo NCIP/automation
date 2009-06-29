@@ -28,7 +28,7 @@ $HeadURL$
 				<choice txt="Everything" value="install.all" set="true" />
 				<choice txt="JBoss" value="install.jboss" />
 				<choice txt="Tomcat" value="install.tomcat" />
-				<choice txt="Database" value="install.database" />
+				<choice txt="Database - (must be run on JBoss machine)" value="install.database" />
 			</spec>
 		</field>
 		<variable name="validation.pre.port.list" value=""/>

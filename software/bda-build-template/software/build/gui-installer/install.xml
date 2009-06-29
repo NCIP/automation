@@ -171,7 +171,6 @@ $HeadURL$
 					<!-- conditionals for containers not chosen -->
 					<variable name="jboss.relative.path" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.server.hostname" value="" condition="container.database|container.tomcat"/>
-					<variable name="jboss.server.name" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.web.user" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.web.password" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.server.ports.name" value="" condition="container.database|container.tomcat"/>

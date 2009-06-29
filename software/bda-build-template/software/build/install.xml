@@ -632,6 +632,7 @@ $HeadURL$
 		common:init,
 		install:jboss:init,
 		install:jboss:validation:pre-install,
+		install:common:validation:pre-install,
 		install:jboss:stop,
 		install:jboss:validation:pre-install:ports,
 		install:jboss:clean,
@@ -654,6 +655,7 @@ $HeadURL$
 		common:tomcat:init,
 		common:init,
 		install:tomcat:validation:pre-install,
+		install:common:validation:pre-install,
 		install:tomcat:stop,
 		install:tomcat:validation:pre-install:ports,
 		install:tomcat:clean,
@@ -711,16 +713,16 @@ $HeadURL$
 	</target>
 
 	<!-- Generic targets to call appropriate upgrade path targets, just change the depends to use alternate ugprade path -->
-	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss" depends="upgrade:jboss:init,common:init,upgrade-ncm:jboss">
+	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss" depends="upgrade:jboss:init,common:init,upgrade-dac:jboss">
 	</target>
 
-	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat" depends="upgrade:tomcat:init,common:init,upgrade-ncm:tomcat">
+	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat" depends="upgrade:tomcat:init,common:init,upgrade-dac:tomcat">
 	</target>
 
-	<target name="upgrade" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-ncm">
+	<target name="upgrade" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-dac">
 	</target>
 
-	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-ncm:with-dbinstall">
+	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-dac:with-dbinstall">
 	</target>
 
 	<!-- Upgrade with Disposable Application Conttainer (DAC) -->
@@ -730,6 +732,7 @@ $HeadURL$
 		common:init,
 		common:jboss:init,
 		install:jboss:validation:pre-install,
+		install:common:validation:pre-install,
 		install:jboss:stop,
 		install:jboss:validation:pre-install:ports,
 		install:jboss:clean,
@@ -738,6 +741,8 @@ $HeadURL$
 		install:jboss:bda-blueprints-webapp:re-configure,
 		install:jboss:bda-blueprints-webapp,
 		install:jboss:bda-blueprints-webapp:configure,
+		install:jboss:grid,
+		install:jboss:grid:configure,
 		upgrade:post:jboss,
 		install:post:jboss,
 		install:jboss:start,
@@ -750,6 +755,7 @@ $HeadURL$
 		common:init,
 		common:tomcat:init,
 		install:tomcat:validation:pre-install,
+		install:common:validation:pre-install,
 		install:tomcat:stop,
 		install:tomcat:validation:pre-install:ports,
 		install:tomcat:clean,
@@ -811,12 +817,15 @@ $HeadURL$
 		common:init,
 		common:jboss:init,
 		install:jboss:validation:pre-install,
+		install:common:validation:pre-install,
 		install:jboss:stop,
 		install:jboss:validation:pre-install:ports,
 		install:jboss:configure,
 		install:jboss:bda-blueprints-webapp:re-configure,
 		install:jboss:bda-blueprints-webapp,
 		install:jboss:bda-blueprints-webapp:configure,
+		install:jboss:grid,
+		install:jboss:grid:configure,
 		upgrade:post:jboss,
 		install:post:jboss,
 		install:jboss:start,
@@ -829,6 +838,7 @@ $HeadURL$
 		common:init,
 		common:tomcat:init,
 		install:tomcat:validation:pre-install,
+		install:common:validation:pre-install,
 		install:tomcat:stop,
 		install:tomcat:validation:pre-install:ports,
 		install:tomcat:configure,
@@ -888,11 +898,14 @@ $HeadURL$
 		common:init,
 		common:jboss:init,
 		install:jboss:validation:pre-install,
+		install:common:validation:pre-install,
 		install:jboss:stop,
 		install:jboss:validation:pre-install:ports,
 		install:jboss:bda-blueprints-webapp:re-configure,
 		install:jboss:bda-blueprints-webapp,
 		install:jboss:bda-blueprints-webapp:configure,
+		install:jboss:grid,
+		install:jboss:grid:configure,
 		install:post:jboss,
 		install:jboss:start,
 		install:jboss:validation:post-install
@@ -904,6 +917,7 @@ $HeadURL$
 		common:init,
 		common:tomcat:init,
 		install:tomcat:validation:pre-install,
+		install:common:validation:pre-install,
 		install:tomcat:stop,
 		install:tomcat:validation:pre-install:ports,
 		install:tomcat:bda-blueprints-webapp:re-configure,
