@@ -1840,7 +1840,7 @@ $HeadURL$
 							</dbconfig>
 							<propertyregex property="read.database.name"
 								input="${read.database.url}"
-								regexp=".*[\/](.*)"
+								regexp=".*[\/](.*)\?*"
 								select="\1"
 								/>
 							<propertyregex property="read.database.server"
@@ -7024,17 +7024,25 @@ $HeadURL$
 		<attribute name="java.check.version.minor" default="1.5.0_10" />
 		<attribute name="property.template.file" default="${properties.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
+		<attribute name="property.exclude.pattern.list" default="tomcat.*,jboss.*,grid.*"/>
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
 				java.check.version.major="@{java.check.version.major}"
 				java.check.version.minor="@{java.check.version.minor}"
 				/>
-			<validate-properties/>
+			<propertyvalidator keyFile="@{property.template.file}"
+				compareFile="@{envpropertyfile}"
+				readInMemory="true"
+				match="atleast"
+				excludePatternList="@{property.exclude.pattern.list}"
+				/>
+			<!--
 			<compare-properties
 				property.template.file="@{property.template.file}"
 				envpropertyfile="@{envpropertyfile}"
 				/>
+			-->
 			<check-absolute-directory
 				directory.property="application.base.path"
 				/>
@@ -7056,8 +7064,16 @@ $HeadURL$
 		<attribute name="jboss.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
 		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
 		<attribute name="validation.pre.port.list" default="${validation.pre.port.list}" />
-
+		<attribute name="property.template.file" default="${properties.template.file}"/>
+		<attribute name="envpropertyfile" default="${properties.file}"/>
+		<attribute name="property.exclude.pattern.list" default="tomcat.*"/>
 		<sequential>
+			<propertyvalidator keyFile="@{property.template.file}"
+				compareFile="@{envpropertyfile}"
+				readInMemory="true"
+				match="atleast"
+				excludePatternList="@{property.exclude.pattern.list}"
+				/>
 			<validate-appserver-versions
 				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
 				tomcat.binaries.relative.dir=""
@@ -7085,7 +7101,16 @@ $HeadURL$
 		<attribute name="tomcat.ssl.keystore.alias" default="${tomcat.ssl.keystore.alias}"/>
 		<attribute name="tomcat.ssl.fullyqualified.hostname" default="${tomcat.ssl.fullyqualified.hostname}"/>
 		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
+		<attribute name="property.template.file" default="${properties.template.file}"/>
+		<attribute name="envpropertyfile" default="${properties.file}"/>
+		<attribute name="property.exclude.pattern.list" default="jboss.*,authentication.type"/>
 		<sequential>
+			<propertyvalidator keyFile="@{property.template.file}"
+				compareFile="@{envpropertyfile}"
+				readInMemory="true"
+				match="atleast"
+				excludePatternList="@{property.exclude.pattern.list}"
+				/>
 			<validate-appserver-versions
 				jboss.binaries.relative.dir=""
 				tomcat.binaries.relative.dir="@{tomcat.binaries.relative.dir}"
@@ -7098,15 +7123,13 @@ $HeadURL$
 				appserver.ssl.fullyqualified.hostname="@{tomcat.ssl.fullyqualified.hostname}"
 				appserver.ssl.keystore.dir="@{tomcat.ssl.keystore.dir}"
 				/>
-
-
 		</sequential>
 	</macrodef>
 
 	<macrodef name="validate-post-jboss" description="Diagnose the host system after the installation">
 		<attribute name="jboss.socket.list" default="${jboss.socket.list}" />
 		<attribute name="jboss.home" default="${jboss.home}" />
-		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="jboss.hostname" default="${jboss.server.hostname}" />
 		<attribute name="jboss.application.url" default="${jboss.application.url}" />
 		<sequential>
 			<!-- Give JBOSS another couple of seconds to come up -->
@@ -7122,7 +7145,7 @@ $HeadURL$
 						<sequential>
 							<echo message="Checking if @{validate.port} is running."/>
 							<if>
-								<socket server="@{hostname}" port="@{validate.port}" />
+								<socket server="@{jboss.hostname}" port="@{validate.port}" />
 								<then>
 									<echo message="Port is @{validate.port} RUNNNING as expected."/>
 								</then>
@@ -7142,7 +7165,7 @@ $HeadURL$
 	<macrodef name="validate-post-tomcat" description="Diagnose the host system after the installation">
 		<attribute name="tomcat.socket.list" default="${tomcat.socket.list}" />
 		<attribute name="tomcat.home" default="${tomcat.home}" />
-		<attribute name="tomcat.server.name" default="${tomcat.server.name}" />
+		<attribute name="tomcat.hostname" default="${tomcat.hostname}" />
 		<attribute name="tomcat.application.url" default="${tomcat.application.url}" />
 		<sequential>
 			<!-- Give JBOSS another couple of seconds to come up -->
@@ -7158,7 +7181,7 @@ $HeadURL$
 						<sequential>
 							<echo message="Checking if @{validate.port} is running."/>
 							<if>
-								<socket server="@{hostname}" port="@{validate.port}" />
+								<socket server="@{tomcat.hostname}" port="@{validate.port}" />
 								<then>
 									<echo message="Port is @{validate.port} RUNNNING as expected."/>
 								</then>
@@ -7309,7 +7332,7 @@ $HeadURL$
 							</dbconfig>
 							<propertyregex property="read.database.name"
 								input="${read.database.url}"
-								regexp=".*[\/](.*)"
+								regexp=".*[\/](.*)\?*"
 								select="\1"
 								/>
 							<propertyregex property="read.database.server"

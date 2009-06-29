@@ -43,7 +43,7 @@
 	  <!-- for svn tasks from ant -->
 	  <dependency conf="runtime" name="svnant" org="org.tigris" rev="1.2.1"/>
 	  <!-- Custom taks for comparing template to file or memeory -->
-	  <dependency conf="runtime" name="propertyvalidator" org="ncicb" rev="0.1.7"/>		  
+	  <dependency conf="runtime" name="propertyvalidator" org="ncicb" rev="0.1.8"/>		  
 	  <!-- Add grand functionality to ant -->
 	  <dependency conf="runtime" name="grand" org="ggtools" rev="1.8"/>
 	  <!-- Adds umlgraph functionality to ant -->
