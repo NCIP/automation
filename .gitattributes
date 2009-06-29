@@ -2065,6 +2065,12 @@ software/ant/custom/propertyvalidator/properties/keyfile.properties -text
 software/ant/custom/propertyvalidator/src/gov/nih/nci/bda/ApplicationVersion.java -text
 software/ant/custom/propertyvalidator/src/gov/nih/nci/bda/PropertyValidator.java -text
 software/ant/custom/propertyvalidator/test/gov/nih/nci/bda/test/TestPropertyValidator.java -text
+software/ant2gant/ant2gant.groovy -text
+software/ant2gant/build.gant -text
+software/ant2gant/build.xml -text
+software/ant2gant/classpath.sh -text
+software/ant2gant/flist.txt -text
+software/ant2gant/readme.txt -text
 software/bda-build-template/.classpath -text
 software/bda-build-template/.project -text
 software/bda-build-template/docs/build.jpg -text
