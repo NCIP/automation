@@ -22,7 +22,7 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 	
 	private boolean readInMemory = false;
 	
-	private String excludePattern;
+	private String excludePatternList;
 
 	public void setCompareFile(String pCompareFile) {
 		this.compareFile = pCompareFile;
@@ -87,6 +87,7 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 			StringBuffer msgExcKeys = new StringBuffer("");
 			pKeyProperties.load(new FileInputStream(new File(this.keyFile)));
 			pCompareProperties.load(new FileInputStream(new File(this.compareFile)));
+			boolean keyMatched = false;
 			if(readInMemory)
 				loadDefinedProperties(pCompareProperties);
 
@@ -99,26 +100,34 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 			} else {
 				Iterator keyIterator = sortedKeyProperties.iterator();
 				Iterator compareIterator = sortedCompareProperties.iterator();
-				System.out.println("Exclude Pattern ::"+ excludePattern);				
+				System.out.println("Exclude Pattern List::"+ excludePatternList);				
 				
 				while (keyIterator.hasNext()) {
+					keyMatched = false;
 					String key = (String) keyIterator.next();
-					if(excludePattern != null)
+					if(excludePatternList != null)
 					{
-						Pattern regPattern = Pattern.compile(excludePattern);
-						System.out.println("Exclude Pattern is not null ");
-						if(!regPattern.matcher(key).matches())
+						for (String excludePattern : excludePatternList.split(","))
 						{
-							if (!sortedCompareProperties.contains(key)) {						
-								msgExcKeys.append(key).append(" ");
-							}	
+							Pattern regPattern = Pattern.compile(excludePattern);
+							if(regPattern.matcher(key).matches())
+							{
+								keyMatched = true;
+							}
 						}
 					}else
 					{
-						System.out.println("Exclude Pattern is null ");
+						// if there are not patterns to be excluded 
 						if (!sortedCompareProperties.contains(key)) {						
 							msgExcKeys.append(key).append(" ");
 						}							
+					}
+					// exclude the keys to be matched
+					if(!keyMatched)
+					{
+						if (!sortedCompareProperties.contains(key)) {						
+							msgExcKeys.append(key).append(" ");
+						}
 					}
 						
 				if (msgExcKeys.length() != 0)
@@ -160,11 +169,11 @@ public class PropertyValidator extends org.apache.tools.ant.Task {
 
 	}
 
-	public String getExcludePattern() {
-		return excludePattern;
+	public String getExcludePatternList() {
+		return excludePatternList;
 	}
 
-	public void setExcludePattern(String excludePattern) {
-		this.excludePattern = excludePattern;
+	public void setExcludePatternList(String excludePatternList) {
+		this.excludePatternList = excludePatternList;
 	}
 }
