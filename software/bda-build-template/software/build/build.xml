@@ -140,7 +140,17 @@ $HeadURL$
 
 
 	<!-- retrive ivy.jar.files then retrieve bda files and librarires -->
-	<property name="commonlibrary.dir" value="" />
+	<condition property="commonlibrary.dir" value="">
+		<or>
+		<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="commonlibrary.dir" value="c:/">
+		<os family="windows" />
+	</condition>
+
 	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
 	<!--
 	<mkdir dir="${bda-download.dir}" />
