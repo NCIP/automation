@@ -955,23 +955,17 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<for list="${tomcat.target.list}" param="target.name" delimiter=",">
 					<sequential>
 						<echo  message="Calling @{target.name} from ${dist.relative.dir}"/>
+						<!--
 						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${sub-project.dist.relative.dir}">
 							<property name="application.base.path.linux" value="${application.base.path.linux}"/>
 							<property name="application.base.path.windows" value="${application.base.path.windows}"/>
-							<!-- Cause readers to read from backup area -->
 							<property name="read.tomcat.home" value="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"/>
-							<!-- Backups only need to be run at suite level -->
 							<property name="exclude.tomcat.backup" value="true"/>
 							<property name="exclude.start.servers" value="true"/>
-							<!-- not sure why this is there -->
 							<property name="cacore-sdk.required" value="false"/>
-							<!-- Get grid binaries from suite-level -->
 							<property name="grid.resource.dir" location="${grid.resource.dir}"/>
-							<!-- To cause readers to not run during install -->
 							<property name="install.running" value="true"/>
-							<!-- Since upgrade target is being called this ensures all props set for install. -->
 							<property name="properties.file" value="${prop.file}"/>
-							<!-- App server Props -->
 							<property name="tomcat.relative.path" value="${tomcat.relative.path}"/>
 							<property name="tomcat.hostname" value="${tomcat.hostname}"/>
 							<property name="tomcat.port.http" value="${tomcat.port.http}"/>
@@ -994,6 +988,68 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 							<property name="tomcat.grid.secure.cert.location" value="${tomcat.grid.secure.cert.location}"/>
 							<property name="tomcat.grid.secure.key.location" value="${tomcat.grid.secure.key.location}"/>
 						</ant>
+						-->
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${sub-project.dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${sub-project.dist.relative.dir}/local.properties" tofile="${sub-project.dist.relative.dir}/local.properties-tomcat-${cur.tstamp}"/>
+						<!-- Cause readers to read from backup area -->         
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="read.tomcat.home=${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}${line.separator}"/>
+						<!-- Backups only need to be run at suite level -->
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="exclude.tomcat.backup=true${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="exclude.start.servers=true${line.separator}"/>
+						<!-- not sure why this is there -->
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="cacore-sdk.required=false${line.separator}"/>
+						<!-- Get grid binaries from suite-level --> 
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="grid.resource.dir=${grid.resource.dir}${line.separator}"/>
+						<!-- To cause readers to not run during install -->
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+						<!-- App server Props -->
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.relative.path=${tomcat.relative.path}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.hostname=${tomcat.hostname}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.port.http=${tomcat.port.http}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.port.ajp=${tomcat.port.ajp}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.port.ssl=${tomcat.port.ssl}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.port.shutdown=${tomcat.port.shutdown}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.ssl.enable=${tomcat.ssl.enable}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.ssl.keystore.location=${tomcat.ssl.keystore.location}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.ssl.keystore.pass=${tomcat.ssl.keystore.pass}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.ssl.keystore.alias=${tomcat.ssl.keystore.alias}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.ssl.fullyqualified.hostname=${tomcat.ssl.fullyqualified.hostname}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.external.http.host=${tomcat.external.http.host}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.external.http.port=${tomcat.external.http.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.external.ssl.host=${tomcat.external.ssl.host}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.external.ssl.port=${tomcat.external.ssl.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.external.grid.secure.host=${tomcat.external.grid.secure.host}${line.separator}"/> 
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.external.grid.secure.port=${tomcat.external.grid.secure.port}${line.separator}"/> 
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.grid.secure.enable=${tomcat.grid.secure.enable}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.grid.secure.port=${tomcat.grid.secure.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.grid.secure.cert.location=${tomcat.grid.secure.cert.location}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="tomcat.grid.secure.key.location=${tomcat.grid.secure.key.location}${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${sub-project.dist.relative.dir}" failonerror="true">
+							<!-- use alternate properties file since default has replace values -->
+							<!-- force reinstall of database and jboss without prompting -->
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>                 
 					</sequential>
 				</for>
 			</sequential>
@@ -1029,6 +1085,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<for list="${jboss.target.list}" param="target.name" delimiter=",">
 					<sequential>
 						<echo  message="Calling @{target.name} from ${dist.relative.dir}"/>
+						<!--
 						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${sub-project.dist.relative.dir}">
 							<property name="application.base.path.linux" value="${application.base.path.linux}"/>
 							<property name="application.base.path.windows" value="${application.base.path.windows}"/>
@@ -1037,11 +1094,11 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 							<property name="exclude.start.servers" value="true"/>
 							<property name="cacore-sdk.required" value="false"/>
 							<property name="grid.resource.dir" location="${grid.resource.dir}"/>
-							<!-- To cause readers to not run during install -->
+							#### To cause readers to not run during install ###
 							<property name="install.running" value="true"/>
-							<!-- Since upgrade target is being called this ensures all props set for install. -->
+							#### Since upgrade target is being called this ensures all props set for install.###>
 							<property name="properties.file" value="${prop.file}"/>
-							<!-- Pass this to make install work -->
+							#### Pass this to make install work ###
 							<property name="jboss.server.binding.template.location" value="${jboss.server.binding.template.location}"/>
 
 							<property name="jboss.relative.path" value="${jboss.relative.path}"/>
@@ -1083,8 +1140,88 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 							<property name="jboss.grid.secure.port" value="${jboss.grid.secure.port}"/>
 							<property name="jboss.grid.secure.cert.location" value="${jboss.grid.secure.cert.location}"/>
 							<property name="jboss.grid.secure.key.location" value="${jboss.grid.secure.key.location}"/>
-
 						</ant>
+						-->
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${sub-project.dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${sub-project.dist.relative.dir}/local.properties" tofile="${sub-project.dist.relative.dir}/local.properties-jboss-${cur.tstamp}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="application.base.path.linux=${application.base.path.linux}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="application.base.path.windows=${application.base.path.windows}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="read.jboss.home=${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="exclude.jboss.backup=true${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="exclude.start.servers=true${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="cacore-sdk.required=false${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="grid.resource.dir=${grid.resource.dir}${line.separator}"/>
+						<!-- To cause readers to not run during install -->
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+						<!-- Since upgrade target is being called this ensures all props set for install. -->
+						<!-- Pass this to make install work -->
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.binding.template.location=${jboss.server.binding.template.location}${line.separator}"/>
+
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.relative.path=${jboss.relative.path}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.hostname=${jboss.server.hostname}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.name=${jboss.server.name}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.web.user=${jboss.web.user}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.web.password=${jboss.web.password}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.ports.name=${jboss.server.ports.name}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.jndi.port=${jboss.server.jndi.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.port=${jboss.server.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.cobraorb.port=${jboss.cobraorb.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.ejbinvoker.port=${jboss.ejbinvoker.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.hajndi.port=${jboss.hajndi.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.hajrmi.port=${jboss.hajrmi.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.jms.port=${jboss.jms.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.jmx-rmi.port=${jboss.jmx-rmi.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.messaging.port=${jboss.messaging.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.pooledha.port=${jboss.pooledha.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.remoting.port=${jboss.remoting.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.bind.port=${jboss.server.bind.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.server.rmi.port=${jboss.server.rmi.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.service.rmiobject.port=${jboss.service.rmiobject.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.snmp.port=${jboss.snmp.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.snmp-trapd.port=${jboss.snmp-trapd.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.web.service.port=${jboss.web.service.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.ssl.enable=${jboss.ssl.enable}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.ssl.keystore.location=${jboss.ssl.keystore.location}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.ssl.keystore.pass=${jboss.ssl.keystore.pass}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.ssl.keystore.alias=${jboss.ssl.keystore.alias}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.ssl.fullyqualified.hostname=${jboss.ssl.fullyqualified.hostname}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.java.opts=${jboss.java.opts}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.external.http.host=${jboss.external.http.host}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.external.http.port=${jboss.external.http.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.external.ssl.host=${jboss.external.ssl.host}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.external.ssl.port=${jboss.external.ssl.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.external.grid.secure.host=${jboss.external.grid.secure.host}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.external.grid.secure.port=${jboss.external.grid.secure.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.grid.secure.enable=${jboss.grid.secure.enable}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.grid.secure.port=${jboss.grid.secure.port}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.grid.secure.cert.location=${jboss.grid.secure.cert.location}${line.separator}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="jboss.grid.secure.key.location=${jboss.grid.secure.key.location}${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${sub-project.dist.relative.dir}" failonerror="true">
+							<!-- use alternate properties file since default has replace values -->
+							<!-- force reinstall of database and jboss without prompting -->
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>                 
 					</sequential>
 				</for>
 			</sequential>
@@ -1119,11 +1256,41 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<for list="${database.target.list}" param="target.name" delimiter=",">
 					<sequential>
 						<echo  message="Calling @{target.name} from ${dist.relative.dir}"/>
+						<!--
 						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${sub-project.dist.relative.dir}">
-							<!-- To cause readers to not run during install -->
 							<property name="install.running" value="true"/>
 							<property name="properties.file" value="${prop.file}"/>
 						</ant>
+						-->
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${sub-project.dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${sub-project.dist.relative.dir}/local.properties" tofile="${sub-project.dist.relative.dir}/local.properties-jboss-${cur.tstamp}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${sub-project.dist.relative.dir}" failonerror="true">
+							<!-- use alternate properties file since default has replace values -->
+							<!-- force reinstall of database and jboss without prompting -->
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>
 					</sequential>
 				</for>
 			</sequential>
@@ -1158,11 +1325,41 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<for list="${database.target.list}" param="target.name" delimiter=",">
 					<sequential>
 						<echo  message="Calling @{target.name} from ${dist.relative.dir} using prop file ${prop.file}"/>
+						<!--
 						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${sub-project.dist.relative.dir}">
-							<!-- To cause readers to not run during install -->
 							<property name="install.running" value="true"/>
 							<property name="properties.file" value="${prop.file}"/>
 						</ant>
+						-->
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${sub-project.dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${sub-project.dist.relative.dir}/local.properties" tofile="${sub-project.dist.relative.dir}/local.properties-jboss-${cur.tstamp}"/>
+						<echo append="true" file="${sub-project.dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${sub-project.dist.relative.dir}" failonerror="true">
+							<!-- use alternate properties file since default has replace values -->
+							<!-- force reinstall of database and jboss without prompting -->
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>                 
 					</sequential>
 				</for>
 			</sequential>

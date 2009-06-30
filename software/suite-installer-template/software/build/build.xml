@@ -229,10 +229,19 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	<target name="build:sub-project" depends="init,svn-co:sub-project" description="Call webapp sub-projects build target to produce artifiacts">
 		<!--  You will need to have one of these targets for each sub-project you will be building. -->
 		<!-- setting the property in the ant call overrides the property in the sub-project allowing the artifact to be produced where needed -->
+		<!-- This does not work when properties.file is passed as a command line property, this same properties file would be passed to the command line of the sub-project.  Since it is not the appropriate file, you would not want to do this 
 		<ant inheritAll="false" inheritRefs="false" antfile="${sub-project.build.file}" target="${sub-project.build.target}" dir="${sub-project.base.dir}">
 			<property name="dist.exploded.dir" value="${sub-project.dist.dir}" />
 			<property name="commonlibrary.dir" value="${commonlibrary.dir}"/>
 		</ant>
+		-->	
+		<exec osfamily="unix" executable="ant" dir="${sub-project.base.dir}" failonerror="true">
+			<arg line="-Ddist.exploded.dir=${sub-project.dist.dir} ${sub-project.build.target}" />
+		</exec>                                         
+		<exec osfamily="windows" executable="ant.bat" dir="${sub-project.base.dir}" failonerror="true">
+			<arg line="-Ddist.exploded.dir=${sub-project.dist.dir} ${sub-project.build.target}" />
+		</exec>                                         
+
 	</target>
 
 	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends="
