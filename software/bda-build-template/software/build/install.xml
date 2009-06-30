@@ -1115,13 +1115,10 @@ $HeadURL$
 				<equals arg1="${exclude.jboss.backup}" arg2="true"/>
 			</not>
 			<then>
-				<property name="changelogFile" location="${install-logs.dir}/chagneLog-${install.time}.txt"/>
-				<property name="compare1.dir" location="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}"/>
-				<property name="compare2.dir" location="${jboss.home}"/>
 				<report-dir-diff
-					dir1="${compare1.dir}"
-					dir2="${compare2.dir}"
-					reportFile="${changelogFile}"
+					dir1="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}"
+					dir2="${jboss.home}"
+					reportFile="${install-logs.dir}/chagneLog-jboss-${install.time}.diff"
 					/>
 				<!-- Copy app server logs -->
 				<mkdir dir="${jboss.home}/server/${jboss.server.name}/log"/>
@@ -1151,11 +1148,12 @@ $HeadURL$
 				<property name="compare1.dir" location="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"/>
 				<property name="compare2.dir" location="${tomcat.home}"/>
 				<report-dir-diff
-					dir1="${compare1.dir}"
-					dir2="${compare2.dir}"
-					reportFile="${changelogFile}"
+					dir1="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"
+					dir2="${tomcat.home}"
+					reportFile="${install-logs.dir}/changeLog-tomcat-${install.time}.diff"
 					/>
 				
+				<!-- not needed for tomcat
 				<mkdir dir="${tomcat.home}/server/${tomcat.server.name}/log"/>
 				<mkdir dir="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}/server/${tomcat.server.name}/log"/>
 				<copy todir="${tomcat.home}/server/${tomcat.server.name}/log">
@@ -1163,6 +1161,7 @@ $HeadURL$
 						<include name="*"/>
 					</fileset>
 				</copy>
+				-->
 			</then>
 		</if>
 	</target>
@@ -1460,5 +1459,8 @@ $HeadURL$
 	</target>
 	<target name="upgrade:post:tomcat">
 		<!-- place holder -->
+	</target>
+	<target name="test:fail">
+		<fail message="This target is supposed to cause a build failure.  This target can be used to verfiy that &lt;exec/&gt; calls are catching failures."/>
 	</target>
 </project>
