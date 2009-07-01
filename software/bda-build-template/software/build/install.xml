@@ -37,6 +37,7 @@ $HeadURL$
 	<property file="local.properties"/>
 	<property file="project.properties"/>
 	<!-- load the properties file -->
+	<echo message="Passed in properties file of ${properties.file}."/>
 	<property name="properties.file" value="${basedir}/install.properties"/>
 	<echo message="Using properties file of ${properties.file}."/>
 	<available file="${properties.file}" property="properties.file.exists" />
