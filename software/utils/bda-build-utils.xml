@@ -3963,7 +3963,31 @@ $HeadURL$
 		<attribute name="install.dir" default="${dist.exploded.dir}" />
 		<attribute name="properties.file" default="${properties.file}" />
 		<attribute name="target.name" />
+		<attribute name="enable.install.debug" default="${enable.install.debug}"/>
+		<attribute name="enable.install.timing" default="${enable.install.timing}"/>
 		<sequential>
+			<var name="install.debug" unset="true"/>
+			<if>
+				<equals arg1="@{enable.install.debug}" arg2="true"/>
+				<then>
+					<echo message="Turning on ANT debug for install"/>
+					<property name="install.debug" value="-v"/>
+				</then>
+				<else>
+					<property name="install.debug" value=""/>
+				</else>
+			</if>
+			<var name="install.timing" unset="true"/>
+			<if>
+				<equals arg1="@{enable.install.timing}" arg2="true"/>
+				<then>
+					<echo message="Turning on ANT target/task execution time reporting for install"/>
+					<property name="install.timing" value="-listener   net.java.antutility.BuildMetricsListener"/>
+				</then>
+				<else>
+					<property name="install.timing" value=""/>
+				</else>
+			</if>
 			<!-- Copies over all files so linux and windows properties are present -->
 			<copy todir="@{install.dir}">
 				<fileset dir="@{build.dir}">
@@ -3972,17 +3996,13 @@ $HeadURL$
 			</copy>
 			<exec osfamily="unix" executable="ant" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
-				<arg value="-Dproperties.file=@{properties.file}" />
 				<!-- force reinstall of database and jboss without prompting -->
-				<arg value="-Dforce.reinstall=true" />
-				<arg value="@{target.name}" />
+				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}" />
 			</exec>
 			<exec osfamily="windows" executable="ant.bat" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
-				<arg value="-Dproperties.file=@{properties.file}" />
 				<!-- force reinstall of database and jboss without prompting -->
-				<arg value="-Dforce.reinstall=true" />
-				<arg value="@{target.name}" />
+				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}" />
 			</exec>
 			<!-- ant returns exit code zero on failure to psexec, issue still lives on
 			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{install.dir}" failonerror="true">
@@ -7133,6 +7153,7 @@ $HeadURL$
 		<attribute name="jboss.application.url" default="${jboss.application.url}" />
 		<sequential>
 			<!-- Give JBOSS another couple of seconds to come up -->
+			<echo message="Waiting for @{jboss.application.url} to respond."/>
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
 				<http url="@{jboss.application.url}"/> 
 			</waitfor>
@@ -7169,6 +7190,7 @@ $HeadURL$
 		<attribute name="tomcat.application.url" default="${tomcat.application.url}" />
 		<sequential>
 			<!-- Give JBOSS another couple of seconds to come up -->
+			<echo message="Waiting for @{tomcat.application.url} to respond."/>
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
 				<http url="@{tomcat.application.url}"/> 
 			</waitfor>
@@ -7400,6 +7422,53 @@ $HeadURL$
 				properties.list="${db.properties.list}"
 				/>
 			<var name="read.properties.list" value="${read.properties.list},${db.properties.list}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="test-groovy-exec" description="macro for enabling ssl in jboss">
+		<attribute name="working.dir" default="${dist.exploded.dir}"/>
+		<attribute name="properties.file" default="${proeprties.file}"/>
+		<attribute name="target.name"/>
+		<sequential>
+			<groovy>
+				<arg line="@{working.dir} @{target.name} @{properties.file}"/>
+				import org.apache.tools.ant.Project
+				import org.apache.tools.ant.ProjectHelper
+				import org.apache.commons.logging.Log;
+				import org.apache.commons.logging.LogFactory;
+				import org.apache.tools.ant.DefaultLogger;
+
+				workingDir=new File(args[0]).getAbsoluteFile()
+				targetName=args[1]      
+				propertiesFile=args[2]  
+				println "dir= " + workingDir.toString() 
+				println "target =" + targetName 
+				println "properties.file= " + propertiesFile
+
+				File buildFile = new File(workingDir.toString() + "/build.xml")
+				Project project = new Project() 
+				project.init()          
+				project.setBaseDir(workingDir)
+				DefaultLogger logger = new DefaultLogger();
+				logger.setMessageOutputLevel(Project.MSG_INFO);
+				logger.setErrorPrintStream(System.out);
+				logger.setOutputPrintStream(System.out);
+				project.addBuildListener(logger);
+
+				ProjectHelper.configureProject(project, buildFile)
+				project.setProperty("force.reinstall", "true")
+				project.setProperty("properties.file", propertiesFile)
+				try                     
+				{                       
+				project.executeTarget(targetName)
+				println "Ran sucessfully"
+				}                       
+				catch(Exception err)    
+				{                       
+				println "Execution of ant failed with the following error:"
+				println err             
+				System.exit 1           
+				}                 
+			</groovy>       
 		</sequential>
 	</macrodef>
 </project>
