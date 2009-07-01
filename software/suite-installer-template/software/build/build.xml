@@ -408,9 +408,25 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		  * This target will use differnt properties based on linux (linux-install.properties) or windows (windows-install.properties) installs.
 		  * It only supports using those properties files for now, so if you want to change install time properites edit these files.
 		-->
-		<deploy-local
-			target.name="${install.target}"
-			/>
+		<copy todir="${dist.exploded.dir}"> 
+			<fileset dir="${build.dir}">    
+				<include name="*.properties" />         
+			</fileset>                      
+		</copy>                 
+
+		<!-- work around for ant bug where <ant/> calls recieve command line options from ant command line, this causes properties file passed from deploy to the install component to pass the properties file value onto the sub-projects even though you specify the <property/> inside the body of the <ant/> task.  They need a different property so by injecting the properties.file variable into local.properties we can pass it from deploy to install without it being on the command line. -->
+		<echo file="${dist.exploded.dir}/local.properties" append="true" message="properties.file=${properties.file}"/>
+		<exec osfamily="unix" executable="ant" dir="${dist.exploded.dir}" failonerror="true">
+			<!-- use alternate properties file since default has replace values -->
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg line="-Dforce.reinstall=true ${install.target}" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${dist.exploded.dir}" failonerror="true">
+			<!-- use alternate properties file since default has replace values -->
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg line="-Dforce.reinstall=true ${install.target}" />
+		</exec>
+
 	</target>
 
 	<target name="deploy:local:upgrade" depends="build:all,dist:upgrader:prep" description="Upgrades and configures the application and database  on the local machine. Used for developer desktops and ci environments.">
@@ -421,10 +437,24 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		  * This target will use differnt properties based on linux (linux-upgrade.properties) or windows (windows-upgrade.properties) installs.
 		  * It only supports using those properties files for now, so if you want to change install time properites edit these files.
 		-->
-		<deploy-local
-			target.name="${upgrade.target}"
-			properties.file="${properties.file}"
-			/>
+		<copy todir="${dist.exploded.dir}"> 
+			<fileset dir="${build.dir}">    
+				<include name="*.properties" />         
+			</fileset>                      
+		</copy>                 
+
+		<echo file="${dist.exploded.dir}/local.properties" append="true" message="properties.file=${properties.file}"/>
+		<exec osfamily="unix" executable="ant" dir="${dist.exploded.dir}" failonerror="true">
+			<!-- use alternate properties file since default has replace values -->
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg line="-Dforce.reinstall=true ${upgrade.target}" />
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${dist.exploded.dir}" failonerror="true">
+			<!-- use alternate properties file since default has replace values -->
+			<!-- force reinstall of database and jboss without prompting -->
+			<arg line="-Dforce.reinstall=true ${upgrade.target}" />
+		</exec>
+
 	</target>
 
 	<target name="deploy:remote:install" description="Installs and configures the application and required binaries and re-creates the datbase  on a remote machine. Used for NCI tiers (dev, qa, stg, prod)" depends="
@@ -439,7 +469,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${sub-project.install.zip.file}" />
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
+		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'proeprties.file=${properties.file}' >> local.properties; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
 	</target>
 
 	<target name="deploy:remote:upgrade" description="Installs and configures the application and required binaries and re-creates the datbase  on a remote machine. Used for NCI tiers (dev, qa, stg, prod)" depends="
@@ -454,6 +484,6 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${sub-project.upgrade.zip.file}" />
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
+		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'proeprties.file=${properties.file}' >> local.properties; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
 </project>
