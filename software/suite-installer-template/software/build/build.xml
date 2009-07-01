@@ -354,7 +354,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 			optional.property.list="ldap.url,ldap.basedn"
 			delete.property.list="exclude.jboss.backup"
 			/>
-		<zip destfile="${dist.dir}/${sub-project.install.zip.file}" basedir="${dist.exploded.dir}" />
+		<zip destfile="${dist.dir}/${suite.install.zip.file}" basedir="${dist.exploded.dir}" />
 	</target>
 
 
@@ -395,7 +395,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 			delete.property.list=""
 			/>
 		<replaceregexp file="${dist.exploded.dir}/build.xml" byline="true" match="(&lt;property name=&quot;properties.file&quot;\s+value=&quot;).*(&quot;\s*\/&gt;)" replace="\1upgrade.properties\2" />
-		<zip destfile="${dist.dir}/${sub-project.upgrade.zip.file}" basedir="${dist.exploded.dir}" />
+		<zip destfile="${dist.dir}/${suite.upgrade.zip.file}" basedir="${dist.exploded.dir}" />
 
 	</target>
 
@@ -467,7 +467,11 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		  * Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install, if you want properties to be used at install time they must be included in a proeprties file.
 		-->
 		<!-- Call macro to deploy files on desired server -->
-		<deploy-files dist.file="${sub-project.install.zip.file}" />
+		<deploy-files dist.file="${suite.install.zip.file}" />
+		<remote-scp
+			remoteScpFileToCopy="${build.dir}/sub-projects.properties"
+			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${remote.dir}"
+			/>
 		<!-- SSH to machine ant run ant command line to install application -->
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'proeprties.file=${properties.file}' >> local.properties; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
 	</target>
@@ -482,7 +486,11 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		  * Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install, if you want properties to be used at install time they must be included in a proeprties file.
 		-->
 		<!-- Call macro to deploy files on desired server -->
-		<deploy-files dist.file="${sub-project.upgrade.zip.file}" />
+		<deploy-files dist.file="${suite.upgrade.zip.file}" />
+		<remote-scp
+			remoteScpFileToCopy="${build.dir}/sub-projects.properties"
+			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${remote.dir}"
+			/>
 		<!-- SSH to machine ant run ant command line to install application -->
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'proeprties.file=${properties.file}' >> local.properties; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
