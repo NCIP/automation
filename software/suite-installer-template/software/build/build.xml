@@ -67,14 +67,10 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	<!-- Ivy Related props -->
 	<property name="ivy.settings.file" value="ivy-settings.xml" />
 
-	<!-- Add on property for each sub-project you have  -->
-	<property name="sub-project.co.dir" location="${checkout.base.dir}/${sub-project.co.relative.dir}"/>
-	<property name="sub-project.base.dir" location="${sub-project.co.dir}/${sub-project.build.relative.dir}"/>
 
 	<!-- Distribution Structure properties, used to copy files into the distribution area.
        		Use project.propertie relative dir names becasue they are used by install also-->
 	<property name="dist.exploded.dir" value="${dist.dir}/exploded" />
-	<property name="sub-project.dist.dir" value="${dist.exploded.dir}/${sub-project.dist.relative.dir}" />
 	<property name="tools.dist.dir" value="${dist.exploded.dir}/${tools.dist.relative.dir}" />
 	<property name="common.dist.dir" value="${dist.exploded.dir}/${common.dist.relative.dir}" />
 	<property name="jboss-conf.dist.dir" value="${dist.exploded.dir}/${jboss-conf.dist.relative.dir}" />
@@ -85,6 +81,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 	<property name="tomcat.dest.file" value="${download.dir}/${tomcat.binaries.file}" />
 	<property name="cagrid-libs.dest.file" value="${download.dir}/${cagrid-libs.binaries.file}" />
 	<property name="cagrid-base-war.dest.file" value="${download.dir}/${cagrid-base-war.binaries.file}" />
+
 
 	<!-- Default install time targets passed by deploy targets to the installer, can be overridden by being set on the command line if different target is desitred.  -->
 	<property name="install.target" value="install" />
@@ -142,7 +139,20 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		<delete dir="${temp.dir}" />
 	</target>
 
-	<target name="init" description="Sets up build are and initalizes variables">
+	<target name="init:sub-project">
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<property name="@{sub-project.prefix}.co.dir" location="${checkout.base.dir}/${@{sub-project.prefix}.co.relative.dir}"/>
+				<echo message="@{sub-project.prefix}.co.dir = ${@{sub-project.prefix}.co.dir}"/>
+				<property name="@{sub-project.prefix}.base.dir" location="${@{sub-project.prefix}.co.dir}/${@{sub-project.prefix}.build.relative.dir}"/>
+				<echo message="@{sub-project.prefix}.base.dir = ${@{sub-project.prefix}.base.dir}"/>
+				<property name="@{sub-project.prefix}.dist.dir" location="${dist.exploded.dir}/sub-projects/${@{sub-project.prefix}.dist.relative.dir}" />
+				<echo message="@{sub-project.prefix}.dist.dir = ${@{sub-project.prefix}.dist.dir}"/>
+				<mkdir dir="${@{sub-project.prefix}.dist.dir}"/>
+			</sequential>
+		</for>
+	</target>
+	<target name="init" depends="init:sub-project" description="Sets up build are and initalizes variables">
 		<echo message=" ______   ______   _______ " />
 		<echo message="(____  \ (______) (_______)" />
 		<echo message=" ____)  ) _     _  _______ " />
@@ -152,7 +162,6 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		<mkdir dir="${target.dir}" />
 		<mkdir dir="${dist.dir}" />
 		<mkdir dir="${dist.exploded.dir}" />
-		<mkdir dir="${sub-project.dist.dir}" />
 		<mkdir dir="${common.dist.dir}" />
 		<mkdir dir="${tools.dist.dir}" />
 		<mkdir dir="${temp.dir}" />
@@ -202,51 +211,24 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		</if>
 	</target>
 
-	<target name="ivy:clean" description="Cleans up the ivy cache of this project and all sub-projects">
-		<ivy:settings file="${ivy.settings.dir}/${ivy.settings.file}" />
-		<ivy:cleancache />
-		<ant inheritAll="false" inheritRefs="false" antfile="bda-ivy-2.0.0-build.xml" target="ivy-cleancache" dir="${bda-download.dir}">
-			<property name="bda-utils.dir" value="${bda-utils.dir}" />
-			<property name="lib.dir" value="${lib.dir}" />
-			<property name="software.dir" value="${software.dir}" />
-		</ant>
-		<!--
-		<ant inheritAll="false" inheritRefs="false" antfile="${sub-project.build.file}" target="ivy-clean" dir="${sub-project.base.dir}" />
-		-->
-	</target>
+	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends="init" >
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<echo message="checking out ${@{sub-project.prefix}.url} to ${@{sub-project.prefix}.co.dir}"/>
+				<svn-co
+					svn.checkout.url="${@{sub-project.prefix}.url}"
+					svn.checkout.dir="${@{sub-project.prefix}.co.dir}"
+					delete="false"
+					/>
 
-	<target name="svn-co:sub-project" depends="init" description="Checks out the sub-project">
-		<!--  You will need to have one of these targets for each sub-project you will be building. -->
-		<!-- assumes anonymous checkout -->
-		<echo message="checking out ${sub-project.url} to ${sub-project.co.dir}"/>
-		<svn-co
-			svn.checkout.url="${sub-project.url}"
-			svn.checkout.dir="${sub-project.co.dir}"
-			delete="false"
-			/>
-	</target>
-		
-	<target name="build:sub-project" depends="init,svn-co:sub-project" description="Call webapp sub-projects build target to produce artifiacts">
-		<!--  You will need to have one of these targets for each sub-project you will be building. -->
-		<!-- setting the property in the ant call overrides the property in the sub-project allowing the artifact to be produced where needed -->
-		<!-- This does not work when properties.file is passed as a command line property, this same properties file would be passed to the command line of the sub-project.  Since it is not the appropriate file, you would not want to do this 
-		<ant inheritAll="false" inheritRefs="false" antfile="${sub-project.build.file}" target="${sub-project.build.target}" dir="${sub-project.base.dir}">
-			<property name="dist.exploded.dir" value="${sub-project.dist.dir}" />
-			<property name="commonlibrary.dir" value="${commonlibrary.dir}"/>
-		</ant>
-		-->	
-		<exec osfamily="unix" executable="ant" dir="${sub-project.base.dir}" failonerror="true">
-			<arg line="-Ddist.exploded.dir=${sub-project.dist.dir} ${sub-project.build.target}" />
-		</exec>                                         
-		<exec osfamily="windows" executable="ant.bat" dir="${sub-project.base.dir}" failonerror="true">
-			<arg line="-Ddist.exploded.dir=${sub-project.dist.dir} ${sub-project.build.target}" />
-		</exec>                                         
-
-	</target>
-
-	<target name="build:all" description="Builds all the sub projects, putting artifacts in the project level target directory, used by distribution targets to make distributions" depends="
-		build:sub-project
-		" >
+				<exec osfamily="unix" executable="ant" dir="${@{sub-project.prefix}.base.dir}" failonerror="true">
+					<arg line="-Ddist.exploded.dir=${@{sub-project.prefix}.dist.dir} ${@{sub-project.prefix}.build.target}" />
+				</exec>                                         
+				<exec osfamily="windows" executable="ant.bat" dir="${@{sub-project.prefix}.base.dir}" failonerror="true">
+					<arg line="-Ddist.exploded.dir=${@{sub-project.prefix}.dist.dir} ${@{sub-project.prefix}.build.target}" />
+				</exec>                                         
+			</sequential>
+		</for>
 		<!-- Add dependency for each sub-project built above -->
 	</target>
 
@@ -394,7 +376,9 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 			optional.property.list=""
 			delete.property.list=""
 			/>
+		<!--
 		<replaceregexp file="${dist.exploded.dir}/build.xml" byline="true" match="(&lt;property name=&quot;properties.file&quot;\s+value=&quot;).*(&quot;\s*\/&gt;)" replace="\1upgrade.properties\2" />
+		-->
 		<zip destfile="${dist.dir}/${suite.upgrade.zip.file}" basedir="${dist.exploded.dir}" />
 
 	</target>
@@ -468,12 +452,22 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		-->
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${suite.install.zip.file}" />
+		<!-- copy of the sub-project.proeprties file -->
 		<remote-scp
 			remoteScpFileToCopy="${build.dir}/sub-projects.properties"
 			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${remote.dir}"
 			/>
+		<!-- Copy over all the sub-project property files as specified in ${properties.file} -->
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<remote-scp
+					remoteScpFileToCopy="${@{sub-project.prefix}.properties.location}"
+					remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${remote.dir}"
+					/>
+			</sequential>
+		</for>
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'proeprties.file=${properties.file}' >> local.properties; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
+		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'proeprties.file=${properties.file}' >> local.properties; ant -Dforce.reinstall=true ${install.target}" />
 	</target>
 
 	<target name="deploy:remote:upgrade" description="Installs and configures the application and required binaries and re-creates the datbase  on a remote machine. Used for NCI tiers (dev, qa, stg, prod)" depends="
@@ -487,11 +481,21 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 		-->
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${suite.upgrade.zip.file}" />
+		<!-- copy of the sub-project.proeprties file -->
 		<remote-scp
 			remoteScpFileToCopy="${build.dir}/sub-projects.properties"
 			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${remote.dir}"
 			/>
+		<!-- Copy over all the sub-project property files as specified in ${properties.file} -->
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<remote-scp
+					remoteScpFileToCopy="${@{sub-project.prefix}.properties.location}"
+					remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${remote.dir}"
+					/>
+			</sequential>
+		</for>
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'proeprties.file=${properties.file}' >> local.properties; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
+		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; echo 'properties.file=${properties.file}' >> local.properties; ant -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
 </project>

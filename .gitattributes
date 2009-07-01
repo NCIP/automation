@@ -2807,14 +2807,15 @@ software/scripts/maven-rsync.pl -text
 software/single-command-build/build.bat -text
 software/single-command-build/default.properties -text
 software/single-command-build/environment.xml -text
+software/suite-installer-template/software/build/bda-build-template-install.properties -text
 software/suite-installer-template/software/build/build.xml -text
 software/suite-installer-template/software/build/install.properties -text
 software/suite-installer-template/software/build/install.xml -text
 software/suite-installer-template/software/build/local.properties -text
 software/suite-installer-template/software/build/project.properties -text
 software/suite-installer-template/software/build/properties.template -text
+software/suite-installer-template/software/build/remote-install.properties -text
 software/suite-installer-template/software/build/sub-projects.properties -text
-software/suite-installer-template/software/build/upgrade.properties -text
 software/suite-installer-template/software/common/bda-download/bda-ivy-2.0.0-build.xml -text
 software/suite-installer-template/software/common/bda-download/bda-ivy-build.xml -text
 software/suite-installer-template/software/common/bda-download/ivy-bda-2.0.0.xml -text
