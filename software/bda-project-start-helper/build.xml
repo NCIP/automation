@@ -162,4 +162,19 @@
 		finalize
 		" >
 	</target>
+	<target name="setup-bda-templates">
+		<svn-co
+			svn.checkout.url="https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-template/software/blueprints-webapp"
+			svn.checkout.dir="${project.root.dir}/software/blueprints-webapp"
+			delete="false"                          
+			/>                                      
+		<!--
+		<delete verbose="true" includeemptydirs="true">
+			<fileset dir="${project.root.dir}/software/blueprints-webapp" includes="**/.svn" defaultexcludes="false"/>
+		</delete>
+		-->
+		<shellscript shell="bash">
+			 find ${project.root.dir}/software/blueprints-webapp -name .svn -exec rm -rf '{}' \;
+		 </shellscript>
+	</target>
 </project>
