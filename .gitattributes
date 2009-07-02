@@ -2811,7 +2811,6 @@ software/suite-installer-template/software/build/bda-build-template-install.prop
 software/suite-installer-template/software/build/build.xml -text
 software/suite-installer-template/software/build/install.properties -text
 software/suite-installer-template/software/build/install.xml -text
-software/suite-installer-template/software/build/local.properties -text
 software/suite-installer-template/software/build/project.properties -text
 software/suite-installer-template/software/build/properties.template -text
 software/suite-installer-template/software/build/remote-install.properties -text
