@@ -14,7 +14,8 @@ use DBI;
 use Cwd 'abs_path';
 
 my $dbServer, $dbPort, $dbUser,$dbPass,$ldapFileName,$inputFile,$outputFile="";
-my %gforgeUserGroupHash,%gforgeUserEmailHash,%gforgeUserRealNameHash,%gforgeEmailUserHash, %ldapUserHash, %ldapEmailHash, %ldapRealNameHash,%scmGroupUserHash, %gforgeGroupHash,%groupMapHash,%svnauthGroupHash,%svnDirHash;
+my %gforgeUserGroupHash,%gforgeUserEmailHash,%gforgeUserRealNameHash,%gforgeEmailUserHash, %ldapUserHash, %ldapEmailHash, %ldapRealNameHash,%scmGroupUserHash, %gforgeGroupHash,%groupMapHash,%svnauthGroupHash,%svnDirHash,%gforgeUserLastNameHash;
+my @cnList;
 
 print "Verifying command line options\n";
 &verifyOptions();
@@ -32,6 +33,8 @@ else
 mkdir("target");
 open (DUMP, ">target/gforge2svnauth.dmp") || die "Could not write dump.log\n";
 open (LOG, ">target/gforge2svnauth.log") || die "Could not write dump.log\n";
+open (USERFOUND, ">target/gforge2svnauth.found") || die "Could not write found log\n";
+open (USERNOTFOUND, ">target/gforge2svnauth.notfound") || die "Could not write notfound log\n";
 
 #&setUsers();
 #exit 0;
@@ -70,13 +73,17 @@ print DUMP "### scmGroupUserHash\n";
 print DUMP Dumper(%scmGroupUserHash);
 print DUMP "### svnauthGroupHash";
 print DUMP Dumper(%svnauthGroupHash);
+print DUMP "### gforgeUserLastNameHash";
+print DUMP Dumper(%gforgeUserLastNameHash);
 
 close DUMP;
 close LOG;
+close USERFOUND;
+close USERNOTFOUND;
 
 sub loadGforge () 
 {
-	
+	print LOG "Entering loadGforge\n";	
 	my $groupQuery="
 		select distinct g.unix_group_name,u.user_name,u.realname, u.email
 		from groups g,role r, users u, user_group ug, plugins p, group_plugin gp, role_setting rs
@@ -95,7 +102,7 @@ sub loadGforge ()
 		";
 		# and	g.group_name='NCICB Build and Deployment Automation'
 
-	print LOG "Using Query String - $groupQuery\n";
+	print LOG "\tUsing Query String - $groupQuery\n";
 	my $sth = $dbh->prepare($groupQuery) or die "Couldn't prepare statement: " . $dbh->errstr;
 	
 	$sth->execute;
@@ -109,12 +116,20 @@ sub loadGforge ()
 		$gforgeUserRealNameHash{lc($userName)}=$gforgeUserRealNameHash;
 		$gforgeEmailUserHash{lc($userEmail)}=lc($userName);
 		$gforgeGroupHash{lc($groupName)}++;
+
+		if ($userRealName =~/(\S+)$/)
+		{
+			my $lastName=$1;
+			$lastName =~ s/\W+//;
+			$gforgeUserLastNameHash{lc($userName)}=lc($lastName);
+		}
 	}
 	$sth->finish();
 }
 
 sub genGroupFile()
 {
+	print LOG "Entering genGroupFile\n";
 	open(GFILE,"> target/groups.map") || die "Can't create target/groups.map\n";
 	foreach my $group (sort keys %gforgeGroupHash)
 	{
@@ -124,6 +139,7 @@ sub genGroupFile()
 
 sub loadUserLdap ()
 {
+	print LOG "Entering loadUserLdap\n";
 	my $oldifs = $/;
 	$/="\n\n";
 	#open(LDAP,"ldapsearch  -h ncids4a.nci.nih.gov -x -D '$ldapUser' -w '$ldapPass' -L -b '$ldapBase' '$ldapSearch'") || die "Could not open file $ldapFileName\n";
@@ -153,6 +169,8 @@ sub loadUserLdap ()
 		}               
 
 		my $realname="${givenName} ${sn}";
+
+		push(@cnList,$cn);
 		# Use uid if defnied otherwise use $cn
 		if ($uid =~/\S+/)
 		{
@@ -173,6 +191,7 @@ sub loadUserLdap ()
 }
 sub loadGroupSvnMap()
 {
+	print LOG "Entering loadGroupSvnMap\n";
 	my @groupMapList;
 	open(MFILE,"$groupSvnMapFile") || die "Can't open $groupSvnMapFile\n";
 	while(my $line = <MFILE>)
@@ -188,14 +207,15 @@ sub loadGroupSvnMap()
 			}
 		}
 	}
-	print LOG "Groups not in map file\n";
+	print LOG "\tGroups not in map file\n";
 	foreach my $group (sort keys %gforgeGroupMap)
 	{
-		print LOG "$group not in map file\n" if ! grep /$group/,@groupMapList;
+		print LOG "\t$group not in map file\n" if ! grep /$group/,@groupMapList;
 	}
 }
 sub compareGforge2Ldap ()
 {
+	print LOG "Entering compareGforge2Ldap\n";
 	foreach my $gforgeUserName (sort keys %gforgeUserGroupHash)
 	{
 		#if usernanme found in ldapUserHash
@@ -208,7 +228,7 @@ sub compareGforge2Ldap ()
 		{
 			foreach my $gforgeGroup (@{$gforgeUserGroupHash{$gforgeUserName}})
 			{
-				print LOG "UserName match, adding to list $gforgeUserName\n";
+				print USERFOUND "Found $gforgeUserName with ldap email $gforgeUserName\n";
 				push(@{$scmGroupUserHash{$gforgeGroup}},$gforgeUserName);
 			}
 		}
@@ -216,21 +236,26 @@ sub compareGforge2Ldap ()
 		{
 			foreach my $gforgeGroup (@{$gforgeUserGroupHash{$gforgeUserName}})
 			{
-				print LOG "Email match, adding to list $ldapEmailHash{$gforgeUserEmailHash{$gforgeUserName}}\n";
+				print USERFOUND "Found $gforgeUserName with ldap email $gforgeUserEmailHash{$gforgeUserName}\n";
 				push(@{$scmGroupUserHash{$gforgeGroup}},$ldapEmailHash{$gforgeUserEmailHash{$gforgeUserName}});
 			}
 		}
 		else
 		{
-			print LOG "$gforgeUserName not found in LDAP by name or email ($gforgeUserEmailHash{$gforgeUserName})\n";
+			# search for last name in cnList, you will get more matches
+			my $possibleMatches=join(",", grep(/$gforgeUserLastNameHash{$gforgeUserName}/, @cnList));
+			my $as=length($possibleMatches);
+			print USERNOTFOUND "NOT FOUND $gforgeUserName LDAP by name or email $gforgeUserEmailHash{$gforgeUserName}, possible matches for last name of $gforgeUserLastNameHash{$gforgeUserName} - [${possibleMatches}]\n" if $as > 0 && $gforgeUserLastNameHash{$gforgeUserName};
+			print USERNOTFOUND "NOT FOUND $gforgeUserName LDAP by name or email $gforgeUserEmailHash{$gforgeUserName}\n" if $as == 0;
 		}
 	}
 }
 sub loadSVNAuthFile()
 {
+	print LOG "Entering loadSVNAuthFile\n";
 	open(IFILE,"$inputFile") || die "Could not open $inputFile\n";
 	my $section="";
-	print LOG "Reading svnauthfile $inputFile.\n";
+	print LOG "\tReading svnauthfile $inputFile.\n";
 	my $i=0;
 	while (my $line = <IFILE>)
 	{
@@ -239,7 +264,7 @@ sub loadSVNAuthFile()
 		if ($line =~/\[(.*)\]/)
 		{
 			$section=$1;
-			print LOG "Processing section $section\n";
+			print LOG "\tProcessing section $section\n";
 		}
 		elsif ($line =~/^(.*)=(.*)/ && $section eq "groups")
 		{
@@ -247,7 +272,7 @@ sub loadSVNAuthFile()
 			my @groupMemberList=split(/,/,$2);
 			
 			push(@{$svnauthGroupHash{$groupName}},@groupMemberList);
-			print LOG "Reading group $groupName  $2\n";
+			print LOG "\tReading group $groupName  $2\n";
 		}
 		elsif ($line =~/^(.*)=(.*)/ && $section ne "groups")
 		{
@@ -255,11 +280,11 @@ sub loadSVNAuthFile()
 			my $rights=$2;
 
 			$svnDirHash{$section}{$user}=$rights;
-			print LOG "Reading rights $section $user\n";
+			print LOG "\tReading rights $section $user\n";
 		}
 		else
 		{
-			print LOG "Failed to process line - $line\n";
+			print LOG "\tFailed to process line - '$line'\n";
 		}
 	}
 	print "done with file \n";
@@ -268,6 +293,7 @@ sub loadSVNAuthFile()
 
 sub writeSVNAuthFile()
 {
+	print LOG "Entering writeSVNAuthFile\n";
 	my @svnDirAddedList;
 	my @svnAuthOutList;
 	my %writeGroupHash,%writeUserHash;
@@ -288,7 +314,7 @@ sub writeSVNAuthFile()
 	{
 		#print "\t$group\n";
 		my %writeUserHash;
-		print LOG "$group - $writeGroupHash{$group}\n";
+		print LOG "\tgroup: $group ($writeGroupHash{$group})\n";
 		print OFILE "$group = ";
 		foreach my $user (@{$scmGroupUserHash{$group}})
 		{
@@ -303,7 +329,7 @@ sub writeSVNAuthFile()
 		foreach my $user (sort keys %writeUserHash)
 		{
 			#print "\t\t$user\n";
-			print LOG "\t$user - $writeUserHash{$user}\n";
+			print LOG "\t\tuser: $user ($writeUserHash{$user})\n";
 			$userList.=" $user,";
 		}
 		$userList=~s/,$//;
@@ -322,7 +348,7 @@ sub writeSVNAuthFile()
 		defined $groupMapHash{$group} ? $groupSearch=$groupMapHash{$group} : $groupSearch=$group;
 		my @svnauthMatchs = grep /$groupSearch/, keys %svnDirHash;
 		my $svnauthMatchCount=@svnauthMatchs;
-		print LOG "$groupSearch matchs @svnauthMatchs\n";
+		print LOG "\t$groupSearch matchs @svnauthMatchs\n";
 		
 		if ($svnauthMatchCount > 0)
 		{
@@ -387,6 +413,7 @@ sub writeSVNAuthFile()
 
 sub verifyOptions ()
 {
+	print LOG "Entering verifyOptions\n";
 	use Getopt::Long;
 
 	(my $cmd = $0) =~ s/^.*\///;
