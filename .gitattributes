@@ -2861,6 +2861,7 @@ software/suite-installer-template/software/common/simian/simian.xsl -text
 software/svn-utilities/build.xml -text
 software/svn-utilities/project.properties -text
 software/svn-utilities/readme.txt -text
+software/upt-configuration/src/test/gov/nih/nci/bda/ConfigureTest.java -text
 software/utils/bda-build-utils.xml -text
 software/utils/build.properties -text
 software/utils/build.xml -text
