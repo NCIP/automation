@@ -235,6 +235,7 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
 	}
 
 	private void associateApplicationWithUser() throws IOException {
+		System.out.println("Associating Application " + getApplicationName() + " with the User " +getUserLogonID());
 	    anchors = (List<HtmlAnchor>)  page.getAnchors();
 	    for (HtmlAnchor anchor: anchors) 
 	    {
@@ -251,15 +252,12 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
 	    for (HtmlAnchor anchor: anchors) 
 	    {
 	    	if(anchor.getHrefAttribute().equalsIgnoreCase("javascript: setAndSubmit('loadSearch')"))
-	    	{
-	    		System.out.println("ADDING NEW APPLICATION..." );
+	    	{	    		
 	    		page = (HtmlPage) anchor.click();
 	    		break;
 	    	}	    		    	
 	    }
 	    
-	    System.out.println("page name :" + page.toString());
-
 	    form = page.getFormByName("ApplicationForm");
 	    
 	    form.getInputByName("applicationName").setValueAttribute(getApplicationName());
@@ -292,12 +290,9 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
 		while (ite.hasNext()) {
 			HtmlElement child = (HtmlElement) ite.next();
 			if (child instanceof HtmlCheckBoxInput)
-			{
-				System.out.println("CHECK BOX INSTANCE");
-				HtmlCheckBoxInput chkBox = (HtmlCheckBoxInput) child;
-				System.out.println("ATTRIBUTE NAME::"+chkBox.getDefaultValue());
+			{		
+				HtmlCheckBoxInput chkBox = (HtmlCheckBoxInput) child;		
 				defaultValue = chkBox.getDefaultValue();
-
 			}
 		}
 
@@ -305,10 +300,12 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
     	associationRequestSettings.setRequestParameters(new ArrayList());
     	associationRequestSettings.getRequestParameters().add(new NameValuePair("operation", "setAssociation"));
     	associationRequestSettings.getRequestParameters().add(new NameValuePair("associatedIds", defaultValue));
-	    page = webClient.getPage(associationRequestSettings);		
+	    page = webClient.getPage(associationRequestSettings);
+	    System.out.println("User " +getUserLogonID()+ " successfully associated with application "+ getApplicationName());
 	}
 
 	private void createApplication() throws IOException {
+		System.out.println("Creating Application " + getApplicationName());
 	    anchors = (List<HtmlAnchor>)  page.getAnchors();		
 	    for (HtmlAnchor anchor: anchors) 
 	    {
@@ -318,14 +315,12 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
 	    		break;
 	    	}	    	
 	    }
-	    System.out.println("page name :" + page.getTitleText()); 
 	    anchors = (List<HtmlAnchor>)  page.getAnchors();
 		
 	    for (HtmlAnchor anchor: anchors) 
 	    {
 	    	if(anchor.getHrefAttribute().equalsIgnoreCase("javascript: setAndSubmit('loadAdd')"))
-	    	{
-	    		System.out.println("ADDING NEW APPLICATION..." );
+	    	{	    		
 	    		page = (HtmlPage) anchor.click();
 	    		break;
 	    	}	    		    	
@@ -342,9 +337,11 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
 	    form.getInputByName("applicationDatabaseDriver").setValueAttribute(getApplicationDBDriver());
  
 	    page = (HtmlPage) form.getInputByValue("Add").click();
+	    System.out.println("Appliation " +getApplicationName() + " created");
 	}
 
 	private void createUser() throws IOException {
+		System.out.println("Creating User " +getUserLogonID());
 	    anchors = (List<HtmlAnchor>)  page.getAnchors();		
 	    for (HtmlAnchor anchor: anchors) 
 	    {
@@ -360,7 +357,6 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
 	    {
 	    	if(anchor.getHrefAttribute().equalsIgnoreCase("javascript: setAndSubmit('loadAdd')"))
 	    	{
-	    		System.out.println("Creating new admin user..." );
 	    		page = (HtmlPage) anchor.click();
 	    		break;
 	    	}	    		    	
@@ -374,6 +370,7 @@ public class UptConfigurator extends org.apache.tools.ant.Task{
 	    form.getInputByName("userPasswordConfirm").setValueAttribute(getUserPassword());
  
 	    page = (HtmlPage) form.getInputByValue("Add").click();
+	    System.out.println("User " +getUserLogonID() + " created");
 	}
 
 	private void login() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
