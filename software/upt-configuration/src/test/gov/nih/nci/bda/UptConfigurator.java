@@ -6,8 +6,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.tools.ant.BuildException;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -29,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlRadioButtonInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
 
-public class ConfigureTest {
+public class UptConfigurator extends org.apache.tools.ant.Task{
 
 	private WebClient webClient = null;
 	private HtmlPage page = null;
@@ -177,7 +179,7 @@ public class ConfigureTest {
 	}
 
 	public static void main(String[] args) {
-		ConfigureTest ct = new ConfigureTest();
+		UptConfigurator ct = new UptConfigurator();
 		try {
 			ct.setUptAppUser("superadmin");
 			ct.setUptUrl("http://localhost:46210/upt");
@@ -197,7 +199,7 @@ public class ConfigureTest {
 		    ct.setApplicationDBDialect("org.hibernate.dialect.MySQLDialect");
 		    ct.setApplicationDBDriver("com.mysql.jdbc.Driver");
 		  		    
-			ct.configureTest();
+			ct.configureApplication();
 		} catch (FailingHttpStatusCodeException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -207,7 +209,19 @@ public class ConfigureTest {
 		}
 	}
 
-	private void configureTest() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
+	public void execute() throws BuildException {
+		try {
+			configureApplication();
+		} catch (FailingHttpStatusCodeException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void configureApplication() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 	    	    
 		initialize();
 		
