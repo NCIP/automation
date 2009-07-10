@@ -70,6 +70,8 @@
 	  <dependency conf="runtime" name="xml-commons-resolver" org="apache" rev="1.2"/>
 	  <!-- Ant Listener that reports timing on target and task execution -->
 	  <dependency conf="runtime" name="antutility" org="java.net" rev="r19"/>
+	   <!-- Added to configure upt -->
+	  <dependency conf="runtime" name="uptconfigurator" org="ncicb" rev="0.0.1"/>
   </dependencies>
   
 </ivy-module>

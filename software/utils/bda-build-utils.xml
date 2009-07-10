@@ -48,6 +48,7 @@ $HeadURL$
 	<taskdef resource="liquibasetasks.properties" classpathref="macrodef.classpath"/>
 	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="macrodef.classpath"/>
 	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="macrodef.classpath"/>
+	<taskdef name="uptconfigurator" classname="gov.nih.nci.bda.UptConfigurator" classpathref="macrodef.classpath"/>
 
 	<xmlcatalog id="bda.xml.catalog">
 		<dtd
