@@ -92,14 +92,31 @@ class BuildStatusUpdater {
 			println  productUrl
 			println  productName			
 
-			
-			if(isReachble(productUrl))
+			boolean isReachable = isReachble(productUrl)
+			if(isReachable)
 			{
 				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
 			}
 			else
 			{
 				replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
+			}
+
+			if(checkValiedBdaRevision(bdaEnabled))
+			{
+				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
+			}
+			else
+			{
+				if(isReachable)
+				{
+					replaceProductString = "'[{color:yellow}" + productName +"{color}|"+ productUrl +"]'";
+				}
+				else
+				{
+					replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
+				}
+				
 			}
 
 			println  productUrl
@@ -145,6 +162,32 @@ class BuildStatusUpdater {
 			return false;      	 
 		}
 	}	
+
+	private  double getMajorMinorRevision(String bdaVersion) {
+		String str = bdaVersion.substring(0,bdaVersion.lastIndexOf("."));
+		return Double.valueOf(str);
+	}
+
+	private boolean checkValiedBdaRevision(String bdaEnabledStr) 
+	{		
+		try
+		{	
+			if(bdaEnabledStr!= null && bdaEnabledStr.substring(bdaEnabledStr.indexOf("[")+1, bdaEnabledStr.indexOf("|")).equals("(/)"))
+			{
+				String str = bdaEnabledStr.substring(bdaEnabledStr.lastIndexOf('|')+1,bdaEnabledStr.lastIndexOf(']'));
+				if(getMajorMinorRevision(str)<Double.valueOf(properties.getProperty("bda.version.check")))
+				{
+					return false;			
+				}
+				return true;
+			}
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace(); 
+		}
+		return false;
+	}
 	
 	public void loadProperties()
 	{
