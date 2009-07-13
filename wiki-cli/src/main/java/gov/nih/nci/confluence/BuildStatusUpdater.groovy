@@ -95,29 +95,20 @@ class BuildStatusUpdater {
 			boolean isReachable = isReachble(productUrl)
 			if(isReachable)
 			{
-				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
+				if(checkValiedBdaRevision(bdaEnabled))
+				{
+					replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
+				}
+				else
+				{
+					replaceProductString = "'[{color:yellow}" + productName +"{color}|"+ productUrl +"]'";
+				}
 			}
 			else
 			{
 				replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
 			}
 
-			if(checkValiedBdaRevision(bdaEnabled))
-			{
-				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
-			}
-			else
-			{
-				if(isReachable)
-				{
-					replaceProductString = "'[{color:yellow}" + productName +"{color}|"+ productUrl +"]'";
-				}
-				else
-				{
-					replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
-				}
-				
-			}
 
 			println  productUrl
 			println  productName
