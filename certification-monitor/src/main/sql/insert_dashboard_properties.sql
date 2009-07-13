@@ -399,7 +399,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.project.url','http://gforge.nci.nih.gov/svnroot/c3prv2/trunk/c3prv2/codebase');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.master.build.location','${c3prv2.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.master.build.location','${c3prv2.svn.local.checkout}/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2.single-command.package.target','dist:installer:prep');
