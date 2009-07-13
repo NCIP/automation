@@ -660,7 +660,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.exploded.dir.location','${ccts-caaers.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ctods');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caaers');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.jobname','');
@@ -670,26 +670,26 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','install:init');
 
 
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.database.type','mysql');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.svn.project.url','http://gforge.nci.nih.gov/svnroot/caexchage');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.master.build.location','${ccts-caexchage.svn.local.checkout}/software/build');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.master.install.location','working/installer');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.single-command.package.target','dist:installer:prep');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.database.integration.target','install:database');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.exploded.dir.location','${ccts-caexchage.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ctods');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.ci-server.portnumber','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.single-command.deployment.target','install');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.project.url','http://gforge.nci.nih.gov/svnroot/caxchange/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.master.build.location','${ccts-caXchage.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.exploded.dir.location','${ccts-caXchage.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caXchage');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.ci-server.hostname','137.187.183.208');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.ci-server.jobname','caXchange');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.ci-server.portnumber','48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.install.init.target','install:init');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.type','mysql');
@@ -704,7 +704,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.exploded.dir.location','${ccts-labviewer.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ctods');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/labviewer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.jobname','');
@@ -726,7 +726,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.exploded.dir.location','${ccts-psc.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ctods');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/psc');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.jobname','');
@@ -734,3 +734,25 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.install.init.target','install:init');
+
+
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk/sdk-toolkit');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/example-project/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exploded.dir.location','${cacoresdk.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cacoresdk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.hostname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','install:init');
