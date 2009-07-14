@@ -88,6 +88,7 @@ class BuildStatusUpdater {
 			String productUrl  = productString.substring(productString.indexOf("|")+1, productString.indexOf("]"));
 			String productName  = productString.substring(productString.indexOf("[")+1, productString.indexOf("|"));
 	    		String replaceProductString = null
+	    		String replaceBdaEnabledString = null
 		
 			println  productUrl
 			println  productName			
@@ -95,26 +96,37 @@ class BuildStatusUpdater {
 			boolean isReachable = isReachble(productUrl)
 			if(isReachable)
 			{
-				if(checkValiedBdaRevision(bdaEnabled))
-				{
-					replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
-				}
-				else
-				{
-					replaceProductString = "'[{color:yellow}" + productName +"{color}|"+ productUrl +"]'";
-				}
+				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";
 			}
 			else
 			{
 				replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
 			}
 
+			String replaceBdaEnabledString = null;
+			if(!ct.checkValiedBdaRevision(bdaEnabled))
+			{	
+				if(bdaEnabled!= null && !bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(x)"))
+				{
+					replaceBdaEnabledString = bdaEnabled.replace(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")), "(!)");
+				}
+				else
+				{
+					replaceBdaEnabledString = bdaEnabled;
+				}
+			}
+			else
+			{
+				replaceBdaEnabledString = bdaEnabled;
+			}
+
 
 			println  productUrl
 			println  productName
 			println  replaceProductString
+			println  replaceBdaEnabledString
 			
-			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
+			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
 
 			println findReplace
 			// update page
