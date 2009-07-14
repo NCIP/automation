@@ -88,25 +88,44 @@ class BuildStatusUpdater {
 			String productUrl  = productString.substring(productString.indexOf("|")+1, productString.indexOf("]"));
 			String productName  = productString.substring(productString.indexOf("[")+1, productString.indexOf("|"));
 	    		String replaceProductString = null
+	    		String replaceBdaEnabledString = null
 		
 			println  productUrl
 			println  productName			
 
-			
-			if(isReachble(productUrl))
+			boolean isReachable = isReachble(productUrl)
+			if(isReachable)
 			{
-				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";			
+				replaceProductString = "'[" + productName +"|"+ productUrl+"]'";
 			}
 			else
 			{
 				replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
 			}
 
+			if(!checkValiedBdaRevision(bdaEnabled))
+			{	
+				if(bdaEnabled!= null && !bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(x)"))
+				{
+					replaceBdaEnabledString = bdaEnabled.replace(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")), "(!)");
+				}
+				else
+				{
+					replaceBdaEnabledString = bdaEnabled;
+				}
+			}
+			else
+			{
+				replaceBdaEnabledString = bdaEnabled;
+			}
+
+
 			println  productUrl
 			println  productName
 			println  replaceProductString
+			println  replaceBdaEnabledString
 			
-			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
+			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
 
 			println findReplace
 			// update page
@@ -145,6 +164,32 @@ class BuildStatusUpdater {
 			return false;      	 
 		}
 	}	
+
+	private  double getMajorMinorRevision(String bdaVersion) {
+		String str = bdaVersion.substring(0,bdaVersion.lastIndexOf("."));
+		return Double.valueOf(str);
+	}
+
+	private boolean checkValiedBdaRevision(String bdaEnabledStr) 
+	{		
+		try
+		{	
+			if(bdaEnabledStr!= null && bdaEnabledStr.substring(bdaEnabledStr.indexOf("[")+1, bdaEnabledStr.indexOf("|")).equals("(/)"))
+			{
+				String str = bdaEnabledStr.substring(bdaEnabledStr.lastIndexOf('|')+1,bdaEnabledStr.lastIndexOf(']'));
+				if(getMajorMinorRevision(str)<Double.valueOf(properties.getProperty("bda.version.check")))
+				{
+					return false;			
+				}
+				return true;
+			}
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace(); 
+		}
+		return false;
+	}
 	
 	public void loadProperties()
 	{
