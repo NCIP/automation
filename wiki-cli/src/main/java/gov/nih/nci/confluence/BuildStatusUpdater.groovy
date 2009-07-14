@@ -103,7 +103,7 @@ class BuildStatusUpdater {
 				replaceProductString = "'[{color:red}" + productName +"{color}|"+ productUrl +"]'";
 			}
 
-			if(!ct.checkValiedBdaRevision(bdaEnabled))
+			if(!checkValiedBdaRevision(bdaEnabled))
 			{	
 				if(bdaEnabled!= null && !bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(x)"))
 				{
