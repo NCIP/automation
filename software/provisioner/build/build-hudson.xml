@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-$Id: build.xml 4839 2008-05-21 14:45:51Z zengje $
-$HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
+$Id: build.xml 4839 2008-05-21 14:45:51Z duvallp $
+$HeadURL: http://gforge.nci.nih.gov/svnroot/bda/trunk/software/build/build-hudson.xml $
 -->
 <project name="build-hudson" default="build-hudson-manager" basedir="." 
 	xmlns:ivy="antlib:org.apache.ivy.ant"
@@ -76,9 +76,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			target="install"
 			dir="${basedir}/hudson-manager" >
 		</ant>
+		<copy file="${basedir}/config.xml" todir="${user.home}/hudson_data/jobs/cai2/"/>
 	</target>
 
-	
 	<target name="svn-scorch">
 		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
 	</target>

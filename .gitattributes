@@ -2771,6 +2771,7 @@ software/hudson-manager/install.properties -text
 software/provisioner/build/.bash_profile -text
 software/provisioner/build/build-hudson.xml -text
 software/provisioner/build/build.xml -text
+software/provisioner/build/config.xml -text
 software/provisioner/build/hosts -text
 software/provisioner/build/init.sh -text
 software/provisioner/build/instance.properties -text
