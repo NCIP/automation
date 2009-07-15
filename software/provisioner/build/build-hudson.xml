@@ -76,7 +76,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/bda/trunk/software/build/build-hudso
 			target="install"
 			dir="${basedir}/hudson-manager" >
 		</ant>
-		<copy file="${basedir}/config.xml" todir="${user.home}/hudson_data/jobs/cai2/"/>
 	</target>
 
 	<target name="svn-scorch">

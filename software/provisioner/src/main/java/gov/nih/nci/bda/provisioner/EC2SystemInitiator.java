@@ -192,6 +192,14 @@ public class EC2SystemInitiator
 		scb.executeCommand("ant -f build-hudson.xml >> build.log");
 		scb.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		scb.close();
+		
+		SessionChannelClient  sessionObject = ssh1.openSessionChannel();
+		sessionObject.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject.executeCommand("mkdir hudson_data/jobs/cai2");
+		sessionObject.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject.close();
+		
+		scp.put(new File("config.xml").getAbsolutePath(), "hudson_data/jobs/cai2", true);
 
 	}
 	else
