@@ -151,6 +151,17 @@ $HeadURL$
 		<os family="windows" />
 	</condition>
 
+	<condition property="local.cbiit-ivy-repo.dir" value="">
+		<or>
+		<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="local.cbiit-ivy-repo.dir" value="c:/">
+		<os family="windows" />
+	</condition>
+
 	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
 	<!--
 	<mkdir dir="${bda-download.dir}" />
