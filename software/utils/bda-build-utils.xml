@@ -7472,4 +7472,41 @@ $HeadURL$
 			</groovy>       
 		</sequential>
 	</macrodef>
+	
+	<macrodef name="upt-application-configure" description="macro for configuring upt application">
+		<attribute name="upt.application.url default="${upt.application.url}"/>
+		<attribute name="upt.application.user" default="superadmin"/>
+		<attribute name="upt.application.password"/>
+		<attribute name="upt.application.contextname" default="csmupt"/>
+		<attribute name="new.user.logonid" default="${new.user.logonid}"/>
+		<attribute name="new.user.firstname" default="${new.user.firstname}"/>
+		<attribute name="new.user.lastname" default="${new.user.lastname}"/>
+		<attribute name="new.user.password" default="${new.user.password}"/>
+		<attribute name="application.name" default="${application.name}"/>
+		<attribute name="application.description" default="${application.description}"/>
+		<attribute name="application.connection.url" default="${database.url}"/>
+		<attribute name="application.dbusername" default="${database.user}"/>
+		<attribute name="application.dbpassword" default="${database.password}"/>
+		<attribute name="application.dbdialect" default="${database.dialect}"/>
+		<attribute name="application.dbdriver" default="${database.driver}"/>
+		<sequential>		    
+			<uptconfigurator
+			    uptUrl="@{upt.url}"
+			    uptAppUser="@{upt.application.user}"
+			    uptAppPassword="@{upt.application.password}"
+			    appContextName="@{upt.application.contextname}"
+			    userLogonID="@{new.user.logonid}"
+			    userFirstName="@{new.user.firstname}"
+			    userLastName="@{new.user.lastname}"
+			    userPassword="@{new.user.password}"
+			    applicationName="@{application.name}"
+			    applicationDesc="@{application.description}"
+			    applicationConnectionUrl="@{application.connection.url}"
+			    applicationDBUserName="@{application.dbusername}"
+			    applicationDBPassword="@{application.dbpassword}"
+			    applicationDBDialect="@{application.dbdialect}"
+			    applicationDBDriver="@{application.dbdriver}"
+			    />
+		</sequential>
+	</macrodef>
 </project>
