@@ -193,23 +193,23 @@ public class EC2SystemInitiator
 		scb.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		scb.close();
 		
-		SessionChannelClient  sessionObject = ssh1.openSessionChannel();
-		sessionObject.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sessionObject.executeCommand("mkdir ~/hudson_data");
-		sessionObject.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		sessionObject.close();
+		SessionChannelClient  sessionObject1 = ssh1.openSessionChannel();
+		sessionObject1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject1.executeCommand("mkdir ~/hudson_data");
+		sessionObject1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject1.close();
 
-		SessionChannelClient  sessionObject = ssh1.openSessionChannel();
-		sessionObject.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sessionObject.executeCommand("mkdir ~/hudson_data/jobs");
-		sessionObject.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		sessionObject.close();
+		SessionChannelClient  sessionObject2 = ssh1.openSessionChannel();
+		sessionObject2.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject2.executeCommand("mkdir ~/hudson_data/jobs");
+		sessionObject2.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject2.close();
 		
-		SessionChannelClient  sessionObject = ssh1.openSessionChannel();
-		sessionObject.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sessionObject.executeCommand("mkdir ~/hudson_data/jobs/cai2");
-		sessionObject.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		sessionObject.close();
+		SessionChannelClient  sessionObject3 = ssh1.openSessionChannel();
+		sessionObject3.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject3.executeCommand("mkdir ~/hudson_data/jobs/cai2");
+		sessionObject3.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject3.close();
 		
 		scp.put(new File("config.xml").getAbsolutePath(), "~/hudson_data/jobs/cai2", true);
 
