@@ -8,7 +8,7 @@
 	<property name="bda-utils.xml.file" value="bda-build-utils-${bda.version}.xml"/>
 	<property name="bda-utils.zip.file" value="bda-build-utils-${bda.version}.zip"/>
 	<property name="commonlibrary.dir" location="../../../commonlibrary/"/>
-	<property name="bda-utils.beta.dir" location="${commonlibrary.dir}/ivy-repo/${bda.ivy.relative.dir}"/>
+	<property name="bda-utils.beta.dir" location="../../../cbiit-ivy-repo/"/>
 	<property name="bda-templates.src.dir" location="../bda-build-template"/>
 	<property name="bda-templates.dest.location" location="${bda-utils.beta.dir}/bda-build-templates-${bda.version}.zip"/>
 	<tstamp>
