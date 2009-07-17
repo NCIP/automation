@@ -342,6 +342,7 @@ $HeadURL$
 			<property name="dist.dir" value="${bda-blueprints-webapp.dist.dir}" />
 			<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 			<property name="commonlibrary.dir" value="${commonlibrary.dir}"/>
+			<property name="local.cbiit-ivy-repo.dir" value="${local.cbiit-ivy-repo.dir}"/>
 		</ant>
 	</target>
 
