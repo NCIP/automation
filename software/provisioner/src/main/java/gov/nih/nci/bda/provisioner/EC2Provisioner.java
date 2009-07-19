@@ -66,7 +66,7 @@ public class EC2Provisioner extends BaseProvisioner
   public String generateKey(String accessId, String secretKey) throws IOException
   {
 	  Jec2 jec2 = new Jec2(accessId, secretKey);
-	  KeyPairInfo key;
+	  KeyPairInfo key = null;
     try
     {
     	List<KeyPairInfo> existingKeys = jec2.describeKeyPairs(new String [] {});
@@ -92,7 +92,7 @@ public class EC2Provisioner extends BaseProvisioner
 	{
 		LOGGER.log(Level.WARNING, "Failed to check EC2 credential", e);
 	}
-	return "success";
+	return key.getKeyMaterial();
   }
 
 
@@ -136,7 +136,7 @@ private void listAllKeys(String accessId, String secretKey) {
   }
 
 
-private void runInstance(String accessId, String secretKey,String privateKey) throws IOException
+private String  runInstance(String accessId, String secretKey,String privateKey) throws IOException
 {
 	Jec2 jec2 = new Jec2(accessId, secretKey);
 	String instanceState = null;
@@ -174,6 +174,7 @@ private void runInstance(String accessId, String secretKey,String privateKey) th
 	catch (EC2Exception e) {
 		throw new AssertionError();
 	}
+	return dnsName;
 }
 
   public void provisionInstance() throws Exception
@@ -185,7 +186,7 @@ private void runInstance(String accessId, String secretKey,String privateKey) th
 		generateSecurityGroup(accessId, secretKey);
 		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName));
 		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName));
-		initializeInstance(System.getProperty("user.home")+"/"+privateKeyFileName);
+		initializeInstance();
 }
 
 
@@ -194,6 +195,12 @@ private void generateSecurityGroup(String accessId, String secretKey) throws IOE
 	Jec2 jec2 = new Jec2(accessId, secretKey);
     try
     {
+    	List<GroupDescription> securityGroups = jec2.describeSecurityGroups(new String [] {});
+    	String ownerId = null;
+    	for (GroupDescription res : securityGroups)
+    	{
+    		res.getName();
+    	}
     	/*
     	List<GroupDescription> securityGroups = jec2.describeSecurityGroups(new String [] {});
     	int n = 0;
@@ -218,7 +225,7 @@ private void generateSecurityGroup(String accessId, String secretKey) throws IOE
 	    	{
 	    		jec2.authorizeSecurityGroupIngress(privateKeyFileName, "tcp", Integer.valueOf(portValue).intValue(), Integer.valueOf(portValue).intValue(), "0.0.0.0/0");
 	    	}
-	    	jec2.authorizeSecurityGroupIngress("default", privateKeyFileName, "923120264911");
+	    	jec2.authorizeSecurityGroupIngress("default", privateKeyFileName, ownerId);
     	}
     }
 	catch (EC2Exception e)
@@ -228,11 +235,11 @@ private void generateSecurityGroup(String accessId, String secretKey) throws IOE
 }
 
 
-private void initializeInstance(String privateKeyFile) throws IOException, InvalidStateException, InterruptedException
+private void initializeInstance() throws IOException, InvalidStateException, InterruptedException
 	{
 	  try
 	  {
-		EC2SystemInitiator si = new EC2SystemInitiator(dnsName,privateKeyFile);
+		EC2SystemInitiator si = new EC2SystemInitiator(dnsName,System.getProperty("user.home")+"/"+privateKeyFileName);
 		si.initializeSystem();
 	  }
 	  catch (EC2Exception e)
