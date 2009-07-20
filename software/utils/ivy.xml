@@ -72,6 +72,7 @@
 	  <!-- Ant Listener that reports timing on target and task execution -->
 	  <dependency conf="runtime" name="antutility" org="java.net" rev="r19"/>
 	  <dependency conf="runtime" name="uptconfigurator" org="ncicb" rev="0.0.1"/>
+	  <dependency org="commons-codec" name="commons-codec" rev="1.3"/>
   </dependencies>
   
 </ivy-module>
