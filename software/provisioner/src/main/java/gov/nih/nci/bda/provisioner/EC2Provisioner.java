@@ -183,7 +183,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey)
 	  	String secretKey = config.getString("ec2.secret.key");
 		listAllKeys(accessId, secretKey);
 		generateKey(accessId, secretKey);
-		generateSecurityGroup(accessId, secretKey);
+		generateSecurityGroup(accessId, secretKey, (ArrayList) config.getProperty("ec2.port.list"));
 		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName));
 		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName));
 		initializeInstance();
@@ -191,7 +191,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey)
 
 
 @SuppressWarnings("unchecked")
-private void generateSecurityGroup(String accessId, String secretKey) throws IOException {
+private void generateSecurityGroup(String accessId, String secretKey, ArrayList<String> portList) throws IOException {
 	Jec2 jec2 = new Jec2(accessId, secretKey);
     try
     {
@@ -199,25 +199,9 @@ private void generateSecurityGroup(String accessId, String secretKey) throws IOE
     	String ownerId = null;
     	for (GroupDescription res : securityGroups)
     	{
-    		res.getName();
+    		ownerId = res.getOwner();
     	}
-    	/*
-    	List<GroupDescription> securityGroups = jec2.describeSecurityGroups(new String [] {});
-    	int n = 0;
-
-    	while (true)
-    	{
-    		boolean found = false;
-    		for (GroupDescription res : securityGroups)
-    			if (res.getName().equals("provisioner-" + n))
-    				found = true;
-    		if (!(found))
-    			break;
-    		++n;
-    	}
-    	privateKeyFileName = "provisioner-" + n;
-    	*/
-    	ArrayList<String> portList=(ArrayList) config.getProperty("ec2.port.list");
+    	
 		if(portList != null)
     	{
     		jec2.createSecurityGroup(privateKeyFileName, privateKeyFileName+" security group");
