@@ -2795,8 +2795,8 @@ software/provisioner-app/grails-app/i18n/messages_pt_BR.properties -text
 software/provisioner-app/grails-app/i18n/messages_ru.properties -text
 software/provisioner-app/grails-app/i18n/messages_th.properties -text
 software/provisioner-app/grails-app/i18n/messages_zh_CN.properties -text
+software/provisioner-app/grails-app/views/cloudClient/confirm.gsp -text
 software/provisioner-app/grails-app/views/cloudClient/index.gsp -text
-software/provisioner-app/grails-app/views/cloudClient/staticView.gsp -text
 software/provisioner-app/grails-app/views/error.gsp -text
 software/provisioner-app/grails-app/views/index.gsp -text
 software/provisioner-app/grails-app/views/layouts/main.gsp -text
