@@ -7474,7 +7474,7 @@ $HeadURL$
 	</macrodef>
 	
 	<macrodef name="upt-application-configure" description="macro for configuring upt application">
-		<attribute name="upt.application.url default="${upt.application.url}"/>
+		<attribute name="upt.application.url" default="${upt.application.url}"/>
 		<attribute name="upt.application.user" default="superadmin"/>
 		<attribute name="upt.application.password"/>
 		<attribute name="upt.application.contextname" default="csmupt"/>
