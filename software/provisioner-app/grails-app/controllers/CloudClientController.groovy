@@ -27,7 +27,8 @@ class CloudClientController {
 		String hostName = ec2p.runInstance(params.accessId,params.secretId,params.privateKey)
 		ec2p.generateSecurityGroup(params.accessId,params.secretId,(ArrayList<String>) InvokerHelper.createList(params.portList.split(",")))		
 		ec2p.initializeInstance()
-		redirect(action: 'index',params: [accessId:params.accessId,secretId:params.secretId,portList:params.portList])
+		//redirect(action: 'index',params: [accessId:params.accessId,secretId:params.secretId,portList:params.portList])
+		render(view: 'staticView',params: [hostName:"narram.nci.nih.gov"):
 	}
 	     
 }
