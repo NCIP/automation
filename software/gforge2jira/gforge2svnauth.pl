@@ -13,9 +13,9 @@ use Data::Dumper;
 use DBI;
 use Cwd 'abs_path';
 
-my $dbServer, $dbPort, $dbUser,$dbPass,$ldapFileName,$inputFile,$outputFile="";
-my %gforgeUserGroupHash,%gforgeUserEmailHash,%gforgeUserRealNameHash,%gforgeEmailUserHash, %ldapUserHash, %ldapEmailHash, %ldapRealNameHash,%scmGroupUserHash, %gforgeGroupHash,%groupMapHash,%svnauthGroupHash,%svnDirHash,%gforgeUserLastNameHash;
-my @cnList;
+my $dbServer, $dbPort, $dbUser,$dbPass,$ldapFileName,$inputFile,$outputFile,$userMapFile,$groupSvnMapFile="";
+my %gforgeUserGroupHash,%gforgeUserEmailHash,%gforgeUserRealNameHash,%gforgeEmailUserHash, %ldapUserHash, %ldapEmailHash, %ldapRealNameHash,%scmGroupUserHash, %gforgeGroupHash,%groupMapHash,%svnauthGroupHash,%svnDirHash,%gforgeUserLastNameHash,%gforgeUserLdapHash;
+my @cnList,@excludeGroupList;
 
 print "Verifying command line options\n";
 &verifyOptions();
@@ -39,6 +39,8 @@ open (USERNOTFOUND, ">target/gforge2svnauth.notfound") || die "Could not write n
 #&setUsers();
 #exit 0;
 
+print "Reading group exclude List\n";
+&loadExcludeList();
 print "Loading User/Group from Gforge\n";
 &loadGforge();
 #&genGroupFile();
@@ -47,6 +49,8 @@ print "Loading Users From LDAP\n";
 &loadUserLdap();
 print "Loading Gforge to SVN Map file\n";
 &loadGroupSvnMap();
+print "Loading Gforge to user Map file\n";
+&loadUserMap();
 print "Comparing Gforge2LDAP\n";
 &compareGforge2Ldap();
 print "Loading SVNAuthFile\n";
@@ -108,20 +112,28 @@ sub loadGforge ()
 	$sth->execute;
 	while( my ($groupName, $userName, $userRealName, $userEmail) = $sth->fetchrow_array)
 	{
-		# replacing spaces with _
-		#$groupName=~ s/\s+/_/g;
-		#fix 1 user  many groups, 1 group  many users, use array....
-		push(@{$gforgeUserGroupHash{lc($userName)}},lc($groupName));
-		$gforgeUserEmailHash{lc($userName)}=lc($userEmail);
-		$gforgeUserRealNameHash{lc($userName)}=$gforgeUserRealNameHash;
-		$gforgeEmailUserHash{lc($userEmail)}=lc($userName);
-		$gforgeGroupHash{lc($groupName)}++;
-
-		if ($userRealName =~/(\S+)$/)
+		if (grep(/$groupName/,@excludeGroupList))
 		{
-			my $lastName=$1;
-			$lastName =~ s/\W+//;
-			$gforgeUserLastNameHash{lc($userName)}=lc($lastName);
+			print LOG "\tskipping group $groupName\n";
+			next;
+		}
+		else
+		{
+			# replacing spaces with _
+			#$groupName=~ s/\s+/_/g;
+			#fix 1 user  many groups, 1 group  many users, use array....
+			push(@{$gforgeUserGroupHash{lc($userName)}},lc($groupName));
+			$gforgeUserEmailHash{lc($userName)}=lc($userEmail);
+			$gforgeUserRealNameHash{lc($userName)}=$gforgeUserRealNameHash;
+			$gforgeEmailUserHash{lc($userEmail)}=lc($userName);
+			$gforgeGroupHash{lc($groupName)}++;
+	
+			if ($userRealName =~/(\S+)$/)
+			{
+				my $lastName=$1;
+				$lastName =~ s/\W+//;
+				$gforgeUserLastNameHash{lc($userName)}=lc($lastName);
+			}
 		}
 	}
 	$sth->finish();
@@ -146,7 +158,11 @@ sub loadUserLdap ()
 	open(LDAP,"$ldapFileName") || die "Could not open file $ldapFileName\n";
 	while (my $rec = <LDAP>) 
 	{       
-		my $cn,$uid,$email,$sn,$givenName;
+		my $cn="";
+		my $uid="";
+		my $email="";
+		my $sn="";
+		my $givenName="";
 		if ($rec =~ /.*uid:\s+(.*)?\n/)
 		{               
 			$uid=lc($1);
@@ -163,13 +179,15 @@ sub loadUserLdap ()
 		{               
 			$giveName=$1;
 		}               
-		if ($rec =~ /.*cn:\s+(.*)?/)
+		if ($rec =~ /.*cn:\s+(.*)?\n/)
 		{               
 			$cn=lc($1);
 		}               
 
 		my $realname="${givenName} ${sn}";
 
+
+		print LOG "\t\tadding $cn to ldapHash\n";
 		push(@cnList,$cn);
 		# Use uid if defnied otherwise use $cn
 		if ($uid =~/\S+/)
@@ -177,12 +195,14 @@ sub loadUserLdap ()
 			$ldapEmailHash{$email}=$uid;
 			$ldapUserHash{$uid}++;
 			$ldapRealNameHash{$realname}=$id;
+			print LOG "\t\t\tadding $uid to ldapHash (uid)\n";
 		}
 		else
 		{
 			$ldapEmailHash{$email}=$cn;
 			$ldapUserHash{$cn}++;
 			$ldapRealNameHash{$realname}=$cn;
+			print LOG "\t\t\tadding $cn to ldapHash (cn)\n";
 		}
 
 	}       
@@ -224,7 +244,22 @@ sub compareGforge2Ldap ()
 		#   user ldap username
 		#else
 		#   log not found message
-		if (defined $ldapUserHash{$gforgeUserName})
+		if (defined $gforgeUserLdapHash{$gforgeUserName})
+		{
+			if (defined $ldapUserHash{$gforgeUserLdapHash{$gforgeUserName}})
+			{
+				foreach my $gforgeGroup (@{$gforgeUserGroupHash{$gforgeUserName}})
+				{
+					print USERFOUND "Found $gforgeUserName in map file\n";
+					push(@{$scmGroupUserHash{$gforgeGroup}},$gforgeUserLdapHash{$gforgeUserName});
+				}
+			}
+			else
+			{
+				print LOG "\tUser $gforgeUserLdapHash{$gforgeUserName} not found in ldap, invalid map for $gforgeUserName\n";
+			}
+		}
+		elsif (defined $ldapUserHash{$gforgeUserName})
 		{
 			foreach my $gforgeGroup (@{$gforgeUserGroupHash{$gforgeUserName}})
 			{
@@ -354,7 +389,7 @@ sub writeSVNAuthFile()
 		{
 			foreach my $svnDir (@svnauthMatchs)
 			{
-				$outRec.="[${svnDir}] match\n";
+				$outRec.="[${svnDir}]\n";
 				push(@svnDirAddedList,$svnDir);
 				my $grpMatch,$starMatch="";
 				foreach my $user (sort keys %{$svnDirHash{$svnDir}})
@@ -364,7 +399,7 @@ sub writeSVNAuthFile()
 					{
 						$grpMatch="true";
 					}
-					if ($user eq "\*.*")
+					if ($user =~ /\*\s*/)
 					{
 						$starMatch="true";
 					}
@@ -392,7 +427,7 @@ sub writeSVNAuthFile()
 	{
 		my $outRec="";
 		next if grep /$svnDir/,@svnDirAddedList;
-		$outRec.="[${svnDir}] unmatch\n";
+		$outRec.="[${svnDir}]\n";
 		foreach my $user (sort keys %{$svnDirHash{$svnDir}})
 		{
 			my $perms=$svnDirHash{$svnDir}{$user};
@@ -418,12 +453,13 @@ sub verifyOptions ()
 
 	(my $cmd = $0) =~ s/^.*\///;
 	my $cwd = `pwd`; chomp $cwd;
-	my $usage = "\n$cmd: $cmd -d dbname [-s dbserver -p dbport -u dbuser -w dbpassword] -l ldiffile -i inputFile -o outputfile -g groupsvnmapfile
+	my $usage = "\n$cmd: $cmd -d dbname [-s dbserver -p dbport -u dbuser -w dbpassword] -l ldiffile -i inputFile -o outputfile -g groupsvnmapfile -u usermapfile
 	-h      Display this USAGE message and exit.
 	-l	LDIF file (required)
 	-i	Input file svnauth file (required)
 	-o	Output file svnauth file (required) [cannot be same as input file]
 	-g	Group to SVN Path Map File (required)
+	-m	User Map file (required)
 	-d      Database Name (required)
 	-s      Database Server (optional db), enter all optional db or none, none will use local user authentication, not entering all will cause failure
 	-p      Database Port (optional db)
@@ -442,14 +478,17 @@ sub verifyOptions ()
 		"l=s"=>\$optldapFileName,
 		"i=s"=>\$optinputFile,
 		"o=s"=>\$optoutputFile,
-		"g=s"=>\$optgroupSvnMapFile
+		"g=s"=>\$optgroupSvnMapFile,
+		"m=s"=>\$optuserMapFile
 	);              
 
 	die "$usage" if  ! $rt  ;
-	die "$usage" if ! defined $optdbName || ! defined $optldapFileName || ! defined $optinputFile || ! defined $optoutputFile || ! defined $optgroupSvnMapFile;
+	die "$usage" if ! defined $optdbName || ! defined $optldapFileName || ! defined $optinputFile || ! defined $optoutputFile || ! defined $optgroupSvnMapFile || ! defined $optuserMapFile;
 	die "$usage" if ((defined  $optdbServer || defined $optdbPort || defined $optdbUser || defined $optdbPass) && (! defined  $optdbServer || ! defined $optdbPort || ! defined $optdbUser || ! defined $optdbPass));
 	die "$optldapFileName does not exist\n" if ! -f $optldapFileName;
 	die "$optinputFile does not exist\n" if ! -f $optinputFile;
+	die "$optuserMapFile does not exist\n" if ! -f $optuserMapFile;
+	die "$optgroupSvnMapFile does not exist\n" if ! -f $optgroupSvnMapFile;
 	die "Input and output files cannot be same" if $optinputFile eq $optoutputFile;
 	$dbName=$optdbName;
 	$dbServer=$optdbServer;
@@ -459,5 +498,40 @@ sub verifyOptions ()
 	$ldapFileName=$optldapFileName;
 	$inputFile=$optinputFile;
 	$outputFile=$optoutputFile;
-	$groupSvnMapFile=$optgroupSvnMapFile
+	$groupSvnMapFile=$optgroupSvnMapFile;
+	$userMapFile=$optuserMapFile;
 }
+sub loadUserMap()
+{
+	print LOG "Entering loadUserMap\n";
+	open(MFILE,"$userMapFile") || die "Can't open $userMapFile\n";
+	while(my $line = <MFILE>)
+	{
+		if($line =~ /(.*)=(.*)/)
+		{
+			my $gforgeUser=$1;
+			my $ldapUser=$2;
+			if ($ldapUser =~ /\S+/)
+			{
+				$gforgeUserLdapHash{$gforgeUser}=$ldapUser;
+			}
+		}
+	}
+}
+sub loadExcludeList()
+{
+	print LOG "Entering loadExcludeList\n";
+	if (-e "groups.exclude")
+	{
+		print LOG "\tFound groups.exclude file.\n";
+		open (EFILE,"groups.exclude") || die "could not open groups.exclude\n";
+		while(my $line= <EFILE>)
+		{
+			chomp($line);
+			push(@excludeGroupList,$line);
+			print LOG "\t\tExcluding $line\n";
+		}
+	}
+}
+
+
