@@ -2759,7 +2759,9 @@ software/gforge2jira/gforge-tasks2jira.pl -text
 software/gforge2jira/gforge-tracker2jira.pl -text
 software/gforge2jira/gforge-users2jira.pl -text
 software/gforge2jira/gforge2svnauth.pl -text
+software/gforge2jira/gforgeUser2LDAP.map -text
 software/gforge2jira/groupSvn.map -text
+software/gforge2jira/groups.exclude -text
 software/heartbeat/.classpath -text
 software/heartbeat/.project -text
 software/heartbeat/pom.xml -text
