@@ -62,5 +62,8 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
+grails.mail.host="mailfwd.nih.gov"
+grails.mail.default.from="narram@mail.nih.gov"
+
 
      

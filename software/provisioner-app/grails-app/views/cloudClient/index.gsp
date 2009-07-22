@@ -11,7 +11,7 @@
 		<g:textField name="accessId" value="${params.accessId}"/></br>
 		<label for="sId">Secret Id</label>
 		<g:textField name="secretId" value="${params.secretId}"/></br>
-		<label for="sId">Private Key</label></br>
+		<label for="keyId">Private Key</label></br>
 		<g:textArea name="privateKey" value="${params.privateKey}" cols="40" rows="10"/></br>
 		<g:submitButton name="generateKey" value="Generate Key"/>
 	    </g:form>
@@ -19,8 +19,10 @@
 	    	<g:hiddenField name="accessId" value="${params.accessId}" />
 	    	<g:hiddenField name="secretId" value="${params.secretId}" />
 	    	<g:hiddenField name="privateKey" value="${params.privateKey}" />
-	    	<label for="sId">Port List</label>
+	    	<label for="portId">Port List</label>
 	    	<g:textField name="portList" value="${params.portList}"/></br>
+	    	<label for="emailId">Email</label>
+	    	<g:textField name="email" value="${params.email}"/></br>	    	
 		<g:submitButton name="provisionAMI" value="Provision AMI"/>   
 	    </g:form>
 	</formset>

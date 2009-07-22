@@ -2,7 +2,7 @@ import gov.nih.nci.bda.provisioner.*
 import org.codehaus.groovy.runtime.InvokerHelper
 
 class CloudClientController {
-
+	def cloudClientService
     def index = { 
     	}
       
@@ -13,11 +13,7 @@ class CloudClientController {
 	}
 	
 	def provisionAMI = {
-		Provisioner ec2p = new EC2Provisioner();
-		println 'ACCESS IN PROVISION' + params.accessId 
-		String hostName = ec2p.runInstance(params.accessId.trim(),params.secretId.trim(),params.privateKey.trim())
-		ec2p.generateSecurityGroup(params.accessId.trim(),params.secretId.trim(),(ArrayList<String>) InvokerHelper.createList(params.portList.split(",")))		
-		ec2p.initializeInstance()
-		render(view: 'confirm',model: [hostName:hostName,hudsonUserName:'hudsonuser',hudsonUserPassword:'password'])
+		cloudClientService.sendMessage(params)	
+		render(view: 'confirm')
 	}
 }
