@@ -62,8 +62,14 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
-grails.mail.host="mailfwd.nih.gov"
-grails.mail.default.from="narram@mail.nih.gov"
+//grails.mail.host="mailfwd.nih.gov"
+
+grails.mail.host="localhost"
+grails.mail.port="25"
+grails.mail.default.from="Mahidhar.Narra@stelligent.com"
+//grails.mail.username="Mahidhar.Narra@stelligent.com"
+//grails.mail.password =""
+//grails.mail.props=["mail.smtp.auth":"true"]
 
 
      
