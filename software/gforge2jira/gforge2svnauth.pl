@@ -23,7 +23,7 @@ print "Verifying command line options\n";
 my $dbh;
 if (defined $dbServer)
 {
-	$dbh = DBI->connect("dbi:Pg:host=$dbServer;port=$dbPort;database=$dbName", "$dbUser", "$dbPass") or die "Couldn't connect to database: " . DBI->errstr;
+	$dbh = DBI->connect("dbi:Pg:host=$dbServer;port=$dbPort;dbname=$dbName", "$dbUser", "$dbPass") or die "Couldn't connect to database: " . DBI->errstr;
 }
 else
 {
