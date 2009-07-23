@@ -351,35 +351,35 @@ public class UserInputPanel extends IzPanel implements ActionListener
     private static final String FAMILY = "family";
 
     private static final String FIELD_BUTTON = "button";
-    
+
     private static final String PANEL_READER_NODE_ID = "panelreader";
-    
+
     private static final String PANEL_READER_METHOD_NAME = "methodname";
-    
+
     private static final String PANEL_READER_CLASS_NAME = "classname";
 
     private static final String PANEL_READER_LANGUAGE = "language";
-    
+
     private static final String PANEL_READER_PROPERTY_MAP = "propertymap";
-    
+
     private static final String PANEL_READER_PROPERTY_NAME = "propertyname";
-    
+
     private static final String PANEL_READER_PROPERTY_MAP_NAME = "mapname";
-    
+
     private static final String FILE_EXTRACTOR_NODE_ID = "fileextractor";
-    
-    private static final String FILE_EXTRACTOR_EXTRACT_FILE = "extractfile"; 
-    
+
+    private static final String FILE_EXTRACTOR_EXTRACT_FILE = "extractfile";
+
     private static final String FILE_EXTRACTOR_FILE_NAME = "filename";
-    
+
     private static final String FILE_EXTRACTOR_DESTINATION_NAME = "toDirName";
-    
+
     private static final String PANEL_READER_IN_PROPERTY = "inpropertymap";
 
     private static final String PANEL_READER_IN_PROPERTY_NAME = "inpropertyname";
-    
+
     private static final String PANEL_READER_IN_PROPERTY_VALUE = "inpropertyvalue";
-    
+
     // ------------------------------------------------------------------------
     // Variable Declarations
     // ------------------------------------------------------------------------
@@ -442,6 +442,11 @@ public class UserInputPanel extends IzPanel implements ActionListener
     private boolean validating = true;
 
     private String currentDirectoryPath = null;
+
+    /**
+     * The panelReader XMLElement
+     */
+    private XMLElement panelReaderToExecuteAtValidation = null;
 
     /*--------------------------------------------------------------------------*/
     // This method can be used to search for layout problems. If this class is
@@ -612,143 +617,150 @@ public class UserInputPanel extends IzPanel implements ActionListener
             }
         }
         XMLElement fileExtractor = spec.getFirstChildNamed(FILE_EXTRACTOR_NODE_ID);
-        
+
         if (fileExtractor != null)
         {
-        	extractUtilsFromJar(fileExtractor);
+            extractUtilsFromJar(fileExtractor);
         }
-        
-        
+
+
         XMLElement panelReader = spec.getFirstChildNamed(PANEL_READER_NODE_ID);
-        
         if (panelReader != null)
         {
-        	processReader(panelReader);
+            String shouldExecuteAtPanelValidationTime = panelReader.getAttribute("shouldExecuteAtPanelValidationTime");
+            if (TRUE.equalsIgnoreCase(shouldExecuteAtPanelValidationTime))
+            {
+                panelReaderToExecuteAtValidation = panelReader;
+            }
+            else
+            {
+                processReader(panelReader);
+            }
         }
     }
 
-    
-	private void extractUtilsFromJar(XMLElement fileExtractor) 
-	{
-		try 
-		{
+
+    private void extractUtilsFromJar(XMLElement fileExtractor)
+    {
+        try
+        {
             Vector<XMLElement> extractorMap = fileExtractor.getChildrenNamed(FILE_EXTRACTOR_EXTRACT_FILE);
             for (int i = 0; i < extractorMap.size(); i++)
             {
-            	XMLElement extractFile = extractorMap.elementAt(i);
-            	String extractorFileName = extractFile.getAttribute(FILE_EXTRACTOR_FILE_NAME);
-            	String toDirName = extractFile.getAttribute(FILE_EXTRACTOR_DESTINATION_NAME);
-            	System.out.println("extractorFileName ::" +extractorFileName);
-            	System.out.println("DestinationFile ::" +toDirName);
-            	System.out.println("classpath ::" +System.getProperty("java.class.path"));
-                	for (String jarFile : System.getProperty("java.class.path").split(System.getProperty("path.separator"))) 
-                	{   
-                	    if (jarFile.endsWith(".jar")) 
-                	    {   
-                        	if(checkIfExists(jarFile,extractorFileName))
-                        	{
-                        		extractFiles(jarFile,extractorFileName,toDirName);
-                        	}
-                	    }
-                	}   
+                XMLElement extractFile = extractorMap.elementAt(i);
+                String extractorFileName = extractFile.getAttribute(FILE_EXTRACTOR_FILE_NAME);
+                String toDirName = extractFile.getAttribute(FILE_EXTRACTOR_DESTINATION_NAME);
+                System.out.println("extractorFileName ::" +extractorFileName);
+                System.out.println("DestinationFile ::" +toDirName);
+                System.out.println("classpath ::" +System.getProperty("java.class.path"));
+                    for (String jarFile : System.getProperty("java.class.path").split(System.getProperty("path.separator")))
+                    {
+                        if (jarFile.endsWith(".jar"))
+                        {
+                            if(checkIfExists(jarFile,extractorFileName))
+                            {
+                                extractFiles(jarFile,extractorFileName,toDirName);
+                            }
+                        }
+                    }
             }
-		} 
-		catch (Exception e1) {
-			e1.printStackTrace();
-		}                
-	}
+        }
+        catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
 
-	
-	private boolean checkIfExists(String jarFile,String fileToExtract)
-	{        
+
+    private boolean checkIfExists(String jarFile,String fileToExtract)
+    {
         JarFile jar;
-		try 
-		{
-			jar = new JarFile(jarFile);
-			Enumeration en = jar.entries();
-			while(en.hasMoreElements())
-			{
-				JarEntry fileName = (JarEntry) en.nextElement();
-				if(fileName.toString().startsWith(fileToExtract))
-				{
-					System.out.println("fileName matches true ::" +fileName.toString());	
-					return true;
-				}
-			}
-		}	
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	private static void extractFiles(String jarFile,String fileToExtract,String toDirName)
-	{
-        
+        try
+        {
+            jar = new JarFile(jarFile);
+            Enumeration en = jar.entries();
+            while(en.hasMoreElements())
+            {
+                JarEntry fileName = (JarEntry) en.nextElement();
+                if(fileName.toString().startsWith(fileToExtract))
+                {
+                    System.out.println("fileName matches true ::" +fileName.toString());
+                    return true;
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static void extractFiles(String jarFile,String fileToExtract,String toDirName)
+    {
+
         // GET FROM JAR
         JarFile jar;
-		try 
-		{
-			jar = new JarFile(jarFile);
-			Enumeration en = jar.entries();
-			File destinationDir = null;
-			while(en.hasMoreElements())
-			{
-				JarEntry fileName = (JarEntry) en.nextElement();
-				if(fileName.toString().startsWith(fileToExtract))
-				{
-					ZipEntry entry = jar.getEntry(fileName.toString());						
-					if (!fileName.isDirectory())
-					{
-						File efile = new File(entry.getName());
-						if(toDirName!= null)
-							destinationDir = new File(toDirName);
-						else
-							destinationDir = new File(System.getProperty("user.home"));
-						
-						String filePath = efile.getPath();
-						String fullFile = destinationDir +"/"+ filePath;
-						
-						String stripedFileName = fullFile.substring(0, fullFile.lastIndexOf(File.separator));
-		
-						if(!(new File(stripedFileName).exists()))
-						{
-							new File(stripedFileName).mkdirs();
-						}
-					
-				        InputStream is = 
-					           new BufferedInputStream(jar.getInputStream(entry));
-					        OutputStream os = 
-					           new BufferedOutputStream(new FileOutputStream(fullFile));
-					        byte[] buffer = new byte[2048];
-					        for (;;)  {
-					          int nBytes = is.read(buffer);
-					          if (nBytes <= 0) break;
-					          os.write(buffer, 0, nBytes);
-					        }
-					        os.flush();
-					        os.close();
-					        is.close();	
-					}
-				}	
-			}               
-		}	
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+        try
+        {
+            jar = new JarFile(jarFile);
+            Enumeration en = jar.entries();
+            File destinationDir = null;
+            while(en.hasMoreElements())
+            {
+                JarEntry fileName = (JarEntry) en.nextElement();
+                if(fileName.toString().startsWith(fileToExtract))
+                {
+                    ZipEntry entry = jar.getEntry(fileName.toString());
+                    if (!fileName.isDirectory())
+                    {
+                        File efile = new File(entry.getName());
+                        if(toDirName!= null)
+                            destinationDir = new File(toDirName);
+                        else
+                            destinationDir = new File(System.getProperty("user.home"));
+
+                        String filePath = efile.getPath();
+                        String fullFile = destinationDir +"/"+ filePath;
+
+                        String stripedFileName = fullFile.substring(0, fullFile.lastIndexOf(File.separator));
+
+                        if(!(new File(stripedFileName).exists()))
+                        {
+                            new File(stripedFileName).mkdirs();
+                        }
+
+                        InputStream is =
+                               new BufferedInputStream(jar.getInputStream(entry));
+                            OutputStream os =
+                               new BufferedOutputStream(new FileOutputStream(fullFile));
+                            byte[] buffer = new byte[2048];
+                            for (;;)  {
+                              int nBytes = is.read(buffer);
+                              if (nBytes <= 0) break;
+                              os.write(buffer, 0, nBytes);
+                            }
+                            os.flush();
+                            os.close();
+                            is.close();
+                    }
+                }
+            }
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("deprecation")
-	private void processReader(XMLElement panelReader) {
-    		String readerClassName = panelReader.getAttribute(PANEL_READER_CLASS_NAME);
+    private void processReader(XMLElement panelReader) {
+            String readerClassName = panelReader.getAttribute(PANEL_READER_CLASS_NAME);
             String readerMethodName = panelReader.getAttribute(PANEL_READER_METHOD_NAME);
             String readerLanguage = panelReader.getAttribute(PANEL_READER_LANGUAGE);
-            
-            // contains 
+
+            // contains
             HashMap propertiesNameMap = new HashMap();
-            HashMap propertiesValueMap = new HashMap();            
-            
+            HashMap propertiesValueMap = new HashMap();
+
 
             Vector<XMLElement> propertiesMap = panelReader.getChildrenNamed(PANEL_READER_PROPERTY_MAP);
             for (int i = 0; i < propertiesMap.size(); i++)
@@ -758,22 +770,22 @@ public class UserInputPanel extends IzPanel implements ActionListener
                 String mapName = propertyMap.getAttribute(PANEL_READER_PROPERTY_MAP_NAME);
                 propertiesNameMap.put(propertyName, mapName);
             }
-            
-        
+
+
             if (readerLanguage != null && readerLanguage.equalsIgnoreCase("ant"))
             {
                 Project project = new Project();
                 project.init();
-                     
+
                 DefaultLogger logger = new DefaultLogger();
                 logger.setMessageOutputLevel(Project.MSG_INFO);
                 logger.setErrorPrintStream(System.err);
                 logger.setOutputPrintStream(System.out);
                 project.addBuildListener(logger);
-              
+
                 File buildFile = new File(readerClassName);
                 ProjectHelper.configureProject(project, buildFile);
-                
+
                 Vector<XMLElement> inProperties = panelReader.getChildrenNamed(PANEL_READER_IN_PROPERTY);
                 for (int i = 0; i < inProperties.size(); i++)
                 {
@@ -782,76 +794,76 @@ public class UserInputPanel extends IzPanel implements ActionListener
                     String inPropertyValue = inProperty.getAttribute(PANEL_READER_IN_PROPERTY_VALUE);
                     project.setProperty(inPropertyName, idata.getVariable(inPropertyValue));
                 }
-                	
-                
+
+
                 System.out.println("readerMethodName::" + readerMethodName);
                 try
                 {
-                	project.executeTarget(readerMethodName);
+                    project.executeTarget(readerMethodName);
                 }
                 catch(Exception err)
                 {
-                	showWarningMessageDialog(parentFrame, err.getMessage());
+                    showWarningMessageDialog(parentFrame, err.getMessage());
                 }
-                
-                                
+
+
                 Hashtable ht = project.getProperties();
-                Set s = propertiesNameMap.keySet();    
+                Set s = propertiesNameMap.keySet();
                 Iterator i = s.iterator();
                 while(i.hasNext())
                 {
-	                Object key = i.next();
-	                if(ht.containsKey(key))
-	                {
-	                	System.out.println("KEY ::" + key);
-	                	System.out.println("VALUE ::" + ht.get(key));
-	                	propertiesValueMap.put(propertiesNameMap.get(key), ht.get(key));
-	                }
+                    Object key = i.next();
+                    if(ht.containsKey(key))
+                    {
+                        System.out.println("KEY ::" + key);
+                        System.out.println("VALUE ::" + ht.get(key));
+                        propertiesValueMap.put(propertiesNameMap.get(key), ht.get(key));
+                    }
                 }
-                /*                         
+                /*
                 ArrayList varialbleList = getAllPanelVariables();
                 Iterator<String> itr = varialbleList.iterator();
-                while (itr.hasNext()) 
+                while (itr.hasNext())
                 {
-	            	String key = itr.next();
-	            	if( propertiesValueMap.containsKey(key))
-	        		  {
-	                		System.out.println("IZPACK KEY ::" + key);
-	                		System.out.println("IZPACK VALUE ::" + propertiesValueMap.get(key));
-	        	  			idata.setVariable(key,(String) propertiesValueMap.get(key));
-	        		  }                               
+                    String key = itr.next();
+                    if( propertiesValueMap.containsKey(key))
+                      {
+                            System.out.println("IZPACK KEY ::" + key);
+                            System.out.println("IZPACK VALUE ::" + propertiesValueMap.get(key));
+                            idata.setVariable(key,(String) propertiesValueMap.get(key));
+                      }
                 }
-              */                
+              */
             }
- 		
-	}
 
-	private ArrayList getAllPanelVariables() {
-		ArrayList variables = new ArrayList();
-	       Vector<XMLElement> fields = spec.getChildrenNamed(FIELD_NODE_ID);
+    }
 
-	        for (int i = 0; i < fields.size(); i++)
-	        {
-	            XMLElement field = fields.elementAt(i);
-	            String attribute = field.getAttribute(TYPE);
-	            if (attribute != null)
-	            {
-	                if (attribute.equals(TEXT_FIELD))
-	                {
-	                	String variableAttribute = field.getAttribute(VARIABLE);
-	                	variables.add(variableAttribute);
-	                }
-	            }
-	        }
-		return variables;
-	}
-	
-	private Properties getAllVariables() {
-	    Properties props = idata.getVariables();  
-		return props;
-	}
+    private ArrayList getAllPanelVariables() {
+        ArrayList variables = new ArrayList();
+           Vector<XMLElement> fields = spec.getChildrenNamed(FIELD_NODE_ID);
 
-	private void addDirectoryField(XMLElement field)
+            for (int i = 0; i < fields.size(); i++)
+            {
+                XMLElement field = fields.elementAt(i);
+                String attribute = field.getAttribute(TYPE);
+                if (attribute != null)
+                {
+                    if (attribute.equals(TEXT_FIELD))
+                    {
+                        String variableAttribute = field.getAttribute(VARIABLE);
+                        variables.add(variableAttribute);
+                    }
+                }
+            }
+        return variables;
+    }
+
+    private Properties getAllVariables() {
+        Properties props = idata.getVariables();
+        return props;
+    }
+
+    private void addDirectoryField(XMLElement field)
     {
         Vector<XMLElement> forPacks = field.getChildrenNamed(SELECTEDPACKS);
         Vector<XMLElement> forOs = field.getChildrenNamed(OS);
@@ -864,8 +876,8 @@ public class UserInputPanel extends IzPanel implements ActionListener
         String filterdesc = null;
 
         XMLElement validatorXmlElement = null;
-		HashMap<String, String> validateParamMap = null;
-		Vector<XMLElement> validateParams = null;
+        HashMap<String, String> validateParamMap = null;
+        Vector<XMLElement> validateParams = null;
         String validator = null;
         String message = null;
 
@@ -1202,7 +1214,12 @@ public class UserInputPanel extends IzPanel implements ActionListener
     /*--------------------------------------------------------------------------*/
     public boolean isValidated()
     {
-        return readInput();
+        boolean wasSuccessfullyValidated = readInput();
+        if(wasSuccessfullyValidated && null != panelReaderToExecuteAtValidation)
+        {
+            processReader(panelReaderToExecuteAtValidation);
+        }
+        return wasSuccessfullyValidated;
     }
 
     /*--------------------------------------------------------------------------*/
@@ -1448,7 +1465,7 @@ public class UserInputPanel extends IzPanel implements ActionListener
 
     private boolean readDirectoryField(Object[] field)
     {
-		System.out.println("readDirectoryField(Object[]) starting...");
+        System.out.println("readDirectoryField(Object[]) starting...");
         try
         {
             ProcessingJPanel panel = (ProcessingJPanel) field[POS_FIELD];
@@ -1461,10 +1478,10 @@ public class UserInputPanel extends IzPanel implements ActionListener
                 File ffile = new File(file);
                 if (ffile.isDirectory())
                 {
-                	// validate the input
+                    // validate the input
                     Debug.trace("Validating text field");
                     boolean success = panel.validateContents();
-            		System.out.println("success =" + success + "=");
+                    System.out.println("success =" + success + "=");
                     if (!success)
                     {
                         Debug.trace("Validation did not pass, message: " + message);
@@ -1494,8 +1511,8 @@ public class UserInputPanel extends IzPanel implements ActionListener
         }
         catch (Exception e)
         {
-			System.err.println("Cannot read Directory field: " + e.getMessage());
-			e.printStackTrace(System.err);
+            System.err.println("Cannot read Directory field: " + e.getMessage());
+            e.printStackTrace(System.err);
             if (Debug.stackTracing())
             {
                 Debug.trace(e);
@@ -4164,57 +4181,57 @@ public class UserInputPanel extends IzPanel implements ActionListener
 
     private static class ProcessingJPanel extends JPanel implements ProcessingClient {
 
-    	private JTextField jTextField;
+        private JTextField jTextField;
         private Map<String, String> validatorParams;
         private Validator validator;
         private boolean hasParams = false;
 
-    	public ProcessingJPanel(final JTextField jTextField, final String validatorString, final Map<String, String> validatorParams) {
-    		this.jTextField = jTextField;
-    		try {
-				if (null != validatorString) {
-					Debug.trace("Making Validator for: " + validator);
-					validator = (Validator) Class.forName(validatorString).newInstance();
-				}
-				if (null != validatorParams && !validatorParams.isEmpty()) {
-					this.validatorParams = validatorParams;
-					hasParams = true;
-				}
-			} catch (Exception exception) {
-				validator = null;
-				Debug.error("Cannot instantiate Validator: " + exception);
-			}
-    	}
+        public ProcessingJPanel(final JTextField jTextField, final String validatorString, final Map<String, String> validatorParams) {
+            this.jTextField = jTextField;
+            try {
+                if (null != validatorString) {
+                    Debug.trace("Making Validator for: " + validator);
+                    validator = (Validator) Class.forName(validatorString).newInstance();
+                }
+                if (null != validatorParams && !validatorParams.isEmpty()) {
+                    this.validatorParams = validatorParams;
+                    hasParams = true;
+                }
+            } catch (Exception exception) {
+                validator = null;
+                Debug.error("Cannot instantiate Validator: " + exception);
+            }
+        }
 
-		public String getFieldContents(int index) {
-			return jTextField.getText();
-		}
+        public String getFieldContents(int index) {
+            return jTextField.getText();
+        }
 
-		public int getNumFields() {
-			return 1;
-		}
+        public int getNumFields() {
+            return 1;
+        }
 
-		public String getText() {
-			return jTextField.getText();
-		}
+        public String getText() {
+            return jTextField.getText();
+        }
 
-		public Map<String, String> getValidatorParams() {
-			return validatorParams;
-		}
+        public Map<String, String> getValidatorParams() {
+            return validatorParams;
+        }
 
-		public boolean hasParams() {
-			return hasParams;
-		}
+        public boolean hasParams() {
+            return hasParams;
+        }
 
-		public boolean validateContents() {
-			if (null != validator) {
-				Debug.trace("Validating contents");
-				return (validator.validate(this));
-			} else {
-				Debug.trace("Not validating contents");
-				return (true);
-			}
-		}
+        public boolean validateContents() {
+            if (null != validator) {
+                Debug.trace("Validating contents");
+                return (validator.validate(this));
+            } else {
+                Debug.trace("Not validating contents");
+                return (true);
+            }
+        }
 
     }
 
