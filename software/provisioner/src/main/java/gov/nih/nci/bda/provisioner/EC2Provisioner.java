@@ -50,8 +50,8 @@ import org.apache.commons.configuration.Configuration;
 
 public class EC2Provisioner extends BaseProvisioner
 {
-  //public static String privateKeyFileName="provisioner-3";
-  //public static String dnsName="ec2-75-101-226-217.compute-1.amazonaws.com";
+  //public static String privateKeyFileName="provisioner-4";
+  //public static String dnsName="ec2-75-101-204-78.compute-1.amazonaws.com";
   public static String privateKeyFileName;
   public static String dnsName;
   private static Configuration config;
@@ -201,7 +201,7 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
     	{
     		ownerId = res.getOwner();
     	}
-    	
+
 		if(portList != null)
     	{
     		jec2.createSecurityGroup(privateKeyFileName, privateKeyFileName+" security group");

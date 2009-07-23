@@ -153,12 +153,6 @@ public class EC2SystemInitiator
 		}
 		scc.close();
 
-		SessionChannelClient  reboot = ssh.openSessionChannel();
-		reboot.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		reboot.executeCommand("reboot");
-		reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		reboot.close();
-
 	}
 	else
 	{
@@ -166,60 +160,6 @@ public class EC2SystemInitiator
 	}
 	ssh.disconnect();
 
-	Thread.sleep(100000);
-	SshClient ssh1 = new SshClient();
-	ssh1.connect(hostName, new IgnoreHostKeyVerification());
-	PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
-	pwd.setUsername("hudsonuser");
-	pwd.setPassword("password");
-
-	if( ssh1.authenticate(pwd)== AuthenticationProtocolState.COMPLETE)
-	{
-
-		LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
-		ScpClient scp = ssh1.openScpClient();
-		scp.put(new File("build-hudson.xml").getAbsolutePath(), "", true);
-		scp.put(new File(".bash_profile").getAbsolutePath(), "", true);
-
-		SessionChannelClient  bash1 = ssh1.openSessionChannel();
-		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		bash1.executeCommand(". .bash_profile >> profile.log");
-		bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		bash1.close();
-
-		SessionChannelClient  scb = ssh1.openSessionChannel();
-		scb.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		scb.executeCommand("ant -f build-hudson.xml >> build.log");
-		scb.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		scb.close();
-		
-		SessionChannelClient  sessionObject1 = ssh1.openSessionChannel();
-		sessionObject1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sessionObject1.executeCommand("mkdir ~/hudson_data");
-		sessionObject1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		sessionObject1.close();
-
-		SessionChannelClient  sessionObject2 = ssh1.openSessionChannel();
-		sessionObject2.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sessionObject2.executeCommand("mkdir ~/hudson_data/jobs");
-		sessionObject2.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		sessionObject2.close();
-		
-		SessionChannelClient  sessionObject3 = ssh1.openSessionChannel();
-		sessionObject3.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sessionObject3.executeCommand("mkdir ~/hudson_data/jobs/cai2");
-		sessionObject3.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		sessionObject3.close();
-		
-		scp.put(new File("config.xml").getAbsolutePath(), "~/hudson_data/jobs/cai2", true);
-
-	}
-	else
-	{
-		LOGGER.log(Level.WARNING, "Authetication Failed for hudsonuser");
-	}
-
-	ssh1.disconnect();
 
 	SshClient ssh2 = new SshClient();
 
@@ -266,7 +206,64 @@ public class EC2SystemInitiator
 	}
 	ssh4.disconnect();
 
-	/*
+	SshClient ssh1 = new SshClient();
+	Thread.sleep(100000);
+	ssh1.connect(hostName, new IgnoreHostKeyVerification());
+
+
+	PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
+	pwd.setUsername("hudsonuser");
+	pwd.setPassword("password");
+
+	if( ssh1.authenticate(pwd)== AuthenticationProtocolState.COMPLETE)
+	{
+
+		LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
+		ScpClient scp = ssh1.openScpClient();
+		scp.put(new File("build-hudson.xml").getAbsolutePath(), "", true);
+		scp.put(new File(".bash_profile").getAbsolutePath(), "", true);
+
+		SessionChannelClient  bash1 = ssh1.openSessionChannel();
+		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		bash1.executeCommand(". .bash_profile >> profile.log");
+		bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		bash1.close();
+
+		SessionChannelClient  scb = ssh1.openSessionChannel();
+		scb.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		scb.executeCommand(". .bash_profile;ant -f build-hudson.xml >> build.log");
+		scb.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		scb.close();
+
+		SessionChannelClient  sessionObject1 = ssh1.openSessionChannel();
+		sessionObject1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject1.executeCommand("mkdir ~/hudson_data");
+		sessionObject1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject1.close();
+
+		SessionChannelClient  sessionObject2 = ssh1.openSessionChannel();
+		sessionObject2.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject2.executeCommand("mkdir ~/hudson_data/jobs");
+		sessionObject2.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject2.close();
+
+		SessionChannelClient  sessionObject3 = ssh1.openSessionChannel();
+		sessionObject3.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject3.executeCommand("mkdir ~/hudson_data/jobs/cai2");
+		sessionObject3.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject3.close();
+
+		scp.put(new File("config.xml").getAbsolutePath(), "~/hudson_data/jobs/cai2", true);
+
+	}
+	else
+	{
+		LOGGER.log(Level.WARNING, "Authetication Failed for hudsonuser");
+	}
+
+	ssh1.disconnect();
+
+
 	SshClient ssh3 = new SshClient();
 
 	Thread.sleep(100000);
@@ -283,13 +280,13 @@ public class EC2SystemInitiator
 
 	   	SessionChannelClient session = ssh3.openSessionChannel();
 		session.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		session.executeCommand("sh start-hudson.sh >> start.log");
+		session.executeCommand(". /mnt/hudsonuser/.bash_profile;env | sort>> start.log;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh 2>&1 >> start.log&");
 		//session.executeCommand("ant -f build-hudson.xml start-hudson >> start.log");
 		session.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		session.close();
 	}
 	ssh3.disconnect();
-*/
+
   }
 /*
   public void executeRemoteCommand(String command ) {
