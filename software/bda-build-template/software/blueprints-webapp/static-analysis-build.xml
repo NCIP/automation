@@ -52,6 +52,17 @@
     -->     
 
     <!-- Run the DBA build script to get the remaining Ivy dependencies needed for BDA --> 
+    <condition property="local.cbiit-ivy-repo.dir" value="">
+	    <or>            
+		    <os family="unix" />    
+		    <os family="mac" />     
+	    </or>           
+    </condition>
+
+    <condition property="local.cbiit-ivy-repo.dir" value="c:/">
+	    <os family="windows" />
+    </condition>
+
     <mkdir dir="${bda-download.dir}" />
     <property name="commonlibrary.dir" value="" />
     <echo message="commonlibrary.dir = ${commonlibrary.dir}"/>
@@ -68,6 +79,9 @@
 	    <property name="software.dir" location="${software.dir}" />
 	    <property name="commonlibrary.dir" location="${commonlibrary.dir}" />
 	    <property name="target.dir" location="${target.dir}"/>
+	    <property name="ivy.settings.file" value="cbiit-ivy-bda-settings.xml"/>
+	    <property name="local.cbiit-ivy-repo.dir" value="${local.cbiit-ivy-repo.dir}"/>
+
     </ant>  
 
     <import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
