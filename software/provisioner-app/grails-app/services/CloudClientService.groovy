@@ -44,9 +44,11 @@ class CloudClientService {
 					body """
 					Continuous Integration Server is ready and configured.
 					
-					1) To begin you application build, go to your web browser and type http://${hostName}:48080/hudson/?auto_refresh=true
-					2) After successful build/deployment (about 15 minutes), open your web browser and type the following to launch the application: http://${hostName}:46210/caintegrator2/
-					Contact administrator if you are experiencing difficulties accessing the host.
+					1) To begin your application build, launch the Hudson CI server by going to your web browser and typing 
+					  http://${hostName}:48080/hudson/?auto_refresh=true
+					2) After successful build/deployment (about 15 minutes), open your web browser and type the following to launch the application: 
+					  http://${hostName}:46210/caintegrator2/
+					
 					"""
 				}
 			}
