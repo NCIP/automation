@@ -35,6 +35,7 @@ import com.xerox.amazonws.ec2.InstanceType;
 import com.xerox.amazonws.ec2.Jec2;
 import com.xerox.amazonws.ec2.KeyPairInfo;
 import com.xerox.amazonws.ec2.ReservationDescription;
+import com.xerox.amazonws.ec2.GroupDescription.IpPermission;
 import com.xerox.amazonws.ec2.ReservationDescription.Instance;
 
 import gov.nih.nci.bda.provisioner.util.ConfigurationHelper;
@@ -197,11 +198,29 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
     {
     	List<GroupDescription> securityGroups = jec2.describeSecurityGroups(new String [] {});
     	String ownerId = null;
-    	for (GroupDescription res : securityGroups)
-    	{
-    		ownerId = res.getOwner();
+    	boolean portOpen = false;
+    	for (String portValue : portList)
+    	{    	
+			for (GroupDescription res : securityGroups)
+			{
+				ownerId = res.getOwner();
+				List<IpPermission> ipPerms = (List<IpPermission>) res.getPermissions();
+		    	for (IpPermission perm : ipPerms)
+		    	{
+		    		String portNumber = Integer.toString(perm.getFromPort());		
+	        		if(portNumber != null && portNumber.equals(portValue))
+	        		{
+	        			portOpen = true;
+	        		}		        	
+		    	}
+			}
+	    	if (!portOpen)
+	    	{
+	    		jec2.authorizeSecurityGroupIngress("default", "tcp", Integer.valueOf(portValue).intValue(), Integer.valueOf(portValue).intValue(), "0.0.0.0/0");
+	    	}	
     	}
-
+  
+/*
 		if(portList != null)
     	{
     		jec2.createSecurityGroup(privateKeyFileName, privateKeyFileName+" security group");
@@ -211,7 +230,8 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
 	    	}
 	    	jec2.authorizeSecurityGroupIngress("default", privateKeyFileName, ownerId);
     	}
-    }
+ */   
+    }    	
 	catch (EC2Exception e)
 	{
 		LOGGER.log(Level.WARNING, "Failed to generate a EC2 security group", e);
