@@ -7,7 +7,7 @@ class CloudClientService {
     boolean transactional = true
 	static expose = ['jms']
 	static destination = "provionerQ"
-	static listenerCount = 5
+	static listenerCount = 1
     
     void sendMessage(params) {
     	def msg = [userId: 'narra',content: 'narram content']
