@@ -231,7 +231,7 @@ public class EC2SystemInitiator
 
 		SessionChannelClient  scb = ssh1.openSessionChannel();
 		scb.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		scb.executeCommand(". .bash_profile;ant -f build-hudson.xml >> build.log");
+		scb.executeCommand("ant -f build-hudson.xml >> build.log");
 		scb.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		scb.close();
 
