@@ -53,8 +53,8 @@ public class EC2Provisioner extends BaseProvisioner
 {
   //public static String privateKeyFileName="provisioner-4";
   //public static String dnsName="ec2-75-101-204-78.compute-1.amazonaws.com";
-  public static String privateKeyFileName;
-  public static String dnsName;
+  public String privateKeyFileName;
+  public String dnsName;
   private static Configuration config;
   private static final Logger LOGGER = Logger.getLogger(EC2Provisioner.class.getName());
 
@@ -149,9 +149,6 @@ private String  runInstance(String accessId, String secretKey,String privateKey)
 			throw new EC2Exception("No matching keypair found on EC2. Is the EC2 private key a valid one?");
 		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-0459bc6d", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), InstanceType.DEFAULT);
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
-	//	jec2.authorizeSecurityGroupIngress("default", "tcp", 22, 22, "0.0.0.0/0");
-	//	jec2.authorizeSecurityGroupIngress("default", "tcp", 80, 80, "0.0.0.0/0");
-
 		do
 		{
 			List<ReservationDescription> instances = jec2.describeInstances(new ArrayList<String>());
