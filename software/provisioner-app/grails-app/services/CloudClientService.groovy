@@ -20,14 +20,34 @@ class CloudClientService {
 		try 
 		{
 			Provisioner ec2p = new EC2Provisioner();
-			println 'ACCESS IN PROVISION' + msg.accessId 
-  			String hostName = ec2p.runInstance(msg.accessId,msg.secretId,msg.privateKey)
-			ec2p.generateSecurityGroup(msg.accessId,msg.secretId,(ArrayList<String>) InvokerHelper.createList(msg.portList.split(",")))		
-			ec2p.initializeInstance()
+			println 'Generating the Private Key with AccessID ' + msg.accessId + ' and SecretID ' + msg.secretId
+			String privateKeyFileName = ec2p.generateKey(msg.accessId, msg.secretId); 
+			println 'Adding the ports ' + msg.portList + 'to the Default security group'
+			if(msg.portList)
+			{ 
+				ec2p.generateSecurityGroup(msg.accessId,msg.secretId,(ArrayList<String>) InvokerHelper.createList(msg.portList.split(",")))
+			}
+			println 'Creating the AMI with AccessID ' + msg.accessId + ' and SecretID ' + msg.secretId + 'private key file ' +privateKeyFileName
+  			String hostName = ec2p.runInstance(msg.accessId,msg.secretId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName))
+			println 'Configuring the AMI'	
+			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/"+privateKeyFileName);			
+			si.initializeSystem()
+			println 'Sending the confirmation Email to '+ msg.email
 			confirmationEmail(msg,hostName)  		
 		} 
 		catch (ex) {
 			println ("Failed to post:"+ ex)
+			if (msg.email) 
+			{
+				mailService.sendMail
+				{
+					to msg.email
+					subject "Continuous Integration Server Ready!"
+					body """
+					There was a problem generating the AMI. Contact your administrator for more details.			
+					"""
+				}
+			}				
 		}
 	}
 
