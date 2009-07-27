@@ -197,9 +197,9 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
     {
     	List<GroupDescription> securityGroups = jec2.describeSecurityGroups(new String [] {});
     	String ownerId = null;
-    	boolean portOpen = false;
     	for (String portValue : portList)
-    	{    	
+    	{   
+        	boolean portOpen = false;
 			for (GroupDescription res : securityGroups)
 			{
 				ownerId = res.getOwner();
