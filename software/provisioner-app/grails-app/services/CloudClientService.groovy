@@ -20,8 +20,10 @@ class CloudClientService {
 		try 
 		{
 			Provisioner ec2p = new EC2Provisioner();
-			println 'Generating the Private Key with AccessID ' + msg.accessId + ' and SecretID ' + msg.secretId
-			String privateKeyFileName = ec2p.generateKey(msg.accessId, msg.secretId); 
+			def aID = msg.accessId.trim()
+			def sId = msg.secretId.trim()		
+			println 'Generating the Private Key with AccessID ' + aID + ' and SecretID ' + sId
+			String privateKeyFileName = ec2p.generateKey(aID, sId); 
 		
 			def defaultPortList = '22,48080,46210'
 			def fullPortList 
@@ -33,9 +35,9 @@ class CloudClientService {
 				fullPortList =defaultPortList 
 			}
 			println 'Adding the ports ' + fullPortList + 'to the Default security group'
-			ec2p.generateSecurityGroup(msg.accessId,msg.secretId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",").trim()))
-			println 'Creating the AMI with AccessID ' + msg.accessId + ' and SecretID ' + msg.secretId + 'private key file ' +privateKeyFileName
-  			String hostName = ec2p.runInstance(msg.accessId,msg.secretId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName))
+			ec2p.generateSecurityGroup(aID,sId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
+			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +privateKeyFileName
+  			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName))
 			println 'Configuring the AMI'	
 			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/"+privateKeyFileName);			
 			si.initializeSystem()
