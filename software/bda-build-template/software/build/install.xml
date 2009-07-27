@@ -77,7 +77,7 @@ $HeadURL$
 	<property name="grid.resource.dir" location="${basedir}/${tools.dist.relative.dir}" />
 	<property name="grid.application.dir" location="${basedir}/${grid-sample.dist.relative.dir}" />
 	<property name="grid.artifact.file" value="sample-wsrf-war.zip" />
-	<property name="grid.dir.dest" value="wsrf" />
+	<property name="grid.dir.dest" value="wsrf.war" />
 	<property name="grid.application.name" value="Sample" />
 	<property name="resource.file.jboss-globus-lib" value="${cagrid-libs.binaries.file}" />
 	<property name="resource.file.jboss-globus-war" value="${cagrid-base-war.binaries.file}" />
@@ -155,7 +155,7 @@ $HeadURL$
 				<echo message="Using custom JBoss port configurations"/>
 				<property name="jboss.server.binding.template.location" value="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings.xml"/>
 				<properties-exist
-					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.cobraorb.port,jboss.ejbinvoker.port,jboss.hajndi.port,jboss.hajrmi.port,jboss.jms.port,jboss.jmx-rmi.port,jboss.messaging.port,jboss.pooledha.port,jboss.remoting.port,jboss.server.bind.port,jboss.server.rmi.port,jboss.service.rmiobject.port,jboss.snmp.port,jboss.snmp-trapd.port,jboss.web.service.port"
+					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.cobraorb.port,jboss.hajndi.port,jboss.hajrmi.port,jboss.jmx-rmi.port,jboss.messaging.port,jboss.pooledha.port,jboss.remoting.port,jboss.server.bind.port,jboss.server.rmi.port,jboss.service.rmiobject.port,jboss.snmp.port,jboss.snmp-trapd.port,jboss.web.service.port,jboss.unifiedinvoker.port,jboss.hajndi.auto.port,jboss.ssl.port,jboss.jms2.netty.port,jboss.jms2.netty-ssl.port,jboss.transaction.recovery.port,jboss.transaction.status.port,jboss.transaction.processid.port"
 					/>
 			</else>
 		</if>
@@ -500,6 +500,10 @@ $HeadURL$
 		<!-- Use below if you are defining all the ports in your install.xml not the NCICB port configuraitons-->
 		<jboss-configure
 			jboss.grid.configure="true"
+			jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"
+			jboss.server.binding.template.location="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings-jboss-beans.xml"
+			jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
+			jboss.server.ports.name="PortsDefaultBindings"
 			/>
 	</target>
 
