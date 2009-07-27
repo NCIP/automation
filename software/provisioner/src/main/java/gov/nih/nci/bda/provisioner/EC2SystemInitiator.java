@@ -100,8 +100,8 @@ public class EC2SystemInitiator
 		LOGGER.log(Level.INFO, "Authetication Successful using key ");
 		SessionChannelClient  sc = ssh.openSessionChannel();
 		ScpClient scp = ssh.openScpClient();
-		scp.put(new File("init.sh").getAbsolutePath(), "", true);
-		scp.put(new File("hosts").getAbsolutePath(), "/etc/", true);
+		scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
+		scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/", true);
 
 
 		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -186,8 +186,8 @@ public class EC2SystemInitiator
 	if( ssh4.authenticate(authenticationClient)== AuthenticationProtocolState.COMPLETE)
 	{
 		ScpClient scp = ssh4.openScpClient();
-		scp.put(new File("mysqld").getAbsolutePath(), "/etc/init.d/", true);
-		scp.put(new File("my.cnf").getAbsolutePath(), "/etc/", true);
+		scp.put(new File("resources/mysqld").getAbsolutePath(), "/etc/init.d/", true);
+		scp.put(new File("resources/my.cnf").getAbsolutePath(), "/etc/", true);
 
 
 
@@ -220,8 +220,8 @@ public class EC2SystemInitiator
 
 		LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
 		ScpClient scp = ssh1.openScpClient();
-		scp.put(new File("build-hudson.xml").getAbsolutePath(), "", true);
-		scp.put(new File(".bash_profile").getAbsolutePath(), "", true);
+		scp.put(new File("resources/build-hudson.xml").getAbsolutePath(), "", true);
+		scp.put(new File("resources/.bash_profile").getAbsolutePath(), "", true);
 
 		SessionChannelClient  bash1 = ssh1.openSessionChannel();
 		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -253,7 +253,7 @@ public class EC2SystemInitiator
 		sessionObject3.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		sessionObject3.close();
 
-		scp.put(new File("config.xml").getAbsolutePath(), "~/hudson_data/jobs/cai2", true);
+		scp.put(new File("resources/config.xml").getAbsolutePath(), "~/hudson_data/jobs/cai2", true);
 
 	}
 	else
@@ -275,7 +275,7 @@ public class EC2SystemInitiator
 	if( ssh3.authenticate(pwd)== AuthenticationProtocolState.COMPLETE)
 	{
 		ScpClient scp = ssh3.openScpClient();
-		scp.put(new File("start-hudson.sh").getAbsolutePath(), "", true);
+		scp.put(new File("resources/start-hudson.sh").getAbsolutePath(), "", true);
 
 
 	   	SessionChannelClient session = ssh3.openSessionChannel();

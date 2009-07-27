@@ -9,6 +9,8 @@
 	<property name="classes.dir" value="${software.dir}/classes" />	
 	<property name="dist.dir" value="${software.dir}/dist" />
 	<property name="provisioner.jar" value="provisioner.jar" />
+	<property name="resources.dir" value="${software.dir}/resources" />
+	
 	<property environment="env" />	
 	
 
@@ -29,12 +31,12 @@
 	</target>
 
 	<target name="deploy:init" depends="deploy:clean" description="create table and populate data">
-		<mkdir dir="${deploy.dir}" />
+		<mkdir dir="${dist.dir}" />
 	</target>
 
 
 	<target name="deploy:clean" description="create table and populate data">
-		<delete dir="${deploy.dir}" />
+		<delete dir="${dist.dir}" />
 	</target>
 
 
@@ -47,24 +49,28 @@
 		</java>
 	</target>
 	
-	<target name="compile"  description="Compile the build monitor source">
+	<target name="compile"  depends="init" description="Compile the build monitor source">
 		<javac executable="${env.JAVA16_HOME}/bin/javac" srcdir="${source.dir}" destdir="${classes.dir}" classpathref="project.classpath"/>		
 	</target>
 
 
 	<target name="package" description="Package the build monitor">
+		<delete file="${lib.dir}/${provisioner.jar}"  />		
 		<jar destfile="${lib.dir}/${provisioner.jar}" basedir="${classes.dir}" update="true" />
 	</target>
 
 
-	<target name="deploy:artifacts" depends="deploy:init,package" description="Package the build monitor">
-		<copy todir="${deploy.dir}" overwrite="true">
+	<target name="deploy:artifacts" depends="deploy:clean,deploy:init,compile,package" description="Package the build monitor">
+		<copy todir="${dist.dir}/lib" overwrite="true">
 			<fileset dir="${lib.dir}">
 				<include name="**/*.jar"/>
 			</fileset>
 		</copy>
-
-		<copy file="${dist.dir}/${provisioner.jar}" todir="${deploy.dir}" />		
+		<copy todir="${dist.dir}/resources" overwrite="true">
+			<fileset dir="${resources.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
 	</target>
 
 

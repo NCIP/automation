@@ -42,6 +42,8 @@ import gov.nih.nci.bda.provisioner.util.ConfigurationHelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -93,7 +95,7 @@ public class EC2Provisioner extends BaseProvisioner
 	{
 		LOGGER.log(Level.WARNING, "Failed to check EC2 credential", e);
 	}
-	return key.getKeyMaterial();
+	return privateKeyFileName;
   }
 
 
@@ -177,7 +179,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey)
 
   public void provisionInstance() throws Exception
   {
-	  	String accessId = config.getString("ec2.access.id");
+	 	String accessId = config.getString("ec2.access.id");
 	  	String secretKey = config.getString("ec2.secret.key");
 		listAllKeys(accessId, secretKey);
 		generateKey(accessId, secretKey);
