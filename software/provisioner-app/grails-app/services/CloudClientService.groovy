@@ -32,13 +32,14 @@ class CloudClientService {
 			println 'Configuring the AMI'	
 			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/"+privateKeyFileName);			
 			si.initializeSystem()
-			println 'Sending the confirmation Email to '+ msg.email
+			
 			confirmationEmail(msg,hostName)  		
 		} 
 		catch (ex) {
 			println ("Failed to post:"+ ex)
 			if (msg.email) 
 			{
+				println 'Could not generate the AMI sending Email to '+ msg.email
 				mailService.sendMail
 				{
 					to msg.email
@@ -47,6 +48,7 @@ class CloudClientService {
 					There was a problem generating the AMI. Contact your administrator for more details.			
 					"""
 				}
+			println 'Mail sent  to '+ msg.email	
 			}				
 		}
 	}
@@ -57,6 +59,7 @@ class CloudClientService {
 		 {
 			if (msg.email) 
 			{
+			println 'Sending the confirmation Email to '+ msg.email
 				mailService.sendMail
 				{
 					to msg.email
@@ -71,6 +74,7 @@ class CloudClientService {
 					
 					"""
 				}
+			println 'Mail sent  to '+ msg.email		
 			}
 		}
 		catch (MailException ex) {
