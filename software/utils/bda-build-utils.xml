@@ -14,9 +14,9 @@ $HeadURL$
 
 	<!-- Supported versions -->
 	<property name="jboss.version.min" value="4.0.4"/>
-	<property name="jboss.version.max" value="4.2.2"/>
+	<property name="jboss.version.max" value="5.1.999"/>
 	<property name="tomcat.version.min" value="5.0.0"/>
-	<property name="tomcat.version.max" value="5.5.999"/>
+	<property name="tomcat.version.max" value="6.999.999"/>
 	<!-- conditionals -->
 	<condition property="os.temp.dir" value="/tmp">
 		<or>
@@ -52,124 +52,166 @@ $HeadURL$
 
 	<xmlcatalog id="bda.xml.catalog">
 		<dtd
-			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application Client 1.3//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/application-client_1_3.dtd"
-			/>
-		<dtd
-			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/application_1_3.dtd"
-			/>
-		<dtd
-			publicId="-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/ejb-jar_2_0.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JAWS 2.4//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jaws_2_4.dtd"
-			/>
-		<dtd
 			publicId="-//JBoss//DTD Application Client 3.2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-client_3_2.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-client_3_2.dtd"
 			/>
 		<dtd
 			publicId="-//JBoss//DTD Application Client 4.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-client_4_0.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-client_4_0.dtd"
 			/>
 		<dtd
-			publicId="-//JBoss//DTD Web Application 2.4//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-web_4_0.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSS//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSS 2.4//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_2_4.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSS 3.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_3_0.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSS 3.2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_3_2.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSS 4.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss_4_0.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSSCMP-JDBC 3.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jbosscmp-jdbc_3_0.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSSCMP-JDBC 3.2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jbosscmp-jdbc_3_2.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSSCMP-JDBC 4.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jbosscmp-jdbc_4_0.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JBOSS Security Config 3.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/security_config.dtd"
-			/>
-		<dtd
-			publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/web-app_2_3.dtd"
-			/>
-		<dtd
-			publicId=""
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/"
-			/>
-		<dtd
-			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application 1.2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/application_1_2.dtd"
-			/>
-		<dtd
-			publicId="-//Sun Microsystems, Inc.//DTD Connector 1.0//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/connector_1_0.dtd"
-			/>
-		<!-- This dtd doesn't have a publicId - see XMLSchema.dtd
-			datatypes.dtd
-		-->
-		<dtd
-			publicId="-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/ejb-jar.dtd"
-			/>
-		<dtd
-			publicId="-//JBoss//DTD JAWS//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jaws.dtd"
+			publicId="-//JBoss//DTD Application Client 5.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-client_5_0.dtd"
 			/>
 		<dtd
 			publicId="-//JBoss//DTD J2EE Application 1.3//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-app_3_0.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-app_3_0.dtd"
 			/>
 		<dtd
 			publicId="-//JBoss//DTD J2EE Application 1.3V2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-app_3_2.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-app_3_2.dtd"
 			/>
 		<dtd
 			publicId="-//JBoss//DTD J2EE Application 1.4//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-app_4_0.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-app_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JAWS 2.4//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jaws_2_4.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JAWS 3.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jaws_3_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JAWS//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jaws.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 2.4//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_2_4.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 3.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_3_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 3.2//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_3_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS 5.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_5_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSSCMP-JDBC 3.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jbosscmp-jdbc_3_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSSCMP-JDBC 3.2//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jbosscmp-jdbc_3_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSSCMP-JDBC 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jbosscmp-jdbc_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS JCA Config 1.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-ds_1_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS JCA Config 1.5//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-ds_1_5.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS Security Config 3.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/security_config.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS XMBEAN 1.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_xmbean_1_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS XMBEAN 1.1//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_xmbean_1_1.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD JBOSS XMBEAN 1.2//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss_xmbean_1_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD MBean Service 3.2//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-service_3_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD MBean Service 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-service_4_0.dtd"
 			/>
 		<dtd
 			publicId="-//JBoss//DTD Web Application 2.2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-web.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-web.dtd"
 			/>
 		<dtd
 			publicId="-//JBoss//DTD Web Application 2.3//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-web_3_0.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-web_3_0.dtd"
 			/>
 		<dtd
 			publicId="-//JBoss//DTD Web Application 2.3V2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/jboss-web_3_2.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-web_3_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Application 2.4//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-web_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Application 5.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/jboss-web_5_0.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD Connector 1.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/connector_1_0.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/ejb-jar.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/ejb-jar_2_0.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application 1.2//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/application_1_2.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/application_1_3.dtd"
+			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD J2EE Application Client 1.3//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/application-client_1_3.dtd"
 			/>
 		<dtd
 			publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
-			location="${bda-utils.resource.dir}/jboss-4.0.5.GA-jems-ejb3/dtd/web-app_2_2.dtd"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/web-app_2_2.dtd"
 			/>
+		<dtd
+			publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/web-app_2_3.dtd"
+			/>
+		<dtd
+			publicId="-//W3C//DTD/XMLSCHEMA 200102//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/XMLSchema.dtd"
+			/>
+
 		<!--
 		<dtd
 			publicId=""
@@ -409,10 +451,10 @@ $HeadURL$
 						<arg file="@{jboss.home}/bin/shutdown.sh" />
 					</exec>
 
-					<exec executable="sh" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
+					<exec executable="nohup" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
 						<env key="JBOSS_HOME" value=""/> 
-						<arg line="run.sh -c @{jboss.server.name}" />
+						<arg line="./run.sh -c @{jboss.server.name}" />
 					</exec>
 
 					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
@@ -1706,6 +1748,198 @@ $HeadURL$
 		jboss.server.bindingfile.location is the location of the binding.xml
 	-->
 	<macrodef name="jboss-bindings" description="configures the binding.xml and the jboss-service.xml">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
+		<attribute name="jboss.server.binding.template.location" default="${jboss.server.binding.template.location}"/>
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
+		<attribute name="jboss.cobraorb.port" default="${jboss.cobraorb.port}"/>
+		<attribute name="jboss.ejbinvoker.port" default="${jboss.ejbinvoker.port}"/>
+		<attribute name="jboss.hajndi.port" default="${jboss.hajndi.port}"/>
+		<attribute name="jboss.hajrmi.port" default="${jboss.hajrmi.port}"/>
+		<attribute name="jboss.jms.port" default="${jboss.jms.port}"/>
+		<attribute name="jboss.jmx-rmi.port" default="${jboss.jmx-rmi.port}"/>
+		<attribute name="jboss.messaging.port" default="${jboss.messaging.port}"/>
+		<attribute name="jboss.pooledha.port" default="${jboss.pooledha.port}"/>
+		<attribute name="jboss.remoting.port" default="${jboss.remoting.port}"/>
+		<attribute name="jboss.server.bind.port" default="${jboss.server.bind.port}"/>
+		<attribute name="jboss.server.rmi.port" default="${jboss.server.rmi.port}"/>
+		<attribute name="jboss.service.rmiobject.port" default="${jboss.service.rmiobject.port}"/>
+		<attribute name="jboss.snmp.port" default="${jboss.snmp.port}"/>
+		<attribute name="jboss.snmp-trapd.port" default="${jboss.snmp-trapd.port}"/>
+		<attribute name="jboss.web.service.port" default="${jboss.web.service.port}"/>
+		<!-- new with 5.1.0-->
+		<attribute name="jboss.unifiedinvoker.port" default="${jboss.unifiedinvoker.port}"/>
+		<attribute name="jboss.hajndi.auto.port" default="${jboss.hajndi.auto.port}"/>
+		<attribute name="jboss.ssl.port" default="${jboss.ssl.port}"/>
+		<attribute name="jboss.jms2.netty.port" default="${jboss.jms2.netty.port}"/>
+		<attribute name="jboss.jms2.netty-ssl.port" default="${jboss.jms2.netty-ssl.port}"/>
+		<attribute name="jboss.transaction.recovery.port" default="${jboss.transaction.recovery.port}"/>
+		<attribute name="jboss.transaction.status.port" default="${jboss.transaction.status.port}"/>
+		<attribute name="jboss.transaction.processid.port" default="${jboss.transaction.processid.port}"/>
+		<sequential>
+			<var name="jboss.file.is.40" unset="true"/>
+			<propertyregex property="jboss.file.is.40"
+				input="@{jboss.home}"
+				regexp=".*jboss-4.0.*"
+				select="true"
+				/>
+			<var name="jboss.file.is.51" unset="true"/>
+			<propertyregex property="jboss.file.is.51"
+				input="@{jboss.home}"
+				regexp=".*jboss-5.1.*"
+				select="true"
+				/>
+			<if>
+				<isset property="jboss.file.is.40"/>
+				<then>
+					<jboss-bindings-40
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.server.ports.name="@{jboss.server.ports.name}"
+						jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
+						jboss.server.binding.template.location="@{jboss.server.binding.template.location}"
+						jboss.server.jndi.port="@{jboss.server.jndi.port}"
+						jboss.server.port="@{jboss.server.port}"
+						jboss.cobraorb.port="@{jboss.cobraorb.port}"
+						jboss.ejbinvoker.port="@{jboss.ejbinvoker.port}"
+						jboss.hajndi.port="@{jboss.hajndi.port}"
+						jboss.hajrmi.port="@{jboss.hajrmi.port}"
+						jboss.jms.port="@{jboss.jms.port}"
+						jboss.jmx-rmi.port="@{jboss.jmx-rmi.port}"
+						jboss.messaging.port="@{jboss.messaging.port}"
+						jboss.pooledha.port="@{jboss.pooledha.port}"
+						jboss.remoting.port="@{jboss.remoting.port}"
+						jboss.server.bind.port="@{jboss.server.bind.port}"
+						jboss.server.rmi.port="@{jboss.server.rmi.port}"              
+						jboss.service.rmiobject.port="@{jboss.service.rmiobject.port}"
+						jboss.snmp.port="@{jboss.snmp.port}"
+						jboss.snmp-trapd.port="@{jboss.snmp-trapd.port}"
+						jboss.web.service.port="@{jboss.web.service.port}"
+
+						/>
+				</then>
+			</if>
+			<if>
+				<isset property="jboss.file.is.51"/>
+				<then>
+					<jboss-bindings-51
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.server.ports.name="@{jboss.server.ports.name}"
+						jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
+						jboss.server.binding.template.location="@{jboss.server.binding.template.location}"
+						jboss.server.jndi.port="@{jboss.server.jndi.port}"
+						jboss.server.port="@{jboss.server.port}"
+						jboss.cobraorb.port="@{jboss.cobraorb.port}"
+						jboss.ejbinvoker.port="@{jboss.ejbinvoker.port}"
+						jboss.hajndi.port="@{jboss.hajndi.port}"
+						jboss.hajrmi.port="@{jboss.hajrmi.port}"
+						jboss.jms.port="@{jboss.jms.port}"
+						jboss.jmx-rmi.port="@{jboss.jmx-rmi.port}"
+						jboss.messaging.port="@{jboss.messaging.port}"
+						jboss.pooledha.port="@{jboss.pooledha.port}"
+						jboss.remoting.port="@{jboss.remoting.port}"
+						jboss.server.bind.port="@{jboss.server.bind.port}"
+						jboss.server.rmi.port="@{jboss.server.rmi.port}"              
+						jboss.service.rmiobject.port="@{jboss.service.rmiobject.port}"
+						jboss.snmp.port="@{jboss.snmp.port}"
+						jboss.snmp-trapd.port="@{jboss.snmp-trapd.port}"
+						jboss.web.service.port="@{jboss.web.service.port}"
+						jboss.unifiedinvoker.port="@{jboss.unifiedinvoker.port}"
+						jboss.hajndi.auto.port="@{jboss.hajndi.auto.port}"
+						jboss.ssl.port="@{jboss.ssl.port}"
+						jboss.jms2.netty.port="@{jboss.jms2.netty.port}"
+						jboss.jms2.netty-ssl.port="@{jboss.jms2.netty-ssl.port}"
+						jboss.transaction.recovery.port="@{jboss.transaction.recovery.port}"
+						jboss.transaction.status.port="@{jboss.transaction.status.port}"
+						jboss.transaction.processid.port="@{jboss.transaction.processid.port}"
+						/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss-bindings-51" description="configures the binding.xml and the jboss-service.xml">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
+		<attribute name="jboss.server.binding.template.location" default="${jboss.server.binding.template.location}"/>
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
+		<attribute name="jboss.cobraorb.port" default="${jboss.cobraorb.port}"/>
+		<attribute name="jboss.ejbinvoker.port" default="${jboss.ejbinvoker.port}"/>
+		<attribute name="jboss.hajndi.port" default="${jboss.hajndi.port}"/>
+		<attribute name="jboss.hajrmi.port" default="${jboss.hajrmi.port}"/>
+		<attribute name="jboss.jms.port" default="${jboss.jms.port}"/>
+		<attribute name="jboss.jmx-rmi.port" default="${jboss.jmx-rmi.port}"/>
+		<attribute name="jboss.messaging.port" default="${jboss.messaging.port}"/>
+		<attribute name="jboss.pooledha.port" default="${jboss.pooledha.port}"/>
+		<attribute name="jboss.remoting.port" default="${jboss.remoting.port}"/>
+		<attribute name="jboss.server.bind.port" default="${jboss.server.bind.port}"/>
+		<attribute name="jboss.server.rmi.port" default="${jboss.server.rmi.port}"/>
+		<attribute name="jboss.service.rmiobject.port" default="${jboss.service.rmiobject.port}"/>
+		<attribute name="jboss.snmp.port" default="${jboss.snmp.port}"/>
+		<attribute name="jboss.snmp-trapd.port" default="${jboss.snmp-trapd.port}"/>
+		<attribute name="jboss.web.service.port" default="${jboss.web.service.port}"/>
+		<!-- new with 5.1.0-->
+		<attribute name="jboss.unifiedinvoker.port" default="${jboss.unifiedinvoker.port}"/>
+		<attribute name="jboss.hajndi.auto.port" default="${jboss.hajndi.auto.port}"/>
+		<attribute name="jboss.ssl.port" default="${jboss.ssl.port}"/>
+		<attribute name="jboss.jms2.netty.port" default="${jboss.jms2.netty.port}"/>
+		<attribute name="jboss.jms2.netty-ssl.port" default="${jboss.jms2.netty-ssl.port}"/>
+		<attribute name="jboss.transaction.recovery.port" default="${jboss.transaction.recovery.port}"/>
+		<attribute name="jboss.transaction.status.port" default="${jboss.transaction.status.port}"/>
+		<attribute name="jboss.transaction.processid.port" default="${jboss.transaction.processid.port}"/>
+		<attribute name="search.jboss.ejbinvoker.port" default="3873"/>
+		<sequential>
+			<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
+			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true">
+				<filterset>
+					<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
+					<filter token="jboss.server.bindingfile.location" value="@{jboss.server.bindingfile.location}"/>
+					<filter token="jboss.server.jndi.port" value="@{jboss.server.jndi.port}"/>
+					<filter token="jboss.server.port" value="@{jboss.server.port}"/>
+					<filter token="jboss.cobraorb.port" value="@{jboss.cobraorb.port}"/>
+					<filter token="jboss.ejbinvoker.port" value="@{jboss.ejbinvoker.port}"/>
+					<filter token="jboss.hajndi.port" value="@{jboss.hajndi.port}"/>
+					<filter token="jboss.hajrmi.port" value="@{jboss.hajrmi.port}"/>
+					<filter token="jboss.jms.port" value="@{jboss.jms.port}"/>
+					<filter token="jboss.jmx-rmi.port" value="@{jboss.jmx-rmi.port}"/>
+					<filter token="jboss.messaging.port" value="@{jboss.messaging.port}"/>
+					<filter token="jboss.pooledha.port" value="@{jboss.pooledha.port}"/>
+					<filter token="jboss.remoting.port" value="@{jboss.remoting.port}"/>
+					<filter token="jboss.server.bind.port" value="@{jboss.server.bind.port}"/>
+					<filter token="jboss.server.rmi.port" value="@{jboss.server.rmi.port}"/>
+					<filter token="jboss.service.rmiobject.port" value="@{jboss.service.rmiobject.port}"/>
+					<filter token="jboss.snmp.port" value="@{jboss.snmp.port}"/>
+					<filter token="jboss.snmp-trapd.port" value="@{jboss.snmp-trapd.port}"/>
+					<filter token="jboss.web.service.port" value="@{jboss.web.service.port}"/>
+					<filter token="jboss.unifiedinvoker.port" value="@{jboss.unifiedinvoker.port}"/> 
+					<filter token="jboss.hajndi.auto.port" value="@{jboss.hajndi.auto.port}"/> 
+					<filter token="jboss.ssl.port" value="@{jboss.ssl.port}"/> 
+					<filter token="jboss.jms2.netty.port" value="@{jboss.jms2.netty.port}"/> 
+					<filter token="jboss.jms2.netty-ssl.port" value="@{jboss.jms2.netty-ssl.port}"/> 
+					<filter token="jboss.transaction.recovery.port" value="@{jboss.transaction.recovery.port}"/>
+					<filter token="jboss.transaction.status.port" value="@{jboss.transaction.status.port}"/> 
+					<filter token="jboss.transaction.processid.port" value="@{jboss.transaction.processid.port}"/> 
+				</filterset>
+			</copy>
+			<jboss-bindings-validate
+				jboss.server.ports.name="@{jboss.server.ports.name}"
+				jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
+				/>
+			<!-- change ejb port -->
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/ejb3-connectors-jboss-beans.xml" byline="true"
+				match="(.*)&gt;@{search.jboss.ejbinvoker.port}&lt;(.*)"
+				replace="\1&gt;@{jboss.ejbinvoker.port}&lt;\2"
+				/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jboss-bindings-40" description="configures the binding.xml and the jboss-service.xml">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
@@ -4331,9 +4565,22 @@ $HeadURL$
 						regexp="tomcat-5.5..."
 						select="\1"
 						/>
+					<!-- not sure if grid will work with tomcat-6.0, assuming it uses same as 5.5-->
+					<propertyregex property="is.tomcat55"
+						input="@{appserver.conf.dir}"
+						regexp="tomcat-6.0.*"
+						select="\1"
+						/>
+					<var name="is.jboss51" unset="true"/>
+					<propertyregex property="is.jboss51"
+						input="@{appserver.conf.dir}"
+						regexp=".*jboss-5.1.*"
+						select="true"
+						/>
 					<if>
 						<or>
 							<isset property="is.jboss40"/>
+							<isset property="is.jboss51"/>
 							<isset property="is.tomcat55"/>
 						</or>
 						<then>
@@ -4393,9 +4640,7 @@ $HeadURL$
 								cert="@{appserver.conf.dir}/@{grid.secure.cert.file}"
 								key="@{appserver.conf.dir}/@{grid.secure.key.file}"
 								${tomcat55.extras}
-								>
-									<Valve className="${valve.name}"/>
-								</Connector>
+								/>
 							]]>
 						</insert>
 					</xmltask>
@@ -4410,7 +4655,6 @@ $HeadURL$
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<sequential>
-			<!-- Functionallity moved to grid-secure-configure-connector
 			<switch value="@{appserver.server-xml.service.name}">
 				<case value="jboss.web">
 					<var name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve55"/>
@@ -4422,16 +4666,21 @@ $HeadURL$
 					<fail message="Unkown server.xml service name - @{appserver.server-xml.service.name}, don't know how to handle"/>
 				</default>
 			</switch>
+			<echo message="Deleting vavle from @{appserver.server-xml.file}"/>
 			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
-				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/ConnenctorEngine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
+				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
+			</xmltask>
+			<echo message="Inserting vavle from @{appserver.server-xml.file}"/>
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
+				dest="@{appserver.server-xml.file}"
+				failWithoutMatch="true">
 				<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']">
 					<![CDATA[
 					<Valve className="${valve.name}"/>
 					]]>
 				</insert>
 			</xmltask>
-			-->
 		</sequential>
 	</macrodef>
 
@@ -4858,6 +5107,10 @@ $HeadURL$
 								grid.secure.cert.file="@{tomcat.grid.secure.cert.file}"
 								grid.secure.key.file="@{tomcat.grid.secure.key.file}"
 								/>
+							<grid-secure-configure-valve
+								appserver.server-xml.file="@{tomcat.server-xml.file}"
+								appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+								/>
 							<!-- needs to be done after adding connector -->
 							<if>
 								<equals arg1="@{tomcat.grid.secure.enable}" arg2="true"/>
@@ -4936,6 +5189,15 @@ $HeadURL$
 		<attribute name="jboss.snmp.port" default="${jboss.snmp.port}"/>
 		<attribute name="jboss.snmp-trapd.port" default="${jboss.snmp-trapd.port}"/>
 		<attribute name="jboss.web.service.port" default="${jboss.web.service.port}"/>
+		<!-- new with 5.1.0-->
+		<attribute name="jboss.unifiedinvoker.port" default="${jboss.unifiedinvoker.port}"/>
+		<attribute name="jboss.hajndi.auto.port" default="${jboss.hajndi.auto.port}"/>
+		<attribute name="jboss.ssl.port" default="${jboss.ssl.port}"/>
+		<attribute name="jboss.jms2.netty.port" default="${jboss.jms2.netty.port}"/>
+		<attribute name="jboss.jms2.netty-ssl.port" default="${jboss.jms2.netty-ssl.port}"/>
+		<attribute name="jboss.transaction.recovery.port" default="${jboss.transaction.recovery.port}"/>
+		<attribute name="jboss.transaction.status.port" default="${jboss.transaction.status.port}"/>
+		<attribute name="jboss.transaction.processid.port" default="${jboss.transaction.processid.port}"/>
 
 		<!-- appserver-ssl-configure -->
 		<attribute name="jboss.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf"/>
@@ -4943,7 +5205,7 @@ $HeadURL$
 		<attribute name="jboss.server-xml.service.name" default="jboss.web"/>
 		<attribute name="jboss.ssl.enable" default="${jboss.ssl.enable}"/>
 		<!-- This is the value inserted into the connector in server.xml, bindings updates this the real port at runtime. You could use the real value then the bindings would not match  and it would update, so this may change in the future. -->
-		<attribute name="jboss.ssl.port" default="8443"/>
+		<!--<attribute name="jboss.ssl.port" default="8443"/>-->
 		<attribute name="jboss.ssl.keystore.file" default="${jboss.ssl.keystore.file}"/>
 		<attribute name="jboss.ssl.keystore.dir" default="${jboss.ssl.keystore.dir}"/>
 		<attribute name="jboss.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
@@ -4971,6 +5233,12 @@ $HeadURL$
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
 		<attribute name="jboss.logs.dir" default="${jboss.home}/server/${jboss.server.name}/log"/>
 		<sequential>
+			<var name="jboss.file.is.51" unset="true"/>
+			<propertyregex property="jboss.file.is.51"
+				input="@{jboss.binaries.file}"
+				regexp=".*jboss-5.1.*"
+				select="true"
+				/>
 			<if>
 				<not>
 					<equals arg1="${exclude.jboss-config}" arg2="true"/>
@@ -5005,7 +5273,14 @@ $HeadURL$
 								jboss.snmp.port="@{jboss.snmp.port}"
 								jboss.snmp-trapd.port="@{jboss.snmp-trapd.port}"
 								jboss.web.service.port="@{jboss.web.service.port}"
-
+								jboss.unifiedinvoker.port="@{jboss.unifiedinvoker.port}"
+								jboss.hajndi.auto.port="@{jboss.hajndi.auto.port}"
+								jboss.ssl.port="@{jboss.ssl.port}"              
+								jboss.jms2.netty.port="@{jboss.jms2.netty.port}"
+								jboss.jms2.netty-ssl.port="@{jboss.jms2.netty-ssl.port}"
+								jboss.transaction.recovery.port="@{jboss.transaction.recovery.port}"
+								jboss.transaction.status.port="@{jboss.transaction.status.port}"
+								jboss.transaction.processid.port="@{jboss.transaction.processid.port}"
 								/>
 						</then>
 						<else>
@@ -5032,13 +5307,23 @@ $HeadURL$
 						</else>
 					</if>
 
-					<echo message="Adding user and password to JBoss console apps"/>
-					<secure-jboss-console
-						jboss.home="@{jboss.home}"
-						jboss.server.name="@{jboss.server.name}"
-						jboss.web.user="@{jboss.web.user}"
-						jboss.web.password="@{jboss.web.password}"
-						/>
+					<if>
+						<not>
+							<isset property="jboss.file.is.51"/>
+						</not>
+						<then>
+							<echo message="Adding user and password to JBoss console apps"/>
+							<secure-jboss-console
+								jboss.home="@{jboss.home}"
+								jboss.server.name="@{jboss.server.name}"
+								jboss.web.user="@{jboss.web.user}"
+								jboss.web.password="@{jboss.web.password}"
+								/>
+						</then>
+						<else>
+							<echo message="Skipping securing console because jboss is 5.1"/>
+						</else>
+					</if>
 
 					<echo message="Updating JBoss shutdown.jar to allow shutdown without command line args"/>
 					<jboss-update-shutdown
@@ -5104,12 +5389,10 @@ $HeadURL$
 								grid.secure.key.file="@{jboss.grid.secure.key.file}"
 								grid.secure.cert.file="@{jboss.grid.secure.cert.file}"
 								/>
-							<!--
 							<grid-secure-configure-valve
 								appserver.server-xml.file="@{jboss.server-xml.file}"
 								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 								/>
-							-->
 							<!-- needs to be done after adding connector -->
 							<if>
 								<equals arg1="@{jboss.grid.secure.enable}" arg2="true"/>
