@@ -25,7 +25,7 @@ class CloudClientService {
 			println 'Generating the Private Key with AccessID ' + aID + ' and SecretID ' + sId
 			String privateKeyFileName = ec2p.generateKey(aID, sId); 
 		
-			def defaultPortList = '22,48080,46210'
+			def defaultPortList = '22,48080,48210'
 			def fullPortList 
 			if(msg.portList)
 			{ 	
@@ -77,7 +77,7 @@ class CloudClientService {
 					1) To view your application build running, launch the Hudson CI server dashboard by going to your web browser and typing 
 					  http://${hostName}:48080/hudson/?auto_refresh=true
 					2) After successful build/deployment (about 15 minutes after you received this email), open your web browser and type the following to launch the application: 
-					  http://${hostName}:46210/caintegrator2/
+					  http://${hostName}:48210/caintegrator2/
 					
 					"""
 				}
