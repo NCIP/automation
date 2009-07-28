@@ -34,14 +34,14 @@ class CloudClientService {
 			{
 				fullPortList =defaultPortList 
 			}
-			println 'Adding the ports ' + fullPortList + 'to the Default security group'
+			println 'Adding the ports ' + fullPortList + ' to the Default security group'
 			ec2p.generateSecurityGroup(aID,sId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
 			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +privateKeyFileName
   			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName))
 			println 'Configuring the AMI'	
 			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/"+privateKeyFileName);			
 			si.initializeSystem()
-			
+			println 'System Initiation complete'
 			confirmationEmail(msg,hostName)  		
 		} 
 		catch (ex) {
@@ -53,7 +53,7 @@ class CloudClientService {
 				{
 					to msg.email
 					subject "Instance Status!"
-					body """ The provisioner is not able to create the instance with the following error ${hostName}. Contact the System Administrator for more details
+					body """ The provisioner is not able to create the instance with the following error ${ex}. Contact the System Administrator for more details
 					"""
 				}
 			println 'Mail sent  to '+ msg.email	
