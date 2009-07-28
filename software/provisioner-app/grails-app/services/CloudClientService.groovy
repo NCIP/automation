@@ -52,9 +52,8 @@ class CloudClientService {
 				mailService.sendMail
 				{
 					to msg.email
-					subject "Continuous Integration Server Ready!"
-					body """
-					There was a problem generating the AMI. Contact your administrator for more details.			
+					subject "Instance Status!"
+					body """ The provisioner is not able to create the instance with the following error ${hostName}. Contact the System Administrator for more details
 					"""
 				}
 			println 'Mail sent  to '+ msg.email	
@@ -72,9 +71,8 @@ class CloudClientService {
 				mailService.sendMail
 				{
 					to msg.email
-					subject "Continuous Integration Server Ready!"
-					body """
-					Continuous Integration Server is ready and configured.
+					subject "Instance Ready(${hostName})"
+					body """ Continuous Integration Server is ready and configured.
 					
 					1) To begin your application build, launch the Hudson CI server by going to your web browser and typing 
 					  http://${hostName}:48080/hudson/?auto_refresh=true
