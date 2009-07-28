@@ -30,13 +30,13 @@
 
 	    		<g:form action="provisionAMI">
 				<form:textField label="Access Key ID"  name="accessId" title="TextField" readonly="false" value="${params.accessId}">
-				  Enter your Access Key ID. To get your Amazon Web Services <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a> , go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>
+				  Enter your <strong>Access Key ID</strong>. To get your Amazon Web Services <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a>, go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>
 				</form:textField>
 				<form:textField label="Secret Access Key"  name="secretId" title="TextField" readonly="false" value="${params.secretId}">
-				  Enter your Amazon Secret Key. To get your Amazon Web Services <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a> , go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>
+				  Enter your Amazon <strong>Secret Access Key</strong>. To get your Amazon Web Services <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a>, go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>
 				</form:textField>		
 				<form:textField label="Port List"  name="portList" title="TextField" readonly="false" value="${params.portList}">
-				  Enter the external ports (in command-delimited, no space format. For example: 46210,48080) you wish to expose in the Port List field
+				  Enter the external ports (in comma-delimited, no spaces format. For example: 46210,48080) you wish to expose in the <strong>Port List</strong> field
 				</form:textField>		
 				<form:textField label="Email Address"  name="email" title="TextField" readonly="false" value="${params.email}">
 				  Enter the email address where you wish to receive further instructions
@@ -46,7 +46,7 @@
 				 </form:buttonBar>
 	    		</g:form>
 	    		<br>
-	    		<h4>Important: The BDA Provisioner will not terminate your Amazon EC2 instance. You will continue to be charged until you manual terminate this instance.</h4>
+	    		<h4>Important: The BDA Provisioner will not terminate your Amazon EC2 instance. You will continue to be charged until you manually terminate this instance. Go to the <a href="https://console.aws.amazon.com/">AWS Management Console</a> to terminate your EC2 instance(s)</h4>
 		</formset>
 	</body>
 </html>
