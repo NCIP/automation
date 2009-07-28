@@ -222,6 +222,7 @@ public class EC2SystemInitiator
 		ScpClient scp = ssh1.openScpClient();
 		scp.put(new File("resources/build-hudson.xml").getAbsolutePath(), "", true);
 		scp.put(new File("resources/.bash_profile").getAbsolutePath(), "", true);
+		scp.put(new File("resources/catalina.sh").getAbsolutePath(), "/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin", true);
 
 		SessionChannelClient  bash1 = ssh1.openSessionChannel();
 		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
