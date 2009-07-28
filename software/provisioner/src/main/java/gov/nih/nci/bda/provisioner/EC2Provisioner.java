@@ -149,7 +149,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey)
 		KeyPairInfo keyPair = new EC2PrivateKey(privateKey).findKeyPair(jec2);
 		if (keyPair == null)
 			throw new EC2Exception("No matching keypair found on EC2. Is the EC2 private key a valid one?");
-		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-0459bc6d", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), InstanceType.DEFAULT);
+		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-3c47a355", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), InstanceType.DEFAULT);
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
 		do
 		{
@@ -203,15 +203,18 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
 			for (GroupDescription res : securityGroups)
 			{
 				ownerId = res.getOwner();
-				List<IpPermission> ipPerms = (List<IpPermission>) res.getPermissions();
-		    	for (IpPermission perm : ipPerms)
-		    	{
-		    		String portNumber = Integer.toString(perm.getFromPort());		
-	        		if(portNumber != null && portNumber.equals(portValue))
-	        		{
-	        			portOpen = true;
-	        		}		        	
-		    	}
+				if(res.getName().equalsIgnoreCase("default"))
+				{				
+					List<IpPermission> ipPerms = (List<IpPermission>) res.getPermissions();
+			    	for (IpPermission perm : ipPerms)
+			    	{
+			    		String portNumber = Integer.toString(perm.getFromPort());		
+		        		if(portNumber != null && portNumber.equals(portValue))
+		        		{
+		        			portOpen = true;
+		        		}		        	
+			    	}
+				}
 			}
 	    	if (!portOpen)
 	    	{
