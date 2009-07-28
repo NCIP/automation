@@ -71,7 +71,7 @@ class CloudClientService {
 				mailService.sendMail
 				{
 					to msg.email
-					subject "Instance Ready(${hostName})"
+					subject "Instance Ready (${hostName})"
 					body """ Continuous Integration Server is ready and configured.
 					
 					1) To view your application build running, launch the Hudson CI server dashboard by going to your web browser and typing 
