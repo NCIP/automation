@@ -2914,6 +2914,7 @@ software/provisioner/lib/j2ssh-core-0.2.9.jar -text
 software/provisioner/lib/typica.jar -text
 software/provisioner/resources/.bash_profile -text
 software/provisioner/resources/build-hudson.xml -text
+software/provisioner/resources/catalina.sh -text
 software/provisioner/resources/config.xml -text
 software/provisioner/resources/hosts -text
 software/provisioner/resources/init.sh -text
