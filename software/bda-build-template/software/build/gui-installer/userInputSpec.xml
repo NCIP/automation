@@ -150,6 +150,15 @@ $HeadURL$
 			<propertymap propertyname="jboss.ejbinvoker.port" mapname="jboss.ejbinvoker.port"/>
 			<propertymap propertyname="jboss.server.rmi.port" mapname="jboss.server.rmi.port"/>
 			<propertymap propertyname="jboss.web.service.port" mapname="jboss.web.service.port"/>
+			<propertymap propertyname="jboss.unifiedinvoker.port" mapname="jboss.unifiedinvoker.port"/>
+			<propertymap propertyname="jboss.hajndi.auto.port" mapname="jboss.hajndi.auto.port"/>
+			<propertymap propertyname="jboss.ssl.port" mapname="jboss.ssl.port"/>
+			<propertymap propertyname="jboss.jms2.netty.port" mapname="jboss.jms2.netty.port"/>
+			<propertymap propertyname="jboss.jms2.netty-ssl.port" mapname="jboss.jms2.netty-ssl.port"/>
+			<propertymap propertyname="jboss.transaction.recovery.port" mapname="jboss.transaction.recovery.port"/>
+			<propertymap propertyname="jboss.transaction.status.port" mapname="jboss.transaction.status.port"/>
+			<propertymap propertyname="jboss.transaction.processid.port" mapname="jboss.transaction.processid.port"/>
+
 			<propertymap propertyname="jboss.service.rmiobject.port" mapname="jboss.service.rmiobject.port"/>
 			<propertymap propertyname="jboss.server.bind.port" mapname="jboss.server.bind.port"/>
 			<propertymap propertyname="jboss.hajndi.port" mapname="jboss.hajndi.port"/>
@@ -160,8 +169,6 @@ $HeadURL$
 			<propertymap propertyname="jboss.jmx-rmi.port" mapname="jboss.jmx-rmi.port"/>
 			<propertymap propertyname="jboss.snmp-trapd.port" mapname="jboss.snmp-trapd.port"/>
 			<propertymap propertyname="jboss.snmp.port" mapname="jboss.snmp.port"/>
-			<propertymap propertyname="jboss.jms.port" mapname="jboss.jms.port"/>
-			<propertymap propertyname="jboss.remoting.port" mapname="jboss.remoting.port"/>
 			<propertymap propertyname="jboss.messaging.port" mapname="jboss.messaging.port"/>
 			<propertymap propertyname="jboss.ssl.keystore.location" mapname="jboss.ssl.keystore.location"/>
 			<propertymap propertyname="jboss.grid.secure.cert.location" mapname="jboss.grid.secure.cert.location"/>
@@ -241,6 +248,15 @@ $HeadURL$
 			<propertymap propertyname="jboss.ejbinvoker.port" mapname="jboss.ejbinvoker.port"/>
 			<propertymap propertyname="jboss.server.rmi.port" mapname="jboss.server.rmi.port"/>
 			<propertymap propertyname="jboss.web.service.port" mapname="jboss.web.service.port"/>
+			<propertymap propertyname="jboss.unifiedinvoker.port" mapname="jboss.unifiedinvoker.port"/>
+			<propertymap propertyname="jboss.hajndi.auto.port" mapname="jboss.hajndi.auto.port"/>
+			<propertymap propertyname="jboss.ssl.port" mapname="jboss.ssl.port"/>
+			<propertymap propertyname="jboss.jms2.netty.port" mapname="jboss.jms2.netty.port"/>
+			<propertymap propertyname="jboss.jms2.netty-ssl.port" mapname="jboss.jms2.netty-ssl.port"/>
+			<propertymap propertyname="jboss.transaction.recovery.port" mapname="jboss.transaction.recovery.port"/>
+			<propertymap propertyname="jboss.transaction.status.port" mapname="jboss.transaction.status.port"/>
+			<propertymap propertyname="jboss.transaction.processid.port" mapname="jboss.transaction.processid.port"/>
+
 			<propertymap propertyname="jboss.service.rmiobject.port" mapname="jboss.service.rmiobject.port"/>
 			<propertymap propertyname="jboss.server.bind.port" mapname="jboss.server.bind.port"/>
 			<propertymap propertyname="jboss.hajndi.port" mapname="jboss.hajndi.port"/>
@@ -251,8 +267,6 @@ $HeadURL$
 			<propertymap propertyname="jboss.jmx-rmi.port" mapname="jboss.jmx-rmi.port"/>
 			<propertymap propertyname="jboss.snmp-trapd.port" mapname="jboss.snmp-trapd.port"/>
 			<propertymap propertyname="jboss.snmp.port" mapname="jboss.snmp.port"/>
-			<propertymap propertyname="jboss.jms.port" mapname="jboss.jms.port"/>
-			<propertymap propertyname="jboss.remoting.port" mapname="jboss.remoting.port"/>
 			<propertymap propertyname="jboss.messaging.port" mapname="jboss.messaging.port"/>
 			<propertymap propertyname="jboss.ssl.keystore.location" mapname="jboss.ssl.keystore.location"/>
 			<propertymap propertyname="jboss.grid.secure.cert.location" mapname="jboss.grid.secure.cert.location"/>
@@ -412,10 +426,6 @@ $HeadURL$
 			<validator class="com.izforge.izpack.util.PortValidator" txt="The hajrmi port number is already in use"/>
 		</field>
 
-		<field type="text" variable="jboss.jms.port">
-			<spec txt="JBoss JMS port:" size="5" set="30170"/>
-			<validator class="com.izforge.izpack.util.PortValidator" txt="The JBoss JMS port number is already in use"/>
-		</field>
 		<!-- Not sure we ant to prompt for these, this page is so big already --> 
 		<variable name="log4j.maxFileSize" value="100MB"/>
 		<variable name="log4j.maxDays" value="7"/>
@@ -442,12 +452,6 @@ $HeadURL$
 			<spec txt="JBoss pooledha port:" size="5" set="30270"/>
 			<validator class="com.izforge.izpack.util.PortValidator" txt="The JBoss pooledha port number is already in use"/>
 		</field>
-
-		<field type="text" variable="jboss.remoting.port">
-			<spec txt="JBoss remoting port:" size="5" set="30320"/>
-			<validator class="com.izforge.izpack.util.PortValidator" txt="The JBoss remoting port number is already in use"/>
-		</field>
-
 
 		<field type="text" variable="jboss.server.bind.port">
 			<spec txt="JBoss bind port:" size="5" set="0"/>
@@ -479,6 +483,52 @@ $HeadURL$
 			<spec txt="JBoss web service port:" size="5" set="30250"/>
 			<validator class="com.izforge.izpack.util.PortValidator" txt="The JBoss web service port number is already in use"/>
 		</field>
+
+		<field type="text" variable="jboss.unifiedinvoker.port">
+			<spec txt="JBoss Unified Invoker Port" size="5" set="30360"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss Unified Invoker port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.hajndi.auto.port">
+			<spec txt="JBoss hajndi Auto Discovery Port" size="5" set="30370"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss hajndi Auto Discovery port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.ssl.port">
+			<spec txt="JBoss SSL" size="5" set="30380"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss SSL port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.jms2.netty.port">
+			<spec txt="JBoss Messaging 2.x HTTP port" size="5" set="30390"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss Messaging 2.x HTTP port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.jms2.netty.port">
+			<spec txt="JBoss Messaging 2.x HTTP port" size="5" set="30390"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss Messaging 2.x HTTP port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.jms2.netty-ssl.port">
+			<spec txt="JBoss Messaging 2.x SSL port" size="5" set="30400"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss Messaging 2.x SSL port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.transaction.recovery.port">
+			<spec txt="JBoss Transaction Recovery port" size="5" set="30410"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss Transaction Recovery port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.transaction.status.port">
+			<spec txt="JBoss Transaction Status port" size="5" set="30420"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss Transaction Status port number is already in use"/>
+		</field>
+
+		<field type="text" variable="jboss.transaction.processid.port">
+			<spec txt="JBoss Transaction Process ID port" size="5" set="30430"/>
+			<validator class="com.izforge.izpack.util.PortValidator" txt="JBoss Transaction Process ID port number is already in use"/>
+		</field>
+
 	</panel>
 	<!--
 		<field type="text" variable="">

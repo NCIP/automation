@@ -1055,5 +1055,60 @@ $HeadURL$
 		<!-- SSH to machine ant run ant command line to install application -->
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
+	<target name="test-read-bindings">
+		<xmltask preservetype="true" source="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml">
+			<xmlcatalog refid="bda.xml.catalog"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.web:service=WebServer']/../:property[@name='port']/text()" property="read.server.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=Naming']/../:property[text()='Port']/../:property[@name='port']/text()" property="read.server.jndi.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=Naming']/../:property[text()='RmiPort']/../:property[@name='port']/text()" property="read.server.rmi.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=WebService']/../:property[@name='port']/text()" property="read.web.service.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='UnifiedInvokerConnector']/../:property[@name='port']/text()" property="read.unifiedinvoker.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=jrmp']/../:property[@name='port']/text()" property="read.service.rmiobject.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=pooled']/../:property[@name='port']/text()" property="read.server.bind.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=HAJNDI']/../:property[text()='Port']/../:property[@name='port']/text()" property="read.hajndi.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=HAJNDI']/../:property[text()='RmiPort']/../:property[@name='port']/text()" property="read.hajrmi.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='AutoDiscovery']/../:property[@name='port']/text()" property="read.hajndi.auto.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=jrmpha']/../:property[@name='port']/text()" property="read.service.rmiobject.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=pooledha']/../:property[@name='port']/text()" property="read.pooledha.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=CorbaORB']/../:property[@name='port']/text()" property="read.cobraorb.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.jmx:name=SnmpAgent,service=trapd,type=logger']/../:property[@name='port']/text()" property="read.snmp-trapd.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor']/../:property[@name='port']/text()" property="read.snmp.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.remoting:service=JMXConnectorServer,protocol=rmi']/../:property[@name='port']/text()" property="read.jmx-rmi.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.web:service=WebServer']/../:property[text()='HttpsConnector']/../:property[@name='port']/text()" property="read.ssl.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.messaging:service=Connector,transport=bisocket']/../:property[@name='port']/text()" property="read.messaging.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='netty-port']/../:property[@name='port']/text()" property="read.jms2.netty.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='netty-ssl-port']/../:property[@name='port']/text()" property="read.jms2.netty-ssl.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='recoveryManager']/../:property[@name='port']/text()" property="read.transaction.recovery.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='transactionStatusManager']/../:property[@name='port']/text()" property="read.transaction.status.port"/>
+			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='socketProcessId']/../:property[@name='port']/text()" property="read.transaction.processid.port"/>
+		</xmltask>
+		<xmltask preservetype="true" source="/data/apps/bda-blueprints-webapp/jboss-5.1.0.GA/server/default/deploy/ejb3-connectors-jboss-beans.xml">
+			<xmlcatalog refid="bda.xml.catalog"/> 
+			<copy path="/:deployment/:bean[@name='org.jboss.ejb3.RemotingConnector']/:property[@name='invokerLocator']/:value-factory/:parameter[5]/text()" property="read.ejbinvoker.port"/>
+		</xmltask>              
 
+		<echo  message="read.ejbinvoker.port=${read.ejbinvoker.port}"/>
+		<echo  message="read.server.jndi.port=${read.server.jndi.port}"/>
+		<echo  message="read.server.port=${read.server.port}"/>
+		<echo  message="read.cobraorb.port=${read.cobraorb.port}"/>
+		<echo  message="read.hajndi.port=${read.hajndi.port}"/>
+		<echo  message="read.hajrmi.port=${read.hajrmi.port}"/>
+		<echo  message="read.jmx-rmi.port=${read.jmx-rmi.port}"/>
+		<echo  message="read.messaging.port=${read.messaging.port}"/>
+		<echo  message="read.pooledha.port=${read.pooledha.port}"/>
+		<echo  message="read.server.bind.port=${read.server.bind.port}"/>
+		<echo  message="read.server.rmi.port=${read.server.rmi.port}"/>
+		<echo  message="read.service.rmiobject.port=${read.service.rmiobject.port}"/>
+		<echo  message="read.snmp.port=${read.snmp.port}"/>
+		<echo  message="read.snmp-trapd.port=${read.snmp-trapd.port}"/>
+		<echo  message="read.web.service.port=${read.web.service.port}"/>
+		<echo  message="read.unifiedinvoker.port=${read.unifiedinvoker.port}"/>
+		<echo  message="read.hajndi.auto.port=${read.hajndi.auto.port}"/>
+		<echo  message="read.ssl.port=${read.ssl.port}"/>
+		<echo  message="read.jms2.netty.port=${read.jms2.netty.port}"/>
+		<echo  message="read.jms2.netty-ssl.port=${read.jms2.netty-ssl.port}"/>
+		<echo  message="read.transaction.recovery.port=${read.transaction.recovery.port}"/>
+		<echo  message="read.transaction.status.port=${read.transaction.status.port}"/>
+		<echo  message="read.transaction.processid.port=${read.transaction.processid.port}"/>
+	</target>
 </project>

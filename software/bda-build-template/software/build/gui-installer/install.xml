@@ -181,17 +181,24 @@ $HeadURL$
 					<variable name="jboss.ejbinvoker.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.hajndi.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.hajrmi.port" value="" condition="container.database|container.tomcat"/>
-					<variable name="jboss.jms.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.jmx-rmi.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.messaging.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.pooledha.port" value="" condition="container.database|container.tomcat"/>
-					<variable name="jboss.remoting.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.server.bind.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.server.rmi.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.service.rmiobject.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.snmp.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.snmp-trapd.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.web.service.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.unifiedinvoker.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.hajndi.auto.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.ssl.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.jms2.netty.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.jms2.netty-ssl.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.transaction.recovery.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.transaction.status.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.transaction.processid.port" value="" condition="container.database|container.tomcat"/>
+
 					<variable name="jboss.ssl.enable" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.ssl.keystore.location" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.ssl.keystore.pass" value="" condition="container.database|container.tomcat"/>
