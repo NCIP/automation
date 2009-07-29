@@ -24,7 +24,7 @@
 			<legend><b>BDA Provisioner</b></legend>
 			<h4>This BDA Provisioner application will generate working software using Amazon's cloud infrastructure. </h4>
 			<h4>After entering the information below and clicking the <b>Provision Instance</b> button, you will receive a follow-up email with further instructions. </h4>
-			<h4>By default, the BDA Provisioner will open the following ports: 22,48080,46210.</h4>
+			<h4>By default, the BDA Provisioner will open the following ports: 22,48080,48210.</h4>
 			<h4>If you do not have an AWS <u>EC2</u> account, you will need to register for one by going to the <a href="http://aws.amazon.com/">http://aws.amazon.com/</a> page and selecting the <strong>Sign Up Now</strong> button. You must also register for an <u>EC2</u> account.</h4>
 			<br>
 			<g:if test="${flash.message}">
