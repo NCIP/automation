@@ -32,7 +32,7 @@ class CloudClientController {
 			}				
 		}else
 		{
-			flash.message = "Access Key ID  and Secret Access Key cannot be empty."
+			flash.message = "Authentication with AWS Failed. Either Access Key ID  or Secret Access Key is invalid."
 			render(view: 'index')
 		}
 	}
