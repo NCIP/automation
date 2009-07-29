@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Provision Instance</title>
+		<title>BDA Provisioner</title>
 		<meta name="layout" content="main"/>
 		<g:javascript library="jquery" />
 		 <style>

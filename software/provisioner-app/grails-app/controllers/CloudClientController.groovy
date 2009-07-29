@@ -28,7 +28,7 @@ class CloudClientController {
 				render(view: 'confirm')
 			}else
 			{
-				flash.message = "Authentication with AWS Failed. Either Access Key ID  or Secret Access Key is invalid."
+				flash.message = "Authentication with AWS Failed. Either Access Key ID  or Secret Access Key is invalid. You must have a valid AWS EC2 account."
 				redirect(controller: 'cloudClient',action: 'index',params: [accessId:params.accessId,secretId:params.secretId])
 			}				
 		}else
