@@ -19,6 +19,7 @@ class CloudClientController {
 	}
 	
 	def provisionAMI = {
+		println "Using access id ${params.accessId} and Secret key ${params.secretId}"
 		if(params.accessId && params.secretId)
 		{	
 			if(cloudClientService.validate(params))
