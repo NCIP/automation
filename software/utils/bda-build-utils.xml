@@ -453,13 +453,13 @@ $HeadURL$
 
 					<exec executable="nohup" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
-						<env key="JBOSS_HOME" value=""/> 
+						<env key="JBOSS_HOME" value=""/>
 						<arg line="./run.sh -c @{jboss.server.name}" />
 					</exec>
 
 					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
-						<env key="JBOSS_HOME" value=""/> 
+						<env key="JBOSS_HOME" value=""/>
 						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat -c @{jboss.server.name}" />
 					</exec>
 					<sleep seconds="15" />
@@ -1586,17 +1586,17 @@ $HeadURL$
 			<echo message="Starting Tomcat instance at @{tomcat.home}" />
 			<exec executable="sh" osfamily="unix" dir="@{tomcat.home}/bin" spawn="true">
 				<env key="NOPAUSE" value="true" />
-				<env key="CATALINA_BASE" value=""/> 
-				<env key="CATALINA_HOME" value=""/> 
-				<env key="CATALINA_TMPDIR" value=""/> 
+				<env key="CATALINA_BASE" value=""/>
+				<env key="CATALINA_HOME" value=""/>
+				<env key="CATALINA_TMPDIR" value=""/>
 				<arg line="startup.sh" />
 			</exec>
 			<echo message="executing ${bda-utils.dir}/resource/psexec.exe"/>
 			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
-				<env key="CATALINA_BASE" value=""/> 
-				<env key="CATALINA_HOME" value=""/> 
-				<env key="CATALINA_TMPDIR" value=""/> 
+				<env key="CATALINA_BASE" value=""/>
+				<env key="CATALINA_HOME" value=""/>
+				<env key="CATALINA_TMPDIR" value=""/>
 				<arg line="-d -i -w @{tomcat.home}/bin @{tomcat.home}/bin/startup.bat" />
 			</exec>
 			<sleep seconds="5" />
@@ -1780,20 +1780,20 @@ $HeadURL$
 		<attribute name="jboss.transaction.status.port" default="${jboss.transaction.status.port}"/>
 		<attribute name="jboss.transaction.processid.port" default="${jboss.transaction.processid.port}"/>
 		<sequential>
-			<var name="jboss.file.is.40" unset="true"/>
-			<propertyregex property="jboss.file.is.40"
+			<var name="jboss.is.40" unset="true"/>
+			<propertyregex property="jboss.is.40"
 				input="@{jboss.home}"
 				regexp=".*jboss-4.0.*"
 				select="true"
 				/>
-			<var name="jboss.file.is.51" unset="true"/>
-			<propertyregex property="jboss.file.is.51"
+			<var name="jboss.is.51" unset="true"/>
+			<propertyregex property="jboss.is.51"
 				input="@{jboss.home}"
 				regexp=".*jboss-5.1.*"
 				select="true"
 				/>
 			<if>
-				<isset property="jboss.file.is.40"/>
+				<isset property="jboss.is.40"/>
 				<then>
 					<jboss-bindings-40
 						jboss.home="@{jboss.home}"
@@ -1813,7 +1813,7 @@ $HeadURL$
 						jboss.pooledha.port="@{jboss.pooledha.port}"
 						jboss.remoting.port="@{jboss.remoting.port}"
 						jboss.server.bind.port="@{jboss.server.bind.port}"
-						jboss.server.rmi.port="@{jboss.server.rmi.port}"              
+						jboss.server.rmi.port="@{jboss.server.rmi.port}"
 						jboss.service.rmiobject.port="@{jboss.service.rmiobject.port}"
 						jboss.snmp.port="@{jboss.snmp.port}"
 						jboss.snmp-trapd.port="@{jboss.snmp-trapd.port}"
@@ -1823,7 +1823,7 @@ $HeadURL$
 				</then>
 			</if>
 			<if>
-				<isset property="jboss.file.is.51"/>
+				<isset property="jboss.is.51"/>
 				<then>
 					<jboss-bindings-51
 						jboss.home="@{jboss.home}"
@@ -1843,7 +1843,7 @@ $HeadURL$
 						jboss.pooledha.port="@{jboss.pooledha.port}"
 						jboss.remoting.port="@{jboss.remoting.port}"
 						jboss.server.bind.port="@{jboss.server.bind.port}"
-						jboss.server.rmi.port="@{jboss.server.rmi.port}"              
+						jboss.server.rmi.port="@{jboss.server.rmi.port}"
 						jboss.service.rmiobject.port="@{jboss.service.rmiobject.port}"
 						jboss.snmp.port="@{jboss.snmp.port}"
 						jboss.snmp-trapd.port="@{jboss.snmp-trapd.port}"
@@ -1917,14 +1917,14 @@ $HeadURL$
 					<filter token="jboss.snmp.port" value="@{jboss.snmp.port}"/>
 					<filter token="jboss.snmp-trapd.port" value="@{jboss.snmp-trapd.port}"/>
 					<filter token="jboss.web.service.port" value="@{jboss.web.service.port}"/>
-					<filter token="jboss.unifiedinvoker.port" value="@{jboss.unifiedinvoker.port}"/> 
-					<filter token="jboss.hajndi.auto.port" value="@{jboss.hajndi.auto.port}"/> 
-					<filter token="jboss.ssl.port" value="@{jboss.ssl.port}"/> 
-					<filter token="jboss.jms2.netty.port" value="@{jboss.jms2.netty.port}"/> 
-					<filter token="jboss.jms2.netty-ssl.port" value="@{jboss.jms2.netty-ssl.port}"/> 
+					<filter token="jboss.unifiedinvoker.port" value="@{jboss.unifiedinvoker.port}"/>
+					<filter token="jboss.hajndi.auto.port" value="@{jboss.hajndi.auto.port}"/>
+					<filter token="jboss.ssl.port" value="@{jboss.ssl.port}"/>
+					<filter token="jboss.jms2.netty.port" value="@{jboss.jms2.netty.port}"/>
+					<filter token="jboss.jms2.netty-ssl.port" value="@{jboss.jms2.netty-ssl.port}"/>
 					<filter token="jboss.transaction.recovery.port" value="@{jboss.transaction.recovery.port}"/>
-					<filter token="jboss.transaction.status.port" value="@{jboss.transaction.status.port}"/> 
-					<filter token="jboss.transaction.processid.port" value="@{jboss.transaction.processid.port}"/> 
+					<filter token="jboss.transaction.status.port" value="@{jboss.transaction.status.port}"/>
+					<filter token="jboss.transaction.processid.port" value="@{jboss.transaction.processid.port}"/>
 				</filterset>
 			</copy>
 			<jboss-bindings-validate
@@ -2527,32 +2527,32 @@ $HeadURL$
 				<then>
 					<switch value="${database.type}">
 						<case value="postgresql">
-							<database-create                                       
-								database.driver="@{database.driver}"                            
-								database.system.url="@{database.system.url}"                    
-								database.system.user="@{database.system.user}"                  
-								database.system.password="@{database.system.password}"          
-								database.version="@{database.version}"                          
-								database.name="@{database.name}"                                
-								database.server="@{database.server}"                            
-								database.url="@{database.url}"                                  
-								database.user="@{database.user}"                                
-								database.password="@{database.password}"                        
-								/>                                                  
+							<database-create
+								database.driver="@{database.driver}"
+								database.system.url="@{database.system.url}"
+								database.system.user="@{database.system.user}"
+								database.system.password="@{database.system.password}"
+								database.version="@{database.version}"
+								database.name="@{database.name}"
+								database.server="@{database.server}"
+								database.url="@{database.url}"
+								database.user="@{database.user}"
+								database.password="@{database.password}"
+								/>
 						</case>
 						<case value="mysql">
-							<database-create                                       
-								database.driver="@{database.driver}"                            
-								database.system.url="@{database.system.url}"                    
-								database.system.user="@{database.system.user}"                  
-								database.system.password="@{database.system.password}"          
-								database.version="@{database.version}"                          
-								database.name="@{database.name}"                                
-								database.server="@{database.server}"                            
-								database.url="@{database.url}"                                  
-								database.user="@{database.user}"                                
-								database.password="@{database.password}"                        
-								/>                                                  
+							<database-create
+								database.driver="@{database.driver}"
+								database.system.url="@{database.system.url}"
+								database.system.user="@{database.system.user}"
+								database.system.password="@{database.system.password}"
+								database.version="@{database.version}"
+								database.name="@{database.name}"
+								database.server="@{database.server}"
+								database.url="@{database.url}"
+								database.user="@{database.user}"
+								database.password="@{database.password}"
+								/>
 						</case>
 						<default>
 							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
@@ -3962,20 +3962,20 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<sequential>
-			<var name="jboss.file.is.zip" unset="true"/>
-			<propertyregex property="jboss.file.is.zip"
+			<var name="jboss.is.zip" unset="true"/>
+			<propertyregex property="jboss.is.zip"
 				input="@{jboss.binaries.file}"
 				regexp=".*.zip"
 				select="true"
 				/>
-			<var name="jboss.file.is.jar" unset="true"/>
-			<propertyregex property="jboss.file.is.jar"
+			<var name="jboss.is.jar" unset="true"/>
+			<propertyregex property="jboss.is.jar"
 				input="@{jboss.binaries.file}"
 				regexp=".*.jar"
 				select="true"
 				/>
-			<var name="jboss.file.is.405" unset="true"/>
-			<propertyregex property="jboss.file.is.405"
+			<var name="jboss.is.405" unset="true"/>
+			<propertyregex property="jboss.is.405"
 				input="@{jboss.binaries.file}"
 				regexp=".*jboss-4.0.5.*"
 				select="true"
@@ -3983,13 +3983,13 @@ $HeadURL$
 			<var name="jboss.base.dir" unset="true"/>
 			<dirname file="@{jboss.home}" property="jboss.base.dir"/>
 			<if>
-				<isset property="jboss.file.is.zip"/>
+				<isset property="jboss.is.zip"/>
 				<then>
 					<unzip dest="${jboss.base.dir}" src="@{jboss.binaries.file}" />
 				</then>
 			</if>
 			<if>
-				<isset property="jboss.file.is.jar"/>
+				<isset property="jboss.is.jar"/>
 				<then>
 					<java jar="@{jboss.binaries.file}" fork="true">
 						<arg line="-installGroup @{jems.install.option} installpath=@{jboss.home}"/>
@@ -4000,7 +4000,7 @@ $HeadURL$
 			<available file="@{jbosscp.binaries.file}" property="jbosscp.exists"/>
 			<if>
 				<and>
-					<isset property="jboss.file.is.405"/>
+					<isset property="jboss.is.405"/>
 					<isset property="jbosscp.exists"/>
 				</and>
 				<then>
@@ -4946,7 +4946,7 @@ $HeadURL$
 						<equals arg1="${datasource.not.variable}" arg2="true"/>
 					</not>
 				</and>
-				<then>	
+				<then>
 					<echo message="Configuring tomcat datasource"/>
 					<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
 						<xmlcatalog refid="bda.xml.catalog"/>
@@ -5233,8 +5233,8 @@ $HeadURL$
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
 		<attribute name="jboss.logs.dir" default="${jboss.home}/server/${jboss.server.name}/log"/>
 		<sequential>
-			<var name="jboss.file.is.51" unset="true"/>
-			<propertyregex property="jboss.file.is.51"
+			<var name="jboss.is.51" unset="true"/>
+			<propertyregex property="jboss.is.51"
 				input="@{jboss.binaries.file}"
 				regexp=".*jboss-5.1.*"
 				select="true"
@@ -5275,7 +5275,7 @@ $HeadURL$
 								jboss.web.service.port="@{jboss.web.service.port}"
 								jboss.unifiedinvoker.port="@{jboss.unifiedinvoker.port}"
 								jboss.hajndi.auto.port="@{jboss.hajndi.auto.port}"
-								jboss.ssl.port="@{jboss.ssl.port}"              
+								jboss.ssl.port="@{jboss.ssl.port}"
 								jboss.jms2.netty.port="@{jboss.jms2.netty.port}"
 								jboss.jms2.netty-ssl.port="@{jboss.jms2.netty-ssl.port}"
 								jboss.transaction.recovery.port="@{jboss.transaction.recovery.port}"
@@ -5309,7 +5309,7 @@ $HeadURL$
 
 					<if>
 						<not>
-							<isset property="jboss.file.is.51"/>
+							<isset property="jboss.is.51"/>
 						</not>
 						<then>
 							<echo message="Adding user and password to JBoss console apps"/>
@@ -5840,21 +5840,45 @@ $HeadURL$
 			<var name="read.bindings.file" unset="true"/>
 			<var name="read.bindings.file.raw" unset="true"/>
 			<var name="read.bindings.port.ports.name" unset="true"/>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
-				<xmlcatalog refid="bda.xml.catalog"/>
-				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']/text()" property="read.bindings.file.raw" />
-				<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']/text()" property="read.bindings.ports.name" />
-			</xmltask>
-			<echo message="${read.bindings.file.raw}"/>
-			<propertyregex property="read.bindings.file"
-				input="${read.bindings.file.raw}"
-				regexp="[file:]*(.*)"
-				select="\1"
+			<var name="jboss.is.40" unset="true"/>
+			<propertyregex property="jboss.is.40"
+				input="@{jboss.home}"
+				regexp=".*jboss-4.0.*"
+				select="true"
 				/>
-			<echo message="Found bindings file ${read.bindings.file} ${read.bindings.ports.name}"/>
-			<property name="@{jboss.server.ports.name.property.name}" value="${read.bindings.ports.name}"/>
-			<property name="@{jboss.bindings.file.location.property.name}" value="${read.bindings.file}"/>
-			<var name="read.properties.list" value="${read.properties.list},${jboss-read-bindingsfile.properties.list}"/>
+			<var name="jboss.is.51" unset="true"/>
+			<propertyregex property="jboss.is.51"
+				input="@{jboss.home}"
+				regexp=".*jboss-5.1.*"
+				select="true"
+				/>
+			<if>
+				<isset property="jboss.is.40"/>
+				<then>
+					<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']/text()" property="read.bindings.file.raw" />
+						<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']/text()" property="read.bindings.ports.name" />
+					</xmltask>
+					<echo message="${read.bindings.file.raw}"/>
+					<propertyregex property="read.bindings.file"
+						input="${read.bindings.file.raw}"
+						regexp="[file:]*(.*)"
+						select="\1"
+						/>
+					<echo message="Found bindings file ${read.bindings.file} ${read.bindings.ports.name}"/>
+					<property name="@{jboss.server.ports.name.property.name}" value="${read.bindings.ports.name}"/>
+					<property name="@{jboss.bindings.file.location.property.name}" value="${read.bindings.file}"/>
+					<var name="read.properties.list" value="${read.properties.list},${jboss-read-bindingsfile.properties.list}"/>
+				</then>
+			</if>
+			<if>
+				<isset property="jboss.is.51"/>
+				<then>
+					<property name="@{jboss.server.ports.name.property.name}" value="PortsDefaultBindings"/>
+					<property name="@{jboss.bindings.file.location.property.name}" value="jboss.home}/server/@{jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-read-ports">
@@ -7439,7 +7463,7 @@ $HeadURL$
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<echo message="Waiting for @{jboss.application.url} to respond."/>
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
-				<http url="@{jboss.application.url}"/> 
+				<http url="@{jboss.application.url}"/>
 			</waitfor>
 
 			<!-- For each socket port call validate:post:socket -->
@@ -7476,7 +7500,7 @@ $HeadURL$
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<echo message="Waiting for @{tomcat.application.url} to respond."/>
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
-				<http url="@{tomcat.application.url}"/> 
+				<http url="@{tomcat.application.url}"/>
 			</waitfor>
 
 			<!-- For each socket port call validate:post:socket -->
@@ -7722,15 +7746,15 @@ $HeadURL$
 				import org.apache.tools.ant.DefaultLogger;
 
 				workingDir=new File(args[0]).getAbsoluteFile()
-				targetName=args[1]      
-				propertiesFile=args[2]  
-				println "dir= " + workingDir.toString() 
-				println "target =" + targetName 
+				targetName=args[1]
+				propertiesFile=args[2]
+				println "dir= " + workingDir.toString()
+				println "target =" + targetName
 				println "properties.file= " + propertiesFile
 
 				File buildFile = new File(workingDir.toString() + "/build.xml")
-				Project project = new Project() 
-				project.init()          
+				Project project = new Project()
+				project.init()
 				project.setBaseDir(workingDir)
 				DefaultLogger logger = new DefaultLogger();
 				logger.setMessageOutputLevel(Project.MSG_INFO);
@@ -7741,21 +7765,21 @@ $HeadURL$
 				ProjectHelper.configureProject(project, buildFile)
 				project.setProperty("force.reinstall", "true")
 				project.setProperty("properties.file", propertiesFile)
-				try                     
-				{                       
+				try
+				{
 				project.executeTarget(targetName)
 				println "Ran sucessfully"
-				}                       
-				catch(Exception err)    
-				{                       
+				}
+				catch(Exception err)
+				{
 				println "Execution of ant failed with the following error:"
-				println err             
-				System.exit 1           
-				}                 
-			</groovy>       
+				println err
+				System.exit 1
+				}
+			</groovy>
 		</sequential>
 	</macrodef>
-	
+
 	<macrodef name="upt-application-configure" description="macro for configuring upt application">
 		<attribute name="upt.application.url" default="${upt.application.url}"/>
 		<attribute name="upt.application.user" default="superadmin"/>
@@ -7772,7 +7796,7 @@ $HeadURL$
 		<attribute name="application.dbpassword" default="${database.password}"/>
 		<attribute name="application.dbdialect" default="${database.dialect}"/>
 		<attribute name="application.dbdriver" default="${database.driver}"/>
-		<sequential>		    
+		<sequential>
 			<uptconfigurator
 			    uptUrl="@{upt.url}"
 			    uptAppUser="@{upt.application.user}"
@@ -7790,6 +7814,144 @@ $HeadURL$
 			    applicationDBDialect="@{application.dbdialect}"
 			    applicationDBDriver="@{application.dbdriver}"
 			    />
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss51-read-ports">
+		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
+		<attribute name="jboss.server.bindingfile.location" default="${jboss.server.bindingfile.location}"/>
+		<attribute name="jboss.server.jndi.port.property.name" default="jboss.server.jndi.port"/>
+		<attribute name="jboss.server.port.property.name" default="jboss.server.port"/>
+		<attribute name="jboss.ejbinvoker.port.property.name" default="jboss.ejbinvoker.port"/>
+		<attribute name="jboss.server.rmi.port.property.name" default="jboss.server.rmi.port"/>
+		<attribute name="jboss.web.service.port.property.name" default="jboss.web.service.port"/>
+		<attribute name="jboss.service.rmiobject.port.property.name" default="jboss.service.rmiobject.port"/>
+		<attribute name="jboss.server.bind.port.property.name" default="jboss.server.bind.port"/>
+		<attribute name="jboss.hajndi.port.property.name" default="jboss.hajndi.port"/>
+		<attribute name="jboss.hajrmi.port.property.name" default="jboss.hajrmi.port"/>
+		<attribute name="jboss.pooledha.port.property.name" default="jboss.pooledha.port"/>
+		<attribute name="jboss.cobraorb.port.property.name" default="jboss.cobraorb.port"/>
+		<attribute name="jboss.jmx-rmi.port.property.name" default="jboss.jmx-rmi.port"/>
+		<attribute name="jboss.snmp-trapd.port.property.name" default="jboss.snmp-trapd.port"/>
+		<attribute name="jboss.snmp.port.property.name" default="jboss.snmp.port"/>
+		<!--<attribute name="jboss.jms.port.property.name" default="jboss.jms.port"/>-->
+		<!--<attribute name="jboss.remoting.port.property.name" default="jboss.remoting.port"/>-->
+		<attribute name="jboss.messaging.port.property.name" default="jboss.messaging.port"/>
+		<!-- new with 5.1.0-->
+		<attribute name="jboss.unifiedinvoker.port.property.name" default="jboss.unifiedinvoker.port"/>
+		<attribute name="jboss.hajndi.auto.port.property.name" default="jboss.hajndi.auto.port"/>
+		<attribute name="jboss.ssl.port.property.name" default="jboss.ssl.port"/>
+		<attribute name="jboss.jms2.netty.port.property.name" default="jboss.jms2.netty.port"/>
+		<attribute name="jboss.jms2.netty-ssl.port.property.name" default="jboss.jms2.netty-ssl.port"/>
+		<attribute name="jboss.transaction.recovery.port.property.name" default="jboss.transaction.recovery.port"/>
+		<attribute name="jboss.transaction.status.port.property.name" default="jboss.transaction.status.port"/>
+		<attribute name="jboss.transaction.processid.port.property.name" default="jboss.transaction.processid.port"/>
+		<sequential>
+			<var name="jboss-read-ports.properties.list" value="@{jboss.ejbinvoker.port.property.name},@{jboss.server.jndi.port.property.name},@{jboss.server.port.property.name},@{jboss.cobraorb.port.property.name},@{jboss.hajndi.port.property.name},@{jboss.hajrmi.port.property.name},@{jboss.jmx-rmi.port.property.name},@{jboss.messaging.port.property.name},@{jboss.pooledha.port.property.name},@{jboss.server.bind.port.property.name},@{jboss.server.rmi.port.property.name},@{jboss.service.rmiobject.port.property.name},@{jboss.snmp.port.property.name},@{jboss.snmp-trapd.port.property.name},@{jboss.web.service.port.property.name},@{jboss.unifiedinvoker.port.property.name},@{jboss.hajndi.auto.port.property.name},@{jboss.ssl.port.property.name},@{jboss.jms2.netty.port.property.name},@{jboss.jms2.netty-ssl.port.property.name},@{jboss.transaction.recovery.port.property.name},@{jboss.transaction.status.port.property.name},@{jboss.transaction.processid.port.property.name}"/>
+			<var name="read.ejbinvoker.port" unset="true"/>
+			<var name="read.server.jndi.port" unset="true"/>
+			<var name="read.server.port" unset="true"/>
+			<var name="read.cobraorb.port" unset="true"/>
+			<var name="read.hajndi.port" unset="true"/>
+			<var name="read.hajrmi.port" unset="true"/>
+			<var name="read.jmx-rmi.port" unset="true"/>
+			<var name="read.messaging.port" unset="true"/>
+			<var name="read.pooledha.port" unset="true"/>
+			<var name="read.server.bind.port" unset="true"/>
+			<var name="read.server.rmi.port" unset="true"/>
+			<var name="read.service.rmiobject.port" unset="true"/>
+			<var name="read.snmp.port" unset="true"/>
+			<var name="read.snmp-trapd.port" unset="true"/>
+			<var name="read.web.service.port" unset="true"/>
+			<var name="read.unifiedinvoker.port" unset="true"/>
+			<var name="read.hajndi.auto.port" unset="true"/>
+			<var name="read.ssl.port" unset="true"/>
+			<var name="read.jms2.netty.port" unset="true"/>
+			<var name="read.jms2.netty-ssl.port" unset="true"/>
+			<var name="read.transaction.recovery.port" unset="true"/>
+			<var name="read.transaction.status.port" unset="true"/>
+			<var name="read.transaction.processid.port" unset="true"/>
+			<xmltask failWithoutMatch="true" preservetype="true" source="@{jboss.server.bindingfile.location}">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.web:service=WebServer']/../:property[@name='port']/text()" property="read.server.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=Naming']/../:property[text()='Port']/../:property[@name='port']/text()" property="read.server.jndi.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=Naming']/../:property[text()='RmiPort']/../:property[@name='port']/text()" property="read.server.rmi.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=WebService']/../:property[@name='port']/text()" property="read.web.service.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='UnifiedInvokerConnector']/../:property[@name='port']/text()" property="read.unifiedinvoker.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=jrmp']/../:property[@name='port']/text()" property="read.service.rmiobject.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=pooled']/../:property[@name='port']/text()" property="read.server.bind.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=HAJNDI']/../:property[text()='Port']/../:property[@name='port']/text()" property="read.hajndi.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=HAJNDI']/../:property[text()='RmiPort']/../:property[@name='port']/text()" property="read.hajrmi.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='AutoDiscovery']/../:property[@name='port']/text()" property="read.hajndi.auto.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=jrmpha']/../:property[@name='port']/text()" property="read.service.rmiobject.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=pooledha']/../:property[@name='port']/text()" property="read.pooledha.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=CorbaORB']/../:property[@name='port']/text()" property="read.cobraorb.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.jmx:name=SnmpAgent,service=trapd,type=logger']/../:property[@name='port']/text()" property="read.snmp-trapd.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor']/../:property[@name='port']/text()" property="read.snmp.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.remoting:service=JMXConnectorServer,protocol=rmi']/../:property[@name='port']/text()" property="read.jmx-rmi.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.web:service=WebServer']/../:property[text()='HttpsConnector']/../:property[@name='port']/text()" property="read.ssl.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.messaging:service=Connector,transport=bisocket']/../:property[@name='port']/text()" property="read.messaging.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='netty-port']/../:property[@name='port']/text()" property="read.jms2.netty.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='netty-ssl-port']/../:property[@name='port']/text()" property="read.jms2.netty-ssl.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='recoveryManager']/../:property[@name='port']/text()" property="read.transaction.recovery.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='transactionStatusManager']/../:property[@name='port']/text()" property="read.transaction.status.port"/>
+				<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='socketProcessId']/../:property[@name='port']/text()" property="read.transaction.processid.port"/>
+			</xmltask>
+			<xmltask failWithoutMatch="true" preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/ejb3-connectors-jboss-beans.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<copy path="/:deployment/:bean[@name='org.jboss.ejb3.RemotingConnector']/:property[@name='invokerLocator']/:value-factory/:parameter[4]/text()" property="read.ejbinvoker.port"/>
+			</xmltask>
+			<echo  level="debug" message="read.ejbinvoker.port=${read.ejbinvoker.port}"/>
+			<echo  level="debug" message="read.server.jndi.port=${read.server.jndi.port}"/>
+			<echo  level="debug" message="read.server.port=${read.server.port}"/>
+			<echo  level="debug" message="read.cobraorb.port=${read.cobraorb.port}"/>
+			<echo  level="debug" message="read.hajndi.port=${read.hajndi.port}"/>
+			<echo  level="debug" message="read.hajrmi.port=${read.hajrmi.port}"/>
+			<echo  level="debug" message="read.jmx-rmi.port=${read.jmx-rmi.port}"/>
+			<echo  level="debug" message="read.messaging.port=${read.messaging.port}"/>
+			<echo  level="debug" message="read.pooledha.port=${read.pooledha.port}"/>
+			<echo  level="debug" message="read.server.bind.port=${read.server.bind.port}"/>
+			<echo  level="debug" message="read.server.rmi.port=${read.server.rmi.port}"/>
+			<echo  level="debug" message="read.service.rmiobject.port=${read.service.rmiobject.port}"/>
+			<echo  level="debug" message="read.snmp.port=${read.snmp.port}"/>
+			<echo  level="debug" message="read.snmp-trapd.port=${read.snmp-trapd.port}"/>
+			<echo  level="debug" message="read.web.service.port=${read.web.service.port}"/>
+			<echo  level="debug" message="read.unifiedinvoker.port=${read.unifiedinvoker.port}"/>
+			<echo  level="debug" message="read.hajndi.auto.port=${read.hajndi.auto.port}"/>
+			<echo  level="debug" message="read.ssl.port=${read.ssl.port}"/>
+			<echo  level="debug" message="read.jms2.netty.port=${read.jms2.netty.port}"/>
+			<echo  level="debug" message="read.jms2.netty-ssl.port=${read.jms2.netty-ssl.port}"/>
+			<echo  level="debug" message="read.transaction.recovery.port=${read.transaction.recovery.port}"/>
+			<echo  level="debug" message="read.transaction.status.port=${read.transaction.status.port}"/>
+			<echo  level="debug" message="read.transaction.processid.port=${read.transaction.processid.port}"/>
+			<property name="@{jboss.ejbinvoker.port.property.name}" value="${read.ejbinvoker.port}"/>
+			<property name="@{jboss.server.jndi.port.property.name}" value="${read.server.jndi.port}"/>
+			<property name="@{jboss.server.port.property.name}" value="${read.server.port}"/>
+			<property name="@{jboss.cobraorb.port.property.name}" value="${read.cobraorb.port}"/>
+			<property name="@{jboss.hajndi.port.property.name}" value="${read.hajndi.port}"/>
+			<property name="@{jboss.hajrmi.port.property.name}" value="${read.hajrmi.port}"/>
+			<property name="@{jboss.jmx-rmi.port.property.name}" value="${read.jmx-rmi.port}"/>
+			<property name="@{jboss.messaging.port.property.name}" value="${read.messaging.port}"/>
+			<property name="@{jboss.pooledha.port.property.name}" value="${read.pooledha.port}"/>
+			<property name="@{jboss.server.bind.port.property.name}" value="${read.server.bind.port}"/>
+			<property name="@{jboss.server.rmi.port.property.name}" value="${read.server.rmi.port}"/>
+			<property name="@{jboss.service.rmiobject.port.property.name}" value="${read.service.rmiobject.port}"/>
+			<property name="@{jboss.snmp.port.property.name}" value="${read.snmp.port}"/>
+			<property name="@{jboss.snmp-trapd.port.property.name}" value="${read.snmp-trapd.port}"/>
+			<property name="@{jboss.web.service.port.property.name}" value="${read.web.service.port}"/>
+			<property name="@{jboss.unifiedinvoker.port.property.name}" value="${read.unifiedinvoker.port}"/>
+			<property name="@{jboss.hajndi.auto.port.property.name}" value="${read.hajndi.auto.port}"/>
+			<property name="@{jboss.ssl.port.property.name}" value="${read.ssl.port}"/>
+			<property name="@{jboss.jms2.netty.port.property.name}" value="${read.jms2.netty.port}"/>
+			<property name="@{jboss.jms2.netty-ssl.port.property.name}" value="${read.jms2.netty-ssl.port}"/>
+			<property name="@{jboss.transaction.recovery.port.property.name}" value="${read.transaction.recovery.port}"/>
+			<property name="@{jboss.transaction.status.port.property.name}" value="${read.transaction.status.port}"/>
+			<property name="@{jboss.transaction.processid.port.property.name}" value="${read.transaction.processid.port}"/>
+
+			<properties-print
+				properties.list="${jboss-read-ports.properties.list}"
+				/>
+
+			<var name="read.properties.list" value="${read.properties.list},${jboss-read-ports.properties.list}"/>
 		</sequential>
 	</macrodef>
 </project>
