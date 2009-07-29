@@ -138,6 +138,18 @@ private void listAllKeys(String accessId, String secretKey) {
     	LOGGER.log(Level.WARNING, "Private Key Authentication Failed", e); }
   }
 
+private boolean validate(String accessId, String secretKey) {
+    Jec2 jec2 = new Jec2(accessId, secretKey);
+    try 
+    {
+    	List<KeyPairInfo> info = jec2.describeKeyPairs(new String [] {});
+    } catch (EC2Exception e) 
+    {
+    	return false;
+    }
+    return true;
+  }
+
 
 private String  runInstance(String accessId, String secretKey,String privateKey) throws IOException
 {

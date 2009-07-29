@@ -257,6 +257,11 @@ public class EC2SystemInitiator
 		scp.put(new File("resources/config.xml").getAbsolutePath(), "~/hudson_data/jobs/cai2", true);
 		scp.put(new File("resources/catalina.sh").getAbsolutePath(), "/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin", true);
 
+		SessionChannelClient  sessionObject4 = ssh1.openSessionChannel();
+		sessionObject4.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject4.executeCommand("dos2unix /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/catalina.sh");
+		sessionObject4.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject4.close();
 	}
 	else
 	{
