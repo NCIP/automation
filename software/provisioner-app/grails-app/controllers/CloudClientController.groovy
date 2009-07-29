@@ -28,12 +28,12 @@ class CloudClientController {
 				render(view: 'confirm')
 			}else
 			{
-				flash.message = "Access Key ID  and Secret Access Key Did not match."
+				flash.message = "Authentication with AWS Failed. Either Access Key ID  or Secret Access Key is invalid."
 				redirect(controller: 'cloudClient',action: 'index',params: [accessId:params.accessId,secretId:params.secretId])
 			}				
 		}else
 		{
-			flash.message = "Authentication with AWS Failed. Either Access Key ID  or Secret Access Key is invalid."
+			flash.message = "Access Key ID  and Secret Access Key cannot be empty."
 			render(view: 'index')
 		}
 	}
