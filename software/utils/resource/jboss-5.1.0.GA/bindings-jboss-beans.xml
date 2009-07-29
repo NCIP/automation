@@ -319,7 +319,7 @@
             <bean class="org.jboss.services.binding.ServiceBindingMetadata">
                 <property name="serviceName">JBM2</property>
                 <property name="bindingName">netty-ssl-port</property>
-                <property name="port">5446</property>
+                <property name="port">@jboss.jms2.netty-ssl.port@</property>
                 <property name="description">SSL socket for JBoss Messaging 2.x</property>
             </bean>
 
