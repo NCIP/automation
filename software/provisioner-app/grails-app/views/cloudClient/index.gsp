@@ -27,8 +27,11 @@
 			<h4>By default, the BDA Provisioner will open the following ports: 22,48080,46210.</h4>
 			<h4>If you do not have an AWS EC2 account, you will need to register for one by going to the <a href="http://aws.amazon.com/">http://aws.amazon.com/</a> page and selecting the <strong>Sign Up Now</strong> button.</h4>
 			<br>
-			<form:formErrors />
-
+			<g:if test="${flash.message}">
+				<div class="errors">
+					${flash.message}
+				</div>
+			</g:if>
 	    		<g:form action="provisionAMI">
 				<form:textField label="Access Key ID"  name="accessId" title="TextField" readonly="false" value="${params.accessId}">
 				  Enter your <strong>Access Key ID</strong>. To get your Amazon Web Services <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a>, go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>

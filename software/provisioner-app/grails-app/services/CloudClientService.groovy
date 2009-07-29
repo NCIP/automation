@@ -14,6 +14,10 @@ class CloudClientService {
 		sendQueueJMSMessage("provionerQ",params)
 	}
 	
+ 	def validate(params) {
+ 		Provisioner ec2p = new EC2Provisioner(); 		
+		return ec2p.validate(params.accessId.trim(),params.secretId.trim())
+	}
 
 	void onMessage(msg) 
 	{
