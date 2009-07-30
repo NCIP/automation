@@ -5381,7 +5381,7 @@ $HeadURL$
 						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 						appserver.external.host="@{jboss.external.ssl.host}"
 						appserver.external.port="@{jboss.external.ssl.port}"
-						proxy.update.connector.port="@{jboss.ssl.port}"
+						proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
 						/>
 					<echo message="Configuring JBoss proxy settings for http"/>
 					<appserver-configure-external-hostname
