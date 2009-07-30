@@ -4927,6 +4927,7 @@ $HeadURL$
 				<equals arg1="${appserver.external.host.has.value}" arg2="true"/>
 				<then>
 					<echo message="Grid External Host Name set so configuring proxy settings"/>
+					<echo message="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{proxy.update.connector.port}"/>
 					<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 						dest="@{appserver.server-xml.file}">
 						<xmlcatalog refid="bda.xml.catalog"/>
@@ -5380,7 +5381,7 @@ $HeadURL$
 						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 						appserver.external.host="@{jboss.external.ssl.host}"
 						appserver.external.port="@{jboss.external.ssl.port}"
-						proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
+						proxy.update.connector.port="@{jboss.ssl.port}"
 						/>
 					<echo message="Configuring JBoss proxy settings for http"/>
 					<appserver-configure-external-hostname
@@ -7928,7 +7929,7 @@ $HeadURL$
 			</xmltask>
 			<xmltask failWithoutMatch="true" preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/ejb3-connectors-jboss-beans.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
-				<copy path="/:deployment/:bean[@name='org.jboss.ejb3.RemotingConnector']/:property[@name='invokerLocator']/:value-factory/:parameter[4]/text()" property="read.ejbinvoker.port"/>
+				<copy path="/:deployment/:bean[@name='org.jboss.ejb3.RemotingConnector']/:property[@name='invokerLocator']/:value-factory/:parameter[5]/text()" property="read.ejbinvoker.port"/>
 			</xmltask>
 			<echo  level="debug" message="read.ejbinvoker.port=${read.ejbinvoker.port}"/>
 			<echo  level="debug" message="read.server.jndi.port=${read.server.jndi.port}"/>
