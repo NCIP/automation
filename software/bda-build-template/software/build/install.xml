@@ -128,7 +128,7 @@ $HeadURL$
 		<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
 	</target>
 	<!-- Targets begin -->
-	<target name="install:jboss:init" depends="common:init:pre" unless="upgrade.running">
+	<target name="install:jboss:init" depends="common:init:pre">
 		<!-- determine if port configurations or port lists are being called -->
 		<if>
 			<isset property="jboss.ncicb-standard.port-config"/>
@@ -187,7 +187,6 @@ $HeadURL$
 
 
 	<target name="common:init" depends="common:init:pre">
-		<property name="install.running" value="true"/>
 		<!-- bda-blueprints-webapp can use either Oracle or MySQL or PostgreSQL as its database platform, this is controled by the database.type property.  Based on the value of this property sent several variables for use during install -->
 		<echoproperties prefix="database"/>
 		<switch value="${database.type}">
@@ -537,7 +536,7 @@ $HeadURL$
 			</not>
 			<then>
 				<jboss-start-jboss />
-				<sleep seconds="15"/>
+				<!--<sleep seconds="15"/>-->
 			</then>
 		</if>
 	</target>
@@ -1066,6 +1065,7 @@ $HeadURL$
 
 	<target name="install:tomcat:grid" description="Deploy grid to tomcat" unless="exclude.tomcat" depends="common:init">
 		<mkdir dir="${tomcat.home}/webapps/${grid.dir.dest}"/>
+		<!--
 		<unzip dest="${tomcat.home}/common/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}">
 			<patternset>
 				<exclude name="**/cog-tomcat.jar"/>
@@ -1076,6 +1076,21 @@ $HeadURL$
 				<include name="**/cog-tomcat.jar"/>
 			</patternset>
 		</unzip>
+		<unzip dest="${tomcat.home}/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" >
+			<patternset>
+				<include name="**/cog-tomcat.jar"/>
+			</patternset>
+		</unzip>
+		-->
+		<unzip dest="${tomcat.home}/common/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" />
+		<unzip dest="${tomcat.home}/server/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" />
+		<unzip dest="${tomcat.home}/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" />
+		<!-- Needed for Valve on tomcat 6.0.x -->
+		<copy todir="${tomcat.home}/lib">
+			<fileset dir="${bda-utils.dir}">
+				<include name="commons-logging*"/>
+			</fileset>
+		</copy>
 		<unzip dest="${tomcat.home}/webapps/${grid.dir.dest}" src="${grid.resource.dir}/${resource.file.jboss-globus-war}" />
 		<unzip dest="${tomcat.home}/webapps/${grid.dir.dest}" src="${grid.application.dir}/${grid.artifact.file}" />
 	</target>
@@ -1186,9 +1201,9 @@ $HeadURL$
 	<target name="install:tomcat:bda-blueprints-webapp:re-configure" description="Configure bda-blueprints-webapp application, copies over externalized properties or configurations that are not part of the tomcat configuration" unless="exclude.tomcat" depends="common:init">
 	</target>
 
-	<target name="upgrade:common:init" depends="upgrade:jboss:init, upgrade:tomcat:init" unless="install.running">
+	<target name="upgrade:common:init" depends="upgrade:jboss:init, upgrade:tomcat:init" >
 	</target>
-	<target name="upgrade:jboss:init" unless="install.running"
+	<target name="upgrade:jboss:init" 
 		depends="
 		upgrade:jboss:init:prep,
 		upgrade:jboss:readers:bda,
@@ -1204,7 +1219,7 @@ $HeadURL$
 			properties.list="${read.properties.list}"
 			/>
 	</target>
-	<target name="upgrade:tomcat:init" unless="install.running"
+	<target name="upgrade:tomcat:init"
 		depends="
 		upgrade:tomcat:init:prep,
 		upgrade:tomcat:readers:bda,
@@ -1220,7 +1235,7 @@ $HeadURL$
 			properties.list="${read.properties.list}"
 			/>
 	</target>
-	<target name="upgrade:database:init" unless="install.running"
+	<target name="upgrade:database:init"
 		depends="
 		upgrade:jboss:init:prep,
 		upgrade:database:readers:bda,
@@ -1228,7 +1243,7 @@ $HeadURL$
 		">
 		<!-- You need to either depend on jboss or tomcat so that you can read the db properties from it's configs.  BDA only has macros to read database properties from jboss. -->
 	</target>
-	<target name="upgrade:common:init:prep" unless="install.running">
+	<target name="upgrade:common:init:prep">
 		<if>
 			<not>
 				<isset property="application.base.path"/>
@@ -1252,9 +1267,8 @@ $HeadURL$
 			properties.list="application.base.path,jboss.home,tomcat.home,jboss.server.name"
 			/>
 		<var name="read.properties.list" value=""/>
-		<property name="upgrade.running" value="true"/>
 	</target>
-	<target name="upgrade:jboss:init:prep" depends="upgrade:common:init:prep" unless="install.running">
+	<target name="upgrade:jboss:init:prep" depends="upgrade:common:init:prep">
 		<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
 		<if>
 			<equals arg1="${jboss.ncicb-standard.port-config}" arg2="true"/>
@@ -1266,7 +1280,6 @@ $HeadURL$
 			</else>
 		</if>
 						
-		<property name="upgrade.running" value="true"/>
 		<!-- Upgrades always use port configs -->
 		<property name="jboss.ncicb-standard.port-config" value="true"/>
 		<available file="${jboss.home}" property="jboss.exists"/>
@@ -1274,22 +1287,22 @@ $HeadURL$
 
 	</target>
 
-	<target name="upgrade:tomcat:init:prep" depends="upgrade:common:init:prep" unless="install.running">
+	<target name="upgrade:tomcat:init:prep" depends="upgrade:common:init:prep">
 		<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
 		<!-- Upgrades always use port configs -->
 		<available file="${tomcat.home}" property="tomcat.exists"/>
 		<property name="read.tomcat.home" value="${tomcat.home}"/>
 	</target>
 
-	<target name="upgrade:jboss:readers:custom" unless="install.running">
+	<target name="upgrade:jboss:readers:custom">
 		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
 	</target>
 
-	<target name="upgrade:tomcat:readers:custom" unless="install.running">
+	<target name="upgrade:tomcat:readers:custom">
 		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
 	</target>
 
-	<target name="upgrade:database:readers:custom" unless="install.running">
+	<target name="upgrade:database:readers:custom">
 		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
 	</target>
 	<target name="upgrade:database:readers:bda" depends="upgrade:jboss:init:prep" if="jboss.exists">
@@ -1345,6 +1358,7 @@ $HeadURL$
 		<var name="jboss.ssl.keystore.dir" value="${working.dir}/keys/jboss"/>
 		<jboss-read-ssl
 			jboss.home="${read.jboss.home}"
+			jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
 			copied.keystore.dir="${jboss.ssl.keystore.dir}"
 			/>
 		<!-- No longer needed now reading all the ports
@@ -1357,6 +1371,7 @@ $HeadURL$
 		-->
 		<jboss-read-external-hostname
 			jboss.home="${read.jboss.home}"
+			jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
 			/>
 		<!-- for tier installs, should be done first, since it is set first it will be the one used if it exists -->
 		<jboss-read-java_opts
@@ -1369,14 +1384,16 @@ $HeadURL$
 		<property name="copied.jboss.log4j.dir" value="${working.dir}/copied-log4j"/>
 		<jboss-copy-log4j
 			jboss.home="${read.jboss.home}"
+			jboss.log4j.location="${jboss.home}/server/${jboss.server.name}/conf/jboss-log4j.xml"
 			copied.jboss.log4j.dir="${copied.jboss.log4j.dir}"
 			/>
 		<grid-read-index-url
-			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf"
+			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
 			/>              
 		<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
 		<jboss-read-grid-secure
 			jboss.home="${read.jboss.home}"
+			jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
 			copied.keystore.dir="${jboss.grid.secure.dir}"
 			/>
 		<!-- will have to add code to install:post:jboss to copy this back if exists -->
@@ -1387,7 +1404,7 @@ $HeadURL$
 			/>
 		-->
 		<grid-read-poc
-			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf"
+			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
 			grid.service.name="Sample"
 			/>                      
 		<read-property-from-properties-service
@@ -1459,8 +1476,8 @@ $HeadURL$
 		<tomcat-read-dbconfig
 			/>
 	</target>
-	<target name="upgrade:post:jboss" unless="install.running">
-		<copy file="${copied.jboss.log4j.dir}/log4j.xml" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
+	<target name="upgrade:post:jboss">
+		<copy file="${copied.jboss.log4j.dir}/jboss-log4j.xml" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
 	</target>
 	<target name="upgrade:post:tomcat">
 		<!-- place holder -->
