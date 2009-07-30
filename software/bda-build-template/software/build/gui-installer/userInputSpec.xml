@@ -177,9 +177,9 @@ $HeadURL$
 			<propertymap propertyname="tomcat.grid.secure.cert.location" mapname="tomcat.grid.secure.cert.location"/>
 			<propertymap propertyname="tomcat.grid.secure.key.location" mapname="tomcat.grid.secure.key.location"/>
 		</panelreader>
-		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.server.port},${jboss.web.service.port}"/>
+		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.server.port},${jboss.web.service.port}"/>
 		<variable name="validation.post.http.list" value="${jboss.server.port}"/>
-		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.web.service.port}"/>
 	</panel>
 	<!-- Upgrade container.jboss -->
 	<panel order="4">
@@ -272,9 +272,9 @@ $HeadURL$
 			<propertymap propertyname="jboss.grid.secure.cert.location" mapname="jboss.grid.secure.cert.location"/>
 			<propertymap propertyname="jboss.grid.secure.key.location" mapname="jboss.grid.secure.key.location"/>
 		</panelreader>
-		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.server.port},${jboss.web.service.port}"/>
+		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.server.port},${jboss.web.service.port}"/>
 		<variable name="validation.post.http.list" value="${jboss.server.port}"/>
-		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.web.service.port}"/>
 	</panel>
 	<!-- Upgrade container.tomcat -->
 	<panel order="5">
@@ -335,9 +335,9 @@ $HeadURL$
 			<propertymap propertyname="tomcat.grid.secure.cert.location" mapname="tomcat.grid.secure.cert.location"/>
 			<propertymap propertyname="tomcat.grid.secure.key.location" mapname="tomcat.grid.secure.key.location"/>
 		</panelreader>
-		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.server.port},${jboss.web.service.port}"/>
+		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.server.port},${jboss.web.service.port}"/>
 		<variable name="validation.post.http.list" value="${jboss.server.port}"/>
-		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.web.service.port}"/>
 	</panel>
 	<!-- Upgrade container.database -->
 	<panel order="6">
@@ -356,9 +356,9 @@ $HeadURL$
 			<propertymap propertyname="database.url" mapname="database.url"/>
 			<propertymap propertyname="database.user" mapname="database.user"/>
 		</panelreader>
-		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.server.port},${jboss.web.service.port}"/>
+		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.server.port},${jboss.web.service.port}"/>
 		<variable name="validation.post.http.list" value="${jboss.server.port}"/>
-		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.web.service.port}"/>
 	</panel>
 	<!-- Jboss Configuration -->
 	<panel order="7">
@@ -456,11 +456,6 @@ $HeadURL$
 		<field type="text" variable="jboss.server.bind.port">
 			<spec txt="JBoss bind port:" size="5" set="0"/>
 			<validator class="com.izforge.izpack.util.PortValidator" txt="The JBoss bind port number is already in use"/>
-		</field>
-
-		<field type="text" variable="jboss.server.redirect.port">
-			<spec txt="JBoss redirect port:" size="5" set="11298"/>
-			<validator class="com.izforge.izpack.util.PortValidator" txt="The JBoss redirect port number is already in use"/>
 		</field>
 
 		<field type="text" variable="jboss.service.rmiobject.port">
@@ -609,9 +604,9 @@ $HeadURL$
 			<spec txt="Grid External Port Number:" size="5" set=""/>
 		</field>
 
-		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.server.port},${jboss.web.service.port}"/>
+		<variable name="validation.pre.port.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.server.port},${jboss.web.service.port}"/>
 		<variable name="validation.post.http.list" value="${jboss.server.port}"/>
-		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+		<variable name="validation.post.socket.list" value="${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.web.service.port}"/>
 
 	</panel>
 
