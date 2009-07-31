@@ -30,16 +30,31 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<condition property="local.cbiit-ivy-repo.dir" value="">
+		<or>
+			<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="local.cbiit-ivy-repo.dir" value="c:/">
+		<os family="windows" />
+	</condition>
+
 	<property name="bda-download.dir" location="${working.dir}/bda-download" />
 	<property name="bda-utils.dir" value="${working.dir}/bda-utils" />	
 	<property name="bda-download.file" value="bda-ivy-build.xml" />
 	<mkdir dir="${bda-download.dir}" />
 	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<property name="cbiit-ivy.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/cbiit-ivy-bda-settings.xml" />
 	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	<get src="${cbiit-ivy.src.url}" dest="${bda-download.dir}/cbiit-ivy-bda-settings.xml"/>
 	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" location="${bda-utils.dir}" />
 		<property name="lib.dir" location="${lib.dir}" />
+		<property name="ivy.settings.file" value="cbiit-ivy-bda-settings.xml"/>
+		<property name="local.cbiit-ivy-repo.dir" value="${local.cbiit-ivy-repo.dir}"/>
 	</ant>
 	
 	<!-- Paths -->
@@ -71,7 +86,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<target name="svn:checkout" depends="svn-scorch">	
-		<svn username="${svn.username}" password="${svn.password}">
+		<svn username="${new.svn.username}" password="${new.svn.password}">
 			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
 		</svn>
 	</target>
@@ -81,17 +96,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<target name="svn:automation-utils:checkout" depends="svn-scorch,svn:ivy:checkout">	
-		<svn username="${svn.username}" password="${svn.password}">
+		<svn username="${old.svn.username}" password="${old.svn.password}">
 			<checkout url="${svn.automation.url}/${svn.automation.project}" revision="${default.automation.revision}" destPath="${svn.automation-utils.checkout}" />
 		</svn>	
 	</target>
 	<target name="svn:automation-templates:checkout" depends="svn-scorch,svn:ivy:checkout">	
-		<svn username="${svn.username}" password="${svn.password}">
+		<svn username="${old.svn.username}" password="${old.svn.password}">
 			<checkout url="${svn.automation.url}/${svn.templates.project}" revision="${default.automation.revision}" destPath="${svn.automation-templates.checkout}" />
 		</svn>	
 	</target>	
 	<target name="svn:ivy:checkout" depends="svn-scorch">	
-		<svn username="${svn.username}" password="${svn.password}">
+		<svn username="${old.svn.username}" password="${old.svn.password}">
 			<checkout url="${svn.automation.url}/${svn.ivy.project}" revision="${default.automation.revision}" destPath="${svn.ivy.checkout}" />
 		</svn>	
 	</target>
@@ -196,7 +211,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="release:create-branch-tag" depends="svn:automation:checkout,svn:checkout">
-		<svn username="${svn.username}" password="${svn.password}">			
+		<svn username="${old.svn.username}" password="${old.svn.password}">			
 			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.branchurl}" message="create a branch for release ${release.version}" revision="${default.automation.revision}"/>
 			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.tagurl}" message="create a tag for release ${release.version}" revision="${default.automation.revision}"/>
 		</svn>
@@ -204,25 +219,25 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 
 	<target name="svn:checkin">
-		<svn username="${svn.username}" password="${svn.password}">		
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
 			<commit message="Prepare the BDA release for development" dir="${svn.automation-utils.checkout}"/>
 		</svn>
 		<!-- added by ssaksa -->
-		<svn username="${svn.username}" password="${svn.password}">		
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
 			<commit message="Prepare the BDA release for development" dir="${svn.automation-templates.checkout}"/>
 		</svn>
-		<svn username="${svn.username}" password="${svn.password}">		
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
 			<add dir="${svn.local.checkout}/${release.version}"/>
 		</svn>
 
 		
-		<svn username="${svn.username}" password="${svn.password}">		
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
 			<status path="${svn.local.checkout}/${next.beta.release.version}" textStatusProperty="next.beta.version.svn.status"/>
 		</svn>
 		<if>
 			<equals arg1="${next.beta.version.svn.status}" arg2="unversioned"/>
 			<then>
-				<svn username="${svn.username}" password="${svn.password}">		
+				<svn username="${old.svn.username}" password="${old.svn.password}">		
 					<add dir="${svn.local.checkout}/${next.beta.release.version}"/>
 					<!--
 					<delete dir="${svn.local.checkout}/${previous.current.beta.release.version}"/>
@@ -230,14 +245,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				</svn>
 			</then>
 		</if>
-		<svn username="${svn.username}" password="${svn.password}">		
+		<svn username="${new.svn.username}" password="${new.svn.password}">		
 			<commit message="Latest BDA revision ${release.version} and beta revision ${next.beta.release.version}" dir="${svn.local.checkout}"/>
 		</svn>	
 	</target>
 
 
 	<target name="svn:automation:checkin">	
-		<svn username="${svn.username}" password="${svn.password}">		
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
 			<commit message="Latest BDA revision " dir="${svn.local.checkout}/${next.beta.release.version}"/>
 		</svn>	
 	</target>
@@ -255,7 +270,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			<zipfileset dir="${svn.ivy.checkout}" />
 		</zip>
 
-		<svn username="${svn.username}" password="${svn.password}">			
+		<svn username="${old.svn.username}" password="${old.svn.password}">			
 			<commit message="Latest BDA released revision " dir="${svn.ivy.checkout}"/>
 		</svn>	
 
@@ -270,7 +285,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 	
 	<target name="svn:delete-beta" >	
-		<svn username="${svn.username}" password="${svn.password}">			
+		<svn username="${new.svn.username}" password="${new.svn.password}">			
 			<delete url="${svn.project.url}/${svn.delete-beta.version}" message="Delete the beta revision " />
 		</svn>
 	</target>
@@ -303,10 +318,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="temp-svn-status">
-		<svn username="${svn.username}" password="${svn.password}">		
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
 			<status path="target" textStatusProperty="release.version.svn.status"/>
 		</svn>
 		<echo message="Target's status is ${release.version.svn.status}"/>
+	</target>
+	<target name="report:grand">
+		<report-grand
+			build.file.location="build.xml" 
+			output.file.dir="." 
+			output.file.name="relase-manager-build.xml" />
 	</target>
 
 </project>
