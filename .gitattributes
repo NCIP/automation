@@ -2673,6 +2673,7 @@ software/bda-dashboard/wiki-cli/target/examples/source.txt -text
 software/bda-dashboard/wiki-cli/target/release.xml -text
 software/bda-download/bda-ivy-2.0.0-build.xml -text
 software/bda-download/bda-ivy-build.xml -text
+software/bda-download/cbiit-ivy-bda-settings.xml -text
 software/bda-download/ivy-bda-2.0.0.xml -text
 software/bda-download/ivy-bda-settings.xml -text
 software/bda-download/ivy-bda.xml -text
