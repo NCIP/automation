@@ -161,7 +161,6 @@ $HeadURL$
 		</if>
 	</target>
 	<target name="common:jboss:init" depends="common:init:pre" unless="exclude.jboss">
-		<math result="jboss.ssl.port" operand1="${jboss.server.port}" operation="+" operand2="363" datatype="int"/>
 		<property name="jboss.ssl.enable" value="false"/>
 		<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
 		<property name="jboss.application.url" value="http://${jboss.server.hostname}:${jboss.server.port}/${bda-blueprints-webapp.name}"/>
