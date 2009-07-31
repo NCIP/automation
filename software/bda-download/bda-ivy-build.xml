@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:ivy="antlib:org.apache.ivy.ant" basedir="." default="retrieve-bda" name="bda-utils">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bda-utils" default="retrieve-bda" basedir=".">
 <!--
 $Id$
 $HeadURL$
@@ -12,7 +12,7 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 	<property name="lib.dir" value="${lib.dir}"/>
 </ant>
 
-<import file="${bda-utils.dir}/bda-build-utils-1.0.xml" />
+<import file="${bda-utils.dir}/bda-build-utils-1.4.0.xml"/>
 -->
 	<!-- Properties -->
 	<property name="lib.dir" value="${basedir}/lib"/>
@@ -20,7 +20,7 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 	<property name="bda-utils.dir" value="${basedir}/bda-utils"/>
 	<property name="commonlibrary.dir" value=""/>
 	<property name="bda.local.repo.dir" value="${software.dir}/../../bda-local-ivy-repo"/>
-	<property name="bda.version" value="1.2.0"/>
+	<property name="bda.version" value="1.4.0"/>
 
 	<property name="ivy.file" value="ivy-2.0.0-beta2.jar"/>
 	<property name="ivy-core.file" value="ivy-core-2.0.0-beta2.jar"/>
@@ -53,13 +53,13 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 	<echo message="comonlibrary.dir=${commonlibrary.dir}"/>
 
 	<!-- Targets -->
-	<target description="Makes transcient directories" name="init">
+	<target name="init" description="Makes transcient directories">
 		<mkdir dir="${lib.dir}"/>
 		<mkdir dir="${bda.local.repo.dir}"/>
 		<mkdir dir="${bda-utils.dir}"/>
 	</target>
 
-	<target description="Cleans transcient directories and files, also cleans ivy cache" name="clean">
+	<target name="clean" description="Cleans transcient directories and files, also cleans ivy cache">
 		<delete dir="${lib.dir}"/>
 		<delete dir="${bda.local.repo.dir}"/>
 		<delete dir="${bda-utils.dir}"/>
@@ -72,27 +72,27 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 		<ivy:cleancache/>
 	</target>
 
-	<target description="Downloads ivy jars if not present" name="download-ivy" unless="ivy.available">
-		<get dest="${ivy.dest.file}" src="${ivy.src.url}"/>
-		<get dest="${ivy-core.dest.file}" src="${ivy-core.src.url}"/>
+	<target name="download-ivy" unless="ivy.available" description="Downloads ivy jars if not present">
+		<get src="${ivy.src.url}" dest="${ivy.dest.file}"/>
+		<get src="${ivy-core.src.url}" dest="${ivy-core.dest.file}"/>
 	</target>
 
-	<target description="Downloads ivy settings file if not present" name="download-ivy-settings" unless="ivy.settings.available">
-		<get dest="${ivy.settings.file}" src="${ivy-bda.src.url.base}/${ivy.settings.file}"/>
+	<target name="download-ivy-settings" unless="ivy.settings.available" description="Downloads ivy settings file if not present">
+		<get src="${ivy-bda.src.url.base}/${ivy.settings.file}" dest="${ivy.settings.file}"/>
 	</target>
 
-	<target description="Downloads ivy bda project file if not present" name="download-ivy-bda" unless="ivy.bda.available">
-		<get dest="${ivy.bda.file}" src="${ivy-bda.src.url.base}/${ivy.bda.file}"/>
+	<target name="download-ivy-bda" unless="ivy.bda.available" description="Downloads ivy bda project file if not present">
+		<get src="${ivy-bda.src.url.base}/${ivy.bda.file}" dest="${ivy.bda.file}"/>
 	</target>
 
-	<target depends="   init,   download-ivy,   download-ivy-settings,   download-ivy-bda   " description="This task retrieves bda project.  It also depends on targets that will download files required to get the ivy bda project." name="retrieve-bda">
-		<taskdef classpathref="ivy.classpath" resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant"/>
+	<target name="retrieve-bda" description="This task retrieves bda project.  It also depends on targets that will download files required to get the ivy bda project." depends="   init,   download-ivy,   download-ivy-settings,   download-ivy-bda   ">
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath"/>
 		<property name="ivy.dep.file" value="${ivy.bda.file}"/>
 		<!-- Causes IVY to check last-modified http header to determine if it is going to download the file.  This can be modified on the resolver (settings file) with the resolve attribute of checkmodified.  It can also be set on the dependency level with the dependency attibute changing. If the web server does not send the http header last-modified it will never detect updates and you have to resort to clean cache to get the updated artifact and depeencies to download.-->
 		<property name="ivy.resolver.default.check.modified" value="true"/>
 		<ivy:settings file="${ivy.settings.file}"/>
-		<ivy:resolve conf="runtime" refresh="true"/>
-		<ivy:retrieve conf="runtime" pattern="${bda-utils.dir}/[artifact]-[revision].[ext]" sync="true"/>
+		<ivy:resolve refresh="true" conf="runtime"/>
+		<ivy:retrieve pattern="${bda-utils.dir}/[artifact]-[revision].[ext]" conf="runtime" sync="true"/>
 		<!-- <echoproperties prefix="ivy."/> -->
 		<unzip dest="${bda-utils.dir}">
 			<fileset dir="${bda-utils.dir}">
@@ -101,14 +101,14 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 		</unzip>
 	</target>
 
-	<target description="Cleans ivy cache, only required if getting ivy errors." name="ivy-cleancache">
+	<target name="ivy-cleancache" description="Cleans ivy cache, only required if getting ivy errors.">
 		<ivy:settings file="${ivy.settings.file}"/>
 		<ivy:cleancache/>
 	</target>
 
 	<!-- This is an example target demonstrating publishing modules to the local ivy repository.  It is currently not working because of cache naming patterns -->
 	<target name="ivy-publish">
-		<taskdef classpathref="ivy.classpath" resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant"/>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath"/>
 		<property name="ivy.repo.url" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk"/>
 		<property name="ivy.sample.path" value="ivy-repo/jakarta/commons-logging/1.0.4"/>
 		<property name="ivy.sample.file" value="commons-logging-1.0.4.jar"/>
@@ -116,18 +116,18 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 		<property name="scratch.dir" value="scratch"/>
 		<property name="version" value="1.0.4"/>
 		<tstamp>
-			<format pattern="yyyyMMddHHmmss" property="now"/>
+			<format property="now" pattern="yyyyMMddHHmmss"/>
 		</tstamp>
 		<mkdir dir="${bda.local.repo.dir}"/>
 		<mkdir dir="${scratch.dir}"/>
-		<get dest="${scratch.dir}/${ivy.sample.file}" src="${ivy.repo.url}/${ivy.sample.path}/${ivy.sample.file}"/>
-		<get dest="${scratch.dir}/${ivy.sample.ivy.file}" src="${ivy.repo.url}/${ivy.sample.path}/${ivy.sample.ivy.file}"/>
+		<get src="${ivy.repo.url}/${ivy.sample.path}/${ivy.sample.file}" dest="${scratch.dir}/${ivy.sample.file}"/>
+		<get src="${ivy.repo.url}/${ivy.sample.path}/${ivy.sample.ivy.file}" dest="${scratch.dir}/${ivy.sample.ivy.file}"/>
 		<property name="ivy.dep.file" value="${scratch.dir}/ivy.xml"/>
 		<ivy:settings file="ivy-bda-settings.xml"/>
 		<ivy:info file="${ivy.dep.file}"/>
 
 		<echoproperties prefix="ivy"/>
-		<ivy:publish artifactspattern="${scratch.dir}/[artifact].jar" forcedeliver="true" pubdate="${now}" pubrevision="${version}" resolver="local-repo" status="release" update="true"/>
+		<ivy:publish artifactspattern="${scratch.dir}/[artifact].jar" resolver="local-repo" pubrevision="${version}" status="release" forcedeliver="true" pubdate="${now}" update="true"/>
 	</target>
 
 </project>
