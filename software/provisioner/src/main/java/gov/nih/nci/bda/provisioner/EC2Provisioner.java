@@ -138,6 +138,27 @@ private void listAllKeys(String accessId, String secretKey) {
     	LOGGER.log(Level.WARNING, "Private Key Authentication Failed", e); }
   }
 
+private List listAllInstances(String accessId, String secretKey) {
+    Jec2 jec2 = new Jec2(accessId, secretKey);
+    List<ReservationDescription> instances = null;
+    try {
+		instances = jec2.describeInstances(new String [] {});
+		LOGGER.info("Instances");
+		String instanceId = "";
+		for (ReservationDescription res : instances) {
+			LOGGER.info(res.getOwner()+"\t"+res.getReservationId());
+			if (res.getInstances() != null) {
+				for (Instance inst : res.getInstances()) {
+					LOGGER.info("\t"+inst.getImageId()+"\t"+inst.getDnsName()+"\t"+inst.getState()+"\t"+inst.getKeyName());
+					instanceId = inst.getInstanceId();
+				}
+			}
+		}
+    } catch (EC2Exception e) {
+    	LOGGER.log(Level.WARNING, "Private Key Authentication Failed", e); }
+    return instances;
+  }
+
 private boolean validate(String accessId, String secretKey) {
     Jec2 jec2 = new Jec2(accessId, secretKey);
     try 
@@ -194,6 +215,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey)
 	 	String accessId = config.getString("ec2.access.id");
 	  	String secretKey = config.getString("ec2.secret.key");
 		listAllKeys(accessId, secretKey);
+		listAllInstances(accessId, secretKey);
 		generateKey(accessId, secretKey);
 		generateSecurityGroup(accessId, secretKey, (ArrayList) config.getProperty("ec2.port.list"));
 		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName));

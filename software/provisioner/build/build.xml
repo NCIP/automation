@@ -41,12 +41,7 @@
 
 
 	<target name="run" depends="init,compile,package" description="Run the class to update Wiki">
-	<echo message="${env.JAVA16_HOME}"/>
-		<java classname="gov.nih.nci.bda.provisioner.ProvisionerManager" classpath="${lib.dir}/${provisioner.jar}" classpathref="project.classpath"
-			jvm="${env.JAVA16_HOME}/bin/java" fork="true"
-			taskname="java1.6" >
 
-		</java>
 	</target>
 	
 	<target name="compile"  depends="init" description="Compile the build monitor source">
