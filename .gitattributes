@@ -3199,6 +3199,7 @@ software/utils/resource/jboss-5.1.0.GA/dtd/jbosscmp-jdbc_3_2.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/jbosscmp-jdbc_4_0.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/jbosscmp-jdbc_4_2.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/jdklogger.dtd -text
+software/utils/resource/jboss-5.1.0.GA/dtd/security_config.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/service-ref_4_0.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/service-ref_4_2.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/service-ref_5_0.dtd -text
