@@ -3049,6 +3049,7 @@ software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
 software/utils/resource/groovy/updatePropertiesService.groovy -text
+software/utils/resource/groovy/verifyPasswordValue.groovy -text
 software/utils/resource/jboss-4.0.4.GA/bindings.xml -text
 software/utils/resource/jboss-4.0.4.GA/dtd/README-DTD.txt -text
 software/utils/resource/jboss-4.0.4.GA/dtd/XMLSchema.dtd -text

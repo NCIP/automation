@@ -8245,19 +8245,8 @@ $HeadURL$
 	</macrodef>
 		<macrodef name="verify-password-value">
 			<sequential>
-				<groovy>
-					<arg line="@{dir1} @{dir2} @{reportFile}"/>
-					/*
-					Properties myprops = System.getProperties();
-					out...
-					for (Iterator i = myprops.iterator(); myprops.hasNext(); ) {
-					}
-					*/
-					System.getProperties().each
-					{ sysprop ->
-					}
-				</groovy>
-
+				<copy tofile="${os.temp.dir}/verifyPasswordValue.groovy" file="${bda-utils.resource.dir}/groovy/verifyPasswordValue.groovy" overwrite="true"/>
+				<groovy src="${os.temp.dir}/verifyPasswordValue.groovy"/>
 			</sequential>
 		</macrodef>
 </project>
