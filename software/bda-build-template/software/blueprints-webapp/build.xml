@@ -40,6 +40,7 @@
 	<property file="${basedir}/local.properties" />
 	<property file="${project.properties.file}" />
 	<property file="${envpropertyfile}" />
+	<echo message="Env Properties file - ${envpropertyfile}"/>
 
 
 	<!-- Ivy -->
@@ -214,6 +215,28 @@
 	</target>
 
 	<target name="war" depends="compile:application-code, ivy:setup-runtime">
+		<!-- Create junk war to test signing -->
+		<mkdir dir="${target.dir}/test-signing"/>
+		<copy file="build.xml" todir="${target.dir}/test-signing"/>
+		<jar
+			basedir="${target.dir}/test-signing"
+			destfile="${runtime.lib.dir}/test-signing.jar"
+			/>
+		<echoproperties prefix="jar-signing"/>
+		<if>
+			<equals arg1="${jar-signing.execution.time}" arg2="build"/>
+			<then>
+				<echo message="jar-signing.execution.time set to build, signing jars"/>
+				<sign-jars
+					jars.dir="${runtime.lib.dir}"
+					/>
+			</then>
+			<else>
+				<echo message="jar-signing.execution.time not set to build, not signing jars"/>
+			</else> 
+		</if>
+
+		<!-- Create junk war to test signing -->
 		<war destfile="${target.dir}/${war.name}">
 			<fileset dir="${blueprints-webapp.web.src.dir}" />
 			<lib dir="${runtime.lib.dir}" includes="*.jar" />

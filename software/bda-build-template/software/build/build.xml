@@ -16,6 +16,7 @@ $HeadURL$
 	<property file="local.properties" />
 	<property file="project.properties" />
 	<property name="properties.file" value="install.properties"/>
+	<property name="properties.file.location" location="${properties.file}"/>
 	<property name="upgrade.properties.file" value="upgrade.properties"/>
 	<echo message="Using properties file of ${properties.file}." />
 	<available file="${properties.file}" property="properties.file.exists" />
@@ -86,6 +87,9 @@ $HeadURL$
 	<property name="bda-blueprints-webapp.maven.profile.list" value="local,bda" />
 	<property name="bda-blueprints-webapp.maven.goal.list" value="clean install" />
 	<property name="bda-blueprints-api.maven.goal.list" value="clean install" />
+
+	<!-- Added to make sure that it works with both absolute and relative paths, this property is handed to sub-project scripts in absolute format. -->
+	<property name="jar-signing.keystore.abs-location" location="${jar-signing.keystore.location}"/>
 
 	<!-- Used by dist:*:prep to determin list of files to use for incremental build process.
 		Directory and files must be in svn to work.
@@ -204,7 +208,7 @@ $HeadURL$
 	<!-- Start logging -->
 	<mkdir dir="${log.dir}" />
 	<tstamp>
-		<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
+		<format property="install.time" pattern="yyyy-MM-dd-HH-mm-ss" />
 	</tstamp>
 	<record name="${log.dir}/install-${install.time}.log" action="start" />
 
@@ -306,6 +310,7 @@ $HeadURL$
 		validate:pre:build,
 		clean,
 		init,
+		keygen,
 		build:bda-blueprints-webapp,
 		build:grid
 		" >
@@ -343,6 +348,10 @@ $HeadURL$
 			<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 			<property name="commonlibrary.dir" value="${commonlibrary.dir}"/>
 			<property name="local.cbiit-ivy-repo.dir" value="${local.cbiit-ivy-repo.dir}"/>
+			<!-- Pass in env property file, used by jar-signing -->
+			<property name="envpropertyfile" value="${properties.file.location}"/>
+			<!-- Need absolution location, relative path would fail in sub-project since file would not exist -->
+			<property name="jar-signing.keystore.abs-location" value="${jar-signing.keystore.abs-location}"/>
 		</ant>
 	</target>
 
@@ -458,6 +467,12 @@ $HeadURL$
 				<include name="cagrid*"/>
 			</fileset>
 		</copy>
+		<if>
+			<equals arg1="${jar-signing.execution.time}" arg2="install"/>
+			<then>
+				<copy file="${jar-signing.keystore.abs-location}" todir="${dist.exploded.dir}"/>
+			</then>
+		</if>
 	</target>
 
 	<target name="dist:installer" depends="dist:installer:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
@@ -497,7 +512,12 @@ $HeadURL$
 			copy.tools.flag="Y"
 			default.target="upgrade"
 			/>
-
+		<if>
+			<equals arg1="${jar-signing.execution.time}" arg2="install"/>
+			<then>
+				<copy file="${jar-signing.keystore.abs-location}" todir="${dist.exploded.dir}"/>
+			</then>
+		</if>
 	</target>
 
 	<target name="dist:upgrader" depends="dist:upgrader:prep" description="Produces zip file based on installer distribution area. Zip is used by deploy:remote:* or external installations">
@@ -1055,7 +1075,7 @@ $HeadURL$
 		<!-- SSH to machine ant run ant command line to install application -->
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
-	<target name="test-read-bindings">
+	<target name="temp-read-bindings">
 		<xmltask preservetype="true" source="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml">
 			<xmlcatalog refid="bda.xml.catalog"/>
 			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.web:service=WebServer']/../:property[@name='port']/text()" property="read.server.port"/>
@@ -1110,5 +1130,17 @@ $HeadURL$
 		<echo  message="read.transaction.recovery.port=${read.transaction.recovery.port}"/>
 		<echo  message="read.transaction.status.port=${read.transaction.status.port}"/>
 		<echo  message="read.transaction.processid.port=${read.transaction.processid.port}"/>
+	</target>
+	<target name="temp:read:bindings">
+		 <jboss-read-bindings-file-location
+			 />
+	</target>
+	<target name="temp:mysql:lctn" depends="database:prep">
+		<validate-mysql-lower_case_table_name
+			/>
+	</target>
+	<target name="keygen">
+		<generate-jar-signing-keystore
+			/>
 	</target>
 </project>
