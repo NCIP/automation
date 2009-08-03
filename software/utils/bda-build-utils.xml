@@ -4436,6 +4436,7 @@ $HeadURL$
 		<attribute name="appserver.ssl.keystore.pass" default="${jboss.ssl.keystore.pass}"/>
 		<attribute name="appserver.ssl.keystore.alias" default="${jboss.ssl.keystore.alias}"/>
 		<attribute name="appserver.ssl.fullyqualified.hostname" default="${jboss.ssl.fullyqualified.hostname}"/>
+		<attribute name="verify.url" default="true"/>
 		<sequential>
 			<if>
 				<equals arg1="@{appserver.ssl.enable}" arg2="true"/>
@@ -4443,7 +4444,7 @@ $HeadURL$
 					<var name="keytool.output" unset="true"/>
 					<var name="keytool.error" unset="true"/>
 					<var name="keytool.result" unset="true"/>
-					<echo message="Validating JBoss SSL configurations"/>
+					<echo message="Validating keystore file"/>
 					<osfamily property="os.family"/>
 					<property name="os.tmp.dir" value="/tmp"/>
 					<if>
@@ -4482,6 +4483,9 @@ $HeadURL$
 						</then>
 						<else>
 							<echo message="debug - ${keytool.result} ${keytool.output} ${keytool.error}"/>
+							<if>
+								<equals arg1="@{verify.url}" arg2="true"/>
+								<then>
 			<groovy>
 				<arg line="${keytool.output} @{appserver.ssl.fullyqualified.hostname}"/>
 				import java.util.regex.Pattern
@@ -4524,6 +4528,8 @@ $HeadURL$
 				}
 				}
 			</groovy>
+								</then>
+							</if>
 						</else>
 					</if>
 				</then>
@@ -5889,12 +5895,31 @@ $HeadURL$
 						<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='StoreURL']/text()" property="read.bindings.file.raw" />
 						<copy path="/server/mbean[@code='org.jboss.services.binding.ServiceBindingManager']/attribute[@name='ServerName']/text()" property="read.bindings.ports.name" />
 					</xmltask>
-					<echo message="${read.bindings.file.raw}"/>
-					<propertyregex property="read.bindings.file"
-						input="${read.bindings.file.raw}"
-						regexp="[file:]*(.*)"
-						select="\1"
+					<trim-property
+						trim.property.name="read.bindings.file.raw"
 						/>
+					<echo message="${read.bindings.file.raw}"/>
+					<var name="has.file" unset="true"/>
+					<propertyregex property="has.file"
+						input="${read.bindings.file.raw}"
+						regexp="^file:.*"
+						select="true"
+						/>
+					<if>
+						<isset property="has.file"/>
+						<then>
+							<propertyregex property="read.bindings.file"
+								input="${read.bindings.file.raw}"
+								regexp="(.*:)?(.*)"
+								select="\2"
+								/>
+							<echo message="Stripping file: ${read.bindings.file}"/>
+						</then>
+						<else>
+							<property name="read.bindings.file" value="${read.bindings.file.raw}"/>
+						</else>
+					</if>
+
 					<echo message="Found bindings file ${read.bindings.file} ${read.bindings.ports.name}"/>
 					<property name="@{jboss.server.ports.name.property.name}" value="${read.bindings.ports.name}"/>
 					<property name="@{jboss.bindings.file.location.property.name}" value="${read.bindings.file}"/>
@@ -7370,7 +7395,6 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.name="@{database.name}"
 				/>
-
 		</sequential>
 	</macrodef>
 
@@ -7382,6 +7406,14 @@ $HeadURL$
 		<attribute name="property.template.file" default="${properties.template.file}"/>
 		<attribute name="envpropertyfile" default="${properties.file}"/>
 		<attribute name="property.exclude.pattern.list" default="tomcat.*,jboss.*,grid.*"/>
+		<!-- New verification for jar-signing -->
+		<attribute name="jar-signing.keystore.abs-location" default="${jar-signing.keystore.abs-location}"/>
+		<attribute name="jar-signing.keystore.password" default="${jar-signing.keystore.password}"/>
+		<attribute name="jar-signing.keystore.alias" default="${jar-signing.keystore.alias}"/>
+		<attribute name="jar-signing.keystore.cert.cn" default="${jar-signing.keystore.cert.cn}"/>
+		<attribute name="jar-signing.keystore.cert.ou" default="${jar-signing.keystore.cert.ou}"/>
+		<attribute name="jar-signing.keystore.cert.o" default="${jar-signing.keystore.cert.o}"/>
+		<attribute name="jar-signing.keystore.cert.c" default="${jar-signing.keystore.cert.c}"/>
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -7408,7 +7440,15 @@ $HeadURL$
 				/>
 			<validate-env-name
 				 />
-
+			<verify-jar-signing-keystore
+				jar-signing.keystore.abs-location="@{jar-signing.keystore.abs-location}"
+				jar-signing.keystore.password="@{jar-signing.keystore.password}"
+				jar-signing.keystore.alias="@{jar-signing.keystore.alias}"
+				jar-signing.keystore.cert.cn="@jar-signing.keystore.cert.cn}"
+				jar-signing.keystore.cert.ou="@jar-signing.keystore.cert.ou}"
+				jar-signing.keystore.cert.o="@jar-signing.keystore.cert.o}"
+				jar-signing.keystore.cert.c="@jar-signing.keystore.cert.c}"
+				/>
 		</sequential>
 	</macrodef>
 
@@ -7985,4 +8025,239 @@ $HeadURL$
 			<var name="read.properties.list" value="${read.properties.list},${jboss-read-ports.properties.list}"/>
 		</sequential>
 	</macrodef>
+	<macrodef name="trim-property">
+		<attribute name="trim.property.name"/>
+		<sequential>
+			<var name="temp.property.value" unset="true"/>
+			<property name="temp.property.value" value="${@{trim.property.name}}"/>
+			<echo message="old property value @{trim.property.name} -'${@{trim.property.name}}'"/>
+			<var name="fixed.value" unset="true"/>
+			<propertyregex property="fixed.value"
+				input="${@{trim.property.name}}"
+				regexp="^\s*(.*)"
+				select="\1"
+				/>
+			<echo message="new property value @{trim.property.name} - '${fixed.value}'"/>
+			<var name="@{trim.property.name}" unset="true"/>
+			<property name="@{trim.property.name}" value="${fixed.value}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="validate-mysql-lower_case_table_name" description="Diagnose the host system before the installation">
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.server" default="${database.server}" />
+		<attribute name="database.port" default="${database.port}" />
+		<sequential>
+			<var name="out.file" unset="true"/>
+			<property name="out.file" value="${temp.dir}/lctn.txt"/>
+			<sql
+				driver="@{database.driver}"
+				url="jdbc:mysql://@{database.server}:@{database.port}/information_schema"
+				userid="@{database.user}"
+				password="@{database.password}"
+				onerror="abort"
+				print="true"
+				output="${out.file}"
+				>
+				<classpath>
+					<pathelement location="${database.driver.file}" />
+				</classpath>
+				show variables;
+			</sql>
+			<!--
+				select * from SESSION_VARIABLES where VARIABLE_NAME='LOWER_CASE_TABLE_NAMES' order by 1;
+			-->
+			<var name="lctn.match" unset="true"/>
+			<loadfile
+				property="lctn.match"
+				srcFile="${out.file}">
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="lower_case_table_names"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
+			<trim-property
+				trim.property.name="lctn.match"
+				/>
+			<echo message="query returned '${lctn.match}'"/>
+			<var name="lctn.value" unset="true"/>
+			<propertyregex property="lctn.value"
+				input="${lctn.match}"
+				regexp="lower_case_table_names,(\d)"
+				select="\1"
+				/>
+			<if>
+				<equals arg1="${lctn.value}" arg2="1"/>
+				<then>
+					<echo message="lower_case_table_names=1, proceding with build"/>
+				</then>
+				<else>
+					<fail message="lower_case_table_names=${lctn.value}, must be set to one, build failing."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="sign-jars">
+		<!-- jar related attribs -->
+		<attribute name="jar-signing.keystore.abs-location" default="${jar-signing.keystore.abs-location}"/>
+		<attribute name="jar-signing.keystore.password" default="${jar-signing.keystore.password}"/>
+		<attribute name="jar-signing.keystore.alias" default="${jar-signing.keystore.alias}"/>
+		<attribute name="jar-signing.execution.time" default="${jar-signing.execution.time}"/>
+		<!-- if jar-signing.exection.time=build -->
+		<attribute name="jars.dir" default=""/>
+		<!-- if jar-signing.exection.time=install -->
+		<attribute name="jars.archive.file" default=""/>
+		<attribute name="jars.archive.relative.dir" default="."/>
+		<!-- global attribs -->
+		<attribute name="working.dir" default="${working.dir}"/>
+		<attribute name="jar-signing.jar.list" default="${jar-signing.jar.list}"/>
+		<sequential>
+			<var name="jars.dir.working" unset="true"/>
+			<if>
+				<equals arg1="@{jar-signing.execution.time}" arg2="install"/>
+				<then>
+					<echo message="Signing jars in an archive"/>
+					<var name="archive.working.dir" unset="true"/>
+					<property name="archive.working.dir" value="@{working.dir}/tmp/@{jars.archive.file}.dir"/>
+					<mkdir dir="${archive.working.dir}"/>
+					<delete dir="${archive.working.dir}"/>
+					<mkdir dir="${archive.working.dir}"/>
+					<unzip src="@{jars.archive.file}" dest="${archive.working.dir}"/>
+					<property name="jars.dir.working" value="${archive.working.dir}/@{jars.archive.relative.dir}"/>
+					<echo message="Signing jars in an archive - ${jars.dir.working}"/>
+				</then>
+				<else>
+					<echo message="Signing jars in a directory  - ${jars.dir.working}"/>
+					<property name="jars.dir.working" value="@{jars.dir}"/>
+				</else>
+			</if>
+			<!-- sign jars -->
+			<for list="@{jar-signing.jar.list}" param="jar.file.name">
+				<sequential>
+					<echo message="Lookging for @{jar.file.name}"/>
+					<signjar
+						destDir="${jars.dir.working}"
+						alias="@{jar-signing.keystore.alias}" 
+						keystore="@{jar-signing.keystore.abs-location}"
+						storepass="@{jar-signing.keystore.password}" 
+						keypass="@{jar-signing.keystore.password}"    
+						lazy="true">
+						<path>
+							<fileset dir="${jars.dir.working}" includes="@{jar.file.name}" />
+						</path>
+					</signjar>
+				</sequential>
+			</for>
+		
+			<if>
+				<equals arg1="@{jar-signing.execution.time}" arg2="install"/>
+				<then>
+					<!-- repackage archive -->
+					<echo message="Re-creating Archive"/>
+					<move file="@{jars.archive.file}" tofile="@{jars.archive.file}.pre-signjar"/>
+					<zip destfile="@{jars.archive.file}" basedir="${archive.working.dir}"/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="generate-jar-signing-keystore">
+		<attribute name="jar-signing.keystore.abs-location" default="${jar-signing.keystore.abs-location}"/>
+		<attribute name="jar-signing.keystore.password" default="${jar-signing.keystore.password}"/>
+		<attribute name="jar-signing.keystore.alias" default="${jar-signing.keystore.alias}"/>
+		<attribute name="jar-signing.generate-selfsigned" default="${jar-signing.generate-selfsigned}"/>
+		<attribute name="jar-signing.exection.time" default="${jar-signing.exection.time}"/>
+		<attribute name="jar-signing.keystore.cert.cn" default="${jar-signing.keystore.cert.cn}"/>
+		<attribute name="jar-signing.keystore.cert.ou" default="${jar-signing.keystore.cert.ou}"/>
+		<attribute name="jar-signing.keystore.cert.o" default="${jar-signing.keystore.cert.o}"/>
+		<attribute name="jar-signing.keystore.cert.c" default="${jar-signing.keystore.cert.c}"/>
+		<sequential>
+			<tstamp>
+				<format property="install.time" pattern="yyyy-MM-dd-HH-mm-ss" />
+			</tstamp>
+			<if>
+				<equals arg1="@{jar-signing.generate-selfsigned}" arg2="true"/>
+				<then>
+					<echo message="Generating self-signed certificate for use with jar signing."/>
+					<if>
+						<available file="@{jar-signing.keystore.abs-location}"/>
+						<then>
+							<move file="@{jar-signing.keystore.abs-location}" tofile="@{jar-signing.keystore.abs-location}-${install.time}"/>
+						</then>
+					</if>
+					<genkey alias="@{jar-signing.keystore.alias}" storepass="@{jar-signing.keystore.password}" keystore="@{jar-signing.keystore.abs-location}" validity="1825">
+						<dname>
+							<param name="CN" value="@{jar-signing.keystore.cert.cn}"/>
+							<param name="OU" value="@{jar-signing.keystore.cert.ou}"/>
+							<param name="O"  value="@{jar-signing.keystore.cert.o}"/>
+							<param name="C"  value="@{jar-signing.keystore.cert.c}"/>
+						</dname>
+					</genkey>
+				</then>
+				<else>
+					<echo message="Using existing certificate for jar signing."/>
+				</else>
+			</if>
+			<verify-jar-signing-keystore
+				jar-signing.keystore.abs-location="@{jar-signing.keystore.abs-location}"
+				jar-signing.keystore.password="@{jar-signing.keystore.password}"
+				jar-signing.keystore.alias="@{jar-signing.keystore.alias}"
+				jar-signing.keystore.cert.cn="@jar-signing.keystore.cert.cn}"
+				jar-signing.keystore.cert.ou="@jar-signing.keystore.cert.ou}"
+				jar-signing.keystore.cert.o="@jar-signing.keystore.cert.o}"
+				jar-signing.keystore.cert.c="@jar-signing.keystore.cert.c}"
+				/>
+
+		</sequential>
+	</macrodef>
+	<macrodef name="verify-jar-signing-keystore">
+		<attribute name="jar-signing.keystore.abs-location" default="${jar-signing.keystore.abs-location}"/>
+		<attribute name="jar-signing.keystore.password" default="${jar-signing.keystore.password}"/>
+		<attribute name="jar-signing.keystore.alias" default="${jar-signing.keystore.alias}"/>
+		<attribute name="jar-signing.keystore.cert.cn" default="${jar-signing.keystore.cert.cn}"/>
+		<attribute name="jar-signing.keystore.cert.ou" default="${jar-signing.keystore.cert.ou}"/>
+		<attribute name="jar-signing.keystore.cert.o" default="${jar-signing.keystore.cert.o}"/>
+		<attribute name="jar-signing.keystore.cert.c" default="${jar-signing.keystore.cert.c}"/>
+		<sequential>
+			<if>
+				<available file="@{jar-signing.keystore.abs-location}"/>
+				<then>
+					<echo message="Found signing jar file at @{jar-signing.keystore.abs-location}, validating."/>
+					<basename file="@{jar-signing.keystore.abs-location}" property="jar-signing.keystore.file"/>
+					<dirname file="@{jar-signing.keystore.abs-location}" property="jar-signing.keystore.dir"/>
+					<verify-keystore
+						appserver.ssl.enable="true"
+						appserver.ssl.keystore.file="${jar-signing.keystore.file}"
+						appserver.ssl.keystore.dir="${jar-signing.keystore.dir}"
+						appserver.ssl.keystore.pass="@{jar-signing.keystore.password}"
+						appserver.ssl.keystore.alias="@{jar-signing.keystore.alias}"
+						appserver.ssl.fullyqualified.hostname=""
+						verify.url="false"
+						/>
+				</then>
+				<else>
+					<echo message="Signing jar file at @{jar-signing.keystore.abs-location} not found, skipping validation."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+		<macrodef name="verify-password-value">
+			<sequential>
+				<groovy>
+					<arg line="@{dir1} @{dir2} @{reportFile}"/>
+					/*
+					Properties myprops = System.getProperties();
+					out...
+					for (Iterator i = myprops.iterator(); myprops.hasNext(); ) {
+					}
+					*/
+					System.getProperties().each
+					{ sysprop ->
+					}
+				</groovy>
+
+			</sequential>
+		</macrodef>
 </project>
