@@ -1,12 +1,15 @@
 import gov.nih.nci.bda.provisioner.*
 import org.codehaus.groovy.runtime.InvokerHelper
+import com.xerox.amazonws.ec2.ReservationDescription;
+import com.xerox.amazonws.ec2.ReservationDescription.Instance;
 
 class CloudClientController {
 	def cloudClientService
 	
-	static constraints = {
-		accessId(matches: '[0-9]{7}[A-Za-z]')
-	}
+	static navigation = [
+		[group:'tabs', action:'index', title: 'Create Instance', order: 0],
+		[action: 'listInstances', title: 'List Instances', order: 1]
+	]
 	
     def index = { 
     	}
@@ -37,4 +40,19 @@ class CloudClientController {
 			render(view: 'index')
 		}
 	}
+
+    def listInstances = {
+		def listAllInstances = cloudClientService.listInstances(params)	
+		return [listAllInstances: listAllInstances]
+		render(view: 'listInstances')
+	}	
+
+    def terminate = {
+    	println "Params::: ${params}"
+		println "Instance Check ${params.instancesTerminating}"
+		if(params.instancesTerminating)
+			cloudClientService.terminateInstances(params.instancesTerminating)
+		redirect(controller: 'cloudClient',action: 'listInstances')		
+	}	
+	
 }

@@ -19,6 +19,16 @@ class CloudClientService {
 		return ec2p.validate(params.accessId.trim(),params.secretId.trim())
 	}
 
+ 	def listInstances(params) {
+ 		Provisioner ec2p = new EC2Provisioner(); 		
+		return ec2p.listAllInstances('AKIAI53FXM32D5P3LZKA','VrI2TFJMZKdVfm4z1tqz4hICPMXhASLMVf3dRtyF')
+	}
+
+ 	def terminateInstances(String[] instancesTerminating) {
+ 		Provisioner ec2p = new EC2Provisioner(); 	
+		ec2p.terminateInstance('AKIAI53FXM32D5P3LZKA','VrI2TFJMZKdVfm4z1tqz4hICPMXhASLMVf3dRtyF',instancesTerminating)
+	}
+	
 	void onMessage(msg) 
 	{
 		try 
