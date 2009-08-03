@@ -35,6 +35,7 @@ import com.xerox.amazonws.ec2.InstanceType;
 import com.xerox.amazonws.ec2.Jec2;
 import com.xerox.amazonws.ec2.KeyPairInfo;
 import com.xerox.amazonws.ec2.ReservationDescription;
+import com.xerox.amazonws.ec2.TerminatingInstanceDescription;
 import com.xerox.amazonws.ec2.GroupDescription.IpPermission;
 import com.xerox.amazonws.ec2.ReservationDescription.Instance;
 
@@ -171,6 +172,25 @@ private boolean validate(String accessId, String secretKey) {
     return true;
   }
 
+private List terminateInstance(String accessId, String secretKey, String[] instancesList) {
+    Jec2 jec2 = new Jec2(accessId, secretKey);
+    List<TerminatingInstanceDescription> info = null;
+    try 
+    {
+    	LOGGER.log(Level.INFO, "TERMINATING INSTANCES::" + instancesList.length); 
+    	for (int i=0;i<instancesList.length;i++ )
+    	{
+    		LOGGER.log(Level.INFO, "INSTANCES::"+i +"::" + instancesList[i]); 
+    	}
+    	info = jec2.terminateInstances(instancesList);
+    	LOGGER.log(Level.INFO, "TERMINATED INSTANCES"); 
+    } catch (EC2Exception e) 
+    {
+    	LOGGER.log(Level.WARNING, "Failed to check EC2 credential", e);
+    	
+    }
+    return info;
+  }
 
 private String  runInstance(String accessId, String secretKey,String privateKey) throws IOException
 {
