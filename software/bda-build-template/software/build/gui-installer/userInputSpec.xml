@@ -910,6 +910,7 @@ $HeadURL$
 		</field>
 
 	</panel>
+	<!-- Jar Signing 1.5.0 -->
 	<panel order="20">
 		<field type="title" txt="Configuring Jar Signging" bold="true" size="1" />
 		<field type="staticText" align="left" txt="For Tomcat SSL configuration details see https://wiki.nci.nih.gov/x/7xWy"/>
@@ -930,7 +931,6 @@ $HeadURL$
 				<choice txt="True" value="true"/>
 			</spec>
 		</field>
-		<field type="text" variable="jar-signing.keystore.location">
 		<field type="text" variable="jar-signing.keystore.location">
 			<spec txt="Keystore file location: "  size="75" set=""/>
 		</field>
