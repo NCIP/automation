@@ -19,10 +19,18 @@ class CloudClientController {
     	redirect(controller: 'cloudClient',action: 'index',params: [accessId:params.accessId,secretId:params.secretId,privateKey:privateKey])
 	}
 	
-	def provisionAMI = {
-		println "Using access id ${params.accessId} and Secret key ${params.secretId}"
-		cloudClientService.sendMessage(session.accessId,session.secretId,params)	
-		render(view: 'confirm')
+	def provisionInstance = {
+		println "Using access id ${session.accessId} and Secret key ${session.secretId}"
+		if(params.email)
+		{	
+			cloudClientService.sendMessage(session.accessId,session.secretId,params)	
+			render(view: 'confirm')
+		}
+		else
+		{
+			flash.message = "Enter a valid email address"
+			render(view: 'createInstance')
+		}
 	}
 
     def listInstances = {

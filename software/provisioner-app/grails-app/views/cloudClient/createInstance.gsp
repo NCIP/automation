@@ -30,7 +30,7 @@
 					${flash.message}
 				</div>
 			</g:if>
-	    		<g:form action="provisionAMI">		
+	    		<g:form action="provisionInstance">		
 				<form:textField label="Port List"  name="portList" title="TextField" readonly="false" value="${params.portList}">
 				  Enter the external ports (in comma-delimited, no spaces format. For example: 46210,48080) you wish to expose in the <strong>Port List</strong> field
 				</form:textField>		
@@ -38,7 +38,7 @@
 				  Enter the email address where you wish to receive further instructions
 				</form:textField>
 				<div class="buttons">
-					<g:actionSubmit value="Provision Instance" />
+					<g:actionSubmit value="Provision Instance" action="provisionInstance" />
 					<g:actionSubmit value="List Instances" action="listInstances" />
 					<g:actionSubmit value="Request Instance With Another ID" action="index" />
 				</div>
