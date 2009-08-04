@@ -1143,4 +1143,21 @@ $HeadURL$
 		<generate-jar-signing-keystore
 			/>
 	</target>
+	<target name="temp:verify:password:value">
+		<property name="bda-utils.resource.dir" value="${dist.exploded.dir}/bda-utils/resource"/>
+		<unzip src="${bda-utils.dir}/bda-build-utils-${bda.version}.zip" dest="${bda-utils.resource.dir}"/>
+		<condition property="os.temp.dir" value="/tmp">
+			<or>
+				<os family="unix" />
+				<os family="mac" />
+			</or>
+		</condition>
+
+		<condition property="os.temp.dir" value="c:/temp">
+			<os family="windows" />
+		</condition>
+
+		<verify-password-value
+			/>
+	</target>
 </project>

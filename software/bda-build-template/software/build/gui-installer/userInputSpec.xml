@@ -911,6 +911,40 @@ $HeadURL$
 
 	</panel>
 	<panel order="20">
+		<field type="title" txt="Configuring Jar Signging" bold="true" size="1" />
+		<field type="staticText" align="left" txt="For Tomcat SSL configuration details see https://wiki.nci.nih.gov/x/7xWy"/>
+		<field type="divider" align="top"/>
+
+		<field type="radio" variable="jar-signing.execution.time">
+			<description align="left" txt="If/when to sign jars"/>
+			<spec>
+				<choice txt="Disabled"  value="false" set="true"/>
+				<choice txt="Build Time" value="build"/>
+				<choice txt="Install Time" value="install"/>
+			</spec>
+		</field>
+		<field type="radio" variable="jar-signing.generate-selfsigned">
+			<description align="left" txt="Auto generate the certificate"/>
+			<spec>
+				<choice txt="False"  value="false" set="true"/>
+				<choice txt="True" value="true"/>
+			</spec>
+		</field>
+		<field type="text" variable="jar-signing.keystore.location">
+		<field type="text" variable="jar-signing.keystore.location">
+			<spec txt="Keystore file location: "  size="75" set=""/>
+		</field>
+		<field type="password" align="left" variable="jar-signing.keystore.password">
+			<spec>
+				<pwd txt="Keystore file password:" size="25" set=""/>
+				<pwd txt="Confirm keystore file password:" size="25" set=""/>
+			</spec>
+		</field>
+		<field type="text" variable="jar-signing.keystore.alias">
+			<spec txt="Keystore alias: "  size="75" set=""/>
+		</field>
+	</panel>
+	<panel order="21">
 		<field type="title" txt="Installation Summary" bold="true" size="1" />
 		<field type="staticText" align="left" txt="Below are "/>
 		<field type="divider" align="top"/>
