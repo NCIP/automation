@@ -9,8 +9,9 @@ class CloudClientService {
 	static destination = "provionerQ"
 	static listenerCount = 1
     
-    void sendMessage(params) {
-    	def msg = [userId: 'narra',content: 'narram content']
+    void sendMessage(accessId, secretId,params) {
+    	params.accessId = accessId
+    	params.secretId = secretId
 		sendQueueJMSMessage("provionerQ",params)
 	}
 	
@@ -19,14 +20,14 @@ class CloudClientService {
 		return ec2p.validate(params.accessId.trim(),params.secretId.trim())
 	}
 
- 	def listInstances(params) {
+ 	def listInstances(accessId, secretId, params) {
  		Provisioner ec2p = new EC2Provisioner(); 		
-		return ec2p.listAllInstances('AKIAI53FXM32D5P3LZKA','VrI2TFJMZKdVfm4z1tqz4hICPMXhASLMVf3dRtyF')
+		return ec2p.listAllInstances(accessId,secretId)
 	}
 
- 	def terminateInstances(String[] instancesTerminating) {
+ 	def terminateInstances(accessId, secretId, String[] instancesTerminating) {
  		Provisioner ec2p = new EC2Provisioner(); 	
-		ec2p.terminateInstance('AKIAI53FXM32D5P3LZKA','VrI2TFJMZKdVfm4z1tqz4hICPMXhASLMVf3dRtyF',instancesTerminating)
+		ec2p.terminateInstance(accessId,secretId,instancesTerminating)
 	}
 	
 	void onMessage(msg) 

@@ -20,7 +20,7 @@
 	<body>
 	<formset>
 	<legend><b>BDA Provisioner</b></legend>
-	    <g:form action="index">
+	    <g:form action="validate">
 		<label><b>A new Amazon EC2 virtual instance has been created and the Hudson CI Server is being configured </b></label><br>
 		<label><b>A follow up email will be sent in around 20 minutes to the email address provided </b></label><br>
 		<form:buttonBar>

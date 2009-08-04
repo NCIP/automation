@@ -32,32 +32,38 @@
 							<g:sortableColumn property="instance_dns_name" title="Instance DNS Name" />
 						</tr>
 					</thead>
-				<label><b>Found <strong>${listAllInstances.size()}</strong> Instances Running</b></label><br>
-				<tbody>
-				<g:each var="result" in="${listAllInstances}">
-					<g:if test="${result?.getInstances()}">
-						<g:each var="instances" in="${result.getInstances()}" status="i">
-								<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-									<td><g:checkBox name="instancesTerminating" value="${instances.getInstanceId()}" checked="false"/>
-									</td>
-									<td>${instances.getInstanceId()}
-									</td>								
-									<td>${instances.getImageId()}
-									</td>
-									<td>${instances.getState()}
-									</td>
-									<td>${instances.getDnsName()}
-									</td>
-								</div>
+					<g:if test="${listAllInstances}">	
+						<label><b><strong>${listAllInstances.size()}</strong> Instances Running</b></label><br>
+						<tbody>
+						<g:each var="result" in="${listAllInstances}">
+							<g:if test="${result?.getInstances()}">
+								<g:each var="instances" in="${result.getInstances()}" status="i">
+										<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+											<td><g:checkBox name="instancesTerminating" value="${instances.getInstanceId()}" checked="false"/>
+											</td>
+											<td>${instances.getInstanceId()}
+											</td>								
+											<td>${instances.getImageId()}
+											</td>
+											<td>${instances.getState()}
+											</td>
+											<td>${instances.getDnsName()}
+											</td>
+										</div>
+								</g:each>
+							</g:if>	
 						</g:each>
-					</g:if>	
-				</g:each>
-				</tbody>
+						</tbody>
+					</g:if>
+					<g:else>
+						<label><b><strong>0</strong> Instances Running</b></label>
+					</g:else>
 				</table>
 				</div>
 				<div class="buttons">
 					<g:actionSubmit value="Terminate" />
-					<g:actionSubmit value="Request Instance" action="index" />
+					<g:actionSubmit value="Request Instance" action="validate" />
+					<g:actionSubmit value="Request Instance With Another ID" action="index" />
 				</div>
 			</g:form>
 		</div>
