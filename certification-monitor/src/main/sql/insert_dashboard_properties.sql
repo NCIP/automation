@@ -97,7 +97,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.install.init.target','common:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
@@ -244,7 +244,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.install.init.target','common:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.username','narram');
@@ -741,7 +741,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk/sdk-toolkit');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/example-project/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.target','dist:installer:prep');
