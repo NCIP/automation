@@ -5,6 +5,7 @@ import java.util.regex.Pattern
 
 def failCharList = ["&","<",">","\"","'"]
 println "Checking all properties values who's name contains password to ensure they do not have invalid characters"
+println ""
 println "Invalid password characters are \$ and " + failCharList.toString()
 //System.getProperties().each
 
