@@ -98,7 +98,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.install.init.target','common:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
@@ -245,7 +245,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.install.init.target','common:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.username','narram');
@@ -690,7 +690,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caexchage.install.init.target','common:init');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.type','mysql');
