@@ -24,7 +24,7 @@
 
 			<legend><b>BDA Provisioner</b></legend>
 			<h4>This BDA Provisioner application will generate working software using Amazon's cloud infrastructure. </h4>
-			<h4>If you do not have an AWS <u>EC2</u> account, you will need to register for one by going to the <a href="http://aws.amazon.com/">http://aws.amazon.com/</a> page and selecting the <strong>Sign Up Now</strong> button. You must also register for an <u>EC2</u> account.</h4>
+			<h4>If you do not have an AWS <u>EC2</u> account, you will need to register for one by going to the <a href="http://aws.amazon.com/">Amazon Web Services</a> page and selecting the <strong>Sign Up Now</strong> button. You must also register for an <u>EC2</u> account.</h4>
 			<br>
 			<g:if test="${flash.message}">
 				<div class="errors">

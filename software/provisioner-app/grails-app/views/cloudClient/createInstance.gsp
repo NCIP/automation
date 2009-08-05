@@ -44,7 +44,7 @@
 				</div>
 	    		</g:form>
 	    		<br>
-	    		<h4>Important: The BDA Provisioner will not terminate your Amazon EC2 instance. You will continue to be charged until you manually terminate this instance.</h4>
+	    		<h4>Important: To terminate your EC2 instances, select the <u>List Instances</u> button and select the instance(s) to terminate. You will continue to be charged until you terminate your instances.</h4>
 		</formset>
 	</body>
 </html>
