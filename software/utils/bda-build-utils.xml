@@ -18,14 +18,14 @@ $HeadURL$
 	<property name="tomcat.version.min" value="5.0.0"/>
 	<property name="tomcat.version.max" value="6.999.999"/>
 	<!-- conditionals -->
-	<condition property="os.temp.dir" value="/tmp">
+	<condition property="os.temp.dir" value="/tmp/${project.name}">
 		<or>
 			<os family="unix" />
 			<os family="mac" />
 		</or>
 	</condition>
 
-	<condition property="os.temp.dir" value="c:/temp">
+	<condition property="os.temp.dir" value="c:/temp/${project.name}">
 		<os family="windows" />
 	</condition>
 
@@ -672,7 +672,7 @@ $HeadURL$
  			<condition property="java.major.version.good">
 				<equals arg1="${ant.java.version}" arg2="@{java.check.version.major}" />
  			</condition>
- 			<antunit:assertTrue message="${line.separator}${line.separator}    Your Java SDK version must be 1.5 (1.5.0_10 recommended). The version you have installed is ${java.version}. Please install the correct version of the Java SDK and update your System PATH to point to directory where you installed it. ${line.separator}">
+			<antunit:assertTrue message="${line.separator}${line.separator}    Your Java SDK version must be @{java.check.version.major}. The version you have installed is ${java.version}. Please install the correct version of the Java SDK and update your System PATH to point to directory where you installed it. ${line.separator}">
  				<isset property="java.major.version.good"/>
  			</antunit:assertTrue>
 			<if>
@@ -2904,9 +2904,11 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-configure-grid">
-		<attribute name="jboss.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf"/>
-		<attribute name="jboss.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy"/>
-		<attribute name="jboss.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.conf.dir" default="@{jboss.home}/server/@{jboss.server.name}/conf"/>
+		<attribute name="jboss.webapp.dir" default="@{jboss.home}/server/@{jboss.server.name}/deploy"/>
+		<attribute name="jboss.server-xml.file" default="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="jboss.server-xml.service.name" default="jboss.web"/>
 		<attribute name="jboss.port.http" default="${jboss.server.port}"/>
 		<attribute name="jboss.port.ssl" default="${jboss.ssl.port}"/>
@@ -2947,8 +2949,14 @@ $HeadURL$
 		<attribute name="grid.poc.tech.email" default="${grid.poc.tech.email}"/>
 		<attribute name="grid.poc.tech.role" default="${grid.poc.tech.role}"/>
 		<attribute name="grid.secdesc.file" default="@{jboss.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<!-- appserver-install-sync-gts -->
+		<attribute name="sync-gts.build.dir" default="${sync-gts.build.dir}"/>
+		<attribute name="cagrid-target.dir" default="${cagrid-target.dir}"/>
+		<attribute name="grid.target" default="${grid.target}"/>
 		<sequential>
 			<grid-appserver-configure
+				appserver.home="@{jboss.home}"
+				appserver.server.name="@{jboss.server.name}"
 				appserver.conf.dir="@{jboss.conf.dir}"
 				appserver.webapp.dir="@{jboss.webapp.dir}"
 				appserver.server-xml.file="@{jboss.server-xml.file}"
@@ -2992,13 +3000,18 @@ $HeadURL$
 				grid.poc.tech.email="@{grid.poc.tech.email}"
 				grid.poc.tech.role="@{grid.poc.tech.role}"
 				grid.secdesc.file="@{grid.secdesc.file}"
+				sync-gts.build.dir="@{sync-gts.build.dir}"
+				cagrid-target.dir="@{cagrid-target.dir}"
+				grid.target="@{grid.target}"
 				/>
 		</sequential>
 	</macrodef>
 	<macrodef name="tomcat-configure-grid">
-		<attribute name="tomcat.conf.dir" default="${tomcat.home}/conf"/>
-		<attribute name="tomcat.webapp.dir" default="${tomcat.home}/webapps"/>
-		<attribute name="tomcat.server-xml.file" default="${tomcat.home}/conf/server.xml"/>
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="tomcat.server.name" default=""/>
+		<attribute name="tomcat.conf.dir" default="@{tomcat.home}/conf"/>
+		<attribute name="tomcat.webapp.dir" default="@{tomcat.home}/webapps"/>
+		<attribute name="tomcat.server-xml.file" default="@{tomcat.home}/conf/server.xml"/>
 		<attribute name="tomcat.server-xml.service.name" default="Catalina"/>
 		<attribute name="tomcat.port.http" default="${tomcat.port.http}"/>
 		<attribute name="tomcat.port.ssl" default="${tomcat.port.ssl}"/>
@@ -3039,8 +3052,14 @@ $HeadURL$
 		<attribute name="grid.poc.tech.email" default="${grid.poc.tech.email}"/>
 		<attribute name="grid.poc.tech.role" default="${grid.poc.tech.role}"/>
 		<attribute name="grid.secdesc.file" default="@{tomcat.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
+		<!-- appserver-install-sync-gts -->
+		<attribute name="sync-gts.build.dir" default="${sync-gts.build.dir}"/>
+		<attribute name="cagrid-target.dir" default="${cagrid-target.dir}"/>
+		<attribute name="grid.target" default="${grid.target}"/>
 		<sequential>
 			<grid-appserver-configure
+				appserver.home="@{tomcat.home}"
+				appserver.server.name="@{tomcat.server.name}"
 				appserver.conf.dir="@{tomcat.conf.dir}"
 				appserver.webapp.dir="@{tomcat.webapp.dir}"
 				appserver.server-xml.file="@{tomcat.server-xml.file}"
@@ -3084,10 +3103,15 @@ $HeadURL$
 				grid.poc.tech.email="@{grid.poc.tech.email}"
 				grid.poc.tech.role="@{grid.poc.tech.role}"
 				grid.secdesc.file="@{grid.secdesc.file}"
+				sync-gts.build.dir="@{sync-gts.build.dir}"
+				cagrid-target.dir="@{cagrid-target.dir}"
+				grid.target="@{grid.target}"
 				/>
 		</sequential>
 	</macrodef>
 	<macrodef name="grid-appserver-configure">
+		<attribute name="appserver.home" default="${jboss.home}"/>
+		<attribute name="appserver.server.name" default="${jboss.server.name}"/>
 		<attribute name="appserver.conf.dir" default="${jboss.home}/server/${jboss.server.name}/conf"/>
 		<attribute name="appserver.webapp.dir" default="${jboss.home}/server/${jboss.server.name}/deploy"/>
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
@@ -3130,6 +3154,10 @@ $HeadURL$
 		<attribute name="grid.secdesc.file" default="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/etc/globus_wsrf_core/global_security_descriptor.xml"/>
 		<attribute name="appserver.external.http.host" default="${jboss.external.http.host}"/>
 		<attribute name="appserver.external.http.port" default="${jboss.external.http.port}"/>
+		<!-- appserver-install-sync-gts -->
+		<attribute name="sync-gts.build.dir" default="${sync-gts.build.dir}"/>
+		<attribute name="cagrid-target.dir" default="${cagrid-target.dir}"/>
+		<attribute name="grid.target" default="${grid.target}"/>
 		<sequential>
 			<if>
 				<equals arg1="@{grid.secure.enable}" arg2="true"/>
@@ -3203,6 +3231,15 @@ $HeadURL$
 						grid.secdesc.file="@{grid.secdesc.file}"
 						grid.secure.cert.file="@{grid.secure.cert.file}"
 						grid.secure.key.file="@{grid.secure.key.file}"
+						/>
+					<appserver-install-sync-gts
+						appserver.home="@{appserver.home}"
+						appserver.server.name="@{appserver.server.name}"
+						grid.dir.dest="@{grid.application.relative.dir}"
+						appserver.grid.secure.enable="@{grid.secure.enable}"
+						sync-gts.build.dir="@{sync-gts.build.dir}"
+						cagrid-target.dir="@{cagrid-target.dir}"
+						grid.target="@{grid.target}"
 						/>
 				</then>
 				<else>
@@ -4446,23 +4483,24 @@ $HeadURL$
 					<var name="keytool.result" unset="true"/>
 					<echo message="Validating keystore file"/>
 					<osfamily property="os.family"/>
-					<property name="os.tmp.dir" value="/tmp"/>
+					<echo  message="os.family=${os.family}"/>
 					<if>
-						<and>
+						<or>
 							<equals arg1="${os.family}" arg2="unix"/>
 							<equals arg1="${os.family}" arg2="mac"/>
-						</and>
+						</or>
 						<then>
-							<property name="os.tmp.dir" value="/tmp"/>
+							<property name="os.tmp.dir" value="/tmp/${project.name}"/>
 						</then>
 					</if>
 					<if>
 						<equals arg1="${os.family}" arg2="windows"/>
 						<then>
-							<property name="os.tmp.dir" value="c:/tmp"/>
+							<property name="os.tmp.dir" value="c:/tmp/${project.name}"/>
 						</then>
 					</if>
 					<mkdir dir="${os.tmp.dir}"/>
+					<echo message="'@{appserver.ssl.keystore.dir}'	'@{appserver.ssl.keystore.file}'"/>
 					<copy file="@{appserver.ssl.keystore.dir}/@{appserver.ssl.keystore.file}" tofile="${os.tmp.dir}/@{appserver.ssl.keystore.file}"/>
 					<exec executable="keytool" outputproperty="keytool.output" errorproperty="keytool.error" resultproperty="keytool.result">
 						<arg value="-list"/>
@@ -5054,6 +5092,7 @@ $HeadURL$
 		<attribute name="tomcat.grid.secure.key.file" default="${tomcat.grid.secure.key.file}" />
 		<attribute name="tomcat.grid.secure.cert.file" default="${tomcat.grid.secure.cert.file}" />
 		<attribute name="tomcat.logs.dir" default="${tomcat.home}/logs"/>
+		<attribute name="tomcat.http-connector.remove" default="${tomcat.http-connector.remove}"/>
 		<sequential>
 			<if>
 				<not>
@@ -5145,6 +5184,12 @@ $HeadURL$
 							<grid-secure-configure-valve
 								appserver.server-xml.file="@{tomcat.server-xml.file}"
 								appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+								/>
+							<appserver-delete-http-connector
+								appserver.server-xml.file="@{tomcat.server-xml.file}"
+								appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+								appserver.http.port="@{tomcat.port.http}"
+								appserver.http-connector.remove="@{tomcat.http-connector.remove}"
 								/>
 							<!-- needs to be done after adding connector -->
 							<if>
@@ -5267,6 +5312,7 @@ $HeadURL$
 		<!--jboss-configure-java_opts -->
 		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
 		<attribute name="jboss.logs.dir" default="${jboss.home}/server/${jboss.server.name}/log"/>
+		<attribute name="jboss.http-connector.remove" default="${jboss.http-connector.remove}"/>
 		<sequential>
 			<var name="jboss.is.51" unset="true"/>
 			<propertyregex property="jboss.is.51"
@@ -5427,6 +5473,13 @@ $HeadURL$
 							<grid-secure-configure-valve
 								appserver.server-xml.file="@{jboss.server-xml.file}"
 								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+								/>
+
+							<appserver-delete-http-connector
+								appserver.server-xml.file="@{jboss.server-xml.file}"
+								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
+								appserver.http.port="@{proxy.update.connector.port.http}"
+								appserver.http-connector.remove="@{jboss.http-connector.remove}"
 								/>
 							<!-- needs to be done after adding connector -->
 							<if>
@@ -6215,20 +6268,20 @@ $HeadURL$
 					<var name="keytool.error" unset="true"/>
 					<var name="keytool.result" unset="true"/>
 					<osfamily property="os.family"/>
-					<property name="os.tmp.dir" value="/tmp"/>
+					<echo  message="os.family=${os.family}"/>
 					<if>
-						<and>
+						<or>
 							<equals arg1="${os.family}" arg2="unix"/>
 							<equals arg1="${os.family}" arg2="mac"/>
-						</and>
+						</or>
 						<then>
-							<property name="os.tmp.dir" value="/tmp"/>
+							<property name="os.tmp.dir" value="/tmp/${project.name}"/>
 						</then>
 					</if>
 					<if>
 						<equals arg1="${os.family}" arg2="windows"/>
 						<then>
-							<property name="os.tmp.dir" value="c:/tmp"/>
+							<property name="os.tmp.dir" value="c:/tmp/${project.name}"/>
 						</then>
 					</if>
 					<mkdir dir="${os.tmp.dir}"/>
@@ -7335,6 +7388,9 @@ $HeadURL$
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
 		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="database.server" default="${database.server}"/>
+		<attribute name="database.port" default="${database.port}"/>
+		<attribute name="mysql.lowercasetablenames" default="${mysql.lowercasetablenames}"/>
 		<sequential>
 
 			<echo message="
@@ -7395,6 +7451,19 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.name="@{database.name}"
 				/>
+			<!-- allow for checks for different types of db, right now only mysql-->
+			<switch value="@{database.type}">
+				<case value="mysql">
+					<validate-mysql-lower_case_table_name
+						database.driver="@{database.driver}"
+						database.user="@{database.user}"
+						database.password="@{database.password}"
+						database.server="@{database.server}"
+						database.port="@{database.port}"
+						mysql.lowercasetablenames="@{mysql.lowercasetablenames}"
+						/>
+				</case>
+			</switch>
 		</sequential>
 	</macrodef>
 
@@ -7414,6 +7483,7 @@ $HeadURL$
 		<attribute name="jar-signing.keystore.cert.ou" default="${jar-signing.keystore.cert.ou}"/>
 		<attribute name="jar-signing.keystore.cert.o" default="${jar-signing.keystore.cert.o}"/>
 		<attribute name="jar-signing.keystore.cert.c" default="${jar-signing.keystore.cert.c}"/>
+		<attribute name="jar-signing.execution.time" default="${jar-signing.execution.time}"/>
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -7440,14 +7510,23 @@ $HeadURL$
 				/>
 			<validate-env-name
 				 />
-			<verify-jar-signing-keystore
-				jar-signing.keystore.abs-location="@{jar-signing.keystore.abs-location}"
-				jar-signing.keystore.password="@{jar-signing.keystore.password}"
-				jar-signing.keystore.alias="@{jar-signing.keystore.alias}"
-				jar-signing.keystore.cert.cn="@jar-signing.keystore.cert.cn}"
-				jar-signing.keystore.cert.ou="@jar-signing.keystore.cert.ou}"
-				jar-signing.keystore.cert.o="@jar-signing.keystore.cert.o}"
-				jar-signing.keystore.cert.c="@jar-signing.keystore.cert.c}"
+			 <if>
+				 <equals arg1="@{jar-signing.execution.time}" arg2="install"/>
+				 <then>
+					<echo message="jar-signing.execution.time=install, verifying keystore"/>
+					<verify-jar-signing-keystore
+						jar-signing.keystore.abs-location="@{jar-signing.keystore.abs-location}"
+						jar-signing.keystore.password="@{jar-signing.keystore.password}"
+						jar-signing.keystore.alias="@{jar-signing.keystore.alias}"
+						jar-signing.keystore.cert.cn="@jar-signing.keystore.cert.cn}"
+						jar-signing.keystore.cert.ou="@jar-signing.keystore.cert.ou}"
+						jar-signing.keystore.cert.o="@jar-signing.keystore.cert.o}"
+						jar-signing.keystore.cert.c="@jar-signing.keystore.cert.c}"
+						/>
+				</then>
+			</if>
+
+			<verify-password-value
 				/>
 		</sequential>
 	</macrodef>
@@ -8048,53 +8127,64 @@ $HeadURL$
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.port" default="${database.port}" />
+		<attribute name="mysql.lowercasetablenames" default="${mysql.lowercasetablenames}"/>
 		<sequential>
-			<var name="out.file" unset="true"/>
-			<property name="out.file" value="${temp.dir}/lctn.txt"/>
-			<sql
-				driver="@{database.driver}"
-				url="jdbc:mysql://@{database.server}:@{database.port}/information_schema"
-				userid="@{database.user}"
-				password="@{database.password}"
-				onerror="abort"
-				print="true"
-				output="${out.file}"
-				>
-				<classpath>
-					<pathelement location="${database.driver.file}" />
-				</classpath>
-				show variables;
-			</sql>
-			<!--
-				select * from SESSION_VARIABLES where VARIABLE_NAME='LOWER_CASE_TABLE_NAMES' order by 1;
-			-->
-			<var name="lctn.match" unset="true"/>
-			<loadfile
-				property="lctn.match"
-				srcFile="${out.file}">
-				<filterchain>
-					<linecontainsregexp>
-						<regexp pattern="lower_case_table_names"/>
-					</linecontainsregexp>
-				</filterchain>
-			</loadfile>
-			<trim-property
-				trim.property.name="lctn.match"
-				/>
-			<echo message="query returned '${lctn.match}'"/>
-			<var name="lctn.value" unset="true"/>
-			<propertyregex property="lctn.value"
-				input="${lctn.match}"
-				regexp="lower_case_table_names,(\d)"
-				select="\1"
-				/>
 			<if>
-				<equals arg1="${lctn.value}" arg2="1"/>
+				<equals arg1="@{mysql.lowercasetablenames}" arg2="true"/>
 				<then>
-					<echo message="lower_case_table_names=1, proceding with build"/>
+					<echo message="Checking that lower_case_table_names=1"/>
+					<var name="out.file" unset="true"/>
+					<mkdir dir="${temp.dir}"/>
+					<property name="out.file" value="${temp.dir}/lctn.txt"/>
+					<sql
+						driver="@{database.driver}"
+						url="jdbc:mysql://@{database.server}:@{database.port}/information_schema"
+						userid="@{database.user}"
+						password="@{database.password}"
+						onerror="abort"
+						print="true"
+						output="${out.file}"
+						>
+						<classpath>
+							<pathelement location="${database.driver.file}" />
+						</classpath>
+						show variables;
+					</sql>
+					<!--
+						select * from SESSION_VARIABLES where VARIABLE_NAME='LOWER_CASE_TABLE_NAMES' order by 1;
+					-->
+					<var name="lctn.match" unset="true"/>
+					<loadfile
+						property="lctn.match"
+						srcFile="${out.file}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="lower_case_table_names"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<trim-property
+						trim.property.name="lctn.match"
+						/>
+					<echo message="query returned '${lctn.match}'"/>
+					<var name="lctn.value" unset="true"/>
+					<propertyregex property="lctn.value"
+						input="${lctn.match}"
+						regexp="lower_case_table_names,(\d)"
+						select="\1"
+						/>
+					<if>
+						<equals arg1="${lctn.value}" arg2="1"/>
+						<then>
+							<echo message="lower_case_table_names=1, proceding with build"/>
+						</then>
+						<else>
+							<fail message="lower_case_table_names=${lctn.value}, must be set to one, build failing."/>
+						</else>
+					</if>
 				</then>
 				<else>
-					<fail message="lower_case_table_names=${lctn.value}, must be set to one, build failing."/>
+					<echo message="Skipping mysql lower_case_table_names=1 check"/>
 				</else>
 			</if>
 		</sequential>
@@ -8120,7 +8210,9 @@ $HeadURL$
 				<then>
 					<echo message="Signing jars in an archive"/>
 					<var name="archive.working.dir" unset="true"/>
-					<property name="archive.working.dir" value="@{working.dir}/tmp/@{jars.archive.file}.dir"/>
+					<var name="archive.file" unset="true"/>
+					<basename file="@{jars.archive.file}" property="archive.file}"/>
+					<property name="archive.working.dir" value="@{working.dir}/tmp/${archive.file}.dir"/>
 					<mkdir dir="${archive.working.dir}"/>
 					<delete dir="${archive.working.dir}"/>
 					<mkdir dir="${archive.working.dir}"/>
@@ -8157,7 +8249,7 @@ $HeadURL$
 					<!-- repackage archive -->
 					<echo message="Re-creating Archive"/>
 					<move file="@{jars.archive.file}" tofile="@{jars.archive.file}.pre-signjar"/>
-					<zip destfile="@{jars.archive.file}" basedir="${archive.working.dir}"/>
+					<zip destfile="@{jars.archive.file}" basedir="${archive.working.dir}" compress="false"/>
 				</then>
 			</if>
 		</sequential>
@@ -8168,7 +8260,6 @@ $HeadURL$
 		<attribute name="jar-signing.keystore.password" default="${jar-signing.keystore.password}"/>
 		<attribute name="jar-signing.keystore.alias" default="${jar-signing.keystore.alias}"/>
 		<attribute name="jar-signing.generate-selfsigned" default="${jar-signing.generate-selfsigned}"/>
-		<attribute name="jar-signing.exection.time" default="${jar-signing.exection.time}"/>
 		<attribute name="jar-signing.keystore.cert.cn" default="${jar-signing.keystore.cert.cn}"/>
 		<attribute name="jar-signing.keystore.cert.ou" default="${jar-signing.keystore.cert.ou}"/>
 		<attribute name="jar-signing.keystore.cert.o" default="${jar-signing.keystore.cert.o}"/>
@@ -8243,10 +8334,213 @@ $HeadURL$
 			</if>
 		</sequential>
 	</macrodef>
-		<macrodef name="verify-password-value">
-			<sequential>
-				<copy tofile="${os.temp.dir}/verifyPasswordValue.groovy" file="${bda-utils.resource.dir}/groovy/verifyPasswordValue.groovy" overwrite="true"/>
-				<groovy src="${os.temp.dir}/verifyPasswordValue.groovy"/>
-			</sequential>
-		</macrodef>
+	<macrodef name="verify-password-value">
+		<sequential>
+			<copy tofile="${os.temp.dir}/verifyPasswordValue.groovy" file="${bda-utils.resource.dir}/groovy/verifyPasswordValue.groovy" overwrite="true"/>
+			<groovy src="${os.temp.dir}/verifyPasswordValue.groovy"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="appserver-delete-http-connector" description="macro for enabling ssl in jboss">
+		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
+		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
+
+		<attribute name="appserver.http.port" default="${jboss.server.port}"/>
+		<attribute name="appserver.http-connector.remove" default="false"/>
+		<sequential>
+			<echo message="@{appserver.http-connector.remove} @{appserver.http.port}"/>
+			<if>
+				<equals arg1="@{appserver.http-connector.remove}" arg2="true"/>
+				<then>
+					<echo message="Remove HTTP Connect from @{appserver.server-xml.file} because *.http-conector.remove=true"/>
+					<xmltask preservetype="true" failWithoutMatch="true" source="@{appserver.server-xml.file}"
+						dest="@{appserver.server-xml.file}">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@port='@{appserver.http.port}']"/>
+					</xmltask>
+				</then>
+				<else>
+					<echo message="*.http-conector.remove!=true, skipping removing http connector"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss-version">
+		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
+		<attribute name="jboss.version.property.name" default="jboss.version"/>
+		<attribute name="jboss.major.version.property.name" default="jboss.major.version"/>
+		<attribute name="jboss.minor.version.property.name" default="jboss.minor.version"/>
+		<attribute name="jboss.patch.version.property.name" default="jboss.patch.version"/>
+		<sequential>
+			<echo message="Determining JBoss Version"/>
+			<var name="@{jboss.version.property.name}" unset="true"/>
+			<propertyregex property="@{jboss.version.property.name}"
+				input="@{jboss.binaries.relative.dir}"
+				regexp="(\d+\.\d+\.\d+).*"
+				select="\1"
+				/>
+			<echo message="JBoss version is ${@{jboss.version.property.name}}"/>
+
+			<var name="@{jboss.major.version.property.name}" unset="true"/>
+			<propertyregex property="@{jboss.major.version.property.name}"
+				input="@{jboss.binaries.relative.dir}"
+				regexp="(\d+)\.\d+\.\d+.*"
+				select="\1"
+				/>
+			<echo message="JBoss major version is ${@{jboss.major.version.property.name}}"/>
+			<var name="@{jboss.minor.version.property.name}" unset="true"/>
+			<propertyregex property="@{jboss.minor.version.property.name}"
+				input="@{jboss.binaries.relative.dir}"
+				regexp="\d+\.(\d+)\.\d+.*"
+				select="\1"
+				/>
+			<echo message="JBoss minor version is ${@{jboss.minor.version.property.name}}"/>
+			<var name="@{jboss.patch.version.property.name}" unset="true"/>
+			<propertyregex property="@{jboss.patch.version.property.name}"
+				input="@{jboss.binaries.relative.dir}"
+				regexp="\d+\.\d+\.(\d+).*"
+				select="\1"
+				/>
+			<echo message="JBoss patch version is ${@{jboss.patch.version.property.name}}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="tomcat-version">
+		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
+		<attribute name="tomcat.version.property.name" default="tomcat.version"/>
+		<attribute name="tomcat.major.version.property.name" default="tomcat.major.version"/>
+		<attribute name="tomcat.minor.version.property.name" default="tomcat.minor.version"/>
+		<attribute name="tomcat.patch.version.property.name" default="tomcat.patch.version"/>
+		<sequential>
+			<echo message="Determining Tomcat Version"/>
+			<var name="@{tomcat.version.property.name}" unset="true"/>
+			<propertyregex property="@{tomcat.version.property.name}"
+				input="@{tomcat.binaries.relative.dir}"
+				regexp="(\d+\.\d+\.\d+).*"
+				select="\1"
+				/>
+			<echo message="Tomcat version is ${@{tomcat.version.property.name}}"/>
+
+			<var name="@{tomcat.major.version.property.name}" unset="true"/>
+			<propertyregex property="@{tomcat.major.version.property.name}"
+				input="@{tomcat.binaries.relative.dir}"
+				regexp="(\d+)\.\d+\.\d+.*"
+				select="\1"
+				/>
+			<echo message="Tomcat major version is ${@{tomcat.major.version.property.name}}"/>
+			<var name="@{tomcat.minor.version.property.name}" unset="true"/>
+			<propertyregex property="@{tomcat.minor.version.property.name}"
+				input="@{tomcat.binaries.relative.dir}"
+				regexp="\d+\.(\d+)\.\d+.*"
+				select="\1"
+				/>
+			<echo message="Tomcat minor version is ${@{tomcat.minor.version.property.name}}"/>
+			<var name="@{tomcat.patch.version.property.name}" unset="true"/>
+			<propertyregex property="@{tomcat.patch.version.property.name}"
+				input="@{tomcat.binaries.relative.dir}"
+				regexp="\d+\.\d+\.(\d+).*"
+				select="\1"
+				/>
+			<echo message="Tomcat patch version is ${@{tomcat.patch.version.property.name}}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="appserver-install-sync-gts">
+		<attribute name="appserver.home" default="${jboss.home}"/>
+		<attribute name="appserver.server.name" default="${jboss.server.name}"/>
+		<attribute name="grid.dir.dest" default="${grid.dir.dest.jboss}"/>
+		<attribute name="appserver.grid.secure.enable" default="${jboss.grid.secure.enable}"/>
+		<attribute name="sync-gts.build.dir" default="${sync-gts.build.dir}"/>
+		<attribute name="cagrid-target.dir" default="${cagrid-target.dir}"/>
+		<attribute name="grid.target" default="${grid.target}"/>
+		<sequential>
+			<if>
+				<equals arg1="@{appserver.grid.secure.enable}" arg2="true"/>
+				<then>
+					<echo message="Installing sync-gts in support of Secure Grid being enabled"/>
+					<copy todir="@{sync-gts.build.dir}/etc/target_grid" file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml"/>
+					<copy todir="@{sync-gts.build.dir}/etc/target_grid/certificates">
+						<fileset dir="@{cagrid-target.dir}/@{grid.target}/certificates"/>
+					</copy>                 
+					<!-- configure syncgts to target grid -->
+					<echo message="Configuring syncgts to target grid"/>
+					<ant inheritAll="false" inheritRefs="false"
+						antfile="build.xml"     
+						target="all"            
+						dir="@{sync-gts.build.dir}"
+						/>                      
+					<!-- sync with fabric-->
+					<echo message="Syncing with fabric"/>
+					<ant inheritAll="false" inheritRefs="false"
+						antfile="build.xml"     
+						target="syncWithTrustFabric"
+						dir="@{sync-gts.build.dir}"
+						/>                      
+					<!-- only run if jboss -->
+					<var name="is.jboss" unset="true"/>
+					<propertyregex property="is.jboss"
+						input="@{appserver.home}"
+						regexp="jboss"
+						select="true"
+						/>
+					<if>
+						<isset property="is.jboss"/>
+						<then>
+							<echo message="Setting server name in build-deploy.xml"/>
+							<replaceregexp file="@{sync-gts.build.dir}/build-deploy.xml"
+								match="jboss.dir}/server/default"
+								replace="jboss.dir}/server/@{appserver.server.name}"
+								/>                      
+							<!-- Deploy to app server -->
+							<echo message="Deploying to App Server"/>
+							<ant inheritAll="false" inheritRefs="false"
+								antfile="build.xml"     
+								target="deployJBoss"    
+								dir="@{sync-gts.build.dir}"
+								>               
+								<property name="env.JBOSS_HOME" location="@{appserver.home}"/>
+							</ant>          
+							<if>
+								<available file="@{appserver.home}/server/@{appserver.server.name}/deploy/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>            
+								<then>
+									<echo message="Sync GTS installed in grid service correctly(jboss)"/>
+								</then>                 
+								<else>                          
+									<fail message="Sync GTS failed to install into grid service correctly."/>
+								</else>                 
+							</if>
+						</then>
+					</if>
+					<!-- Verify it was installed to appserver -->
+					<echo message="jboss - @{appserver.home}/server/@{appserver.server.name}/deploy/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>
+					<echo message="tomcat - @{appserver.home}/webapps/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>
+
+					<if>
+						<not>
+							<isset property="is.jboss"/>
+						</not>
+						<then>
+							<echo message="Deploying to App Server"/>
+							<ant inheritAll="false" inheritRefs="false"
+								antfile="build.xml"     
+								target="deployTomcat"    
+								dir="@{sync-gts.build.dir}"
+								>               
+								<property name="env.CATALINA_HOME" location="@{appserver.home}"/>
+							</ant>          
+							<if>
+								<available file="@{appserver.home}/webapps/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>            
+								<then>
+									<echo message="Sync GTS installed in grid service correctly"/>
+								</then>                 
+								<else>                          
+									<fail message="Sync GTS failed to install into grid service correctly(tomcat)."/>
+								</else>                 
+							</if>           
+						</then>
+					</if>
+				</then>
+				<else>
+					<echo message="Not installing sync-gts"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
 </project>
