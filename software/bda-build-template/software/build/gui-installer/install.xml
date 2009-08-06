@@ -77,8 +77,29 @@ $HeadURL$
 				<!--
 				The gui preferences indication.
 				Sets the installer window to 640x480. It will not be able to change the size.
+				LOOK AND FEELS <laf/> (style: name in laf)
+				Kunstoff: kunststoff
+				Liquid: liquid (decorate.frames: yes means that it will render the frames in Liquid style)
+				Substance: substance
+				Metouia: metouia
+				JGoodies Looks: looks (variants)
+					windows: use the Windows look
+					plastic: use the basic Plastic look
+					plastic3D: use the Plastic 3D look
+					plasticXP: use the Plastic XP look (default).
 				-->
+				
 				<guiprefs width="1024" height="768" resizable="yes">
+					<laf name="liquid">
+						<os family="unix" />
+						<param name="decorate.frames" value="yes" />
+					</laf>
+					<!-- go with the default for now
+					<laf name="looks">
+						<os family="windows" />
+						<param name="variant" value="extwin" />
+					</laf>
+					-->
 					<modifier key="useButtonIcons" value="no"/>
 					<modifier key="useLabelIcons" value="no"/>
 					<modifier key="allYGap" value="3"/>
@@ -181,9 +202,11 @@ $HeadURL$
 					<variable name="jboss.ejbinvoker.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.hajndi.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.hajrmi.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.jms.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.jmx-rmi.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.messaging.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.pooledha.port" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.remoting.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.server.bind.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.server.rmi.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.service.rmiobject.port" value="" condition="container.database|container.tomcat"/>
@@ -216,6 +239,7 @@ $HeadURL$
 					<variable name="jboss.grid.secure.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.grid.secure.cert.location" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.grid.secure.key.location" value="" condition="container.database|container.tomcat"/>
+					<variable name="jboss.http-connector.remove" value="" condition="container.database|container.tomcat"/>
 					<variable name="jboss.server.redirect.port" value="" condition="container.database|container.tomcat"/>
 					<variable name="log4j.maxFileSize" value="" condition="container.database|container.tomcat"/>
 					<variable name="log4j.maxDays" value="" condition="container.database|container.tomcat"/>
@@ -243,6 +267,7 @@ $HeadURL$
 					<variable name="tomcat.grid.secure.port" value="" condition="container.database|container.jboss"/>
 					<variable name="tomcat.grid.secure.cert.location" value="" condition="container.database|container.jboss"/>
 					<variable name="tomcat.grid.secure.key.location" value="" condition="container.database|container.jboss"/>
+					<variable name="tomcat.http-connector.remove" value="" condition="container.database|container.jboss"/>
 
 					<variable name="grid.index.url" value="" condition="container.database"/>
 					<variable name="grid.poc.tech.researchCenter.displayname" value="" condition="container.database"/>
@@ -316,32 +341,36 @@ $HeadURL$
 					<panel classname="UserInputPanel"  id="UserInputPanel.8" condition="container.jboss|container.all"/>
 					<!-- Jboss SSL 0.9.0 -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.9" condition="container.jboss|container.all"/>
+					<!-- external host stuff jboss -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.10" condition="container.jboss|container.all"/>
 					<!-- Authentication Type -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.10" condition="!container.database"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.11" condition="!container.database"/>
 					<!-- Ldap data entry -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.11" condition="ldap.setup"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.12" condition="ldap.setup"/>
 					<!-- Database Properties -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.12"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.13"/>
 					<!-- Global Configuraiton Options -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.13" condition="!container.database"/>
-					<!-- Grid Global Configuration -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.14" condition="!container.database"/>
-					<!-- Grid Research Center -->
+					<!-- Grid Global Configuration -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.15" condition="!container.database"/>
-					<!-- Grid Tech Contact -->
+					<!-- Grid Research Center -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.16" condition="!container.database"/>
-					<!-- Grid Science Contact -->
+					<!-- Grid Tech Contact -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.17" condition="!container.database"/>
+					<!-- Grid Science Contact -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.18" condition="!container.database"/>
 					<!-- Application Specific Properties -->
 					<!-- Tomcat Base Config 0.9.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.18" condition="container.tomcat|container.all"/>
-					<!-- Tomcat SSL 0.9.0 -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.19" condition="container.tomcat|container.all"/>
+					<!-- Tomcat SSL 0.9.0 -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.20" condition="container.tomcat|container.all"/>
+					<!-- external host stuff tomcat -->
+					<panel classname="UserInputPanel"  id="UserInputPanel.21" condition="container.tomcat|container.all"/>
 					<!-- Jar Signing 1.5.0 -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.20" condition="container.tomcat|container.all|container.jboss"/>
+					<panel classname="UserInputPanel"  id="UserInputPanel.22" condition="container.tomcat|container.all|container.jboss"/>
 
 					<!-- Installation Summary -->
-					<panel classname="UserInputPanel"  id="UserInputPanel.21" />
+					<panel classname="UserInputPanel"  id="UserInputPanel.23" />
 					<panel classname="InstallationGroupPanel"/>
 					<panel classname="ExtendedInstallPanel"/>
 					<panel classname="FinishPanel"/>
