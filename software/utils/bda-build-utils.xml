@@ -3872,7 +3872,17 @@ $HeadURL$
 			<groovy>
 				<arg line="@{dir1} @{dir2} @{reportFile}"/>
 				dir1 = new File(args[0]).getAbsoluteFile()
+				if(!dir1.exists())
+				{
+				println "${dir1} does not exist, please check that you are refering to the correct directory."
+				System.exit(1)
+				}
 				dir2 = new File(args[1]).getAbsoluteFile()
+				if(!dir2.exists())
+				{
+				println "${dir2} does not exist, please check that you are refering to the correct directory."
+				System.exit(1)
+				}
 				reportFile = new File(args[2]).getAbsoluteFile()
 				Integer dir1Length = dir1.toString().length()
 				Integer dir2Length = dir2.toString().length()
