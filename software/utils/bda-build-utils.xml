@@ -5973,8 +5973,8 @@ $HeadURL$
 						<then>
 							<propertyregex property="read.bindings.file"
 								input="${read.bindings.file.raw}"
-								regexp="(.*:)?(.*)"
-								select="\2"
+								regexp="^.*?:(.*)"
+								select="\1"
 								/>
 							<echo message="Stripping file: ${read.bindings.file}"/>
 						</then>
