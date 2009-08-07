@@ -4042,14 +4042,14 @@ $HeadURL$
 				</and>
 				<then>
 					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
-					<unzip dest="${jboss.home}" src="@{jbosscp.binaries.file}" />
+					<unzip dest="@{jboss.home}" src="@{jbosscp.binaries.file}" />
 					<!-- Copy of patched configuration files -->
-					<copy file="${jboss.home}/config-patches/jboss-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
-					<copy file="${jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jmx-invoker-service.xml"/>
-					<copy file="${jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
-					<copy file="${jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
-					<copy file="${jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
-					<copy file="${jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/jboss-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
+					<copy file="@{jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-invoker-service.xml"/>
+					<copy file="@{jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/>
 				</then>
 			</if>
 
@@ -5433,7 +5433,7 @@ $HeadURL$
 						appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 						appserver.external.host="@{jboss.external.ssl.host}"
 						appserver.external.port="@{jboss.external.ssl.port}"
-						proxy.update.connector.port="@{proxy.update.connector.port.ssl}"
+						proxy.update.connector.port="@{jboss.ssl.port}"
 						/>
 					<echo message="Configuring JBoss proxy settings for http"/>
 					<appserver-configure-external-hostname
@@ -8454,25 +8454,61 @@ $HeadURL$
 			<if>
 				<equals arg1="@{appserver.grid.secure.enable}" arg2="true"/>
 				<then>
+					<echo message="appserver.home - @{appserver.home}"/>
+					<echo message="appserver.server.name - @{appserver.server.name}"/>
+					<echo message="grid.dir.dest - @{grid.dir.dest}"/>
+					<echo message="appserver.grid.secure.enable - @{appserver.grid.secure.enable}"/>
+					<echo message="sync-gts.build.dir - @{sync-gts.build.dir}"/>
+					<echo message="cagrid-target.dir - @{cagrid-target.dir}"/>
+					<echo message="grid.target -@{grid.target}"/>
 					<echo message="Installing sync-gts in support of Secure Grid being enabled"/>
 					<copy todir="@{sync-gts.build.dir}/etc/target_grid" file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml"/>
 					<copy todir="@{sync-gts.build.dir}/etc/target_grid/certificates">
 						<fileset dir="@{cagrid-target.dir}/@{grid.target}/certificates"/>
 					</copy>                 
-					<!-- configure syncgts to target grid -->
-					<echo message="Configuring syncgts to target grid"/>
-					<ant inheritAll="false" inheritRefs="false"
-						antfile="build.xml"     
-						target="all"            
-						dir="@{sync-gts.build.dir}"
-						/>                      
-					<!-- sync with fabric-->
-					<echo message="Syncing with fabric"/>
-					<ant inheritAll="false" inheritRefs="false"
-						antfile="build.xml"     
-						target="syncWithTrustFabric"
-						dir="@{sync-gts.build.dir}"
-						/>                      
+					
+					<var name="is.jre" unset="true"/>
+					<propertyregex property="is.jre"
+						input="${java.home}"
+						regexp="jre"
+						select="true"
+						/>
+					<if>
+						<isset property="is.jre"/>
+						<then>
+							<echo message="Configuring syncgts to target grid"/>
+							<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
+								<arg line="all" />
+							</exec>
+							<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
+								<arg line="all" />
+							</exec>
+
+							<echo message="Syncing with fabric"/>
+							<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
+								<arg line="syncWithTrustFabric" />
+							</exec>
+							<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
+								<arg line="syncWithTrustFabric" />
+							</exec>
+						</then>
+						<else>
+							<!-- configure syncgts to target grid -->
+							<echo message="Configuring syncgts to target grid"/>
+							<ant inheritAll="false" inheritRefs="false"
+								antfile="build.xml"     
+								target="all"            
+								dir="@{sync-gts.build.dir}"
+								/>                      
+							<!-- sync with fabric-->
+							<echo message="Syncing with fabric"/>
+							<ant inheritAll="false" inheritRefs="false"
+								antfile="build.xml"     
+								target="syncWithTrustFabric"
+								dir="@{sync-gts.build.dir}"
+								/>                      
+						</else>
+					</if>
 					<!-- only run if jboss -->
 					<var name="is.jboss" unset="true"/>
 					<propertyregex property="is.jboss"
@@ -8490,13 +8526,27 @@ $HeadURL$
 								/>                      
 							<!-- Deploy to app server -->
 							<echo message="Deploying to App Server"/>
-							<ant inheritAll="false" inheritRefs="false"
-								antfile="build.xml"     
-								target="deployJBoss"    
-								dir="@{sync-gts.build.dir}"
-								>               
-								<property name="env.JBOSS_HOME" location="@{appserver.home}"/>
-							</ant>          
+							<if>
+								<isset property="is.jre"/>
+								<then>
+									<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
+										<arg line="-Denv.JBOSS_HOME=@{appserver.home} deployJBoss" />
+									</exec>
+									<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
+										<arg line="-Denv.JBOSS_HOME=@{appserver.home} deployJBoss" />
+									</exec>
+								</then>
+								<else>
+
+									<ant inheritAll="false" inheritRefs="false"
+										antfile="build.xml"     
+										target="deployJBoss"    
+										dir="@{sync-gts.build.dir}"
+										>               
+										<property name="env.JBOSS_HOME" location="@{appserver.home}"/>
+									</ant>          
+								</else>
+							</if>
 							<if>
 								<available file="@{appserver.home}/server/@{appserver.server.name}/deploy/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>            
 								<then>
@@ -8518,13 +8568,27 @@ $HeadURL$
 						</not>
 						<then>
 							<echo message="Deploying to App Server"/>
-							<ant inheritAll="false" inheritRefs="false"
-								antfile="build.xml"     
-								target="deployTomcat"    
-								dir="@{sync-gts.build.dir}"
-								>               
-								<property name="env.CATALINA_HOME" location="@{appserver.home}"/>
-							</ant>          
+							<if>
+								<isset property="is.jre"/>
+								<then>
+									<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
+										<arg line="-Denv.CATALINA_HOME=@{appserver.home} deployTomcat" />
+									</exec>
+									<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
+										<arg line="-Denv.CATALINA_HOME=@{appserver.home} deployTomcat" />
+									</exec>
+								</then>
+								<else>
+
+									<ant inheritAll="false" inheritRefs="false"
+										antfile="build.xml"     
+										target="deployTomcat"    
+										dir="@{sync-gts.build.dir}"
+										>               
+										<property name="env.CATALINA_HOME" location="@{appserver.home}"/>
+									</ant>          
+								</else>
+							</if>
 							<if>
 								<available file="@{appserver.home}/webapps/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>            
 								<then>
