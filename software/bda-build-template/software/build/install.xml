@@ -1196,11 +1196,20 @@ $HeadURL$
 				<equals arg1="${exclude.jboss.backup}" arg2="true"/>
 			</not>
 			<then>
-				<report-dir-diff
-					dir1="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}"
-					dir2="${jboss.home}"
-					reportFile="${install-logs.dir}/chagneLog-jboss-${install.time}.diff"
-					/>
+				<if>
+					<available file="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}/bin/run.sh"/>
+					<then>
+						<echo message="Producing changelog"/>
+						<report-dir-diff
+							dir1="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}"
+							dir2="${jboss.home}"
+							reportFile="${install-logs.dir}/chagneLog-jboss-${install.time}.diff"
+							/>
+					</then>
+					<else>
+						<echo message="It appears your jboss backup is incomplete, skipping change log."/>
+					</else>
+				</if>
 				<!-- Copy app server logs -->
 				<mkdir dir="${jboss.home}/server/${jboss.server.name}/log"/>
 				<mkdir dir="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}/server/${jboss.server.name}/log"/>
@@ -1225,14 +1234,20 @@ $HeadURL$
 				<equals arg1="${exclude.tomcat.backup}" arg2="true"/>
 			</not>
 			<then>
-				<property name="changelogFile" location="${install-logs.dir}/changeLog-${install.time}.txt"/>
-				<property name="compare1.dir" location="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"/>
-				<property name="compare2.dir" location="${tomcat.home}"/>
-				<report-dir-diff
-					dir1="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"
-					dir2="${tomcat.home}"
-					reportFile="${install-logs.dir}/changeLog-tomcat-${install.time}.diff"
-					/>
+				<if>
+					<available file="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}/bin/startup.sh"/>
+					<then>
+						<echo message="Producing changelog"/>
+						<report-dir-diff
+							dir1="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"
+							dir2="${tomcat.home}"
+							reportFile="${install-logs.dir}/changeLog-tomcat-${install.time}.diff"
+							/>
+					</then>
+					<else>
+						<echo message="It appears your Tomcat backup is incomplete, skipping change log"/>
+					</else>
+				</if>
 
 				<!-- not needed for tomcat
 				<mkdir dir="${tomcat.home}/server/${tomcat.server.name}/log"/>
@@ -1243,6 +1258,10 @@ $HeadURL$
 					</fileset>
 				</copy>
 				-->
+				<!-- Compress backup and cleanup -->
+				<mkdir dir="${backup.tomcat.base.dir}/backup1"/>
+				<zip destfile="${backup.tomcat.base.dir}/backup1/${tomcat.binaries.relative.dir}.zip" basedir="${backup.tomcat.base.dir}/backup" />
+				<delete dir="${backup.tomcat.base.dir}/backup"/>
 			</then>
 		</if>
 	</target>
