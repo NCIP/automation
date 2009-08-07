@@ -732,6 +732,15 @@ Guide to this file:
 			<spec txt="Grid Index Url:" size="35" set="http://cagrid-index.nci.nih.gov:8080/wsrf/services/DefaultIndexService"/>
 			<validator class="com.izforge.izpack.util.URLCheckValidator" txt="Please enter a valid Index URL"/>
 		</field>
+		<field type="radio" variable="grid.target">
+			<description align="left" txt="Which Grid do you want to Sync Certificates with?"/>
+			<spec>
+				<choice txt="Production" value="nci_prod-1.3" set="true" />
+				<choice txt="QA" value="nci_qa-1.3"/>
+				<choice txt="Staging" value="nci_stage-1.3"/>
+				<choice txt="Training" value="training-1.3"/>
+			</spec>
+		</field>
 	</panel>
 
 	<!-- Grid Research Center -->
@@ -1010,7 +1019,7 @@ Guide to this file:
 		<field type="space"/>
 		<field type="staticText" align="left" txt="JBoss URL [http://${jboss.server.hostname}:${jboss.server.port}/bda-blueprints-webapp] - This will be the url to reach your application when the install is finished."/>
 		<field type="space"/>
-		<field type="staticText" align="left" txt="JBoss Log Dir [${UserPathPanelVariable}/${jboss.binaries.relative.path}/server/${jboss.server.name}] - This is where the logs can be found."/>
+		<field type="staticText" align="left" txt="JBoss Log Dir [${UserPathPanelVariable}/${jboss.binaries.relative.dir}/server/${jboss.server.name}] - This is where the logs can be found."/>
 
 		<field type="space"/>
 		<field type="staticText" align="left" txt="Database URL [jdbc:mysql://${database.server}:${database.port}/${database.name}] "/>

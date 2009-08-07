@@ -119,6 +119,10 @@ $HeadURL$
 					<variable name="installer.dir" value="@{installer.dir}"/>
 					<variable name="tomcat.binaries.relative.dir" value="@{tomcat.binaries.relative.dir}"/>
 					<variable name="jboss.binaries.relative.dir" value="@{jboss.binaries.relative.dir}"/>
+					<variable name="JDKPathPanel.minVersion" value="1.5.0"/>
+					<variable name="JDKPathPanel.maxVersion" value="1.6.99"/>
+					<variable name="JDKPathPanel.skipIfValid" value="yes"/> 
+
 				</variables>
 
 				<!--
@@ -321,6 +325,8 @@ $HeadURL$
 					<panel classname="HelloPanel"/>
 					<panel classname="InfoPanel"/>
 					<panel classname="HTMLLicencePanel"/>
+					<panel classname="JDKPathPanel"/>
+					<!-- Install or upgrade -->
 					<panel classname="UserInputPanel"  id="UserInputPanel.0" />
 					<!-- Typical or Custom
 					<panel classname="UserInputPanel"  id="UserInputPanel.1" condition="never"/>

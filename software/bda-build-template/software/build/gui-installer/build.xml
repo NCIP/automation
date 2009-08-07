@@ -17,6 +17,7 @@ $HeadURL$
 		<replace dir="${install.path}/${application_installer}" token="basedir}" value="install.path}/${application_installer}">
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />
+			<exclude name="**/sync-gts/**/*"/>
 		</replace>
 		<replace file="${install.path}/${application_installer}/build.xml" token="project.properties" value="${install.path}/${application_installer}/project.properties"/>
 		<replace file="${install.path}/${application_installer}/build.xml" token="install-properties.template" value="${install.path}/${application_installer}/install-properties.template"/>
@@ -35,6 +36,7 @@ $HeadURL$
 		<replace dir="${install.path}/${application_installer}" token="basedir}" value="install.path}/${application_installer}">
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />
+			<exclude name="**/sync-gts/**/*"/>
 		</replace>
 		<replace file="${install.path}/${application_installer}/build.xml" token="project.properties" value="${install.path}/${application_installer}/project.properties"/>
 		<replace file="${install.path}/${application_installer}/build.xml" token="install-properties.template" value="${install.path}/${application_installer}/install-properties.template"/>
