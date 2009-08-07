@@ -33,6 +33,7 @@ Guide to this file:
 	<panel order="1">
 		<field type="title" txt="Choose what to install" bold="true" size="1" />
 		<field type="staticText" align="left" txt="Select whether you want to install or upgrade all components of this application, or just an individual component.  If you want to install components on different servers, select the one component on this machine and other components on other machines."/>
+		<field type="staticText" align="left" txt="Note: If you click next on anything but everything, all values for other products will be blanked. If you use back and select another product you will loose default values and have to fail in every field.  If chose the wrong component exit the installer and run again."/>
 		<field type="divider" align="top"/>
 		<field type="radio" variable="install.selection">
 			<description align="left" txt="Chose what to install"/>
