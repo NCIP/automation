@@ -2920,7 +2920,6 @@ software/provisioner/resources/.bash_profile -text
 software/provisioner/resources/build-hudson.xml -text
 software/provisioner/resources/cai2/config.xml -text
 software/provisioner/resources/catalina.sh -text
-software/provisioner/resources/config.xml -text
 software/provisioner/resources/hosts -text
 software/provisioner/resources/init.sh -text
 software/provisioner/resources/my.cnf -text
