@@ -2918,12 +2918,14 @@ software/provisioner/lib/j2ssh-core-0.2.9.jar -text
 software/provisioner/lib/typica.jar -text
 software/provisioner/resources/.bash_profile -text
 software/provisioner/resources/build-hudson.xml -text
+software/provisioner/resources/cai2/config.xml -text
 software/provisioner/resources/catalina.sh -text
 software/provisioner/resources/config.xml -text
 software/provisioner/resources/hosts -text
 software/provisioner/resources/init.sh -text
 software/provisioner/resources/my.cnf -text
 software/provisioner/resources/mysqld -text
+software/provisioner/resources/petstore/config.xml -text
 software/provisioner/resources/start-hudson.sh -text
 software/provisioner/src/main/java/gov/nih/nci/bda/provisioner/BaseProvisioner.java -text
 software/provisioner/src/main/java/gov/nih/nci/bda/provisioner/EC2PrivateKey.java -text
