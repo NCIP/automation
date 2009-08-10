@@ -211,7 +211,9 @@ $HeadURL$
 		<format property="install.time" pattern="yyyy-MM-dd-HH-mm-ss" />
 	</tstamp>
 	<record name="${log.dir}/install-${install.time}.log" action="start" />
-
+	
+	<!-- Echo properties to catch AHP variables at build time-->
+	<echoproperties/>
 	<!-- Fix first time build issue -->
 	<mkdir dir="${download.dir}"/>
 
