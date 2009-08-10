@@ -201,9 +201,15 @@ $HeadURL$
 	<!-- Task definitions -->
 	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath" />
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda-utils.classpath"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="bda-utils.classpath"/>
 
 	<!-- Includes- include BDA marcos -->
-	<echoproperties/>
+	<if>
+		<equals arg1="${bda.debug}" arg2="true"/>
+		<then>
+			<echoproperties/>
+		</then>
+	</if>
 	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
 	<!-- Start logging -->
@@ -214,7 +220,12 @@ $HeadURL$
 	<record name="${log.dir}/install-${install.time}.log" action="start" />
 	
 	<!-- Echo properties to catch AHP variables at build time-->
-	<echoproperties/>
+	<if>
+		<equals arg1="${bda.debug}" arg2="true"/>
+		<then>
+			<echoproperties/>
+		</then>
+	</if>
 	<!-- Fix first time build issue -->
 	<mkdir dir="${download.dir}"/>
 
