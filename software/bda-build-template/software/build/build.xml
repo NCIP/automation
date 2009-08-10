@@ -203,6 +203,7 @@ $HeadURL$
 	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda-utils.classpath"/>
 
 	<!-- Includes- include BDA marcos -->
+	<echoproperties/>
 	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
 	<!-- Start logging -->
