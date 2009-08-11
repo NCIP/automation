@@ -11,7 +11,7 @@
 	<!-- Main -->
 	<property name="root.dir" location="${basedir}/../.." />
 	<property name="docs.dir" location="${root.dir}/docs" />
-	<property name="software.dir" location="${root.dir}/software" />
+	<property name="software.dir" location=".." />
 	<property name="lib.dir" location="${software.dir}/target/lib" />
 	<property name="runtime.lib.dir" location="${lib.dir}/runtime" />
 	<property name="compile.lib.dir" location="${lib.dir}/compile" />
