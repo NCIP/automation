@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <wiki>
-	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P><b>May 27, 2009</b>: The BDA team released version 1.1 of the BDA Framework. See the <a href='https://wiki.nci.nih.gov/x/yqN8'>BDA API</a> page for more information.<br/><br/><b>Latest News</b>: The BDA team is assisting <a href="https://wiki.nci.nih.gov/x/4oTB">active CBIIT development teams</a> implement a self-service BDA model.<br/><br/><b>Certification Dashboard</b>: Release 1.0.1 of the <a href="https://wiki.nci.nih.gov/x/jojB">BDA Certification Dashboard</a> was released Tuesday, May 19, 2009. This dashboard provides a daily monitoring of Build and Deployment practices of CBIIT development projects.]]></welcome>
+	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P><b>August 13, 2009</b>: The BDA team released version 1.5.0 of the BDA Framework. See the <a href='https://wiki.nci.nih.gov/x/yqN8'>BDA API</a> page for more information.<br/><br/><b>Latest News</b>: The BDA team is assisting <a href="https://wiki.nci.nih.gov/x/4oTB">active CBIIT development teams</a> implement a self-service BDA model.<br/><br/><b>Certification Dashboard</b>: Release 1.0.1 of the <a href="https://wiki.nci.nih.gov/x/jojB">BDA Certification Dashboard</a> was released Tuesday, May 19, 2009. This dashboard provides a daily monitoring of Build and Deployment practices of CBIIT development projects.]]></welcome>
 	<button>
 		<name>News</name>
 		<link>
