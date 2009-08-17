@@ -273,6 +273,7 @@ docs/wiki/flash/src/gov/nih/nci/bda/wiki/events/WikiButtonEvent.as -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/events/WikiTeaserEvent.as -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/view/WikiButton.mxml -text
 docs/wiki/flash/src/gov/nih/nci/bda/wiki/vo/WikiButtonVO.as -text
+resources/ahp3/template-project.xml -text
 resources/eclipse/bda-plugins.xml -text
 resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml -text
 resources/jboss-bindings/ncicb-jboss4.0.x-bindings.xml -text
