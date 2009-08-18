@@ -156,7 +156,7 @@ private List listAllInstances(String accessId, String secretKey) {
 			}
 		}
     } catch (EC2Exception e) {
-    	LOGGER.log(Level.WARNING, "Private Key Authentication Failed", e); }
+    	LOGGER.log(Level.WARNING, "Exception while listing all instances::", e); }
     return instances;
   }
 

@@ -222,7 +222,7 @@ public class EC2SystemInitiator
 		ScpClient scp = ssh1.openScpClient();
 		scp.put(new File("resources/build-hudson.xml").getAbsolutePath(), "", true);
 		scp.put(new File("resources/.bash_profile").getAbsolutePath(), "", true);
-		
+
 
 		SessionChannelClient  bash1 = ssh1.openSessionChannel();
 		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -253,7 +253,7 @@ public class EC2SystemInitiator
 		sessionObject3.executeCommand("mkdir ~/hudson_data/jobs/cai2");
 		sessionObject3.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		sessionObject3.close();
-		
+
 		SessionChannelClient  sessionObject4 = ssh1.openSessionChannel();
 		sessionObject4.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 		sessionObject4.executeCommand("mkdir ~/hudson_data/jobs/petstore");
@@ -264,11 +264,11 @@ public class EC2SystemInitiator
 		scp.put(new File("resources/petstore/config.xml").getAbsolutePath(), "~/hudson_data/jobs/petstore", true);
 		scp.put(new File("resources/catalina.sh").getAbsolutePath(), "/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin", true);
 
-		SessionChannelClient  sessionObject4 = ssh1.openSessionChannel();
-		sessionObject4.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sessionObject4.executeCommand("dos2unix /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/catalina.sh");
-		sessionObject4.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		sessionObject4.close();
+		SessionChannelClient  sessionObject5 = ssh1.openSessionChannel();
+		sessionObject5.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sessionObject5.executeCommand("dos2unix /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/catalina.sh");
+		sessionObject5.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		sessionObject5.close();
 	}
 	else
 	{
