@@ -2846,12 +2846,13 @@ software/provisioner-app/provisioner-app.launch -text
 software/provisioner-app/provisioner-app.tmproj -text
 software/provisioner-app/resources/.bash_profile -text
 software/provisioner-app/resources/build-hudson.xml -text
+software/provisioner-app/resources/cai2/config.xml -text
 software/provisioner-app/resources/catalina.sh -text
-software/provisioner-app/resources/config.xml -text
 software/provisioner-app/resources/hosts -text
 software/provisioner-app/resources/init.sh -text
 software/provisioner-app/resources/my.cnf -text
 software/provisioner-app/resources/mysqld -text
+software/provisioner-app/resources/petstore/config.xml -text
 software/provisioner-app/resources/start-hudson.sh -text
 software/provisioner-app/src/templates/artifacts/Controller.groovy -text
 software/provisioner-app/src/templates/artifacts/DomainClass.groovy -text
