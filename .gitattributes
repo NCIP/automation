@@ -2787,6 +2787,7 @@ software/provisioner-app/grails-app/conf/DataSource.groovy -text
 software/provisioner-app/grails-app/conf/UrlMappings.groovy -text
 software/provisioner-app/grails-app/conf/spring/resources.groovy -text
 software/provisioner-app/grails-app/controllers/CloudClientController.groovy -text
+software/provisioner-app/grails-app/controllers/ListController.groovy -text
 software/provisioner-app/grails-app/i18n/messages.properties -text
 software/provisioner-app/grails-app/i18n/messages_de.properties -text
 software/provisioner-app/grails-app/i18n/messages_es.properties -text
@@ -2806,6 +2807,7 @@ software/provisioner-app/grails-app/views/cloudClient/listInstances.gsp -text
 software/provisioner-app/grails-app/views/error.gsp -text
 software/provisioner-app/grails-app/views/index.gsp -text
 software/provisioner-app/grails-app/views/layouts/main.gsp -text
+software/provisioner-app/grails-app/views/list/listInstances.gsp -text
 software/provisioner-app/ivy.xml -text
 software/provisioner-app/ivysettings.xml -text
 software/provisioner-app/lib/JAXB2_20070122.jar -text

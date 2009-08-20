@@ -40,7 +40,7 @@
 				<div class="buttons">
 					<g:actionSubmit value="Provision Instance" action="provisionInstance" />
 					<g:actionSubmit value="List Instances" action="listInstances" />
-					<g:actionSubmit value="Request Instance With Another ID" action="index" />
+					<g:actionSubmit value="Logoff" action="index" />
 				</div>
 	    		</g:form>
 	    		<br>

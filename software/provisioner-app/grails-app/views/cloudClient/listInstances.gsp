@@ -63,7 +63,7 @@
 				<div class="buttons">
 					<g:actionSubmit value="Terminate" />
 					<g:actionSubmit value="Request Instance" action="validate" />
-					<g:actionSubmit value="Request Instance With Another ID" action="index" />
+					<g:actionSubmit value="Logoff" action="index" />
 				</div>
 			</g:form>
 		</div>

@@ -39,7 +39,7 @@
 				  Enter your Amazon <strong>Secret Access Key</strong>. To get your Amazon Web Services <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a>, go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>
 				</form:textField>
 				<form:buttonBar>
-				  <input type="submit" value="Provision Instance" />
+				  <input type="submit" value="Login" />
 				 </form:buttonBar>
 	    		</g:form>
 	    		<br>
