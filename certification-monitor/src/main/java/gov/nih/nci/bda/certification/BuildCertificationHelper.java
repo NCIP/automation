@@ -22,7 +22,7 @@ import org.hibernate.Session;
 public class BuildCertificationHelper {
 	BuildCertificationBean bmb;
 	private Log certLogger = LogFactory.getLog(BuildCertificationHelper.class);
-	
+
 	public BuildCertificationHelper()
 	{
 		super();
@@ -32,13 +32,13 @@ public class BuildCertificationHelper {
 	{
 		this.bmb = bmb;
 	}
-		
+
 	private String formatMessage(String message) {
 		StringBuffer sb = new StringBuffer();
 
 		if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
 			message=message.substring(0, BuildCertificationConstants.ERROR_MESSAGE_LENGTH);
-				
+
 		message=message.replace("'", "");
 		message=message.replace("\"", "");
 		String[] result=message.split("\\n");
@@ -47,8 +47,8 @@ public class BuildCertificationHelper {
 	    certLogger.info("Format the Error Message :: " + sb.toString());
 	    return sb.toString();
 	}
-	
-	
+
+
 	private String getLink(String jobName) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(ConfigurationHelper.getConfiguration().getString(BuildCertificationConstants.CI_SERVER_NAME));
@@ -59,15 +59,15 @@ public class BuildCertificationHelper {
 	}
 
 	private String getSetMethodName(String mapName) {
-		
-		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1); 
+
+		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1);
 	}
-	
+
 	private String getWikiLinkTip(String displayName,String jobName,String message) {
 		String wikiLinkTipStr = null;
 		if (message != null)
-		{	
-			wikiLinkTipStr = "'[" + displayName +"|"+ getLink(jobName)+"|" + formatMessage(message) + "]'";			
+		{
+			wikiLinkTipStr = "'[" + displayName +"|"+ getLink(jobName)+"|" + formatMessage(message) + "]'";
 		}
 		else
 		{
@@ -86,10 +86,10 @@ public class BuildCertificationHelper {
 		{
 			return BuildCertificationConstants.WIKI_FAILED;
 		}
-			
 
-	}	
-	
+
+	}
+
 	private void invokeSetAllMethods(ProjectCertificationStatus pbs,String methodName,String certificationStatus) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
 
@@ -129,52 +129,52 @@ public class BuildCertificationHelper {
 	}
 
 	public void updateProjectBuildStatus() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
-	{				
+	{
 		ProjectCertificationStatus pbs = null;
-		String searchProject = null;
-		String projectUrl = null;
-		String projectName = bmb.getProjectName();		
-		String mapName = bmb.getMapName();				
+		String projectName = bmb.getProjectName();
+		String mapName = bmb.getMapName();
 		String methodName = getSetMethodName(mapName);
-		
+		String searchProject = "%"+projectName+"|%";
+		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
+/*
 		if(isReachble(bmb.getProjectRepoUrl()))
 		{
 			searchProject = "%"+projectName+"|%";
-			projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";			
+			projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
 		}
 		else
 		{
 			searchProject = "%"+projectName+"{color}|%";
 			projectUrl = "'[{color:red}" + projectName +"{color}|"+ bmb.getProjectRepoUrl()+"]'";
 		}
+*/
 
-		
 		certLogger.info("Update the Build Status for the feature :::::::" + mapName);
 		certLogger.info("check isValue:::::::" +bmb.isValue());
 		certLogger.info("check isOptional:::::::" +bmb.isOptional());
 		certLogger.info("get property value if .is.value is true:::::::" +bmb.getPropertyValue());
-		certLogger.info("get the project URL:::::::" +projectUrl);		
+		certLogger.info("get the project URL:::::::" +projectUrl);
 		certLogger.info("FailureMessage:::::::" +bmb.getFailureMessage());
-				
+
 		Session session = HibernateUtil.getSession();
-	    session.beginTransaction(); 		    
-	    	    
+	    session.beginTransaction();
+
 	    certLogger.info("Retrive the certification record from the database");
 	    Query query = session.createQuery( BuildCertificationConstants.CERTIFICATION_QUERY);
 	    query.setString(0, searchProject);
 		pbs= (ProjectCertificationStatus) query.uniqueResult();
 		certLogger.info("Clear the session");
 		session.clear();
-		
-		if (!bmb.isBuildSuccessful()) 
-		{	
+
+		if (!bmb.isBuildSuccessful())
+		{
 			certLogger.info("Certification Feature Failed");
 			// build failed
 			if(pbs != null )
 			{
 				certLogger.info("Project exists ");
 				invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
-		    	//update the project URL on update					
+		    	//update the project URL on update
 				setProductValue(pbs,projectUrl);
 		    	session.update(pbs);
 		    }
@@ -184,27 +184,27 @@ public class BuildCertificationHelper {
 		    	pbs = new ProjectCertificationStatus();
 		    	invokeSetAllMethods(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
 		    	setProductValue(pbs,projectUrl);
-		    	session.save(pbs);		
-		    }		    
+		    	session.save(pbs);
+		    }
 		}
 		else
-		{	
+		{
 			certLogger.info("Certification Feature Successful");
-			// build successful			
+			// build successful
 			if(pbs != null )
-			{	
+			{
 				certLogger.info("Project exists ");
 		    	invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
 		    	//update the project URL on update
 		    	setProductValue(pbs,projectUrl);
 		    	session.update(pbs);
-		    	
+
 		    }
 		    else
 		    {
 		    	certLogger.info("New Project ");
 		    	pbs = new ProjectCertificationStatus();
-		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);		    	
+		    	invokeSetAllMethods(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
 		    	setProductValue(pbs,projectUrl);
 		    	session.save(pbs);
 		    }
@@ -213,13 +213,13 @@ public class BuildCertificationHelper {
 		invokeSetMethodValue(pbs,"setCertificationStatus",getWikiProjectCertificationStatus());
 		session.update(pbs);
 		certLogger.info("Commit to Database");
-	    session.getTransaction().commit();  
+	    session.getTransaction().commit();
 	}
 
 	private boolean isReachble(String projectRepoUrl) {
       try
-        {	
-	  	  URL url = new URL(projectRepoUrl);    	  
+        {
+	  	  URL url = new URL(projectRepoUrl);
 	      System.out.println("Testing to see if URL connects::"+ projectRepoUrl);
 	      HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 	      System.out.println("Created HttpURLConnection object");
@@ -237,9 +237,9 @@ public class BuildCertificationHelper {
 	   }
       catch (Exception ex)
       {
-      	ex.printStackTrace(); 
-      	return false;      	 
+      	ex.printStackTrace();
+      	return false;
       }
-	}	
-	
+	}
+
 }
