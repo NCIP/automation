@@ -1123,6 +1123,7 @@ $HeadURL$
 		  * Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install, if you want properties to be used at install time they must be included in a proeprties file.
 		-->
 		<!-- Call macro to deploy files on desired server -->
+		<echoproperties prefix="ssh"/>
 		<deploy-files dist.file="${bda-blueprints-webapp.upgrade.zip.file}" />
 		<!-- SSH to machine ant run ant command line to install application -->
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
@@ -1233,5 +1234,51 @@ $HeadURL$
 			/>
 		<tomcat-version
 			/>
+	</target>
+	<target name="temp:sql">
+		<switch value="${ssaksa.database.type}">
+			<case value="oracle">
+				<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
+				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="database.schema" value="${database.name}"/>
+			</case>
+			<case value="mysql">
+				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.8.jar"/>
+				<property name="database.driver" value="com.mysql.jdbc.Driver"/>
+				<property name="database.schema" value="${database.name}"/>
+			</case>
+			<case value="postgresql">
+				<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/postgresql-8.3-603.jdbc3.jar"/>
+				<property name="database.driver" value="org.postgresql.Driver"/>
+				<property name="database.schema" value="public"/>
+			</case>
+			<default>
+				<fail message="Invalid database type ${database.type}"/>
+			</default>
+		</switch>
+		<path id="jdbc.driver.classpath">
+			<pathelement location="${database.driver.file}"/>
+		</path>
+	
+		<!-- sql.delimiter ; / -->
+		<!-- sql.delimitertype normal row -->
+		<sql driver="${database.driver}"
+			url="${ssaksa.database.url}"
+			userid="${ssaksa.database.user}"
+			password="${ssaksa.database.password}"
+			src="${sql.file}"
+			onerror="abort"
+			autocommit="true"
+			delimiter=";"
+			delimitertype="normal"
+			keepformat="true">
+			<classpath>                     
+				<pathelement location="${database.driver.file}"
+					/>
+			</classpath>                    
+		</sql>                  
 	</target>
 </project>
