@@ -92,13 +92,17 @@ class CertificationUtils
 		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
 		def installProject = new XmlParser().parse(installFile)
 
-		ant.property(file: projectPropertiesFile)
-		println project.properties['application.url']	
+		ant.property(file: projectPropertiesFile)		
 		def applicationUrl = project.properties['application.url']
+		println "application.url:" + applicationUrl
 		if(applicationUrl)
 		{					
 			ant.runseliniumtest(hostname:applicationUrl)
-		}					
+		}
+		else
+		{
+			ant.fail("Cannot find the application.url: " + applicationUrl + "to run the test")
+		}
 		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:grid'))
 		{
 			println "Run the selenium test for the jboss server"
