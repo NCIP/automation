@@ -98,6 +98,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.install.init.target','common:common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.build:database-integration.macro.list','install:database');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
@@ -651,7 +652,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.project.url','http://gforge.nci.nih.gov/svnroot/caaersappdev/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.project.url','http://gforge.nci.nih.gov/svnroot/caaersappdev/trunk/caAERS');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.build.location','${ccts-caaers.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.install.location','working/installer');
