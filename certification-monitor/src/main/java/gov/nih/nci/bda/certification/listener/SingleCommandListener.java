@@ -19,7 +19,7 @@ public class SingleCommandListener implements BuildListener {
 	private Log certLogger = LogFactory.getLog(SingleCommandListener.class);
 
 	ArrayList taskList = new ArrayList();
-	
+
 	public void buildFinished(BuildEvent event) {
 	}
 
@@ -49,12 +49,12 @@ public class SingleCommandListener implements BuildListener {
 		String projectName = event.getProject().getProperty("project.name");
 		String projectUrl = event.getProject().getProperty("svn.project.url");
 		String macroList = event.getProject().getProperty( event.getTarget().getName() + ".macro.list");
-		
+
 		certLogger.info(" Populating  projectName :" + projectName);
 		certLogger.info(" Populating ProjectUrl " + projectUrl);
 		certLogger.info(" macroList " + macroList);
 		certLogger.info(" property name " + event.getProject().getProperty( event.getTarget().getName() + ".macro.list"));
-		
+
 		certLogger.info(" Check and populate if the feature is optional ");
 		if (event.getProject().getProperty("is.optional") != null
 				&& event.getProject().getProperty("is.optional").equals("true")) {
@@ -62,7 +62,7 @@ public class SingleCommandListener implements BuildListener {
 		} else {
 			bmb.setOptional(false);
 		}
-		
+
 		certLogger.info(" Check and populate the status of the feature and the certification ");
 		if (event.getException() != null || !checkMacroList(macroList,event)) {
 			certLogger.info(" macro list value False " + checkMacroList(macroList,event));
@@ -73,7 +73,7 @@ public class SingleCommandListener implements BuildListener {
 				CertificationManager.projectCertificationStatus = false;
 			}
 			//bmb.setValue(false);
-		} else {		
+		} else {
 			bmb.setBuildSuccessful(true);
 			certLogger.info(" macro list value TURE " + checkMacroList(macroList,event));
 			certLogger.info(" Check and populate the status of the feature and the certification ");
@@ -83,7 +83,7 @@ public class SingleCommandListener implements BuildListener {
 				CertificationManager.projectCertificationStatus = true;
 			}
 			certLogger.info(" Check and Set certification.property.value only when the feature build is successful :" +event.getProject().getProperty("certification.property.value"));
-			
+
 		}
 		if (event.getProject().getProperty("is.value") != null
 				&& event.getProject().getProperty("is.value")
@@ -109,6 +109,7 @@ public class SingleCommandListener implements BuildListener {
 	}
 
 	private boolean checkMacroList(String macroList,BuildEvent event) {
+		/*
 		if (macroList != null)
 		{
 			String macroArray[] = macroList.split(",");
@@ -116,10 +117,11 @@ public class SingleCommandListener implements BuildListener {
 				if (!taskList.contains(macroArray[i])){
 					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
 					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
-					return false;					
+					return false;
 				}
 			}
 		}
+		*/
 		String execTaskList = event.getProject().getProperty("task.list");
 		if(execTaskList != null && execTaskList.equals(""))
 		{
@@ -128,9 +130,9 @@ public class SingleCommandListener implements BuildListener {
 				if (!execTaskList.contains(macroArray[i])){
 					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
 					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
-					return false;					
+					return false;
 				}
-			}			
+			}
 		}
 		return true;
 	}
@@ -174,7 +176,7 @@ public class SingleCommandListener implements BuildListener {
 		}
 	}
 
-	public void targetStarted(BuildEvent event) {	
+	public void targetStarted(BuildEvent event) {
 		System.out.println("TARGET "+event.getTarget().getName()+" STARTED....");
 	}
 
@@ -183,10 +185,10 @@ public class SingleCommandListener implements BuildListener {
 	}
 
 	private void addTask(String taskName) {
-		taskList.add(taskName);		
+		taskList.add(taskName);
 	}
 
-	public void taskStarted(BuildEvent event) {		
+	public void taskStarted(BuildEvent event) {
 	}
 
 }
