@@ -224,29 +224,11 @@
 	<target name="build:single-command-build" depends="init">		
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 			<arg value="${single-command.build.target}" />			
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<redirector outputproperty="redirector.out">
-			</redirector>
 		</exec>
 		<echo message="START BUILD"/>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
 			<arg value="${single-command.build.target}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<redirector outputproperty="redirector.out">
-			</redirector>
 		</exec>
-
-		<echo message="REDIRECTOR::::${redirector.out}"/>
-
-		<propertyregex property="task.list"
-		      input="${redirector.out}"
-		      regexp="(?s).*START FROM THE TASKLISTENER(.*)END FROM THE TASKLISTENER.*$"
-		      select="\1"/>
-
-		<echo message="TASK LIST::::${task.list}"/>
-
 	</target>
 
 	<target name="clean-deployments">		
