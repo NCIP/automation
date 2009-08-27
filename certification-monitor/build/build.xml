@@ -302,6 +302,9 @@
 	<!--
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkDBIntegration"/>		
 	-->
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
+		<delete dir="${user.home}/apps"/>
+		
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
 			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
