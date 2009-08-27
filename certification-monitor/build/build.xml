@@ -293,7 +293,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.deployment.target}" />			
 		</exec>
 
 	</target>
@@ -318,6 +318,8 @@
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="${single-command.deployment.target}" />
+			<redirector outputproperty="redirector.out">
+			</redirector>			
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
@@ -332,7 +334,17 @@
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="${single-command.deployment.target}" />
+			<redirector outputproperty="redirector.out">
+			</redirector>
 		</exec>
+		<echo message="REDIRECTOR::::${redirector.out}"/>
+
+		<propertyregex property="task.list"
+		      input="${redirector.out}"
+		      regexp="(?s).*START FROM THE TASKLISTENER(.*)END FROM THE TASKLISTENER.*$"
+		      select="\1"/>
+
+		<echo message="TASK LIST::::${task.list}"/>		
 		
 	</target>
 
