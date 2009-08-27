@@ -318,7 +318,7 @@
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="${single-command.deployment.target}" />
-			<redirector outputproperty="redirector.out">
+			<redirector outputproperty="redirector1.out">
 			</redirector>			
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
@@ -334,13 +334,13 @@
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="${single-command.deployment.target}" />
-			<redirector outputproperty="redirector.out">
+			<redirector outputproperty="redirector1.out">
 			</redirector>
 		</exec>
-		<echo message="REDIRECTOR::::${redirector.out}"/>
+		<echo message="REDIRECTOR::::${redirector1.out}"/>
 
 		<propertyregex property="task.list"
-		      input="${redirector.out}"
+		      input="${redirector1.out}"
 		      regexp="(?s).*START FROM THE TASKLISTENER(.*)END FROM THE TASKLISTENER.*$"
 		      select="\1"/>
 
