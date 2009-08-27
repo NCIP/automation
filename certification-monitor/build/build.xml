@@ -226,8 +226,6 @@
 			<arg value="${single-command.build.target}" />			
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<redirector outputproperty="redirector.out">
 			</redirector>
 		</exec>
@@ -236,8 +234,6 @@
 			<arg value="${single-command.build.target}" />
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<redirector outputproperty="redirector.out">
 			</redirector>
 		</exec>
@@ -320,8 +316,6 @@
 			<arg value="${single-command.deployment.target}" />
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<redirector outputproperty="redirector1.out">
 			</redirector>			
 		</exec>
@@ -340,8 +334,6 @@
 			<arg value="${single-command.deployment.target}" />
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
 			<redirector outputproperty="redirector1.out">
 			</redirector>
 		</exec>
