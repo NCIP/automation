@@ -318,6 +318,10 @@
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="${single-command.deployment.target}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
 			<redirector outputproperty="redirector1.out">
 			</redirector>			
 		</exec>
@@ -334,6 +338,10 @@
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg value="${single-command.deployment.target}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
+			<arg value="-lib" />
+			<arg value="${build.dir}/.." />
 			<redirector outputproperty="redirector1.out">
 			</redirector>
 		</exec>

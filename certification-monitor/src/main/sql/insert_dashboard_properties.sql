@@ -98,7 +98,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.install.init.target','common:common:init');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.build:database-integration.macro.list','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncia.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
