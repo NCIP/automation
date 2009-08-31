@@ -1,0 +1,11 @@
+BDA Blueprints Home Page Test
+
+!|com.neuri.webfixture.PlainSeleniumTest|
+
+!include -c .VariableDefinitions
+
+!|start browser|${browser}|localhost|4444|${bdaserver}|
+
+!|open|${bdaserver}/bda-blueprints-webapp|
+
+|verifyTextPresent|Online Research Manager|
