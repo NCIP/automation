@@ -457,7 +457,7 @@ $HeadURL$
 						<arg line="./run.sh -c @{jboss.server.name}" />
 					</exec>
 
-					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
+					<exec osfamily="windows" executable="${bda-utils.resource.dir}/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
 						<env key="JBOSS_HOME" value=""/>
 						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat -c @{jboss.server.name}" />
@@ -1591,8 +1591,8 @@ $HeadURL$
 				<env key="CATALINA_TMPDIR" value=""/>
 				<arg line="startup.sh" />
 			</exec>
-			<echo message="executing ${bda-utils.dir}/resource/psexec.exe"/>
-			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{tomcat.home}/bin" spawn="true" >
+			<echo message="executing ${bda-utils.resource.dir}/psexec.exe"/>
+			<exec osfamily="windows" executable="${bda-utils.resource.dir}/psexec.exe" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
 				<env key="CATALINA_BASE" value=""/>
 				<env key="CATALINA_HOME" value=""/>
@@ -2339,7 +2339,7 @@ $HeadURL$
 
 	<!--
 	fusebox-metrics macro will generate graphical representation of the static analysis for the project
-		usage: <fusebox-matrix fusebox.config.file="${bda-utils.dir}/resource/fusemetrics_config.xml" fusebox.template.file="${bda-utils.dir}/resource/dashboard.tmpl" fusebox.output.dir="${basedir}/target/output" fusebox.persist.dir="${basedir}/target/persist" fusebox.search.dir="${basedir}/reports"/>
+		usage: <fusebox-matrix fusebox.config.file="${bda-utils.resource.dir}/fusemetrics_config.xml" fusebox.template.file="${bda-utils.resource.dir}/dashboard.tmpl" fusebox.output.dir="${basedir}/target/output" fusebox.persist.dir="${basedir}/target/persist" fusebox.search.dir="${basedir}/reports"/>
 		fusebox.config.file is the location of the config file.
 		fusebox.project.name is the name of the project and the macro configures it into the config file.
 		fusebox.search.dir is the location of the resulted XML files from the static analysis.
@@ -4287,7 +4287,7 @@ $HeadURL$
 				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}" />
 			</exec>
 			<!-- ant returns exit code zero on failure to psexec, issue still lives on
-			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{install.dir}" failonerror="true">
+			<exec osfamily="windows" executable="${bda-utils.resource.dir}/psexec.exe" dir="@{install.dir}" failonerror="true">
 				<arg line="ant.bat -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}"/>
 			</exec>
 			-->
