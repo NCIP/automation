@@ -177,9 +177,27 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
     {
         this.packOpLabel.setText(error);
         idata.installSuccess = false;
-        JOptionPane.showMessageDialog(this, error, parent.langpack.getString("installer.error"),
-                JOptionPane.ERROR_MESSAGE);
+        JOptionPane optionPane = getNarrowOptionPane(100);
+        optionPane.setMessage(error);
+        optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        JDialog dialog = optionPane.createDialog(this, parent.langpack.getString("installer.error"));
+        dialog.setVisible(true);
     }
+
+    public static JOptionPane getNarrowOptionPane(final int maxCharactersPerLineCount) {
+        // inner class definition
+        class NarrowOptionPane extends JOptionPane {
+            int maxCharactersPerLineCount;
+            NarrowOptionPane(final int maxCharactersPerLineCount) {
+                this.maxCharactersPerLineCount = maxCharactersPerLineCount;
+            }
+            public int getMaxCharactersPerLineCount() {
+                return maxCharactersPerLineCount;
+            }
+        }
+        return new NarrowOptionPane(maxCharactersPerLineCount);
+    }
+
 
     /**
      * The unpacker stops.

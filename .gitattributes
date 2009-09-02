@@ -2717,11 +2717,13 @@ software/bda-installer/src-custom-4.3/resources/Licence.html -text
 software/bda-installer/src-custom-4.3/resources/ProgressBarInstallerListener.xml -text
 software/bda-installer/src-custom-4.3/resources/eng.xml -text
 software/bda-installer/src-custom/com/izforge/izpack/event/AntAction.java -text
+software/bda-installer/src-custom/com/izforge/izpack/installer/IzPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/ExtendedInstallPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/InstallPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/MySQLColumnValueAnalyzerPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/MySQLDatabaseInfoExtractionPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/panels/UserInputPanel.java -text
+software/bda-installer/src-custom/com/izforge/izpack/panels/UserPathSelectionPanel.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/AntLogListener.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/ArtifactExistsRelativeToDirValidator.java -text
 software/bda-installer/src-custom/com/izforge/izpack/util/DBConnectionValidator.java -text
