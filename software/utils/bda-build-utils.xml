@@ -302,8 +302,9 @@ $HeadURL$
 		<attribute name="remoteSshUser" default="${ssh.server.username}" />
 		<attribute name="remoteSshKeyfile" default="${ssh.key.file}" />
 		<attribute name="remoteSshSleep" default="5" />
+		<attribute name="remoteSshPassPhrase" default="${ssh.key.passphrase}"/>
 		<sequential>
-			<sshexec port="@{remoteSshPort}" host="@{remoteSshHost}" username="@{remoteSshUser}" keyfile="@{remoteSshKeyfile}" trust="true" passphrase="" verbose="true" command="@{remoteSshCommand}" />
+			<sshexec port="@{remoteSshPort}" host="@{remoteSshHost}" username="@{remoteSshUser}" keyfile="@{remoteSshKeyfile}" trust="true" passphrase="@{remoteSshPassPhrase}" verbose="true" command="@{remoteSshCommand}" />
 			<sleep seconds="@{remoteSshSleep}" />
 			<echo message="Performed @{remoteSshCommand} command on @{remoteSshHost}:@{remoteSshPort} using SSH..." />
 		</sequential>
@@ -319,7 +320,7 @@ $HeadURL$
 		<attribute name="remoteScpFileToCopy" />
 		<attribute name="remoteScpToDir" />
 		<attribute name="remoteScpKeyFile" default="${ssh.key.file}" />
-		<attribute name="remoteScpPassphrase" default="" />
+		<attribute name="remoteScpPassphrase" default="${ssh.key.passphrase}" />
 		<attribute name="remoteScpTrust" default="true" />
 		<attribute name="remoteScpVerbose" default="true" />
 		<attribute name="remoteScpSleep" default="5"  />
@@ -4302,6 +4303,7 @@ $HeadURL$
 		<attribute name="dist.file" />
 		<attribute name="ssh.port" default="22"/>
 		<attribute name="ssh.key.file" default="${ssh.key.file}"/>
+		<attribute name="ssh.key.passphrase" default="${ssh.key.passphrase}"/>
 		<sequential>
 			<!-- Validate remote directory is valid -->
 			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" override="true" />
@@ -4310,24 +4312,37 @@ $HeadURL$
 			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
+				remoteSshKeyfile="@{ssh.key.file}"
+				remoteSshPassPhrase="@{ssh.key.passphrase}"
 				remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
 			<!-- work around for issue where basedir is required but is not currently used -->
 			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
+				remoteSshKeyfile="@{ssh.key.file}"
+				remoteSshPassPhrase="@{ssh.key.passphrase}"
 				remotesshcommand="mkdir -p ${remote.dir}/lib" />
 
 			<!-- copy distribution and prop file to remote system -->
 			<remote-scp
-				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}"
+				remoteScpKeyFile="@{ssh.key.file}"
+				remoteScpPassphrase="@{ssh.key.passphrase}"
+				/>
+
 			<!-- Extract zip file -->
 			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
+				remoteSshKeyfile="@{ssh.key.file}"
+				remoteSshPassPhrase="@{ssh.key.passphrase}"
 				remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
 			<!-- copy properties after unzip to ensure that zip does not prompt for file existence if properties file is already in distribution. -->
 			<remote-scp
-				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}"
+				remoteScpKeyFile="@{ssh.key.file}"
+				remoteScpPassphrase="@{ssh.key.passphrase}"
+				/>
 		</sequential>
 	</macrodef>
 	<macrodef name="dist-prep" description="Macro for copying files to dist area">
@@ -8221,7 +8236,7 @@ $HeadURL$
 					<echo message="Signing jars in an archive"/>
 					<var name="archive.working.dir" unset="true"/>
 					<var name="archive.file" unset="true"/>
-					<basename file="@{jars.archive.file}" property="archive.file}"/>
+					<basename file="@{jars.archive.file}" property="archive.file"/>
 					<property name="archive.working.dir" value="@{working.dir}/tmp/${archive.file}.dir"/>
 					<mkdir dir="${archive.working.dir}"/>
 					<delete dir="${archive.working.dir}"/>
