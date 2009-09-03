@@ -2830,7 +2830,6 @@ software/provisioner-app/deploy/bda-lib/xercesImpl-2.9.1.jar -text
 software/provisioner-app/deploy/bda-lib/xml-apis-1.3.04.jar -text
 software/provisioner-app/deploy/bda-lib/xml-commons-resolver-1.2.jar -text
 software/provisioner-app/deploy/bda-lib/xmltask-1.15.1.jar -text
-software/provisioner-app/deploy/build.xml -text
 software/provisioner-app/deploy/package.xml -text
 software/provisioner-app/deploy/project.properties -text
 software/provisioner-app/deploy/taskdefs.xml -text
