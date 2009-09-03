@@ -46,11 +46,14 @@
 		  <checkout url="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/provisioner-app/" recurse="true" destPath="${dist.dir}" />
 		</svn>
 
-		<mkdir dir="${dist.dir}/grails" />
+		<!--><mkdir dir="${dist.dir}/grails" />
         <get src="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/other/grails-bin-1.1.zip"
             dest="${dist.dir}/grails/grails-bin-1.1.zip" usetimestamp="true" verbose="true"/>
 	    <unzip src="${dist.dir}/grails/grails-bin-1.1.zip" dest="${dist.dir}/grails">
 		</unzip>
+		
+		<chmod dir="${dist.dir}/grails" perm="777" includes="**/*.sh"/>
+		-->
 		
 		<!-- Run grails clean, grails war locally -->
 		<exec osfamily="unix" executable="grails" dir="${dist.dir}">
@@ -91,7 +94,7 @@
 			remoteSshHost="${ssh.server.hostname}"
 			remoteSshUser="${ssh.server.username}"
 			remoteSshPassword="${ssh.server.password}"
-			remotesshcommand=". /mnt/hudsonuser/.bash_profile;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup &" />
+			remotesshcommand=". /mnt/hudsonuser/.bash_profile;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh &amp;" />
 	</target>
 	
 
