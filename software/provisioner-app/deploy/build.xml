@@ -12,11 +12,7 @@
 	<property file="project.properties" />
 	
 	<property name="build.dir" location="." />
-	<property name="temp.dir" location="${build.dir}/temp" />
-	<property name="log.dir" location="${build.dir}/logs" />
 	<property name="dist.dir" location="${build.dir}/dist" />
-	<property name="download.dir" location="${build.dir}/download" />
-	<property name="working.dir" location="${build.dir}/working" />
 	<property name="bda-lib.dir" location="${build.dir}/bda-lib" />
 	
 	<import file="${build.dir}/taskdefs.xml" />
@@ -24,6 +20,7 @@
 	
 	
 	<target name="init" description="Sets up build are and initalizes variables">
+	    <delete dir="${dist.dir}" includes="**/*"/>
 		<mkdir dir="${dist.dir}" />
 	</target>
 	
@@ -45,20 +42,34 @@
 		
 		
 		<!-- Perform clean checkout of source from SVN locally -->
-		   <svn username="${svn.username}" password="${svn.password}">
-			<checkout url="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/provisioner-app/" recurse="true" destPath="${dist.dir}" />
-		   </svn>
+		<svn username="${svn.username}" password="${svn.password}">
+		  <checkout url="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/provisioner-app/" recurse="true" destPath="${dist.dir}" />
+		</svn>
+
+		<mkdir dir="${dist.dir}/grails" />
+        <get src="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/other/grails-bin-1.1.zip"
+            dest="${dist.dir}/grails/grails-bin-1.1.zip" usetimestamp="true" verbose="true"/>
+	    <unzip src="${dist.dir}/grails/grails-bin-1.1.zip" dest="${dist.dir}/grails">
+		</unzip>
 		
 		<!-- Run grails clean, grails war locally -->
-		<exec osfamily="unix" executable="grails" dir="..">
+		<exec osfamily="unix" executable="grails" dir="${dist.dir}">
 		       <arg line="clean" />
 		</exec>
-		<exec osfamily="unix" executable="grails" dir="..">
+		<exec osfamily="unix" executable="grails" dir="${dist.dir}">
+		       <arg line="war" />
+		</exec>
+
+		<exec osfamily="windows" executable="grails" dir="${dist.dir}">
+		       <arg line="clean" />
+		</exec>
+		<exec osfamily="windows" executable="grails" dir="${dist.dir}">
 		       <arg line="war" />
 		</exec>
 		<!-- Delete, download and copy Grails 1.1 Assumes Grails 1.1 is in user profile -->
 		<!-- ./hudson/application/apache-tomcat-5.5.20/bin/shutdown.sh -->
-		<!-- Shutdown Tomcat -->
+		<!-- Shutdown Tomcat -->  
+
 		<remote-ssh
 			remoteSshHost="${ssh.server.hostname}"
 			remoteSshUser="${ssh.server.username}"
@@ -72,7 +83,7 @@
 			remotesshcommand="rm -rf /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/provisioner*" />
 		<!-- copy WAR file to remote system -->
 		<remote-scp
-			remoteScpFileToCopy="../provisioner-app-0.1.war" 
+			remoteScpFileToCopy="${dist.dir}/provisioner-app-0.1.war" 
 			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/" 
 			remoteScpPassword="${ssh.server.password}"/>
 		<!-- Startup Tomcat -->
@@ -80,7 +91,7 @@
 			remoteSshHost="${ssh.server.hostname}"
 			remoteSshUser="${ssh.server.username}"
 			remoteSshPassword="${ssh.server.password}"
-			remotesshcommand=". /mnt/hudsonuser/.bash_profile;/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh" />
+			remotesshcommand=". /mnt/hudsonuser/.bash_profile;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup &" />
 	</target>
 	
 
