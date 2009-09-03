@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<project name="build-template" default="deploy:remote:install" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" >
+	<description>
+		 This is the master build file for the project. These scripts require Java, Ant, Database and SVN to work.
+	</description>
+
+	<!-- Property file related properties and tasks -->
+	<property environment="env" />
+	<property file="local.properties" />
+	<property file="project.properties" />
+	
+	<property name="build.dir" location="." />
+	<property name="temp.dir" location="${build.dir}/temp" />
+	<property name="log.dir" location="${build.dir}/logs" />
+	<property name="dist.dir" location="${build.dir}/dist" />
+	<property name="download.dir" location="${build.dir}/download" />
+	<property name="working.dir" location="${build.dir}/working" />
+	<property name="bda-lib.dir" location="${build.dir}/bda-lib" />
+	
+	<import file="${build.dir}/taskdefs.xml" />
+	<import file="${build.dir}/utils.xml" />
+	
+	
+	<target name="init" description="Sets up build are and initalizes variables">
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${dist.exploded.dir}" />
+		<mkdir dir="${common.dist.dir}" />
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${download.dir}" />
+	</target>
+	
+	
+	<target name="deploy:remote:install" description="Deploys on the remote machine" depends="init">
+		<!-- Delete/re-create remote directory -->
+		<!-- svn co http://gforge.nci.nih.gov/svnroot/automation/trunk/software/provisioner-app/ (LOCALLY) -->
+		<!-- Run grails clean grails war (LOCALLY) -->
+		<!--ssh hudsonuser@ec2-174-129-239-140.compute-1.amazonaws.com
+		./hudson/application/apache-tomcat-5.5.20/bin/shutdown.sh
+		cd /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps
+		rm -R provisioner*
+		 -->
+		<!-- scp provisioner-app-0.1.war hudsonuser@ec2-174-129-239-140.compute-1.amazonaws.com:/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps
+		 -->
+		<!-- From user home on remote machine, run ./hudson/application/apache-tomcat-5.5.20/bin/startup.sh
+		 -->
+		
+		
+		
+		<!-- Perform clean checkout of source from SVN locally -->
+		   <svn username="${svn.username}" password="${svn.password}">
+			<checkout url="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/provisioner-app/" recurse="true" destPath="${dist.dir}" />
+		   </svn>
+		
+		<!-- Run grails clean, grails war locally -->
+		<exec osfamily="unix" executable="grails">
+		       <arg line="clean" />
+		</exec>
+		<exec osfamily="unix" executable="grails">
+		       <arg line="war" />
+		</exec>
+		<!-- Delete, download and copy Grails 1.1 Assumes Grails 1.1 is in user profile -->
+		<!-- TBD -->
+		<!-- Shutdown Tomcat -->
+		<remote-ssh
+			remoteSshHost="${ssh.server.hostname}"
+			remoteSshUser="${ssh.server.username}"
+			remoteSshPassword="${ssh.server.password}"
+			remotesshcommand="./hudson/application/apache-tomcat-5.5.20/bin/shutdown.sh" />
+		<!-- Delete provisioner application deployments on remote machine -->
+		<remote-ssh
+			remoteSshHost="${ssh.server.hostname}"
+			remoteSshUser="${ssh.server.username}"
+			remoteSshPassword="${ssh.server.password}"
+			remotesshcommand="rm -rf /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/provisioner*" />
+		<!-- copy WAR file to remote system -->
+		<remote-scp
+			remoteScpFileToCopy="${basedir}/provisioner-app-0.1.war" 
+			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${ssh.dir.temp}" 
+			remoteScpPassword="${ssh.server.password}"/>
+		<!-- Startup Tomcat -->
+		<remote-ssh
+			remoteSshHost="${ssh.server.hostname}"
+			remoteSshUser="${ssh.server.username}"
+			remoteSshPassword="${ssh.server.password}"
+			remotesshcommand="./hudson/application/apache-tomcat-5.5.20/bin/startup.sh" />
+	</target>
+	
+
+</project>
