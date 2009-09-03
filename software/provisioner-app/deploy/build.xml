@@ -86,7 +86,7 @@
 			remotesshcommand="rm -rf /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/provisioner*" />
 		<!-- copy WAR file to remote system -->
 		<remote-scp
-			remoteScpFileToCopy="${dist.dir}/provisioner-app-0.1.war" 
+			remoteScpFileToCopy="${dist.dir}/provisioner.war" 
 			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/" 
 			remoteScpPassword="${ssh.server.password}"/>
 		<!-- Startup Tomcat -->
