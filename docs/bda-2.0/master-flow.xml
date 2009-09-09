@@ -1,0 +1,43 @@
+<project name="projectname">
+	<project-details>
+		<contacts>
+			<contact name="" type="tech|pm"/>
+		</projects>
+		<repository-url/>
+		<sub-projects>
+			<sub-project>
+			</sub-project>
+		</sub-projects>
+		<database-containers numofcontainers="">
+			<supported-types>
+				<supported-type type="type" min-version=""/>
+			</supported-types>
+			<database-container prefix="prefix"/>
+		</database-containers>
+		<jboss-containers numofcontainers="">
+			<jboss-container prefix="prefix" version="version"/>
+		</jboss-containers>
+		<tomcat-containers numofcontainers="">
+			<jboss-container prefix="prefix" version="version"/>
+		<tomcat-containers>
+	</project-detail>
+	<build-steps>
+		<build>
+		</build>
+		<test>
+		</test>
+		<static-analysis>
+		</static-analysis>
+		 <dist>
+		 </dist>
+		 <deploy>
+		 </deploy>
+		 <utility>
+		 </utility>
+		 <other>
+		 </other>
+	</build-steps>
+	<install-steps>
+		 <> 
+	</install-steps>
+</project>
