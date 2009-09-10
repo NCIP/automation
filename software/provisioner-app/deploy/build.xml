@@ -7,6 +7,7 @@
 	</description>
 
 	<!-- Property file related properties and tasks -->
+	<get src="http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/properties/ws/properties/local.properties" dest="." />
 	<property environment="env" />
 	<property file="local.properties" />
 	<property file="project.properties" />
@@ -26,34 +27,11 @@
 	
 	
 	<target name="deploy:remote:install" description="Deploys on the remote machine" depends="init">
-		<!-- Delete/re-create remote directory -->
-		<!-- svn co http://gforge.nci.nih.gov/svnroot/automation/trunk/software/provisioner-app/ (LOCALLY) -->
-		<!-- Run grails clean grails war (LOCALLY) -->
-		<!--ssh hudsonuser@ec2-174-129-239-140.compute-1.amazonaws.com
-		./hudson/application/apache-tomcat-5.5.20/bin/shutdown.sh
-		cd /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps
-		rm -R provisioner*
-		 -->
-		<!-- scp provisioner-app-0.1.war hudsonuser@ec2-174-129-239-140.compute-1.amazonaws.com:/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps
-		 -->
-		<!-- From user home on remote machine, run ./hudson/application/apache-tomcat-5.5.20/bin/startup.sh
-		 -->
-		
-		
 		
 		<!-- Perform clean checkout of source from SVN locally -->
 		<svn username="${svn.username}" password="${svn.password}">
 		  <checkout url="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/provisioner-app/" recurse="true" destPath="${dist.dir}" />
 		</svn>
-
-		<!--><mkdir dir="${dist.dir}/grails" />
-        <get src="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/other/grails-bin-1.1.zip"
-            dest="${dist.dir}/grails/grails-bin-1.1.zip" usetimestamp="true" verbose="true"/>
-	    <unzip src="${dist.dir}/grails/grails-bin-1.1.zip" dest="${dist.dir}/grails">
-		</unzip>
-		
-		<chmod dir="${dist.dir}/grails" perm="777" includes="**/*.sh"/>
-		-->
 		
 		<!-- Run grails clean, grails war locally -->
 		<exec osfamily="unix" executable="grails" dir="${dist.dir}">
@@ -69,9 +47,6 @@
 		<exec osfamily="windows" executable="grails" dir="${dist.dir}">
 		       <arg line="war" />
 		</exec>
-		<!-- Delete, download and copy Grails 1.1 Assumes Grails 1.1 is in user profile -->
-		<!-- ./hudson/application/apache-tomcat-5.5.20/bin/shutdown.sh -->
-		<!-- Shutdown Tomcat -->  
 
 		<remote-ssh
 			remoteSshHost="${ssh.server.hostname}"
