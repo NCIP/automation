@@ -20,7 +20,7 @@ $HeadURL$
 	<property name="upgrade.properties.file" value="upgrade.properties"/>
 	<echo message="Using properties file of ${properties.file}." />
 	<available file="${properties.file}" property="properties.file.exists" />
-	<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail." />
+	<!--<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail." /> -->
 
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2" />
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2" />
@@ -1125,8 +1125,12 @@ $HeadURL$
 		<!-- Call macro to deploy files on desired server -->
 		<echoproperties prefix="ssh"/>
 		<deploy-files dist.file="${bda-blueprints-webapp.upgrade.zip.file}" />
+		<override-properties-prep
+			override.properties="@{override.properties}"
+			override.properties.string.property.name="override.properties.string"
+			/>
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
+		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${override.properties.string} ${upgrade.target}" />
 	</target>
 	<target name="temp-read-bindings">
 		<xmltask preservetype="true" source="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml">
@@ -1280,5 +1284,10 @@ $HeadURL$
 					/>
 			</classpath>                    
 		</sql>                  
+	</target>
+	<target name="temp:override">
+		<property name="override.properties" value="prop1=val1,prop2=val2"/>
+		<override-properties-prep
+			/>
 	</target>
 </project>
