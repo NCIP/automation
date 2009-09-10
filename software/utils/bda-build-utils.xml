@@ -4248,6 +4248,7 @@ $HeadURL$
 		<attribute name="target.name" />
 		<attribute name="enable.install.debug" default="${enable.install.debug}"/>
 		<attribute name="enable.install.timing" default="${enable.install.timing}"/>
+		<attribute name="override.properties" default="${override.properties}" />
 		<sequential>
 			<var name="install.debug" unset="true"/>
 			<if>
@@ -4271,6 +4272,10 @@ $HeadURL$
 					<property name="install.timing" value=""/>
 				</else>
 			</if>
+			<override-properties-prep
+				override.properties="@{override.properties}"
+				override.properties.string.property.name="override.properties.string"
+				/>
 			<!-- Copies over all files so linux and windows properties are present -->
 			<copy todir="@{install.dir}">
 				<fileset dir="@{build.dir}">
@@ -4280,12 +4285,12 @@ $HeadURL$
 			<exec osfamily="unix" executable="ant" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
 				<!-- force reinstall of database and jboss without prompting -->
-				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}" />
+				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true ${override.properties.string} @{target.name}" />
 			</exec>
 			<exec osfamily="windows" executable="ant.bat" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
 				<!-- force reinstall of database and jboss without prompting -->
-				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}" />
+				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true ${override.properties.string} @{target.name}" />
 			</exec>
 			<!-- ant returns exit code zero on failure to psexec, issue still lives on
 			<exec osfamily="windows" executable="${bda-utils.resource.dir}/psexec.exe" dir="@{install.dir}" failonerror="true">
@@ -8630,6 +8635,32 @@ $HeadURL$
 					<echo message="Not installing sync-gts"/>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="override-properties-prep">
+		<attribute name="override.properties" default="${override.properties}"/>
+		<attribute name="override.properties.string.property.name" default="override.properties.string"/>
+		<sequential>
+			<var name="@{override.properties.string.property.name}" value=""/>
+			<echo message="override.properties=@{override.properties}"/>
+			<for list="@{override.properties}" param="prop.val" delimiter=",">
+				<sequential>
+					<var name="prop" unset="true"/>
+					<propertyregex property="prop"
+						input="@{prop.val}"
+						regexp="^(.*)=(.*)"
+						select="\1"
+						/>
+					<var name="val" unset="true"/>
+					<propertyregex property="val"
+						input="@{prop.val}"
+						regexp="^(.*)=(.*)"
+						select="\2"
+						/>
+					<var name="@{override.properties.string.property.name}" value="${@{override.properties.string.property.name}} -D${prop}=&quot;${val}&quot;"/>
+				</sequential>
+			</for>
+			<echo message="override.properties.string=${@{override.properties.string.property.name}}"/>
 		</sequential>
 	</macrodef>
 </project>
