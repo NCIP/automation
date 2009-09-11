@@ -7,9 +7,8 @@
 	</description>
 
 	<!-- Property file related properties and tasks -->
-	<get src="${user.home}/local.properties" dest="./local.properties" />
 	<property environment="env" />
-	<property file="local.properties" />
+	<property file="${user.home}/local.properties" />
 	<property file="project.properties" />
 	
 	<property name="build.dir" location="." />
