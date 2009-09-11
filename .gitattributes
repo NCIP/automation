@@ -3295,7 +3295,6 @@ software/provisioner-app/bda-lib/xml-commons-resolver-1.2.jar -text
 software/provisioner-app/bda-lib/xmltask-1.15.1.jar -text
 software/provisioner-app/build.xml -text
 software/provisioner-app/deploy.xml -text
-software/provisioner-app/deploy/build.xml -text
 software/provisioner-app/grails-app/conf/BootStrap.groovy -text
 software/provisioner-app/grails-app/conf/Config.groovy -text
 software/provisioner-app/grails-app/conf/DataSource.groovy -text
