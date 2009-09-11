@@ -247,6 +247,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.username','narram');
@@ -536,12 +537,13 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.m
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.exploded.dir.location','${ncit.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ncit');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.hostname','ncias-d171-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.jobname','ncitbrowser-nightly');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.username','narram');
