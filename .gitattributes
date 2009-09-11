@@ -3247,6 +3247,7 @@ software/provisioner-app/.project -text
 software/provisioner-app/.settings/org.codehaus.groovy.eclipse.preferences.prefs -text
 software/provisioner-app/application.properties -text
 software/provisioner-app/build.xml -text
+software/provisioner-app/deploy.xml -text
 software/provisioner-app/deploy/bda-lib/ant-1.7.0.jar -text
 software/provisioner-app/deploy/bda-lib/ant-antunit-1.1.jar -text
 software/provisioner-app/deploy/bda-lib/ant-contrib-1.0nci.jar -text
