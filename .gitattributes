@@ -3296,10 +3296,6 @@ software/provisioner-app/deploy/bda-lib/xml-apis-1.3.04.jar -text
 software/provisioner-app/deploy/bda-lib/xml-commons-resolver-1.2.jar -text
 software/provisioner-app/deploy/bda-lib/xmltask-1.15.1.jar -text
 software/provisioner-app/deploy/build.xml -text
-software/provisioner-app/deploy/package.xml -text
-software/provisioner-app/deploy/project.properties -text
-software/provisioner-app/deploy/taskdefs.xml -text
-software/provisioner-app/deploy/utils.xml -text
 software/provisioner-app/grails-app/conf/BootStrap.groovy -text
 software/provisioner-app/grails-app/conf/Config.groovy -text
 software/provisioner-app/grails-app/conf/DataSource.groovy -text
@@ -3360,6 +3356,8 @@ software/provisioner-app/lib/provisioner.jar -text
 software/provisioner-app/lib/stax-1.2.0.jar -text
 software/provisioner-app/lib/stax-api-1.0.jar -text
 software/provisioner-app/lib/typica.jar -text
+software/provisioner-app/package.xml -text
+software/provisioner-app/project.properties -text
 software/provisioner-app/provisioner-app-test.launch -text
 software/provisioner-app/provisioner-app.launch -text
 software/provisioner-app/provisioner-app.tmproj -text
@@ -3389,8 +3387,10 @@ software/provisioner-app/src/templates/scaffolding/renderEditor.template -text
 software/provisioner-app/src/templates/scaffolding/show.gsp -text
 software/provisioner-app/src/templates/war/web.xml -text
 software/provisioner-app/stacktrace.log -text
+software/provisioner-app/taskdefs.xml -text
 software/provisioner-app/test/unit/CloudClientControllerTests.groovy -text
 software/provisioner-app/test/unit/CloudClientServiceTests.groovy -text
+software/provisioner-app/utils.xml -text
 software/provisioner-app/web-app/WEB-INF/applicationContext.xml -text
 software/provisioner-app/web-app/WEB-INF/sitemesh.xml -text
 software/provisioner-app/web-app/WEB-INF/tld/c.tld -text
