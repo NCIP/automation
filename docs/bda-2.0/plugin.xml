@@ -40,7 +40,10 @@
 				${property-prefix}.post-execute.property.map.subproject.name(x) =
 				${property-prefix}.post-execute.property.map.bda.name(x) =
 		-->
-		<property name="" type="" display-type="select|multi-select|combo|radio|checkbox|text|text-area" default="" />
+		<!-- If display-name is not set then name is used -->
+		<!-- display-short-description can be listed on line or on mouse over or something -->
+		<!-- display-long-description will pop up if you click ? icon?? -->
+		<property name="" type="" display-type="select|multi-select|combo|radio|checkbox|text|text-area" default="" display-name="" display-short-description="" display-long-description=""/>
 		</property>
 	</engine-properties>
 	<!-- display type is how to display these fields, on the same page as the rest of the container or on it's own page/tab or in a popup -->

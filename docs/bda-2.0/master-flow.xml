@@ -6,6 +6,27 @@
 		<repository-url/>
 		<sub-projects>
 			<sub-project>
+				<!-- build targets that produce artifacts -->
+				<!-- install time considerations...
+					For BDA Projects
+						Build-time - Call dist:installer/upgrader:prep targets
+						Install-time - Call the standard install:{container}:{webapp}*
+				-->
+				<build-base-dir/>
+				<build-file/>
+				<build-target/>
+				<build-artifact-dir/>
+				<build-artifact-pattern/>
+				<!-- Test info, junit/selenium/ect -->
+				<test-base-dir/>
+				<test-file/>
+				<test-target/>
+				<test-output-dir/>
+				<!-- Static analysis -->
+				<sa-base-dir/>
+				<sa-file/>
+				<sa-target/>
+				<sa-output-dir/>
 			</sub-project>
 		</sub-projects>
 		<database-containers numofcontainers="">
@@ -51,6 +72,5 @@
 		 </other>
 	</build-steps>
 	<install-steps>
-		 <> 
 	</install-steps>
 </project>
