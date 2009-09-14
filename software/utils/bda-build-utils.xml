@@ -1687,7 +1687,7 @@ $HeadURL$
 				</then>
 			</if>
 			<echo message="Checking out @{svn.checkout.url} to @{svn.checkout.dir}."/>
-			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}">
+			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}" javahl="false" svnkit="true">
 				<!-- <checkout url="@{svn.checkout.url}" revision="HEAD" destPath="@{svn.checkout.dir}" />-->
 				<checkout url="@{svn.checkout.url}"  destPath="@{svn.checkout.dir}" />
 			</svn>
@@ -1698,7 +1698,7 @@ $HeadURL$
 		<attribute name="svn.add.dir"/>
 		<sequential>
 			<echo message="Adding @{svn.add.dir} to svn."/>
-			<svn failonerror="false">
+			<svn failonerror="false" javahl="false" svnkit="true">
 				<add dir="@{svn.add.dir}" force="true"/>
 			</svn>
 		</sequential>
@@ -1707,7 +1707,7 @@ $HeadURL$
 		<attribute name="svn.update.dir"/>
 		<sequential>
 			<echo message="Adding @{svn.update.dir} to svn."/>
-			<svn failonerror="false">
+			<svn failonerror="false" javahl="false" svnkit="true">
 				<update dir="@{svn.update.dir}"/>
 			</svn>
 		</sequential>
@@ -1720,7 +1720,7 @@ $HeadURL$
 		<attribute name="svn.commit.message" default="Added by build process"/>
 		<sequential>
 			<echo message="Commiting @{svn.commit.dir} to svn."/>
-			<svn username="@{svn.commit.user}" password="@{svn.commit.pass}">
+			<svn username="@{svn.commit.user}" password="@{svn.commit.pass}" javahl="false" svnkit="true">
 				<commit dir="@{svn.commit.dir}" message="@{svn.commit.message}"/>
 			</svn>
 		</sequential>
@@ -2155,7 +2155,7 @@ $HeadURL$
 	<macrodef name="svn-getinfo">
 		<attribute name="my.path" default="${basedir}"/>
 		<sequential>
-			<svn javahl="false">
+			<svn javahl="false" svnkit="true">
 				<status path="@{my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
 			</svn>
 			<var name="lsd.revision" value="${svn.revision}" />
@@ -2419,11 +2419,11 @@ $HeadURL$
 		<attribute name="old.revision.number" />
 		<attribute name="differential.file.name" default="diff_list.txt" />
 		<sequential>
-			<svn javahl="false">
+			<svn javahl="false" svnkit="true">
 				<status path="${basedir}"  revisionProperty="build.svn.revision" urlProperty="svn.source.url"/>
 			</svn>
 
-			<svn javahl="false">
+			<svn javahl="false" svnkit="true">
 				<diff oldUrl="${svn.source.url}" oldTargetRevision="@{old.revision.number}" newTargetRevision="${build.svn.revision}" outFile="${basedir}/patch.txt"/>
 			</svn>
 			<loadfile
