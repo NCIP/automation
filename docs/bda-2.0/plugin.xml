@@ -1,0 +1,23 @@
+<plugin name=""/>
+	<description/>
+	<container-type name="jboss|tomcat|database">
+		<versions>
+			<version value=""/>
+		</version>
+	</container-type>
+	<!-- helps in definnig lists -->
+	<property-types>
+		<property-type name="">
+			<property-choice
+	<configurator>
+		<related-properties>
+			<property name="" type=">
+			</property>
+		</related-properties>
+	</configurator>
+	<engine>
+		<related-properties>
+			<property/>
+		</related-properties>
+	</engine>
+</plugin>

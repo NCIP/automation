@@ -19,7 +19,19 @@
 		</jboss-containers>
 		<tomcat-containers numofcontainers="">
 			<jboss-container prefix="prefix" version="version"/>
-		<tomcat-containers>
+		</tomcat-containers>
+		<!-- Allows us to define certain types used by all builds, we will have our own validation classs or target. These will be our custom types in addition to a base type of number, string boolean or list.
+			email
+			hostname
+			ip-address
+		-->
+		<property-types>
+			<property-type name="" base-type="number|string|boolean|list" validation-class="" validation-target="">
+				<!-- if you want to provide a list of values add below -->
+				<list-type value="select|multi-select|checkbox|radio"/>
+				<property-item value=""/>
+			</property-type>
+		</property-types>
 	</project-detail>
 	<build-steps>
 		<build>
