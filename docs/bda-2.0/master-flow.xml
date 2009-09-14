@@ -24,11 +24,12 @@
 			email
 			hostname
 			ip-address
+			url
 		-->
 		<property-types>
 			<property-type name="" base-type="number|string|boolean|list" validation-class="" validation-target="">
 				<!-- if you want to provide a list of values add below -->
-				<list-type value="select|multi-select|checkbox|radio"/>
+				<list-type value="single|multiple"/>
 				<property-item value=""/>
 			</property-type>
 		</property-types>
