@@ -45,5 +45,6 @@
 	</engine-properties>
 	<!-- display type is how to display these fields, on the same page as the rest of the container or on it's own page/tab or in a popup -->
 	<configurator validation-class="" validation-target="" display-type="container|popup|page/tab"/>
-	<engine install-class="" install-target=""/>
+	<!-- step-type is when to run this step, either init (first), pre-install, during the install or after the install, pre and post are for validation -->
+	<engine step-type="init|pre|post|install" install-class="" install-target=""/>
 </plugin>
