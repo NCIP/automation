@@ -8,16 +8,19 @@
 	<!-- helps in definnig lists -->
 	<property-types>
 		<property-type name="">
-			<property-choice
+			<property-choice value=""/>
+		</property-type>
+	</property-types>
 	<configurator>
 		<related-properties>
-			<property name="" type=">
-			</property>
+			<!-- Default will allow variable expansion so that way we can build vars from prefix/suffix -->
+			<!-- profile can be install.proeprties, upgrade.properties, tier.proprties (both) or project.properties -->
+			<property name="" type="" required="true|false" default="" propfile="see-above"/>
 		</related-properties>
 	</configurator>
 	<engine>
 		<related-properties>
-			<property/>
+			<!-- see above -->
 		</related-properties>
 	</engine>
 </plugin>
