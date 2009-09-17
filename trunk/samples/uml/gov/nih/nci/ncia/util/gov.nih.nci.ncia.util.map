@@ -1,0 +1,25 @@
+<map id="G" name="G">
+<area shape="rect" href="./EnumUserType.html" title="&lt;TABLE&gt;" alt="" coords="16,274,459,570"/>
+<area shape="rect" href="./HashCodeUtil.html" title="&lt;TABLE&gt;" alt="" coords="504,314,792,530"/>
+<area shape="rect" href="./HqlUtils.html" title="&lt;TABLE&gt;" alt="" coords="837,378,1389,466"/>
+<area shape="rect" href="./IDataProcessor.html" title="&lt;TABLE&gt;" alt="" coords="1435,338,1651,506"/>
+<area shape="rect" href="./MailManager.html" title="&lt;TABLE&gt;" alt="" coords="1696,114,2589,730"/>
+<area shape="rect" href="./NCIAConfig.html" title="&lt;TABLE&gt;" alt="" coords="2635,10,3061,834"/>
+<area shape="rect" href="./NCIAConstants.html" title="&lt;TABLE&gt;" alt="" coords="3107,370,3381,474"/>
+<area shape="rect" href="./NCIADicomObject.html" title="&lt;TABLE&gt;" alt="" coords="3427,274,3885,570"/>
+<area shape="rect" href="./NameValueObj.html" title="&lt;TABLE&gt;" alt="" coords="3931,354,4107,490"/>
+<area shape="rect" href="./PropertyLoader.html" title="&lt;TABLE&gt;" alt="" coords="4152,362,4571,482"/>
+<area shape="rect" href="./QuarantinedFilesUtil.html" title="&lt;TABLE&gt;" alt="" coords="4616,306,5069,538"/>
+<area shape="rect" href="./QueryHistoryComparator.html" title="&lt;TABLE&gt;" alt="" coords="5115,386,5523,458"/>
+<area shape="rect" href="./QueryProcessor.html" title="&lt;TABLE&gt;" alt="" coords="5568,386,5864,458"/>
+<area shape="rect" href="./ReportingDataStorageManager.html" title="&lt;TABLE&gt;" alt="" coords="5909,370,6267,474"/>
+<area shape="rect" href="./SavedQueryComparator.html" title="&lt;TABLE&gt;" alt="" coords="6312,386,6701,458"/>
+<area shape="rect" href="./SelectItemComparator.html" title="&lt;TABLE&gt;" alt="" coords="6747,386,7053,458"/>
+<area shape="rect" href="./SendMail.html" title="&lt;TABLE&gt;" alt="" coords="7099,370,7595,474"/>
+<area shape="rect" href="./UrlParams.html" title="&lt;TABLE&gt;" alt="" coords="7640,42,8104,802"/>
+<area shape="rect" href="./VerifySubmissionUtil.html" title="&lt;TABLE&gt;" alt="" coords="8149,354,8584,490"/>
+<area shape="rect" href="./CriteriaComparator.html" title="&lt;TABLE&gt;" alt="" coords="8629,386,8896,458"/>
+<area shape="rect" href="./MultiSelectConverter.html" title="&lt;TABLE&gt;" alt="" coords="8941,378,9133,466"/>
+<area shape="rect" href="./SiteData.html" title="&lt;TABLE&gt;" alt="" coords="9179,354,9360,490"/>
+<area shape="rect" href="./UidDisplayUtil.html" title="&lt;TABLE&gt;" alt="" coords="9405,386,9667,458"/>
+</map>

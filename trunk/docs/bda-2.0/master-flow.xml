@@ -1,0 +1,100 @@
+<project name="projectname">
+	<project-details>
+		<contacts>
+			<contact name="" type="tech|pm"/>
+		</contacts>
+		<repository-url/>
+		<sub-projects numberofsub-projects="">
+			<subproject prefix=""/>
+		</sub-projects>
+		<database-containers numofcontainers="">
+			<database-container prefix="prefix" database-type="">
+				<database-types type="" minimum-version=""/>
+			</database-container>
+		</database-containers>
+		<jboss-containers numofcontainers="">
+			<jboss-container prefix="prefix" version="version"/>
+		</jboss-containers>
+		<tomcat-containers numofcontainers="">
+			<tomcat-container prefix="prefix" version="version"/>
+		</tomcat-containers>
+		<!-- Allows us to define certain types used by all builds, we will have our own validation classs or target. These will be our custom types in addition to a base type of number, string boolean or list.
+			email
+			hostname
+			ip-address
+			url
+		-->
+		<property-types>
+			<property-type name="" base-type="number|string|boolean|list" validation-class="" validation-target="">
+				<!-- if you want to provide a list of values add below -->
+				<list-type value="single|multiple"/>
+				<property-item value=""/>
+			</property-type>
+		</property-types>
+	</project-detail>
+	<build-steps>
+		<!-- descriptions maybe be show on web-ui -->
+		<build>
+			<description></description>
+			<sub-projects>
+				<!-- Anything that the dev team wants to include in a distribution need to be done in this target -->
+				<!-- install time considerations...
+					For BDA Projects
+						Build-time - Call dist:installer/upgrader:prep targets
+						Install-time - Call the standard install:{container}:{webapp}* as default target for install and configure of application.
+					For non-BDA Projects
+						Build time- must copy install-time build file, resource and properties files into distribution
+						Install time- 
+				-->
+				<sub-project prefix="" builder="ant|maven|ect" build-base-dir="" build-file="" build-target="" build-artifact-dir="" build-artifact-pattern="">
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+			</sub-projects>
+		</build>
+		<test>
+			<description></description>
+			<sub-projects>
+				<sub-project prefix="" builder="ant|maven|ect" test-base-dir="" test-file="" test-target="" test-output-dir="" >
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+		</test>
+		<static-analysis>
+			<description></description>
+				<sub-project prefix="" builder="ant|maven|ect" sa-base-dir="" sa-file="" sa-target="" sa-output-dir="" >
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+		</static-analysis>
+		 <!-- includes dist -->
+		 <dist>
+			<description></description>
+			<local>
+			</local>
+			<remote type="individual|all">
+			</remote>
+			<external>
+			</external>
+		 </dist>
+		 <deploy>
+			<description></description>
+			<local>
+				<deployment container-type="" container-prefix=""
+			</local>
+			<remote type=">
+			</remote>
+			<external>
+			</external>
+		 </deploy>
+		 <utility>
+		 </utility>
+		 <other>
+		 </other>
+	</build-steps>
+	<install-steps>
+	</install-steps>
+</project>

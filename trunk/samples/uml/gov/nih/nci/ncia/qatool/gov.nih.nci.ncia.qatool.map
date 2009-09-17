@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" href="./ImageManager.html" title="&lt;TABLE&gt;" alt="" coords="16,27,424,147"/>
+<area shape="rect" href="./NodeType.html" title="&lt;TABLE&gt;" alt="" coords="469,11,579,163"/>
+<area shape="rect" href="./QAHistoryManager.html" title="&lt;TABLE&gt;" alt="" coords="624,27,1077,147"/>
+<area shape="rect" href="./QAUpdateManager.html" title="&lt;TABLE&gt;" alt="" coords="1123,19,2203,155"/>
+<area shape="rect" href="./QAUpdateManagerImpl.html" title="&lt;TABLE&gt;" alt="" coords="1123,221,2203,437"/>
+<area shape="rect" href="./VisibilityStatus.html" title="&lt;TABLE&gt;" alt="" coords="2248,11,2408,163"/>
+</map>

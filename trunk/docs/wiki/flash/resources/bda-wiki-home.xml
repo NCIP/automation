@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<wiki>
+	<welcome><![CDATA[<H1>Welcome to BDA! </H1><P><b>August 13, 2009</b>: The BDA team released version 1.5.0 of the BDA Framework. See the <a href='https://wiki.nci.nih.gov/x/yqN8'>BDA API</a> page for more information.<br/><br/><b>Latest News</b>: The BDA team is assisting <a href="https://wiki.nci.nih.gov/x/4oTB">active CBIIT development teams</a> implement a self-service BDA model.<br/><br/><b>Certification Dashboard</b>: Release 1.0.1 of the <a href="https://wiki.nci.nih.gov/x/jojB">BDA Certification Dashboard</a> was released Tuesday, May 19, 2009. This dashboard provides a daily monitoring of Build and Deployment practices of CBIIT development projects.]]></welcome>
+	<button>
+		<name>News</name>
+		<link>
+			https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation
+		</link>
+		<image>
+			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/internet.png
+		</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>The BDA team released version 1.1 of the BDA Framework. See the <a href='https://wiki.nci.nih.gov/x/yqN8'>BDA API</a> page for more information.</LI><LI>Learn the <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://wiki.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://wiki.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://wiki.nci.nih.gov/x/1AKM">here</a></LI><LI>Paul Duvall held an information session on the upcoming <a href="https://wiki.nci.nih.gov/x/vxKy">BDA enterprise rollout for 2009</a> on Wednesday, December 17th, 2008.</LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>FAQ</name>
+		<link>https://wiki.nci.nih.gov/x/UZx8</link>
+		<image>
+			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/flag.png
+		</image>
+		<teaser><![CDATA[<H1>Frequently Asked Questions (FAQ)</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/UZx8">How do I convert a project to use Ivy as a dependency manager?</a></LI><LI><a href="https://wiki.nci.nih.gov/x/DwCG">Do I have an automated database upgrade process?</a></LI><LI><a href="https://wiki.nci.nih.gov/x/MJx8">What is the difference between BDA Utilities vs. BDA Templates?</a></LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>Documentation</name>
+		<link>https://wiki.nci.nih.gov/x/-ROZ</link>
+		<image>
+			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/Community_Help.png
+		</image>
+		<teaser><![CDATA[<H1>Documentation</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/LwCG">BDA Build Script Standards</a></LI><LI><a href="https://wiki.nci.nih.gov/x/Ghmy">BDA Project Plan template</a></LI><LI><a href="https://wiki.nci.nih.gov/x/yqN8">BDA Utilities (BDA API)</a></LI><LI><a href="https://wiki.nci.nih.gov/x/wqN8">BDA Templates</a></LI><LI><a href="https://wiki.nci.nih.gov/x/cgPO">BDA Systems Request Guide</a></LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>Tutorial</name>
+		<link>https://wiki.nci.nih.gov/x/_Q6Z</link>
+		<image>
+			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/bookcase.png
+		</image>
+		<teaser><![CDATA[<H1>Tutorial</H1><UL><LI>Learn how to use the <a href="https://wiki.nci.nih.gov/x/_Q6Z">BDA "rules and tools"</a> with an example Petstore project]]></teaser>
+	</button>
+	<button>
+		<name>How Do I?</name>
+		<link>https://wiki.nci.nih.gov/x/FgPj</link>
+		<image>
+			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/kservices.png
+		</image>
+		<teaser><![CDATA[<H2></H2><UL><LI><a href="https://wiki.nci.nih.gov/x/FgPj">Learn how to use BDA tools</a></LI></UL>]]></teaser>
+	</button>
+	<button>
+		<name>About</name>
+		<link>https://wiki.nci.nih.gov/x/mQ6Z</link>
+		<image>
+			https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/wiki/flash/images/amor.png
+		</image>
+		<teaser><![CDATA[<H1>About BDA</H1><UL><LI><a href="https://wiki.nci.nih.gov/x/agGU">Build and Deployment Automation Goals</a></LI><LI><a href="https://wiki.nci.nih.gov/x/S5l8">Policies and Procedures</a></LI><LI><a href="https://wiki.nci.nih.gov/x/Tpx8">Technology the BDA team uses</a></LI><LI><a href="https://wiki.nci.nih.gov/x/1AKM">Calendar</a></LI><LI><a href="https://wiki.nci.nih.gov/x/vQOZ">Contact Us</a></LI></UL>]]></teaser>
+	</button>
+
+</wiki>
