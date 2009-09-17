@@ -181,8 +181,25 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
     {
         this.packOpLabel.setText(error);
         idata.installSuccess = false;
-        JOptionPane.showMessageDialog(this, error, parent.langpack.getString("installer.error"),
-                JOptionPane.ERROR_MESSAGE);
+        JOptionPane optionPane = getNarrowOptionPane(100);
+        optionPane.setMessage(error);
+        optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        JDialog dialog = optionPane.createDialog(this, parent.langpack.getString("installer.error"));
+        dialog.setVisible(true);
+    }
+
+    public static JOptionPane getNarrowOptionPane(final int maxCharactersPerLineCount) {
+        // inner class definition
+        class NarrowOptionPane extends JOptionPane {
+            int maxCharactersPerLineCount;
+            NarrowOptionPane(final int maxCharactersPerLineCount) {
+                this.maxCharactersPerLineCount = maxCharactersPerLineCount;
+            }
+            public int getMaxCharactersPerLineCount() {
+                return maxCharactersPerLineCount;
+            }
+        }
+        return new NarrowOptionPane(maxCharactersPerLineCount);
     }
 
     /**
@@ -291,49 +308,49 @@ public class InstallPanel extends IzPanel implements AbstractUIProgressHandler, 
      */
     public void panelActivate()
     {
-		// We clip the panel
-		Dimension dim = parent.getPanelsContainerSize();
-		dim.width -= (dim.width / 4);
-		dim.height = 150;
-		setMinimumSize(dim);
-		setMaximumSize(dim);
-		setPreferredSize(dim);
-		parent.lockNextButton();
+        // We clip the panel
+        Dimension dim = parent.getPanelsContainerSize();
+        dim.width -= (dim.width / 4);
+        dim.height = 150;
+        setMinimumSize(dim);
+        setMaximumSize(dim);
+        setPreferredSize(dim);
+        parent.lockNextButton();
 
-		parent.install(this);
+        parent.install(this);
 
-		File logDir = new File(idata.getVariable("SYSTEM_user_home") + "/"
-				+ idata.getVariable("installer.dir") + "/");
-		if (!logDir.exists())
-			new File(idata.getVariable("SYSTEM_user_home") + "/"
-					+ idata.getVariable("installer.dir")).mkdirs();
+        File logDir = new File(idata.getVariable("SYSTEM_user_home") + "/"
+                + idata.getVariable("installer.dir") + "/");
+        if (!logDir.exists())
+            new File(idata.getVariable("SYSTEM_user_home") + "/"
+                    + idata.getVariable("installer.dir")).mkdirs();
 
-		String fileName = new String(idata.getVariable("SYSTEM_user_home")
-				+ "/" + idata.getVariable("installer.dir")
-				+ "/antlog_installer.txt");
-		File logFile = new File(fileName);
-		if (!logFile.exists()) {
-			try {
-				logFile.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+        String fileName = new String(idata.getVariable("SYSTEM_user_home")
+                + "/" + idata.getVariable("installer.dir")
+                + "/antlog_installer.txt");
+        File logFile = new File(fileName);
+        if (!logFile.exists()) {
+            try {
+                logFile.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
 
-		tailer = new LogFileTailer(logFile, 1000, false);
-		tailer.addLogFileTailerListener(this);
-		tailer.start();
+        tailer = new LogFileTailer(logFile, 1000, false);
+        tailer.addLogFileTailerListener(this);
+        tailer.start();
 
-		// Will tail the log in new frame
-		// JTailer frame = new JTailer(fileName);
+        // Will tail the log in new frame
+        // JTailer frame = new JTailer(fileName);
 
-	}
+    }
 
-	public void newLogFileLine(String line) {
-		this.textArea.append(line);
-		this.textArea.setCaretPosition(this.textArea.getDocument().getLength());
+    public void newLogFileLine(String line) {
+        this.textArea.append(line);
+        this.textArea.setCaretPosition(this.textArea.getDocument().getLength());
 
-	}
+    }
 
 }
