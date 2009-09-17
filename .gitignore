@@ -3,3 +3,8 @@ software/bda-build-template/software/build/target[!!-~]local.properties
 software/bda-build-template/software/target
 software/heartbeat/target
 software/release-manager/local.properties
+trunk/software/bda-build-template/software/blueprints-webapp/target
+trunk/software/bda-build-template/software/build/target[!!-~]local.properties
+trunk/software/bda-build-template/software/target
+trunk/software/heartbeat/target
+trunk/software/release-manager/local.properties

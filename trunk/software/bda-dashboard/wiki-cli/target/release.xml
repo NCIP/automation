@@ -1,0 +1,39 @@
+  <assembly>
+  	<id>distribution</id>
+  	<formats>
+    	<format>zip</format>
+  	</formats>
+  	<fileSets>
+
+  	    <fileSet>
+      		<directory>C:\dev\confluence-interface\trunk\target/release</directory>
+            <outputDirectory>/release</outputDirectory>
+      		<includes>
+                <include>*.jar</include>
+            </includes>
+            <excludes>
+				<exclude>junit*</exclude>
+			</excludes>
+    	</fileSet>
+
+  	    <fileSet>
+      		<directory>C:\dev\confluence-interface\trunk\target/examples</directory>
+            <outputDirectory>/examples</outputDirectory>
+    	</fileSet>
+
+    	<fileSet>
+      		<directory>/license</directory>
+            <outputDirectory>/license</outputDirectory>
+    	</fileSet>
+
+    	<fileSet>
+      		<directory>C:\dev\confluence-interface\trunk\target</directory>
+            <outputDirectory>/</outputDirectory>
+      		<includes>
+                <include>*.bat</include>
+                <include>README.*</include>
+            </includes>
+    	</fileSet>
+  	</fileSets>
+
+  </assembly>

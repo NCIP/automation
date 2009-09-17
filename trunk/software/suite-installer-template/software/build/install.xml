@@ -1,0 +1,1335 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- bda-build-template version 1.1.1  -->
+<!--
+$Id: install.xml 1775 2009-06-26 18:34:54Z saksass $
+$HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-template/software/build/install.xml $
+-->
+
+<project name="bda-blueprints-installer" default="upgrade" basedir="." 
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	>
+	<description>
+		This build file is part of the bda-build-templates project. This is the master install file for the project.  It should be placed in project/software.  This script is copied into the distribution and  executed from the extracted distribution.  It is run by typing "ant" from the master project build.xml or from command line. This script has two flows install and upgrade.
+		Install will do the following
+ 			* Install binaries
+			* Configure binaries
+			* Install application
+			* Configure application
+			* Re-create database
+			* Upgrade database
+		Upgrade will do the following
+			* Install application
+			* Configure application
+			* Upgrade database
+		The script includes target that may not be used by all projects, but are included in here becaue it is a template. This script has targets to deal with the following, you can delete targets you don't want to work with
+		Application servers (option for grid services also)
+			* JBoss
+			* Tomcat
+		Databases
+			* MySQL
+			* PostgreSQL
+			* Oracle
+		This script requires java and ant to run. Every thing else it needs is included in the distribution.
+	</description>
+
+	<echo message="Passed in properties file of ${properties.file}."/>
+	<!-- Properties file related properties and tasks -->
+	<property environment="env" />
+	<property file="local.properties"/>
+	<property file="project.properties"/>
+	<property file="sub-projects.properties"/>
+	<echoproperties prefix="sub-project"/>
+	<!-- load the properties file -->
+	<property name="properties.file" value="${basedir}/install.properties"/>
+	<echo message="Using properties file of ${properties.file}."/>
+	<available file="${properties.file}" property="properties.file.exists" />
+	<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail."/>
+	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2"/>
+	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2"/>
+	<property file="${properties.file}" />
+	
+	<!-- Generic properties -->
+	<property name="env.name" value="local"/>
+	<property name="log.dir" location="${basedir}/logs" />
+	<property name="working.dir" location="${basedir}/working" />
+	<property name="temp.dir" location="${working.dir}/temp" />
+
+
+	<!-- Install Time properties -->
+	<!-- Source and target directories -->
+	<property name="bda-utils.dir" location="${basedir}/bda-utils" />
+	<property name="tools.dir" location="${basedir}/${tools.dist.relative.dir}" />
+	<property name="common.dir.src" location="${basedir}/${common.dist.relative.dir}" />
+	<property name="common.dir.dest" location="${working.dir}/${common.dist.relative.dir}" />
+	<property name="jboss-conf.dir.src" location="${basedir}/${jboss-conf.dist.relative.dir}" />
+	<property name="jboss-conf.dir.dest" location="${working.dir}/${jboss-conf.dist.relative.dir}" />
+
+	<!-- Custom to suite installer -->
+	<property name="project.name" value="bda-blueprints"/>
+	<property name="exlude.database" value="true"/>
+	<property name="exclude.check.database" value="true"/>
+	<property name="grid.resource.dir" location="${basedir}/${tools.dist.relative.dir}" />
+	<property name="suite.webapp.name" value="bda-blueprints-webapp"/>
+	<!-- cause readers not to run
+	<property name="install.running" value="true"/>
+	-->
+
+	<!-- Paths -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<!-- Task definitions -->
+	<taskdef uri="antlib:org.apache.ant.antunit" resource="org/apache/ant/antunit/antlib.xml" classpathref="bda-utils.classpath"/>
+	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda-utils.classpath"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="bda-utils.classpath"/>
+	<taskdef resource="liquibasetasks.properties" classpathref="bda-utils.classpath"/>
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="bda-utils.classpath"/>
+
+	<!-- Includes-->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+
+	<!-- Clean/make working dir -->
+	<delete dir="${working.dir}" failonerror="false"/>
+	<mkdir dir="${working.dir}" />
+
+	<!-- Start logging moved out of target so all targets are logged --> 
+	<!--<property name="install-logs.dir" location="${application.base.path}/change-logs"/> -->
+	<property name="install-logs.dir" location="${log.dir}"/>
+	<mkdir dir="${install-logs.dir}"/>
+	<tstamp>
+		<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
+	</tstamp>
+	<record name="${install-logs.dir}/install-${install.time}.log" action="start"/>
+
+	<target name="common:init:pre">
+		<!-- Set application.base.path based on platform -->
+		<condition property="application.base.path" value="${application.base.path.linux}">
+			<or>
+				<os family="unix" />
+				<os family="mac" />
+			</or>
+		</condition>
+	
+		<condition property="application.base.path" value="${application.base.path.windows}">
+			<os family="windows" />
+		</condition>
+		<echo message="application.base.path=${application.base.path}"/>
+		<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
+		<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
+	</target>
+	<!-- Targets begin -->
+	<target name="install:jboss:init" depends="common:init:pre" unless="upgrade.running">
+		<!-- determine if port configurations or port lists are being called -->
+		<if>
+			<isset property="jboss.ncicb-standard.port-config"/>
+			<then>
+				<!-- Read some port properties from standard bindings file -->
+				<echo message="Using JBoss NCICB Standard port configurations"/>
+				<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
+				<jboss-read-ports
+					jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
+					/>
+				<echo message="http -${jboss.server.port} "/>
+				<echo message="http -${jboss.server.jndi.port} "/>
+				<properties-exist
+					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.server.ports.name"
+					/>
+				<!-- Make sure there are not unexpanded tokens and that the jboss.server.ports.name is a configuration in the bindings file. -->
+				<jboss-bindings-validate
+					jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
+					/>
+
+			</then>
+			<else>
+				<!-- else ensure that all ports are set, since these will be removed from install-properties.template we will verify here.  They have to be removed so the validator works with or without the properties or we have to change the format of the file. -->
+				<echo message="Using custom JBoss port configurations"/>
+				<property name="jboss.server.binding.template.location" value="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings.xml"/>
+				<properties-exist
+					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.cobraorb.port,jboss.ejbinvoker.port,jboss.hajndi.port,jboss.hajrmi.port,jboss.jms.port,jboss.jmx-rmi.port,jboss.messaging.port,jboss.pooledha.port,jboss.remoting.port,jboss.server.bind.port,jboss.server.rmi.port,jboss.service.rmiobject.port,jboss.snmp.port,jboss.snmp-trapd.port,jboss.web.service.port"
+					/>
+			</else>
+		</if>
+	</target>
+	<target name="common:jboss:init" depends="common:init:pre" unless="exclude.jboss">
+		<math result="jboss.ssl.port" operand1="${jboss.server.port}" operation="+" operand2="363" datatype="int"/>
+		<property name="jboss.ssl.enable" value="false"/>
+		<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
+		<property name="jboss.application.url" value="http://${jboss.server.hostname}:${jboss.server.port}/${suite.webapp.name}"/>
+		<available file="${jboss.home}/server/${jboss.server.name}/conf/jboss-service.xml" property="jboss.exists"/>
+		<basename file="${jboss.ssl.keystore.location}" property="jboss.ssl.keystore.file"/>
+		<dirname file="${jboss.ssl.keystore.location}" property="jboss.ssl.keystore.dir"/>
+		<basename file="${jboss.grid.secure.cert.location}" property="jboss.grid.secure.cert.file"/>
+		<dirname file="${jboss.grid.secure.cert.location}" property="jboss.grid.secure.dir"/>
+		<basename file="${jboss.grid.secure.key.location}" property="jboss.grid.secure.key.file"/>
+		<property name="jboss.socket.ports" value="${jboss.server.port},${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+	</target>
+	<target name="common:tomcat:init" depends="common:init:pre" unless="exclude.tomcat">
+		<property name="tomcat.ssl.enable" value="false"/>
+		<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
+		<property name="tomcat.application.url" value="http://${tomcat.hostname}:${tomcat.port.http}/${suite.webapp.name}"/>
+		<basename file="${tomcat.ssl.keystore.location}" property="tomcat.ssl.keystore.file"/>
+		<dirname file="${tomcat.ssl.keystore.location}" property="tomcat.ssl.keystore.dir"/>
+		<basename file="${tomcat.grid.secure.cert.location}" property="tomcat.grid.secure.cert.file"/>
+		<dirname file="${tomcat.grid.secure.cert.location}" property="tomcat.grid.secure.dir"/>
+		<basename file="${tomcat.grid.secure.key.location}" property="tomcat.grid.secure.key.file"/>
+		<property name="tomcat.sock.ports" value="${tomcat.port.http},${tomcat.port.ajp},${tomcat.port.shutdown}"/>
+	</target>
+
+
+	<target name="common:init" depends="common:init:pre">
+		<property name="install.running" value="true"/>
+		<!-- bda-blueprints-webapp can use either Oracle or MySQL or PostgreSQL as its database platform, this is controled by the database.type property.  Based on the value of this property sent several variables for use during install -->
+		<echoproperties prefix="database"/>
+		<switch value="${database.type}">
+			<case value="oracle">
+				<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.4.0.jar"/>
+				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="database.schema" value="${database.name}"/>
+			</case>
+			<case value="mysql">
+				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.8.jar"/>
+				<property name="database.driver" value="com.mysql.jdbc.Driver"/>
+				<property name="database.schema" value="${database.name}"/>
+			</case>
+			<case value="postgresql">
+				<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+				<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-604.jar"/>
+				<property name="database.driver" value="org.postgresql.Driver"/>
+				<property name="database.schema" value="public"/>
+			</case>
+			<default>
+				<!-- changed from fail to echo for suite-installer where property does not matter - ssaksa -->
+				<echo  message="Invalid database type ${database.type}"/>
+			</default>
+		</switch>
+	
+		<path id="jdbc.driver.classpath">
+			<pathelement location="${database.driver.file}"/>
+		</path>
+
+		<property name="properties.template.file" value="${basedir}/properties.template" />
+		<filterset id="embedded.filterset">
+			<filter token="application.base.path" value="${application.base.path}"/>
+			<filter token="application.url" value="${application.url}"/>
+			<filter token="database.url" value="${database.url}"/>
+			<filter token="database.user" value="${database.user}"/>
+			<filter token="database.password" value="${database.password}"/>
+			<filter token="database.system.url" value="${database.system.url}"/>
+			<!-- added internal properties that may be used in a filtered copy -->
+			<filter token="database.driver" value="${database.driver}"/>
+			<!-- added for liquibase -->
+			<filter token="db-upgrade.run.dir" value="${db-upgrade.dir.dest}/${database.type}"/>
+			<filter token="jboss.home" value="${jboss.home}"/>
+			<filter token="tomcat.home" value="${tomcat.home}"/>
+			<filter token="database.dialect" value="${database.dialect}"/>
+			<filter token="hibernate.cfg.file.path" value="${hibernate.cfg.file.path}"/>
+			<filter token="env.LOGNAME" value="${env.LOGNAME}"/>
+			<filter token="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
+			<filter token="project.name" value="project.name"/>
+		</filterset>
+
+		<!--OS Temp dir -->
+		<condition property="os.temp.dir" value="/tmp">
+			<or>
+				<os family="unix" />
+				<os family="mac" />
+			</or>
+		</condition>
+	
+		<condition property="os.temp.dir" value="c:/temp">
+			<os family="windows" />
+		</condition>
+		<!-- Copy files to ensure values containing variables are expanded, such properties are stored in embedded.filterset and then copy with filter files -->
+		<copy todir="${common.dir.dest}" filtering="true">
+			<fileset dir="${common.dir.src}">
+				<include name="**/*"/>
+			</fileset>
+			<filterset refid="embedded.filterset"/>
+			<filterset>
+				<filtersfile file="${properties.file}"/>
+				<filtersfile file="project.properties"/>
+			</filterset>
+		</copy> 
+	</target>
+
+	<target name="diag">
+		<echoproperties/>
+	</target>
+
+	<!-- Clean up destination directory -->
+	<target name="install:common:clean" description="Removes all files from the local filesystem" depends="common:init,install:jboss:clean,install:tomcat:clean">
+	</target>
+
+	<target name="install:jboss:clean" unless="exclude.jboss" depends="common:jboss:init,common:init">
+		<sleep seconds="5" />
+		<property name="backup.count" value="5"/>
+
+		<if>
+			<not>
+				<equals arg1="${exclude.jboss.backup}" arg2="true"/>
+			</not>
+			<then>
+				<!-- Jboss backup, do not compress until install is finished -->
+				<property name="backup.jboss.base.dir" location="${application.base.path}/backup/jboss"/>
+		
+				<!-- So these directories won't be included in the backup, they are not needed to use jboss -->
+				<delete dir="${jboss.home}/server/${jboss.server.name}/work"/>
+				<delete dir="${jboss.home}/server/${jboss.server.name}/tmp"/>
+		
+				<backup-dir
+					src.dir="${jboss.home}"
+					backup.base.dir="${backup.jboss.base.dir}"
+					backup.count="${backup.count}"
+					/>
+			</then>
+		</if>
+		<delete dir="${jboss.home}"/>
+	</target>
+
+	<target name="install:tomcat:clean" unless="exclude.tomcat" depends="common:tomcat:init">
+		<sleep seconds="5" />
+		<property name="backup.count" value="5"/>
+		<if>
+			<not>
+				<equals arg1="${exclude.tomcat.backup}" arg2="true"/>
+			</not>
+			<then>
+				<property name="backup.tomcat.base.dir" location="${application.base.path}/backup/tomcat"/>
+		
+				<backup-dir
+					src.dir="${tomcat.home}"
+					backup.base.dir="${backup.tomcat.base.dir}"
+					backup.count="${backup.count}"
+					/>
+			</then>
+		</if>
+		<delete dir="${tomcat.home}"/>
+	</target>
+
+	<target name="install:jboss:binaries" description="Install JBoss binaries" unless="exclude.jboss" depends="common:jboss:init, common:init">
+		<jboss-install-binaries
+			/>
+		<jboss-nci-customizations       
+			/>                                      
+	</target>
+
+	<!-- Calls to bda macros for basic functionality -->
+	<target name="install:jboss:stop" description="Stops jboss" unless="exclude.jboss" depends="common:jboss:init,common:init">
+		<if>
+			<isset property="jboss.exists"/>
+			<then>
+				<jboss-stop-jboss jboss.server.jndi.port="${jboss.server.jndi.port}"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="install:jboss:start" description="Starts jboss" unless="exclude.jboss" depends="common:jboss:init,common:init">
+		<if>
+			<not>
+				<isset property="exclude.start.servers"/>
+			</not>
+			<then>
+				<jboss-start-jboss />
+				<sleep seconds="15"/>
+			</then>
+		</if>
+	</target>
+	<target name="install:common:validation:pre-install" description="Runs pre-install validation checks bda-utils" depends="common:init">
+		<validate-pre-install-common
+			ant.check.version="${ant.minimum.version}"
+			java.check.version.major="${java.major.version}"
+			java.check.version.minor="${java.minor.version}"
+			/>
+	</target>
+	<target name="install:jboss:validation:pre-install" description="Runs pre-install validation checks bda-utils" 
+		depends="
+		common:jboss:init,common:init,
+		install:common:validation:pre-install
+		">
+		<validate-pre-install-jboss
+			/>
+	</target>
+	<target name="install:tomcat:validation:pre-install" description="Runs pre-install validation checks bda-utils" 
+		depends="
+		common:tomcat:init,
+		common:init,
+		install:common:validation:pre-install
+		">
+		<validate-pre-install-tomcat
+			/>
+	</target>
+	<target name="install:database:validation:pre-install" description="Runs pre-install validation checks bda-utils" 
+		depends="
+		common:init,
+		install:common:validation:pre-install
+		">
+		<validate-pre-install-database
+			database.version="${mysql.minimum.version}"
+			/>
+	</target>
+
+
+	<target name="install:jboss:validation:pre-install:ports" description="Checks to see if configured ports are listenting and fails buld, meant to be run after jboss:stop"
+		depends="
+		common:init,
+		install:jboss:stop
+		">
+		<validate-pre-jboss-ports
+			/>
+	</target>
+	<target name="install:tomcat:validation:pre-install:ports" description="Checks to see if configured ports are listenting and fails buld, meant to be run after jboss:stop"
+		depends="
+		common:init,
+		install:tomcat:stop
+		">
+		<validate-pre-tomcat-ports
+			/>
+	</target>
+
+	<target name="install:common:validation:post-install" description="Run post-install checks from bda-utils"
+		depends="
+		common:init
+		">
+		<validate-post-common />
+	</target>
+	<target name="install:jboss:validation:post-install" description="Run post-install checks from bda-utils"
+		depends="
+		common:jboss:init,
+		common:init,
+		install:jboss:start
+		">
+		<if>
+			<not>
+				<isset property="exclude.start.servers"/>
+			</not>
+			<then>
+				<validate-post-jboss />
+			</then>
+		</if>
+	</target>
+	<target name="install:tomcat:validation:post-install" description="Run post-install checks from bda-utils"
+		depends="
+		common:tomcat:init,
+		common:init,
+		install:tomcat:start
+		">
+		<if>
+			<not>
+				<isset property="exclude.start.servers"/>
+			</not>
+			<then>
+				<validate-post-tomcat />
+			</then>
+		</if>
+	</target>
+
+	<!-- Wrapper target to deploy JBOSS container -->
+	<target name="install:jboss" description="Wrapper scripts that calls all required targets to install the jboss container" unless="exclude.jboss"
+		depends="
+		common:jboss:init,
+		common:init,
+		install:jboss:init,
+		install:jboss:validation:pre-install,
+		install:jboss:stop,
+		install:jboss:validation:pre-install:ports,
+		install:jboss:clean,
+		install:jboss:binaries,
+		install:jboss:sub-project,
+		install:post:jboss,
+		install:jboss:start,
+		install:jboss:validation:post-install
+		" >
+	</target>
+
+	<target name="install:tomcat" description="Wrapper scripts that calls all required targets to install the tomcat container" unless="exclude.tomcat"
+		depends="
+		common:tomcat:init,
+		common:init,
+		install:tomcat:validation:pre-install,
+		install:tomcat:stop,
+		install:tomcat:validation:pre-install:ports,
+		install:tomcat:clean,
+		install:tomcat:binaries,
+		install:tomcat:sub-project,
+		install:post:tomcat,
+		install:tomcat:start,
+		install:tomcat:validation:post-install
+		">
+	</target>
+
+	<target name="install" description="Installs and configures JBOSS, creates database, and deploys application" 
+		depends="
+		common:jboss:init,
+		common:tomcat:init,
+		common:init,
+		install:jboss:init,
+		install:common:validation:pre-install,
+		install:jboss:validation:pre-install,
+		install:tomcat:validation:pre-install,
+		install:jboss:stop,
+		install:tomcat:stop,
+		install:jboss:validation:pre-install:ports,
+		install:tomcat:validation:pre-install:ports,
+		install:common:clean,
+		install:database:sub-project,
+		install:tomcat,
+		install:jboss,
+		install:jboss:start,
+		install:common:validation:post-install
+		">
+	</target>
+
+	<!-- Upgrade with Disposable Application Conttainer (DAC) -->
+	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
+		depends="
+		upgrade:jboss:init,
+		common:init,
+		common:jboss:init,
+		install:jboss:validation:pre-install,
+		install:jboss:stop,
+		install:jboss:validation:pre-install:ports,
+		install:jboss:clean,
+		install:jboss:binaries,
+		install:jboss:sub-project,
+		upgrade:post:jboss,
+		install:post:jboss,
+		install:jboss:start,
+		install:jboss:validation:post-install
+		">
+	</target>
+	<target name="upgrade:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." unless="exclude.tomcat"
+		depends="
+		upgrade:tomcat:init,
+		common:init,
+		common:tomcat:init,
+		install:tomcat:validation:pre-install,
+		install:tomcat:stop,
+		install:tomcat:validation:pre-install:ports,
+		install:tomcat:clean,
+		install:tomcat:binaries,
+		install:tomcat:sub-project,
+		upgrade:post:tomcat,
+		install:post:tomcat,
+		install:tomcat:start,
+		install:tomcat:validation:post-install
+		">
+	</target>
+
+	<target name="upgrade" description="Upgrades JBoss and Database"
+		depends="
+		upgrade:common:init,
+		common:init,
+		common:jboss:init,
+		common:tomcat:init,
+		install:common:validation:pre-install,
+		install:jboss:validation:pre-install,
+		install:tomcat:validation:pre-install,
+		install:jboss:stop,
+		install:tomcat:stop,
+		upgrade:database:sub-project,
+		upgrade:jboss,
+		upgrade:tomcat,
+		install:common:validation:post-install
+		">
+	</target>
+
+	<target name="upgrade:with-dbinstall" description="Upgrades JBoss and Database"
+		depends="
+		upgrade:common:init,
+		common:init,
+		common:jboss:init,
+		common:tomcat:init,
+		install:common:validation:pre-install,
+		install:jboss:validation:pre-install,
+		install:tomcat:validation:pre-install,
+		install:jboss:stop,
+		install:tomcat:stop,
+		install:database:sub-project,
+		upgrade:jboss,
+		upgrade:tomcat,
+		install:common:validation:post-install
+		">
+	</target>
+
+	<target name="install:tomcat:binaries" description="Install tomcat binaries" unless="exclude.tomcat" depends="common:init">
+		<delete dir="${tomcat.home}"/>
+		<dirname file="${tomcat.home}" property="tomcat.base.dir"/>
+		<unzip dest="${tomcat.base.dir}" src="${tools.dir}/${tomcat.binaries.file}" />
+		<if>    
+			<os family="unix"/>
+			<then>  
+				<chmod dir="${tomcat.home}/bin" perm="ugo+rx" 
+					includes="**/*.sh"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="install:tomcat:stop" description="Stop Tomcat" unless="exclude.tomcat" depends="common:init">
+		<if>
+			<available file="${tomcat.home}/bin/shutdown.sh"/>
+			<then>
+				<echo message="Shutting down tomcat"/>
+				<tomcat-stop tomcat.home="${tomcat.home}"/>
+			</then>
+			<else>
+				<echo message="Tomcat not found , not shutting down tomcat"/>
+			</else>
+		</if>
+	</target>
+
+	<target name="install:tomcat:start" description="Start Tomcat" unless="exclude.tomcat" depends="common:init">
+		<if>    
+			<not>   
+				<isset property="exclude.start.servers"/>
+			</not>  
+			<then>  
+				<tomcat-start tomcat.home="${tomcat.home}"/>
+			</then> 
+		</if>   
+	</target>
+
+	<target name="install:common:post" depends="common:init,install:post:jboss, install:post:tomcat">
+	</target>
+
+	<target name="install:post:jboss" unless="exclude.jboss" depends="common:init">
+		<if>
+			<not>
+				<equals arg1="${exclude.jboss.backup}" arg2="true"/>
+			</not>
+			<then>
+				<report-dir-diff
+					dir1="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}"
+					dir2="${jboss.home}"
+					reportFile="${install-logs.dir}/chagneLog-jboss-${install.time}.diff"
+					/>
+				<!-- Copy app server logs -->
+				<mkdir dir="${jboss.home}/server/${jboss.server.name}/log"/>
+				<mkdir dir="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}/server/${jboss.server.name}/log"/>
+				<!-- so the logs wont be included in the zip -->
+				<move todir="${jboss.home}/server/${jboss.server.name}/log">
+					<fileset dir="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}/server/${jboss.server.name}/log">
+						<include name="*"/>
+					</fileset>
+				</move>
+		
+				<!-- Compress backup and cleanup -->
+				<mkdir dir="${backup.jboss.base.dir}/backup1"/>
+				<zip destfile="${backup.jboss.base.dir}/backup1/${jboss.binaries.relative.dir}.zip" basedir="${backup.jboss.base.dir}/backup" />
+				<delete dir="${backup.jboss.base.dir}/backup"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="install:post:tomcat" unless="exclude.tomcat" depends="common:init">
+		<if>
+			<not>
+				<equals arg1="${exclude.tomcat.backup}" arg2="true"/>
+			</not>
+			<then>
+				<report-dir-diff
+					dir1="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"
+					dir2="${tomcat.home}"
+					reportFile="${install-logs.dir}/changeLog-tomcat-${install.time}.diff"
+					/>
+				
+				<!--
+				<mkdir dir="${tomcat.home}/server/${tomcat.server.name}/log"/>
+				<mkdir dir="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}/server/${tomcat.server.name}/log"/>
+				<copy todir="${tomcat.home}/server/${tomcat.server.name}/log">
+					<fileset dir="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}/server/${tomcat.server.name}/log">
+						<include name="*"/>
+					</fileset>
+				</copy>
+				-->
+			</then>
+		</if>
+	</target>
+
+	<target name="upgrade:common:init" depends="upgrade:jboss:init, upgrade:tomcat:init" unless="install.running">
+	</target>
+	<target name="upgrade:jboss:init" unless="install.running"
+		depends="
+		upgrade:jboss:init:prep,
+		upgrade:jboss:readers:bda,
+		upgrade:jboss:readers:custom
+		">
+		<properties-print
+			properties.list="${read.properties.list}"
+			/>
+		<properties-exist
+			properties.list="${read.properties.list}"
+			/>
+		<properties-write
+			properties.list="${read.properties.list}"
+			/>
+	</target>
+	<target name="upgrade:tomcat:init" unless="install.running"
+		depends="
+		upgrade:tomcat:init:prep,
+		upgrade:tomcat:readers:bda,
+		upgrade:tomcat:readers:custom
+		">
+		<properties-print
+			properties.list="${read.properties.list}"
+			/>
+		<properties-exist
+			properties.list="${read.properties.list}"
+			/>
+		<properties-write
+			properties.list="${read.properties.list}"
+			/>
+	</target>
+	<target name="upgrade:database:init" unless="install.running"
+		depends="
+		upgrade:jboss:init:prep,
+		upgrade:database:readers:bda,
+		upgrade:database:readers:custom
+		">
+		<!-- You need to either depend on jboss or tomcat so that you can read the db properties from it's configs.  BDA only has macros to read database properties from jboss. -->
+	</target>
+	<target name="upgrade:common:init:prep" unless="install.running">
+		<if>
+			<not>
+				<isset property="application.base.path"/>
+			</not>
+			<then>
+				<!-- Set application.base.path based on platform -->
+				<condition property="application.base.path" value="${application.base.path.linux}">
+					<or>
+						<os family="unix" />
+						<os family="mac" />
+					</or>
+				</condition>
+			
+				<condition property="application.base.path" value="${application.base.path.windows}">
+					<os family="windows" />
+				</condition>
+				<echo message="application.base.path=${application.base.path}"/>
+			</then>
+		</if>
+		<properties-print
+			properties.list="application.base.path,jboss.home,tomcat.home,jboss.server.name"
+			/>
+		<var name="read.properties.list" value=""/>
+		<property name="upgrade.running" value="true"/>
+	</target>
+	<target name="upgrade:jboss:init:prep" depends="upgrade:common:init:prep" unless="install.running">
+		<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
+		<if>
+			<equals arg1="${jboss.ncicb-standard.port-config}" arg2="true"/>
+			<then>
+				<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
+			</then>
+			<else>
+				<property name="jboss.server.binding.template.location" value="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings.xml"/>
+			</else>
+		</if>
+						
+		<property name="upgrade.running" value="true"/>
+		<!-- Upgrades always use port configs -->
+		<property name="jboss.ncicb-standard.port-config" value="true"/>
+		<available file="${jboss.home}" property="jboss.exists"/>
+		<property name="read.jboss.home" value="${jboss.home}"/>
+
+	</target>
+
+	<target name="upgrade:tomcat:init:prep" depends="upgrade:common:init:prep" unless="install.running">
+		<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
+		<!-- Upgrades always use port configs -->
+		<available file="${tomcat.home}" property="tomcat.exists"/>
+		<property name="read.tomcat.home" value="${tomcat.home}"/>
+	</target>
+
+	<target name="upgrade:jboss:readers:custom" unless="install.running">
+		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
+	</target>
+
+	<target name="upgrade:tomcat:readers:custom" unless="install.running">
+		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
+	</target>
+
+	<target name="upgrade:database:readers:custom" unless="install.running">
+		<!-- call your custom readers here, two properties included in these scripts that don't have readers are "fs-data.base.dir, mail.smtp.server" -->
+	</target>
+	<target name="upgrade:database:readers:bda" depends="upgrade:jboss:init:prep" if="jboss.exists">
+
+		<!-- Make sure the ${properties.file} has at least the following props -->
+		<properties-exist
+			properties.list="application.base.path,jboss.home,jboss.server.name"
+			/>
+		<jboss-read-dbconfig
+			jboss.home="${read.jboss.home}"
+			jboss.ds-xml.file="bda-blueprints-ds.xml"
+			/>
+	</target>
+	
+	<target name="upgrade:jboss:readers:bda" if="jboss.exists">
+
+		<!-- Make sure the ${properties.file} has at least the following props -->
+		<properties-exist
+			properties.list="application.base.path,jboss.home,jboss.server.name"
+			/>
+		<!-- Set these -->
+		<osfamily property="os.family"/>
+		<if>
+			<or>
+				<equals arg1="${os.family}" arg2="unix"/>
+				<equals arg1="${os.family}" arg2="mac"/>
+			</or>
+			<then>
+				<property name="jboss.server.hostname" value="${env.HOSTNAME}"/>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<property name="jboss.server.hostname" value="${env.COMPUTERNAME}"/>
+			</then>
+		</if>
+		<!-- Begin JBoss Readers -->
+		<!-- Reader reqiures that you have only one data source defined in each *-ds.xml file -->
+		<jboss-read-dbconfig
+			jboss.home="${read.jboss.home}"
+			jboss.ds-xml.file="bda-blueprints-ds.xml"
+			/>
+		<jboss-read-ldapconfig
+			jboss.home="${read.jboss.home}"
+			/>
+		<jboss-read-bindings-file-location
+			jboss.home="${read.jboss.home}"
+			/>
+		<jboss-read-ports
+			/>
+		<!-- Setting this variable will cause install to copy it into place if using CM/DAC, not modified in NCM -->
+		<var name="jboss.ssl.keystore.dir" value="${working.dir}/keys/jboss"/>
+		<jboss-read-ssl
+			jboss.home="${read.jboss.home}"
+			copied.keystore.dir="${jboss.ssl.keystore.dir}"
+			/>
+		<!-- No longer needed now reading all the ports
+		<jboss-copy-bindings
+			copied.jboss.server.bindingfile.dir="${working.dir}/copied-bindings"
+			copied.jboss.bindings.file.property.name="copied.jboss.bindings.file"
+			/>
+		# Setting this will cause install to copy this file into place if using CM/DAC, not modified in NCM 
+		<var name="jboss.server.binding.template.location" value="${working.dir}/copied-bindings/${copied.jboss.bindings.file}"/>
+		-->
+		<jboss-read-external-hostname
+			jboss.home="${read.jboss.home}"
+			/>
+		<!-- for tier installs, should be done first, since it is set first it will be the one used if it exists -->
+		<jboss-read-java_opts
+			jboss.bin.dir="${read.jboss.home}/server/${jboss.server.name}/bin"
+			/>              
+		<jboss-read-java_opts
+			jboss.home="${read.jboss.home}"
+			/>
+		<!-- will have to add code to install:post:jboss to copy this back if exists -->
+		<property name="copied.jboss.log4j.dir" value="${working.dir}/copied-log4j"/>
+		<jboss-copy-log4j
+			jboss.home="${read.jboss.home}"
+			copied.jboss.log4j.dir="${copied.jboss.log4j.dir}"
+			/>
+		<grid-read-index-url
+			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf"
+			/>              
+		<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
+		<jboss-read-grid-secure
+			jboss.home="${read.jboss.home}"
+			copied.keystore.dir="${jboss.grid.secure.dir}"
+			/>
+		<!-- will have to add code to install:post:jboss to copy this back if exists -->
+		<!-- no longer needed 
+		<property name="copied.jboss.service-metadata.dir" value="${working.dir}/jboss-grid"/>
+		<grid-copy-service-metadata
+			copied.service-metadata.dir="${copied.service-metadata.dir}"
+			/>
+		-->
+		<grid-read-poc
+			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf"
+			grid.service.name="Sample"
+			/>                      
+		<read-property-from-properties-service
+			jboss.home="${read.jboss.home}"
+			property.name="property1"
+			/>
+		<read-property-from-properties-service
+			jboss.home="${read.jboss.home}"
+			property.name="property2"
+			/>
+	</target>
+	<target name="upgrade:tomcat:readers:bda" depends="upgrade:tomcat:init:prep" if="tomcat.exists">
+
+		<!-- Make sure the ${properties.file} has at least the following props -->
+		<properties-exist
+			properties.list="application.base.path,tomcat.home"
+			/>
+		<!-- Begin Tomcat readers, delete if you don't need -->
+		<osfamily property="os.family"/>
+		<if>
+			<or>
+				<equals arg1="${os.family}" arg2="unix"/>
+				<equals arg1="${os.family}" arg2="mac"/>
+			</or>
+			<then>
+				<property name="tomcat.hostname" value="${env.HOSTNAME}"/>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<property name="tomcat.hostname" value="${env.COMPUTERNAME}"/>
+			</then>
+		</if>
+		<tomcat-read-ports
+			tomcat.home="${read.tomcat.home}"
+			/>
+		<var name="tomcat.ssl.keystore.dir" value="${working.dir}/keys/tomcat"/>
+		<tomcat-read-ssl
+			tomcat.home="${read.tomcat.home}"
+			copied.keystore.dir="${tomcat.ssl.keystore.dir}"
+			/>              
+		<tomcat-read-external-hostname
+			tomcat.home="${read.tomcat.home}"
+			/>
+		<grid-read-index-url
+			grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
+			/>
+		<var name="tomcat.grid.secure.dir" value="${working.dir}/keys/tomcat"/>
+		<tomcat-read-grid-secure
+			tomcat.home="${read.tomcat.home}"
+			copied.keystore.dir="${tomcat.grid.secure.dir}"
+			/>
+		<!--
+		<property name="copied.tomcat.service-metadata.dir" value="${working.dir}/tomcat-grid"/>
+		<grid-copy-service-metadata
+			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
+			copied.service-metadata.dir="${copied.service-metadata.dir1}"
+			/>
+		-->
+		<grid-read-poc
+			grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
+			grid.service.name="Sample"
+			/>                      
+
+
+		<!-- Fail if any read properties are not set -->
+		<echo message="All properties after readers"/>
+		<tomcat-read-dbconfig
+			/>
+	</target>
+	<target name="upgrade:post:jboss" unless="install.running">
+		<copy file="${copied.jboss.log4j.dir}/log4j.xml" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
+	</target>
+	<target name="upgrade:post:tomcat">
+		<!-- place holder -->
+	</target>
+
+	<target name="install:tomcat:sub-project">
+
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<var name="dist.relative.dir" unset="true"/>
+				<var name="tomcat.target.list" unset="true"/>
+				<property name="dist.relative.dir" location="${basedir}/sub-projects/${@{sub-project.prefix}.dist.relative.dir}"/>
+				<property name="tomcat.target.list" value="${@{sub-project.prefix}.install.tomcat.target.list}"/>
+
+				<var name="property.location" unset="true"/>
+				<property name="property.location" value="${@{sub-project.prefix}.properties.location}"/>
+				<var name="base.file" unset="true"/>
+				<basename file="${property.location}" property="base.file"/>
+				<var name="prop.file" unset="true"/>
+				<property name="prop.file" location="${basedir}/${base.file}"/>
+
+				<echo message="dir- '${dist.relative.dir}' target.list- '${tomcat.target.list}'"/>
+				
+				<for list="${tomcat.target.list}" param="target.name" delimiter=",">
+					<sequential>
+						<echo  message="Calling @{target.name} from ${dist.relative.dir}"/>
+						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${dist.relative.dir}">
+							<property name="application.base.path.linux" value="${application.base.path.linux}"/>
+							<property name="application.base.path.windows" value="${application.base.path.windows}"/>
+							<property name="read.tomcat.home" value="${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}"/>
+							<property name="exclude.tomcat.backup" value="true"/>
+							<property name="exclude.start.servers" value="true"/>
+							<property name="cacore-sdk.required" value="false"/>
+							<property name="grid.resource.dir" location="${grid.resource.dir}"/>
+							<property name="install.running" value="true"/>
+							<property name="properties.file" value="${prop.file}"/>
+							<property name="tomcat.relative.path" value="${tomcat.relative.path}"/>
+							<property name="tomcat.hostname" value="${tomcat.hostname}"/>
+							<property name="tomcat.port.http" value="${tomcat.port.http}"/>
+							<property name="tomcat.port.ajp" value="${tomcat.port.ajp}"/>
+							<property name="tomcat.port.ssl" value="${tomcat.port.ssl}"/>
+							<property name="tomcat.port.shutdown" value="${tomcat.port.shutdown}"/>
+							<property name="tomcat.ssl.enable" value="${tomcat.ssl.enable}"/>
+							<property name="tomcat.ssl.keystore.location" value="${tomcat.ssl.keystore.location}"/>
+							<property name="tomcat.ssl.keystore.pass" value="${tomcat.ssl.keystore.pass}"/>
+							<property name="tomcat.ssl.keystore.alias" value="${tomcat.ssl.keystore.alias}"/>
+							<property name="tomcat.ssl.fullyqualified.hostname" value="${tomcat.ssl.fullyqualified.hostname}"/>
+							<property name="tomcat.external.http.host" value="${tomcat.external.http.host}"/>
+							<property name="tomcat.external.http.port" value="${tomcat.external.http.port}"/>
+							<property name="tomcat.external.ssl.host" value="${tomcat.external.ssl.host}"/>
+							<property name="tomcat.external.ssl.port" value="${tomcat.external.ssl.port}"/>
+							<property name="tomcat.external.grid.secure.host" value="${tomcat.external.grid.secure.host}"/>
+							<property name="tomcat.external.grid.secure.port" value="${tomcat.external.grid.secure.port}"/>
+							<property name="tomcat.grid.secure.enable" value="${tomcat.grid.secure.enable}"/>
+							<property name="tomcat.grid.secure.port" value="${tomcat.grid.secure.port}"/>
+							<property name="tomcat.grid.secure.cert.location" value="${tomcat.grid.secure.cert.location}"/>
+							<property name="tomcat.grid.secure.key.location" value="${tomcat.grid.secure.key.location}"/>
+						</ant>
+						<!--
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${dist.relative.dir}/local.properties" tofile="${dist.relative.dir}/local.properties-tomcat-${cur.tstamp}"/>
+						#### Cause readers to read from backup area ###         
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="read.tomcat.home=${backup.tomcat.base.dir}/backup/${tomcat.binaries.relative.dir}${line.separator}"/>
+						#### Backups only need to be run at suite level ###
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="exclude.tomcat.backup=true${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="exclude.start.servers=true${line.separator}"/>
+						#### not sure why this is there ###
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="cacore-sdk.required=false${line.separator}"/>
+						#### Get grid binaries from suite-level ### 
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="grid.resource.dir=${grid.resource.dir}${line.separator}"/>
+						#### To cause readers to not run during install ###
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+						#### App server Props ###
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.relative.path=${tomcat.relative.path}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.hostname=${tomcat.hostname}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.port.http=${tomcat.port.http}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.port.ajp=${tomcat.port.ajp}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.port.ssl=${tomcat.port.ssl}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.port.shutdown=${tomcat.port.shutdown}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.ssl.enable=${tomcat.ssl.enable}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.ssl.keystore.location=${tomcat.ssl.keystore.location}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.ssl.keystore.pass=${tomcat.ssl.keystore.pass}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.ssl.keystore.alias=${tomcat.ssl.keystore.alias}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.ssl.fullyqualified.hostname=${tomcat.ssl.fullyqualified.hostname}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.external.http.host=${tomcat.external.http.host}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.external.http.port=${tomcat.external.http.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.external.ssl.host=${tomcat.external.ssl.host}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.external.ssl.port=${tomcat.external.ssl.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.external.grid.secure.host=${tomcat.external.grid.secure.host}${line.separator}"/> 
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.external.grid.secure.port=${tomcat.external.grid.secure.port}${line.separator}"/> 
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.grid.secure.enable=${tomcat.grid.secure.enable}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.grid.secure.port=${tomcat.grid.secure.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.grid.secure.cert.location=${tomcat.grid.secure.cert.location}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="tomcat.grid.secure.key.location=${tomcat.grid.secure.key.location}${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${dist.relative.dir}" failonerror="true">
+							#### use alternate properties file since default has replace values ###
+							#### force reinstall of database and jboss without prompting ###
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>                 
+						-->
+					</sequential>
+				</for>
+			</sequential>
+		</for>
+	</target>
+	<target name="install:jboss:sub-project">
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<var name="dist.relative.dir" unset="true"/>
+				<var name="jboss.target.list" unset="true"/>
+				<property name="dist.relative.dir" location="${basedir}/sub-projects/${@{sub-project.prefix}.dist.relative.dir}"/>
+				<property name="jboss.target.list" value="${@{sub-project.prefix}.install.jboss.target.list}"/>
+
+				<var name="property.location" unset="true"/>
+				<property name="property.location" value="${@{sub-project.prefix}.properties.location}"/>
+				<var name="base.file" unset="true"/>
+				<basename file="${property.location}" property="base.file"/>
+				<var name="prop.file" unset="true"/>
+				<property name="prop.file" location="${basedir}/${base.file}"/>
+
+				<echo message="dir- '${dist.relative.dir}' target.list- '${jboss.target.list}'"/>
+				
+				<for list="${jboss.target.list}" param="target.name" delimiter=",">
+					<sequential>
+						<echo  message="Calling @{target.name} from ${dist.relative.dir}"/>
+						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${dist.relative.dir}">
+							<property name="application.base.path.linux" value="${application.base.path.linux}"/>
+							<property name="application.base.path.windows" value="${application.base.path.windows}"/>
+							<property name="read.jboss.home" value="${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}"/>
+							<property name="exclude.jboss.backup" value="true"/>
+							<property name="exclude.start.servers" value="true"/>
+							<property name="cacore-sdk.required" value="false"/>
+							<property name="grid.resource.dir" location="${grid.resource.dir}"/>
+							<!-- To cause readers to not run during install -->
+							<property name="install.running" value="true"/>
+							<!-- Since upgrade target is being called this ensures all props set for install.-->
+							<property name="properties.file" value="${prop.file}"/>
+							<!-- Pass this to make install work -->
+							<property name="jboss.server.binding.template.location" value="${jboss.server.binding.template.location}"/>
+
+							<property name="jboss.relative.path" value="${jboss.relative.path}"/>
+							<property name="jboss.server.hostname" value="${jboss.server.hostname}"/>
+							<property name="jboss.server.name" value="${jboss.server.name}"/>
+							<property name="jboss.web.user" value="${jboss.web.user}"/>
+							<property name="jboss.web.password" value="${jboss.web.password}"/>
+							<property name="jboss.server.ports.name" value="${jboss.server.ports.name}"/>
+							<property name="jboss.server.jndi.port" value="${jboss.server.jndi.port}"/>
+							<property name="jboss.server.port" value="${jboss.server.port}"/>
+							<property name="jboss.cobraorb.port" value="${jboss.cobraorb.port}"/>
+							<property name="jboss.ejbinvoker.port" value="${jboss.ejbinvoker.port}"/>
+							<property name="jboss.hajndi.port" value="${jboss.hajndi.port}"/>
+							<property name="jboss.hajrmi.port" value="${jboss.hajrmi.port}"/>
+							<property name="jboss.jms.port" value="${jboss.jms.port}"/>
+							<property name="jboss.jmx-rmi.port" value="${jboss.jmx-rmi.port}"/>
+							<property name="jboss.messaging.port" value="${jboss.messaging.port}"/>
+							<property name="jboss.pooledha.port" value="${jboss.pooledha.port}"/>
+							<property name="jboss.remoting.port" value="${jboss.remoting.port}"/>
+							<property name="jboss.server.bind.port" value="${jboss.server.bind.port}"/>
+							<property name="jboss.server.rmi.port" value="${jboss.server.rmi.port}"/>
+							<property name="jboss.service.rmiobject.port" value="${jboss.service.rmiobject.port}"/>
+							<property name="jboss.snmp.port" value="${jboss.snmp.port}"/>
+							<property name="jboss.snmp-trapd.port" value="${jboss.snmp-trapd.port}"/>
+							<property name="jboss.web.service.port" value="${jboss.web.service.port}"/>
+							<property name="jboss.ssl.enable" value="${jboss.ssl.enable}"/>
+							<property name="jboss.ssl.keystore.location" value="${jboss.ssl.keystore.location}"/>
+							<property name="jboss.ssl.keystore.pass" value="${jboss.ssl.keystore.pass}"/>
+							<property name="jboss.ssl.keystore.alias" value="${jboss.ssl.keystore.alias}"/>
+							<property name="jboss.ssl.fullyqualified.hostname" value="${jboss.ssl.fullyqualified.hostname}"/>
+							<property name="jboss.java.opts" value="${jboss.java.opts}"/>
+							<property name="jboss.external.http.host" value="${jboss.external.http.host}"/>
+							<property name="jboss.external.http.port" value="${jboss.external.http.port}"/>
+							<property name="jboss.external.ssl.host" value="${jboss.external.ssl.host}"/>
+							<property name="jboss.external.ssl.port" value="${jboss.external.ssl.port}"/>
+							<property name="jboss.external.grid.secure.host" value="${jboss.external.grid.secure.host}"/>
+							<property name="jboss.external.grid.secure.port" value="${jboss.external.grid.secure.port}"/>
+							<property name="jboss.grid.secure.enable" value="${jboss.grid.secure.enable}"/>
+							<property name="jboss.grid.secure.port" value="${jboss.grid.secure.port}"/>
+							<property name="jboss.grid.secure.cert.location" value="${jboss.grid.secure.cert.location}"/>
+							<property name="jboss.grid.secure.key.location" value="${jboss.grid.secure.key.location}"/>
+						</ant>
+						<!--
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${dist.relative.dir}/local.properties" tofile="${dist.relative.dir}/local.properties-jboss-${cur.tstamp}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="application.base.path.linux=${application.base.path.linux}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="application.base.path.windows=${application.base.path.windows}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="read.jboss.home=${backup.jboss.base.dir}/backup/${jboss.binaries.relative.dir}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="exclude.jboss.backup=true${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="exclude.start.servers=true${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="cacore-sdk.required=false${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="grid.resource.dir=${grid.resource.dir}${line.separator}"/>
+						#### To cause readers to not run during install ###
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+						#### Since upgrade target is being called this ensures all props set for install. ###
+						#### Pass this to make install work ###
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.binding.template.location=${jboss.server.binding.template.location}${line.separator}"/>
+
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.relative.path=${jboss.relative.path}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.hostname=${jboss.server.hostname}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.name=${jboss.server.name}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.web.user=${jboss.web.user}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.web.password=${jboss.web.password}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.ports.name=${jboss.server.ports.name}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.jndi.port=${jboss.server.jndi.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.port=${jboss.server.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.cobraorb.port=${jboss.cobraorb.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.ejbinvoker.port=${jboss.ejbinvoker.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.hajndi.port=${jboss.hajndi.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.hajrmi.port=${jboss.hajrmi.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.jms.port=${jboss.jms.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.jmx-rmi.port=${jboss.jmx-rmi.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.messaging.port=${jboss.messaging.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.pooledha.port=${jboss.pooledha.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.remoting.port=${jboss.remoting.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.bind.port=${jboss.server.bind.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.server.rmi.port=${jboss.server.rmi.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.service.rmiobject.port=${jboss.service.rmiobject.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.snmp.port=${jboss.snmp.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.snmp-trapd.port=${jboss.snmp-trapd.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.web.service.port=${jboss.web.service.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.ssl.enable=${jboss.ssl.enable}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.ssl.keystore.location=${jboss.ssl.keystore.location}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.ssl.keystore.pass=${jboss.ssl.keystore.pass}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.ssl.keystore.alias=${jboss.ssl.keystore.alias}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.ssl.fullyqualified.hostname=${jboss.ssl.fullyqualified.hostname}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.java.opts=${jboss.java.opts}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.external.http.host=${jboss.external.http.host}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.external.http.port=${jboss.external.http.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.external.ssl.host=${jboss.external.ssl.host}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.external.ssl.port=${jboss.external.ssl.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.external.grid.secure.host=${jboss.external.grid.secure.host}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.external.grid.secure.port=${jboss.external.grid.secure.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.grid.secure.enable=${jboss.grid.secure.enable}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.grid.secure.port=${jboss.grid.secure.port}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.grid.secure.cert.location=${jboss.grid.secure.cert.location}${line.separator}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="jboss.grid.secure.key.location=${jboss.grid.secure.key.location}${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${dist.relative.dir}" failonerror="true">
+							#### use alternate properties file since default has replace values ###
+							#### force reinstall of database and jboss without prompting ###
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>                 
+						-->
+					</sequential>
+				</for>
+			</sequential>
+		</for>
+	</target>
+	<target name="install:database:sub-project">
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<var name="dist.relative.dir" unset="true"/>
+				<var name="database.target.list" unset="true"/>
+				<property name="dist.relative.dir" location="${basedir}/sub-projects/${@{sub-project.prefix}.dist.relative.dir}"/>
+				<property name="database.target.list" value="${@{sub-project.prefix}.install.database.target.list}"/>
+
+				<var name="property.location" unset="true"/>
+				<property name="property.location" value="${@{sub-project.prefix}.properties.location}"/>
+				<var name="base.file" unset="true"/>
+				<basename file="${property.location}" property="base.file"/>
+				<var name="prop.file" unset="true"/>
+				<property name="prop.file" location="${basedir}/${base.file}"/>
+
+				<echo message="dir- '${dist.relative.dir}' target.list- '${database.target.list}' prop.file- '${prop.file}'"/>
+				
+				<for list="${database.target.list}" param="target.name" delimiter=",">
+					<sequential>
+						<echo  message="Calling @{target.name} from ${dist.relative.dir}"/>
+						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${dist.relative.dir}">
+							<property name="install.running" value="true"/>
+							<property name="properties.file" value="${prop.file}"/>
+						</ant>
+						<!--
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${dist.relative.dir}/local.properties" tofile="${dist.relative.dir}/local.properties-jboss-${cur.tstamp}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${dist.relative.dir}" failonerror="true">
+							#### use alternate properties file since default has replace values ###
+							#### force reinstall of database and jboss without prompting ###
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>
+						-->
+					</sequential>
+				</for>
+			</sequential>
+		</for>
+	</target>
+	<target name="upgrade:database:sub-project">
+		<for list="${sub-project.prefix.list}" param="sub-project.prefix" delimiter=",">
+			<sequential>
+				<var name="dist.relative.dir" unset="true"/>
+				<var name="database.target.list" unset="true"/>
+				<property name="dist.relative.dir" location="${basedir}/sub-projects/${@{sub-project.prefix}.dist.relative.dir}"/>
+				<property name="database.target.list" value="${@{sub-project.prefix}.install.database.target.list}"/>
+
+				<var name="property.location" unset="true"/>
+				<property name="property.location" value="${@{sub-project.prefix}.properties.location}"/>
+				<var name="base.file" unset="true"/>
+				<basename file="${property.location}" property="base.file"/>
+				<var name="prop.file" unset="true"/>
+				<property name="prop.file" location="${basedir}/${base.file}"/>
+
+				<echo message="dir- '${dist.relative.dir}' target.list- '${database.target.list}' prop.file- '${prop.file}'"/>
+				
+				<for list="${database.target.list}" param="target.name" delimiter=",">
+					<sequential>
+						<echo  message="Calling @{target.name} from ${dist.relative.dir} using prop file ${prop.file} cur properties.file- '${properties.file}' "/>
+						<ant inheritAll="false" inheritRefs="false" antfile="build.xml" target="@{target.name}" dir="${dist.relative.dir}">
+							<property name="install.running" value="true"/>
+							<property name="properties.file" value="${prop.file}"/>
+						</ant>
+						<!--
+						<osfamily property="os.family"/>
+						<var name="ant.cmd" unset="true"/>
+						<switch value="${os.family}">
+							<case value="unix">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="mac">
+								<property name="ant.cmd" value="ant"/>
+							</case>
+							<case value="windows">
+								<property name="ant.cmd" value="ant.bat"/>
+							</case>
+							<default>
+								<fail message="Platform not supported ${os.family}."/>
+							</default>
+						</switch>
+						<var name="cur.tstamp" unset="true"/>
+						<tstamp>
+							<format property="cur.tstamp" pattern="yyyy-MM-dd-HH-mm" />
+						</tstamp>
+						<echo file="${dist.relative.dir}/local.properties" append="true" message=""/>
+						<move file="${dist.relative.dir}/local.properties" tofile="${dist.relative.dir}/local.properties-jboss-${cur.tstamp}"/>
+						<echo append="true" file="${dist.relative.dir}/local.properties" message="install.running=true${line.separator}"/>
+
+						<exec osfamily="unix" executable="${ant.cmd}" dir="${dist.relative.dir}" failonerror="true">
+							#### use alternate properties file since default has replace values ###
+							#### force reinstall of database and jboss without prompting ###
+							<arg line="-Dproperties.file=${prop.file} -Dforce.reinstall=true @{target.name}" />
+						</exec>                 
+						-->
+					</sequential>
+				</for>
+			</sequential>
+		</for>
+	</target>
+</project>

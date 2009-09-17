@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" href="./BasePatientDTOArrayCallable.html" title="&lt;TABLE&gt;" alt="" coords="16,10,221,114"/>
+<area shape="rect" href="./BooleanCallable.html" title="&lt;TABLE&gt;" alt="" coords="267,10,464,114"/>
+<area shape="rect" href="./ObjectArrayCallable.html" title="&lt;TABLE&gt;" alt="" coords="509,10,707,114"/>
+<area shape="rect" href="./SearchCriteriaDTOArrayCallable.html" title="&lt;TABLE&gt;" alt="" coords="752,10,971,114"/>
+<area shape="rect" href="./SeriesDTOArrayCallable.html" title="&lt;TABLE&gt;" alt="" coords="1016,10,1213,114"/>
+<area shape="rect" href="./StudyDTOArrayCallable.html" title="&lt;TABLE&gt;" alt="" coords="1259,10,1456,114"/>
+<area shape="rect" href="./ThumbnailImageDTOArrayCallable.html" title="&lt;TABLE&gt;" alt="" coords="1501,10,1733,114"/>
+</map>

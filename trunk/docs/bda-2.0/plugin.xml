@@ -1,0 +1,53 @@
+<plugin name="" property-prefix=""/>
+	<description/>
+	<container-type name="jboss|tomcat|database">
+		<versions>
+			<version value=""/>
+		</version>
+	</container-type>
+	<!-- for defining custom types not already provided by core engine, mostly used by lists -->
+	<property-types>
+		<property-type name="" base-type="number|string|boolean|list" validation-class="" validation-target="">
+			<!-- if you want to provide a list of values add below -->
+			<list-type value="single|multiple"/>
+			<property-choice value=""/>
+		</property-type>
+	</property-types>
+	<tier-properties>
+		<!-- This element is used to identify properties from properties files that are related to this plugin, it can be used in validation phase of configurator -->
+		<!-- Default will allow variable expansion so that way we can build vars from prefix/suffix, this will be suggested value or may even be added to file if user approves. -->
+		<!-- profile can be install.proeprties, upgrade.properties, tier.proprties (both) or project.properties -->
+		<property name="" type="" required="true|false" default="" propfile="see-above"/>
+	</tier-properties>
+	<engine-properties>
+		<!-- these properties will end up in the main engine-config file -->
+		<!-- Default will allow variable expansion so that way we can build vars from prefix/suffix, this will be suggested value or may even be added to file if user approves. -->
+		<!-- Typical engine variable will be as follows, not that (x) will allow users map bda variables to thier properties, user will have enter property name in thier sub-project
+			${property-prefix}.disable = false
+			${property-prefix}.override = false
+				${property-prefix}.override.build.file.dist.relative.location =
+				${property-prefix}.override.build.file.target =
+				${property-prefix}.override.property.map.subproject.name(x) =
+				${property-prefix}.override.property.map.bda.name(x) =
+			${property-prefix}.pre-execute = false
+				${property-prefix}.pre-execute.build.file.dist.relative.location =
+				${property-prefix}.pre-execute.build.file.target =
+				${property-prefix}.pre-execute.property.map.subproject.name(x) =
+				${property-prefix}.pre-execute.property.map.bda.name(x) =
+			${property-prefix}.post-execute = false
+				${property-prefix}.post-execute.build.file.dist.relative.location =
+				${property-prefix}.post-execute.build.file.target =
+				${property-prefix}.post-execute.property.map.subproject.name(x) =
+				${property-prefix}.post-execute.property.map.bda.name(x) =
+		-->
+		<!-- If display-name is not set then name is used -->
+		<!-- display-short-description can be listed on line or on mouse over or something -->
+		<!-- display-long-description will pop up if you click ? icon?? -->
+		<property name="" type="" display-type="select|multi-select|combo|radio|checkbox|text|text-area" default="" display-name="" display-short-description="" display-long-description=""/>
+		</property>
+	</engine-properties>
+	<!-- display type is how to display these fields, on the same page as the rest of the container or on it's own page/tab or in a popup -->
+	<configurator validation-class="" validation-target="" display-type="container|popup|page/tab"/>
+	<!-- step-type is when to run this step, either init (first), pre-install, during the install or after the install, pre and post are for validation -->
+	<engine step-type="init|pre|post|install" install-class="" install-target=""/>
+</plugin>
