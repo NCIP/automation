@@ -7473,6 +7473,9 @@ $HeadURL$
 						</default>
 					</switch>
 				</case>
+				<default>
+					<echo message="This function for the value @{database.type} of property database.type is not defined" />
+				</default>				
 			</switch>
 			<check-database-exists
 				database.driver="@{database.driver}"
@@ -7493,6 +7496,9 @@ $HeadURL$
 						mysql.lowercasetablenames="@{mysql.lowercasetablenames}"
 						/>
 				</case>
+				<default>
+					<echo message="This function for the value @{database.type} of property database.type is not defined" />
+				</default>				
 			</switch>
 		</sequential>
 	</macrodef>
