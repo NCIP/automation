@@ -50,17 +50,23 @@
 						Build time- must copy install-time build file, resource and properties files into distribution
 						Install time- 
 				-->
-				<container type="jboss" prefix=""/>
-					<!-- Will include  bda-utils -->
-					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern=""/>
+				<!-- All products will have 
+					bda-utils.dir
+					install.xml renamed to build.xml and modified
+					properties files
+					commmon.dir	
+				-->
+				<!-- Sub-project deterimes which artifacts from projects are included -->
+				<container type="jboss" prefix="">
+					<!-- inlcudes jboss binaries/patches and grid files if install-grid=true -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
 				</container>
-				<container type="tomcat" prefix=""/>
-					<!-- Will include  bda-utils -->
-					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern=""/>
+				<container type="tomcat" prefix="">
+					<!-- inlcudes tomcat binaries/patches and grid files if install-grid=true -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
 				</container>
-				<container type="database" prefix=""/>
-					<!-- Will include  bda-utils -->
-					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern=""/>
+				<container type="database" prefix="">
+					<sub-project prefix="" db-install-dir="" db-upgrade-dir=""/>
 				</container>
 			</containers>
 		</build>
