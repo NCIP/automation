@@ -1490,6 +1490,9 @@ $HeadURL$
 					<not>
 						<isset property="exclude.check.database"/>
 					</not>
+					<not>
+						<isset property="exclude.database"/>
+					</not>
 				</and>
 				<then>
 					<echo message="Validating database connection..." />
