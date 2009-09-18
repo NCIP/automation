@@ -83,9 +83,9 @@
 		 <deploy>
 			<description></description>
 			<local>
-				<deployment container-type="" container-prefix=""
+				<deployment container-type="" container-prefix="">
 			</local>
-			<remote type=">
+			<remote type="">
 			</remote>
 			<external>
 			</external>
