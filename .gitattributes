@@ -3,6 +3,7 @@ docs/automated-build.mm -text
 docs/bda-2.0/master-flow.xml -text
 docs/bda-2.0/plugin.xml -text
 docs/bda-2.0/property-sufix.txt -text
+docs/bda-2.0/rules.txt -text
 docs/bda-diagrams.vsd -text
 docs/bda-gettingstarted.doc -text
 docs/bda-project-plan.mpp -text

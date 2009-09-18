@@ -1,0 +1,4 @@
+* BDA 2.0 assumptions
+** All deployments will be DAC if not using DAC, not using bda-2.0
+** Each container will be installed on it's server (jboss on jboss server, db on db server, tomcat on tomcat server)
+*** Deploy folder will inlcude container name ($HOME/deploy/db)
