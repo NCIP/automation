@@ -5,7 +5,11 @@
 		</contacts>
 		<repository-url/>
 		<sub-projects numberofsub-projects="">
-			<subproject prefix=""/>
+			<sub-project prefix="" builder="ant|maven|ect" build-base-dir="" build-file="" build-target="">
+				<property-maps>
+					<property-map sub-project.property.name="" bda-project.property.name=""/>
+				</proeprty-maps>
+			</sub-project>
 		</sub-projects>
 		<database-containers numofcontainers="">
 			<database-container prefix="prefix" database-type="">
@@ -36,7 +40,7 @@
 		<!-- descriptions maybe be show on web-ui -->
 		<build>
 			<description></description>
-			<sub-projects>
+			<containers>
 				<!-- Anything that the dev team wants to include in a distribution need to be done in this target -->
 				<!-- install time considerations...
 					For BDA Projects
@@ -46,12 +50,19 @@
 						Build time- must copy install-time build file, resource and properties files into distribution
 						Install time- 
 				-->
-				<sub-project prefix="" builder="ant|maven|ect" build-base-dir="" build-file="" build-target="" build-artifact-dir="" build-artifact-pattern="">
-					<property-maps>
-						<property-map sub-project.property.name="" bda-project.property.name=""/>
-					</proeprty-maps>
-				</sub-project>
-			</sub-projects>
+				<container type="jboss" prefix=""/>
+					<!-- Will include  bda-utils -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern=""/>
+				</container>
+				<container type="tomcat" prefix=""/>
+					<!-- Will include  bda-utils -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern=""/>
+				</container>
+				<container type="database" prefix=""/>
+					<!-- Will include  bda-utils -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern=""/>
+				</container>
+			</containers>
 		</build>
 		<test>
 			<description></description>
@@ -83,9 +94,11 @@
 		 <deploy>
 			<description></description>
 			<local>
+				<!-- -->
 				<deployment container-type="" container-prefix="">
 			</local>
-			<remote type="">
+			<remote>
+
 			</remote>
 			<external>
 			</external>
