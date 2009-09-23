@@ -152,24 +152,30 @@
 			
 		<deploy>
 			<description></description>
-			<validation>
-				<!--
+			<!-- Plugin -->
+			<!-- Always uses complete-(installer|upgrader) -->
+			<local-install/>
+			<!-- Plugin -->
+			<remote-install dist-type="complete-installer|...">
+				<!-- Validation pre-deploy validatiion
 				Copies over deploy-tools to remote machine, deploy-tools includes setup shell script, validation script (groovy?), version file, ant, java and support libraries.
 				Executes script which extracts ant, java and support libs (if version file is not up to date or does not exist).
 				Executes validation script which:
 					checks space avaliable 
 				-->
-			</validation>
-			<!-- Plugin -->
-			<!-- Always uses complete-(installer|upgrader) -->
-			<local-install/>
-			<!-- Plugin -->
-			<remote-install dist-type="complete-installer|..."/>
+			</remote-install>
 			<!-- Plugin -->
 			<!-- Always uses complete-(installer|upgrader) -->
 			<local-upgrade/>
 			<!-- Plugin -->
 			<remote-upgrade dist-type="complete-upgrader|..."/>
+				<!-- Validation pre-deploy validatiion
+				Copies over deploy-tools to remote machine, deploy-tools includes setup shell script, validation script (groovy?), version file, ant, java and support libraries.
+				Executes script which extracts ant, java and support libs (if version file is not up to date or does not exist).
+				Executes validation script which:
+					checks space avaliable 
+				-->
+			</remote-upgrade>
 		 </deploy>
 		 <utility>
 		 </utility>
@@ -178,27 +184,59 @@
 	</build-steps>
 	<install-steps>
 		<!-- Install steps are broken down into phases -->
+		<!-- Initialization steps -->
+		<initialization>
+			<common>
+				<!-- plugin -->
+				<!-- Loads props from files and environment, also adds properties which reference other property values (have embedded ${}) to the a filter set used when copying files.  -->
+				<properties-load/>
+				<!-- plugin -->
+				<!-- Sets up global properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+				<properties-init-global/>
+				<!-- plugin -->
+				<!-- Do any "bda-utils" like import or taskdefs -->
+				<libraries-init/>
+				<!-- plugin -->
+				<!--  -->
+				<x/>
+			</common>
+			<database>
+				<!-- plugin -->
+				<!-- Sets up db properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+				<properties-init-db/>
+			</database>
+			<jboss>
+				<!-- plugin -->
+				<!-- Sets up jboss properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+				<properties-init-jboss/>
+			</jboss>
+			<tomcat>
+				<!-- plugin -->
+				<!-- Sets up tomcat properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+				<properties-init-tomcat/>
+			</tomcat>
+		</initialization>
 		<!-- Validation for all containers happens during pre-validation -->
 		<pre-validation>
 			<common>
 			</common>
 			<database>
+				<!-- plugin -->
+				<db-verify-connect prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+					<property type="" name="db-verify-version.dist.relative.base.dir" value=""/>
+				</db-verify-version>
+				<!-- plugin -->
+				<db-verify-version prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+					<property type="" name="db-verify-version.dist.relative.base.dir" value=""/>
+				</db-verify-version>
 			</database>
 			<jboss>
 			</jboss>
 			<tomcat>
 			</tomcat>
 		</pre-validation>
-		<initialization>
-			<common>
-			</common>
-			<database>
-			</database>
-			<jboss>
-			</jboss>
-			<tomcat>
-			</tomcat>
-		</initialization>
 		<backup>
 			<common>
 			</common>

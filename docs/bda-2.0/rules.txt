@@ -2,3 +2,11 @@
 ** All deployments will be DAC if not using DAC, not using bda-2.0
 ** Each container will be installed on it's server (jboss on jboss server, db on db server, tomcat on tomcat server)
 *** Deploy folder will inlcude container name ($HOME/deploy/db)
+
+* Features of engine
+** Logging capability like log4j
+** Try to add ant listener like functionality that can track each event.
+
+* Coding standards
+** Log debug on entry and exit of each "code block"
+** Report event to "listener" on entry and exit of each "code block"
