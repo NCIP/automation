@@ -6,7 +6,7 @@
 		<repository-url/>
 		<sub-projects numberofsub-projects="">
 		</sub-projects>
-		<database-containers numofcontainers="">
+		<database-containers numofcontainers="" use-bda="">
 			<database-container prefix="prefix" database-type="">
 				<database-types type="" minimum-version=""/>
 			</database-container>
@@ -33,6 +33,7 @@
 	</project-detail>
 	<build-steps>
 		<!-- descriptions maybe be show on web-ui -->
+		<!-- plugin -->
 		<build>
 			<description></description>
 			<sub-projects>
@@ -52,6 +53,7 @@
 				</sub-project>
 			</sub-projects>
 		</build>
+		<!-- plugin -->
 		<test>
 			<description></description>
 			<sub-projects>
@@ -62,6 +64,7 @@
 				</sub-project>
 			</sub-projects>
 		</test>
+		<!-- plugin -->
 		<static-analysis>
 			<description></description>
 			<sub-projects>
@@ -72,8 +75,20 @@
 				</sub-project>
 			</sub-projects>
 		</static-analysis>
-		 <!-- includes dist -->
+		 
 		<dist>
+			<obfuscate-properties>
+				<required.property.list>
+				</required.property.list>
+				<optional.property.list>
+				</optional.property.list>
+				<delete.property.list>
+				</delete.property.list>
+				<comment.property.list>
+				</comment.property.list>
+				<uncomment.property.list>
+				</uncomment.property.list>
+			</obfuscate-properties>
 			<containers>
 				<!-- All products will have 
 					bda-utils.dir
@@ -82,45 +97,79 @@
 					commmon.dir	
 				-->
 				<!-- Sub-project deterimes which artifacts from projects are included -->
+				<!-- plugin -->
 				<container type="jboss" prefix="">
 					<!-- inlcudes jboss binaries/patches and grid files if install-grid=true -->
 					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
 				</container>
+				<!-- plugin -->
 				<container type="tomcat" prefix="">
 					<!-- inlcudes tomcat binaries/patches and grid files if install-grid=true -->
 					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
 				</container>
+				<!-- plugin -->
 				<container type="database" prefix="">
+					<!-- Requires install scripts in one directory and upgrade in another.
+					     Requires child directory for each type of db supported with files under them.
+					     So teams may need to restructure
+						sub-poject/db-(install|upgrade)/${database.type}/*.sql
+					-->
 					<sub-project prefix="" db-install-dir="" db-upgrade-dir=""/>
 				</container>
 			</containers>
 			<distributions>
+				<!-- plugin -->
 				<distribution name="complete-installer">
+					<!-- loops through containers, packages them  into one dist -->
 				</distribution>
+				<!-- plugin -->
 				<distribution name="complete-upgrader">
+					<!-- loops through containers, packages them  into one dist -->
 				</distribution>
+				<!-- plugin -->
 				<distribution name="container-installer">
+					<!-- loops through containers, packages them into sepearate distributions -->
 				</distribution>
+				<!-- plugin -->
 				<distribution name="container-upgrader">
+					<!-- loops through containers, packages them into sepearate distributions -->
 				</distribution>
+				<!-- plugin -->
 				<distribution name="gui-installer">
+					<!-- consumes complete-installer -->
 				</distribution>
+				<!-- plugin -->
 				<distribution name="source">
+					<!-- source for whole project -->
+					<source builder="ant|maven|ect" build-base-dir="" build-file="" build-target="">
+						<property-maps>
+							<property-map sub-project.property.name="" bda-project.property.name=""/>
+						</proeprty-maps>
+					</source>
 				</distribution>
 			</distributions>
 		</dist>
 			
-		 <deploy>
+		<deploy>
 			<description></description>
-			<local>
-				<!-- -->
-				<deployment container-type="" container-prefix="">
-			</local>
-			<remote>
-
-			</remote>
-			<external>
-			</external>
+			<validation>
+				<!--
+				Copies over deploy-tools to remote machine, deploy-tools includes setup shell script, validation script (groovy?), version file, ant, java and support libraries.
+				Executes script which extracts ant, java and support libs (if version file is not up to date or does not exist).
+				Executes validation script which:
+					checks space avaliable 
+				-->
+			</validation>
+			<!-- Plugin -->
+			<!-- Always uses complete-(installer|upgrader) -->
+			<local-install/>
+			<!-- Plugin -->
+			<remote-install dist-type="complete-installer|..."/>
+			<!-- Plugin -->
+			<!-- Always uses complete-(installer|upgrader) -->
+			<local-upgrade/>
+			<!-- Plugin -->
+			<remote-upgrade dist-type="complete-upgrader|..."/>
 		 </deploy>
 		 <utility>
 		 </utility>
@@ -128,5 +177,57 @@
 		 </other>
 	</build-steps>
 	<install-steps>
+		<!-- Install steps are broken down into phases -->
+		<!-- Validation for all containers happens during pre-validation -->
+		<pre-validation>
+			<common>
+			</common>
+			<database>
+			</database>
+			<jboss>
+			</jboss>
+			<tomcat>
+			</tomcat>
+		</pre-validation>
+		<initialization>
+			<common>
+			</common>
+			<database>
+			</database>
+			<jboss>
+			</jboss>
+			<tomcat>
+			</tomcat>
+		</initialization>
+		<backup>
+			<common>
+			</common>
+			<database>
+			</database>
+			<jboss>
+			</jboss>
+			<tomcat>
+			</tomcat>
+		</backup>
+		<execution>
+			<common>
+			</common>
+			<database>
+			</database>
+			<jboss>
+			</jboss>
+			<tomcat>
+			</tomcat>
+		</execution>
+		<post-validation>
+			<common>
+			</common>
+			<database>
+			</database>
+			<jboss>
+			</jboss>
+			<tomcat>
+			</tomcat>
+		</post-validation>
 	</install-steps>
 </project>
