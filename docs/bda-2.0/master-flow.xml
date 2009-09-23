@@ -5,11 +5,6 @@
 		</contacts>
 		<repository-url/>
 		<sub-projects numberofsub-projects="">
-			<sub-project prefix="" builder="ant|maven|ect" build-base-dir="" build-file="" build-target="">
-				<property-maps>
-					<property-map sub-project.property.name="" bda-project.property.name=""/>
-				</proeprty-maps>
-			</sub-project>
 		</sub-projects>
 		<database-containers numofcontainers="">
 			<database-container prefix="prefix" database-type="">
@@ -40,7 +35,7 @@
 		<!-- descriptions maybe be show on web-ui -->
 		<build>
 			<description></description>
-			<containers>
+			<sub-projects>
 				<!-- Anything that the dev team wants to include in a distribution need to be done in this target -->
 				<!-- install time considerations...
 					For BDA Projects
@@ -50,6 +45,36 @@
 						Build time- must copy install-time build file, resource and properties files into distribution
 						Install time- 
 				-->
+				<sub-project prefix="" builder="ant|maven|ect" build-base-dir="" build-file="" build-target="">
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+			</sub-projects>
+		</build>
+		<test>
+			<description></description>
+			<sub-projects>
+				<sub-project prefix="" builder="ant|maven|ect" test-base-dir="" test-file="" test-target="" test-output-dir="" >
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+			</sub-projects>
+		</test>
+		<static-analysis>
+			<description></description>
+			<sub-projects>
+				<sub-project prefix="" builder="ant|maven|ect" sa-base-dir="" sa-file="" sa-target="" sa-output-dir="" >
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+			</sub-projects>
+		</static-analysis>
+		 <!-- includes dist -->
+		<dist>
+			<containers>
 				<!-- All products will have 
 					bda-utils.dir
 					install.xml renamed to build.xml and modified
@@ -69,34 +94,22 @@
 					<sub-project prefix="" db-install-dir="" db-upgrade-dir=""/>
 				</container>
 			</containers>
-		</build>
-		<test>
-			<description></description>
-			<sub-projects>
-				<sub-project prefix="" builder="ant|maven|ect" test-base-dir="" test-file="" test-target="" test-output-dir="" >
-					<property-maps>
-						<property-map sub-project.property.name="" bda-project.property.name=""/>
-					</proeprty-maps>
-				</sub-project>
-		</test>
-		<static-analysis>
-			<description></description>
-				<sub-project prefix="" builder="ant|maven|ect" sa-base-dir="" sa-file="" sa-target="" sa-output-dir="" >
-					<property-maps>
-						<property-map sub-project.property.name="" bda-project.property.name=""/>
-					</proeprty-maps>
-				</sub-project>
-		</static-analysis>
-		 <!-- includes dist -->
-		 <dist>
-			<description></description>
-			<local>
-			</local>
-			<remote type="individual|all">
-			</remote>
-			<external>
-			</external>
-		 </dist>
+			<distributions>
+				<distribution name="complete-installer">
+				</distribution>
+				<distribution name="complete-upgrader">
+				</distribution>
+				<distribution name="container-installer">
+				</distribution>
+				<distribution name="container-upgrader">
+				</distribution>
+				<distribution name="gui-installer">
+				</distribution>
+				<distribution name="source">
+				</distribution>
+			</distributions>
+		</dist>
+			
 		 <deploy>
 			<description></description>
 			<local>
