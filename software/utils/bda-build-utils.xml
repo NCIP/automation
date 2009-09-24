@@ -5561,6 +5561,13 @@ $HeadURL$
 						jboss.bin.dir="@{jboss.home}/server/@{jboss.server.name}/bin"
 						jboss.java.opts="@{jboss.java.opts}"
 						/>
+					<!-- added 090924 ssaksa for issue with app scans -->
+					<replaceregexp
+						file="@{jboss.server-xml.file}"
+						byline="true"
+						match="emptySessionPath=&quot;true&quot;"
+						replace="emptySessionPath=&quot;false&quot;"
+						/>
 				</then>
 				<else>
 					<echo message="Skipping jboss configuraiton because exclude.jboss-config is set"/>
@@ -8501,8 +8508,8 @@ $HeadURL$
 					<echo message="cagrid-target.dir - @{cagrid-target.dir}"/>
 					<echo message="grid.target -@{grid.target}"/>
 					<echo message="Installing sync-gts in support of Secure Grid being enabled"/>
-					<copy todir="@{sync-gts.build.dir}/etc/target_grid" file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml"/>
-					<copy todir="@{sync-gts.build.dir}/etc/target_grid/certificates">
+					<copy todir="@{sync-gts.build.dir}/ext/target_grid" file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml"/>
+					<copy todir="@{sync-gts.build.dir}/ext/target_grid/certificates">
 						<fileset dir="@{cagrid-target.dir}/@{grid.target}/certificates"/>
 					</copy>                 
 					
