@@ -202,15 +202,30 @@
 			</common>
 			<database>
 				<!-- plugin -->
+				<!-- Reads the database properties -->
+				<db-read-props disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</db-read-props>
+				<!-- plugin -->
 				<!-- Sets up db properties, split (basename,dirname)  and os derived props (like application.base.path) -->
 				<properties-init-db/>
 			</database>
 			<jboss>
 				<!-- plugin -->
+				<!-- If upgrade then read db props -->
+				<jboss-read-props prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-read-props>
+				<!-- plugin -->
 				<!-- Sets up jboss properties, split (basename,dirname)  and os derived props (like application.base.path) -->
 				<properties-init-jboss/>
 			</jboss>
 			<tomcat>
+				<!-- plugin -->
+				<!-- If upgrade then read db props -->
+				<tomcat-read-props prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-read-props>
 				<!-- plugin -->
 				<!-- Sets up tomcat properties, split (basename,dirname)  and os derived props (like application.base.path) -->
 				<properties-init-tomcat/>
@@ -219,42 +234,263 @@
 		<!-- Validation for all containers happens during pre-validation -->
 		<pre-validation>
 			<common>
+				<!-- plugin -->
+				<!-- Checks versions of required tools, Ant, Java, ect-->
+				<common-validate-env prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</common-validate-env>
+				<!-- plugin -->
+				<!-- Checks property values -->
+				<common-validate-props prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</common-validate-props>
+				<!-- plugin -->
+				<!-- Makes sure the application.base.path is not a restricted dir, checks that it is an absolute path-->
+				<common-validate-base-path prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</common-validate-base-path>
+				<!-- plugin -->
+				<!-- Validates that env.name has valid value -->
+				<common-validate-env-nane prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</common-validate-env-name>
+				<!-- plugin -->
+				<!-- Validates that passwords do not contain special characters that break the build. -->
+				<common-validate-passwords prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</common-validate-passwords>
 			</common>
 			<database>
 				<!-- plugin -->
-				<db-verify-connect prefix="" disable="false" override="false" pre-run="false" post-run="false">
+				<!-- Verifies that all required db props (properties.template) are set and that database.system.user and database.user not the same, if my sql database name not mysql, ect -->
+				<db-verify-properties prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
-					<property type="" name="db-verify-version.dist.relative.base.dir" value=""/>
 				</db-verify-version>
 				<!-- plugin -->
+				<!-- Check that you can connect -->
+				<db-verify-connect prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</db-verify-version>
+				<!-- plugin -->
+				<!-- Check that version is good -->
 				<db-verify-version prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
-					<property type="" name="db-verify-version.dist.relative.base.dir" value=""/>
 				</db-verify-version>
-			</database>
+				<!-- plugin -->
+				<!-- If force.re-install not set warn that db exists -->
+				<db-warn-exists prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</db-warn-exists>
+				<!-- plugin -->
+				<!-- Verifies that lower.case.table.names=1 -->
+				<db-mysql-lowercase-tablenames prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</db-mysql-lowercase-tablenames>
 			<jboss>
+				<!-- plugin -->
+				<!-- Verifies that all jboss props (properties.template) are set -->
+				<jboss-verify-props prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-verify-props>
+				<!-- plugin -->
+				<!-- Verifies that specified version is supported by build and project-->
+				<jboss-verify-version prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-verify-version>
+				<!-- plugin -->
+				<!-- If ssl is enabled verify keystore -->
+				<jboss-verify-keystore prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-verify-keystore>
+				<!-- plugin -->
+				<!-- stop jboss  -->
+				<jboss-stop prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-stop>
+				<!-- plugin -->
+				<!-- Verify ports not in use after stopping JBoss -->
+				<jboss-verify-ports prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-verify-ports>
 			</jboss>
 			<tomcat>
+				<!-- plugin -->
+				<!-- Verifies that all tomcat props (properties.template are set -->
+				<tomcat-verify-props prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-verify-props>
+				<!-- plugin -->
+				<!-- Verifies that specified version is supported by build and project-->
+				<tomcat-verify-version prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-verify-version>
+				<!-- plugin -->
+				<!-- If ssl is enabled verify keystore -->
+				<tomcat-verify-keystore prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-verify-keystore>
+				<!-- plugin -->
+				<!-- stop tomcat  -->
+				<tomcat-stop prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-stop>
+				<!-- plugin -->
+				<!-- Verify ports not in use after stopping tomcat -->
+				<tomcat-verify-ports prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-verify-ports>
 			</tomcat>
 		</pre-validation>
 		<backup>
-			<common>
-			</common>
-			<database>
-			</database>
 			<jboss>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-backup prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-backup>
+
 			</jboss>
 			<tomcat>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-backup prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-backup>
 			</tomcat>
 		</backup>
 		<execution>
 			<common>
 			</common>
 			<database>
+				<!-- plugin -->
+				<!-- Cleans, installs and upgrades database -->
+				<database-install prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</database-install>
+				<!-- plugin -->
+				<!-- Upgrades database using liquibase -->
+				<database-upgrade prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</database-upgrade>
 			</database>
 			<jboss>
+				<!-- plugin -->
+				<!-- Installs and patches binaries -->
+				<jboss-install-binaries prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-install-binaries>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-bindings prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-bindings>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-login prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-login>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-console prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-console>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-shutdown prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-shutdown>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-ssl prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-ssl>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-gridssl prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-gridssl>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-java-opts prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-java-opts>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-external prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-external>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-install-webapp prefix="" disable="false" override="true" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-install-webapp>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-webapp prefix="" disable="false" override="true" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-webapp>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-install-grid prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-install-grid>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-grid prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-grid>
 			</jboss>
 			<tomcat>
+				<!-- plugin -->
+				<!-- Installs and patches binaries -->
+				<tomcat-install-binaries prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-install-binaries>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-configure-ports prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-configure-ports>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-configure-datasource prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-configure-datasource>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-configure-ssl prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-configure-ssl>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-configure-gridssl prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-configure-gridssl>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-configure-external prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-configure-external>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-install-webapp prefix="" disable="false" override="true" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-install-webapp>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-configure-webapp prefix="" disable="false" override="true" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-configure-webapp>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-install-grid prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-install-grid>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-configure-grid prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-grid>
 			</tomcat>
 		</execution>
 		<post-validation>
