@@ -34,9 +34,16 @@
 				<form:textField label="Port List"  name="portList" title="TextField" readonly="false" value="${params.portList}">
 				  Enter the external ports (in comma-delimited, no spaces format. For example: 46210,48080) you wish to expose in the <strong>Port List</strong> field
 				</form:textField>		
+				<form:textField label="Project SCM Url"  name="projectSCMUrl" title="TextField" readonly="false" value="${params.projectSCMUrl}">
+				  Enter the publicly accessible project source URL
+				</form:textField>				
+				<tr><td><label>Instance Type</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<g:select label="Instance Type " name="instanceType" from="['default','large','xlarge']" /></td></tr>				
+				<br><br><br>
 				<form:textField label="Email Address"  name="email" title="TextField" readonly="false" value="${params.email}">
 				  Enter the email address where you wish to receive further instructions
 				</form:textField>
+
+				
 				<div class="buttons">
 					<g:actionSubmit value="Provision Instance" action="provisionInstance" />
 					<g:actionSubmit value="List Instances" action="listInstances" />

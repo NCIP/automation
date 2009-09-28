@@ -3356,7 +3356,6 @@ software/provisioner-app/lib/j2ssh-common-0.2.9.jar -text
 software/provisioner-app/lib/j2ssh-core-0.2.9.jar -text
 software/provisioner-app/lib/jaxb-api-2.0.jar -text
 software/provisioner-app/lib/jaxb-impl-2.0.3.jar -text
-software/provisioner-app/lib/provisioner.jar -text
 software/provisioner-app/lib/stax-1.2.0.jar -text
 software/provisioner-app/lib/stax-api-1.0.jar -text
 software/provisioner-app/lib/typica.jar -text
@@ -3375,6 +3374,15 @@ software/provisioner-app/resources/my.cnf -text
 software/provisioner-app/resources/mysqld -text
 software/provisioner-app/resources/petstore/config.xml -text
 software/provisioner-app/resources/start-hudson.sh -text
+software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/util/ConfigHelper.groovy -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/BaseProvisioner.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/EC2PrivateKey.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/EC2Provisioner.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/EC2SystemInitiator.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/Provisioner.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/ProvisionerManager.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/util/ConfigurationHelper.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/util/PropertyHelper.java -text
 software/provisioner-app/src/templates/artifacts/Controller.groovy -text
 software/provisioner-app/src/templates/artifacts/DomainClass.groovy -text
 software/provisioner-app/src/templates/artifacts/Filters.groovy -text

@@ -10,8 +10,11 @@ class CloudClientService {
 	static listenerCount = 1
     
     void sendMessage(accessId, secretId,params) {
+    	println(params)
+    	println(params.instanceType)
     	params.accessId = accessId
     	params.secretId = secretId
+    	params.instanceType = params.instanceType
 		sendQueueJMSMessage("provionerQ",params)
 	}
 	
@@ -34,12 +37,15 @@ class CloudClientService {
 	{
 		try 
 		{
+			gov.nih.nci.bda.provisioner.util.ConfigHelper config = new gov.nih.nci.bda.provisioner.util.ConfigHelper()
+			config.setSCMProjectUrlValue("resources/petstore/config.xml","scm.locations.'hudson.scm.SubversionSCM_-ModuleLocation'.remote",msg.projectSCMUrl)
+			
 			Provisioner ec2p = new EC2Provisioner();
 			def aID = msg.accessId.trim()
 			def sId = msg.secretId.trim()		
 			println 'Generating the Private Key with AccessID ' + aID + ' and SecretID ' + sId
 			String privateKeyFileName = ec2p.generateKey(aID, sId); 
-		
+			println 'privateKeyFileName ' + privateKeyFileName
 			def defaultPortList = '22,48080,48210'
 			def fullPortList 
 			if(msg.portList)
@@ -52,7 +58,7 @@ class CloudClientService {
 			println 'Adding the ports ' + fullPortList + ' to the Default security group'
 			ec2p.generateSecurityGroup(aID,sId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
 			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +privateKeyFileName
-  			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName))
+  			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName),msg.instanceType)
 			println 'Configuring the AMI'	
 			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/"+privateKeyFileName);			
 			si.initializeSystem()
