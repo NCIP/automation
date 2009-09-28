@@ -406,6 +406,11 @@
 				</jboss-configure-ssl>
 				<!-- plugin -->
 				<!-- -->
+				<jboss-configure-ejbssl prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-ejbssl>
+				<!-- plugin -->
+				<!-- -->
 				<jboss-configure-gridssl prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-configure-gridssl>
@@ -419,6 +424,11 @@
 				<jboss-configure-external prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-configure-external>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-configure-accesslog prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-configure-accesslog>
 				<!-- plugin -->
 				<!-- -->
 				<jboss-install-webapp prefix="" disable="false" override="true" pre-run="false" post-run="false">
@@ -438,7 +448,17 @@
 				<!-- -->
 				<jboss-configure-grid prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
-				</jboss-grid>
+				</jboss-configure-grid>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-changelog prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-changelog>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-start prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-start>
 			</jboss>
 			<tomcat>
 				<!-- plugin -->
@@ -473,6 +493,11 @@
 				</tomcat-configure-external>
 				<!-- plugin -->
 				<!-- -->
+				<tomcat-configure-accesslog prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-configure-accesslog>
+				<!-- plugin -->
+				<!-- -->
 				<tomcat-install-webapp prefix="" disable="false" override="true" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</tomcat-install-webapp>
@@ -490,17 +515,40 @@
 				<!-- -->
 				<tomcat-configure-grid prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
-				</tomcat-grid>
+				</tomcat-configure-grid>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-changelog prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-changelog>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-start prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-start>
 			</tomcat>
 		</execution>
 		<post-validation>
 			<common>
+				<!-- plugin -->
+				<!-- -->
+				<common-post prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</common-post>
 			</common>
-			<database>
-			</database>
 			<jboss>
+				<!-- plugin -->
+				<!-- -->
+				<jboss-post prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</jboss-post>
 			</jboss>
 			<tomcat>
+				<!-- plugin -->
+				<!-- -->
+				<tomcat-post prefix="" disable="false" override="false" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</tomcat-post>
 			</tomcat>
 		</post-validation>
 	</install-steps>
