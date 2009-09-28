@@ -3357,7 +3357,6 @@ software/provisioner-app/lib/j2ssh-core-0.2.9.jar -text
 software/provisioner-app/lib/jaxb-api-2.0.jar -text
 software/provisioner-app/lib/jaxb-impl-2.0.3.jar -text
 software/provisioner-app/lib/stax-1.2.0.jar -text
-software/provisioner-app/lib/stax-api-1.0.jar -text
 software/provisioner-app/lib/typica.jar -text
 software/provisioner-app/package.xml -text
 software/provisioner-app/project.properties -text
