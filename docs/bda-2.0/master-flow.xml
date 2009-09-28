@@ -23,6 +23,7 @@
 			ip-address
 			url
 		-->
+		<!-- Not user entered -->
 		<property-types>
 			<property-type name="" base-type="number|string|boolean|list" validation-class="" validation-target="">
 				<!-- if you want to provide a list of values add below -->
@@ -78,16 +79,30 @@
 		 
 		<dist>
 			<obfuscate-properties>
-				<required.property.list>
-				</required.property.list>
-				<optional.property.list>
-				</optional.property.list>
-				<delete.property.list>
-				</delete.property.list>
-				<comment.property.list>
-				</comment.property.list>
-				<uncomment.property.list>
-				</uncomment.property.list>
+				<install>
+					<required.property.list>
+					</required.property.list>
+					<optional.property.list>
+					</optional.property.list>
+					<delete.property.list>
+					</delete.property.list>
+					<comment.property.list>
+					</comment.property.list>
+					<uncomment.property.list>
+					</uncomment.property.list>
+				</install>
+				<upgrade>
+					<required.property.list>
+					</required.property.list>
+					<optional.property.list>
+					</optional.property.list>
+					<delete.property.list>
+					</delete.property.list>
+					<comment.property.list>
+					</comment.property.list>
+					<uncomment.property.list>
+					</uncomment.property.list>
+				</upgrade>
 			</obfuscate-properties>
 			<containers>
 				<!-- All products will have 
