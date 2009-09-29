@@ -484,7 +484,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('catiss
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.project.url','http://gforge.nci.nih.gov/svnroot/cab2b/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.project.url','http://gforge.nci.nih.gov/svnroot/cab2b/trunk/cab2b');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.build.location','${cab2b.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.install.location','working/installer');
