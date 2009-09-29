@@ -92,6 +92,7 @@ class CloudClientService {
 				mailService.sendMail
 				{
 					to msg.email
+					cc "aws@stelligent.com"					
 					subject "Instance Ready (${hostName})"
 					body """ Continuous Integration Server is ready and configured.
 					

@@ -209,11 +209,9 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 		if(instanceType.equalsIgnoreCase("default"))
 		{
 			instanceSize = InstanceType.DEFAULT;
-		} else if (instanceType.equalsIgnoreCase("large")){
-			instanceSize = InstanceType.LARGE;
-		} else if(instanceType.equalsIgnoreCase("xlarge")){
-			instanceSize = InstanceType.XLARGE;
-		}
+		} else if (instanceType.equalsIgnoreCase("medium")){
+			instanceSize = InstanceType.MEDIUM_HCPU;
+		} 
 	
 		System.out.println("1111");	
 		KeyPairInfo keyPair = new EC2PrivateKey(privateKey).findKeyPair(jec2);

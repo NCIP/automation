@@ -37,7 +37,7 @@
 				<form:textField label="Project SCM Url"  name="projectSCMUrl" title="TextField" readonly="false" value="${params.projectSCMUrl}">
 				  Enter the publicly accessible project source URL
 				</form:textField>				
-				<tr><td><label>Instance Type</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<g:select label="Instance Type " name="instanceType" from="['default','large','xlarge']" /></td></tr>				
+				<tr><td><label>Instance Type</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<g:select label="Instance Type " name="instanceType" from="['default','medium']" /></td></tr>				
 				<br><br><br>
 				<form:textField label="Email Address"  name="email" title="TextField" readonly="false" value="${params.email}">
 				  Enter the email address where you wish to receive further instructions
