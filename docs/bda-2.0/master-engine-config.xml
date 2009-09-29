@@ -1,5 +1,4 @@
-<engine>
-	<version value=""/>
+<engine version="">
 	<container-types>
 		<container-type name="common"/>
 		<container-type name="jboss"/>
@@ -9,6 +8,20 @@
 	<builders>
 		<builder name="" class="" target=""/>
 	</builders>
+	<property-types>
+		<!-- Allows us to define certain types used by all builds, we will have our own validation classs or target. These will be our custom types in addition to a base type of number, string boolean or list.
+		email
+		hostname
+		ip-address
+		url
+		-->
+
+		<property-type name="" base-type="number|string|boolean|list" validation-class="" validation-target="">
+			<!-- if you want to provide a list of values add below -->
+			<list-type value="single|multiple"/>
+			<property-item value=""/>       
+		</property-type>        
+	</property-types>
 	<plugins>
 		<!-- BDA Team will add plugins into the project, we need to determine when to call it things that depend on many other things should have high numbers, things that many other things depend on should have low numbers, this allows a sort of dynamic depends.
 	       		The version can be used to compare to version inside project engine-config.xml
@@ -33,4 +46,17 @@
 
 		<plugin name="" file-prefix="" container-type="" version="" type="build|install" section="" phase=""/>
 	</plugins>
+
+		
+	<project>
+	</project>
+	<build-steps>
+		<build-step name="">
+		</build-step>
+	</build-steps>
+	<install-steps>
+		<install-step name=""/>
+	</install-steps>
 </engine>
+
+
