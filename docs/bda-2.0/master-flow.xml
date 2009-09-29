@@ -208,10 +208,12 @@
 				<!-- Not configured through UI, done by each project -->
 				<!-- plugin -->
 				<!-- Loads props from files and environment, also adds properties which reference other property values (have embedded ${}) to the a filter set used when copying files.  -->
+				<!-- Not configured through UI, done by each project -->
 				<properties-load phase="1"/>
 				<!-- plugin -->
 				<!-- Sets up global properties, split (basename,dirname)  and os derived props (like application.base.path) -->
 				<common-properties-init phase="2"/>
+				<!-- Not configured through UI, done by each project -->
 				<!-- plugin -->
 				<!-- Do any "bda-utils" like import or taskdefs -->
 				<libraries-init phase="2"/>
@@ -225,6 +227,7 @@
 				<database-read-props phase="3" install-type="upgrade" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</database-read-props>
+				<!-- Not configured through UI, done by each project -->
 				<!-- plugin -->
 				<!-- Sets up db properties, split (basename,dirname)  and os derived props (like application.base.path) -->
 				<database-properties-init-db phase="4"/>
@@ -235,6 +238,7 @@
 				<jboss-read-props phase="3" install-type="upgrade" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-read-props>
+				<!-- Not configured through UI, done by each project -->
 				<!-- plugin -->
 				<!-- Sets up jboss properties, split (basename,dirname)  and os derived props (like application.base.path) -->
 				<jboss-properties-init phase="4"/>
@@ -245,6 +249,7 @@
 				<tomcat-read-props phase="3" install-type="upgrade" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</tomcat-read-props>
+				<!-- Not configured through UI, done by each project -->
 				<!-- plugin -->
 				<!-- Sets up tomcat properties, split (basename,dirname)  and os derived props (like application.base.path) -->
 				<tomcat-properties-init phase="4"/>
@@ -253,11 +258,11 @@
 		<!-- Validation for all containers happens during pre-validation -->
 		<pre-validation>
 			<common>
-				<!-- Not configured through UI, done by each project -->
+				<!-- This whole section is not configured through UI, properties often determine if plugin is run -->
 				<!-- plugin -->
 				<!-- Checks versions of required tools, Ant, Java, ect-->
 				<!-- May want to do this under each container -->
-				<common-validate-env phase="1"prefix="" disable="false" override="false" pre-run="false" post-run="false">
+				<common-validate-env phase="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</common-validate-env>
 				<!-- plugin -->
@@ -282,13 +287,14 @@
 				</common-validate-passwords>
 			</common>
 			<database>
+				<!-- This whole section is not configured through UI, properties often determine if plugin is run -->
 				<!-- plugin -->
 				<!-- Verifies that all required db props (properties.template) are set and that database.system.user and database.user not the same, if my sql database name not mysql, ect -->
 				<database-verify-properties phase="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</database-verify-version>
 				<!-- plugin -->
-				<!-- Check that you can connect, skipped if local -->
+				<!-- Check that you can connect, skipped if env.name=local -->
 				<database-verify-connect phase="2" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</database-verify-version>
@@ -303,11 +309,12 @@
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</database-warn-exists>
 				<!-- plugin -->
-				<!-- Verifies that lower.case.table.names=1 -->
+				<!-- Verifies that lower.case.table.names=1 if flag set in properties file -->
 				<database-mysql-lowercase-tablenames phase="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</database-mysql-lowercase-tablenames>
 			<jboss>
+				<!-- This whole section is not configured through UI, properties often determine if plugin is run -->
 				<!-- plugin -->
 				<!-- Verifies that all jboss props (properties.template) are set -->
 				<jboss-verify-props phase="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
@@ -335,6 +342,7 @@
 				</jboss-verify-ports>
 			</jboss>
 			<tomcat>
+				<!-- This whole section is not configured through UI, properties often determine if plugin is run -->
 				<!-- plugin -->
 				<!-- Verifies that all tomcat props (properties.template are set -->
 				<tomcat-verify-props phase="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
@@ -364,8 +372,9 @@
 		</pre-validation>
 		<backup>
 			<jboss>
+				<!-- This whole section is not configured through UI, properties often determine if plugin is run -->
 				<!-- plugin -->
-				<!-- -->
+				<!-- Run unless exclude flag set in properties file -->
 				<jboss-backup phase="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-backup>
@@ -401,12 +410,12 @@
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-install-binaries>
 				<!-- plugin -->
-				<!-- -->
+				<!-- Copies a static or dynamic (filtered) bindings file into JBoss and modifies jboss-service.xml to enable binding manager. -->
 				<jboss-configure-bindings phase="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-configure-bindings>
 				<!-- plugin -->
-				<!-- -->
+				<!-- Inserts xml block into login-config.xml for configuring appliction authentication policy. -->
 				<jboss-configure-login phase="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-configure-login>
@@ -427,9 +436,11 @@
 				</jboss-configure-ssl>
 				<!-- plugin -->
 				<!-- -->
+				<!--
 				<jboss-configure-ejbssl phase="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
-					<!-- properties for basedir, build.file.location and build target could be specified here-->
+					## properties for basedir, build.file.location and build target could be specified here ##
 				</jboss-configure-ejbssl>
+				-->
 				<!-- plugin -->
 				<!-- -->
 				<jboss-configure-gridssl phase="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
@@ -462,7 +473,7 @@
 				</jboss-configure-webapp>
 				<!-- plugin -->
 				<!-- -->
-				<jboss-install-grid phase="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+				<jboss-install-grid phase="4" prefix="" disable="false" override="false" pre-run="false" post-run="false" grid.artifact.file.name="">
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</jboss-install-grid>
 				<!-- plugin -->

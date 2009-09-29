@@ -23,18 +23,17 @@
 		<!-- these properties will end up in the main engine-config file -->
 		<!-- Default will allow variable expansion so that way we can build vars from prefix/suffix, this will be suggested value or may even be added to file if user approves. -->
 		<!-- Typical engine variable will be as follows, not that (x) will allow users map bda variables to thier properties, user will have enter property name in thier sub-project
-			${property-prefix}.disable = false
-			${property-prefix}.override = false
+				${property-prefix}.override.builder.type=
 				${property-prefix}.override.build.file.dist.relative.location =
 				${property-prefix}.override.build.file.target =
 				${property-prefix}.override.property.map.subproject.name(x) =
 				${property-prefix}.override.property.map.bda.name(x) =
-			${property-prefix}.pre-execute = false
+				${property-prefix}.pre-execute.builder.type=
 				${property-prefix}.pre-execute.build.file.dist.relative.location =
 				${property-prefix}.pre-execute.build.file.target =
 				${property-prefix}.pre-execute.property.map.subproject.name(x) =
 				${property-prefix}.pre-execute.property.map.bda.name(x) =
-			${property-prefix}.post-execute = false
+				${property-prefix}.post-execute.builder.type=
 				${property-prefix}.post-execute.build.file.dist.relative.location =
 				${property-prefix}.post-execute.build.file.target =
 				${property-prefix}.post-execute.property.map.subproject.name(x) =

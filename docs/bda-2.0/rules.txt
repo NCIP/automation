@@ -10,3 +10,12 @@
 * Coding standards
 ** Log debug on entry and exit of each "code block"
 ** Report event to "listener" on entry and exit of each "code block"
+
+* Database
+** env.name=local - re-create
+** env.name=external - ??
+** env.name=other - drop schema
+
+* Disable
+** If disable is chosen for a step then the properties are not required.
+
