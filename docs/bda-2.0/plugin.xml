@@ -1,4 +1,4 @@
-<plugin name="" property-prefix=""/>
+<plugin name="" property-prefix="" class="" validation-class=""/>
 	<description>
 	<description/>
 	<release-notes>
@@ -22,9 +22,8 @@
 		<!-- profile can be install.proeprties, upgrade.properties, tier.proprties (both) or project.properties -->
 		<property name="" type="" required="true|false" default="" propfile="see-above" description=""/>
 	</tier-properties>
+	<engine-properties>
+		<property name="" type="" display-type="select|multi-select|combo|radio|checkbox|text|text-area" default="" display-name="" display-short-description="" display-long-description=""/>
+	</property>
 	</engine-properties>
-	<!-- display type is how to display these fields, on the same page as the rest of the container or on it's own page/tab or in a popup -->
-	<configurator validation-class="" validation-target="" display-type="container|popup|page/tab"/>
-	<!-- step-type is when to run this step, either init (first), pre-install, during the install or after the install, pre and post are for validation -->
-	<engine step-type="init|pre|post|install" install-class="" install-target=""/>
 </plugin>

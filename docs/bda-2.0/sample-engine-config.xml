@@ -126,6 +126,11 @@
 					-->
 					<sub-project prefix="" database-install-dir="" database-upgrade-dir=""/>
 				</container>
+				<container type="custom" prefix="">
+					<!-- inlcudes tomcat binaries/patches and grid files if install-grid=true -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
+				</container>
+				<!-- plugin -->
 			</containers>
 			<distributions>
 				<!-- plugin -->
@@ -551,6 +556,13 @@
 					<!-- properties for basedir, build.file.location and build target could be specified here-->
 				</tomcat-start>
 			</tomcat>
+			<custom>
+				<!-- plugin -->
+				<!-- -->
+				<custom-install phase="6" prefix="" disable="false" override="true" pre-run="false" post-run="false">
+					<!-- properties for basedir, build.file.location and build target could be specified here-->
+				</custom-install>
+			</custom>
 		</execution>
 		<post-validation>
 			<common>

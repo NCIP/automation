@@ -1,9 +1,9 @@
 <engine version="">
 	<container-types>
-		<container-type name="common"/>
+		<container-type name="custom"/>
+		<container-type name="database"/>
 		<container-type name="jboss"/>
 		<container-type name="tomcat"/>
-		<container-type name="database"/>
 	</container-types>
 	<builders>
 		<builder name="" class="" target=""/>
@@ -44,7 +44,7 @@
 			phase= phase with in the section 1-10
 		-->
 
-		<plugin name="" file-prefix="" container-type="" version="" type="build|install" section="" phase=""/>
+		<plugin name="" prefix="" container-type="" version="" type="build|install" section="" phase="" class=""/>
 	</plugins>
 
 		
