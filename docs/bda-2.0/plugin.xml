@@ -1,4 +1,4 @@
-<plugin name="" property-prefix="" class="" validation-class=""/>
+<plugin name="" property-prefix="" class="" validation-class="" test-class="" version=""/>
 	<description>
 	<description/>
 	<release-notes>
