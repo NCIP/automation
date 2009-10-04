@@ -27,7 +27,7 @@ public class CertificationManager {
 	public static boolean projectCertificationStatus = true;
 
 	public static void main(String args[]) {
-		String projectName = null;		
+		String projectName = null;
 		if (args.length != 1) {
 			System.out.println("Enter the project name for certification");
 			System.exit(0);
@@ -42,8 +42,8 @@ public class CertificationManager {
 	public void certifyProjects(String projectName) {
 
 		certLogger.info("Certifing project :" + projectName);
-		
-		certLogger.info("geting the session" );		
+
+		certLogger.info("geting the session" );
 		Session session = HibernateUtil.getSession();
 
 		certLogger.info("create an ant project" );
@@ -59,7 +59,7 @@ public class CertificationManager {
 
 		certLogger.info("load all the properties from the database for the project :" + projectName);
 		PropertyLoader.loadProjectProperties(projectName, project);
-		
+
 		certLogger.info("load all the general properties from the database" );
 		PropertyLoader.loadGeneralProperties(project);
 
@@ -86,7 +86,7 @@ public class CertificationManager {
 
 			certLogger.info("TargetName : " + targetLookup.getTargetName()
 					+ " :: MapName : " + targetLookup.getMapName()
-					+ " :: ProjectName::" + projectName 
+					+ " :: ProjectName::" + projectName
 					+ " :: IsValue : "	+ targetLookup.getIsValue()
 					+ " :: IsOptional : "	+ targetLookup.getIsOptional()
 					);
@@ -138,6 +138,7 @@ public class CertificationManager {
 		}
 
 		certLogger.info("Check if the current feature for this project is optional ");
+		certLogger.info("optionalFeaturesList:: "+optionalFeaturesList.toArray());
 		if (optionalFeaturesList.contains(targetLookup.getTargetName())) {
 			certLogger.info("Set is.optional to true");
 			project.setProperty("is.optional", "true");
