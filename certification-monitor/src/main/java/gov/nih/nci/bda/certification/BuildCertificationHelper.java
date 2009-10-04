@@ -175,6 +175,8 @@ public class BuildCertificationHelper {
 				certLogger.info("Project exists ");
 				if(bmb.isOptional())
 					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_OPTIONAL,projectName,bmb.getFailureMessage()));
+				else if(bmb.isSystemsWaiver())
+					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_SYSTEMS_WAIVER,projectName,bmb.getFailureMessage()));
 				else
 					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
 		    	//update the project URL on update

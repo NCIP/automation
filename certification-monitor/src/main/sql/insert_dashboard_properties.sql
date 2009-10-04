@@ -121,6 +121,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.systems.waiver','build:ci-server');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.username','narram');

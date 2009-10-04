@@ -64,8 +64,10 @@ public class CertificationManager {
 		PropertyLoader.loadGeneralProperties(project);
 
 		certLogger.info("load all the features that are optional for the project" );
-		ArrayList<String> optionalFeaturesList = getListOfOptionalFeaturesForProject(
-				projectName, project);
+		ArrayList<String> optionalFeaturesList = getListOfOptionalFeaturesForProject(project);
+
+		certLogger.info("load all the System Waivers for the project" );
+		ArrayList<String> systemWaiversList = getListOfSystemWaiversForProject(project);
 
 		certLogger.info("Add the SingleCommandListener" );
 		SingleCommandListener scListener = new SingleCommandListener();
@@ -92,7 +94,7 @@ public class CertificationManager {
 					);
 
 			populateAditionalAntProperties(targetLookup, project,
-					optionalFeaturesList);
+					optionalFeaturesList,systemWaiversList);
 
 			try {
 				project.executeTarget(targetLookup.getTargetName());
@@ -105,12 +107,10 @@ public class CertificationManager {
 		certLogger.info("Certification Complete");
 	}
 
-	private ArrayList<String> getListOfOptionalFeaturesForProject(String projectName,
-			Project project) {
+	private ArrayList<String> getListOfOptionalFeaturesForProject(Project project) {
 		ArrayList<String> optionalList = new ArrayList<String>();
-		String optionalStr = project.getProperty(projectName
-				+ ".optional.features");
-		certLogger.info("Optional Property : " +  optionalStr);
+		String optionalStr = project.getProperty("optional.features");
+		certLogger.info("Features that are optional : " +  optionalStr);
 		if (optionalStr != null) {
 			String[] result = optionalStr.split(",");
 			for (int i = 0; i < result.length; i++) {
@@ -122,8 +122,24 @@ public class CertificationManager {
 		return optionalList;
 	}
 
+	private ArrayList<String> getListOfSystemWaiversForProject(Project project) {
+		ArrayList<String> optionalList = new ArrayList<String>();
+		String optionalStr = project.getProperty("systems.waiver");
+		certLogger.info("Systems Team Waifers : " +  optionalStr);
+		if (optionalStr != null) {
+			String[] result = optionalStr.split(",");
+			for (int i = 0; i < result.length; i++) {
+				certLogger.info("Adding Systems Waiver " + i + " : "
+						+ result[i]);
+				optionalList.add(result[i]);
+			}
+		}
+		return optionalList;
+	}
+
+
 	private void populateAditionalAntProperties(TargetLookup targetLookup,
-			Project project, ArrayList<String> optionalFeaturesList) {
+			Project project, ArrayList<String> optionalFeaturesList,ArrayList<String> systemWaiversList) {
 		project.setProperty("map.name", targetLookup.getMapName());
 		project.setProperty("executed.target.name", targetLookup
 				.getTargetName());
@@ -138,7 +154,6 @@ public class CertificationManager {
 		}
 
 		certLogger.info("Check if the current feature for this project is optional ");
-		certLogger.info("optionalFeaturesList:: "+optionalFeaturesList.toArray());
 		if (optionalFeaturesList.contains(targetLookup.getTargetName())) {
 			certLogger.info("Set is.optional to true");
 			project.setProperty("is.optional", "true");
@@ -147,6 +162,14 @@ public class CertificationManager {
 			project.setProperty("is.optional", "false");
 		}
 
+		certLogger.info("Check if the current feature for this project is optional ");
+		if (systemWaiversList.contains(targetLookup.getTargetName())) {
+			certLogger.info("Set is.systems.waiver to true");
+			project.setProperty("is.systems.waiver", "true");
+		} else {
+			certLogger.info("Set is.systems.waiver to false");
+			project.setProperty("is.systems.waiver", "false");
+		}
 		certLogger.info("Check if the feature is optional for all projects");
 		if (targetLookup.getIsOptional() != null
 				&& targetLookup.getIsOptional().equals("true")) {

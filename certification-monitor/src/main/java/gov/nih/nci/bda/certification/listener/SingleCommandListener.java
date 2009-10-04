@@ -63,6 +63,14 @@ public class SingleCommandListener implements BuildListener {
 			bmb.setOptional(false);
 		}
 
+		certLogger.info(" Check to see for systems waiver ");
+		if (event.getProject().getProperty("is.systems.waiver") != null
+				&& event.getProject().getProperty("is.systems.waiver").equals("true")) {
+			bmb.setSystemsWaiver(true);
+		} else {
+			bmb.setSystemsWaiver(false);
+		}
+
 		certLogger.info(" Check and populate the status of the feature and the certification ");
 		if (event.getException() != null || !checkMacroList(macroList,event)) {
 			certLogger.info(" macro list value False " + checkMacroList(macroList,event));

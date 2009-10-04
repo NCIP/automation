@@ -12,6 +12,7 @@ public class BuildCertificationBean {
 	private boolean isValue;
 	private String mapName;
 	private boolean optional;
+	private boolean systemsWaiver;	
 	private String projectName;
 	private String projectRepoUrl;
 	private String propertyValue;
@@ -76,6 +77,12 @@ public class BuildCertificationBean {
 	}
 	public void setValue(boolean isValue) {
 		this.isValue = isValue;
+	}
+	public boolean isSystemsWaiver() {
+		return systemsWaiver;
+	}
+	public void setSystemsWaiver(boolean systemsWaiver) {
+		this.systemsWaiver = systemsWaiver;
 	}
 		
 }
