@@ -17,4 +17,5 @@ public class BuildCertificationConstants {
 	public static final String WIKI_FAILED = "(x)";
 	public static final String WIKI_NOTBUILD = "(off)";
 	public static final String WIKI_SUCCESSFUL = "(/)";
+	public static final String WIKI_OPTIONAL = "(+)";
 }

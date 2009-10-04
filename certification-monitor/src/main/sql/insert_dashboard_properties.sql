@@ -544,6 +544,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.optional.features','build:check-commandline-installer');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.username','narram');
