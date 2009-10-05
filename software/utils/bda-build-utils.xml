@@ -1783,11 +1783,14 @@ $HeadURL$
 		<attribute name="jboss.transaction.recovery.port" default="${jboss.transaction.recovery.port}"/>
 		<attribute name="jboss.transaction.status.port" default="${jboss.transaction.status.port}"/>
 		<attribute name="jboss.transaction.processid.port" default="${jboss.transaction.processid.port}"/>
+		<!-- grid secure fixes -->
+		<attribute name="jboss.http-connector.remove" default="${jboss.http-connector.remove}"/>
+		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
 		<sequential>
 			<var name="jboss.is.40" unset="true"/>
 			<propertyregex property="jboss.is.40"
 				input="@{jboss.home}"
-				regexp=".*jboss-4.0.*"
+				regexp=".*jboss-4.*"
 				select="true"
 				/>
 			<var name="jboss.is.51" unset="true"/>
@@ -1822,7 +1825,9 @@ $HeadURL$
 						jboss.snmp.port="@{jboss.snmp.port}"
 						jboss.snmp-trapd.port="@{jboss.snmp-trapd.port}"
 						jboss.web.service.port="@{jboss.web.service.port}"
-
+						grid.secure.port="@{grid.secure.port}"
+						jboss.http-connector.remove="@{jboss.http-connector.remove}"
+						jboss.ssl.port="@{jboss.ssl.port}"
 						/>
 				</then>
 			</if>
@@ -1966,6 +1971,10 @@ $HeadURL$
 		<attribute name="jboss.snmp.port" default="${jboss.snmp.port}"/>
 		<attribute name="jboss.snmp-trapd.port" default="${jboss.snmp-trapd.port}"/>
 		<attribute name="jboss.web.service.port" default="${jboss.web.service.port}"/>
+		<!-- grid secure fixes -->
+		<attribute name="jboss.http-connector.remove" default="${jboss.http-connector.remove}"/>
+		<attribute name="grid.secure.port" default="${grid.secure.port}"/>
+		<attribute name="jboss.ssl.port" default="${jboss.ssl.port}"/>
 
 		<sequential>
 			<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
@@ -1992,6 +2001,27 @@ $HeadURL$
 					<filter token="jboss.web.service.port" value="@{jboss.web.service.port}"/>
 				</filterset>
 			</copy>
+			<if>
+				<equals arg1="@{jboss.http-connector.remove}" arg2="true"/>
+				<then>
+					<echo message="Changing redirect port in bindings file to @{grid.secure.port}"/>
+					<replaceregexp file="@{jboss.server.bindingfile.location}"
+						byline="true"
+						match="\$port \+ 363"
+						replace="@{grid.secure.port}"
+						/>
+				</then>
+				<else>
+					<!-- Right now only  removing http port for grid ssl.
+					<echo message="Changing redirect port in bindings file to @{grid.secure.port}"/>
+					<replaceregexp file="@{jboss.server.bindingfile.location}"
+						byline="true"
+						match="\$port\s\++\s\+363"
+						replace="@{jboss.ssl.port}"
+						/>
+					-->
+				</else>
+			</if>
 			<jboss-bindings-validate
 				jboss.server.ports.name="@{jboss.server.ports.name}"
 				jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
@@ -4275,16 +4305,16 @@ $HeadURL$
 					<property name="install.timing" value=""/>
 				</else>
 			</if>
-			<override-properties-prep
-				override.properties="@{override.properties}"
-				override.properties.string.property.name="override.properties.string"
-				/>
 			<!-- Copies over all files so linux and windows properties are present -->
 			<copy todir="@{install.dir}">
 				<fileset dir="@{build.dir}">
 					<include name="*.properties" />
 				</fileset>
 			</copy>
+			<override-properties-prep
+				override.properties="@{override.properties}"
+				override.properties.string.property.name="override.properties.string"
+				/>
 			<exec osfamily="unix" executable="ant" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
 				<!-- force reinstall of database and jboss without prompting -->
@@ -4472,7 +4502,10 @@ $HeadURL$
 								keystoreFile="@{appserver.conf.dir}/@{appserver.ssl.keystore.file}"
 								keystorePass="@{appserver.ssl.keystore.pass}"
 								keyAlias="@{appserver.ssl.keystore.alias}"
-							       	sslProtocol = "TLS" />
+								sslProtocol = "TLS"
+								protocol="HTTP/1.1"
+								SSLEnabled="true"
+							       />
 							]]>
 						</insert>
 					</xmltask>
@@ -4627,26 +4660,26 @@ $HeadURL$
 					<var name="is.jboss40" unset="true"/>
 					<propertyregex property="is.jboss40"
 						input="@{appserver.conf.dir}"
-						regexp="jboss-4.0...GA"
-						select="\1"
+						regexp="jboss-4.*GA"
+						select="true"
 						/>
 					<var name="is.tomcat50" unset="true"/>
 					<propertyregex property="is.tomcat50"
 						input="@{appserver.conf.dir}"
-						regexp="tomcat-5.0..."
-						select="\1"
+						regexp="tomcat-5.0.*"
+						select="true"
 						/>
 					<var name="is.tomcat55" unset="true"/>
 					<propertyregex property="is.tomcat55"
 						input="@{appserver.conf.dir}"
-						regexp="tomcat-5.5..."
-						select="\1"
+						regexp="tomcat-5.5.*"
+						select="true"
 						/>
 					<!-- not sure if grid will work with .*tomcat-6.0, assuming it uses same as 5.5-->
 					<propertyregex property="is.tomcat55"
 						input="@{appserver.conf.dir}"
 						regexp=".*tomcat-6.0.*"
-						select="\1"
+						select="true"
 						/>
 					<var name="is.jboss51" unset="true"/>
 					<propertyregex property="is.jboss51"
@@ -4724,32 +4757,32 @@ $HeadURL$
 			<var name="is.jboss40" unset="true"/>
 			<propertyregex property="is.jboss40"
 				input="@{appserver.server-xml.file}"
-				regexp="jboss-4.0...GA"
-				select="\1"
+				regexp="jboss-4.*GA"
+				select="true"
 				/>
 			<var name="is.tomcat50" unset="true"/>
 			<propertyregex property="is.tomcat50"
 				input="@{appserver.server-xml.file}"
-				regexp="tomcat-5.0..."
-				select="\1"
+				regexp="tomcat-5.0.*"
+				select="true"
 				/>
 			<var name="is.tomcat55" unset="true"/>
 			<propertyregex property="is.tomcat55"
 				input="@{appserver.server-xml.file}"
-				regexp="tomcat-5.5..."
-				select="\1"
+				regexp="tomcat-5.5.*"
+				select="true"
 				/>
 			<!-- not sure if grid will work with .*tomcat-6.0, assuming it uses same as 5.5-->
 			<var name="is.tomcat60" unset="true"/>
 			<propertyregex property="is.tomcat60"
 				input="@{appserver.server-xml.file}"
 				regexp=".*tomcat-6.0.*"
-				select="\1"
+				select="true"
 				/>
 			<var name="is.jboss51" unset="true"/>
 			<propertyregex property="is.jboss51"
 				input="@{appserver.server-xml.file}"
-				regexp=".*jboss-5.1.*"
+				regexp=".*jboss-5.1.*GA"
 				select="true"
 				/>
 			<echo message="is.jboss40 = ${is.jboss40}"/>
@@ -5395,6 +5428,8 @@ $HeadURL$
 								jboss.transaction.recovery.port="@{jboss.transaction.recovery.port}"
 								jboss.transaction.status.port="@{jboss.transaction.status.port}"
 								jboss.transaction.processid.port="@{jboss.transaction.processid.port}"
+								jboss.http-connector.remove="@{jboss.http-connector.remove}"
+								grid.secure.port="@{grid.secure.port}"
 								/>
 						</then>
 						<else>
@@ -5561,7 +5596,6 @@ $HeadURL$
 						jboss.bin.dir="@{jboss.home}/server/@{jboss.server.name}/bin"
 						jboss.java.opts="@{jboss.java.opts}"
 						/>
-					<!-- added 090924 ssaksa for issue with app scans -->
 					<replaceregexp
 						file="@{jboss.server-xml.file}"
 						byline="true"
@@ -5971,7 +6005,7 @@ $HeadURL$
 			<var name="jboss.is.40" unset="true"/>
 			<propertyregex property="jboss.is.40"
 				input="@{jboss.home}"
-				regexp=".*jboss-4.0.*"
+				regexp=".*jboss-4.*GA"
 				select="true"
 				/>
 			<var name="jboss.is.51" unset="true"/>
@@ -7485,7 +7519,7 @@ $HeadURL$
 				</case>
 				<default>
 					<echo message="This function for the value @{database.type} of property database.type is not defined" />
-				</default>				
+				</default>
 			</switch>
 			<check-database-exists
 				database.driver="@{database.driver}"
@@ -7508,7 +7542,7 @@ $HeadURL$
 				</case>
 				<default>
 					<echo message="This function for the value @{database.type} of property database.type is not defined" />
-				</default>				
+				</default>
 			</switch>
 		</sequential>
 	</macrodef>
@@ -7653,18 +7687,30 @@ $HeadURL$
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.hostname" default="${jboss.server.hostname}" />
 		<attribute name="jboss.application.url" default="${jboss.application.url}" />
+		<attribute name="connect.wait.seconds" default="90"/>
 		<sequential>
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<echo message="Waiting for @{jboss.application.url} to respond."/>
-			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
+			<waitfor maxwait="@{connect.wait.seconds}" maxwaitunit="second" checkevery="5" checkeveryunit="second" timeoutproperty="jboss.timeout">
 				<http url="@{jboss.application.url}"/>
 			</waitfor>
 
+			<var name="jboss.socket.list.has.values" unset="true"/>
+			<propertyregex property="jboss.socket.list.has.values"
+				input="@{jboss.socket.list}"
+				regexp="[\d\,]+"
+				select="true"
+				/>
 			<!-- For each socket port call validate:post:socket -->
 			<if>
-				<isset property="validation.post.socket.list"/>
+				<and>
+					<isset property="jboss.socket.list.has.values"/>
+					<not>
+						<isset property="jboss.timeout"/>
+					</not>
+				</and>
 				<then>
-					<for list="${validation.post.socket.list}" param="validate.port" >
+					<for list="@{jboss.socket.list}" param="validate.port" >
 						<sequential>
 							<echo message="Checking if @{validate.port} is running."/>
 							<if>
@@ -7684,24 +7730,35 @@ $HeadURL$
 			<echo message="${line.separator}To view your application goto ${jboss.application.url}."/>
 		</sequential>
 	</macrodef>
-
 	<macrodef name="validate-post-tomcat" description="Diagnose the host system after the installation">
 		<attribute name="tomcat.socket.list" default="${tomcat.socket.list}" />
 		<attribute name="tomcat.home" default="${tomcat.home}" />
-		<attribute name="tomcat.hostname" default="${tomcat.hostname}" />
+		<attribute name="tomcat.hostname" default="${tomcat.server.hostname}" />
 		<attribute name="tomcat.application.url" default="${tomcat.application.url}" />
+		<attribute name="connect.wait.seconds" default="90"/>
 		<sequential>
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<echo message="Waiting for @{tomcat.application.url} to respond."/>
-			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
+			<waitfor maxwait="@{connect.wait.seconds}" maxwaitunit="second" checkevery="5" checkeveryunit="second" timeoutproperty="tomcat.timeout">
 				<http url="@{tomcat.application.url}"/>
 			</waitfor>
 
+			<var name="tomcat.socket.list.has.values" unset="true"/>
+			<propertyregex property="tomcat.socket.list.has.values"
+				input="@{tomcat.socket.list}"
+				regexp="[\d\,]+"
+				select="true"
+				/>
 			<!-- For each socket port call validate:post:socket -->
 			<if>
-				<isset property="validation.post.socket.list"/>
+				<and>
+					<isset property="tomcat.socket.list.has.values"/>
+					<not>
+						<isset property="tomcat.timeout"/>
+					</not>
+				</and>
 				<then>
-					<for list="${validation.post.socket.list}" param="validate.port" >
+					<for list="@{tomcat.socket.list}" param="validate.port" >
 						<sequential>
 							<echo message="Checking if @{validate.port} is running."/>
 							<if>
@@ -7721,7 +7778,6 @@ $HeadURL$
 			<echo message="${line.separator}To view your application goto ${tomcat.application.url}."/>
 		</sequential>
 	</macrodef>
-
 	<macrodef name="validate-post-common" description="Diagnose the host system after the installation">
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="propertyfile.backup.location" default="@{application.base.path}/change-logs" />
@@ -8277,10 +8333,10 @@ $HeadURL$
 					<echo message="Lookging for @{jar.file.name}"/>
 					<signjar
 						destDir="${jars.dir.working}"
-						alias="@{jar-signing.keystore.alias}" 
+						alias="@{jar-signing.keystore.alias}"
 						keystore="@{jar-signing.keystore.abs-location}"
-						storepass="@{jar-signing.keystore.password}" 
-						keypass="@{jar-signing.keystore.password}"    
+						storepass="@{jar-signing.keystore.password}"
+						keypass="@{jar-signing.keystore.password}"
 						lazy="true">
 						<path>
 							<fileset dir="${jars.dir.working}" includes="@{jar.file.name}" />
@@ -8288,7 +8344,7 @@ $HeadURL$
 					</signjar>
 				</sequential>
 			</for>
-		
+
 			<if>
 				<equals arg1="@{jar-signing.execution.time}" arg2="install"/>
 				<then>
@@ -8511,8 +8567,8 @@ $HeadURL$
 					<copy todir="@{sync-gts.build.dir}/ext/target_grid" file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml"/>
 					<copy todir="@{sync-gts.build.dir}/ext/target_grid/certificates">
 						<fileset dir="@{cagrid-target.dir}/@{grid.target}/certificates"/>
-					</copy>                 
-					
+					</copy>
+
 					<var name="is.jre" unset="true"/>
 					<propertyregex property="is.jre"
 						input="${java.home}"
@@ -8542,17 +8598,17 @@ $HeadURL$
 							<!-- configure syncgts to target grid -->
 							<echo message="Configuring syncgts to target grid"/>
 							<ant inheritAll="false" inheritRefs="false"
-								antfile="build.xml"     
-								target="all"            
+								antfile="build.xml"
+								target="all"
 								dir="@{sync-gts.build.dir}"
-								/>                      
+								/>
 							<!-- sync with fabric-->
 							<echo message="Syncing with fabric"/>
 							<ant inheritAll="false" inheritRefs="false"
-								antfile="build.xml"     
+								antfile="build.xml"
 								target="syncWithTrustFabric"
 								dir="@{sync-gts.build.dir}"
-								/>                      
+								/>
 						</else>
 					</if>
 					<!-- only run if jboss -->
@@ -8569,7 +8625,7 @@ $HeadURL$
 							<replaceregexp file="@{sync-gts.build.dir}/build-deploy.xml"
 								match="jboss.dir}/server/default"
 								replace="jboss.dir}/server/@{appserver.server.name}"
-								/>                      
+								/>
 							<!-- Deploy to app server -->
 							<echo message="Deploying to App Server"/>
 							<if>
@@ -8585,22 +8641,22 @@ $HeadURL$
 								<else>
 
 									<ant inheritAll="false" inheritRefs="false"
-										antfile="build.xml"     
-										target="deployJBoss"    
+										antfile="build.xml"
+										target="deployJBoss"
 										dir="@{sync-gts.build.dir}"
-										>               
+										>
 										<property name="env.JBOSS_HOME" location="@{appserver.home}"/>
-									</ant>          
+									</ant>
 								</else>
 							</if>
 							<if>
-								<available file="@{appserver.home}/server/@{appserver.server.name}/deploy/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>            
+								<available file="@{appserver.home}/server/@{appserver.server.name}/deploy/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>
 								<then>
 									<echo message="Sync GTS installed in grid service correctly(jboss)"/>
-								</then>                 
-								<else>                          
+								</then>
+								<else>
 									<fail message="Sync GTS failed to install into grid service correctly."/>
-								</else>                 
+								</else>
 							</if>
 						</then>
 					</if>
@@ -8627,23 +8683,23 @@ $HeadURL$
 								<else>
 
 									<ant inheritAll="false" inheritRefs="false"
-										antfile="build.xml"     
-										target="deployTomcat"    
+										antfile="build.xml"
+										target="deployTomcat"
 										dir="@{sync-gts.build.dir}"
-										>               
+										>
 										<property name="env.CATALINA_HOME" location="@{appserver.home}"/>
-									</ant>          
+									</ant>
 								</else>
 							</if>
 							<if>
-								<available file="@{appserver.home}/webapps/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>            
+								<available file="@{appserver.home}/webapps/@{grid.dir.dest}/WEB-INF/etc/cagrid_SyncGTS"/>
 								<then>
 									<echo message="Sync GTS installed in grid service correctly"/>
-								</then>                 
-								<else>                          
+								</then>
+								<else>
 									<fail message="Sync GTS failed to install into grid service correctly(tomcat)."/>
-								</else>                 
-							</if>           
+								</else>
+							</if>
 						</then>
 					</if>
 				</then>
@@ -8679,4 +8735,5 @@ $HeadURL$
 			<echo message="override.properties.string=${@{override.properties.string.property.name}}"/>
 		</sequential>
 	</macrodef>
+
 </project>

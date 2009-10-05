@@ -12,7 +12,7 @@ println "Invalid password characters are \$ and " + failCharList.toString()
 properties.each
 { sysprop ->
 	//println "Checking ${sysprop.key}"
-	if( sysprop.key ==~ /.*password.*/)
+	if( sysprop.key ==~ /.*database.*password.*/)
 	{
 		println "${sysprop.key} contains 'password'"
 		// issues making $ work in array
