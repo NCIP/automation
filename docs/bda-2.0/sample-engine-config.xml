@@ -7,25 +7,25 @@
 	<property-types>
 	</property-types>
 
-	<project name=""/>
-		<contacts>
-			<contact name="" type="tech|pm"/>
-		</contacts>
-		<repository-url/>
-		<sub-projects numberofsub-projects="">
+	<project name="">
+		<project-details>
+			<description></description>
+			<contacts>
+				<contact name="" type="tech|pm"/>
+			</contacts>
+			<web-url/>
+			<repository-url/>
+		</project-details>
+			<sub-projects numberofsub-projects="">
 		</sub-projects>
+		<!-- Architecture -->
 		<containers>
-			<database-containers numofcontainers="" use-bda="">
-				<database-container prefix="prefix" database-type="">
-					<database-types type="" minimum-version=""/>
-				</database-container>
-			</database-containers>
-			<jboss-containers numofcontainers="">
-				<jboss-container prefix="prefix" version="version"/>
-			</jboss-containers>
-			<tomcat-containers numofcontainers="">
-				<tomcat-container prefix="prefix" version="version"/>
-			</tomcat-containers>
+			<container container-type="database" prefix="prefix">
+				<database-types type="" minimum-version="" default="true|false"/>
+			</container>
+			<container container-type="jboss" prefix="prefix" version="version"/>
+			<container container-type="tomcat" prefix="prefix" version="version"/>
+			<container container-type="custom" prefix="prefix" version="version"/>
 		</containers>
 	</project>
 	<build-plugins>
