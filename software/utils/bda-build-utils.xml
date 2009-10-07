@@ -7299,14 +7299,6 @@ $HeadURL$
 						</else>
 					</if>
 							<!-- Write to apptab -->
-					<if>
-						<not>
-							<available file="@{application.base.path}/../apptab"/>
-						</not>
-						<then>
-							<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
-						</then>
-					</if>
 					<switch value="@{start.jboss}">
 						<case value="Y"/>
 						<case value="N"/>
@@ -7318,10 +7310,41 @@ $HeadURL$
 							<fail message="start.jboss must be Y/N or y/n"/>
 						</default>
 					</switch>
-					<replaceregexp file="@{application.base.path}/../apptab" byline="true"
-						match="^@{logname}.*"
-						replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
+					<if>
+						<not>
+							<available file="@{application.base.path}/../apptab"/>
+						</not>
+						<then>
+							<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+						</then>
+					</if>
+					<loadfile
+						property="apptab.contents"
+						srcFile="@{application.base.path}/../apptab">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="^@{logname}:.*"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<var name="apptab.user.found" unset="true"/>
+					<propertyregex property="apptab.user.found"
+						input="${apptab.contents}"
+						regexp="^@{logname}:.*"
+						select="true"
 						/>
+					<if>
+						<isset property="apptab.user.found"/>
+						<then>
+							<replaceregexp file="@{application.base.path}/../apptab" byline="true"
+								match="^@{logname}.*"
+								replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
+								/>
+						</then>
+						<else>
+							<echo append="true" file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+						</else>
+					</if>
 				</then>
 				<else>
 					<echo message="NOT setting up jboss-nci-customizations because this system is not Unix or Mac NCI environment"/>
