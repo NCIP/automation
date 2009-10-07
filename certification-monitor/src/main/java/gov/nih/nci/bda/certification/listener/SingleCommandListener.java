@@ -79,6 +79,18 @@ public class SingleCommandListener implements BuildListener {
 			if (!bmb.isOptional()) {
 				bmb.setCertificationStatus(false);
 				CertificationManager.projectCertificationStatus = false;
+			}else
+			{
+				bmb.setCertificationStatus(true);
+				CertificationManager.projectCertificationStatus = true;				
+			}
+			if (!bmb.isSystemsWaiver()) {
+				bmb.setCertificationStatus(false);
+				CertificationManager.projectCertificationStatus = false;
+			}else
+			{
+				bmb.setCertificationStatus(true);
+				CertificationManager.projectCertificationStatus = true;				
 			}
 			//bmb.setValue(false);
 		} else {

@@ -174,9 +174,9 @@ public class BuildCertificationHelper {
 			{
 				certLogger.info("Project exists ");
 				if(bmb.isOptional())
-					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_OPTIONAL,projectName,bmb.getFailureMessage()));
+					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_OPTIONAL,projectName,BuildCertificationConstants.OPTIONAL_MESSAGE));
 				else if(bmb.isSystemsWaiver())
-					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_SYSTEMS_WAIVER,projectName,bmb.getFailureMessage()));
+					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_SYSTEMS_WAIVER,projectName,BuildCertificationConstants.WAIVER_MESSAGE));
 				else
 					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
 		    	//update the project URL on update
@@ -187,7 +187,7 @@ public class BuildCertificationHelper {
 		    {
 		    	certLogger.info("New Project ");
 		    	pbs = new ProjectCertificationStatus();
-		    	invokeSetAllMethods(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
+				invokeSetAllMethods(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_FAILED,projectName,bmb.getFailureMessage()));
 		    	setProductValue(pbs,projectUrl);
 		    	session.save(pbs);
 		    }
@@ -199,7 +199,12 @@ public class BuildCertificationHelper {
 			if(pbs != null )
 			{
 				certLogger.info("Project exists ");
-		    	invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
+				if(bmb.isOptional())
+					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_OPTIONAL,projectName,BuildCertificationConstants.OPTIONAL_MESSAGE));
+				else if(bmb.isSystemsWaiver())
+					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_SYSTEMS_WAIVER,projectName,BuildCertificationConstants.WAIVER_MESSAGE));
+				else
+					invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
 		    	//update the project URL on update
 		    	setProductValue(pbs,projectUrl);
 		    	session.update(pbs);

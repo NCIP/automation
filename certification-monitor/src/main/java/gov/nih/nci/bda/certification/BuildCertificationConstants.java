@@ -17,6 +17,8 @@ public class BuildCertificationConstants {
 	public static final String WIKI_FAILED = "(x)";
 	public static final String WIKI_NOTBUILD = "(off)";
 	public static final String WIKI_SUCCESSFUL = "(/)";
-	public static final String WIKI_OPTIONAL = "(on)";
-	public static final String WIKI_SYSTEMS_WAIVER = "(+)";
+	public static final String WIKI_OPTIONAL = "(+)";
+	public static final String WIKI_SYSTEMS_WAIVER = "(on)";
+	public static final String OPTIONAL_MESSAGE = "Feature is Optional";
+	public static final String WAIVER_MESSAGE = "Systems team Waiver";
 }
