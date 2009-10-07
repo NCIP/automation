@@ -3413,6 +3413,7 @@ software/provisioner-app/web-app/css/main.css -text
 software/provisioner-app/web-app/images/favicon.ico -text
 software/provisioner-app/web-app/images/grails_logo.jpg -text
 software/provisioner-app/web-app/images/logotype.gif -text
+software/provisioner-app/web-app/images/nci-logo.gif -text
 software/provisioner-app/web-app/images/skin/database_add.png -text
 software/provisioner-app/web-app/images/skin/database_delete.png -text
 software/provisioner-app/web-app/images/skin/database_edit.png -text
