@@ -413,7 +413,7 @@
 	</target>
 
 	<target name="test:seleniumrc:stop">
-		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="C:\Documents and Settings\narram\Desktop\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
+		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="${user.home}\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
 		<sleep seconds="10"/>     
 	</target>
 
