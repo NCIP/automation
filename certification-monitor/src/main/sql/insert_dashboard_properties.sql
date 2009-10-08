@@ -439,7 +439,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.install.init.target','install:init');
 
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.project.url','https://ncisvn.nci.nih.gov/svn/camod/trunk');
@@ -459,6 +459,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.username','narram');
