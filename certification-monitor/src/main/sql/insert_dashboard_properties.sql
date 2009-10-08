@@ -442,7 +442,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.project.url','http://gforge.nci.nih.gov/svnroot/camod/trunk/camod');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.project.url','https://ncisvn.nci.nih.gov/svn/camod/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.build.location','${camod.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.install.location','working/installer');
@@ -484,7 +484,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('catiss
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.project.url','http://gforge.nci.nih.gov/svnroot/cab2b/trunk/cab2b');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.project.url','https://ncisvn.nci.nih.gov/svn/cab2b/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.build.location','${cab2b.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.install.location','working/installer');
