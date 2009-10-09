@@ -476,7 +476,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('evstre
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.private.url','http://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/evstree');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.hostname','ncias-c261-v.nci.nih.gov');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.jobname','evstree_upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.jobname','evstree');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.distribution.target','dist');
