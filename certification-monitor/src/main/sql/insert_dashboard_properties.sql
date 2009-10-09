@@ -451,11 +451,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.exploded.dir.location','${camod.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/camod');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.private.url','http://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/caMOD');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.hostname','ncias-c261-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.jobname','camod_upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.install.init.target','common:init');
