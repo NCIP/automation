@@ -458,7 +458,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.type','mysql');
