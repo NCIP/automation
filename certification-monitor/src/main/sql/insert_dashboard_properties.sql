@@ -461,6 +461,28 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.use.genericDB','false');
 
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.database.type','oracle');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.project.url','https://ncisvn.nci.nih.gov/svn/evstree/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.master.build.location','${evstree.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.exploded.dir.location','${evstree.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.private.url','http://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/evstree');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.hostname','ncias-c261-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.jobname','evstree_upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.portnumber','48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.use.genericDB','false');
+
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.password','Temp123$');
