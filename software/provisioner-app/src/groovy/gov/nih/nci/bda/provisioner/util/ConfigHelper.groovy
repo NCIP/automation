@@ -17,12 +17,15 @@ class ConfigHelper {
 		remote.each { g ->
     		g.value = projectUrl
 		}
-		
+
 		def writer = new StringWriter()
-		new XmlNodePrinter(new PrintWriter(fileName)).print(root)
+		
+		def nodePrinter = new XmlNodePrinter(new PrintWriter(fileName))
+		nodePrinter.setPreserveWhitespace(true)
+		nodePrinter.print(root)
 		println root.scm.locations.'hudson.scm.SubversionSCM_-ModuleLocation'.remote.text()
-		/*
-			root.each  { node ->
+		/*	
+		root.each  { node ->
 			println("${node}");
 			if(${node}.equals(xPath))
 				{
