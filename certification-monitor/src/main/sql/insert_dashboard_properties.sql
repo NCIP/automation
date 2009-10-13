@@ -421,7 +421,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.project.url','http://ncisvn.nci.nih.gov/svn/cdebrowser/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.project.url','https://ncisvn.nci.nih.gov/svn/cdebrowser/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.master.build.location','${cadsr-cdebrowser.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.master.install.location','working/installer');
@@ -430,7 +430,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.exploded.dir.location','${cadsr-cdebrowser.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.private.url','http://ncisvn.nci.nih.gov/svn/cdebrowser');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/cdebrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.jobname','');
@@ -443,7 +443,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.project.url','http://ncisvn.nci.nih.gov/svn/umlmodelbrowser');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.project.url','https://ncisvn.nci.nih.gov/svn/umlmodelbrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.master.build.location','${cadsr-umlmodelbrowser.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.master.install.location','working/installer');
@@ -452,7 +452,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.exploded.dir.location','${cadsr-umlmodelbrowser.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.private.url','http://ncisvn.nci.nih.gov/svn/umlmodelbrowser');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/umlmodelbrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.jobname','');
@@ -465,7 +465,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.project.url','http://ncisvn.nci.nih.gov/svn/formbuilder');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.project.url','https://ncisvn.nci.nih.gov/svn/formbuilder');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.master.build.location','${cadsr-formbuilder.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.master.install.location','working/installer');
@@ -474,7 +474,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.exploded.dir.location','${cadsr-formbuilder.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.private.url','http://ncisvn.nci.nih.gov/svn/formbuilder');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.private.url','https://ncisvn.nci.nih.gov/svn/formbuilder');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.jobname','');
@@ -487,7 +487,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.project.url','http://ncisvn.nci.nih.gov/svn/sentinel');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.project.url','https://ncisvn.nci.nih.gov/svn/sentinel');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.master.build.location','${cadsr-sentinel.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.master.install.location','working/installer');
@@ -496,7 +496,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.exploded.dir.location','${cadsr-sentinel.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.private.url','http://ncisvn.nci.nih.gov/svn/sentinel');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.private.url','https://ncisvn.nci.nih.gov/svn/sentinel');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.jobname','');
@@ -509,7 +509,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.project.url','http://ncisvn.nci.nih.gov/svn/freestylesearch');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.project.url','https://ncisvn.nci.nih.gov/svn/freestylesearch');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.build.location','${cadsr-freestylesearch.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.install.location','working/installer');
@@ -518,7 +518,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.exploded.dir.location','${cadsr-freestylesearch.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.private.url','http://ncisvn.nci.nih.gov/svn/freestylesearch');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.private.url','https://ncisvn.nci.nih.gov/svn/freestylesearch');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.jobname','');
@@ -531,7 +531,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.project.url','http://ncisvn.nci.nih.gov/svn/cdecurate');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.project.url','https://ncisvn.nci.nih.gov/svn/cdecurate');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.master.build.location','${cadsr-cdecurate.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.master.install.location','working/installer');
@@ -540,7 +540,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.exploded.dir.location','${cadsr-cdecurate.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.private.url','http://ncisvn.nci.nih.gov/svn/cdecurate');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.private.url','https://ncisvn.nci.nih.gov/svn/cdecurate');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.ci-server.jobname','');
@@ -553,7 +553,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.project.url','http://ncisvn.nci.nih.gov/svn/semanticTools');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.project.url','https://ncisvn.nci.nih.gov/svn/semanticTools');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.master.build.location','${cadsr-semanticTools.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.master.install.location','working/installer');
@@ -562,7 +562,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.exploded.dir.location','${cadsr-semanticTools.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.private.url','http://ncisvn.nci.nih.gov/svn/semanticTools');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.private.url','https://ncisvn.nci.nih.gov/svn/semanticTools');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.ci-server.jobname','');
@@ -575,7 +575,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.project.url','http://ncisvn.nci.nih.gov/svn/cadsrdb');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.project.url','https://ncisvn.nci.nih.gov/svn/cadsrdb');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.master.build.location','${cadsr-cadsrdb.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.master.install.location','working/installer');
@@ -584,7 +584,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.exploded.dir.location','${cadsr-cadsrdb.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.private.url','http://ncisvn.nci.nih.gov/svn/cadsrdb');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.private.url','https://ncisvn.nci.nih.gov/svn/cadsrdb');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.ci-server.jobname','');
@@ -608,7 +608,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.exploded.dir.location','${cadsr.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.private.url','http://ncisvn.nci.nih.gov/svn/cdebrowser');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.private.url','https://ncisvn.nci.nih.gov/svn/cdebrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.jobname','');
@@ -631,7 +631,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.exploded.dir.location','${camod.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.private.url','http://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/caMOD');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/caMOD');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.hostname','ncias-c261-v.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.ci-server.jobname','camod_upgrade');
@@ -653,7 +653,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('evstre
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.exploded.dir.location','${evstree.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.private.url','http://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/evstree');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/evstree');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.hostname','ncias-c261-v.nci.nih.gov');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.ci-server.jobname','evstree');
@@ -905,7 +905,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.project.url','http://ncisvn.nci.nih.gov/svn/psc/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.project.url','https://ncisvn.nci.nih.gov/svn/psc/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.master.build.location','${ccts-psc.svn.local.checkout}/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.master.install.location','working/installer');
@@ -914,7 +914,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.exploded.dir.location','${ccts-psc.svn.local.checkout}/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','http://ncisvn.nci.nih.gov/svn/psc/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','https://ncisvn.nci.nih.gov/svn/psc/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.jobname','');
