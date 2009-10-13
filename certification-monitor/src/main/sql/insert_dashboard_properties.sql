@@ -421,7 +421,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('c3prv2
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.project.url','http://ncisvn.nci.nih.gov/svn/cdebrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.master.build.location','${cadsr-cdebrowser.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.master.install.location','working/installer');
@@ -443,7 +443,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.project.url','http://ncisvn.nci.nih.gov/svn/umlmodelbrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.master.build.location','${cadsr-umlmodelbrowser.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.master.install.location','working/installer');
@@ -465,7 +465,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.project.url','http://ncisvn.nci.nih.gov/svn/formbuilder');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.master.build.location','${cadsr-formbuilder.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.master.install.location','working/installer');
@@ -487,7 +487,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.project.url','http://ncisvn.nci.nih.gov/svn/sentinel');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.master.build.location','${cadsr-sentinel.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.master.install.location','working/installer');
@@ -509,7 +509,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.project.url','http://ncisvn.nci.nih.gov/svn/freestylesearch');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.build.location','${cadsr-freestylesearch.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.install.location','working/installer');
@@ -531,7 +531,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.project.url','http://ncisvn.nci.nih.gov/svn/cdecurate');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.master.build.location','${cadsr-cdecurate.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.master.install.location','working/installer');
@@ -553,7 +553,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.project.url','http://ncisvn.nci.nih.gov/svn/semanticTools');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.master.build.location','${cadsr-semanticTools.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.master.install.location','working/installer');
@@ -575,7 +575,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.project.url','http://gforge.nci.nih.gov/svnroot/cadsr/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.project.url','http://ncisvn.nci.nih.gov/svn/cadsrdb');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.master.build.location','${cadsr-cadsrdb.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.master.install.location','working/installer');
@@ -791,26 +791,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('genepa
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.install.init.target','install:init');
 
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.database.type','mysql');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.username','narram');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.project.url','http://gforge.nci.nih.gov/svnroot/tfs/trunk');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.master.build.location','${tfs.svn.local.checkout}/software/build');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.master.install.location','working/installer');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.build.target','build:all');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.package.target','dist:installer:prep');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.database.integration.target','install:database');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.exploded.dir.location','${tfs.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/tfs');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.ci-server.portnumber','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.deployment.target','install');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tfs.install.init.target','install:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.svn.username','narram');
