@@ -6,7 +6,6 @@ import com.xerox.amazonws.ec2.ReservationDescription.Instance;
 class CloudClientController {
 	def cloudClientService
 	
-	
     def index = { 
 		session.accessId=null
 		session.secretId=null
@@ -15,16 +14,21 @@ class CloudClientController {
       
      def generateKey = {
     	Provisioner ec2p = new EC2Provisioner();
-    	def privateKey = ec2p.generateKey(params.accessId.trim(),params.secretId.trim())
-    	redirect(controller: 'cloudClient',action: 'index',params: [accessId:params.accessId,secretId:params.secretId,privateKey:privateKey])
+    	def privateKey1 = "KEYFILE"
+    	//ec2p.generateKey(params.accessId.trim(),params.secretId.trim())
+    	//redirect(controller: 'cloudClient',action: 'createInstance',params: [accessId:params.accessId,secretId:params.secretId,privateKey:privateKey])
+    	render(view: 'createInstance',model: [privateKey:'privateKey1'])
 	}
 	
 	def provisionInstance = {
 		println "Using access id ${session.accessId} and Secret key ${session.secretId}"
+		
 		if(params.email)
 		{	
-			cloudClientService.sendMessage(session.accessId,session.secretId,params)	
-			render(view: 'confirm')
+			cloudClientService.sendMessage(session.accessId,session.secretId,params)
+			println "IN PROVISION INSTANCE" + params.privateKeyFileName
+			//return [fileName: fileName]	
+			render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
 		}
 		else
 		{
@@ -38,6 +42,15 @@ class CloudClientController {
 		return [listAllInstances: listAllInstances]
 		render(view: 'listInstances')
 	}	
+	
+    def downloadKey = {
+    	println params.privateKeyFileName
+	    def file = new File(System.getProperty("user.home")+"/provisioner-key/"+params.privateKeyFileName)    
+		response.setContentType("application/octet-stream")
+		response.setHeader("Content-disposition", "attachment;filename=${file.getName()}")
+		response.outputStream << file.newInputStream() 
+	}	
+	
 
     def terminate = {
     	println "Params::: ${params}"

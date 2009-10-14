@@ -8,13 +8,20 @@ class CloudClientService {
 	static expose = ['jms']
 	static destination = "provionerQ"
 	static listenerCount = 1
+	  
     
     void sendMessage(accessId, secretId,params) {
+    	Provisioner ec2p = new EC2Provisioner(); 
     	println(params)
     	println(params.instanceType)
     	params.accessId = accessId
     	params.secretId = secretId
     	params.instanceType = params.instanceType
+    				
+		println 'Generating the Private Key with AccessID ' + accessId + ' and SecretID ' + secretId
+		String privateKeyFileName = ec2p.generateKey(accessId.trim(), secretId.trim()); 
+		println 'privateKeyFileName ' + privateKeyFileName
+		params.privateKeyFileName = privateKeyFileName
 		sendQueueJMSMessage("provionerQ",params)
 	}
 	
@@ -37,15 +44,22 @@ class CloudClientService {
 	{
 		try 
 		{
-			gov.nih.nci.bda.provisioner.util.ConfigHelper config = new gov.nih.nci.bda.provisioner.util.ConfigHelper()
-			config.setSCMProjectUrlValue("resources/petstore/config.xml","scm.locations.'hudson.scm.SubversionSCM_-ModuleLocation'.remote",msg.projectSCMUrl)
+			Provisioner ec2p = new EC2Provisioner(); 
 			
-			Provisioner ec2p = new EC2Provisioner();
 			def aID = msg.accessId.trim()
-			def sId = msg.secretId.trim()		
-			println 'Generating the Private Key with AccessID ' + aID + ' and SecretID ' + sId
-			String privateKeyFileName = ec2p.generateKey(aID, sId); 
-			println 'privateKeyFileName ' + privateKeyFileName
+			def sId = msg.secretId.trim()
+println 'configure started'
+			
+			gov.nih.nci.bda.provisioner.util.ConfigHelper config = new gov.nih.nci.bda.provisioner.util.ConfigHelper()
+			config.setSCMProjectUrlValue("resources/project/config.xml","scm.locations.'hudson.scm.SubversionSCM_-ModuleLocation'.remote",msg.projectSCMUrl)
+			config.setSCMProjectUserValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.userName",msg.projectSCMUser)
+			config.setSCMProjectPasswordValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.password",msg.projectSCMPassword)
+			config.setProjectBuildTargets("resources/project/config.xml","builders.'hudson.tasks.Ant'.targets",msg.projectBuildTargets)
+			config.setProjectBuildLocation("resources/project/config.xml","builders.'hudson.tasks.Ant'.buildFile",msg.projectBuildFile)
+			config.setProjectBuildOptions("resources/project/config.xml","builders.'hudson.tasks.Ant'.antOpts",msg.projectBuildOptions)
+			
+			println 'configure complete'
+
 			def defaultPortList = '22,48080,48210'
 			def fullPortList 
 			if(msg.portList)
@@ -57,13 +71,13 @@ class CloudClientService {
 			}
 			println 'Adding the ports ' + fullPortList + ' to the Default security group'
 			ec2p.generateSecurityGroup(aID,sId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
-			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +privateKeyFileName
-  			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName),msg.instanceType)
+			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +msg.privateKeyFileName
+  			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home")+"/provisioner-key",msg.privateKeyFileName),msg.instanceType)
 			println 'Configuring the AMI'	
-			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/"+privateKeyFileName);			
+			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/provisioner-key"+"/"+msg.privateKeyFileName);			
 			si.initializeSystem()
 			println 'System Initiation complete'
-			confirmationEmail(msg,hostName)  		
+			confirmationEmail(msg,hostName)	
 		} 
 		catch (ex) {
 			println ("Failed to post:"+ ex)

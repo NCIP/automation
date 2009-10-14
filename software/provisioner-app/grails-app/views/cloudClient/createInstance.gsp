@@ -36,13 +36,31 @@
 				</form:textField>		
 				<form:textField label="Project SCM Url"  name="projectSCMUrl" title="TextField" readonly="false" value="${params.projectSCMUrl}">
 				  Enter the publicly accessible project source URL
+				</form:textField>
+				<tr><td>
+					<form:textField label="Project SCM User"  name="projectSCMUser" title="TextField" readonly="false" value="${params.projectSCMUser}">
+					  Enter the user name for the repository
+					</form:textField>
+				</td><td>
+					<form:textField label="Project SCM Password"  name="projectSCMPassword" title="TextField" readonly="false" value="${params.projectSCMPassword}">
+					  Enter the password for the repository
+					</form:textField>
+				</td></tr>
+				<form:textField label="Project Build Targets"  name="projectBuildTargets" title="TextField" readonly="false" value="${params.projectBuildTargets}">
+				  Enter the password for the repository
+				</form:textField>
+				<form:textField label="Project Build File"  name="projectBuildFile" title="TextField" readonly="false" value="${params.projectBuildFile}">
+				  Enter the password for the repository
 				</form:textField>				
+				<form:textField label="Project Build Options"  name="projectBuildOptions" title="TextField" readonly="false" value="${params.projectBuildOptions}">
+				  Enter the password for the repository
+				</form:textField>				
+				
 				<tr><td><label>Instance Type</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<g:select label="Instance Type " name="instanceType" from="['default','medium']" /></td></tr>				
 				<br><br><br>
 				<form:textField label="Email Address"  name="email" title="TextField" readonly="false" value="${params.email}">
 				  Enter the email address where you wish to receive further instructions
 				</form:textField>
-
 				
 				<div class="buttons">
 					<g:actionSubmit value="Provision Instance" action="provisionInstance" />

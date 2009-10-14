@@ -56,7 +56,10 @@ public class EC2Provisioner extends BaseProvisioner
 {
   //public static String privateKeyFileName="provisioner-4";
   //public static String dnsName="ec2-75-101-204-78.compute-1.amazonaws.com";
-  public String privateKeyFileName;
+  public static int fileCount;	
+  public String privateKeyFileName="provisioner"+fileCount;
+  public String privateKeyFileLocation=System.getProperty("user.home")+"/provisioner-key";
+  //public String privateKeyFileDownload=System.getProperty("user.home")+"/key-download";
   public String dnsName;
   private static Configuration config;
   private static final Logger LOGGER = Logger.getLogger(EC2Provisioner.class.getName());
@@ -67,20 +70,17 @@ public class EC2Provisioner extends BaseProvisioner
 	  config = ConfigurationHelper.getConfiguration(new File("instance.properties").getAbsoluteFile());
   }
 
-  public String generateKey(String accessId, String secretKey) throws IOException
+  public synchronized String generateKey(String accessId, String secretKey) throws IOException
   {
 	  System.out.println("GENERATE KEY");
 	  Jec2 jec2 = new Jec2(accessId, secretKey);
 	  KeyPairInfo key = null;
     try
     {
-    	System.out.println("INSIDE TRY");
     	List<KeyPairInfo> existingKeys = jec2.describeKeyPairs(new String [] {});
-    	System.out.println("AFTER KEYS");
     	int n = 0;
     	while (true)
     	{
-    		System.out.println("INSIDE WHILE");
     		boolean found = false;
     		for (KeyPairInfo res : existingKeys)
     			if (res.getKeyName().equals("provisioner-" + n))
@@ -89,13 +89,15 @@ public class EC2Provisioner extends BaseProvisioner
     			break;
     		++n;
     	}
-    	privateKeyFileName = "provisioner-" + n;
-    	System.out.println("privateKeyFileName::"+privateKeyFileName);
-    	key = jec2.createKeyPair(privateKeyFileName);
+    	//privateKeyFileName = "provisioner-" + n;
+    	//System.out.println("privateKeyFileName::"+privateKeyFileName);
+    	key = jec2.createKeyPair("provisioner-" + n);
     	LOGGER.info("keypair : "+key.getKeyName()+", "+key.getKeyFingerprint() + ", "+key.getKeyMaterial());
     	LOGGER.info("Saving key in user home ");
-    	EC2PrivateKey.savePrivateKey(key.getKeyMaterial(),System.getProperty("user.home"),privateKeyFileName);
-  	  System.out.println("END GENERATE KEY");
+    	EC2PrivateKey.savePrivateKey(key.getKeyMaterial(),privateKeyFileLocation,privateKeyFileName);
+    	//EC2PrivateKey.saveKeyToDownloadDir(key.getKeyMaterial(),privateKeyFileDownload,privateKeyFileName);
+    	++fileCount; 
+    	System.out.println("END GENERATE KEY");
     }
 	catch (EC2Exception e)
 	{
@@ -213,13 +215,11 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 			instanceSize = InstanceType.MEDIUM_HCPU;
 		} 
 	
-		System.out.println("1111");	
 		KeyPairInfo keyPair = new EC2PrivateKey(privateKey).findKeyPair(jec2);
 		if (keyPair == null)
 			throw new EC2Exception("No matching keypair found on EC2. Is the EC2 private key a valid one?");
 		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-3c47a355", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
-		System.out.println("2222");	
 		do
 		{
 			List<ReservationDescription> instances = jec2.describeInstances(new ArrayList<String>());
@@ -254,8 +254,8 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 		listAllInstances(accessId, secretKey);
 		generateKey(accessId, secretKey);
 		generateSecurityGroup(accessId, secretKey, (ArrayList) config.getProperty("ec2.port.list"));
-		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName));
-		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home"),privateKeyFileName),"default");
+		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName));
+		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName),"default");
 		initializeInstance();
 }
 
@@ -315,7 +315,7 @@ private void initializeInstance() throws IOException, InvalidStateException, Int
 	{
 	  try
 	  {
-		EC2SystemInitiator si = new EC2SystemInitiator(dnsName,System.getProperty("user.home")+"/"+privateKeyFileName);
+		EC2SystemInitiator si = new EC2SystemInitiator(dnsName,privateKeyFileLocation+"/"+privateKeyFileName);
 		si.initializeSystem();
 	  }
 	  catch (EC2Exception e)

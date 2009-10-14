@@ -30,6 +30,7 @@ package gov.nih.nci.bda.provisioner;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -117,11 +118,24 @@ public class EC2PrivateKey {
 
 	public static void savePrivateKey(String keyMaterial, String location , String fileName) throws IOException {
 		  byte[] key = keyMaterial.getBytes();
+		  System.out.println("SAVING FILING IN " + location+"/"+fileName);
 	      FileOutputStream keyfos = new FileOutputStream(location+"/"+fileName);
 	      keyfos.write(key);
 	      keyfos.close();
 	}
 
+	public static void saveKeyToDownloadDir(String keyMaterial, String location , String fileName) throws IOException {
+		  byte[] key = keyMaterial.getBytes();
+		  File locationDir = new File(location);
+		  if(locationDir.exists())
+			  locationDir.delete();
+		  else
+			  locationDir.mkdirs();	
+	      FileOutputStream keyfos = new FileOutputStream(location+"/"+fileName);
+	      keyfos.write(key);
+	      keyfos.close();
+	}
+	
 	public static String retrivePrivateKey(String location, String fileName) throws IOException {
         FileInputStream keyfis = new FileInputStream(location+"/"+fileName);
         byte[] encKey = new byte[keyfis.available()];

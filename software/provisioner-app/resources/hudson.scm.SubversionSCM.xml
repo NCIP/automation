@@ -1,0 +1,13 @@
+<hudson.scm.SubversionSCM_-DescriptorImpl>
+  <repositoryBrowser>hudson.scm.SubversionRepositoryBrowser</repositoryBrowser>
+  <generation>1</generation>
+  <credentials class="hashtable">
+    <entry>
+      <string>&lt;https://gforge.nci.nih.gov:443&gt; NCICB gForge Subersion Repository</string>
+      <hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
+        <userName>das</userName>
+        <password>sadas</password>
+      </hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
+    </entry>
+  </credentials>
+</hudson.scm.SubversionSCM_-DescriptorImpl>

@@ -35,9 +35,9 @@
 				<form:textField label="Access Key ID"  name="accessId" title="TextField" readonly="false" value="${params.accessId}">
 				  Enter your <strong>Access Key ID</strong>. To get your AWS <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a>, go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>
 				</form:textField>
-				<form:textField label="Secret Access Key"  name="secretId" title="TextField" readonly="false" value="${params.secretId}">
+				<form:passwordField label="Secret Access Key"  name="secretId" title="TextField" readonly="false" value="${params.secretId}">
 				  Enter your AWS <strong>Secret Access Key</strong>. To get your AWS <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">Access Identifiers</a>, go <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key">here</a>
-				</form:textField>
+				</form:passwordField>
 				<form:buttonBar>
 				  <input type="submit" value="Login" />
 				 </form:buttonBar>
