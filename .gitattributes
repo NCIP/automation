@@ -3373,7 +3373,6 @@ software/provisioner-app/resources/hudson.scm.SubversionSCM.xml -text
 software/provisioner-app/resources/init.sh -text
 software/provisioner-app/resources/my.cnf -text
 software/provisioner-app/resources/mysqld -text
-software/provisioner-app/resources/petstore/config.xml -text
 software/provisioner-app/resources/start-hudson.sh -text
 software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/util/ConfigHelper.groovy -text
 software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/BaseProvisioner.java -text
