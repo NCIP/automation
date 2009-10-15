@@ -23,7 +23,7 @@
 		<formset>
 			<legend><b>BDA Provisioner</b></legend>
 			<h4>After entering the information below and clicking the <b>Provision Instance</b> button, you will receive a follow-up email with further instructions. </h4>
-			<h4>By default, the BDA Provisioner will open the following ports: 22,48080,48210.</h4>
+			<h4>By default, the BDA Provisioner will open the following ports: 22,48080,48210. See the <a href="http://aws.amazon.com/ec2/#pricing">AWS EC2 pricing</a> page to estimate the cost for using your virtual instance.</h4>
 			<br>
 			<g:if test="${flash.message}">
 				<div class="errors">
