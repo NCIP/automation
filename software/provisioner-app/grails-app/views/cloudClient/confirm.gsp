@@ -23,6 +23,7 @@
 	    <g:form action="validate">
 		<label><b>A new Amazon EC2 virtual instance has been created and the Hudson CI Server is being configured </b></label><br>
 		<label><b>A follow up email will be sent in around 20 minutes to the email address provided </b></label><br>	
+		<label><b>Click on the 'Download Key' button below to download the Private Key file you can use to access your instance.</b></label><br>	
 		<g:hiddenField name="privateKeyFileName" value="${fileName}" />
 		<div class="buttons">
 			<g:actionSubmit value="Download Key" action="downloadKey" />
