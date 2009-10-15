@@ -47,7 +47,7 @@
 					</form:textField>
 				</td></tr>
 				<form:textField label="Project Build Targets"  name="projectBuildTargets" title="TextField" readonly="false" value="${params.projectBuildTargets}">
-				  Enter the Ant build targets
+				  Enter the Ant build targets (space delimited)
 				</form:textField>
 				<form:textField label="Project Build File"  name="projectBuildFile" title="TextField" readonly="false" value="${params.projectBuildFile}">
 				  Enter the location of the Ant build file (relative to Project SCM URL)
