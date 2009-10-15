@@ -34,7 +34,7 @@
 				<form:textField label="Port List"  name="portList" title="TextField" readonly="false" value="${params.portList}">
 				  Enter the external ports (in comma-delimited, no spaces format. For example: 46210,48080) you wish to expose in the <strong>Port List</strong> field
 				</form:textField>		
-				<form:textField label="Project SCM Url"  name="projectSCMUrl" title="TextField" readonly="false" value="${params.projectSCMUrl}">
+				<form:textField label="Project SCM URL"  name="projectSCMUrl" title="TextField" readonly="false" value="${params.projectSCMUrl}">
 				  Enter the publicly accessible project source URL
 				</form:textField>
 				<tr><td>
@@ -47,13 +47,13 @@
 					</form:textField>
 				</td></tr>
 				<form:textField label="Project Build Targets"  name="projectBuildTargets" title="TextField" readonly="false" value="${params.projectBuildTargets}">
-				  Enter the password for the repository
+				  Enter the Ant build targets
 				</form:textField>
 				<form:textField label="Project Build File"  name="projectBuildFile" title="TextField" readonly="false" value="${params.projectBuildFile}">
-				  Enter the password for the repository
+				  Enter the location of the Ant build file (relative to Project SCM URL)
 				</form:textField>				
 				<form:textField label="Project Build Options"  name="projectBuildOptions" title="TextField" readonly="false" value="${params.projectBuildOptions}">
-				  Enter the password for the repository
+				  Enter the Project Build Options
 				</form:textField>				
 				
 				<tr><td><label>Instance Type</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<g:select label="Instance Type " name="instanceType" from="['default','medium']" /></td></tr>				
