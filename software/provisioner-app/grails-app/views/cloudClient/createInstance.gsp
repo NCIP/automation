@@ -37,15 +37,15 @@
 				<form:textField label="Project SCM URL"  name="projectSCMUrl" title="TextField" readonly="false" value="${params.projectSCMUrl}">
 				  Enter the publicly accessible project source Subversion URL
 				</form:textField>
-				<tr><td>
-					<form:textField label="Project SCM User"  name="projectSCMUser" title="TextField" readonly="false" value="${params.projectSCMUser}">
-					  Enter the user name for the Subversion repository
-					</form:textField>
-				</td><td>
-					<form:textField label="Project SCM Password"  name="projectSCMPassword" title="TextField" readonly="false" value="${params.projectSCMPassword}">
-					  Enter the password for the Subversion repository
-					</form:textField>
-				</td></tr>
+<!--
+				<form:textField label="Project SCM User"  name="projectSCMUser" title="TextField" readonly="false" value="${params.projectSCMUser}">
+				  Enter the user name for the Subversion repository
+				</form:textField>
+
+				<form:textField label="Project SCM Password"  name="projectSCMPassword" title="TextField" readonly="false" value="${params.projectSCMPassword}">
+				  Enter the password for the Subversion repository
+				</form:textField>
+-->
 				<form:textField label="Project Build Targets"  name="projectBuildTargets" title="TextField" readonly="false" value="${params.projectBuildTargets}">
 				  Enter the Ant build targets (space delimited)
 				</form:textField>

@@ -52,8 +52,8 @@ println 'configure started'
 			
 			gov.nih.nci.bda.provisioner.util.ConfigHelper config = new gov.nih.nci.bda.provisioner.util.ConfigHelper()
 			config.setSCMProjectUrlValue("resources/project/config.xml","scm.locations.'hudson.scm.SubversionSCM_-ModuleLocation'.remote",msg.projectSCMUrl)
-			config.setSCMProjectUserValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.userName",msg.projectSCMUser)
-			config.setSCMProjectPasswordValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.password",msg.projectSCMPassword)
+			//config.setSCMProjectUserValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.userName",msg.projectSCMUser)
+			//config.setSCMProjectPasswordValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.password",msg.projectSCMPassword)
 			config.setProjectBuildTargets("resources/project/config.xml","builders.'hudson.tasks.Ant'.targets",msg.projectBuildTargets)
 			config.setProjectBuildLocation("resources/project/config.xml","builders.'hudson.tasks.Ant'.buildFile",msg.projectBuildFile)
 			config.setProjectBuildOptions("resources/project/config.xml","builders.'hudson.tasks.Ant'.antOpts",msg.projectBuildOptions)
