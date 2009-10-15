@@ -861,7 +861,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.project.url','http://gforge.nci.nih.gov/svnroot/caxchange/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.project.url','https://ncisvn.nci.nih.gov/svn/cabigintegrationhub/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.master.build.location','${ccts-caXchage.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.master.install.location','working/installer');
