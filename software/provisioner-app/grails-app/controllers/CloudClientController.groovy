@@ -2,6 +2,7 @@ import gov.nih.nci.bda.provisioner.*
 import org.codehaus.groovy.runtime.InvokerHelper
 import com.xerox.amazonws.ec2.ReservationDescription;
 import com.xerox.amazonws.ec2.ReservationDescription.Instance;
+import gov.nih.nci.bda.provisioner.validator.CreateInstanceCommand;
 
 class CloudClientController {
 	def cloudClientService
@@ -20,20 +21,14 @@ class CloudClientController {
     	render(view: 'createInstance',model: [privateKey:'privateKey1'])
 	}
 	
-	def provisionInstance = {
-		println "Using access id ${session.accessId} and Secret key ${session.secretId}"
-		
-		if(params.email)
-		{	
-			cloudClientService.sendMessage(session.accessId,session.secretId,params)
-			println "IN PROVISION INSTANCE" + params.privateKeyFileName
-			//return [fileName: fileName]	
+	def provisionInstance = {CreateInstanceCommand cmd ->
+        if(!cmd.hasErrors()) {
+        	cloudClientService.sendMessage(session.accessId,session.secretId,params)
 			render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
-		}
+        }
 		else
 		{
-			flash.message = "Enter a valid email address"
-			render(view: 'createInstance')
+			render(view: 'createInstance', model: [ instance: cmd ])
 		}
 	}
 

@@ -267,7 +267,7 @@ public class EC2SystemInitiator
 		scp.put(new File("resources/cai2/config.xml").getAbsolutePath(), "~/hudson_data/jobs/cai2", true);
 		scp.put(new File("resources/project/config.xml").getAbsolutePath(), "~/hudson_data/jobs/project", true);
 		scp.put(new File("resources/catalina.sh").getAbsolutePath(), "/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin", true);
-		scp.put(new File("resources/hudson.scm.SubversionSCM.xml").getAbsolutePath(), "~/hudson_data", true);
+		//scp.put(new File("resources/hudson.scm.SubversionSCM.xml").getAbsolutePath(), "~/hudson_data", true);
 
 		SessionChannelClient  sessionObject5 = ssh1.openSessionChannel();
 		sessionObject5.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
