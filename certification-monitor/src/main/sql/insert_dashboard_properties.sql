@@ -531,7 +531,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.project.url','https://ncisvn.nci.nih.gov/svn/cdecurate');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.project.url','https://ncisvn.nci.nih.gov/svn/cdecurate/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.master.build.location','${cadsr-cdecurate.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.master.install.location','working/installer');
