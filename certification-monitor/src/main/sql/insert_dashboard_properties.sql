@@ -608,7 +608,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.exploded.dir.location','${cadsr.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.private.url','https://ncisvn.nci.nih.gov/svn/cdebrowser');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/cadsr');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.jobname','');
