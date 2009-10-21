@@ -873,7 +873,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caxchange');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.ci-server.hostname','ncias-d228-v.nci.nih.gov');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.ci-server.jobname','caXchange');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.ci-server.jobname','caBIGIntegrationHub');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.single-command.distribution.target','dist');
