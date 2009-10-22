@@ -367,6 +367,8 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
     private boolean eventsActivated = false;
 
     private Vector<UIElement> elements = new Vector<UIElement>();
+    
+    static File destinationDir = null;
 
     /*--------------------------------------------------------------------------*/
     // This method can be used to search for layout problems. If this class is
@@ -683,8 +685,7 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 		try 
 		{
 			jar = new JarFile(jarFile);
-			Enumeration en = jar.entries();
-			File destinationDir = null;
+			Enumeration en = jar.entries();			
 			while(en.hasMoreElements())
 			{
 				JarEntry fileName = (JarEntry) en.nextElement();
@@ -763,8 +764,9 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
                 logger.setErrorPrintStream(System.err);
                 logger.setOutputPrintStream(System.out);
                 project.addBuildListener(logger);
-
-                File buildFile = new File(readerClassName);
+                System.out.println("executing the file in "+destinationDir.getAbsolutePath()+"/"+readerClassName);
+                
+                File buildFile = new File(destinationDir.getAbsolutePath()+"/"+readerClassName);
                 ProjectHelper.configureProject(project, buildFile);
 
                 Vector<IXMLElement> inProperties = panelReader.getChildrenNamed(PANEL_READER_IN_PROPERTY);
