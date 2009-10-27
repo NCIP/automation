@@ -42,6 +42,7 @@
 				  <input type="submit" value="Login" />
 				 </form:buttonBar>
 	    		</g:form>
+	            v0.1.0
 	    		<br>
 		</formset>
 	</body>
