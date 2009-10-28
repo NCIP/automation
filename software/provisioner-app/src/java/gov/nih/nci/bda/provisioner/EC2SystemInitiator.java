@@ -82,7 +82,6 @@ public class EC2SystemInitiator {
 		SshClient ssh = new SshClient();
 		LOGGER.log(Level.INFO, "Executing System command using " +command);
 		SessionChannelClient sc = ssh.openSessionChannel();
-
 		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 		sc.executeCommand(command);
 		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
