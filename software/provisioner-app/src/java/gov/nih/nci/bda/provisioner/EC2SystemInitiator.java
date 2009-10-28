@@ -96,7 +96,7 @@ public class EC2SystemInitiator {
 		LOGGER.log(Level.INFO, "KEY FILE " + authenticationClient.getKeyfile());
 		if (ssh.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
-			LOGGER.log(Level.INFO, "Authentication Successful using key ");
+			LOGGER.log(Level.INFO, "Authetication Successful using key ");
 			SessionChannelClient sc = ssh.openSessionChannel();
 			ScpClient scp = ssh.openScpClient();
 			scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
@@ -106,7 +106,13 @@ public class EC2SystemInitiator {
 			executeSystemCommand("chmod 700 init.sh");
 			executeSystemCommand("yum install sysutils");
 			executeSystemCommand("dos2unix init.sh");
-			int exitStatus = executeSystemCommand("sh init.sh");
+			executeSystemCommand("sh init.sh");
+
+			SessionChannelClient scc = ssh.openSessionChannel();
+			scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+			scc.executeCommand("sh init.sh");
+			scc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+			int exitStatus = scc.getExitCode().intValue();
 			if (exitStatus != 0) {
 				List remoteOutput = IOUtils.readLines(scc
 						.getStderrInputStream());
