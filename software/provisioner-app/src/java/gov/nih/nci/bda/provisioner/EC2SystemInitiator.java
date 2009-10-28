@@ -83,8 +83,6 @@ public class EC2SystemInitiator {
 		LOGGER.info("Connecting to " + hostName);
 		LOGGER.info("Using key at " + privateKeyFile);
 
-		
-
 		Thread.sleep(100000);
 		ssh.connect(hostName, new IgnoreHostKeyVerification());
 
@@ -98,42 +96,17 @@ public class EC2SystemInitiator {
 		LOGGER.log(Level.INFO, "KEY FILE " + authenticationClient.getKeyfile());
 		if (ssh.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
-			LOGGER.log(Level.INFO, "Authetication Successful using key ");
+			LOGGER.log(Level.INFO, "Authentication Successful using key ");
 			SessionChannelClient sc = ssh.openSessionChannel();
 			ScpClient scp = ssh.openScpClient();
 			scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
 			scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/",
 					true);
 
-			/*
-			 * sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			 * sc.executeCommand("chmod 700 init.sh");
-			 * sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			 * sc.close();
-			 */
 			executeSystemCommand("chmod 700 init.sh");
 			executeSystemCommand("yum install sysutils");
 			executeSystemCommand("dos2unix init.sh");
-
-			/*
-			 * SessionChannelClient utils = ssh.openSessionChannel();
-			 * utils.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			 * utils.executeCommand("yum install sysutils");
-			 * utils.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			 * utils.close();
-			 * 
-			 * SessionChannelClient dos = ssh.openSessionChannel();
-			 * dos.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			 * dos.executeCommand("dos2unix init.sh");
-			 * dos.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			 * dos.close();
-			 */
-
-			SessionChannelClient scc = ssh.openSessionChannel();
-			scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			scc.executeCommand("sh init.sh");
-			scc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			int exitStatus = scc.getExitCode().intValue();
+			int exitStatus = executeSystemCommand("sh init.sh");
 			if (exitStatus != 0) {
 				List remoteOutput = IOUtils.readLines(scc
 						.getStderrInputStream());
@@ -143,11 +116,6 @@ public class EC2SystemInitiator {
 				for (Iterator iter = remoteOutput.iterator(); iter.hasNext();) {
 					LOGGER.log(Level.WARNING, (String) iter.next());
 				}
-				// OutputStream out = null ;
-				// IOUtils.copy(session.getStdout(),out);
-				// IOStreamConnector output = new
-				// IOStreamConnector(scc.getInputStream(), out);
-				// LOGGER.addHandler(streamHandler);
 			} else {
 				List remoteOutput = IOUtils.readLines(scc.getInputStream());
 				for (Iterator iter = remoteOutput.iterator(); iter.hasNext();) {
@@ -308,14 +276,16 @@ public class EC2SystemInitiator {
 
 	}
 
-	private void executeSystemCommand(String command) throws IOException,
+	private int executeSystemCommand(String command) throws IOException,
 			EC2Exception, InvalidStateException, InterruptedException {
 		LOGGER.log(Level.INFO, "Executing System command using " + command);
 		SessionChannelClient sc = ssh.openSessionChannel();
 		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 		sc.executeCommand(command);
 		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		int exitStatus = sc.getExitCode().intValue();
 		sc.close();
+		return exitStatus;
 	}	
 
 }
