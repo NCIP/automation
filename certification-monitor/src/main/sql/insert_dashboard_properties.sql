@@ -833,7 +833,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.install.init.target','common:init);
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.type','mysql');
