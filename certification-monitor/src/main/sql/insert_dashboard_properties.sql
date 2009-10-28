@@ -825,7 +825,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.exploded.dir.location','${ccts-c3pr.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.exploded.dir.location','${ccts-c3pr.svn.local.checkout}/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/c3pr');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.ci-server.hostname','');
