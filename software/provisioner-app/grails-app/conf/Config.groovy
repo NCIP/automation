@@ -66,7 +66,7 @@ log4j = {
 
 grails.mail.host="localhost"
 grails.mail.port="25"
-grails.mail.default.from="Mahidhar.Narra@stelligent.com"
+grails.mail.default.from="aws@stelligent.com"	
 //grails.mail.username="Mahidhar.Narra@stelligent.com"
 //grails.mail.password =""
 //grails.mail.props=["mail.smtp.auth":"true"]
