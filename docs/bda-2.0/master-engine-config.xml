@@ -6,6 +6,7 @@
 		<container-type name="tomcat"/>
 	</container-types>
 	<builders>
+		<!-- ant, groovy, maven, ect.. Probably only start with ant -->
 		<builder name="" class="" target=""/>
 	</builders>
 	<property-types>
@@ -22,41 +23,12 @@
 			<property-item value=""/>       
 		</property-type>        
 	</property-types>
-	<plugins>
-		<!-- BDA Team will add plugins into the project, we need to determine when to call it things that depend on many other things should have high numbers, things that many other things depend on should have low numbers, this allows a sort of dynamic depends.
-	       		The version can be used to compare to version inside project engine-config.xml
-
-			type - either install-steps or build-steps
-			section - build
-				build
-				test
-				static-analysis
-				dist
-				deploy
-				util
-				other
-			section - install
-				init
-				pre-validation
-				backup
-				execute
-				post-validation
-			phase= phase with in the section 1-10
-		-->
-
-		<plugin name="" prefix="" container-type="" version="" type="build|install" section="" phase="" class=""/>
-	</plugins>
-
-		
 	<project>
 	</project>
-	<build-steps>
-		<build-step name="">
-		</build-step>
-	</build-steps>
-	<install-steps>
-		<install-step name=""/>
-	</install-steps>
+	<build-plugins>
+	</build-plugin>
+	<install-plugins>
+	</install-plugins>
 </engine>
 
 

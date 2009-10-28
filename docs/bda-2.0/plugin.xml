@@ -3,9 +3,10 @@
 	<description/>
 	<release-notes>
 	</release-notes>
-	<container-type name="jboss|tomcat|database">
+	<container-type name="jboss|tomcat|database|custom">
 		<versions>
-			<version value=""/>
+			<version value="x.x"/>
+			<version value="x.y"/>
 		</version>
 	</container-type>
 	<!-- for defining custom types not already provided by core engine, mostly used by lists -->
