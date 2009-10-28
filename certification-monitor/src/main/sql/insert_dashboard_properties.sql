@@ -826,7 +826,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.exploded.dir.location','${ccts-c3pr.svn.local.checkout}/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/c3pr');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.private.url','https://gforge.nci.nih.gov/svnroot/scm-private/trunk/c3pr');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.ci-server.jobname','');
@@ -914,7 +914,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.exploded.dir.location','${ccts-psc.svn.local.checkout}/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/psc');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','https://gforge.nci.nih.gov/svn/scm-private/trunk/psc.');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.hostname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.jobname','');
