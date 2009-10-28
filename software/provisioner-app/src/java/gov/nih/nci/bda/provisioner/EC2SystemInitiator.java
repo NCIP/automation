@@ -69,7 +69,8 @@ public class EC2SystemInitiator {
 			.getLogger(EC2SystemInitiator.class.getName());
 	private String hostName;
 	private String privateKeyFile;
-	private SshClient ssh = new SshClient();
+	private SshClient sshRoot = new SshClient();
+	private SshClient sshHudson = new SshClient();
 
 	PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper();
 
@@ -84,7 +85,7 @@ public class EC2SystemInitiator {
 		LOGGER.info("Using key at " + privateKeyFile);
 
 		Thread.sleep(100000);
-		ssh.connect(hostName, new IgnoreHostKeyVerification());
+		sshRoot.connect(hostName, new IgnoreHostKeyVerification());
 
 		// Authenticate
 		// Open up the private key file
@@ -94,11 +95,11 @@ public class EC2SystemInitiator {
 		authenticationClient.setUsername("root");
 		authenticationClient.setKey(pkFile.toPrivateKey(null));
 		LOGGER.log(Level.INFO, "KEY FILE " + authenticationClient.getKeyfile());
-		if (ssh.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
+		if (sshRoot.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
 			LOGGER.log(Level.INFO, "Authetication Successful using key ");
-			SessionChannelClient sc = ssh.openSessionChannel();
-			ScpClient scp = ssh.openScpClient();
+			SessionChannelClient sc = sshRoot.openSessionChannel();
+			ScpClient scp = sshRoot.openScpClient();
 			scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
 			scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/",
 					true);
@@ -108,7 +109,7 @@ public class EC2SystemInitiator {
 			executeSystemCommand("dos2unix init.sh");
 			executeSystemCommand("sh init.sh");
 
-			SessionChannelClient scc = ssh.openSessionChannel();
+			SessionChannelClient scc = sshRoot.openSessionChannel();
 			scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 			scc.executeCommand("sh init.sh");
 			scc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
@@ -134,7 +135,7 @@ public class EC2SystemInitiator {
 		} else {
 			LOGGER.log(Level.WARNING, "Authetication Failed for root ");
 		}
-		ssh.disconnect();
+		sshRoot.disconnect();
 
 		SshClient ssh2 = new SshClient();
 
@@ -285,13 +286,75 @@ public class EC2SystemInitiator {
 	private int executeSystemCommand(String command) throws IOException,
 			EC2Exception, InvalidStateException, InterruptedException {
 		LOGGER.log(Level.INFO, "Executing System command using " + command);
-		SessionChannelClient sc = ssh.openSessionChannel();
+		SessionChannelClient sc = sshRoot.openSessionChannel();
 		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 		sc.executeCommand(command);
 		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		int exitStatus = sc.getExitCode().intValue();
 		sc.close();
 		return exitStatus;
-	}	
+	}
+
+	private int executeSystemHudsonCommand(String command) throws IOException,
+			EC2Exception, InvalidStateException, InterruptedException {
+		LOGGER.log(Level.INFO, "Executing System command using " + command);
+		SessionChannelClient sc = sshHudson.openSessionChannel();
+		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sc.executeCommand(command);
+		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		int exitStatus = sc.getExitCode().intValue();
+		sc.close();
+		return exitStatus;
+	}
+
+	private void executeHudsonCommands(String command) throws IOException,
+			EC2Exception, InvalidStateException, InterruptedException {
+
+		Thread.sleep(100000);
+		sshHudson.connect(hostName, new IgnoreHostKeyVerification());
+
+		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
+		pwd.setUsername("hudsonuser");
+		pwd.setPassword("password");
+
+		if (sshHudson.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
+
+			LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
+			ScpClient scp = sshHudson.openScpClient();
+			scp.put(new File("resources/build-hudson.xml").getAbsolutePath(),
+					"", true);
+			scp.put(new File("resources/.bash_profile").getAbsolutePath(), "",
+					true);
+
+			executeSystemHudsonCommand(". .bash_profile >> profile.log");
+			executeSystemHudsonCommand("ant -f build-hudson.xml >> build.log");
+			executeSystemHudsonCommand("mkdir ~/hudson_data");
+			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs");
+			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs/cai2");
+			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs/project");
+
+			scp.put(new File("resources/cai2/config.xml").getAbsolutePath(),
+					"~/hudson_data/jobs/cai2", true);
+			scp.put(new File("resources/project/config.xml").getAbsolutePath(),
+					"~/hudson_data/jobs/project", true);
+			scp
+					.put(
+							new File("resources/catalina.sh").getAbsolutePath(),
+							"/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin",
+							true);
+
+			SessionChannelClient sessionObject5 = sshHudson
+					.openSessionChannel();
+			sessionObject5.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+			sessionObject5
+					.executeCommand("dos2unix /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/catalina.sh");
+			sessionObject5.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+			sessionObject5.close();
+		} else {
+			LOGGER.log(Level.WARNING, "Authetication Failed for hudsonuser");
+		}
+
+		sshHudson.disconnect();
+	}
 
 }
