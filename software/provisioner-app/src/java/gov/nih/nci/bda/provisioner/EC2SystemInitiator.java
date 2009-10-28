@@ -82,9 +82,6 @@ public class EC2SystemInitiator {
 		SshClient ssh = new SshClient();
 		LOGGER.log(Level.INFO, "Executing System command using " +command);
 		SessionChannelClient sc = ssh.openSessionChannel();
-		ScpClient scp = ssh.openScpClient();
-		scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
-		scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/", true);
 
 		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 		sc.executeCommand(command);
@@ -125,9 +122,11 @@ public class EC2SystemInitiator {
 			sc.close();
 			*/
 			executeSystemCommand("chmod 700 init.sh");
+			executeSystemCommand("yum install sysutils");
+			executeSystemCommand("dos2unix init.sh");
 			
 
-			SessionChannelClient utils = ssh.openSessionChannel();
+			/*SessionChannelClient utils = ssh.openSessionChannel();
 			utils.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 			utils.executeCommand("yum install sysutils");
 			utils.getState().waitForState(ChannelState.CHANNEL_CLOSED);
@@ -138,6 +137,7 @@ public class EC2SystemInitiator {
 			dos.executeCommand("dos2unix init.sh");
 			dos.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 			dos.close();
+			*/
 
 			SessionChannelClient scc = ssh.openSessionChannel();
 			scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
