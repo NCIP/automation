@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<roi-configuration>
+	<organizations>
+		<organization name="cbiit">			
+			<dbDeploymentPerTargetEnv bda="0" non-bda="2"/>
+			<deploymentPerTargetEnv bda="0" non-bda="4"/>
+			<appContainerConfigurationPerTargetEnv bda="0" non-bda="8"/>
+			<tierProvisioning bda="0" non-bda="16"/>
+			<buildPromotion bda="1" non-bda="4"/>
+			<oneTimeProcessesPerDeployment bda="0" non-bda="4"/>
+			<continuousIntegration bda="1" non-bda="2"/>
+			<bdaImplementationOneTimeCost bda="120" non-bda="0"/>
+		</organization>
+		<organization name="nci">
+		</organization>		
+	</organizations>
+</roi-configuration>
