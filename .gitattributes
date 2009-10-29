@@ -2095,6 +2095,7 @@ software/bda-app/grails-app/conf/DataSource.groovy -text
 software/bda-app/grails-app/conf/UrlMappings.groovy -text
 software/bda-app/grails-app/conf/spring/resources.groovy -text
 software/bda-app/grails-app/controllers/BdaController.groovy -text
+software/bda-app/grails-app/controllers/ConfiguratorController.groovy -text
 software/bda-app/grails-app/i18n/messages.properties -text
 software/bda-app/grails-app/i18n/messages_de.properties -text
 software/bda-app/grails-app/i18n/messages_es.properties -text
@@ -2107,6 +2108,8 @@ software/bda-app/grails-app/i18n/messages_ru.properties -text
 software/bda-app/grails-app/i18n/messages_th.properties -text
 software/bda-app/grails-app/i18n/messages_zh_CN.properties -text
 software/bda-app/grails-app/views/bda/index.gsp -text
+software/bda-app/grails-app/views/configurator/configWizard/projectInfo.gsp -text
+software/bda-app/grails-app/views/configurator/main.gsp -text
 software/bda-app/grails-app/views/error.gsp -text
 software/bda-app/grails-app/views/index.gsp -text
 software/bda-app/grails-app/views/layouts/main.gsp -text
