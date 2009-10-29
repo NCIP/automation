@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>BDA Provisioner</title>
+		<title>BDA Calculator</title>
 		<meta name="layout" content="main"/>
 		<g:javascript library="jquery" />
 		 <style>

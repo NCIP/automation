@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="layout" content="main" />
-	<title>BDA 2.0</title>
+	<title>BDA Calculator</title>
 	<g:javascript library="jquery" />
 	 <style>
 		.fieldWrapper { margin-bottom: 20px;}
