@@ -24,7 +24,7 @@
 			alert("111");
 		}
 	</g:javascript>
-	<legend><b>BDA Provisioner</b></legend>
+	<legend><b>BDA Calculator</b></legend>
 		<div class="body">
 			<g:form >
 				<div class="list">		
