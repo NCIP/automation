@@ -88,12 +88,7 @@ public class EC2SystemInitiator {
 
 		if (sshRoot.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
-			LOGGER.log(Level.INFO, "Authetication Successful using key ");
-			SessionChannelClient sc = sshRoot.openSessionChannel();
-			ScpClient scp = sshRoot.openScpClient();
-			scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
-			scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/",
-					true);
+			putFiles("root");
 
 			executeSystemCommand("chmod 700 init.sh");
 			executeSystemCommand("yum install sysutils");
@@ -128,18 +123,21 @@ public class EC2SystemInitiator {
 		}
 		sshRoot.disconnect();
 
-		SshClient ssh2 = new SshClient();
+		connectToRemoteNode("root", authenticationClient);
 
-		Thread.sleep(100000);
-		ssh2.connect(hostName, new IgnoreHostKeyVerification());
-		if (ssh2.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
-			SessionChannelClient reboot = ssh2.openSessionChannel();
-			reboot.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			reboot.executeCommand("reboot");
-			reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			reboot.close();
-		}
-		ssh2.disconnect();
+		// Called by connectToRemoteNode instead
+		/*
+		 * SshClient ssh2 = new SshClient();
+		 * 
+		 * Thread.sleep(100000); ssh2.connect(hostName, new
+		 * IgnoreHostKeyVerification()); if
+		 * (ssh2.authenticate(authenticationClient) ==
+		 * AuthenticationProtocolState.COMPLETE) { SessionChannelClient reboot =
+		 * ssh2.openSessionChannel(); reboot.requestPseudoTerminal("ansi", 80,
+		 * 24, 0, 0, ""); reboot.executeCommand("reboot");
+		 * reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		 * reboot.close(); } ssh2.disconnect();
+		 */
 
 		SshClient ssh4 = new SshClient();
 
@@ -274,6 +272,24 @@ public class EC2SystemInitiator {
 
 	}
 
+	private void connectToRemoteNode(String username,
+			PublicKeyAuthenticationClient authenticationClient)
+			throws IOException, EC2Exception, InvalidStateException,
+			InterruptedException {
+		SshClient ssh2 = new SshClient();
+
+		Thread.sleep(100000);
+		ssh2.connect(hostName, new IgnoreHostKeyVerification());
+		if (ssh2.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
+			SessionChannelClient reboot = ssh2.openSessionChannel();
+			reboot.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+			reboot.executeCommand("reboot");
+			reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+			reboot.close();
+		}
+		ssh2.disconnect();
+	}
+
 	private PublicKeyAuthenticationClient connectToRemoteHost(String username)
 			throws IOException, EC2Exception, InvalidStateException,
 			InterruptedException {
@@ -295,8 +311,12 @@ public class EC2SystemInitiator {
 		return false;
 	}
 
-	private void putFiles(String username) {
-
+	private void putFiles(String username) throws IOException {
+		LOGGER.log(Level.INFO, "Authetication Successful using key ");
+		SessionChannelClient sc = sshRoot.openSessionChannel();
+		ScpClient scp = sshRoot.openScpClient();
+		scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
+		scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/", true);
 	}
 
 	private void executeRemoteCommand(String username) {
