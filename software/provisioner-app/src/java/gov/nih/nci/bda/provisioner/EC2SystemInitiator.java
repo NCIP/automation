@@ -84,17 +84,8 @@ public class EC2SystemInitiator {
 		LOGGER.info("Connecting to " + hostName);
 		LOGGER.info("Using key at " + privateKeyFile);
 
-		Thread.sleep(100000);
-		sshRoot.connect(hostName, new IgnoreHostKeyVerification());
+		PublicKeyAuthenticationClient authenticationClient = connectToRemoteHost("root");
 
-		// Authenticate
-		// Open up the private key file
-		SshPrivateKeyFile pkFile = SshPrivateKeyFile.parse(new File(
-				privateKeyFile));
-		PublicKeyAuthenticationClient authenticationClient = new PublicKeyAuthenticationClient();
-		authenticationClient.setUsername("root");
-		authenticationClient.setKey(pkFile.toPrivateKey(null));
-		LOGGER.log(Level.INFO, "KEY FILE " + authenticationClient.getKeyfile());
 		if (sshRoot.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
 			LOGGER.log(Level.INFO, "Authetication Successful using key ");
@@ -280,6 +271,39 @@ public class EC2SystemInitiator {
 			session.close();
 		}
 		ssh3.disconnect();
+
+	}
+
+	private PublicKeyAuthenticationClient connectToRemoteHost(String username)
+			throws IOException, EC2Exception, InvalidStateException,
+			InterruptedException {
+		Thread.sleep(100000);
+		sshRoot.connect(hostName, new IgnoreHostKeyVerification());
+
+		// Authenticate
+		// Open up the private key file
+		SshPrivateKeyFile pkFile = SshPrivateKeyFile.parse(new File(
+				privateKeyFile));
+		PublicKeyAuthenticationClient authenticationClient = new PublicKeyAuthenticationClient();
+		authenticationClient.setUsername(username);
+		authenticationClient.setKey(pkFile.toPrivateKey(null));
+		LOGGER.log(Level.INFO, "KEY FILE " + authenticationClient.getKeyfile());
+		return authenticationClient;
+	}
+
+	private boolean isUserConnected(String username) {
+		return false;
+	}
+
+	private void putFiles(String username) {
+
+	}
+
+	private void executeRemoteCommand(String username) {
+
+	}
+
+	private void closeConnection(String username) {
 
 	}
 
