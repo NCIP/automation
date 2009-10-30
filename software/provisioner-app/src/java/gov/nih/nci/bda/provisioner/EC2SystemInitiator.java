@@ -104,10 +104,10 @@ public class EC2SystemInitiator {
 			scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/",
 					true);
 
-			executeSystemCommand("chmod 700 init.sh");
-			executeSystemCommand("yum install sysutils");
-			executeSystemCommand("dos2unix init.sh");
-			executeSystemCommand("sh init.sh");
+			executeRemoteCommandAsRoot("chmod 700 init.sh");
+			executeRemoteCommandAsRoot("yum install sysutils");
+			executeRemoteCommandAsRoot("dos2unix init.sh");
+			executeRemoteCommandAsRoot("sh init.sh");
 
 			SessionChannelClient scc = sshRoot.openSessionChannel();
 			scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -133,7 +133,7 @@ public class EC2SystemInitiator {
 			scc.close();
 
 		} else {
-			LOGGER.log(Level.WARNING, "Authetication Failed for root ");
+			LOGGER.log(Level.WARNING, "Authentication failed for root ");
 		}
 		sshRoot.disconnect();
 
@@ -283,7 +283,20 @@ public class EC2SystemInitiator {
 
 	}
 
-	private int executeSystemCommand(String command) throws IOException,
+	private int executeRemoteCommandAsRootIgnoreHostKey(String command)
+			throws IOException, EC2Exception, InvalidStateException,
+			InterruptedException {
+		LOGGER.log(Level.INFO, "Executing System command using " + command);
+		SessionChannelClient sc = sshRoot.openSessionChannel();
+		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		sc.executeCommand(command);
+		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		int exitStatus = sc.getExitCode().intValue();
+		sc.close();
+		return exitStatus;
+	}
+
+	private int executeRemoteCommandAsRoot(String command) throws IOException,
 			EC2Exception, InvalidStateException, InterruptedException {
 		LOGGER.log(Level.INFO, "Executing System command using " + command);
 		SessionChannelClient sc = sshRoot.openSessionChannel();
@@ -295,8 +308,9 @@ public class EC2SystemInitiator {
 		return exitStatus;
 	}
 
-	private int executeSystemHudsonCommand(String command) throws IOException,
-			EC2Exception, InvalidStateException, InterruptedException {
+	private int executeRemoteCommandAsHudson(String command)
+			throws IOException, EC2Exception, InvalidStateException,
+			InterruptedException {
 		LOGGER.log(Level.INFO, "Executing System command using " + command);
 		SessionChannelClient sc = sshHudson.openSessionChannel();
 		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -326,12 +340,12 @@ public class EC2SystemInitiator {
 			scp.put(new File("resources/.bash_profile").getAbsolutePath(), "",
 					true);
 
-			executeSystemHudsonCommand(". .bash_profile >> profile.log");
-			executeSystemHudsonCommand("ant -f build-hudson.xml >> build.log");
-			executeSystemHudsonCommand("mkdir ~/hudson_data");
-			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs");
-			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs/cai2");
-			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs/project");
+			executeRemoteCommandAsHudson(". .bash_profile >> profile.log");
+			executeRemoteCommandAsHudson("ant -f build-hudson.xml >> build.log");
+			executeRemoteCommandAsHudson("mkdir ~/hudson_data");
+			executeRemoteCommandAsHudson("mkdir ~/hudson_data/jobs");
+			executeRemoteCommandAsHudson("mkdir ~/hudson_data/jobs/cai2");
+			executeRemoteCommandAsHudson("mkdir ~/hudson_data/jobs/project");
 
 			scp.put(new File("resources/cai2/config.xml").getAbsolutePath(),
 					"~/hudson_data/jobs/cai2", true);
