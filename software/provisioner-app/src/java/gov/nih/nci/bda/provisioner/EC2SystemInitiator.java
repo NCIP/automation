@@ -88,7 +88,8 @@ public class EC2SystemInitiator {
 
 		if (sshRoot.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
-			putFiles("root");
+			putFiles(new File("resources/init.sh").getAbsolutePath(), "");
+			putFiles(new File("resources/hosts").getAbsolutePath(), "/etc/");
 
 			executeSystemCommand("chmod 700 init.sh");
 			executeSystemCommand("yum install sysutils");
@@ -134,11 +135,10 @@ public class EC2SystemInitiator {
 		// Open up the private key file
 
 		if (ssh4.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
-			ScpClient scp = ssh4.openScpClient();
-			scp.put(new File("resources/mysqld").getAbsolutePath(),
-					"/etc/init.d/", true);
-			scp.put(new File("resources/my.cnf").getAbsolutePath(), "/etc/",
-					true);
+
+			putFiles(new File("resources/mysqld").getAbsolutePath(),
+					"/etc/init.d/");
+			putFiles(new File("resources/my.cnf").getAbsolutePath(), "/etc/");
 
 			connectToPseudoTerminal(ssh4, "/etc/init.d/mysqld start");
 			connectToPseudoTerminal(ssh4, "mysqladmin -u root password mysql");
@@ -189,69 +189,70 @@ public class EC2SystemInitiator {
 
 		ssh1.disconnect();
 
-		SshClient ssh3 = new SshClient();
+		SshClient ssh = createSshClient();
 
-		Thread.sleep(100000);
-		ssh3.connect(hostName, new IgnoreHostKeyVerification());
-
-		// Authenticate
-		// Open up the private key file
-
-		if (ssh3.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
-			ScpClient scp = ssh3.openScpClient();
+		if (ssh.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
+			ScpClient scp = ssh.openScpClient();
 			scp.put(new File("resources/start-hudson.sh").getAbsolutePath(),
 					"", true);
 
-			SessionChannelClient session = ssh3.openSessionChannel();
+			SessionChannelClient session = ssh.openSessionChannel();
 			session.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 			session
 					.executeCommand(". /mnt/hudsonuser/.bash_profile;env | sort>> start.log;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh 2>&1 >> start.log&");
-			// session.executeCommand("ant -f build-hudson.xml start-hudson >> start.log");
 			session.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 			session.close();
 		}
-		ssh3.disconnect();
+		ssh.disconnect();
 		sshHudson.disconnect();
 		sshRoot.disconnect();
 
+	}
+
+	private SshClient createSshClient() throws IOException,
+			InterruptedException {
+		SshClient ssh = new SshClient();
+		Thread.sleep(100000);
+		ssh.connect(hostName, new IgnoreHostKeyVerification());
+		return ssh;
 	}
 
 	private void connectToRemoteNode(String username,
 			PublicKeyAuthenticationClient authenticationClient, String command)
 			throws IOException, EC2Exception, InvalidStateException,
 			InterruptedException {
-		SshClient ssh2 = new SshClient();
+		SshClient ssh = new SshClient();
 
 		Thread.sleep(100000);
-		ssh2.connect(hostName, new IgnoreHostKeyVerification());
-		if (ssh2.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
-			SessionChannelClient reboot = ssh2.openSessionChannel();
+		ssh.connect(hostName, new IgnoreHostKeyVerification());
+		if (ssh.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
+			SessionChannelClient reboot = ssh.openSessionChannel();
 			reboot.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
 			reboot.executeCommand(command);
 			reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 			reboot.close();
 		}
-		ssh2.disconnect();
+		ssh.disconnect();
 	}
 
-	private void connectToPseudoTerminal(SshClient ssh1, String command)
+	private void connectToPseudoTerminal(SshClient ssh, String command)
 			throws IOException, EC2Exception, InvalidStateException,
 			InterruptedException {
 
-		SessionChannelClient bash1 = ssh1.openSessionChannel();
-		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		bash1.executeCommand(command);
-		bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		bash1.close();
+		SessionChannelClient scc = ssh.openSessionChannel();
+		scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		scc.executeCommand(command);
+		scc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		scc.close();
 
 	}
 
-	private PasswordAuthenticationClient connectToHudsonUser(SshClient ssh1,
+	private PasswordAuthenticationClient connectToHudsonUser(SshClient ssh,
 			String username, String password) throws IOException, EC2Exception,
 			InvalidStateException, InterruptedException {
 
 		Thread.sleep(100000);
-		ssh1.connect(hostName, new IgnoreHostKeyVerification());
+		ssh.connect(hostName, new IgnoreHostKeyVerification());
 
 		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 		pwd.setUsername(username);
@@ -281,20 +282,18 @@ public class EC2SystemInitiator {
 		return false;
 	}
 
-	private void putFiles(String username) throws IOException {
-		LOGGER.log(Level.INFO, "Authetication Successful using key ");
-		SessionChannelClient sc = sshRoot.openSessionChannel();
+	private void putFiles(String path, String dir) throws IOException {
+		LOGGER.log(Level.INFO, "Writing to file with path: " + path);
 		ScpClient scp = sshRoot.openScpClient();
-		scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
-		scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/", true);
+		scp.put(new File(path).getAbsolutePath(), dir, true);
 	}
 
 	private void executeRemoteCommand(String username) {
 
 	}
 
-	private void closeConnection(String username) {
-
+	private void closeConnection(SshClient ssh) {
+		ssh.disconnect();
 	}
 
 	private int executeSystemCommand(String command) throws IOException,
