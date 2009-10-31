@@ -88,8 +88,9 @@ public class EC2SystemInitiator {
 
 		if (sshRoot.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
-			putFiles("root");
-
+			putFiles(new File("resources/init.sh").getAbsolutePath(), "");
+			putFiles(new File("resources/hosts").getAbsolutePath(), "/etc/");
+			
 			executeSystemCommand("chmod 700 init.sh");
 			executeSystemCommand("yum install sysutils");
 			executeSystemCommand("dos2unix init.sh");
@@ -281,12 +282,10 @@ public class EC2SystemInitiator {
 		return false;
 	}
 
-	private void putFiles(String username) throws IOException {
-		LOGGER.log(Level.INFO, "Authetication Successful using key ");
-		SessionChannelClient sc = sshRoot.openSessionChannel();
+	private void putFiles(String path, String dir) throws IOException {
+		LOGGER.log(Level.INFO, "Writing to file with path: " + path);
 		ScpClient scp = sshRoot.openScpClient();
-		scp.put(new File("resources/init.sh").getAbsolutePath(), "", true);
-		scp.put(new File("resources/hosts").getAbsolutePath(), "/etc/", true);
+		scp.put(new File(path).getAbsolutePath(), dir, true);
 	}
 
 	private void executeRemoteCommand(String username) {
