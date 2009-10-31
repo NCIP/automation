@@ -33,17 +33,11 @@ import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.authentication.PublicKeyAuthenticationClient;
-import com.sshtools.j2ssh.connection.ChannelOutputStream;
 import com.sshtools.j2ssh.connection.ChannelState;
 import com.sshtools.j2ssh.session.SessionChannelClient;
-import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
 import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
-import com.sshtools.j2ssh.transport.publickey.SshPrivateKey;
 import com.sshtools.j2ssh.transport.publickey.SshPrivateKeyFile;
-import com.sshtools.j2ssh.util.InvalidStateException;
-import com.sshtools.j2ssh.forwarding.ForwardingIOChannel;
-import com.sshtools.j2ssh.io.IOStreamConnector; //import com.trilead.ssh2.Connection;
-//import com.trilead.ssh2.SCPClient;
+import com.sshtools.j2ssh.util.InvalidStateException; //import com.trilead.ssh2.SCPClient;
 //import com.trilead.ssh2.Session;
 import com.xerox.amazonws.ec2.EC2Exception;
 
@@ -51,16 +45,10 @@ import gov.nih.nci.bda.provisioner.util.PropertyHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 import org.apache.commons.io.IOUtils;
 
@@ -91,9 +79,9 @@ public class EC2SystemInitiator {
 			createFile(new File("resources/init.sh").getAbsolutePath(), "");
 			createFile(new File("resources/hosts").getAbsolutePath(), "/etc/");
 
-			executeRemoteCommand("chmod 700 init.sh");
-			executeRemoteCommand("yum install sysutils");
-			executeRemoteCommand("dos2unix init.sh");
+			runSystemCommand(sshRoot, "chmod 700 init.sh");
+			runSystemCommand(sshRoot, "yum install sysutils");
+			runSystemCommand(sshRoot, "dos2unix init.sh");
 
 			SessionChannelClient scc = sshRoot.openSessionChannel();
 			scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -181,7 +169,6 @@ public class EC2SystemInitiator {
 		ssh3.connect(hostName, new IgnoreHostKeyVerification());
 
 		if (ssh3.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
-			ScpClient scp = ssh3.openScpClient();
 			createFile(new File("resources/start-hudson.sh").getAbsolutePath(),
 					"");
 
@@ -275,16 +262,15 @@ public class EC2SystemInitiator {
 
 	}
 
-	private int executeRemoteCommand(String command) throws IOException,
-			EC2Exception, InvalidStateException, InterruptedException {
-		LOGGER.log(Level.INFO, "Executing System command using " + command);
-		SessionChannelClient sc = sshRoot.openSessionChannel();
-		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sc.executeCommand(command);
-		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		int exitStatus = sc.getExitCode().intValue();
-		sc.close();
-		return exitStatus;
-	}
+	/*
+	 * private int executeRemoteCommand(String command) throws IOException,
+	 * EC2Exception, InvalidStateException, InterruptedException {
+	 * LOGGER.log(Level.INFO, "Executing System command using " + command);
+	 * SessionChannelClient sc = sshRoot.openSessionChannel();
+	 * sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+	 * sc.executeCommand(command);
+	 * sc.getState().waitForState(ChannelState.CHANNEL_CLOSED); int exitStatus =
+	 * sc.getExitCode().intValue(); sc.close(); return exitStatus; }
+	 */
 
 }
