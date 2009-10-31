@@ -88,8 +88,8 @@ public class EC2SystemInitiator {
 
 		if (sshRoot.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
-			createFile(new File("resources/init.sh").getAbsolutePath(), "");
-			createFile(new File("resources/hosts").getAbsolutePath(), "/etc/");
+			putFiles(new File("resources/init.sh").getAbsolutePath(), "");
+			putFiles(new File("resources/hosts").getAbsolutePath(), "/etc/");
 
 			executeRemoteCommand("chmod 700 init.sh");
 			executeRemoteCommand("yum install sysutils");
@@ -135,9 +135,10 @@ public class EC2SystemInitiator {
 
 		if (ssh4.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 			ScpClient scp = ssh4.openScpClient();
-			createFile(new File("resources/mysqld").getAbsolutePath(),
-					"/etc/init.d/");
-			createFile(new File("resources/my.cnf").getAbsolutePath(), "/etc/");
+			scp.put(new File("resources/mysqld").getAbsolutePath(),
+					"/etc/init.d/", true);
+			scp.put(new File("resources/my.cnf").getAbsolutePath(), "/etc/",
+					true);
 
 			connectToPseudoTerminal(ssh4, "/etc/init.d/mysqld start");
 			connectToPseudoTerminal(ssh4, "mysqladmin -u root password mysql");
@@ -154,9 +155,10 @@ public class EC2SystemInitiator {
 
 			LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
 			ScpClient scp = ssh1.openScpClient();
-			createFile(new File("resources/build-hudson.xml").getAbsolutePath(),
-					"");
-			createFile(new File("resources/.bash_profile").getAbsolutePath(), "");
+			scp.put(new File("resources/build-hudson.xml").getAbsolutePath(),
+					"", true);
+			scp.put(new File("resources/.bash_profile").getAbsolutePath(), "",
+					true);
 
 			connectToPseudoTerminal(ssh1, ". .bash_profile >> profile.log");
 
@@ -167,11 +169,10 @@ public class EC2SystemInitiator {
 			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/cai2");
 			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/project");
 
-			createFile(new File("resources/cai2/config.xml").getAbsolutePath(),
-					"~/hudson_data/jobs/cai2");
-			createFile(
-					new File("resources/project/config.xml").getAbsolutePath(),
-					"~/hudson_data/jobs/project");
+			scp.put(new File("resources/cai2/config.xml").getAbsolutePath(),
+					"~/hudson_data/jobs/cai2", true);
+			scp.put(new File("resources/project/config.xml").getAbsolutePath(),
+					"~/hudson_data/jobs/project", true);
 			scp
 					.put(
 							new File("resources/catalina.sh").getAbsolutePath(),
@@ -198,8 +199,8 @@ public class EC2SystemInitiator {
 
 		if (ssh3.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
 			ScpClient scp = ssh3.openScpClient();
-			createFile(new File("resources/start-hudson.sh").getAbsolutePath(),
-					"");
+			scp.put(new File("resources/start-hudson.sh").getAbsolutePath(),
+					"", true);
 
 			SessionChannelClient session = ssh3.openSessionChannel();
 			session.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -248,8 +249,10 @@ public class EC2SystemInitiator {
 	private PasswordAuthenticationClient connectToHudsonUser(SshClient ssh1,
 			String username, String password) throws IOException, EC2Exception,
 			InvalidStateException, InterruptedException {
+
 		Thread.sleep(100000);
 		ssh1.connect(hostName, new IgnoreHostKeyVerification());
+
 		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 		pwd.setUsername(username);
 		pwd.setPassword(password);
@@ -278,7 +281,7 @@ public class EC2SystemInitiator {
 		return false;
 	}
 
-	private void createFile(String path, String dir) throws IOException {
+	private void putFiles(String path, String dir) throws IOException {
 		LOGGER.log(Level.INFO, "Writing to file with path: " + path);
 		ScpClient scp = sshRoot.openScpClient();
 		scp.put(new File(path).getAbsolutePath(), dir, true);
