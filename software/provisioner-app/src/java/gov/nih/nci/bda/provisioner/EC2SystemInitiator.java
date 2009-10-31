@@ -192,11 +192,16 @@ public class EC2SystemInitiator {
 			scp.put(new File("resources/.bash_profile").getAbsolutePath(), "",
 					true);
 
-			SessionChannelClient bash1 = ssh1.openSessionChannel();
-			bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			bash1.executeCommand(". .bash_profile >> profile.log");
-			bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			bash1.close();
+			connectToPseudoTerminal(ssh1, ". .bash_profile >> profile.log");
+
+			// connectToPseudoTerminal
+			/*
+			 * SessionChannelClient bash1 = ssh1.openSessionChannel();
+			 * bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+			 * bash1.executeCommand(". .bash_profile >> profile.log");
+			 * bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+			 * bash1.close();
+			 */
 
 			SessionChannelClient scb = ssh1.openSessionChannel();
 			scb.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -296,10 +301,15 @@ public class EC2SystemInitiator {
 		ssh2.disconnect();
 	}
 
-	private void connectToPseudoTerminal(String username,
-			PublicKeyAuthenticationClient authenticationClient, String command)
+	private void connectToPseudoTerminal(SshClient ssh1, String command)
 			throws IOException, EC2Exception, InvalidStateException,
 			InterruptedException {
+
+		SessionChannelClient bash1 = ssh1.openSessionChannel();
+		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
+		bash1.executeCommand(". .bash_profile >> profile.log");
+		bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+		bash1.close();
 
 	}
 
