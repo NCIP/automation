@@ -88,8 +88,8 @@ public class EC2SystemInitiator {
 
 		if (sshRoot.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 
-			putFiles(new File("resources/init.sh").getAbsolutePath(), "");
-			putFiles(new File("resources/hosts").getAbsolutePath(), "/etc/");
+			createFile(new File("resources/init.sh").getAbsolutePath(), "");
+			createFile(new File("resources/hosts").getAbsolutePath(), "/etc/");
 
 			executeRemoteCommand("chmod 700 init.sh");
 			executeRemoteCommand("yum install sysutils");
@@ -281,7 +281,7 @@ public class EC2SystemInitiator {
 		return false;
 	}
 
-	private void putFiles(String path, String dir) throws IOException {
+	private void createFile(String path, String dir) throws IOException {
 		LOGGER.log(Level.INFO, "Writing to file with path: " + path);
 		ScpClient scp = sshRoot.openScpClient();
 		scp.put(new File(path).getAbsolutePath(), dir, true);
