@@ -90,7 +90,7 @@ public class EC2SystemInitiator {
 
 			putFiles(new File("resources/init.sh").getAbsolutePath(), "");
 			putFiles(new File("resources/hosts").getAbsolutePath(), "/etc/");
-			
+
 			executeSystemCommand("chmod 700 init.sh");
 			executeSystemCommand("yum install sysutils");
 			executeSystemCommand("dos2unix init.sh");
@@ -106,7 +106,7 @@ public class EC2SystemInitiator {
 						.getStderrInputStream());
 				LOGGER
 						.log(Level.WARNING,
-								"Failed to excute the init script with the following error ");
+								"Failed to execute the init script with the following error ");
 				for (Iterator iter = remoteOutput.iterator(); iter.hasNext();) {
 					LOGGER.log(Level.WARNING, (String) iter.next());
 				}
@@ -120,7 +120,7 @@ public class EC2SystemInitiator {
 			scc.close();
 
 		} else {
-			LOGGER.log(Level.WARNING, "Authetication Failed for root ");
+			LOGGER.log(Level.WARNING, "Authentication failed for root ");
 		}
 		sshRoot.disconnect();
 
@@ -136,10 +136,9 @@ public class EC2SystemInitiator {
 
 		if (ssh4.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 			ScpClient scp = ssh4.openScpClient();
-			scp.put(new File("resources/mysqld").getAbsolutePath(),
-					"/etc/init.d/", true);
-			scp.put(new File("resources/my.cnf").getAbsolutePath(), "/etc/",
-					true);
+			putFiles(new File("resources/mysqld").getAbsolutePath(),
+					"/etc/init.d/");
+			putFiles(new File("resources/my.cnf").getAbsolutePath(), "/etc/");
 
 			connectToPseudoTerminal(ssh4, "/etc/init.d/mysqld start");
 			connectToPseudoTerminal(ssh4, "mysqladmin -u root password mysql");
@@ -156,10 +155,9 @@ public class EC2SystemInitiator {
 
 			LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
 			ScpClient scp = ssh1.openScpClient();
-			scp.put(new File("resources/build-hudson.xml").getAbsolutePath(),
-					"", true);
-			scp.put(new File("resources/.bash_profile").getAbsolutePath(), "",
-					true);
+			putFiles(new File("resources/build-hudson.xml").getAbsolutePath(),
+					"");
+			putFiles(new File("resources/.bash_profile").getAbsolutePath(), "");
 
 			connectToPseudoTerminal(ssh1, ". .bash_profile >> profile.log");
 
@@ -170,15 +168,13 @@ public class EC2SystemInitiator {
 			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/cai2");
 			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/project");
 
-			scp.put(new File("resources/cai2/config.xml").getAbsolutePath(),
-					"~/hudson_data/jobs/cai2", true);
-			scp.put(new File("resources/project/config.xml").getAbsolutePath(),
-					"~/hudson_data/jobs/project", true);
-			scp
-					.put(
-							new File("resources/catalina.sh").getAbsolutePath(),
-							"/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin",
-							true);
+			putFiles(new File("resources/cai2/config.xml").getAbsolutePath(),
+					"~/hudson_data/jobs/cai2");
+			putFiles(
+					new File("resources/project/config.xml").getAbsolutePath(),
+					"~/hudson_data/jobs/project");
+			putFiles(new File("resources/catalina.sh").getAbsolutePath(),
+					"/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin");
 
 			connectToPseudoTerminal(
 					ssh1,
@@ -200,8 +196,8 @@ public class EC2SystemInitiator {
 
 		if (ssh3.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
 			ScpClient scp = ssh3.openScpClient();
-			scp.put(new File("resources/start-hudson.sh").getAbsolutePath(),
-					"", true);
+			putFiles(new File("resources/start-hudson.sh").getAbsolutePath(),
+					"");
 
 			SessionChannelClient session = ssh3.openSessionChannel();
 			session.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -285,7 +281,7 @@ public class EC2SystemInitiator {
 	private void putFiles(String path, String dir) throws IOException {
 		LOGGER.log(Level.INFO, "Writing to file with path: " + path);
 		ScpClient scp = sshRoot.openScpClient();
-		scp.put(new File(path).getAbsolutePath(), dir, true);
+		putFiles(new File(path).getAbsolutePath(), dir);
 	}
 
 	private void executeRemoteCommand(String username) {
