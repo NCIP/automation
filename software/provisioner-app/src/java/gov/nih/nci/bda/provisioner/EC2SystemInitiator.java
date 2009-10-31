@@ -125,20 +125,6 @@ public class EC2SystemInitiator {
 
 		connectToRemoteNode("root", authenticationClient, "reboot");
 
-		// Called by connectToRemoteNode instead
-		/*
-		 * SshClient ssh2 = new SshClient();
-		 * 
-		 * Thread.sleep(100000); ssh2.connect(hostName, new
-		 * IgnoreHostKeyVerification()); if
-		 * (ssh2.authenticate(authenticationClient) ==
-		 * AuthenticationProtocolState.COMPLETE) { SessionChannelClient reboot =
-		 * ssh2.openSessionChannel(); reboot.requestPseudoTerminal("ansi", 80,
-		 * 24, 0, 0, ""); reboot.executeCommand("reboot");
-		 * reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		 * reboot.close(); } ssh2.disconnect();
-		 */
-
 		SshClient ssh4 = new SshClient();
 
 		Thread.sleep(100000);
@@ -174,15 +160,6 @@ public class EC2SystemInitiator {
 		PasswordAuthenticationClient pwd = connectToHudsonUser(ssh1,
 				"hudsonuser", "password");
 
-		/*
-		 * SshClient ssh1 = new SshClient(); Thread.sleep(100000);
-		 * ssh1.connect(hostName, new IgnoreHostKeyVerification());
-		 * 
-		 * PasswordAuthenticationClient pwd = new
-		 * PasswordAuthenticationClient(); pwd.setUsername("hudsonuser");
-		 * pwd.setPassword("password");
-		 */
-
 		if (ssh1.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
 
 			LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
@@ -194,44 +171,12 @@ public class EC2SystemInitiator {
 
 			connectToPseudoTerminal(ssh1, ". .bash_profile >> profile.log");
 
-			// connectToPseudoTerminal
-			/*
-			 * SessionChannelClient bash1 = ssh1.openSessionChannel();
-			 * bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			 * bash1.executeCommand(". .bash_profile >> profile.log");
-			 * bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			 * bash1.close();
-			 */
-
-			SessionChannelClient scb = ssh1.openSessionChannel();
-			scb.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			scb.executeCommand("ant -f build-hudson.xml >> build.log");
-			scb.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			scb.close();
-
-			SessionChannelClient sessionObject1 = ssh1.openSessionChannel();
-			sessionObject1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			sessionObject1.executeCommand("mkdir ~/hudson_data");
-			sessionObject1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			sessionObject1.close();
-
-			SessionChannelClient sessionObject2 = ssh1.openSessionChannel();
-			sessionObject2.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			sessionObject2.executeCommand("mkdir ~/hudson_data/jobs");
-			sessionObject2.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			sessionObject2.close();
-
-			SessionChannelClient sessionObject3 = ssh1.openSessionChannel();
-			sessionObject3.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			sessionObject3.executeCommand("mkdir ~/hudson_data/jobs/cai2");
-			sessionObject3.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			sessionObject3.close();
-
-			SessionChannelClient sessionObject4 = ssh1.openSessionChannel();
-			sessionObject4.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			sessionObject4.executeCommand("mkdir ~/hudson_data/jobs/project");
-			sessionObject4.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			sessionObject4.close();
+			connectToPseudoTerminal(ssh1,
+					"ant -f build-hudson.xml >> build.log");
+			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data");
+			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs");
+			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/cai2");
+			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/project");
 
 			scp.put(new File("resources/cai2/config.xml").getAbsolutePath(),
 					"~/hudson_data/jobs/cai2", true);
@@ -242,16 +187,11 @@ public class EC2SystemInitiator {
 							new File("resources/catalina.sh").getAbsolutePath(),
 							"/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin",
 							true);
-			// scp.put(new
-			// File("resources/hudson.scm.SubversionSCM.xml").getAbsolutePath(),
-			// "~/hudson_data", true);
 
-			SessionChannelClient sessionObject5 = ssh1.openSessionChannel();
-			sessionObject5.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			sessionObject5
-					.executeCommand("dos2unix /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/catalina.sh");
-			sessionObject5.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			sessionObject5.close();
+			connectToPseudoTerminal(
+					ssh1,
+					"dos2unix /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/catalina.sh");
+
 		} else {
 			LOGGER.log(Level.WARNING, "Authetication Failed for hudsonuser");
 		}
@@ -280,6 +220,7 @@ public class EC2SystemInitiator {
 			session.close();
 		}
 		ssh3.disconnect();
+		sshHudson.disconnect();
 
 	}
 
@@ -307,7 +248,7 @@ public class EC2SystemInitiator {
 
 		SessionChannelClient bash1 = ssh1.openSessionChannel();
 		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		bash1.executeCommand(". .bash_profile >> profile.log");
+		bash1.executeCommand(command);
 		bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 		bash1.close();
 
@@ -374,68 +315,6 @@ public class EC2SystemInitiator {
 		int exitStatus = sc.getExitCode().intValue();
 		sc.close();
 		return exitStatus;
-	}
-
-	private int executeSystemHudsonCommand(String command) throws IOException,
-			EC2Exception, InvalidStateException, InterruptedException {
-		LOGGER.log(Level.INFO, "Executing System command using " + command);
-		SessionChannelClient sc = sshHudson.openSessionChannel();
-		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sc.executeCommand(command);
-		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		int exitStatus = sc.getExitCode().intValue();
-		sc.close();
-		return exitStatus;
-	}
-
-	private void executeHudsonCommands(String command) throws IOException,
-			EC2Exception, InvalidStateException, InterruptedException {
-
-		Thread.sleep(100000);
-		sshHudson.connect(hostName, new IgnoreHostKeyVerification());
-
-		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
-		pwd.setUsername("hudsonuser");
-		pwd.setPassword("password");
-
-		if (sshHudson.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
-
-			LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
-			ScpClient scp = sshHudson.openScpClient();
-			scp.put(new File("resources/build-hudson.xml").getAbsolutePath(),
-					"", true);
-			scp.put(new File("resources/.bash_profile").getAbsolutePath(), "",
-					true);
-
-			executeSystemHudsonCommand(". .bash_profile >> profile.log");
-			executeSystemHudsonCommand("ant -f build-hudson.xml >> build.log");
-			executeSystemHudsonCommand("mkdir ~/hudson_data");
-			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs");
-			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs/cai2");
-			executeSystemHudsonCommand("mkdir ~/hudson_data/jobs/project");
-
-			scp.put(new File("resources/cai2/config.xml").getAbsolutePath(),
-					"~/hudson_data/jobs/cai2", true);
-			scp.put(new File("resources/project/config.xml").getAbsolutePath(),
-					"~/hudson_data/jobs/project", true);
-			scp
-					.put(
-							new File("resources/catalina.sh").getAbsolutePath(),
-							"/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin",
-							true);
-
-			SessionChannelClient sessionObject5 = sshHudson
-					.openSessionChannel();
-			sessionObject5.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			sessionObject5
-					.executeCommand("dos2unix /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/catalina.sh");
-			sessionObject5.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			sessionObject5.close();
-		} else {
-			LOGGER.log(Level.WARNING, "Authetication Failed for hudsonuser");
-		}
-
-		sshHudson.disconnect();
 	}
 
 }
