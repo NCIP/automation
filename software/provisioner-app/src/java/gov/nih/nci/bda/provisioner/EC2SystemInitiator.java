@@ -140,17 +140,8 @@ public class EC2SystemInitiator {
 			scp.put(new File("resources/my.cnf").getAbsolutePath(), "/etc/",
 					true);
 
-			SessionChannelClient startMysql = ssh4.openSessionChannel();
-			startMysql.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			startMysql.executeCommand("/etc/init.d/mysqld start");
-			startMysql.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			startMysql.close();
-
-			SessionChannelClient setRootMysql = ssh4.openSessionChannel();
-			setRootMysql.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			setRootMysql.executeCommand("mysqladmin -u root password mysql");
-			setRootMysql.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			setRootMysql.close();
+			connectToPseudoTerminal(ssh4, "/etc/init.d/mysqld start");
+			connectToPseudoTerminal(ssh4, "mysqladmin -u root password mysql");
 
 		}
 		ssh4.disconnect();
@@ -221,6 +212,7 @@ public class EC2SystemInitiator {
 		}
 		ssh3.disconnect();
 		sshHudson.disconnect();
+		sshRoot.disconnect();
 
 	}
 
