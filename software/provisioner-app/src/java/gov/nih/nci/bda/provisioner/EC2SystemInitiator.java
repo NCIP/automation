@@ -90,11 +90,10 @@ public class EC2SystemInitiator {
 
 			putFiles(new File("resources/init.sh").getAbsolutePath(), "");
 			putFiles(new File("resources/hosts").getAbsolutePath(), "/etc/");
-			
-			executeSystemCommand("chmod 700 init.sh");
-			executeSystemCommand("yum install sysutils");
-			executeSystemCommand("dos2unix init.sh");
-			executeSystemCommand("sh init.sh");
+
+			executeRemoteCommand("chmod 700 init.sh");
+			executeRemoteCommand("yum install sysutils");
+			executeRemoteCommand("dos2unix init.sh");
 
 			SessionChannelClient scc = sshRoot.openSessionChannel();
 			scc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -288,15 +287,11 @@ public class EC2SystemInitiator {
 		scp.put(new File(path).getAbsolutePath(), dir, true);
 	}
 
-	private void executeRemoteCommand(String username) {
-
-	}
-
 	private void closeConnection(String username) {
 
 	}
 
-	private int executeSystemCommand(String command) throws IOException,
+	private int executeRemoteCommand(String command) throws IOException,
 			EC2Exception, InvalidStateException, InterruptedException {
 		LOGGER.log(Level.INFO, "Executing System command using " + command);
 		SessionChannelClient sc = sshRoot.openSessionChannel();
