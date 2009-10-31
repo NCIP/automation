@@ -123,7 +123,7 @@ public class EC2SystemInitiator {
 		}
 		sshRoot.disconnect();
 
-		connectToRemoteNode("root", authenticationClient);
+		connectToRemoteNode("root", authenticationClient, "reboot");
 
 		// Called by connectToRemoteNode instead
 		/*
@@ -170,12 +170,18 @@ public class EC2SystemInitiator {
 		ssh4.disconnect();
 
 		SshClient ssh1 = new SshClient();
-		Thread.sleep(100000);
-		ssh1.connect(hostName, new IgnoreHostKeyVerification());
 
-		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
-		pwd.setUsername("hudsonuser");
-		pwd.setPassword("password");
+		PasswordAuthenticationClient pwd = connectToHudsonUser(ssh1,
+				"hudsonuser", "password");
+
+		/*
+		 * SshClient ssh1 = new SshClient(); Thread.sleep(100000);
+		 * ssh1.connect(hostName, new IgnoreHostKeyVerification());
+		 * 
+		 * PasswordAuthenticationClient pwd = new
+		 * PasswordAuthenticationClient(); pwd.setUsername("hudsonuser");
+		 * pwd.setPassword("password");
+		 */
 
 		if (ssh1.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
 
@@ -273,7 +279,7 @@ public class EC2SystemInitiator {
 	}
 
 	private void connectToRemoteNode(String username,
-			PublicKeyAuthenticationClient authenticationClient)
+			PublicKeyAuthenticationClient authenticationClient, String command)
 			throws IOException, EC2Exception, InvalidStateException,
 			InterruptedException {
 		SshClient ssh2 = new SshClient();
@@ -283,11 +289,32 @@ public class EC2SystemInitiator {
 		if (ssh2.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 			SessionChannelClient reboot = ssh2.openSessionChannel();
 			reboot.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			reboot.executeCommand("reboot");
+			reboot.executeCommand(command);
 			reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
 			reboot.close();
 		}
 		ssh2.disconnect();
+	}
+
+	private void connectToPseudoTerminal(String username,
+			PublicKeyAuthenticationClient authenticationClient, String command)
+			throws IOException, EC2Exception, InvalidStateException,
+			InterruptedException {
+
+	}
+
+	private PasswordAuthenticationClient connectToHudsonUser(SshClient ssh1,
+			String username, String password) throws IOException, EC2Exception,
+			InvalidStateException, InterruptedException {
+
+		Thread.sleep(100000);
+		ssh1.connect(hostName, new IgnoreHostKeyVerification());
+
+		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
+		pwd.setUsername(username);
+		pwd.setPassword(password);
+
+		return pwd;
 	}
 
 	private PublicKeyAuthenticationClient connectToRemoteHost(String username)
