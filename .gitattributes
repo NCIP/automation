@@ -3040,7 +3040,9 @@ software/bda-calculator/src/java/gov/nih/nci/bda/calculator/ReportBean.java -tex
 software/bda-calculator/src/java/gov/nih/nci/bda/calculator/util/Calculator.java -text
 software/bda-calculator/src/java/gov/nih/nci/bda/calculator/util/ConfigurationHelper.java -text
 software/bda-calculator/src/java/project_config.xml -text
+software/bda-calculator/taskdefs.xml -text
 software/bda-calculator/test/unit/CalculatorControllerTests.groovy -text
+software/bda-calculator/utils.xml -text
 software/bda-calculator/web-app/WEB-INF/applicationContext.xml -text
 software/bda-calculator/web-app/WEB-INF/sitemesh.xml -text
 software/bda-calculator/web-app/WEB-INF/tld/c.tld -text
