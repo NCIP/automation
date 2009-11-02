@@ -196,13 +196,20 @@ public class EC2SystemInitiator {
 			scp.put(new File("resources/start-hudson.sh").getAbsolutePath(),
 					"", true);
 
-			SessionChannelClient session = ssh3.openSessionChannel();
-			session.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			session
-					.executeCommand(". /mnt/hudsonuser/.bash_profile;env | sort>> start.log;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh 2>&1 >> start.log&");
-			// session.executeCommand("ant -f build-hudson.xml start-hudson >> start.log");
-			session.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			session.close();
+			connectToPseudoTerminal(
+					ssh3,
+					". /mnt/hudsonuser/.bash_profile;env | sort>> start.log;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh 2>&1 >> start.log&");
+
+			/*
+			 * SessionChannelClient session = ssh3.openSessionChannel();
+			 * session.requestPseudoTerminal("ansi", 80, 24, 0, 0, ""); session
+			 * .executeCommand(
+			 * ". /mnt/hudsonuser/.bash_profile;env | sort>> start.log;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh 2>&1 >> start.log&"
+			 * ); //session.executeCommand(
+			 * "ant -f build-hudson.xml start-hudson >> start.log");
+			 * session.getState().waitForState(ChannelState.CHANNEL_CLOSED);
+			 * session.close();
+			 */
 		}
 		ssh3.disconnect();
 		sshHudson.disconnect();
