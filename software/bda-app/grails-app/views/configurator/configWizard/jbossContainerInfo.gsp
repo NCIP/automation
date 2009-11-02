@@ -23,12 +23,11 @@
 			<gui:toolTip text="Select yes if you want to Override this plugin. You will be prompted for info about what target to run as an alternate.">
 				<br>Override<g:select name="jboss1Override" from="${['yes', 'no']}" value="no" />
                         </gui:toolTip>
-			<gui:toolTip text="Select yes if you want to run a target before you execute this plugin."/>
+			<gui:toolTip text="Select yes if you want to run a target before you execute this plugin.">
 				<br>Pre-Execution Target<g:select name="jboss1Pre" from="${['yes', 'no']}" value="no" />
                         </gui:toolTip>
-			<gui:toolTip text="Select yes if you want to run a target after you execute this plugin."/>
+			<gui:toolTip text="Select yes if you want to run a target after you execute this plugin.">
 				<br>Post-Execution Target<g:select name="jboss1Post" from="${['yes', 'no']}" value="no" />
-			<!--
                         </gui:toolTip>
 			<gui:expandablePanel title="JBoss Reader Override" bounce="false" expanded="false">
 				<table>
@@ -135,7 +134,6 @@
 				</tr>
 				</table>
 			</gui:expandablePanel>
-			-->
 		</gui:expandablePanel>
 		<form:buttonBar>
 			<g:submitButton name="previous" value="Previous"></g:submitButton>
