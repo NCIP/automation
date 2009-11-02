@@ -189,16 +189,10 @@ public class EC2SystemInitiator {
 
 		ssh1.disconnect();
 
-		SshClient ssh3 = new SshClient();
-
-		Thread.sleep(100000);
-		ssh3.connect(hostName, new IgnoreHostKeyVerification());
-
-		// Authenticate
-		// Open up the private key file
+		SshClient ssh3 = createSshConnection();
 
 		if (ssh3.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
-			ScpClient scp = ssh3.openScpClient();
+			ScpClient scp = createScpConnection(ssh3);
 			scp.put(new File("resources/start-hudson.sh").getAbsolutePath(),
 					"", true);
 
@@ -285,6 +279,20 @@ public class EC2SystemInitiator {
 		LOGGER.log(Level.INFO, "Writing to file with path: " + path);
 		ScpClient scp = sshRoot.openScpClient();
 		scp.put(new File(path).getAbsolutePath(), dir, true);
+	}
+
+	private SshClient createSshConnection() throws InterruptedException,
+			IOException {
+		SshClient ssh = new SshClient();
+		Thread.sleep(100000);
+		ssh.connect(hostName, new IgnoreHostKeyVerification());
+		return ssh;
+	}
+
+	private ScpClient createScpConnection(SshClient ssh)
+			throws InterruptedException, IOException {
+		ScpClient scp = ssh.openScpClient();
+		return scp;
 	}
 
 	private void closeConnection(String username) {
