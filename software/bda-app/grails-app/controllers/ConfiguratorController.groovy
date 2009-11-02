@@ -18,18 +18,26 @@ class ConfiguratorController {
 		 	on("next")
 			{
 				//collect project info
-			}.to("archInfo")
+			}.to("buildDetails")
 			on("cancel").to("main")
 		}
-	
-		archInfo
+		buildDetails
+		{
+		 	on("next")
+			{
+				//collect sub-project info
+			}.to("distDeployDetails")
+			on("cancel").to("main")
+			on("previous").to("projectInfo")
+		}
+		distDeployDetails
 		{
 		 	on("next")
 			{
 				//collect sub-project info
 			}.to("jbossContainerInfo")
 			on("cancel").to("main")
-			on("previous").to("projectInfo")
+			on("previous").to("buildDetails")
 		}
 		jbossContainerInfo
 		{
