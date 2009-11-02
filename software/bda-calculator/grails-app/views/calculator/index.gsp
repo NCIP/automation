@@ -29,32 +29,84 @@
 						<g:renderErrors bean="${instance}" as="list" />
 					</div>
 				</g:hasErrors>
-				<form:textField label="Average Automated Code Coverage Persentage "  name="averageAutomatedCodeCoveragePersentage" title="TextField" readonly="false" value="${params.portList}">
-				  Enter the Average Automated Code Coverage Persentage
-				</form:textField>		
-				<form:textField label="Number Of Projects In Portfolio "  name="numberOfProjectsInPortfolio" title="TextField" readonly="false" value="${params.projectSCMUrl}">
-				  Enter the Number Of Projects In Portfolio
-				</form:textField>
-				<form:textField label="Average Number Of Deployments Per Project Per Year "  name="averageNumberOfDeploymentsPerProjectPerYear" title="TextField" readonly="false" value="${params.projectBuildTargets}">
-				  Enter the Average Number Of Deployments Per Project Per Year
-				</form:textField>
-				<form:textField label="Average Size Of Projects "  name="averageSizeOfProjects" title="TextField" readonly="false" value="${params.projectBuildFile}">
-				  Enter the Average Size Of Projects
-				</form:textField>				
-				<form:textField label="Number Of Target Environments Per Project "  name="numberOfTargetEnvironmentsPerProject" title="TextField" readonly="false" value="${params.projectBuildOptions}">
-				  Enter the Number Of Target Environments Per Project
-				</form:textField>				
-				<form:textField label="Average Technical Architecture Complexity "  name="averageTechnicalArchitectureComplexity" title="TextField" readonly="false" value="${params.projectBuildOptions}">
-				  Average Technical Architecture Complexity
-				</form:textField>				
-				<form:textField label="Average Engineer Hourly Rate "  name="averageEngineerHourlyRate" title="TextField" readonly="false" value="${params.projectBuildOptions}">
-				  Average Engineer Hourly Rate
-				</form:textField>				
+				<table>
+					<tbody>	
+						<tr>
+							<td>
+								<label for="averageAutomatedCodeCoveragePersentage">Average Automated Code Coverage Percentage </label>
+							</td>
+							<td>
+								<g:textField name="averageAutomatedCodeCoveragePersentage" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="numberOfProjectsInPortfolio">Number Of Projects In Portfolio </label>
+							</td>
+							<td>
+								<g:textField name="numberOfProjectsInPortfolio" />
+							</td>
+						</tr>					
+						<tr>
+							<td>
+								<label for="numberOfProjectsInPortfolio">Average Number Of Deployments Per Project Per Year </label>
+							</td>
+							<td>
+								<g:textField name="averageNumberOfDeploymentsPerProjectPerYear" />
+							</td>
+						</tr>
 
+					<tr>
+						<td>
+							<label>Average Size Of Projects</label>&nbsp;
+						</td>
+						<td>							
+							<select name="averageSizeOfProjects" >
+								<option value="null">Select Application Size</option>
+								<option value="40">Small (0-25,000 SLOC)</option>
+								<option value="80">Medium (25K-100K SLOC)</option>
+								<option value="120">Large ( $100K &gt; SLOC)</option>					
+							</select> 
+						</td>						
+					</tr>	
 
+					<tr>
+						<td>
+							<label>Number Of Target Environments Per Project</label>&nbsp;
+						</td>
+						<td>							
+							<g:textField name="numberOfTargetEnvironmentsPerProject" />
+						</td>						
+					</tr>	
 				
+					<tr>
+						<td>
+							<label>Average Technical Architecture Complexity</label>&nbsp;
+						</td>
+						<td>							
+							<select name="averageTechnicalArchitectureComplexity" >
+								<option value="null">Technical Architecture Complexity</option>
+								<option value="1">Low (Standard Tech Stack, Single Containers)</option>
+								<option value="2">Medium (Slight Deviations to Tech Stack, More than one container)</option>
+								<option value="3">High (Several tech stack deviations and/or multiple containers)</option>					
+							</select> 
+						</td>						
+					</tr>	
+
+					<tr>
+						<td>
+							<label>Average Engineer Hourly Rate</label>&nbsp;
+						</td>
+						<td>							
+							<g:textField name="averageEngineerHourlyRate" />
+						</td>						
+					</tr>
+
+			
+					</tbody>	
+				</table>
 				<div class="buttons">
-					<g:actionSubmit value="calculate" action="calculate" />
+					<g:actionSubmit value="Calculate" action="calculate" />
 				</div>
 	    		</g:form>
 			

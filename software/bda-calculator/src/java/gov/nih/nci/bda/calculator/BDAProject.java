@@ -57,7 +57,6 @@ public class BDAProject extends BaseProject {
 		reportBean.setCostPerProject(calculateCostPerProject(projectBO));
 		reportBean.setNumberOfProjectsInPortfolio(projectBO.getNumberOfProjectsInPortfolio());
 		reportBean.setOrganizationalCost(calculateOrganizationalCost(projectBO));
-
 		return reportBean;
 	}
 

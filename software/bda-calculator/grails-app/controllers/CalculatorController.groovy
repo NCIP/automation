@@ -1,3 +1,5 @@
+import gov.nih.nci.bda.calculator.validator.CreateInstanceCommand;
+
 class CalculatorController {
 	gov.nih.nci.bda.calculator.ProjectBO projectBO = new gov.nih.nci.bda.calculator.ProjectBO()
 	gov.nih.nci.bda.calculator.ReportBean reportBeanBDA = new gov.nih.nci.bda.calculator.ReportBean()
@@ -6,17 +8,22 @@ class CalculatorController {
 	def index = { }
     
 	def calculate = {  	
-			populateProjectBO(params);
-			try {
-			  gov.nih.nci.bda.calculator.Project bdaProject = new gov.nih.nci.bda.calculator.BDAProject("cbiit");
-			  gov.nih.nci.bda.calculator.Project nonBdaProject = new gov.nih.nci.bda.calculator.NonBdaProject("cbiit");
-			  reportBeanBDA = bdaProject.calculateBudget(projectBO);
-			  reportBeanNonBDA = nonBdaProject.calculateBudget(projectBO);
-			} catch (Exception e) {
-			e.printStackTrace();
+			CreateInstanceCommand cmd ->
+			if(!cmd.hasErrors()) {
+				populateProjectBO(params);
+				try {
+				  gov.nih.nci.bda.calculator.Project bdaProject = new gov.nih.nci.bda.calculator.BDAProject("cbiit");
+				  gov.nih.nci.bda.calculator.Project nonBdaProject = new gov.nih.nci.bda.calculator.NonBdaProject("cbiit");
+				  reportBeanBDA = bdaProject.calculateBudget(projectBO);
+				  reportBeanNonBDA = nonBdaProject.calculateBudget(projectBO);
+				} catch (Exception e) {
+				e.printStackTrace();
+				}
+				render(view: 'report', model: [ reportBeanBDA: reportBeanBDA,reportBeanNonBDA: reportBeanNonBDA ])
 			}
-			render(view: 'report', model: [ reportBeanBDA: reportBeanBDA,reportBeanNonBDA: reportBeanNonBDA ])
-
+			else{
+				render(view: 'index', model: [ instance: cmd ])
+			}
 	}
 
 	def populateProjectBO(params) {

@@ -18,13 +18,10 @@
 		</style>
 	</head>
 	<body>
-	<g:javascript>
-		function refreshPage() 
-		{
-			alert("111");
-		}
-	</g:javascript>
 	<legend><b>BDA Calculator</b></legend>
+	<%
+		 int totalSaving = reportBeanNonBDA.getOrganizationalCost() - reportBeanBDA.getOrganizationalCost()
+	%>
 		<div class="body">
 			<g:form >
 				<div class="list">		
@@ -115,8 +112,19 @@
 								</td>								
 								<td>$${reportBeanNonBDA.getOrganizationalCost()}
 								</td>
-							</tr>								
+							</tr>						
 						</g:if>	
+					</tbody>
+				</table>
+				<table>
+					<tbody>
+						<tr class="odd">
+							<td>
+							<label><b>Total Saving(In Dollars)</b></label>
+							</td>
+							<td><b>$${totalSaving}</b>
+							</td>								
+						</tr>
 					</tbody>
 				</table>
 				</div>
