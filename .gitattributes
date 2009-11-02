@@ -2998,6 +2998,7 @@ software/bda-calculator/bda-calculator-test.launch -text
 software/bda-calculator/bda-calculator.launch -text
 software/bda-calculator/bda-calculator.tmproj -text
 software/bda-calculator/build.xml -text
+software/bda-calculator/deploy.xml -text
 software/bda-calculator/grails-app/conf/BootStrap.groovy -text
 software/bda-calculator/grails-app/conf/Config.groovy -text
 software/bda-calculator/grails-app/conf/DataSource.groovy -text
