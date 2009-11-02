@@ -124,14 +124,7 @@ public class EC2SystemInitiator {
 		sshRoot.disconnect();
 
 		connectToRemoteNode("root", authenticationClient, "reboot");
-
-		SshClient ssh4 = new SshClient();
-
-		Thread.sleep(100000);
-		ssh4.connect(hostName, new IgnoreHostKeyVerification());
-
-		// Authenticate
-		// Open up the private key file
+		SshClient ssh4 = createSshConnection();
 
 		if (ssh4.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 			ScpClient scp = ssh4.openScpClient();
@@ -200,16 +193,6 @@ public class EC2SystemInitiator {
 					ssh3,
 					". /mnt/hudsonuser/.bash_profile;env | sort>> start.log;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh 2>&1 >> start.log&");
 
-			/*
-			 * SessionChannelClient session = ssh3.openSessionChannel();
-			 * session.requestPseudoTerminal("ansi", 80, 24, 0, 0, ""); session
-			 * .executeCommand(
-			 * ". /mnt/hudsonuser/.bash_profile;env | sort>> start.log;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh 2>&1 >> start.log&"
-			 * ); //session.executeCommand(
-			 * "ant -f build-hudson.xml start-hudson >> start.log");
-			 * session.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			 * session.close();
-			 */
 		}
 		ssh3.disconnect();
 		sshHudson.disconnect();
@@ -221,10 +204,8 @@ public class EC2SystemInitiator {
 			PublicKeyAuthenticationClient authenticationClient, String command)
 			throws IOException, EC2Exception, InvalidStateException,
 			InterruptedException {
-		SshClient ssh2 = new SshClient();
 
-		Thread.sleep(100000);
-		ssh2.connect(hostName, new IgnoreHostKeyVerification());
+		SshClient ssh2 = createSshConnection();
 		if (ssh2.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
 			SessionChannelClient reboot = ssh2.openSessionChannel();
 			reboot.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
@@ -276,10 +257,6 @@ public class EC2SystemInitiator {
 		authenticationClient.setKey(pkFile.toPrivateKey(null));
 		LOGGER.log(Level.INFO, "KEY FILE " + authenticationClient.getKeyfile());
 		return authenticationClient;
-	}
-
-	private boolean isUserConnected(String username) {
-		return false;
 	}
 
 	private void createFile(String path, String dir) throws IOException {
