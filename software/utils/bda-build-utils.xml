@@ -8738,23 +8738,39 @@ $HeadURL$
 		<sequential>
 			<var name="@{override.properties.string.property.name}" value=""/>
 			<echo message="override.properties=@{override.properties}"/>
-			<for list="@{override.properties}" param="prop.val" delimiter=",">
-				<sequential>
-					<var name="prop" unset="true"/>
-					<propertyregex property="prop"
-						input="@{prop.val}"
-						regexp="^(.*)=(.*)"
-						select="\1"
-						/>
-					<var name="val" unset="true"/>
-					<propertyregex property="val"
-						input="@{prop.val}"
-						regexp="^(.*)=(.*)"
-						select="\2"
-						/>
-					<var name="@{override.properties.string.property.name}" value="${@{override.properties.string.property.name}} -D${prop}=&quot;${val}&quot;"/>
-				</sequential>
-			</for>
+			<var name="override.props.set" unset="true"/>
+			<propertyregex property="override.props.set"
+				input="@{override.properties}"
+				regexp="\${override.properties}"
+				select="true"
+				/>
+			<if>
+				<not>
+					<isset property="override.props.set"/>
+				</not>
+				<then>
+					<for list="@{override.properties}" param="prop.val" delimiter=",">
+						<sequential>
+							<var name="prop" unset="true"/>
+							<propertyregex property="prop"
+								input="@{prop.val}"
+								regexp="^(.*)=(.*)"
+								select="\1"
+								/>
+							<var name="val" unset="true"/>
+							<propertyregex property="val"
+								input="@{prop.val}"
+								regexp="^(.*)=(.*)"
+								select="\2"
+								/>
+							<var name="@{override.properties.string.property.name}" value="${@{override.properties.string.property.name}} -D${prop}=&quot;${val}&quot;"/>
+						</sequential>
+					</for>
+				</then>
+				<else>
+					<echo message="Override Properties not set, setting command line option to plank."/>
+				</else>
+			</if>
 			<echo message="override.properties.string=${@{override.properties.string.property.name}}"/>
 		</sequential>
 	</macrodef>
