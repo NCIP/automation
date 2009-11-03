@@ -36,7 +36,19 @@
 								<label for="averageAutomatedCodeCoveragePersentage">Average Automated Code Coverage Percentage </label>
 							</td>
 							<td>
-								<g:textField name="averageAutomatedCodeCoveragePersentage" />
+								<select name="averageAutomatedCodeCoveragePersentage" >
+									<option value="null">Select Code Coverage Persentage</option>
+									<option value="10">10%</option>
+									<option value="20">20%</option>
+									<option value="30">30%</option>
+									<option value="40">40%</option>
+									<option value="50">50%</option>
+									<option value="60">60%</option>
+									<option value="70">70%</option>
+									<option value="80">80%</option>
+									<option value="90">90%</option>
+									<option value="100">100%</option>
+								</select> 
 							</td>
 						</tr>
 						<tr>
@@ -95,7 +107,7 @@
 
 					<tr>
 						<td>
-							<label>Average Engineer Hourly Rate</label>&nbsp;
+							<label>Average Engineer Hourly Rate(In Dollars)</label>&nbsp;
 						</td>
 						<td>							
 							<g:textField name="averageEngineerHourlyRate" />

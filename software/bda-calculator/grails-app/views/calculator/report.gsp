@@ -19,8 +19,17 @@
 	</head>
 	<body>
 	<legend><b>BDA Calculator</b></legend>
+	<%! import java.text.NumberFormat %>
 	<%
-		 int totalSaving = reportBeanNonBDA.getOrganizationalCost() - reportBeanBDA.getOrganizationalCost()
+		NumberFormat nf = NumberFormat.getCurrencyInstance();    		
+		int totalSaving = reportBeanNonBDA.getOrganizationalCost() - reportBeanBDA.getOrganizationalCost()
+		String totalSavingDollars = nf.format(totalSaving);
+		String nonBDAOrgCosts = nf.format(reportBeanNonBDA.getOrganizationalCost());
+		String bdaOrgCosts = nf.format(reportBeanBDA.getOrganizationalCost());
+		String nonBDACostPerProject = nf.format(reportBeanNonBDA.getCostPerProject());
+		String bdaCostPerProject = nf.format(reportBeanBDA.getCostPerProject());
+		String nonBDAAvgPricePerHour = nf.format(reportBeanNonBDA.getAveragePricePerHour());
+		String bdaAvgPricePerHour = nf.format(reportBeanBDA.getAveragePricePerHour());		
 	%>
 		<div class="body">
 			<g:form >
@@ -81,18 +90,18 @@
 								<td>
 								<label><b>Average price per hour(In Dollars)</b></label>
 								</td>
-								<td>$${reportBeanBDA.getAveragePricePerHour()}
+								<td>${bdaAvgPricePerHour}
 								</td>								
-								<td>$${reportBeanNonBDA.getAveragePricePerHour()}
+								<td>${nonBDAAvgPricePerHour}
 								</td>
 							</tr>	
 							<tr class="odd">
 								<td>
 								<label><b>Cost per project(In Dollars)</b></label>
 								</td>
-								<td>$${reportBeanBDA.getCostPerProject()}
+								<td>${bdaCostPerProject}
 								</td>								
-								<td>$${reportBeanNonBDA.getCostPerProject()}
+								<td>${nonBDACostPerProject}
 								</td>
 							</tr>
 							<tr class="even">
@@ -108,9 +117,9 @@
 								<td>
 								<label><b>Organizational Cost(In Dollars)</b></label>
 								</td>
-								<td>$${reportBeanBDA.getOrganizationalCost()}
+								<td>${bdaOrgCosts}
 								</td>								
-								<td>$${reportBeanNonBDA.getOrganizationalCost()}
+								<td>${nonBDAOrgCosts}									
 								</td>
 							</tr>						
 						</g:if>	
@@ -122,7 +131,7 @@
 							<td>
 							<label><b>Total Saving(In Dollars)</b></label>
 							</td>
-							<td><b>$${totalSaving}</b>
+							<td><b>${totalSavingDollars}</b>
 							</td>								
 						</tr>
 					</tbody>
