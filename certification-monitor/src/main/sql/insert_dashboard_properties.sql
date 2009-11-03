@@ -509,7 +509,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.project.url','https://ncisvn.nci.nih.gov/svn/freestylesearch/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.project.url','https://ncisvn.nci.nih.gov/svn/freestylesearch/trunk/freestylesearch');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.build.location','${cadsr-freestylesearch.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.install.location','working/installer');
