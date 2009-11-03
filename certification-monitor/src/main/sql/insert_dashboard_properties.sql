@@ -400,7 +400,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.i
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.project.url','http://gforge.nci.nih.gov/svnroot/tcga');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.project.url','https://ncisvn.nci.nih.gov/svn/tcgainformatics');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.master.build.location','${tcga.svn.local.checkout}/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.master.install.location','working/installer');
