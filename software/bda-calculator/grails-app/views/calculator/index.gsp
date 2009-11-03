@@ -77,7 +77,7 @@
 								<option value="null">Select Application Size</option>
 								<option value="40">Small (0-25,000 SLOC)</option>
 								<option value="80">Medium (25K-100K SLOC)</option>
-								<option value="120">Large ( $100K &gt; SLOC)</option>					
+								<option value="120">Large (&gt; 100K SLOC)</option>					
 							</select> 
 						</td>						
 					</tr>	
