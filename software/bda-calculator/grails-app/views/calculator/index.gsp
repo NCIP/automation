@@ -37,7 +37,7 @@
 							</td>
 							<td>
 								<select name="averageAutomatedCodeCoveragePersentage" >
-									<option value="null">Select Code Coverage Persentage</option>
+									<option value="null">Select Code Coverage Percentage</option>
 									<option value="10">10%</option>
 									<option value="20">20%</option>
 									<option value="30">30%</option>
