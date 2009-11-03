@@ -190,16 +190,12 @@ public class EC2SystemInitiator {
 			PublicKeyAuthenticationClient authenticationClient, String command)
 			throws IOException, EC2Exception, InvalidStateException,
 			InterruptedException {
-
-		SshClient ssh2 = createSshConnection();
-		if (ssh2.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
-			SessionChannelClient reboot = ssh2.openSessionChannel();
-			reboot.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-			reboot.executeCommand(command);
-			reboot.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-			reboot.close();
+		SshClient ssh = createSshConnection();
+		if (ssh.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
+			connectToPseudoTerminal(ssh, command);
 		}
-		ssh2.disconnect();
+
+		ssh.disconnect();
 	}
 
 	private void connectToPseudoTerminal(SshClient ssh1, String command)
