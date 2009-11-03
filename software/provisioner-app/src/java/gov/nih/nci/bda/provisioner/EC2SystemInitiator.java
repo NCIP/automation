@@ -33,34 +33,21 @@ import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.authentication.PublicKeyAuthenticationClient;
-import com.sshtools.j2ssh.connection.ChannelOutputStream;
 import com.sshtools.j2ssh.connection.ChannelState;
 import com.sshtools.j2ssh.session.SessionChannelClient;
-import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
 import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
-import com.sshtools.j2ssh.transport.publickey.SshPrivateKey;
 import com.sshtools.j2ssh.transport.publickey.SshPrivateKeyFile;
 import com.sshtools.j2ssh.util.InvalidStateException;
-import com.sshtools.j2ssh.forwarding.ForwardingIOChannel;
-import com.sshtools.j2ssh.io.IOStreamConnector; //import com.trilead.ssh2.Connection;
-//import com.trilead.ssh2.SCPClient;
-//import com.trilead.ssh2.Session;
 import com.xerox.amazonws.ec2.EC2Exception;
 
 import gov.nih.nci.bda.provisioner.util.PropertyHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 import org.apache.commons.io.IOUtils;
 
@@ -127,7 +114,7 @@ public class EC2SystemInitiator {
 		SshClient ssh4 = createSshConnection();
 
 		if (ssh4.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
-			ScpClient scp = ssh4.openScpClient();
+			ScpClient scp = createScpConnection(ssh4);
 			scp.put(new File("resources/mysqld").getAbsolutePath(),
 					"/etc/init.d/", true);
 			scp.put(new File("resources/my.cnf").getAbsolutePath(), "/etc/",
@@ -145,7 +132,6 @@ public class EC2SystemInitiator {
 				"hudsonuser", "password");
 
 		if (ssh1.authenticate(pwd) == AuthenticationProtocolState.COMPLETE) {
-
 			LOGGER.log(Level.INFO, "Authetication Successful for hudsonuser ");
 			ScpClient scp = ssh1.openScpClient();
 			scp.put(new File("resources/build-hudson.xml").getAbsolutePath(),
@@ -277,10 +263,6 @@ public class EC2SystemInitiator {
 			throws InterruptedException, IOException {
 		ScpClient scp = ssh.openScpClient();
 		return scp;
-	}
-
-	private void closeConnection(String username) {
-
 	}
 
 	private int executeRemoteCommand(String command) throws IOException,
