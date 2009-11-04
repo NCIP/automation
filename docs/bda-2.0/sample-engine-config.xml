@@ -207,29 +207,29 @@
 			<!-- properties for basedir, build.file.location and build target could be specified here-->
 		</plugin>
 
-
-
-		<!-- Verifies that all jboss props (properties.template) are set -->
-		<plugin name="jboss-verify-props" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+		<!-- Plugin groups allow us to present a group of plugins as one plugin to the UI.  Whatever they select for the plugin options will be passed to all plugins in the group. -->
+		<plugin-group name="jboss-pre-validation">
+			<!-- Verifies that all jboss props (properties.template) are set -->
+			<plugin name="jboss-verify-props" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 			<!-- properties for basedir, build.file.location and build target could be specified here-->
-		</plugin>
-		<!-- Verifies that specified version is supported by build and project-->
-		<plugin name="jboss-verify-version" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			</plugin>
+			<!-- Verifies that specified version is supported by build and project-->
+			<plugin name="jboss-verify-version" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+				<!-- properties for basedir, build.file.location and build target could be specified here-->
+			</plugin>
+			<!-- If ssl is enabled verify keystore -->
+			<plugin name="jboss-verify-keystore" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 			<!-- properties for basedir, build.file.location and build target could be specified here-->
-		</plugin>
-		<!-- If ssl is enabled verify keystore -->
-		<plugin name="jboss-verify-keystore" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			</plugin>
+			<!-- stop jboss  -->
+			<plugin name="jboss-stop" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 			<!-- properties for basedir, build.file.location and build target could be specified here-->
-		</plugin>
-		<!-- stop jboss  -->
-		<plugin name="jboss-stop" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			</plugin>
+			<!-- Verify ports not in use after stopping JBoss -->
+			<plugin name="jboss-verify-ports" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
 			<!-- properties for basedir, build.file.location and build target could be specified here-->
-		</plugin>
-		<!-- Verify ports not in use after stopping JBoss -->
-		<plugin name="jboss-verify-ports" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
-			<!-- properties for basedir, build.file.location and build target could be specified here-->
-		</plugin>
-
+			</plugin>
+		</plugin-group>
 
 		<!-- Verifies that all tomcat props (properties.template are set -->
 		<plugin name="tomcat-verify-props" version="" class="" prefix="" action="install" phase="pre-validation" container="tomcat" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
