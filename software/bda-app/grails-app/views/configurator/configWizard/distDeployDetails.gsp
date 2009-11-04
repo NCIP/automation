@@ -6,6 +6,7 @@
         <title>Build Details</title>
     </head>
     <body>
+    <g:form action="configWizard">
     <gui:tabView id="tabView">
     <gui:tab id='jbossContainers' label='JBoss Container Dist/Deploy Info' active="true">
 	<g:if test="${flash.message}">
@@ -13,7 +14,6 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="JBoss Prefix 1" expanded="true">
 			<gui:toolTip text="This is the Sub-Project that will be deploying to athis JBoss container.">
 				<br>Sub-Project Prefix &nbsp;<g:select name="jboss1SubProject" from="${['spPrefix1', 'spPrefix2']}" />
@@ -49,7 +49,6 @@
 			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
 		</form:buttonBar>
 		-->
-	</g:form>
     </gui:tab>
     <gui:tab id='TomcatContainers' label='Tomcat Container Dist/Deploy Info'>
 	<g:if test="${flash.message}">
@@ -57,7 +56,6 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="Tomcat Prefix 1" expanded="true">
 			<gui:toolTip text="This is the Sub-Project that will be deploying to athis Tomcat container.">
 				<br>Sub-Project Prefix &nbsp;<g:select name="tomcat1SubProject" from="${['spPrefix1', 'spPrefix2']}" />
@@ -93,7 +91,6 @@
 			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
 		</form:buttonBar>
 		-->
-	</g:form>
     </gui:tab>
     <gui:tab id='customContainers' label='Custom Container Dist/Deploy Info' >
 	<g:if test="${flash.message}">
@@ -101,7 +98,6 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="Custom Prefix 1" expanded="true">
 			<gui:toolTip text="This is the Sub-Project that will be deploying to athis Custom container.">
 				<br>Sub-Project Prefix &nbsp;<g:select name="custom1SubProject" from="${['spPrefix1', 'spPrefix2']}" />
@@ -137,7 +133,6 @@
 			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
 		</form:buttonBar>
 		-->
-	</g:form>
     </gui:tab>
     <gui:tab id='dbContainer' label='Database Container Dist/Deploy Info'>
 	<g:if test="${flash.message}">
@@ -145,7 +140,6 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="Database Prefix 1" expanded="true">
 			<gui:toolTip text="This is the Sub-Project that will be deploying to athis Database container.">
 				<br>Sub-Project Prefix &nbsp;<g:select name="db1SubProject" from="${['spPrefix1', 'spPrefix2']}" />
@@ -175,7 +169,6 @@
 			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
 		</form:buttonBar>
 		-->
-	</g:form>
     </gui:tab>
     <gui:tab id='generalContainer' label='General Container Dist/Deploy Info'>
 	<g:if test="${flash.message}">
@@ -183,7 +176,6 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="Distribution/Deploy Type" expanded="true">
 			<table>
 				<tr><td><em>Type</em></td><td><em>Description</em></td></tr>
@@ -209,13 +201,13 @@
 				<form:textField label="Install Optional Property List" name="installOptionalPropertyList"/>
 			</gui:toolTip>
 		</gui:expandablePanel>
+    </gui:tab>
+    </gui:tabView>
 		<form:buttonBar>
 			<g:submitButton name="previous" value="Previous"></g:submitButton>
 			<g:submitButton name="next" value="Next"></g:submitButton>
 			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
 		</form:buttonBar>
 	</g:form>
-    </gui:tab>
-    </gui:tabView>
     </body>
 </html>

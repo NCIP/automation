@@ -6,13 +6,12 @@
         <title>Project Info</title>
     </head>
     <body>
-    <formset>
+	<g:form action="configWizard">
 	<g:if test="${flash.message}">
 		<div class="errors">
 			${flash.message}
 		</div>
 	</g:if>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="Project Details" expanded="true">
 			<form:textField label="Project Name"  name="projectName" title="TextField" readonly="false" />
 			<form:textarea label="Project Description"  name="projectDesc" title="TextArea" readonly="false" />
@@ -83,6 +82,5 @@
 			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
 		</form:buttonBar>
 	</g:form>
-    </formset>
     </body>
 </html>

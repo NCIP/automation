@@ -2108,6 +2108,8 @@ software/bda-app/grails-app/i18n/messages_ru.properties -text
 software/bda-app/grails-app/i18n/messages_th.properties -text
 software/bda-app/grails-app/i18n/messages_zh_CN.properties -text
 software/bda-app/grails-app/views/bda/index.gsp -text
+software/bda-app/grails-app/views/configurator/_customPluginTemplate.gsp -text
+software/bda-app/grails-app/views/configurator/_pluginTemplate.gsp -text
 software/bda-app/grails-app/views/configurator/configWizard/buildDetails.gsp -text
 software/bda-app/grails-app/views/configurator/configWizard/distDeployDetails.gsp -text
 software/bda-app/grails-app/views/configurator/configWizard/jbossContainerInfo.gsp -text

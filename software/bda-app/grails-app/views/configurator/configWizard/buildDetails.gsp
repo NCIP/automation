@@ -6,6 +6,7 @@
         <title>Build Details</title>
     </head>
     <body>
+    <g:form action="configWizard">
     <gui:tabView id="tabView">
     <gui:tab id='subProject1' label='Sub-Project 1' active="true">
 	<g:if test="${flash.message}">
@@ -13,7 +14,6 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="Build Details" expanded="true">
 		<table>
 		<tr>
@@ -125,10 +125,8 @@
 			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
 		</form:buttonBar>
 		-->
-	</g:form>
     </gui:tab>
     <gui:tab id='subProject2' label='Sub-Project 2'>
-	<g:form action="configWizard">
 		<gui:expandablePanel title="Build Details" expanded="true">
 		<table>
 		<tr>
@@ -234,13 +232,13 @@
 		</tr>
 		</table>
 		</gui:expandablePanel>
-		<form:buttonBar>
-			<g:submitButton name="previous" value="Previous"></g:submitButton>
-			<g:submitButton name="next" value="Next"></g:submitButton>
-			<g:submitButton name="cancel" value="Cancel"></g:submitButton>
-		</form:buttonBar>
-	</g:form>
     </gui:tab>
     </gui:tabView>
+	<form:buttonBar>
+		<g:submitButton name="previous" value="Previous"></g:submitButton>
+		<g:submitButton name="next" value="Next"></g:submitButton>
+		<g:submitButton name="cancel" value="Cancel"></g:submitButton>
+	</form:buttonBar>
+    </g:form>
     </body>
 </html>
