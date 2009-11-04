@@ -437,7 +437,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.database.type','oracle');
@@ -459,7 +459,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.database.type','oracle');
@@ -481,7 +481,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.database.type','oracle');
@@ -503,7 +503,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.database.type','oracle');
@@ -525,7 +525,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.database.type','oracle');
@@ -547,7 +547,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.database.type','oracle');
@@ -569,7 +569,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.database.type','oracle');
@@ -591,7 +591,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.use.genericDB','false');
 
 
@@ -615,7 +615,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.use.genericDB','false');
 
 
