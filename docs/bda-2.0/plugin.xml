@@ -23,6 +23,9 @@
 		<!-- profile can be install.proeprties, upgrade.properties, tier.proprties (both) or project.properties -->
 		<property name="" type="" required="true|false" default="" propfile="see-above" description=""/>
 	</tier-properties>
+	<project-properties>
+		<property name="" type="" required="true|false" default="" propfile="see-above" description=""/>
+	</project-properties>	
 	<engine-properties>
 		<property name="" type="" display-type="select|multi-select|combo|radio|checkbox|text|text-area" default="" display-name="" display-short-description="" display-long-description=""/>
 	</property>
