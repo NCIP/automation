@@ -23,6 +23,9 @@
 			<property-item value=""/>       
 		</property-type>        
 	</property-types>
+	<plugin-groups>
+		<!-- see sample for explaination -->
+	</plugin-groups>
 	<project>
 	</project>
 	<build-plugins>
