@@ -13,9 +13,9 @@
 	</div>          
     </g:if> 
 
-    <gui:tabView id="jbossContainers">
-    <gui:tab id='jboss1' label='JBoss Prefix 1' active="true">
-	<g:render template="jbossTemplate" model="['varPrefix':'jboss1Post','prefixNum':'1']" />
+    <gui:tabView id="tomcatContainers">
+    <gui:tab id='tomcat1' label='Tomcat Prefix 1' active="true">
+	<g:render template="tomcatTemplate" model="['varPrefix':'tomcat1Post']" />
     </gui:tab>
     </gui:tabView>
 		<form:buttonBar>
