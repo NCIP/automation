@@ -4660,7 +4660,7 @@ $HeadURL$
 					<var name="is.jboss40" unset="true"/>
 					<propertyregex property="is.jboss40"
 						input="@{appserver.conf.dir}"
-						regexp="jboss-4.*GA"
+						regexp="jboss-4.*"
 						select="true"
 						/>
 					<var name="is.tomcat50" unset="true"/>
@@ -4757,7 +4757,7 @@ $HeadURL$
 			<var name="is.jboss40" unset="true"/>
 			<propertyregex property="is.jboss40"
 				input="@{appserver.server-xml.file}"
-				regexp="jboss-4.*GA"
+				regexp="jboss-4.*"
 				select="true"
 				/>
 			<var name="is.tomcat50" unset="true"/>
@@ -4782,7 +4782,7 @@ $HeadURL$
 			<var name="is.jboss51" unset="true"/>
 			<propertyregex property="is.jboss51"
 				input="@{appserver.server-xml.file}"
-				regexp=".*jboss-5.1.*GA"
+				regexp=".*jboss-5.1.*"
 				select="true"
 				/>
 			<echo message="is.jboss40 = ${is.jboss40}"/>
@@ -6005,7 +6005,7 @@ $HeadURL$
 			<var name="jboss.is.40" unset="true"/>
 			<propertyregex property="jboss.is.40"
 				input="@{jboss.home}"
-				regexp=".*jboss-4.*GA"
+				regexp=".*jboss-4.*"
 				select="true"
 				/>
 			<var name="jboss.is.51" unset="true"/>
@@ -7459,7 +7459,7 @@ $HeadURL$
 			<var name="jboss.home.good" unset="true"/>
 			<propertyregex property="jboss.home.good"
 				input="@{jboss.home}"
-				regexp="\S+@{jboss.binaries.relative.dir}$"
+				regexp="\S+jboss-\d.\d.\d.*"
 				select="true"
 				/>
 			<if>
