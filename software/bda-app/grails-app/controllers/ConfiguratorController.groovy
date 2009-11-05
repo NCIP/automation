@@ -19,7 +19,7 @@ class ConfiguratorController {
 			{
 				//collect project info
 			}.to("buildDetails")
-			on("cancel").to("main")
+			on("cancel").to("finishConfigurator")
 		}
 		buildDetails
 		{
@@ -27,7 +27,7 @@ class ConfiguratorController {
 			{
 				//collect sub-project info
 			}.to("distDeployDetails")
-			on("cancel").to("main")
+			on("cancel").to("finishConfigurator")
 			on("previous").to("projectInfo")
 		}
 		distDeployDetails
@@ -36,7 +36,7 @@ class ConfiguratorController {
 			{
 				//collect sub-project info
 			}.to("jbossContainerInfo")
-			on("cancel").to("main")
+			on("cancel").to("finishConfigurator")
 			on("previous").to("buildDetails")
 		}
 		jbossContainerInfo
@@ -45,8 +45,8 @@ class ConfiguratorController {
 			{
 				//collect sub-project info
 			}.to("tomcatContainerInfo")
-			on("cancel").to("main")
-			on("previous").to("archInfo")
+			on("cancel").to("finishConfigurator")
+			on("previous").to("distDeployDetails")
 		}
 		tomcatContainerInfo
 		{
@@ -54,7 +54,7 @@ class ConfiguratorController {
 			{
 				//collect sub-project info
 			}.to("databaseContainerInfo")
-			on("cancel").to("main")
+			on("cancel").to("finishConfigurator")
 			on("previous").to("jbossContainerInfo")
 		}
 		databaseContainerInfo
@@ -63,7 +63,7 @@ class ConfiguratorController {
 			{
 				//collect sub-project info
 			}.to("customContainerInfo")
-			on("cancel").to("main")
+			on("cancel").to("finishConfigurator")
 			on("previous").to("tomcatContainerInfo")
 		}
 		customContainerInfo
@@ -72,21 +72,21 @@ class ConfiguratorController {
 			{
 				//collect sub-project info
 			}.to("acceptConfiguration")
-			on("cancel").to("main")
+			on("cancel").to("finishConfigurator")
 			on("previous").to("databaseContainerInfo")
 		}
 		acceptConfiguration
 		{
-		 	on("next")
+		 	on("accept")
 			{
 				//collect sub-project info
 			}.to("finishConfigurator")
-			on("cancel").to("main")
-			on("previous").to("databaseContainerInfo")
+			on("cancel").to("finishConfigurator")
+			on("previous").to("customContainerInfo")
 		}
 		finishConfigurator
 		{
-			redirect(action: "main")
+			redirect(controller:"configurator", action:"home")
 		}
 	}
 }
