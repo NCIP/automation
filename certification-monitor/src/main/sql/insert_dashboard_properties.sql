@@ -768,7 +768,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.install.init.target','common:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.username','narram');
