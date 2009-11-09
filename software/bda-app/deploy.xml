@@ -46,7 +46,7 @@
 			remoteSshHost="${ssh.server.hostname}"
 			remoteSshUser="${ssh.server.username}"
 			remoteSshPassword="${ssh.server.password}"
-			remotesshcommand=". //usr/localhudsonuser/.bash_profile;/usr/local/hudsonuser/hudson/application/jakarta-tomcat-5.0.28/bin/shutdown.sh" />
+			remotesshcommand=". /usr/localhudsonuser/.bash_profile;/usr/local/hudsonuser/hudson/application/jakarta-tomcat-5.0.28/bin/shutdown.sh" />
 		<!-- Delete bda-calculator application deployments on remote machine -->
 		<remote-ssh
 			remoteSshHost="${ssh.server.hostname}"
