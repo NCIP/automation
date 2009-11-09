@@ -944,3 +944,24 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','install:init');
+
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.project.url','http://gforge.nci.nih.gov/svnroot/pro-ctcae/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.master.build.location','${pro-ctcae.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.exploded.dir.location','${pro-ctcae.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/pro-ctcae');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.ci-server.hostname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.install.init.target','install:init');
