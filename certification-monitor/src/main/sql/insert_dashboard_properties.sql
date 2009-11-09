@@ -763,9 +763,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.exploded.dir.location','${reportwriter.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/reportwriter');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.hostname','ncias-d171-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.jobname','reportwriter');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.install.init.target','common:init');
