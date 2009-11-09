@@ -46,24 +46,24 @@
 			remoteSshHost="${ssh.server.hostname}"
 			remoteSshUser="${ssh.server.username}"
 			remoteSshPassword="${ssh.server.password}"
-			remotesshcommand=". /mnt/hudsonuser/.bash_profile;/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/shutdown.sh" />
+			remotesshcommand=". //usr/localhudsonuser/.bash_profile;/usr/local/hudsonuser/hudson/application/jakarta-tomcat-5.0.28/bin/shutdown.sh" />
 		<!-- Delete bda-calculator application deployments on remote machine -->
 		<remote-ssh
 			remoteSshHost="${ssh.server.hostname}"
 			remoteSshUser="${ssh.server.username}"
 			remoteSshPassword="${ssh.server.password}"
-			remotesshcommand="rm -rf /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/bda-calculator*" />
+			remotesshcommand="rm -rf /usr/local/hudsonuser/hudson/application/jakarta-tomcat-5.0.28/webapps/bda*" />
 		<!-- copy WAR file to remote system -->
 		<remote-scp
 			remoteScpFileToCopy="./bda-calculator.war" 
-			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/" 
+			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:/usr/local/hudsonuser/hudson/application/jakarta-tomcat-5.0.28/webapps/" 
 			remoteScpPassword="${ssh.server.password}"/>
 		<!-- Startup Tomcat -->
 		<remote-ssh
 			remoteSshHost="${ssh.server.hostname}"
 			remoteSshUser="${ssh.server.username}"
 			remoteSshPassword="${ssh.server.password}"
-			remotesshcommand=". /mnt/hudsonuser/.bash_profile;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh &amp;" />
+			remotesshcommand=". /usr/local/hudsonuser/.bash_profile;nohup /usr/local/hudsonuser/hudson/application/jakarta-tomcat-5.0.28/bin/startup.sh &amp;" />
 	</target>
 	
 
