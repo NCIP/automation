@@ -84,7 +84,7 @@ class BuildStatusUpdater {
 			String bdaEnabled = row.BDA_ENABLED;
 			String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
 			String commandLineInstaller = row.COMMANDLINE_INSTALLER;
-			String dateLastEvaluated = row.DATE_LAST_EVALUATED;			
+			String bdaValidated = row.BDA_VALIDATED;			
 	    
 			String productUrl  = productString.substring(productString.indexOf("|")+1, productString.indexOf("]"));
 			String productName  = productString.substring(productString.indexOf("[")+1, productString.indexOf("|"));
@@ -126,7 +126,7 @@ class BuildStatusUpdater {
 			println  replaceProductString
 			println  replaceBdaEnabledString
 			
-			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller},Date-Evaluated${count}:${dateLastEvaluated}\""
+			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller},BDA-Validated${count}:${bdaValidated}\""
 
 			println findReplace
 			// update page
