@@ -666,7 +666,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('evstre
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.project.url','http://gforge.nci.nih.gov/svnroot/catissue/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.project.url','https://ncisvn.nci.nih.gov/svn/catissue/branches/caTISSUE_SUITE_MAIN_BRANCH_07_Sep_09/catissuecore');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.master.build.location','${catissue.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.master.install.location','working/installer');
