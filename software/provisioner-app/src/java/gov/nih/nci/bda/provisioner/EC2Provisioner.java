@@ -56,14 +56,14 @@ public class EC2Provisioner extends BaseProvisioner
 {
   //public static String privateKeyFileName="provisioner-4";
   //public static String dnsName="ec2-75-101-204-78.compute-1.amazonaws.com";
-  public static int fileCount;	
+  public static int fileCount;
   public String privateKeyFileName="provisioner"+fileCount;
   public String privateKeyFileLocation=System.getProperty("user.home")+"/provisioner-key";
   //public String privateKeyFileDownload=System.getProperty("user.home")+"/key-download";
   public String dnsName;
   private static Configuration config;
   private static final Logger LOGGER = Logger.getLogger(EC2Provisioner.class.getName());
-  
+
   public EC2Provisioner ()
   {
 	  super();
@@ -96,7 +96,7 @@ public class EC2Provisioner extends BaseProvisioner
     	LOGGER.info("Saving key in user home ");
     	EC2PrivateKey.savePrivateKey(key.getKeyMaterial(),privateKeyFileLocation,privateKeyFileName);
     	//EC2PrivateKey.saveKeyToDownloadDir(key.getKeyMaterial(),privateKeyFileDownload,privateKeyFileName);
-    	++fileCount; 
+    	++fileCount;
     	System.out.println("END GENERATE KEY");
     }
 	catch (EC2Exception e)
@@ -170,10 +170,10 @@ private List listAllInstances(String accessId, String secretKey) {
 
 private boolean validate(String accessId, String secretKey) {
     Jec2 jec2 = new Jec2(accessId, secretKey);
-    try 
+    try
     {
     	List<KeyPairInfo> info = jec2.describeKeyPairs(new String [] {});
-    } catch (EC2Exception e) 
+    } catch (EC2Exception e)
     {
     	return false;
     }
@@ -183,19 +183,19 @@ private boolean validate(String accessId, String secretKey) {
 private List terminateInstance(String accessId, String secretKey, String[] instancesList) {
     Jec2 jec2 = new Jec2(accessId, secretKey);
     List<TerminatingInstanceDescription> info = null;
-    try 
+    try
     {
-    	LOGGER.log(Level.INFO, "TERMINATING INSTANCES::" + instancesList.length); 
+    	LOGGER.log(Level.INFO, "TERMINATING INSTANCES::" + instancesList.length);
     	for (int i=0;i<instancesList.length;i++ )
     	{
-    		LOGGER.log(Level.INFO, "INSTANCES::"+i +"::" + instancesList[i]); 
+    		LOGGER.log(Level.INFO, "INSTANCES::"+i +"::" + instancesList[i]);
     	}
     	info = jec2.terminateInstances(instancesList);
-    	LOGGER.log(Level.INFO, "TERMINATED INSTANCES"); 
-    } catch (EC2Exception e) 
+    	LOGGER.log(Level.INFO, "TERMINATED INSTANCES");
+    } catch (EC2Exception e)
     {
     	LOGGER.log(Level.WARNING, "Failed to check EC2 credential", e);
-    	
+
     }
     return info;
   }
@@ -213,12 +213,12 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 			instanceSize = InstanceType.DEFAULT;
 		} else if (instanceType.equalsIgnoreCase("medium")){
 			instanceSize = InstanceType.MEDIUM_HCPU;
-		} 
-	
+		}
+
 		KeyPairInfo keyPair = new EC2PrivateKey(privateKey).findKeyPair(jec2);
 		if (keyPair == null)
 			throw new EC2Exception("No matching keypair found on EC2. Is the EC2 private key a valid one?");
-		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-3c47a355", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
+		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-4ea14327", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
 		do
 		{
@@ -268,30 +268,30 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
     	List<GroupDescription> securityGroups = jec2.describeSecurityGroups(new String [] {});
     	String ownerId = null;
     	for (String portValue : portList)
-    	{   
+    	{
         	boolean portOpen = false;
 			for (GroupDescription res : securityGroups)
 			{
 				ownerId = res.getOwner();
 				if(res.getName().equalsIgnoreCase("default"))
-				{				
+				{
 					List<IpPermission> ipPerms = (List<IpPermission>) res.getPermissions();
 			    	for (IpPermission perm : ipPerms)
 			    	{
-			    		String portNumber = Integer.toString(perm.getFromPort());		
+			    		String portNumber = Integer.toString(perm.getFromPort());
 		        		if(portNumber != null && portNumber.equals(portValue))
 		        		{
 		        			portOpen = true;
-		        		}		        	
+		        		}
 			    	}
 				}
 			}
 	    	if (!portOpen)
 	    	{
 	    		jec2.authorizeSecurityGroupIngress("default", "tcp", Integer.valueOf(portValue).intValue(), Integer.valueOf(portValue).intValue(), "0.0.0.0/0");
-	    	}	
+	    	}
     	}
-  
+
 /*
 		if(portList != null)
     	{
@@ -302,8 +302,8 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
 	    	}
 	    	jec2.authorizeSecurityGroupIngress("default", privateKeyFileName, ownerId);
     	}
- */   
-    }    	
+ */
+    }
 	catch (EC2Exception e)
 	{
 		LOGGER.log(Level.WARNING, "Failed to generate a EC2 security group", e);
