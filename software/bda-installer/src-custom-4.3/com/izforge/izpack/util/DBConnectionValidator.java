@@ -12,43 +12,43 @@ import com.izforge.izpack.panels.Validator;
 
 public class DBConnectionValidator implements Validator {
 
-
     
 	public boolean validate(ProcessingClient client)
     {
-        StringBuffer dbUrl = new StringBuffer();
-        StringBuffer dbSystemUrl = new StringBuffer();
-        String dbDriver = "com.mysql.jdbc.Driver";
-        String dbUser = "";
-        String dbSystemUser = "";
-        String dbPassword = "";
         InstallData idata = (InstallData) AutomatedInstallData.getInstance();        
-        String sysUser = "";
+        String sysUser = null;
+        String databaseType =null;
+        DatabaseConnection connection = null;
         try
         {
+        	databaseType = idata.getVariable("database.type");
+        	if(databaseType == null )
+        	{
+        		databaseType = "mysql";
+        	}
+        	System.out.println("databaseType::"+databaseType);	
             if (client.hasParams())
             {
                 Map<String, String> paramMap = client.getValidatorParams();
-                sysUser = paramMap.get("systemUser");             
+                sysUser = paramMap.get("systemUser");               
             }
-            if (sysUser.equals("true"))
-            {              
-	    		dbPassword = client.getFieldContents(0);
-	    		dbSystemUrl =dbSystemUrl.append("jdbc:mysql://").append(idata.getVariable("database.server")).append(":").append(idata.getVariable("database.port"));
-	    		System.out.println("dbSystemUrl::" + dbSystemUrl);
-	        	dbSystemUser = idata.getVariable("database.system.user");    	        	
-	            Class.forName(dbDriver).newInstance();
-	          	DriverManager.getConnection(dbSystemUrl.toString(),dbSystemUser,dbPassword);    	        	
-	        }
-            else
-            {            	
-	        	dbPassword = client.getFieldContents(0);
-	            dbUrl =dbUrl.append("jdbc:mysql://").append(idata.getVariable("database.server")).append(":").append(idata.getVariable("database.port")).append("/").append(idata.getVariable("database.name"));
-	            dbUser = idata.getVariable("database.user");
-	            Class.forName(dbDriver).newInstance();
-	        	DriverManager.getConnection(dbUrl.toString(),dbUser,dbPassword);
-            }  
-        	return true;
+            System.out.println("sysUser::"+sysUser);
+            if(databaseType != null && databaseType.equalsIgnoreCase("mysql"))
+            {
+                if (sysUser != null && sysUser.equals("true"))
+                {
+                	connection = new MySQLConnection(idata.getVariable("database.server"),idata.getVariable("database.port"),idata.getVariable("database.system.user"),client.getFieldContents(0));               	
+                }else
+                {
+                	connection = new MySQLConnection(idata.getVariable("database.server"),idata.getVariable("database.port"),idata.getVariable("database.name"),idata.getVariable("database.user"),client.getFieldContents(0));
+                }
+            }
+            if(databaseType != null && databaseType.equalsIgnoreCase("oracle"))
+            {
+            	String dbPassword = client.getFieldContents(0);
+            	connection = new OracleConnection(idata.getVariable("database.server"),idata.getVariable("database.port"),idata.getVariable("database.name"),idata.getVariable("database.user"),dbPassword);
+            }
+            return connection.isValidConnection();
         }
         catch (Exception e)
         {

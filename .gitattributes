@@ -3410,11 +3410,14 @@ software/bda-installer/src-custom-4.3/com/izforge/izpack/panels/UserPathSelectio
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/AntLogListener.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/ArtifactExistsRelativeToDirValidator.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/DBConnectionValidator.java -text
+software/bda-installer/src-custom-4.3/com/izforge/izpack/util/DatabaseConnection.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/HostNameValidator.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/InstallPannelTailProcessor.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/JTailer.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/LogFileTailer.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/LogFileTailerListener.java -text
+software/bda-installer/src-custom-4.3/com/izforge/izpack/util/MySQLConnection.java -text
+software/bda-installer/src-custom-4.3/com/izforge/izpack/util/OracleConnection.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/TailerFrame.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/URLCheckValidator.java -text
 software/bda-installer/src-custom-4.3/resources/CustomPanels.xml -text
