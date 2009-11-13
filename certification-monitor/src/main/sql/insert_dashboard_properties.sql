@@ -839,7 +839,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.project.url','http://gforge.nci.nih.gov/svnroot/caaersappdev/trunk/caAERS');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.project.url','https://ncisvn.nci.nih.gov/svn/caaersappdev/trunk/caAERS');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.build.location','${ccts-caaers.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.install.location','working/installer');
