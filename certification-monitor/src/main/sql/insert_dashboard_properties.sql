@@ -880,7 +880,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.install.init.target','install:init');
 
 
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.project.url','https://ncisvn.nci.nih.gov/svn/ctodslabviewer/trunk');
