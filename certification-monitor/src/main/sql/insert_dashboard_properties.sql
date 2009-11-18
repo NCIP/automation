@@ -855,7 +855,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','common:init');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchage.database.type','mysql');
