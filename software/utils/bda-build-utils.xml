@@ -561,6 +561,9 @@ $HeadURL$
 		<attribute name="tomcat.ssl.fullyqualified.hostname" default="${tomcat.ssl.fullyqualified.hostname}"/>
 		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
 		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
+		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="database.re-create" default="${database.re-create}" />
+		<attribute name="database.drop-schema" default="${database.drop-schema}" />
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -577,6 +580,9 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.version="@{database.version}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
+				database.drop-schema="@{database.drop-schema}"
+				database.re-create="@{database.re-create}"
 				/>
 			<validate-properties/>
 			<compare-properties
@@ -1480,6 +1486,9 @@ $HeadURL$
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.type" default="${database.type}" />
+		<attribute name="database.re-create" default="${database.re-create}" />
+		<attribute name="database.drop-schema" default="${database.drop-schema}" />
 		<sequential>
 			<!-- Only validates connection for oracle -->
 			<if>
@@ -1498,8 +1507,9 @@ $HeadURL$
 					<echo message="Validating database connection..." />
 					<switch value="${database.type}">
 						<case value="mysql">
+							<echoproperties prefix="database"/>
 							<if>
-								<isset property="database.re-create"/>
+								<equals arg1="@{database.re-create}" arg2="true"/>
 								<then>
 									<dbconfig property="db.connection.success"
 										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
@@ -1520,6 +1530,27 @@ $HeadURL$
 								</else>
 							</if>
 						</case>
+						<case value="postgresql">
+							<if>
+								<equals arg1="@{database.re-create}" arg2="true"/>
+								<then>
+									<dbconfig property="db.connection.success"
+										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+										<validate />
+									</dbconfig>
+									<antunit:assertPropertyEquals message="Database connection failed for @{database.url}. Verify that your database.user and database.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+									<echo message="Database Connection: PASSED" />
+								</then>
+								<else>
+									<dbconfig property="db.connection.success"
+										driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
+										<validate />
+									</dbconfig>
+									<antunit:assertPropertyEquals message="Database connection failed for @{database.url}. Verify that your database.user and database.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+									<echo message="Database Connection: PASSED" />
+								</else>
+							</if>
+						</case>
 						<case value="oracle">
 							<dbconfig property="oracle.connection.success"
 								driver="@{database.driver}"
@@ -1531,20 +1562,6 @@ $HeadURL$
 							<antunit:assertPropertyEquals
 								message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
 								name="oracle.connection.success"
-							       	value="true" />
-							<echo message="Database Connection: PASSED" />
-						</case>
-						<case value="postgresql">
-							<dbconfig property="postgresql.connection.success"
-								driver="@{database.driver}"
-								url="@{database.url}"
-								user="@{database.user}"
-								password="@{database.password}">
-									<validate />
-									</dbconfig>
-							<antunit:assertPropertyEquals
-								message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
-								name="postgresql.connection.success"
 							       	value="true" />
 							<echo message="Database Connection: PASSED" />
 						</case>
@@ -7465,10 +7482,10 @@ $HeadURL$
 			<if>
 				<isset property="jboss.home.good"/>
 				<then>
-					<echo message="Validated jboss.home '${jboss.home}' ends in jboss.binaries.relative.dir '@{jboss.binaries.relative.dir}'"/>
+					<echo message="Validated jboss.home '${jboss.home}' ends with 'jboss-X.X.X.*' (where X is a number)"/>
 				</then>
 				<else>
-					<fail message="Error- jboss.home '${jboss.home}' must end with jboss.binaries.relative.dir '@{jboss.binaries.relative.dir}'"/>
+					<fail message="Error- jboss.home '${jboss.home}' must end with jboss.binaries.relative.dir 'jboss-X.X.X.*' (where X is a number)"/>
 				</else>
 			</if>
 		</sequential>
@@ -7484,10 +7501,12 @@ $HeadURL$
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
-		<attribute name="database.type" default="${database.type}"/>
 		<attribute name="database.server" default="${database.server}"/>
 		<attribute name="database.port" default="${database.port}"/>
 		<attribute name="mysql.lowercasetablenames" default="${mysql.lowercasetablenames}"/>
+		<attribute name="database.type" default="${database.type}" />
+		<attribute name="database.re-create" default="${database.re-create}" />
+		<attribute name="database.drop-schema" default="${database.drop-schema}" />
 		<sequential>
 
 			<echo message="
@@ -7512,6 +7531,9 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.version="@{database.version}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
+				database.drop-schema="@{database.drop-schema}"
+				database.re-create="@{database.re-create}"
 				/>
 			<!-- Make sure system and app user are different -->
 			<if>
@@ -7554,14 +7576,29 @@ $HeadURL$
 			<!-- allow for checks for different types of db, right now only mysql-->
 			<switch value="@{database.type}">
 				<case value="mysql">
-					<validate-mysql-lower_case_table_name
-						database.driver="@{database.driver}"
-						database.user="@{database.user}"
-						database.password="@{database.password}"
-						database.server="@{database.server}"
-						database.port="@{database.port}"
-						mysql.lowercasetablenames="@{mysql.lowercasetablenames}"
-						/>
+					<if>
+						<equals arg1="@{database.re-create}" arg2="true"/>
+						<then>
+							<validate-mysql-lower_case_table_name
+								database.driver="@{database.driver}"
+								database.user="@{database.system.user}"
+								database.password="@{database.system.password}"
+								database.server="@{database.server}"
+								database.port="@{database.port}"
+								mysql.lowercasetablenames="@{mysql.lowercasetablenames}"
+								/>
+						</then>
+						<else>
+							<validate-mysql-lower_case_table_name
+								database.driver="@{database.driver}"
+								database.user="@{database.user}"
+								database.password="@{database.password}"
+								database.server="@{database.server}"
+								database.port="@{database.port}"
+								mysql.lowercasetablenames="@{mysql.lowercasetablenames}"
+								/>
+						</else>
+					</if>
 				</case>
 				<default>
 					<echo message="This function for the value @{database.type} of property database.type is not defined" />
@@ -8741,7 +8778,7 @@ $HeadURL$
 			<var name="override.props.set" unset="true"/>
 			<propertyregex property="override.props.set"
 				input="@{override.properties}"
-				regexp="\${override.properties}"
+				regexp="\$\{override.properties\}"
 				select="true"
 				/>
 			<if>
@@ -8749,6 +8786,7 @@ $HeadURL$
 					<isset property="override.props.set"/>
 				</not>
 				<then>
+
 					<for list="@{override.properties}" param="prop.val" delimiter=",">
 						<sequential>
 							<var name="prop" unset="true"/>
