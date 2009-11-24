@@ -3333,6 +3333,7 @@ software/bda-dashboard/wiki-cli/lib/cli-soap-1.0.0.jar -text
 software/bda-dashboard/wiki-cli/lib/commons-discovery-0.2.jar -text
 software/bda-dashboard/wiki-cli/lib/commons-lang-2.4.jar -text
 software/bda-dashboard/wiki-cli/lib/commons-logging-1.1.jar -text
+software/bda-dashboard/wiki-cli/lib/commons-net-2.0.jar -text
 software/bda-dashboard/wiki-cli/lib/confluence-cli-1.3.0.jar -text
 software/bda-dashboard/wiki-cli/lib/confluence-soap-model-0.2.jar -text
 software/bda-dashboard/wiki-cli/lib/derby.jar -text

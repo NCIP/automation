@@ -132,12 +132,20 @@ class ErrorValidator {
 
 	public void sendEmailToProjectTeam(String projectName, String message )
 	{
-		// get the POCs for the projectName
+		// Get the POCs for the projectName
+		String devPocEmail,govPocEmail= null
+		
+		String pocStatement = "SELECT DEV_POC_EMAIL, GOV_POC_EMAIL FROM PROJECT_POC WHERE PROJECT_NAME='"+projectName + "'"
+		connection.eachRow(pocStatement) { row ->			  
+			devPocEmail    = row.DEV_POC_EMAIL;
+			govPocEmail = row.GOV_POC_EMAIL;	 
+		}	
 		MailSender ms = new MailSender()
 		ArrayList recipientList = new ArrayList()
-		recipientList.add("Mahidhar.Narra@stelligent.com")
-		recipientList.add("Paul.Duvall@stelligent.com")
-		ms.sendMessage("mailfwd.nih.gov",25,"narram@mail.nih.gov",recipientList ,"CERTIFICATION STATUS",message)
+		println("Sending email to Dev Poc " +devPocEmail + " And GOV Poc " + govPocEmail)
+		recipientList.add(devPocEmail)
+		recipientList.add(govPocEmail)
+		ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList ,projectName.toUpperCase()  + " CERTIFICATION STATUS",message)
 	}	
 	
 }
