@@ -3360,7 +3360,6 @@ software/bda-dashboard/wiki-cli/src/assembly/release.xml -text
 software/bda-dashboard/wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 software/bda-dashboard/wiki-cli/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy -text
 software/bda-dashboard/wiki-cli/src/main/java/gov/nih/nci/confluence/MailSender.groovy -text
-software/bda-dashboard/wiki-cli/src/main/java/gov/nih/nci/confluence/TableUpdater.groovy -text
 software/bda-dashboard/wiki-cli/src/main/java/org/swift/confluence/cli/ConfluenceClient.java -text
 software/bda-dashboard/wiki-cli/src/main/resources/build.xml -text
 software/bda-dashboard/wiki-cli/src/main/resources/confluence.bat -text
