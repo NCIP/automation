@@ -3309,6 +3309,7 @@ software/bda-dashboard/certification-monitor/src/main/sql/create_schema_buildmon
 software/bda-dashboard/certification-monitor/src/main/sql/create_table_dashboard_properties.sql -text
 software/bda-dashboard/certification-monitor/src/main/sql/create_table_target_lookup.sql -text
 software/bda-dashboard/certification-monitor/src/main/sql/insert_dashboard_properties.sql -text
+software/bda-dashboard/certification-monitor/src/main/sql/insert_project_poc.sql -text
 software/bda-dashboard/certification-monitor/src/main/sql/insert_target_lookup.sql -text
 software/bda-dashboard/certification-monitor/src/tests/functional/certification-test-case.html -text
 software/bda-dashboard/certification-monitor/src/tests/functional/certification-test-suite.html -text
