@@ -105,7 +105,9 @@ class ErrorValidator {
 				}
 				else
 				{
-					if (bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("|")).contains("-beta"))
+				     println (" Beta Message :: " +bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")))
+				     
+					if (bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
 					{
 						mailString = mailString + properties.getProperty("mail.beta.version")
 						if (!singleCommandBuild.equals("(/)"))
