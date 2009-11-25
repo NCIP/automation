@@ -28,14 +28,14 @@ INSERT INTO project_poc VALUES( 'ccts-caXchage ','Ram Chilkur','chilukurir2@mail
 INSERT INTO project_poc VALUES( 'ccts-labviewer','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-psc','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'cds','TBD',' ','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'cds',' ',' ','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'coppa - CTRP - Accrual','Edmond Mulaire','edmond.mulaire@semanticbits.com','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'pa','Edmond Mulaire','edmond.mulaire@semanticbits.com','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'po','Edmond Mulaire','edmond.mulaire@semanticbits.com','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'cpas','Denny Chan','dc331z@nih.gov','Carl Schaefer','cs339h@nih.gov','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'ctods','TBD','TBD','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'ctods',' ',' ','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'evstree','Maki Duncan','duncanmk@mail.nih.gov','Juli Klemm','klemmj@mail.nih.gov','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'genepattern','TBD',' ','Juli Klemm','klemmj@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'genepattern',' ',' ','Juli Klemm','klemmj@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'CSM - CGMWeb','Raghu Chintalapati','chintalr@mail.nih.gov','Sichen Liu','liusi@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'CSM - LLT','Satish Patel','patelsat@mail.nih.gov','Sichen Liu','liusi@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'upt','Satish Patel','patelsat@mail.nih.gov','Sichen Liu','liusi@mail.nih.gov','ncicbiitbda@mail.nih.gov');
@@ -56,7 +56,7 @@ INSERT INTO project_poc VALUES( 'caintegrator2','JP Marple','marplej@mail.nih.go
 
 INSERT INTO project_poc VALUES( 'protexpress','Krishna Kanchinadam','kanchink@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'rembrandt','Himanso/Shine','jacobss2@mail.nih.gov', 'Anand Basu' ,'basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');	  	  	  	  	 
-INSERT INTO project_poc VALUES( 'tcga', 'Robert Sfeir', 'TBD', 'Carl Schaefer', 'cs339h@nih.gov','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'petstore', 'TBD', 'TBD', 'TBD', 'TBD','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'pro-ctcae', 'TBD', 'TBD', 'TBD', 'TBD','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'tcga', 'Robert Sfeir', ' ', 'Carl Schaefer', 'cs339h@nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'petstore', ' ', ' ', ' ', ' ','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'pro-ctcae', ' ', ' ', ' ', ' ','ncicbiitbda@mail.nih.gov');
 
