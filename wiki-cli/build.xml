@@ -21,7 +21,6 @@
 	<property name="properties.file" value="build.properties" />
 	<property name="wiki.properties.file" value="wiki.properties" />
 	
-	
 	<echo message="${lib.dir}"/>
 
 	<!-- PATHS -->
@@ -32,7 +31,8 @@
 	</path>
 
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
-
+	<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask" classpathref="project.classpath"/>
+	
 	<target name="init" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${target.dir}" />
@@ -61,6 +61,7 @@
 		<groovyc srcdir="${source.dir}" destdir="${classes.dir}">
 			<classpath>
 				<pathelement location="${lib.dir}/groovy-all-1.6-beta-1.jar"/>
+				<pathelement location="${lib.dir}/commons-net-2.0.jar"/>
 			</classpath>
 			<javac source="1.5" target="1.5" debug="on" />
 		</groovyc>
@@ -85,7 +86,7 @@
 	</target>
 
 
-	<target name="configure" description="Run the class to update Wiki">
+	<target name="configure" description="Run the class to update Wiki" depends="configure:revision-number">
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.name)=.*" replace="\1=${database.name}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.url)=.*" replace="\1=${database.url}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.user)=.*" replace="\1=${database.user}" />
@@ -110,6 +111,14 @@
 				<pathelement location="${deploy.lib.dir}/mysql-connector-java-5.0.5.jar"/>
 			</classpath>
 		</java>		
+	</target>
+	
+	<target name="configure:revision-number" description="Run the class to update Wiki">
+		<svn javahl="false">
+			<status path="${basedir}" revisionProperty="svn.revision" urlProperty="svn.url"/>
+		</svn>
+		<echo message="${svn.revision}"/>
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.revision.number)=.*" replace="\1=${svn.revision}" />
 	</target>
 	
 	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
