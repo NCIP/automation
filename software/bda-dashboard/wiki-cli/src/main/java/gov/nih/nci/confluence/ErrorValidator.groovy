@@ -218,7 +218,7 @@ class ErrorValidator {
 			properties.getProperty("mail.additional.recipients").split(',').eachWithIndex {processToken, i -> 
 				recipientList.add(processToken)
 			}
-			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName.toUpperCase(),message)
+			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message)
 		}
 		catch(Exception ex){
 			ex.printStackTrace()
