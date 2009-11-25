@@ -109,6 +109,7 @@ wiki-cli/lib/cli-soap-1.0.0.jar -text
 wiki-cli/lib/commons-discovery-0.2.jar -text
 wiki-cli/lib/commons-lang-2.4.jar -text
 wiki-cli/lib/commons-logging-1.1.jar -text
+wiki-cli/lib/commons-net-2.0.jar -text
 wiki-cli/lib/confluence-cli-1.3.0.jar -text
 wiki-cli/lib/confluence-soap-model-0.2.jar -text
 wiki-cli/lib/derby.jar -text
@@ -130,7 +131,8 @@ wiki-cli/source.txt -text
 wiki-cli/sql/populate_wikiDB.sql -text
 wiki-cli/src/assembly/release.xml -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
-wiki-cli/src/main/java/gov/nih/nci/confluence/TableUpdater.groovy -text
+wiki-cli/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy -text
+wiki-cli/src/main/java/gov/nih/nci/confluence/MailSender.groovy -text
 wiki-cli/src/main/java/org/swift/confluence/cli/ConfluenceClient.java -text
 wiki-cli/src/main/resources/build.xml -text
 wiki-cli/src/main/resources/confluence.bat -text

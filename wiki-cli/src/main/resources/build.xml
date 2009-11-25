@@ -10,4 +10,15 @@
 			</classpath>
 		</java>		
 	</target>
+
+	<target name="run-validate" description="Run the class to update Wiki">
+		<java classname="gov.nih.nci.confluence.ErrorValidator">	
+			<classpath>
+				<pathelement location="./wiki_cli_nci.jar"/>
+				<pathelement location="./lib/groovy-all-1.6-beta-1.jar"/>
+				<pathelement location="./lib/mysql-connector-java-5.0.5.jar"/>
+				<pathelement location="./lib/commons-net-2.0.jar"/>
+			</classpath>
+		</java>		
+	</target>	
 </project>

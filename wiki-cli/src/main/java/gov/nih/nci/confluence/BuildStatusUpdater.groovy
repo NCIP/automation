@@ -63,7 +63,7 @@ class BuildStatusUpdater {
 
 	// get most recent tempates
 		doCmd("${confluence} -a getPageSource --space \""+certificationTemplateSpace+"\" --title \"" + certificationTemplateFile+ "\" --file "+certificationTemplateFile+"_temp.txt")
-		String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER,BDA_VALIDATED from PROJECT_CERTIFICATION_STATUS order by product desc"
+		String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS order by product desc"
 
 	List projectRows = connection.rows(statement)	
 	
@@ -84,7 +84,6 @@ class BuildStatusUpdater {
 			String bdaEnabled = row.BDA_ENABLED;
 			String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
 			String commandLineInstaller = row.COMMANDLINE_INSTALLER;
-			String bdaValidated = row.BDA_VALIDATED;			
 	    
 			String productUrl  = productString.substring(productString.indexOf("|")+1, productString.indexOf("]"));
 			String productName  = productString.substring(productString.indexOf("[")+1, productString.indexOf("|"));
@@ -126,7 +125,7 @@ class BuildStatusUpdater {
 			println  replaceProductString
 			println  replaceBdaEnabledString
 			
-			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller},BDA-Validated${count}:${bdaValidated}\""
+			String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
 
 			println findReplace
 			// update page
