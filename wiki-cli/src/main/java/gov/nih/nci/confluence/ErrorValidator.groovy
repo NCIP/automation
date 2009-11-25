@@ -48,7 +48,7 @@ class ErrorValidator {
 			{
 				
 				println "bda enabled string:: " + bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|"))
-				if(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+				if(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)") || bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(!)"))
 				{				
 					if (!singleCommandBuild.equals("(/)"))
 					{
@@ -153,7 +153,7 @@ class ErrorValidator {
 			ArrayList recipientList = new ArrayList()
 			println("Sending email to Dev Poc " +devPocEmail + " And GOV Poc " + govPocEmail)
 			recipientList.add(devPocEmail)
-			recipientList.add(govPocEmail)
+			//recipientList.add(govPocEmail)
 			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName.toUpperCase(),message)
 		}
 		catch(Exception ex){
