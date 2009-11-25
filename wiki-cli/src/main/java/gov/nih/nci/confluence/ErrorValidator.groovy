@@ -109,8 +109,7 @@ class ErrorValidator {
 				     
 					if (bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
 					{
-					println("true")
-					/*
+
 						mailString = mailString + properties.getProperty("mail.beta.version")
 						if (!singleCommandBuild.equals("(/)"))
 						{
@@ -164,7 +163,6 @@ class ErrorValidator {
 						}
 						mailString = mailString + properties.getProperty("mail.post.template")
 						sendEmailToProjectTeam(productName,mailString.replaceAll("INSERT_SVN_URL",productUrl))
-						*/
 					}					
 				}
 			}
@@ -217,7 +215,7 @@ class ErrorValidator {
 			ArrayList recipientList = new ArrayList()
 			println("Sending email to Dev Poc " +devPocEmail + " And GOV Poc " + govPocEmail)
 			recipientList.add(devPocEmail)
-			recipientList.add(govPocEmail)
+			//recipientList.add(govPocEmail)
 			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName.toUpperCase(),message)
 		}
 		catch(Exception ex){
