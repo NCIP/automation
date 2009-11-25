@@ -105,8 +105,12 @@ class ErrorValidator {
 				}
 				else
 				{
+				     println (" Beta Message :: " +bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("|"))
+				     
 					if (bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("|")).contains("-beta"))
 					{
+					println("true")
+					/*
 						mailString = mailString + properties.getProperty("mail.beta.version")
 						if (!singleCommandBuild.equals("(/)"))
 						{
@@ -160,6 +164,7 @@ class ErrorValidator {
 						}
 						mailString = mailString + properties.getProperty("mail.post.template")
 						sendEmailToProjectTeam(productName,mailString.replaceAll("INSERT_SVN_URL",productUrl))
+						*/
 					}					
 				}
 			}
