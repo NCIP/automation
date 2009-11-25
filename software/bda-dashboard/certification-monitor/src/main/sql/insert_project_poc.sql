@@ -24,7 +24,7 @@ INSERT INTO project_poc VALUES( 'cananolab','Sue Pan','pansu@mail.nih.gov','Anan
 INSERT INTO project_poc VALUES( 'catissue','Michelle Lee','leeml@mail.nih.gov','Ian Fore','forei@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-c3pr','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-caaers','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'ccts-caXchange','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'ccts-caXchage ','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-labviewer','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-psc','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
@@ -50,8 +50,8 @@ INSERT INTO project_poc VALUES( 'LexEVS-DB-Automation','Raghu Chintalapati','chi
 
 INSERT INTO project_poc VALUES( 'nbia','Jennifer Zeng','zengje@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 
-INSERT INTO project_poc VALUES( 'LSD - caGWAS','Himanso Sahni','jacobss2@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'LSD - caIntegrator2','JP Marple','marplej@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'cagwas','Himanso Sahni','jacobss2@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'caintegrator2','JP Marple','marplej@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 
 
 INSERT INTO project_poc VALUES( 'protexpress','Krishna Kanchinadam','kanchink@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
