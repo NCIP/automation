@@ -215,6 +215,9 @@ class ErrorValidator {
 			println("Sending email to Dev Poc " +devPocEmail + " And GOV Poc " + govPocEmail)
 			recipientList.add(devPocEmail)
 			recipientList.add(govPocEmail)
+			properties.getProperty("mail.additional.recipients").split(',').eachWithIndex {processToken, i -> 
+				recipientList.add(processToken)
+			}
 			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName.toUpperCase(),message)
 		}
 		catch(Exception ex){
