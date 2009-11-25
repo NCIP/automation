@@ -48,7 +48,7 @@ class ErrorValidator {
 			{
 				
 				println "bda enabled string:: " + bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|"))
-				if(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)") || bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(!)"))
+				if(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 				{				
 					if (!singleCommandBuild.equals("(/)"))
 					{
