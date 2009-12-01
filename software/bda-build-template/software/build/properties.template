@@ -4,10 +4,10 @@
 # $HeadURL$
 #
 #
-# bda-build-template version 1.5.8      
+# bda-build-template version 1.5.8
 #
 # This properties file template for all .properties to adhere (The "interface")
-# 
+#
 ##############################################################
 ##############################
 ###  APPLICATION SETTINGS  ###
@@ -45,41 +45,41 @@ jboss.home=This is the root of the jboss installation, can be specified or deriv
 jboss.server.hostname=The server name where jboss will be running. Example: localhost
 jboss.server.name=The jboss server instance name, $JBOSS_HOME/server/${jboss.server.name}. Example: default
 #jboss.web.user=The account name to log into the JBoss web consoles.  Example: admin
-#jboss.web.password=The password to the access the jboss web console and jmx console. Example: blueprint123!. The user is admin. 
+#jboss.web.password=The password to the access the jboss web console and jmx console. Example: blueprint123!. The user is admin.
 #jboss.java.opts=java options for starting jboss
 # If you want to use JBboss NCICB Standard port configurations, uncommment the lines below and comment out all the ports.  Be sure to pick a correct prot configuration (see  https://wiki.nci.nih.gov/x/0gqy)
 #jboss.ncicb-standard.port-config=(true/false) flag to determine whether to use NCICB ports or your own ports
 #jboss.server.ports.name=The name of the port configuration within the bindings file
-#jboss.cobraorb.port=
-#jboss.ejbinvoker.port=
-#jboss.hajndi.port=
-#jboss.hajrmi.port=
-#jboss.jmx-rmi.port=
-#jboss.messaging.port=
-#jboss.pooledha.port=
-#jboss.server.bind.port=
+#jboss.cobraorb.port=Standard JBoss Port
+#jboss.ejbinvoker.port=Standard JBoss Port
+#jboss.hajndi.port=Standard JBoss Port
+#jboss.hajrmi.port=Standard JBoss Port
+#jboss.jmx-rmi.port=Standard JBoss Port
+#jboss.messaging.port=Standard JBoss Port
+#jboss.pooledha.port=Standard JBoss Port
+#jboss.server.bind.port=Standard JBoss Port
 #jboss.server.jndi.port=Port used to connect when shutting down jboss.
 #jboss.server.port=The port used to connect to the jboss instance via http.
-#jboss.server.rmi.port=
-#jboss.service.rmiobject.port=
-#jboss.service.rmiobject.port=
-#jboss.snmp.port=
-#jboss.snmp-trapd.port=
-#jboss.web.service.port=
+#jboss.server.rmi.port=Standard JBoss Port
+#jboss.service.rmiobject.port=Standard JBoss Port
+#jboss.service.rmiobject.port=Standard JBoss Port
+#jboss.snmp.port=Standard JBoss Port
+#jboss.snmp-trapd.port=Standard JBoss Port
+#jboss.web.service.port=Standard JBoss Port
 
 # not in jboss 5.1.0
-#jboss.remoting.port=30320
-#jboss.jms.port=30170
+#jboss.remoting.port=Standard JBoss Port
+#jboss.jms.port=Standard JBoss Port
 
 # new ports with 5.1.0
-#jboss.unifiedinvoker.port=30360
-#jboss.hajndi.auto.port=30370
-#jboss.ssl.port=30380
-#jboss.jms2.netty.port=30390
-#jboss.jms2.netty-ssl.port=30400
-#jboss.transaction.recovery.port=30410
-#jboss.transaction.status.port=30420
-#jboss.transaction.processid.port=30430
+#jboss.unifiedinvoker.port=Standard JBoss Port
+#jboss.hajndi.auto.port=Standard JBoss Port
+#jboss.ssl.port=Standard JBoss Port
+#jboss.jms2.netty.port=Standard JBoss Port
+#jboss.jms2.netty-ssl.port=Standard JBoss Port
+#jboss.transaction.recovery.port=Standard JBoss Port
+#jboss.transaction.status.port=Standard JBoss Port
+#jboss.transaction.processid.port=Standard JBoss Port
 
 
 jboss.ssl.enable=A flag to determine where JBoss is configured with SSL, see https://wiki.nci.nih.gov/x/7xWy
@@ -94,7 +94,7 @@ jboss.ssl.enable=A flag to determine where JBoss is configured with SSL, see htt
 #jboss.external.grid.secure.host=Set this if you are using external hostnames for grid ssl, see https://wiki.nci.nih.gov/x/8hWy
 #jboss.external.grid.secure.port=Set this if you are using a different port with the external hostname above for grid ssl
 jboss.grid.secure.enable=Flag to use grid ssl port
-#jboss.grid.secure.port=Port for grid ssl 
+#jboss.grid.secure.port=Port for grid ssl
 #jboss.grid.secure.cert.location=location of grid generated cert file for grid ssl
 #jboss.grid.secure.key.location=location of grid generated key file for grid ssl
 #jboss.http-connector.remove=Whether to remove the http port, required for grid
@@ -117,9 +117,9 @@ tomcat.home=Home dir or tomcat
 tomcat.hostname=The server name where tomcat will be running. Example: localhost
 # Ports used by JBoss. Must not conflict with other LSD applications. Check with BDA or Systems teamsf for acceptable values.
 tomcat.port.http=The port used to connect to the tomcat instance via http.
-tomcat.port.ajp=
-tomcat.port.ssl=
-tomcat.port.shutdown=
+tomcat.port.ajp=Standard Tomcat Port
+tomcat.port.ssl=Standard Tomcat Port
+tomcat.port.shutdown=Standard Tomcat Port
 tomcat.ssl.enable=A flag to determine where Tomcat is configured with SSL, see https://wiki.nci.nih.gov/x/7xWy
 #tomcat.ssl.keystore.location=The keystore file location, dir/filename recommend projectroot/software/common/security
 #tomcat.ssl.keystore.pass=The password for that keystore file
@@ -132,7 +132,7 @@ tomcat.ssl.enable=A flag to determine where Tomcat is configured with SSL, see h
 #tomcat.external.grid.secure.host=Set this if you are using external hostnames for grid ssl, see https://wiki.nci.nih.gov/x/8hWy
 #tomcat.external.grid.secure.port=Set this if you are using a different port with the external hostname above for grid ssl
 tomcat.grid.secure.enable=Flag to use grid ssl port
-#tomcat.grid.secure.port=Port for grid ssl 
+#tomcat.grid.secure.port=Port for grid ssl
 #tomcat.grid.secure.cert.location=location of grid generated cert file for grid ssl
 #tomcat.grid.secure.key.location=location of grid generated key file for grid ssl
 #tomcat.http-connector.remove=Whether to remove the http port, required for grid
@@ -184,6 +184,7 @@ grid.poc.science.phone=Example: 0124567890
 grid.poc.science.email=Example: john.smith@mail.com
 grid.poc.science.role=Example: sysadmin
 # The external host an IP to access the grid service from the internet.  For security reasons Network Address Translation (NAT) is often used to allow traffic from the internet into the local network.  With NAT an IP address and port are configured on the seucrity device facing the internet and are mapped back to the IP and port of the server running the application.  The name in DNS for access from the intenet is often different than the server it's self.  So you would want to put the NAT IP or NAT hostname and the NAT port in the fileds below.
+grid.target=This is which grid you point to, it is only used when configuring grid ssl right now. Eventually this will replace grid.index.url also.
 
 ########################
 ###  MAIL  SETTINGS  ###
