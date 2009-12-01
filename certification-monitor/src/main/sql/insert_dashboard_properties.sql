@@ -190,7 +190,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.sv
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.project.url','http://gforge.nci.nih.gov/svnroot/security/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.build.location','${upt.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.build.location','${upt.svn.local.checkout}/software/buildupt');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.package.target','dist:installer:prep');
