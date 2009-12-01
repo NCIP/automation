@@ -86,6 +86,7 @@ certification-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
 certification-monitor/src/main/sql/create_table_dashboard_properties.sql -text
 certification-monitor/src/main/sql/create_table_target_lookup.sql -text
 certification-monitor/src/main/sql/insert_dashboard_properties.sql -text
+certification-monitor/src/main/sql/insert_project_poc.sql -text
 certification-monitor/src/main/sql/insert_target_lookup.sql -text
 certification-monitor/src/tests/functional/certification-test-case.html -text
 certification-monitor/src/tests/functional/certification-test-suite.html -text
