@@ -1278,7 +1278,7 @@ $HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build
 				<var name="dist.relative.dir" unset="true"/>
 				<var name="database.target.list" unset="true"/>
 				<property name="dist.relative.dir" location="${basedir}/sub-projects/${@{sub-project.prefix}.dist.relative.dir}"/>
-				<property name="database.target.list" value="${@{sub-project.prefix}.install.database.target.list}"/>
+				<property name="database.target.list" value="${@{sub-project.prefix}.upgrade.database.target.list}"/>
 
 				<var name="property.location" unset="true"/>
 				<property name="property.location" value="${@{sub-project.prefix}.properties.location}"/>
