@@ -916,9 +916,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.exploded.dir.location','${ccts-psc.svn.local.checkout}/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','http://gforge.nci.nih.gov/svn/scm-private/trunk/psc');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.hostname','ncias-d228-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.jobname','48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.portnumber','PSC trunk matrix (external)');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.install.init.target','install:init');
