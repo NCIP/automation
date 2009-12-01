@@ -24,7 +24,7 @@ INSERT INTO project_poc VALUES( 'cananolab','Sue Pan','pansu@mail.nih.gov','Anan
 INSERT INTO project_poc VALUES( 'catissue','Michelle Lee','leeml@mail.nih.gov','Ian Fore','forei@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-c3pr','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-caaers','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
-INSERT INTO project_poc VALUES( 'ccts-caXchage ','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'ccts-caXchange ','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-labviewer','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts-psc','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'ccts','Ram Chilkur','chilukurir2@mail.nih.gov','Christo Andonyadis','andonyac@mail.nih.gov','ncicbiitbda@mail.nih.gov');
