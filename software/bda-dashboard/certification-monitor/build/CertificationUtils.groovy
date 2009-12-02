@@ -92,19 +92,13 @@ class CertificationUtils
 		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
 		def installProject = new XmlParser().parse(installFile)
 
-		ant.property(file: projectPropertiesFile)
-		println project.properties['application.url']	
-		def applicationUrl = project.properties['application.url']
-		if(applicationUrl)
-		{					
-			ant.runseliniumtest(hostname:applicationUrl)
-		}					
-		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:grid'))
+		ant.property(file: projectPropertiesFile)		
+		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:jboss'))
 		{
 			println "Run the selenium test for the jboss server"
 			def jbossServerPort = project.properties['jboss.server.port']
 			def jbossServerHostName = project.properties['jboss.server.hostname']
-			println jbossServerPort;
+			println 'HOSTNAME ::: http://'+jbossServerHostName+':'+jbossServerPort;
 			ant.runseliniumtest(hostname:'http://'+jbossServerHostName+':'+jbossServerPort)
 		}
 		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:tomcat'))
@@ -112,7 +106,7 @@ class CertificationUtils
 			println "Run the selenium test for the tomcat server"
 			String tomcatServerPort = project.properties['tomcat.port.http']
 			String tomcatServerHostName = project.properties['tomcat.hostname']
-			println tomcatServerPort;
+			println 'HOSTNAME ::: http://'+tomcatServerHostName+':'+tomcatServerPort;
 			ant.runseliniumtest(hostname:'http://'+tomcatServerHostName+':'+tomcatServerPort)				
 		}
 	}
@@ -224,6 +218,7 @@ println privatePropertiesLocation
 
 	void checkDBIntegration ()
 	{
+		/*
 		def buildFileLocation=project.properties['master.build.location']		
 		def targetName=project.properties['database.integration.target']
 		def databaseType=project.properties['database.type']
@@ -273,6 +268,7 @@ println privatePropertiesLocation
 			}
 
 		}
+		*/
 	}
 
 

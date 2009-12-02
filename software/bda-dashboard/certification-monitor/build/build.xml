@@ -224,33 +224,11 @@
 	<target name="build:single-command-build" depends="init">		
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 			<arg value="${single-command.build.target}" />			
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
-			<redirector outputproperty="redirector.out">
-			</redirector>
 		</exec>
 		<echo message="START BUILD"/>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
 			<arg value="${single-command.build.target}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<arg value="-lib" />
-			<arg value="${build.dir}/.." />
-			<redirector outputproperty="redirector.out">
-			</redirector>
 		</exec>
-
-		<echo message="REDIRECTOR::::${redirector.out}"/>
-
-		<propertyregex property="task.list"
-		      input="${redirector.out}"
-		      regexp="(?s).*START FROM THE TASKLISTENER(.*)END FROM THE TASKLISTENER.*$"
-		      select="\1"/>
-
-		<echo message="TASK LIST::::${task.list}"/>
-
 	</target>
 
 	<target name="clean-deployments">		
@@ -293,13 +271,63 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg value="${single-command.deployment.target}" />
+			<arg value="${single-command.deployment.target}" />			
 		</exec>
 
 	</target>
 
 	<target name="build:database-integration" depends="init">
+	<!--
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkDBIntegration"/>		
+	-->
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
+		<delete dir="${user.home}/apps"/>
+		
+		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
+			<arg value="-Dproperties.file=install.properties" />
+			<arg value="-Dforce.reinstall=true" />
+			<arg value="-Ddatabase.system.user=${database.system.user}" />
+			<arg value="-Ddatabase.system.password=${database.system.password}" />
+			<arg value="-Ddatabase.server=${database.server}" />
+			<arg value="-Ddatabase.port=${database.port}" />
+			<arg value="-Ddatabase.name=${database.name}" />
+			<arg value="-Ddatabase.user=${database.user}" />
+			<arg value="-Ddatabase.password=${database.password}" />
+			<arg value="-Ddatabase.url=${database.url}" />
+			<arg value="-Ddatabase.system.url=${database.system.url}" />
+			<arg value="${single-command.deployment.target}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
+			<redirector outputproperty="redirector1.out">
+			</redirector>			
+		</exec>
+		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
+			<arg value="-Dproperties.file=install.properties" />			
+			<arg value="-Dforce.reinstall=true" />
+			<arg value="-Ddatabase.system.user=${database.system.user}" />
+			<arg value="-Ddatabase.system.password=${database.system.password}" />
+			<arg value="-Ddatabase.server=${database.server}" />
+			<arg value="-Ddatabase.port=${database.port}" />
+			<arg value="-Ddatabase.name=${database.name}" />
+			<arg value="-Ddatabase.user=${database.user}" />
+			<arg value="-Ddatabase.password=${database.password}" />
+			<arg value="-Ddatabase.url=${database.url}" />
+			<arg value="-Ddatabase.system.url=${database.system.url}" />
+			<arg value="${single-command.deployment.target}" />
+			<arg value="-listener" />
+			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
+			<redirector outputproperty="redirector1.out">
+			</redirector>
+		</exec>
+		<echo message="REDIRECTOR::::${redirector1.out}"/>
+
+		<propertyregex property="task.list"
+		      input="${redirector1.out}"
+		      regexp="(?s).*START FROM THE TASKLISTENER(.*)END FROM THE TASKLISTENER.*$"
+		      select="\1"/>
+
+		<echo message="TASK LIST::::${task.list}"/>		
+		
 	</target>
 
 
@@ -385,7 +413,7 @@
 	</target>
 
 	<target name="test:seleniumrc:stop">
-		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="C:\Documents and Settings\narram\Desktop\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
+		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="${user.home}\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
 		<sleep seconds="10"/>     
 	</target>
 
