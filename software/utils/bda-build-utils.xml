@@ -7340,21 +7340,21 @@ $HeadURL$
 						srcFile="@{application.base.path}/../apptab">
 						<filterchain>
 							<linecontainsregexp>
-								<regexp pattern="^@{logname}:.*"/>
+								<regexp pattern="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"/>
 							</linecontainsregexp>
 						</filterchain>
 					</loadfile>
 					<var name="apptab.user.found" unset="true"/>
 					<propertyregex property="apptab.user.found"
 						input="${apptab.contents}"
-						regexp="^@{logname}:.*"
+						regexp="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
 						select="true"
 						/>
 					<if>
 						<isset property="apptab.user.found"/>
 						<then>
 							<replaceregexp file="@{application.base.path}/../apptab" byline="true"
-								match="^@{logname}.*"
+								match="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
 								replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
 								/>
 						</then>
