@@ -207,7 +207,7 @@ $HeadURL$
 	<if>
 		<equals arg1="${bda.debug}" arg2="true"/>
 		<then>
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 		</then>
 	</if>
 	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
@@ -223,7 +223,7 @@ $HeadURL$
 	<if>
 		<equals arg1="${bda.debug}" arg2="true"/>
 		<then>
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 		</then>
 	</if>
 	<!-- Fix first time build issue -->
@@ -231,7 +231,7 @@ $HeadURL$
 
 	<!-- Targets -->
 	<target name="diagnostics" description="diagnostics">
-		<echoproperties />
+		<echoproperties  > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 		<diagnostics />
 	</target>
 
@@ -412,7 +412,7 @@ $HeadURL$
 	</target>
 
 	<target name="dist:tools:retrieve:jbosscp" unless="jbosscp.tools.exists" description="Downloads JBOSS Cumulative Patch from binary repository and verifies checksum">
-		<echoproperties prefix="jbosscp"/>
+		<echoproperties  prefix="jbosscp"> <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 		<if>
 			<isset property="jbosscp.src.url"/>
 			<then>
@@ -1051,7 +1051,7 @@ $HeadURL$
 			<pathelement location="${database.driver.file}"/>
 		</path>
 	
-		<echoproperties prefix="database"/>
+		<echoproperties  prefix="database"> <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 		<copy todir="${working.dir}/" filtering="true"  overwrite="true">
 			<fileset dir="${db.src.dir}">
 				<include name="**/db-upgrade/**/*"/>
@@ -1123,7 +1123,7 @@ $HeadURL$
 		  * Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install, if you want properties to be used at install time they must be included in a proeprties file.
 		-->
 		<!-- Call macro to deploy files on desired server -->
-		<echoproperties prefix="ssh"/>
+		<echoproperties  prefix="ssh"> <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 		<deploy-files dist.file="${bda-blueprints-webapp.upgrade.zip.file}" />
 		<override-properties-prep
 			override.properties="@{override.properties}"
