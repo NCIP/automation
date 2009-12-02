@@ -666,7 +666,7 @@ $HeadURL$
 		<attribute name="java.check.version.minor" default="1.5.0_10" />
 		<sequential>
 			<!-- Echo the properties for diagnostic purposes -->
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 			<!-- Validate Ant version is 1.7.x -->
 			<echo message="Validating Ant version..." />
 			<condition property="ant.version.success">
@@ -1145,7 +1145,7 @@ $HeadURL$
 		<sequential>
 
 			<!-- Echo the properties for diagnostic purposes -->
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
@@ -1507,7 +1507,7 @@ $HeadURL$
 					<echo message="Validating database connection..." />
 					<switch value="${database.type}">
 						<case value="mysql">
-							<echoproperties prefix="database"/>
+							<echoproperties  prefix="database"> <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 							<if>
 								<equals arg1="@{database.re-create}" arg2="true"/>
 								<then>
@@ -2180,7 +2180,7 @@ $HeadURL$
 								<isset property="db.appuser.works"/>
 								<then>
 									<echo level="debug" message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ##### NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
 								</then>
 								<else>
 									<fail  message="Failed to connect to database TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
@@ -6330,7 +6330,7 @@ $HeadURL$
 			</xmltask>
 			<echo level="debug" message="read.ssl.port = ${read.ssl.port}"/>
 			<echo level="debug" message="read.keystore.file.location = ${read.keystore.file.location}"/>
-			<echo level="debug" message="read.keystore.password = ${read.keystore.password}"/>
+			<echo level="debug" message="read.keystore.password = #####"/>
 			<echo level="debug" message="read.keystore.alias = ${read.keystore.alias}"/>
 			<echo level="debug" message="read.ssl.port = ${read.ssl.port}"/>
 
@@ -7516,7 +7516,7 @@ $HeadURL$
 				database.system.password=@{database.system.password}
 				database.url=@{database.url}
 				database.user=@{database.user}
-				database.password=@{database.password}
+				database.password=#######
 				database.version=@{database.version}
 				database.name=@{database.name}
 				"/>
@@ -7842,7 +7842,7 @@ $HeadURL$
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="propertyfile.backup.location" default="@{application.base.path}/change-logs" />
 		<sequential>
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 			<tstamp>
 				<format property="run.date" pattern="yyMMddHHmm"/>
 			</tstamp>
@@ -8026,7 +8026,7 @@ $HeadURL$
 								<isset property="db.appuser.works"/>
 								<then>
 									<echo level="debug" message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ##### NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
 								</then>
 								<else>
 									<fail  message="Failed to connect to database TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
