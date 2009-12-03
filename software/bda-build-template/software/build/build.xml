@@ -129,6 +129,7 @@ $HeadURL$
 	<property name="tomcat.dest.file" value="${download.dir}/${tomcat.binaries.file}" />
 	<property name="cagrid-libs.dest.file" value="${download.dir}/${cagrid-libs.binaries.file}" />
 	<property name="cagrid-base-war.dest.file" value="${download.dir}/${cagrid-base-war.binaries.file}" />
+	<property name="cagrid-console.dest.file" value="${download.dir}/${cagrid-console.binaries.file}" />
 
 	<!-- Default install time targets passed by deploy targets to the installer, can be overridden by being set on the command line if different target is desitred.  -->
 	<property name="install.target" value="install" />
@@ -264,6 +265,7 @@ $HeadURL$
 		<available file="${tomcat.dest.file}" property="tomcat.tools.exists" />
 		<available file="${cagrid-libs.dest.file}" property="cagrid-libs.tools.exists" />
 		<available file="${cagrid-base-war.dest.file}" property="cagrid-base-war.tools.exists" />
+		<available file="${cagrid-console.dest.file}" property="cagrid-console.tools.exists" />
 		<!-- If jboss is required to build, then check for jboss in jboss.home, then check for in jboss in working directory, if not found then download it into this that directory.  If found at any point set local.jboss.home to where it is found.  This can be passed to sub-projects so then can compile code against distribution.  This is especially important on AntHillPro server which will not have jboss present, thus will have to use a copy in the working area.  This also makes it easier to start the project, if the developer does not yet have jboss installed, build will download it and install it so build can proceed. -->
 		<if>
 			<equals arg1="${require.jboss}" arg2="true" />
@@ -407,6 +409,7 @@ $HeadURL$
 		dist:tools:retrieve:jbosscp,
 		dist:tools:retrieve:tomcat,
 		dist:tools:retrieve:cagrid,
+		dist:tools:retrieve:cagrid-console,
 		dist:tools:retrieve:sync-gts
 		" >
 	</target>
@@ -441,6 +444,32 @@ $HeadURL$
 	<target name="dist:tools:retrieve:cagrid" unless="cagrid-libs.tools.exists" description="Downloads JBOSS from binary repository and verifies checksum">
 		<get src="${cagrid-libs.src.url}" dest="${cagrid-libs.dest.file}" />
 		<get src="${cagrid-base-war.src.url}" dest="${cagrid-base-war.dest.file}" />
+	</target>
+
+	<target name="dist:tools:retrieve:cagrid-console" description="Downloads JBOSS from binary repository and verifies checksum">
+		<if>
+			<not>
+				<available file="${cagrid-console.dest.file}"/>
+			</not>
+			<then>
+				<get src="${cagrid-console.src.url}" dest="${cagrid-console.dest.file}" />
+			</then>
+		</if>
+		<property name="cagrid-console.dist.dir" location="${dist.exploded.dir}/${cagrid-console.dist.relative.dir}"/>
+		<unzip src="${cagrid-console.dest.file}" dest="${dist.exploded.dir}"/>
+		<replaceregexp file="${cagrid-console.dist.dir}/ivy-build.xml" byline="true"
+			match="override=.true."
+			replace=""
+			/>
+		<!--
+		<ant inheritAll="false" inheritRefs="false" 
+			antfile="build.xml"
+			target="deployJBoss"
+			dir="${cagrid-console.dist.dir}"
+			>
+			<property name="jboss.dir" value="${tmp.jboss.dir}"/>
+		</ant>
+		-->
 	</target>
 
 	<target name="dist:tools:retrieve:jboss-bindings"  description="Downloads JBOSS bindings filefrom binary repository and verifies checksum">
