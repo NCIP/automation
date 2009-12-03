@@ -848,11 +848,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.exploded.dir.location','${ccts-caaers.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caaers');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/ccts-suite');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.hostname','ncias-d228-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.jobname','caAERS-PostgresSQL');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','common:init');
