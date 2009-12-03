@@ -39,8 +39,9 @@ public class PropertyLoader {
 
 	private static void loadDatabasePropertiesFromFile(String projectName,
 			Project project) {
-		certLogger.info("Loading database properties ");
+		certLogger.info("Loading database properties from file ");
 		Iterator<Object> it = fileConfig.getKeys(projectName);
+
 		try {
 			while (it.hasNext()) {
 				String keyName = (String) it.next();
