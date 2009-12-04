@@ -205,7 +205,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','install:init');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.use.genericDB','false');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.username','narram');
