@@ -205,7 +205,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','install:init');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.override.properties','upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false')
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.username','narram');
@@ -380,7 +380,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.i
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.project.url','http://gforge.nci.nih.gov/svnroot/ccts/trunk/ccts/codebase');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.project.url','http://gforge.nci.nih.gov/svnroot/ccts-installer/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.build.location','${ccts.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.install.location','working/installer');
@@ -849,11 +849,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.exploded.dir.location','${ccts-caaers.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caaers');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/ccts-suite');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.hostname','ncias-d228-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.jobname','caAERS-PostgresSQL');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','common:init');
