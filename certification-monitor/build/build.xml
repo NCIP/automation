@@ -245,6 +245,11 @@
 			<arg value="${single-command.package.target}" />
 		</exec>
 
+		<override-properties-prep
+			override.properties="${override.properties}"
+			override.properties.string.property.name="override.properties.string"
+			/>
+
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
 			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
@@ -257,6 +262,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
+			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
@@ -271,6 +277,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
+			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />			
 		</exec>
 

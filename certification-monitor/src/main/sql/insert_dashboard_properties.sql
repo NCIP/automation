@@ -31,7 +31,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('force.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ant.minimum.version','1.7.0');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('java.major.version','1.5');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('java.minor.version','1.5.0_10');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('bda.version','1.0.0');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bda.version','1.5.18');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ci.server.name','http://cbvapp-c1006.nci.nih.gov:48080/hudson/job');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.database.type','mysql');
@@ -205,6 +205,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.override.properties','upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false')
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.username','narram');
