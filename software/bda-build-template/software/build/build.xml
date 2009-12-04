@@ -461,6 +461,10 @@ $HeadURL$
 			match="override=.true."
 			replace=""
 			/>
+		<replaceregexp file="${cagrid-console.dist.dir}/ivy-build.xml" byline="true"
+			match="id=.ivy.instance."
+			replace=""
+			/>
 		<!--
 		<ant inheritAll="false" inheritRefs="false" 
 			antfile="build.xml"

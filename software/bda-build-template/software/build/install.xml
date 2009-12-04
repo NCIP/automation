@@ -1173,13 +1173,18 @@ $HeadURL$
 			grid.application.relative.dir="${grid.dir.dest.tomcat}"
 			/>
 		<property name="cagrid-console.dir" location="${basedir}/${cagrid-console.dist.relative.dir}"/>
-		<ant inheritAll="false" inheritRefs="false" 
-			antfile="build.xml"     
-			target="deployTomcat"    
+		<replaceregexp file="${cagrid-console.dir}/ivy-build.xml" byline="true"
+			match="ivy.instance"
+			replace="console-tomcat"
+			/>
+		<echoproperties prefix="ivy"/>
+		<ant inheritAll="false" inheritRefs="false"
+			antfile="build.xml"
+			target="deployTomcat"
 			dir="${cagrid-console.dir}"
-			>                       
+			>
 			<property name="tomcat.dir" value="${tomcat.home}"/>
-		</ant>          
+		</ant>
 
 
 	</target>
@@ -1196,14 +1201,18 @@ $HeadURL$
 			grid.application.relative.dir="${grid.dir.dest.jboss}"
 			/>
 		<property name="cagrid-console.dir" location="${basedir}/${cagrid-console.dist.relative.dir}"/>
-		<ant inheritAll="false" inheritRefs="false" 
-			antfile="build.xml"     
-			target="deployJBoss"    
+		<replaceregexp file="${cagrid-console.dir}/ivy-build.xml" byline="true"
+			match="ivy.instance"
+			replace="console-jboss"
+			/>
+		<ant inheritAll="false" inheritRefs="false"
+			antfile="build.xml"
+			target="deployJBoss"
 			dir="${cagrid-console.dir}"
-			>                       
+			>
 			<property name="jboss.dir" value="${jboss.home}"/>
 			<property name="wsrf.webapp.dir" value="${jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"/>
-		</ant>          
+		</ant>
 		<delete>
 			<fileset dir="${jboss.home}/server/${jboss.server.name}/deploy/wsrf.war/WEB-INF/lib">
 				<include name="commons-logging*.jar"/>
