@@ -379,7 +379,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.i
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.project.url','http://gforge.nci.nih.gov/svnroot/ccts/trunk/ccts/codebase');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.project.url','http://gforge.nci.nih.gov/svnroot/ccts-installer/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.build.location','${ccts.svn.local.checkout}/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.install.location','working/installer');
