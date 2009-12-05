@@ -289,7 +289,12 @@
 	-->
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<delete dir="${user.home}/apps"/>
-		
+	
+		<override-properties-prep
+			override.properties="${override.properties}"
+			override.properties.string.property.name="override.properties.string"
+			/>	
+	
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
 			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
@@ -302,6 +307,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
+			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
@@ -320,6 +326,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
+			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
 			<arg value="-listener" />
 			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
@@ -438,13 +445,20 @@
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<delete dir="${user.home}/apps"/>
 
+		<override-properties-prep
+			override.properties="${override.properties}"
+			override.properties.string.property.name="override.properties.string"
+			/>	
+
 
 		<exec osfamily="unix" executable="ant" dir="${master.install.location}" failonerror="true">
 			<arg value="-Dforce.reinstall=true" />
+			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.install.location}" failonerror="true">			
 			<arg value="-Dforce.reinstall=true" />
+			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
 		</exec>
 
