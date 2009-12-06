@@ -204,7 +204,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.override.properties','upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
