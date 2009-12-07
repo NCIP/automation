@@ -271,6 +271,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('canano
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.install.init.target','install:init');
 
+
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.password','Temp123$');
@@ -901,6 +902,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.properties','exclude.tomcat.backup=true');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.type','postgresql');
