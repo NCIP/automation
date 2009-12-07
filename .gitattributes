@@ -3255,6 +3255,16 @@ software/bda-dashboard/certification-monitor/build/build.xml -text
 software/bda-dashboard/certification-monitor/build/lookup.properties -text
 software/bda-dashboard/certification-monitor/build/project.properties -text
 software/bda-dashboard/certification-monitor/dev-install.properties -text
+software/bda-dashboard/certification-monitor/images/application.png -text
+software/bda-dashboard/certification-monitor/images/applications.png -text
+software/bda-dashboard/certification-monitor/images/clock.png -text
+software/bda-dashboard/certification-monitor/images/database.png -text
+software/bda-dashboard/certification-monitor/images/database_accept.png -text
+software/bda-dashboard/certification-monitor/images/database_remove.png -text
+software/bda-dashboard/certification-monitor/images/note_edit.png -text
+software/bda-dashboard/certification-monitor/images/process.png -text
+software/bda-dashboard/certification-monitor/images/process_accept.png -text
+software/bda-dashboard/certification-monitor/images/process_remove.png -text
 software/bda-dashboard/certification-monitor/install.properties -text
 software/bda-dashboard/certification-monitor/lib/ant-contrib.jar -text
 software/bda-dashboard/certification-monitor/lib/ant-jsch.jar -text
