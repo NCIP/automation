@@ -894,11 +894,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.exploded.dir.location','${ccts-labviewer.svn.local.checkout}/Code/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/labviewer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/ccts-suite');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.hostname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.hostname','ncias-d228-v.nci.nih.gov');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.jobname','LabViewer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.portnumber','48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.install.init.target','install:init');
