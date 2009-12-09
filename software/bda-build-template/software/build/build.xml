@@ -1329,7 +1329,7 @@ $HeadURL$
 			jboss.server.ports.name="ports-01"
 			/>
 	</target>
-	<macrodef name="jboss51-read-ports-std">
+	<macrodef name="jboss51-read-ports-nci">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
