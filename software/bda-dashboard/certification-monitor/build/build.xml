@@ -379,27 +379,16 @@
 	<target name="build:ci-server" depends="init">				
 		<if>
 			<not>
-				<equals arg1="${ci-server.hostname}" arg2=""/>
+				<equals arg1="${ci-server.url}" arg2=""/>
 			</not>
-			<then>
-				<if>
-					<isreachable host="${ci-server.hostname}" timeout="5"/>
-					<then>
-						<echo message="${ci-server.hostname} reached."/>				
-
-						<get src="http://${ci-server.hostname}:${ci-server.portnumber}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
-						
-					</then>
-					<else>
-						<echo message="Could not reach host ${ci-server.hostname}."/>
-					</else>
-				</if>
+			<then>	
+				<get src="{ci-server.url}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
+				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
 			</then>
 			<else>				
-				<echo message="hostname is null "/>
+				<fail message="CI-Server url is null "/>
 			</else>
 		</if>
-		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
 	</target>
 	
 	
