@@ -454,7 +454,7 @@ println privatePropertiesLocation
 			println "Status of the build:" + ciStatusStr	
 			if (ciStatusStr=="Success")
 			{
-				wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
+				wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+project.properties['ci-server.url']+"/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
 				if (sb!= null)
 					wikiStr = wikiStr.append("|"+sb+"]'")
 
@@ -463,7 +463,7 @@ println privatePropertiesLocation
 			}
 			else
 			{
-				wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+"http://"+project.properties['ci-server.hostname']+":48080/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
+				wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+project.properties['ci-server.url']+"/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
 				if (sb!= null)
 					wikiStr = wikiStr.append("|"+sb+"]'")
 
