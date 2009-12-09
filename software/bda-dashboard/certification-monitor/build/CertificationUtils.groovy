@@ -142,9 +142,9 @@ class CertificationUtils
 	       println basedir
 	       try
 	       {
-		       def propertiesDir = new File(basedir +"/"+privatePropertiesLocation + "/properties").getAbsoluteFile()
-		       java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*dev.*upgrade.properties/)
-		       java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*dev.*install.properties/)
+		       def propertiesDir = new File(basedir +"/"+privatePropertiesLocation ).getAbsoluteFile()
+		       java.util.regex.Pattern upgradePattern = java.util.regex.Pattern.compile(/.*upgrade.properties/)
+		       java.util.regex.Pattern installPattern = java.util.regex.Pattern.compile(/.*install.properties/)
 println privatePropertiesLocation
 		       if(propertiesDir.exists())
 		       {		       		

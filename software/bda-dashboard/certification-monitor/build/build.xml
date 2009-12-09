@@ -382,13 +382,15 @@
 				<equals arg1="${ci-server.url}" arg2=""/>
 			</not>
 			<then>	
-				<get src="{ci-server.url}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
+				<echo message="Verifying the job from :${ci-server.url}/hudson/job/${ci-server.jobname}/lastBuild"/>
+				<get src="${ci-server.url}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
 				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
 			</then>
 			<else>				
 				<fail message="CI-Server url is null "/>
 			</else>
 		</if>
+		
 	</target>
 	
 	

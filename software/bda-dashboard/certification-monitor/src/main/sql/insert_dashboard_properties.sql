@@ -46,10 +46,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.exploded.dir.location','${petstore.svn.local.checkout}/trunk/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/petstore');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/petstore/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.url','http://cbvapp-c1007.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.jobname','bda-blueprints-ci');
+
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.install.init.target','install:init');
@@ -61,14 +62,14 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.project.url','http://gforge.nci.nih.gov/svnroot/caarray2/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.location','${caarray.svn.local.checkout}/software');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.location','${caarray.svn.local.checkout}/software/master_build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.exploded.dir.location','${caarray.svn.local.checkout}/software/target');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caarray2');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caarray2/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.url','http://cbvapp-c1003.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.jobname','caarray2-ci');
@@ -88,7 +89,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.exploded.dir.location','${nbia.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/ncia');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/ncia/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.ci-server.url','http://cbv-ciweb-base.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.ci-server.jobname','ncia_ci');
@@ -109,11 +110,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.exploded.dir.location','${cagwas.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cagwas');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cagwas/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.install.init.target','common:init');
@@ -131,11 +131,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('protex
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.exploded.dir.location','${protexpress.svn.local.checkout}/software/install-target/protExpress/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/protexpress');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/protexpress/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
@@ -152,11 +151,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('biopor
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.exploded.dir.location','${bioportal.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/bioportal');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/bioportal/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.install.init.target','install:init');
@@ -173,7 +171,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.exploded.dir.location','${lexevs.svn.local.checkout}/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/lexevs/v5');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/lexevs/v5/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.url','http://nciaas-c112-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.ci-server.jobname','LexEVS.4.3');
@@ -193,13 +191,13 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.si
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.exploded.dir.location','${upt.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/csmupt');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/csmupt/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci-server.url','http://cbvapp-c1002.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.ci-server.jobname','csm-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.override.properties','upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
@@ -214,7 +212,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.sin
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.exploded.dir.location','${po.svn.local.checkout}/code/target');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.url','http://cbvapp-c1005.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.jobname','coppa-po-ci-full');
@@ -234,7 +232,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.exploded.dir.location','${caintegrator2.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/cai2');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/cai2/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.url','http://cbvapp-c1004.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.ci-server.jobname','caintegrator2-ci');
@@ -255,14 +253,14 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('canano
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.exploded.dir.location','${cananolab.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cananolab');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cananolab/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.install.init.target','install:init');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.username','narram');
@@ -276,7 +274,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.sin
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.exploded.dir.location','${pa.svn.local.checkout}/software/target');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.ci-server.url','http://cbvapp-c1005.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.ci-server.jobname','pa-bda-ci');
@@ -296,11 +294,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('rembra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.exploded.dir.location','${rembrandt.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/rembrandt');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/rembrandt/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.install.init.target','install:init');
@@ -317,7 +314,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.exploded.dir.location','${cabio.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cabio/cabioapi');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cabio/cabioapi/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.url','http://ncias-d185-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.jobname','cabioapi');
@@ -338,11 +335,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.exploded.dir.location','${ispy.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ispy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ispy/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.install.init.target','install:init');
@@ -359,11 +355,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.exploded.dir.location','${cpas.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cpas');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cpas/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.install.init.target','install:init');
@@ -380,11 +375,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.exploded.dir.location','${ccts.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ccts');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ccts/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.install.init.target','install:init');
@@ -401,11 +395,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.exploded.dir.location','${tcga.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/tcga');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/tcga/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.install.init.target','install:init');
@@ -426,7 +419,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.install.init.target','common:init');
@@ -448,7 +440,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.install.init.target','common:init');
@@ -470,7 +461,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.install.init.target','common:init');
@@ -492,7 +482,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.install.init.target','common:init');
@@ -514,7 +503,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.install.init.target','common:init');
@@ -536,7 +524,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.install.init.target','common:init');
@@ -558,7 +545,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.install.init.target','common:init');
@@ -580,7 +566,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.install.init.target','common:init');
@@ -604,7 +589,6 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.install.init.target','common:init');
@@ -665,11 +649,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('catiss
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.exploded.dir.location','${catissue.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/catissue');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/catissue/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.install.init.target','install:init');
@@ -686,11 +669,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.exploded.dir.location','${cab2b.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cab2b');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cab2b/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.install.init.target','install:init');
@@ -707,11 +689,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.exploded.dir.location','${cagrid.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cagrid');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cagrid/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.install.init.target','install:init');
@@ -728,7 +709,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.exploded.dir.location','${ncit.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ncit');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ncit/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.url','http://ncias-d171-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.jobname','ncitbrowser-nightly');
@@ -750,13 +731,14 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.exploded.dir.location','${reportwriter.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/reportwriter');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/reportwriter/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.url','http://ncias-d171-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.jobname','reportwriter');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.optional.features','build:check-commandline-installer');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.username','narram');
@@ -770,11 +752,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('genepa
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.exploded.dir.location','${genepattern.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/genepattern');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/genepattern/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.install.init.target','install:init');
@@ -792,11 +773,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.exploded.dir.location','${ctods.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ctods');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ctods/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.install.init.target','install:init');
@@ -814,7 +794,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.exploded.dir.location','${ccts-c3pr.svn.local.checkout}/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/c3pr');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/c3pr/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.ci-server.url','http://ncias-d228-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.ci-server.jobname','C3PR-PostgresSQL');
@@ -842,6 +822,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.properties','tomcat.hostname=localhost');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.database.type','mysql');
@@ -856,7 +837,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.exploded.dir.location','${ccts-caXchange.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caxchange');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caxchange/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.ci-server.url','http://ncias-d228-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.ci-server.jobname','caBIGIntegrationHub');
@@ -877,14 +858,14 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.exploded.dir.location','${ccts-labviewer.svn.local.checkout}/Code/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/labviewer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/ccts-suite');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.portnumber','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.url','http://ncias-d228-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.ci-server.jobname','LabViewer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.properties','application.base.path.linux=${user.home}/apps/labviewer,exclude.tomcat.backup=true,tomcat.grid.secure.enable=false');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.type','postgresql');
@@ -901,9 +882,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.exploded.dir.location','${ccts-psc.svn.local.checkout}/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.svn.private.url','http://gforge.nci.nih.gov/svn/scm-private/trunk/psc');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.url','ncias-d228-v.nci.nih.gov');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.jobname','PSC%20trunk%20matrix%20%28external%29');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.portnumber','48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.url','https://ctms-ci.nubic.northwestern.edu');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.ci-server.jobname','PSC%20stable%20matrix');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.install.init.target','install:init');
@@ -912,20 +892,19 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk/sdk-toolkit');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk/sdk-toolkit/example-project/');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exploded.dir.location','${cacoresdk.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cacoresdk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cacoresdk/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','install:init');
@@ -942,11 +921,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ct
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.exploded.dir.location','${pro-ctcae.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/pro-ctcae');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/pro-ctcae/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.ci-server.jobname','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.ci-server.portnumber','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.install.init.target','install:init');
