@@ -62,7 +62,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.project.url','http://gforge.nci.nih.gov/svnroot/caarray2/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.location','${caarray.svn.local.checkout}/software');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.location','${caarray.svn.local.checkout}/software/master_build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.package.target','dist:installer:prep');
