@@ -145,30 +145,37 @@ $HeadURL$
 			<then>
 				<!-- Read some port properties from standard bindings file -->
 				<echo message="Using JBoss NCICB Standard port configurations"/>
-				<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
 				<if>
 					<equals arg1="${jboss.major.version}" arg2="4"/>
 					<then>
+						<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
 						<jboss-read-ports
 							jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
 							/>
+						<jboss-bindings-validate
+							jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
+					/>
 					</then>
-					<elsif>
+					<elseif>
 						<equals arg1="${jboss.major.version}" arg2="5"/>
 						<then>
-							<jboss51-read-ports
-								jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
+							<property name="jboss.server.bindingfile.location" value="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"/>
+							<property name="temp.bindings.file" value="${temp.dir}/unmodified-bindings-jboss-beans.xml"/>
+							<copy tofile="${temp.bindings.file}" file="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/unmodified-bindings-jboss-beans.xml"/>
+							<jboss51-bindings-nci
+								jboss.server.bindingfile.location="${temp.bindings.file}"
 								/>
+							<jboss51-read-ports-nci
+								jboss.server.bindingfile.location="${temp.bindings.file}"
+								/>
+						</then>
+					</elseif>
+				</if>
 				<echo message="http -${jboss.server.port} "/>
 				<echo message="http -${jboss.server.jndi.port} "/>
 				<properties-exist
 					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.server.ports.name"
 					/>
-				<!-- Make sure there are not unexpanded tokens and that the jboss.server.ports.name is a configuration in the bindings file. -->
-				<jboss-bindings-validate
-					jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
-					/>
-
 			</then>
 			<else>
 				<!-- else ensure that all ports are set, since these will be removed from install-properties.template we will verify here.  They have to be removed so the validator works with or without the properties or we have to change the format of the file. -->
@@ -1476,12 +1483,12 @@ $HeadURL$
 		<jboss-read-ldapconfig
 			jboss.home="${read.jboss.home}"
 			/>
-		<jboss-read-bindings-file-location
-			jboss.home="${read.jboss.home}"
-			/>
 		<if>
 			<equals arg1="${jboss.major.version}" arg2="4"/>
 			<then>
+				<jboss-read-bindings-file-location
+					jboss.home="${read.jboss.home}"
+					/>
 				<jboss-read-ports
 					/>
 			</then>
@@ -1489,8 +1496,10 @@ $HeadURL$
 		<if>
 			<equals arg1="${jboss.major.version}" arg2="5"/>
 			<then>
-				<jboss51-read-ports
-				/>
+				<jboss51-read-default-portconfig
+					/>
+				<jboss51-read-ports-nci
+					/>
 			</then>
 		</if>
 		<!-- Setting this variable will cause install to copy it into place if using CM/DAC, not modified in NCM -->

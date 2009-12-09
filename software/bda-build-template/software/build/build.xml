@@ -1478,4 +1478,11 @@ $HeadURL$
 			<var name="read.properties.list" value="${read.properties.list},${jboss-read-ports.properties.list}"/>
 		</sequential>
 	</macrodef>
+	<target name="temp:binding">
+		<jboss51-bindings-nci
+			jboss.server.bindingfile.location="bindings-jboss-beans.xml"
+			jboss.server.ports.name="ports-ssaska"
+			jboss.port.offset="10000"
+			/>
+	</target>
 </project>
