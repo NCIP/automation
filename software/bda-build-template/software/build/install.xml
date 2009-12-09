@@ -146,9 +146,19 @@ $HeadURL$
 				<!-- Read some port properties from standard bindings file -->
 				<echo message="Using JBoss NCICB Standard port configurations"/>
 				<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
-				<jboss-read-ports
-					jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
-					/>
+				<if>
+					<equals arg1="${jboss.major.version}" arg2="4"/>
+					<then>
+						<jboss-read-ports
+							jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
+							/>
+					</then>
+					<elsif>
+						<equals arg1="${jboss.major.version}" arg2="5"/>
+						<then>
+							<jboss51-read-ports
+								jboss.server.bindingfile.location="${jboss.server.binding.template.location}"
+								/>
 				<echo message="http -${jboss.server.port} "/>
 				<echo message="http -${jboss.server.jndi.port} "/>
 				<properties-exist
