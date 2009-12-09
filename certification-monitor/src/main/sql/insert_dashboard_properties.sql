@@ -68,7 +68,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.exploded.dir.location','${caarray.svn.local.checkout}/software/target');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.exploded.dir.location','${caarray.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caarray2/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.url','http://cbvapp-c1003.nci.nih.gov:48080');
