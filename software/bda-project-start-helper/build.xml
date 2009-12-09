@@ -13,6 +13,7 @@
 
 
 	<property name="working.dir" location="${basedir}/target"/>
+	<property name="target.dir" location="${working.dir}"/>
 	<property name="lib.dir" location="${working.dir}/lib" />
 	<property name="template.exploded.dir" location="${bda.template.dir}"/>
 	<property name="template.working.dir" location="${working.dir}/templates-working"/>
@@ -22,7 +23,7 @@
 
 
 	<property name="bda.version" value="${bda.template.version}"/>
-	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
 	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
 
 	<mkdir dir="${working.dir}"/>
@@ -31,11 +32,24 @@
 	<mkdir dir="${template.working.dir}"/>
 
 	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	<condition property="commonlibrary.dir" value="">
+		<or>            
+			<os family="unix" />
+			<os family="mac" />     
+		</or>           
+	</condition>
+
+	<condition property="commonlibrary.dir" value="c:/">
+		<os family="windows" />
+	</condition>
 
 	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
 		<property name="bda.version" value="${bda.version}" />
 		<property name="bda-utils.dir" location="${bda-utils.dir}" />
 		<property name="lib.dir" location="${lib.dir}" />
+		<property name="software.dir" location="${software.dir}" />
+		<property name="commonlibrary.dir" location="${commonlibrary.dir}" />
+		<property name="target.dir" location="${target.dir}"/>
 	</ant>
 
 	<path id="bda-utils.classpath">
