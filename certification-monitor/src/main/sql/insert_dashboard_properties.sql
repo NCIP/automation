@@ -50,11 +50,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.url','http://cbvapp-c1007.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.jobname','bda-blueprints-ci');
-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:private-repository-properties.macro.list','svn');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:database-integration.macro.list','database-install');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.type','mysql');
@@ -76,6 +76,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.svn.username','narram');
@@ -138,6 +139,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('protex
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.username','narram');
@@ -158,6 +160,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('biopor
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.username','narram');
@@ -178,6 +181,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.build:database-integration.macro.list','database-install');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.username','narram');
@@ -322,6 +327,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.username','narram');
