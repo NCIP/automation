@@ -75,7 +75,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.jobname','caarray2-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','common:init');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.svn.username','narram');
