@@ -895,6 +895,26 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.install.init.target','install:init');
 
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.database.type','oracle');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.project.url','https://ncisvn.nci.nih.gov/svn/c3dtools/trunk/clinicalConnector');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.build.location','${ccts-clinicalconnector.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.exploded.dir.location','${ccts-clinicalconnector.svn.local.checkout}/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.private.url','http://gforge.nci.nih.gov/svn/scm-private/trunk/psc');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.url','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.username','narram');
