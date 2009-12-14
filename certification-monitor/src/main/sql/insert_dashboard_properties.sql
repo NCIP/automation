@@ -594,8 +594,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.exploded.dir.location','${cadsr.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/cadsr');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.url','http://cbvapp-c1006.nci.nih.gov:48080');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.jobname','cadsr');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.url','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.install.init.target','common:init');
