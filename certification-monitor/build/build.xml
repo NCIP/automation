@@ -391,7 +391,7 @@
 			<else>
 				<fail message="CI SERVER NOT REACHABLE"/>
 			<else>
-		<if>	
+		</if>	
 	</target>
 	
 	
