@@ -105,7 +105,7 @@ class BuildStatusUpdater {
 
 			if(!checkValiedBdaRevision(bdaEnabled))
 			{	
-				if(bdaEnabled!= null  && bdaEnabledStr.length() != 0 && !bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(x)"))
+				if(bdaEnabled!= null  && bdaEnabled.length() != 0 && !bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(x)"))
 				{
 					replaceBdaEnabledString = bdaEnabled.replace(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")), "(!)");
 				}
