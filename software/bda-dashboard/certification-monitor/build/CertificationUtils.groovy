@@ -132,6 +132,7 @@ class CertificationUtils
 					project.setProperty("certification.property.value",parsedDate);
 				}
 			}
+		}
 	       catch(Exception ex)
 	       {
 		       ant.fail("PROJECT CI JOB VERIFICATION FAILED")
