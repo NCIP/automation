@@ -98,7 +98,11 @@
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.template.file)=.*" replace="\1=${certification.template.file}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.space)=.*" replace="\1=${certification.page.space}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.file)=.*" replace="\1=${certification.page.file}" />
-		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.release.version)=.*" replace="\1=${dashboard.release.version}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.release.version)=.*" replace="\1=${dashboard.release.version}" />		
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.hostname)=.*" replace="\1=${mail.hostname}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.portnumber)=.*" replace="\1=${mail.portnumber}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.send.address)=.*" replace="\1=${mail.send.address}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.additional.recipients)=.*" replace="\1=${mail.additional.recipients}" />
 	</target>
 
 
