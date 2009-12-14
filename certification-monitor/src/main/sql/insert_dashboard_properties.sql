@@ -873,6 +873,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.properties','application.base.path.linux=${user.home}/apps/labviewer,exclude.tomcat.backup=true,tomcat.grid.secure.enable=false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.optional.features','build:check-commandline-installer');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.type','postgresql');
