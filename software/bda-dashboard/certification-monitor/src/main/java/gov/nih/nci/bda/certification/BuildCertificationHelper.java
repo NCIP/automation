@@ -210,7 +210,7 @@ public class BuildCertificationHelper {
 				else if(bmb.isSystemsWaiver())
 					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_SYSTEMS_WAIVER,projectName,BuildCertificationConstants.WAIVER_MESSAGE));
 				else
-					invokeSetMethodValue(pbs,methodName,BuildCertificationConstants.WIKI_SUCCESSFUL);
+					invokeSetMethodValue(pbs,methodName,getWikiLinkTip(BuildCertificationConstants.WIKI_SUCCESSFUL,projectName,BuildCertificationConstants.SUCCESSFUL_MESSAGE));
 		    	//update the project URL on update
 		    	setProductValue(pbs,projectUrl);
 		    	session.update(pbs);
