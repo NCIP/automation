@@ -379,7 +379,7 @@
 	<target name="build:ci-server" depends="init">				
 		<echo message="Verifying the job from :${ci-server.url}/hudson/job/${ci-server.jobname}/lastBuild"/>
 		<get src="${ci-server.url}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
-		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>		
+		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
 	</target>
 	
 	
