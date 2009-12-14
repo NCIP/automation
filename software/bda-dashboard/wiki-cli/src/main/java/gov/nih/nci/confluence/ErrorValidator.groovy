@@ -48,7 +48,7 @@ class ErrorValidator {
 			{
 				
 				println "bda enabled string:: " + bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|"))
-				if(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+				if(bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 				{				
 					if (!singleCommandBuild.equals("(/)"))
 					{
@@ -107,7 +107,7 @@ class ErrorValidator {
 				{
 				     println (" Beta Message :: " +bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")))
 				     
-					if (bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
+					if (bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
 					{
 						mailString = mailString + properties.getProperty("mail.beta.version")
 						if (!singleCommandBuild.equals("(/)"))
