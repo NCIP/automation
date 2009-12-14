@@ -383,14 +383,14 @@
 		</condition>
 		<echo message="CI server valied? :: ${ci-server.valid}"/>
 		<if>
-			<isset property="jboss.home"/>
+			<isset property="ci-server.valid"/>
 			<then>
 				<get src="${ci-server.url}/hudson/job/${ci-server.jobname}/lastBuild" dest="${master.build.location}/ciBuildLog.xml"/>
 				<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="parseAndFormatDate"/>
 			</then>
 			<else>
 				<fail message="CI SERVER NOT REACHABLE"/>
-			<else>
+			</else>
 		</if>	
 	</target>
 	
