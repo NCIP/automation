@@ -105,7 +105,7 @@ class BuildStatusUpdater {
 
 			if(!checkValiedBdaRevision(bdaEnabled))
 			{	
-				if(bdaEnabled!= null && !bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(x)"))
+				if(bdaEnabled!= null  && bdaEnabledStr.length() != 0 && !bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(x)"))
 				{
 					replaceBdaEnabledString = bdaEnabled.replace(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")), "(!)");
 				}
@@ -174,7 +174,7 @@ class BuildStatusUpdater {
 	{		
 		try
 		{	
-			if(bdaEnabledStr!= null && bdaEnabledStr.substring(bdaEnabledStr.indexOf("[")+1, bdaEnabledStr.indexOf("|")).equals("(/)"))
+			if(bdaEnabledStr!= null && bdaEnabledStr.length() != 0 && bdaEnabledStr.substring(bdaEnabledStr.indexOf("[")+1, bdaEnabledStr.indexOf("|")).equals("(/)"))
 			{
 				String str = bdaEnabledStr.substring(bdaEnabledStr.lastIndexOf('|')+1,bdaEnabledStr.lastIndexOf(']'));
 				if(getMajorMinorRevision(str)<Double.valueOf(properties.getProperty("bda.version.check")))
