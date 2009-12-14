@@ -50,11 +50,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.url','http://cbvapp-c1007.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.ci-server.jobname','bda-blueprints-ci');
-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:private-repository-properties.macro.list','svn');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:database-integration.macro.list','database-install');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.type','mysql');
@@ -68,14 +68,16 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.exploded.dir.location','${caarray.svn.local.checkout}/software/target');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.exploded.dir.location','${caarray.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/caarray2/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.url','http://cbvapp-c1003.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.ci-server.jobname','caarray2-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.override.properties','application.base.path=${user.home}/apps/caarray');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.svn.username','narram');
@@ -138,6 +140,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('protex
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.username','narram');
@@ -158,6 +161,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('biopor
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.username','narram');
@@ -178,6 +182,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.build:database-integration.macro.list','database-install');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.svn.username','narram');
@@ -322,6 +328,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.build:database-integration.macro.list','database-install');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.username','narram');
@@ -822,7 +829,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','common:init');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.properties','tomcat.hostname=localhost');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.override.properties','tomcat.hostname=localhost');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.database.type','mysql');
@@ -888,6 +895,26 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.install.init.target','install:init');
 
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.database.type','oracle');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.project.url','https://ncisvn.nci.nih.gov/svn/c3dtools/trunk/clinicalConnector');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.build.location','${ccts-clinicalconnector.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.exploded.dir.location','${ccts-clinicalconnector.svn.local.checkout}/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.private.url','http://gforge.nci.nih.gov/svn/scm-private/trunk/psc');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.url','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.use.genericDB','false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.username','narram');
