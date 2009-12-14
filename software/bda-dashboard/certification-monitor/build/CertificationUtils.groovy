@@ -115,22 +115,28 @@ class CertificationUtils
 	void formatAndSetDate ()
 	{
 
-		def latestCIBuild=project.properties['latest.build.dir']
+	       def latestCIBuild=project.properties['latest.build.dir']
+	       try
+	       {
+			def ant = new AntBuilder()
+			def format = new SimpleDateFormat("yyyy-MM-dd");
+			def formatter = new SimpleDateFormat("EEE, dd MMM yyyy");
 
-		def ant = new AntBuilder()
-		def format = new SimpleDateFormat("yyyy-MM-dd");
-		def formatter = new SimpleDateFormat("EEE, dd MMM yyyy");
-
-		latestCIBuild.split('_').eachWithIndex {processToken, i -> 
-		if(i == 0)
-			{
-				Date dtConverted = format.parse(processToken);
-				println("Time Stamp Format" + dtConverted)
-				def parsedDate = formatter.format(dtConverted);
-				println("Time Stamp Format" + parsedDate);
-				project.setProperty("certification.property.value",parsedDate);
+			latestCIBuild.split('_').eachWithIndex {processToken, i -> 
+			if(i == 0)
+				{
+					Date dtConverted = format.parse(processToken);
+					println("Time Stamp Format" + dtConverted)
+					def parsedDate = formatter.format(dtConverted);
+					println("Time Stamp Format" + parsedDate);
+					project.setProperty("certification.property.value",parsedDate);
+				}
 			}
-		}
+	       catch(Exception ex)
+	       {
+		       ant.fail("PROJECT CI JOB VERIFICATION FAILED")
+	       }
+
 	}
 
 
