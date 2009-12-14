@@ -119,7 +119,13 @@ public class BuildCertificationHelper {
     		if(!bmb.isValue())
     			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,certificationStatus);
     		else
-    			pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
+    		{
+    			if(!bmb.isBuildSuccessful())
+    				pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,certificationStatus);
+    			else
+    				pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
+    		}
+    			
 	}
 
 	private void setProductValue(ProjectCertificationStatus pbs,
