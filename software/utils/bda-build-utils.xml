@@ -3480,7 +3480,7 @@ $HeadURL$
 			</for>
 		</sequential>
 	</macrodef>
-	<macrodef name="secure-jboss-console" description="Diagnose the host system before the installation">
+	<macrodef name="secure-jboss41-console" description="Diagnose the host system before the installation">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
@@ -7269,114 +7269,50 @@ $HeadURL$
 					<equals arg1="${nci.env}" arg2="true"/>
 				</and>
 				<then>
-					<echo message="Setting up jboss-nci-customizations (this system is Unix or Mac)"/>
-					<filterset id="@{filterset.name}">
-						<filter token="application.base.path" value="@{application.base.path}"/>
-						<filter token="project.name" value="@{project.name}"/>
-						<filter token="jboss.home" value="@{jboss.home}"/>
-						<filter token="env.LOGNAME" value="@{logname}"/>
-						<filter token="jboss.server.name" value="@{jboss.server.name}"/>
-						<filter token="env.JAVA_HOME" value="@{java.home}"/>
-						<filter token="jboss.server.jndi.port" value="@{jboss.server.jndi.port}"/>
-					</filterset>
-					<mkdir dir="@{jboss.home}/server/@{jboss.server.name}/bin"/>
-					<copy todir="@{jboss.home}/server/@{jboss.server.name}/bin">
-								<filterset refid="@{filterset.name}"/>
-						<fileset dir="${bda-utils.resource.dir}/ncicb/jboss-custom/bin">
-							<include name="*"/>
-						</fileset>
-					</copy>
-
-					<chmod dir="@{jboss.home}/server/@{jboss.server.name}/bin" perm="ug+x" includes="*"/>
-					<jboss-configure-java_opts
-						jboss.bin.dir="@{jboss.home}/bin"
-						jboss.java.opts="@{jboss.java.opts}"
-						/>
-					<copy tofile="@{jboss.home}/server/@{jboss.server.name}/conf/log4j.xml" file="${bda-utils.resource.dir}/ncicb/jboss-custom/conf/log4j.xml" overwrite="true"/>
-					<if>
-						<equals arg1="@{database.type}" arg2="oracle"/>
-						<then>
-							<echo message="Database.type is oracle, setting pad=true"/>
-							<var name="read.pad" unset="true"/>
-							<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
-								<xmlcatalog refid="bda.xml.catalog"/>
-								<copy path="/server/mbean[@code='org.jboss.tm.XidFactory']/attribute[@name='Pad']/text()" property="read.pad"/>
-							</xmltask>
-
-							<var name="pad.is.set" unset="true"/>
-							<propertyregex property="pad.is.set"
-								input="${read.pad}"
-								regexp="^[^\$]\S+"
-								select="\0"
-								/>
-							<echo message="read.pad = ${read.pad}"/>
-							<if>
-								<not>
-									<isset property="pad.is.set"/>
-								</not>
-								<then>
-									<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
-										<xmlcatalog refid="bda.xml.catalog"/>
-										<insert path="/server/mbean[@code='org.jboss.tm.XidFactory']">
-											<![CDATA[ <attribute name="Pad">true</attribute>]]>
-										</insert>
-									</xmltask>
-								</then>
-								<else>
-									<echo message="Pad already set"/>
-								</else>
-							</if>
-						</then>
-						<else>
-							<echo message="Database.type is not oracle, skipping pad"/>
-						</else>
-					</if>
-							<!-- Write to apptab -->
-					<switch value="@{start.jboss}">
-						<case value="Y"/>
-						<case value="N"/>
-						<!-- not supported
-						<case value="y"/>
-						<case value="n"/>
-						-->
-						<default>
-							<fail message="start.jboss must be Y/N or y/n"/>
-						</default>
-					</switch>
-					<if>
-						<not>
-							<available file="@{application.base.path}/../apptab"/>
-						</not>
-						<then>
-							<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
-						</then>
-					</if>
-					<loadfile
-						property="apptab.contents"
-						srcFile="@{application.base.path}/../apptab">
-						<filterchain>
-							<linecontainsregexp>
-								<regexp pattern="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"/>
-							</linecontainsregexp>
-						</filterchain>
-					</loadfile>
-					<var name="apptab.user.found" unset="true"/>
-					<propertyregex property="apptab.user.found"
-						input="${apptab.contents}"
-						regexp="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
-						select="true"
+					<jboss-version
+						jboss.home="@{jboss.home}"
+						jboss.version.property.name="jboss-ncic.version"
+						jboss.major.version.property.name="jboss-ncic.major.version"
+						jboss.minor.version.property.name="jboss-ncic.minor.version"
+						jboss.patch.version.property.name="jboss-ncic.patch.version"
 						/>
 					<if>
-						<isset property="apptab.user.found"/>
+						<equals arg1="${jboss-ncic.major.version}" arg2="4"/>
 						<then>
-							<replaceregexp file="@{application.base.path}/../apptab" byline="true"
-								match="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
-								replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
+							<jboss41-nci-customizations
+								jboss.home="@{jboss.home}" 
+								jboss.server.name="@{jboss.server.name}" 
+								application.base.path="@{application.base.path}" 
+								project.name="@{project.name}" 
+								logname="@{logname}" 
+								java.home="@{java.home}" 
+								jboss.server.jndi.port="@{jboss.server.jndi.port}" 
+								filterset.name="@{filterset.name}" 
+								jboss.java.opts="@{jboss.java.opts}" 
+								database.type="@{database.type}" 
+								start.jboss="@{start.jboss}" 
+								env.name="@{env.name}" 
 								/>
 						</then>
-						<else>
-							<echo append="true" file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
-						</else>
+					</if>
+					<if>
+						<equals arg1="${jboss-ncic.major.version}" arg2="5"/>
+						<then>
+							<jboss51-nci-customizations
+								jboss.home="@{jboss.home}" 
+								jboss.server.name="@{jboss.server.name}" 
+								application.base.path="@{application.base.path}" 
+								project.name="@{project.name}" 
+								logname="@{logname}" 
+								java.home="@{java.home}" 
+								jboss.server.jndi.port="@{jboss.server.jndi.port}" 
+								filterset.name="@{filterset.name}" 
+								jboss.java.opts="@{jboss.java.opts}" 
+								database.type="@{database.type}" 
+								start.jboss="@{start.jboss}" 
+								env.name="@{env.name}" 
+								/>
+						</then>
 					</if>
 				</then>
 				<else>
@@ -8543,16 +8479,18 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss-version">
-		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
+		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.version.property.name" default="jboss.version"/>
 		<attribute name="jboss.major.version.property.name" default="jboss.major.version"/>
 		<attribute name="jboss.minor.version.property.name" default="jboss.minor.version"/>
 		<attribute name="jboss.patch.version.property.name" default="jboss.patch.version"/>
 		<sequential>
+			<var name="jboss.version.dir" unset="true"/>
+			<basename file="@{jboss.home}" property="jboss.version.dir"/>
 			<echo message="Determining JBoss Version"/>
 			<var name="@{jboss.version.property.name}" unset="true"/>
 			<propertyregex property="@{jboss.version.property.name}"
-				input="@{jboss.binaries.relative.dir}"
+				input="${jboss.version.dir}"
 				regexp="(\d+\.\d+\.\d+).*"
 				select="\1"
 				/>
@@ -8560,21 +8498,21 @@ $HeadURL$
 
 			<var name="@{jboss.major.version.property.name}" unset="true"/>
 			<propertyregex property="@{jboss.major.version.property.name}"
-				input="@{jboss.binaries.relative.dir}"
+				input="${jboss.version.dir}"
 				regexp="(\d+)\.\d+\.\d+.*"
 				select="\1"
 				/>
 			<echo message="JBoss major version is ${@{jboss.major.version.property.name}}"/>
 			<var name="@{jboss.minor.version.property.name}" unset="true"/>
 			<propertyregex property="@{jboss.minor.version.property.name}"
-				input="@{jboss.binaries.relative.dir}"
+				input="${jboss.version.dir}"
 				regexp="\d+\.(\d+)\.\d+.*"
 				select="\1"
 				/>
 			<echo message="JBoss minor version is ${@{jboss.minor.version.property.name}}"/>
 			<var name="@{jboss.patch.version.property.name}" unset="true"/>
 			<propertyregex property="@{jboss.patch.version.property.name}"
-				input="@{jboss.binaries.relative.dir}"
+				input="${jboss.version.dir}"
 				regexp="\d+\.\d+\.(\d+).*"
 				select="\1"
 				/>
@@ -8582,16 +8520,18 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="tomcat-version">
-		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
 		<attribute name="tomcat.version.property.name" default="tomcat.version"/>
 		<attribute name="tomcat.major.version.property.name" default="tomcat.major.version"/>
 		<attribute name="tomcat.minor.version.property.name" default="tomcat.minor.version"/>
 		<attribute name="tomcat.patch.version.property.name" default="tomcat.patch.version"/>
 		<sequential>
+			<var name="tomcat.version.dir" unset="true"/>
+			<basename file="@{tomcat.home}" property="tomcat.version.dir"/>
 			<echo message="Determining Tomcat Version"/>
 			<var name="@{tomcat.version.property.name}" unset="true"/>
 			<propertyregex property="@{tomcat.version.property.name}"
-				input="@{tomcat.binaries.relative.dir}"
+				input="${tomcat.version.dir}"
 				regexp="(\d+\.\d+\.\d+).*"
 				select="\1"
 				/>
@@ -8599,21 +8539,21 @@ $HeadURL$
 
 			<var name="@{tomcat.major.version.property.name}" unset="true"/>
 			<propertyregex property="@{tomcat.major.version.property.name}"
-				input="@{tomcat.binaries.relative.dir}"
+				input="${tomcat.version.dir}"
 				regexp="(\d+)\.\d+\.\d+.*"
 				select="\1"
 				/>
 			<echo message="Tomcat major version is ${@{tomcat.major.version.property.name}}"/>
 			<var name="@{tomcat.minor.version.property.name}" unset="true"/>
 			<propertyregex property="@{tomcat.minor.version.property.name}"
-				input="@{tomcat.binaries.relative.dir}"
+				input="${tomcat.version.dir}"
 				regexp="\d+\.(\d+)\.\d+.*"
 				select="\1"
 				/>
 			<echo message="Tomcat minor version is ${@{tomcat.minor.version.property.name}}"/>
 			<var name="@{tomcat.patch.version.property.name}" unset="true"/>
 			<propertyregex property="@{tomcat.patch.version.property.name}"
-				input="@{tomcat.binaries.relative.dir}"
+				input="${tomcat.version.dir}"
 				regexp="\d+\.\d+\.(\d+).*"
 				select="\1"
 				/>
@@ -9164,6 +9104,467 @@ $HeadURL$
 				/>
 			<echo message="read.default=${read.default}"/>
 			<property name="@{jboss.server.ports.name.property.name}" value="${read.default}"/>
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss41-nci-customizations" description="deploys customized jboss management files, this target only works for linux">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="project.name" default="${project.name}"/>
+		<attribute name="logname" default="${env.LOGNAME}"/>
+		<attribute name="java.home" default="${env.JAVA_HOME}"/>
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="filterset.name" default="jboss.nci.custom"/>
+		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
+		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="start.jboss" default="Y"/>
+		<attribute name="env.name" default="${env.name}"/>
+		<sequential>
+			<echo message="Setting up jboss-nci-customizations (this system is Unix or Mac)"/>
+			<filterset id="@{filterset.name}">
+				<filter token="application.base.path" value="@{application.base.path}"/>
+				<filter token="project.name" value="@{project.name}"/>
+				<filter token="jboss.home" value="@{jboss.home}"/>
+				<filter token="env.LOGNAME" value="@{logname}"/>
+				<filter token="jboss.server.name" value="@{jboss.server.name}"/>
+				<filter token="env.JAVA_HOME" value="@{java.home}"/>
+				<filter token="jboss.server.jndi.port" value="@{jboss.server.jndi.port}"/>
+			</filterset>
+			<mkdir dir="@{jboss.home}/server/@{jboss.server.name}/bin"/>
+			<copy todir="@{jboss.home}/server/@{jboss.server.name}/bin">
+						<filterset refid="@{filterset.name}"/>
+				<fileset dir="${bda-utils.resource.dir}/ncicb/jboss-custom/bin">
+					<include name="*"/>
+				</fileset>
+			</copy>
+
+			<chmod dir="@{jboss.home}/server/@{jboss.server.name}/bin" perm="ug+x" includes="*"/>
+			<jboss-configure-java_opts
+				jboss.bin.dir="@{jboss.home}/bin"
+				jboss.java.opts="@{jboss.java.opts}"
+				/>
+			<copy tofile="@{jboss.home}/server/@{jboss.server.name}/conf/log4j.xml" file="${bda-utils.resource.dir}/ncicb/jboss-custom/conf/log4j.xml" overwrite="true"/>
+			<if>
+				<equals arg1="@{database.type}" arg2="oracle"/>
+				<then>
+					<echo message="Database.type is oracle, setting pad=true"/>
+					<var name="read.pad" unset="true"/>
+					<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<copy path="/server/mbean[@code='org.jboss.tm.XidFactory']/attribute[@name='Pad']/text()" property="read.pad"/>
+					</xmltask>
+
+					<var name="pad.is.set" unset="true"/>
+					<propertyregex property="pad.is.set"
+						input="${read.pad}"
+						regexp="^[^\$]\S+"
+						select="\0"
+						/>
+					<echo message="read.pad = ${read.pad}"/>
+					<if>
+						<not>
+							<isset property="pad.is.set"/>
+						</not>
+						<then>
+							<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-service.xml">
+								<xmlcatalog refid="bda.xml.catalog"/>
+								<insert path="/server/mbean[@code='org.jboss.tm.XidFactory']">
+									<![CDATA[ <attribute name="Pad">true</attribute>]]>
+								</insert>
+							</xmltask>
+						</then>
+						<else>
+							<echo message="Pad already set"/>
+						</else>
+					</if>
+				</then>
+				<else>
+					<echo message="Database.type is not oracle, skipping pad"/>
+				</else>
+			</if>
+			<setup-apptab
+				jboss.home="@{jboss.home}"
+				jboss.server.name="@{jboss.server.name}"
+				application.base.path="@{application.base.path}"
+				logname="@{logname}"
+				start.jboss="@{start.jboss}"
+				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss51-nci-customizations" description="deploys customized jboss management files, this target only works for linux">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="project.name" default="${project.name}"/>
+		<attribute name="logname" default="${env.LOGNAME}"/>
+		<attribute name="java.home" default="${env.JAVA_HOME}"/>
+		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="filterset.name" default="jboss.nci.custom"/>
+		<attribute name="jboss.java.opts" default="${jboss.java.opts}"/>
+		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="start.jboss" default="Y"/>
+		<attribute name="env.name" default="${env.name}"/>
+		<sequential>
+			<echo message="Setting up jboss-nci-customizations (this system is Unix or Mac)"/>
+			<filterset id="@{filterset.name}">
+				<filter token="application.base.path" value="@{application.base.path}"/>
+				<filter token="project.name" value="@{project.name}"/>
+				<filter token="jboss.home" value="@{jboss.home}"/>
+				<filter token="env.LOGNAME" value="@{logname}"/>
+				<filter token="jboss.server.name" value="@{jboss.server.name}"/>
+				<filter token="env.JAVA_HOME" value="@{java.home}"/>
+				<filter token="jboss.server.port" value="@{jboss.server.port}"/>
+				<filter token="jboss.server.jndi.port" value="@{jboss.server.jndi.port}"/>
+			</filterset>
+			<copy todir="@{jboss.home}/bin">
+						<filterset refid="@{filterset.name}"/>
+				<fileset dir="${bda-utils.resource.dir}/ncicb/jboss51-custom">
+					<include name="*"/>
+				</fileset>
+			</copy>
+			<!-- insert load init.conf into JBOSS_HOME/bin/*.sh -->
+			<var name="flist" unset="true"/>
+			<property name="flist" value="run.sh,shutdown.sh"/>
+			<for list="${flist}" param="file">
+				<sequential>
+					<var name="sh.file" unset="true"/>
+					<var name="file.customized" unset="true"/>
+					<property name="sh.file" value="@{jboss.home}/bin/@{file}"/>
+					<groovy>
+						File shFile = new File(properties["sh.file"])
+						List lines = shFile.readLines()
+						if(lines.grep("NCI Additions"))
+						{
+						properties["file.customized"]="true"
+						}
+					</groovy>
+					<if>
+						<not>
+							<equals arg1="${file.customized}" arg2="true"/>
+						</not>
+						<then>
+							<echo message="${sh.file} is being customized for NCI Tier configuration"/>
+							<copy file="${sh.file}" tofile="${sh.file}.orig"/>
+							<replaceregexp file="${sh.file}" byline="true"
+								match="GREP=&quot;grep&quot;"
+								replace="GREP=&quot;grep&quot;${line.separator}##############NCI additions${line.separator}## NCI additions${line.separator}INIT_CONF=&quot;$DIRNAME/init.conf&quot;${line.separator}if [ -r &quot;$INIT_CONF&quot; ]; then${line.separator}. &quot;$INIT_CONF&quot;${line.separator}else${line.separator}echo &quot;${PROGNAME}: Missing init.conf! exiting...&quot;${line.separator}exit 1${line.separator}fi${line.separator}## end NCI additions${line.separator}"
+								/>
+						</then>
+						<else>
+							<echo message="${sh.file} already customized"/>
+						</else>
+					</if>
+				</sequential>
+			</for>
+			<var name="sh.file" unset="true"/>
+			<var name="file.customized" unset="true"/>
+			<property name="sh.file" value="@{jboss.home}/bin/run.sh"/>
+			<groovy>
+				File shFile = new File(properties["sh.file"])
+				List lines = shFile.readLines()
+				if(lines.grep("NCI Additions"))
+				{
+				properties["file.customized"]="true"
+				}
+			</groovy>
+			<if>
+				<not>
+					<equals arg1="${file.customized}" arg2="true"/>
+				</not>
+				<then>
+					<echo message="${sh.file} is being customized for NCI Tier configuration"/>
+					<copy file="${sh.file}" tofile="${sh.file}.orig"/>
+					<replaceregexp file="${sh.file}" byline="true"
+						match="org.jboss.Main &quot;\$\@&quot;$"
+						replace="org.jboss.Main &quot;$\@&quot;${line.separator}# NCI Additions${line.separator}JBOSS_PID=$!${line.separator}echo $JBOSS_PID > $yyyJBOSS_HOMEzzz/bin/$yyyJBOSS_CONF_BASEzzz.pid${line.separator}# END NCI Additions${line.separator}"
+						/>
+					<replaceregexp file="${sh.file}" byline="true"
+						match="xxx"
+						replace="$"
+						flags="g"
+						/>
+					<replaceregexp file="${sh.file}" byline="true"
+						match="yyy"
+						replace="\{"
+						flags="g"
+						/>
+					<replaceregexp file="${sh.file}" byline="true"
+						match="zzz"
+						replace="\}"
+						flags="g"
+						/>
+				</then>
+				<else>
+					<echo message="${sh.file} already customized"/>
+				</else>
+			</if>
+			<!-- remove daily appender add size appender -->
+			<var name="log4j.file" unset="true"/>
+			<var name="file.customized" unset="true"/>
+			<property name="log4j.file" value="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml"/>
+			<groovy>
+				File log4jFile = new File(properties["log4j.file"])
+				List lines = log4jFile.readLines()
+				if(lines.grep("NCI Additions"))
+				{
+				properties["file.customized"]="true"
+				}
+			</groovy>
+			<if>
+				<not>
+					<equals arg1="${file.customized}" arg2="true"/>
+				</not>
+				<then>
+					<echo message="${log4j.file} is being customized for NCI Tier configuration"/>
+					<copy file="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" tofile="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml.nci"/>
+			                
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml"
+						byline="true"           
+						match="^(&lt;!DOCTYPE.*)"
+						replace="&lt;!\-\-\1\-\-&gt;"
+						/>                      
+		
+					<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<remove	path="/log4j:configuration/appender[@class='org.jboss.logging.appender.DailyRollingFileAppender']"/>
+					</xmltask>
+					<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<insert path="log4j:configuration/appender[@class='org.apache.log4j.ConsoleAppender']" position="before">
+							<![CDATA[
+							<!-- NCI Additions -->
+							<!-- A size based file rolling appender -->
+							<appender name="FILE" class="org.jboss.logging.appender.RollingFileAppender">
+								<errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+								<param name="File" value="${jboss.server.log.dir}/server.log"/>
+								<param name="Append" value="True"/>
+								<param name="MaxFileSize" value="${log4j.maxFileSize}"/>
+								<param name="MaxBackupIndex" value="${log4j.maxDays}"/>
+								<layout class="org.apache.log4j.PatternLayout">
+									<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+								</layout>
+							</appender>
+							]]>
+						</insert>
+					</xmltask>
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml"
+						byline="true"
+						match="^&lt;!\-\-(&lt;!DOCTYPE.*)\-\-&gt;"
+						replace="\1"
+						/>
+					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml"
+						byline="true"
+						match="^(&lt;log4j:configuration.*)"
+						replace="\1${line.separator}&lt;!-- NCI Additions --&gt;"
+						/>
+				</then>
+				<else>
+					<echo message="${log4j.file} is already customized for NCI Tier configuration"/>
+				</else>
+			</if>
+			<!-- App Tab -->
+			<setup-apptab
+				jboss.home="@{jboss.home}"
+				jboss.server.name="@{jboss.server.name}"
+				application.base.path="@{application.base.path}"
+				logname="@{logname}"
+				start.jboss="@{start.jboss}"
+				/>
+		</sequential>
+	</macrodef>
+	<macrodef name="setup-apptab" description="">
+		<attribute name="jboss.home" default="${jboss.home}" />
+		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="logname" default="${env.LOGNAME}"/>
+		<attribute name="start.jboss" default="Y"/>
+		<sequential>
+			<!-- Write to apptab -->
+			<switch value="@{start.jboss}">
+				<case value="Y"/>
+				<case value="N"/>
+				<!-- not supported
+				<case value="y"/>
+				<case value="n"/>
+				-->
+				<default>
+					<fail message="start.jboss must be Y/N or y/n"/>
+				</default>
+			</switch>
+			<if>
+				<not>
+					<available file="@{application.base.path}/../apptab"/>
+				</not>
+				<then>
+					<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+				</then>
+			</if>
+			<loadfile
+				property="apptab.contents"
+				srcFile="@{application.base.path}/../apptab">
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"/>
+					</linecontainsregexp>
+				</filterchain>
+			</loadfile>
+			<var name="apptab.user.found" unset="true"/>
+			<propertyregex property="apptab.user.found"
+				input="${apptab.contents}"
+				regexp="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
+				select="true"
+				/>
+			<if>
+				<isset property="apptab.user.found"/>
+				<then>
+					<replaceregexp file="@{application.base.path}/../apptab" byline="true"
+						match="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
+						replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
+						/>
+				</then>
+				<else>
+							<echo append="true" file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="secure-jboss-console" description="Diagnose the host system before the installation">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
+		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
+		<sequential>
+			<var name="jboss-sec.version" unset="true"/>
+			<var name="jboss-sec.major.version" unset="true"/>
+			<var name="jboss-sec.minor.version" unset="true"/>
+			<var name="jboss-sec.patch.version" unset="true"/>
+
+			<jboss-version
+				jboss.home="@{jboss.home}"
+				jboss.version.property.name="jboss-sec.version"
+				jboss.major.version.property.name="jboss-sec.major.version"
+				jboss.minor.version.property.name="jboss-sec.minor.version"
+				jboss.patch.version.property.name="jboss-sec.patch.version"
+				/>
+			<if>
+				<equals arg1="${jboss-sec.major.version}" arg2="4"/>
+				<then>
+					<secure-jboss41-console
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.web.user="@{jboss.web.user}"
+						jboss.web.password="@{jboss.web.password}"
+						/>
+				</then>
+			</if>
+			<if>
+				<equals arg1="${jboss-sec.major.version}" arg2="5"/>
+				<then>
+					<secure-jboss51-console
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.web.user="@{jboss.web.user}"
+						jboss.web.password="@{jboss.web.password}"
+						/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+	<macrodef name="secure-jboss51-console" description="Diagnose the host system before the installation">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
+		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
+		<sequential>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove	path="/jboss-web/security-domain"/>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<insert path="/jboss-web" position="under">
+					<![CDATA[
+					<security-domain>java:/jaas/jmx-console</security-domain>
+					]]>
+				</insert>
+			</xmltask>
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss51-encrypt-passwd">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.server.keystore.location" default="@{jboss.home}/keystore/server.keystore"/>
+		<attribute name="jboss.server.keystore.pass" default="jboss51pass"/>
+		<attribute name="jboss.server.keystore.alias" default="jboss510"/>
+		<attribute  name="messaging.sucker.password" default="password"/>
+		<sequential>
+			<var name="jboss.server.keystore.dir" unset="true"/>
+			<dirname file="@{jboss.server.keystore.location}" property="jboss.server.keystore.dir"/>
+			<mkdir dir="${jboss.server.keystore.dir}"/>
+			<if>
+				<not>
+					<available file="@{jboss.server.keystore.location}"/>
+				</not>
+				<then>
+					<echo message="@{jboss.server.keystore.location} NOT found, generating."/>
+					<var name="keytool.output" unset="true"/>
+					<var name="keytool.error" unset="true"/>
+					<var name="keytool.result" unset="true"/>
+					<var name="passwordtool.file" value="@{jboss.home}/bin/password_tool.sh"/>
+					<var name="mess.pass" value="@{messaging.sucker.password}"/>
+					<var name="keystore.location" value="@{jboss.server.keystore.location}"/>
+					<var name="keystore.alias" value="@{jboss.server.keystore.alias}"/>
+					<var name="keystore.pass" value="@{jboss.server.keystore.pass}"/>
+					<exec executable="keytool" outputproperty="keytool.output" errorproperty="keytool.error" resultproperty="keytool.result">
+						<arg line="-genkey -alias ${keystore.alias} -keyalg RSA -dname &quot;CN=NCI Computer Services,OU=NCICB,O=National Cancer Institute,L=Rockville,ST=Maryland,C=US&quot; -keystore ${keystore.location} -storepass ${keystore.pass} -validity 3650"/>
+					</exec>
+					<if>
+						<not>
+							<equals arg1="${keytool.result}" arg2="0"/>
+						</not>
+						<then>
+							<fail message="keytool failed - ${keytool.output} ${keytool.error}"/>
+						</then>
+					</if>
+					<!-- removed from above -keypass $PASSWORD$ -->
+					<groovy>
+						import expectj.*
+						// Create a new ExpectJ object with a timeout of 5s
+						ExpectJ expectinator = new ExpectJ(15);
+						// Fork the process
+						Spawn shell = expectinator.spawn(properties["passwordtool.file"]);
+						// Talk to it
+						shell.send("0\n");
+						shell.expect("Enter Keystore password");
+						shell.send(properties["keystore.pass"] + "\n");
+						shell.expect("Enter Salt");
+						shell.send("allyourbasebelongtous\n");
+						shell.expect("Enter Iterator Count");
+						shell.send("1234\n");
+						shell.expect("5:Exit");
+						shell.send("1\n");
+						shell.expect("Enter Keystore location including the file name");
+						shell.send(properties["keystore.location"] + "\n");
+						shell.expect("Enter Keystore alias");
+						shell.send(properties["keystore.alias"] + "\n");
+						shell.expect("5:Exit");
+						shell.send("2\n");
+						shell.expect("Enter security domain");
+						shell.send("messaging\n");
+						shell.expect("Enter passwd");
+						shell.send(properties["mess.pass"] + "\n");
+						shell.expect("5:Exit");
+						shell.send("5\n");
+
+						//shell.expect("");
+						//shell.send(properties[""] + "\n");
+						// Done!
+					</groovy>
+				</then>
+				<else>
+					<echo message="@{jboss.server.keystore.location} found."/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 </project>
