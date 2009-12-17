@@ -9476,21 +9476,86 @@ $HeadURL$
 		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
 		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
 		<sequential>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove	path="/jboss-web/security-domain"/>
 			</xmltask>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<insert path="/jboss-web" position="under">
 					<![CDATA[
-					<security-domain>java:/jaas/jmx-console</security-domain>
+					 <security-domain>java:/jaas/jmx-console</security-domain>
 					]]>
 				</insert>
 			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove	path="/jboss-web/security-domain"/>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<insert path="/jboss-web" position="under">
+					<![CDATA[
+					 <security-domain>java:/jaas/jmx-console</security-domain>
+					]]>
+				</insert>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove	path="/web-webapp/security-constraint"/>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<insert path="/web-app/login-config" position="before">
+					<![CDATA[
+					<security-constraint>
+						<web-resource-collection>
+							<web-resource-name>HtmlAdaptor</web-resource-name>
+							<description>An example security config that only allows users with the
+								role JBossAdmin to access the HTML JMX console web application
+							</description>
+							<url-pattern>/*</url-pattern>
+							<http-method>GET</http-method>
+							<http-method>POST</http-method>
+						</web-resource-collection>
+						<auth-constraint>
+							<role-name>JBossAdmin</role-name>
+						</auth-constraint>
+					</security-constraint>
+
+					]]>
+				</insert>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove	path="/web-app/security-constraint"/>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<insert path="/web-app/login-config" position="before">
+					<![CDATA[
+					<security-constraint>
+						<web-resource-collection>
+							<web-resource-name>HtmlAdaptor</web-resource-name>
+							<description>An example security config that only allows users with the
+								role JBossAdmin to access the HTML JMX console web application
+							</description>
+							<url-pattern>/*</url-pattern>
+							<http-method>GET</http-method>
+							<http-method>POST</http-method>
+						</web-resource-collection>
+						<auth-constraint>
+							<role-name>JBossAdmin</role-name>
+						</auth-constraint>
+					</security-constraint>
+
+					]]>
+				</insert>
 		</sequential>
 	</macrodef>
-	<macrodef name="jboss51-encrypt-passwd">
+		</sequential>
+	</macrodef>
+	<macrodef name="jboss51-encrypt-messaging-passwd">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.keystore.location" default="@{jboss.home}/keystore/server.keystore"/>
@@ -9565,6 +9630,20 @@ $HeadURL$
 					<echo message="@{jboss.server.keystore.location} found."/>
 				</else>
 			</if>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/messaging/messaging-jboss-beans.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/messaging/messaging-jboss-beans.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove	path="/jboss-web/security-domain"/>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<insert path="/jboss-web" position="under">
+					<![CDATA[
+					<security-domain>java:/jaas/jmx-console</security-domain>
+					]]>
+				</insert>
+			</xmltask>
+		</sequential>
+	</macrodef>
 		</sequential>
 	</macrodef>
 </project>
