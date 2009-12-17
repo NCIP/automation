@@ -32,9 +32,14 @@
     
     <!-- Ivy -->
     <property name="ivy.jar" location="${software.dir}/target/lib/ivy-2.0.0.jar" />
+    <!-- use for the old ivy repository
     <property name="ivy.settings.file" location="${common.dir}/ivy/ivy-settings.xml" />
+    -->
+    <!-- Use for the new ivy repository-->
+    <property name="ivy.settings.file" location="${common.dir}/ivy/cbiit-ivy-settings.xml" />
     <!--<property name="ivy.def.file" location="ivy-sub-project.xml" />-->
-    <property name="ivy.static.def.file" location="${common.dir}/ivy/ivy-test.xml" />
+    <!--<property name="ivy.static.def.file" location="${common.dir}/ivy/ivy-test.xml" />-->
+    <property name="ivy.static.def.file" location="${build.dir}/ivy-blueprints.xml" />
 
     <property name="local.repo.dir" location="${software.dir}/local-ivy-repo" />
     <property name="bda-utils.dir" location="${software.dir}/target/bda-utils" />

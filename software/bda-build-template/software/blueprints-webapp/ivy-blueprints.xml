@@ -27,7 +27,11 @@
 		<dependency org="javancss" name="javancss" rev="29.50" conf="test-javancss->default" />
 		<dependency org="checkstyle" name="checkstyle" rev="5.0" conf="test-checkstyle->default" />
 		<dependency org="redhill" name="simian" rev="2.2.4" conf="test-simian->default" />
-		<dependency org="pmd" name="pmd" rev="4.2.5" conf="test-pmd->default" />
+		<dependency org="pmd" name="pmd" rev="4.2.5" transitive="true" conf="test-pmd->*" />
+		<!--
+		<dependency org="jaxen" name="jaxen" rev="1.1.1" conf="test-pmd->default"/>
+		<dependency org="asm" name="asm" rev="3.1" conf="test-pmd->default"/>
+		-->
 		<!-- Still in ivy -->
 		<dependency org="fitnesse" name="fitnesse" rev="20080812" conf="test-acceptance->master" />
 		<dependency org="fitnesse" name="webfixture" rev="1.0" conf="test-acceptance->master" />

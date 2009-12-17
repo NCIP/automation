@@ -1062,7 +1062,7 @@ $HeadURL$
 				<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
 				<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
-				<property name="database.schema" value="${database.name}"/>
+				<property name="database.schema" value="${database.user}"/>
 			</case>
 			<case value="mysql">
 				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
@@ -1483,6 +1483,15 @@ $HeadURL$
 			jboss.server.bindingfile.location="bindings-jboss-beans.xml"
 			jboss.server.ports.name="ports-ssaska"
 			jboss.port.offset="10000"
+			/>
+	</target>
+	<target name="temp:nci">
+		<jboss51-nci-customizations
+			/>
+	</target>
+	<target name="temp:enc">
+		<delete file="${jboss.home}/keystore/server.keystore"/>
+		<jboss51-encrypt-passwd
 			/>
 	</target>
 </project>
