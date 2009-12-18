@@ -283,7 +283,7 @@
 
 	</target>
 
-	<target name="build:single-command-upgrade" depends="init">
+	<target name="build:remote-upgrade" depends="init">
 			<override-properties-prep
 				override.properties="${override.properties}"
 				override.properties.string.property.name="override.properties.string"
@@ -312,11 +312,6 @@
 			<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
 				<arg value="-Dproperties.file=upgrade.properties" />
 				<arg value="-Dforce.reinstall=true" />
-				<arg value="-Dssh.server.username=bdauser"/>
-				<arg value="-Dssh.server.hostname=cbvapp-c1007.nci.nih.gov"/>
-				<arg value="-Dssh.port=22"/>
-				<arg value="-Dssh.key.file=${user.home}/.ssh/id_dsa"/>
-				<arg value="-Dssh.dir.temp=${user.home}/remote-deploy"/>
 				<arg value="-Ddatabase.system.user=${database.system.user}" />
 				<arg value="-Ddatabase.system.password=${database.system.password}" />
 				<arg value="-Ddatabase.server=${database.server}" />
