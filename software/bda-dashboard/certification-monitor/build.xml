@@ -184,7 +184,7 @@
 	<echo message="HOME is: ${env.HOME}" />
 	<target name="update:build:schedule">
 		<echo message="match : (&lt;spec&gt;).*(&lt;/spec&gt;)"/>
-		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\110 07 * * *\2"  byline="true">
+		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\130 14 * * *\2"  byline="true">
    			 <fileset dir="${env.HOME}/hudson_data/jobs" includes="certify*/config.xml"/>
 		</replaceregexp>
 	</target>
