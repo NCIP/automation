@@ -7270,18 +7270,18 @@ $HeadURL$
 						<equals arg1="${jboss-ncic.major.version}" arg2="4"/>
 						<then>
 							<jboss41-nci-customizations
-								jboss.home="@{jboss.home}" 
-								jboss.server.name="@{jboss.server.name}" 
-								application.base.path="@{application.base.path}" 
-								project.name="@{project.name}" 
-								logname="@{logname}" 
-								java.home="@{java.home}" 
-								jboss.server.jndi.port="@{jboss.server.jndi.port}" 
-								filterset.name="@{filterset.name}" 
-								jboss.java.opts="@{jboss.java.opts}" 
-								database.type="@{database.type}" 
-								start.jboss="@{start.jboss}" 
-								env.name="@{env.name}" 
+								jboss.home="@{jboss.home}"
+								jboss.server.name="@{jboss.server.name}"
+								application.base.path="@{application.base.path}"
+								project.name="@{project.name}"
+								logname="@{logname}"
+								java.home="@{java.home}"
+								jboss.server.jndi.port="@{jboss.server.jndi.port}"
+								filterset.name="@{filterset.name}"
+								jboss.java.opts="@{jboss.java.opts}"
+								database.type="@{database.type}"
+								start.jboss="@{start.jboss}"
+								env.name="@{env.name}"
 								/>
 						</then>
 					</if>
@@ -7289,18 +7289,18 @@ $HeadURL$
 						<equals arg1="${jboss-ncic.major.version}" arg2="5"/>
 						<then>
 							<jboss51-nci-customizations
-								jboss.home="@{jboss.home}" 
-								jboss.server.name="@{jboss.server.name}" 
-								application.base.path="@{application.base.path}" 
-								project.name="@{project.name}" 
-								logname="@{logname}" 
-								java.home="@{java.home}" 
-								jboss.server.jndi.port="@{jboss.server.jndi.port}" 
-								filterset.name="@{filterset.name}" 
-								jboss.java.opts="@{jboss.java.opts}" 
-								database.type="@{database.type}" 
-								start.jboss="@{start.jboss}" 
-								env.name="@{env.name}" 
+								jboss.home="@{jboss.home}"
+								jboss.server.name="@{jboss.server.name}"
+								application.base.path="@{application.base.path}"
+								project.name="@{project.name}"
+								logname="@{logname}"
+								java.home="@{java.home}"
+								jboss.server.jndi.port="@{jboss.server.jndi.port}"
+								filterset.name="@{filterset.name}"
+								jboss.java.opts="@{jboss.java.opts}"
+								database.type="@{database.type}"
+								start.jboss="@{start.jboss}"
+								env.name="@{env.name}"
 								/>
 						</then>
 					</if>
@@ -9307,13 +9307,13 @@ $HeadURL$
 				<then>
 					<echo message="${log4j.file} is being customized for NCI Tier configuration"/>
 					<copy file="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" tofile="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml.nci"/>
-			                
+
 					<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml"
-						byline="true"           
+						byline="true"
 						match="^(&lt;!DOCTYPE.*)"
 						replace="&lt;!\-\-\1\-\-&gt;"
-						/>                      
-		
+						/>
+
 					<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<remove	path="/log4j:configuration/appender[@class='org.jboss.logging.appender.DailyRollingFileAppender']"/>
@@ -9540,10 +9540,71 @@ $HeadURL$
 							<role-name>JBossAdmin</role-name>
 						</auth-constraint>
 					</security-constraint>
+					]]>
+				</insert>
+			</xmltask>
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/admin-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/admin-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove	path="/:web-webapp/:security-constraint"/>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/admin-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/admin-console.war/WEB-INF/web.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<insert path="/:web-app/:login-config" position="before">
+					<![CDATA[
+					<security-constraint>
+						<web-resource-collection>
+							<web-resource-name>HtmlAdaptor</web-resource-name>
+							<description>An example security config that only allows users with the
+								role JBossAdmin to access the HTML JMX console web application
+							</description>
+							<url-pattern>/*</url-pattern>
+							<http-method>GET</http-method>
+							<http-method>POST</http-method>
+						</web-resource-collection>
+						<auth-constraint>
+							<role-name>JBossAdmin</role-name>
+						</auth-constraint>
+					</security-constraint>
 
 					]]>
 				</insert>
 			</xmltask>
+			<if>
+				<equals arg1="@{jboss.ssl.enable}" arg2="true"/>
+				<then>
+					<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<insert path="/web-app/security-constraint" position="under">
+							<![CDATA[
+							<user-data-constraint>
+								<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+							</user-data-constraint>
+							]]>
+						</insert>
+					</xmltask>
+					<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<insert path="/web-app/security-constraint" position="under">
+							<![CDATA[
+							<user-data-constraint>
+								<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+							</user-data-constraint>
+							]]>
+						</insert>
+					</xmltask>
+					<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/admin-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/admin-console.war/WEB-INF/web.xml">
+						<xmlcatalog refid="bda.xml.catalog"/>
+						<insert path="/web-app/security-constraint" position="under">
+							<![CDATA[
+							<user-data-constraint>
+								<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+							</user-data-constraint>
+							]]>
+						</insert>
+					</xmltask>
+				</then>
+			</if>
+
 			<!-- Clean bogus xmlns="" -->
 			<echo message="Cleaning bogus xmlns=&quot;&quot;"/>
 			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml"
@@ -9554,7 +9615,10 @@ $HeadURL$
 				match="xmlns=&quot;&quot;"
 				replace=""
 				flags="g" byline="true"/>
-
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/admin-console.war/WEB-INF/web.xml"
+				match="xmlns=&quot;&quot;"
+				replace=""
+				flags="g" byline="true"/>
 
 			<!-- copy in web-console files-->
 			<var name="web-console.classes.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes"/>
@@ -9567,8 +9631,8 @@ $HeadURL$
 					<copy todir="${jboss.props.dir}">
 						<fileset dir="${web-console.classes.dir}">
 							<include name="web-console-*.properties"/>
-						</fileset>                      
-					</copy>                 
+						</fileset>
+					</copy>
 				</then>
 			</if>
 
@@ -9606,7 +9670,7 @@ $HeadURL$
 						writeBuffer=writeBuffer + line + "\n"
 						}
 						}
-						if (! matchFound) 
+						if (! matchFound)
 						{
 						writeBuffer=writeBuffer + user + "=" + pass + "\n"
 						}
@@ -9638,7 +9702,7 @@ $HeadURL$
 						writeBuffer=writeBuffer + line + "\n"
 						}
 						}
-						if (! matchFound) 
+						if (! matchFound)
 						{
 						writeBuffer=writeBuffer + user + "=JBossAdmin,HttpInvoker\n"
 						}
