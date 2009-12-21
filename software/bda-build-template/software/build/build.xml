@@ -1478,20 +1478,13 @@ $HeadURL$
 			<var name="read.properties.list" value="${read.properties.list},${jboss-read-ports.properties.list}"/>
 		</sequential>
 	</macrodef>
-	<target name="temp:binding">
-		<jboss51-bindings-nci
-			jboss.server.bindingfile.location="bindings-jboss-beans.xml"
-			jboss.server.ports.name="ports-ssaska"
-			jboss.port.offset="10000"
-			/>
-	</target>
-	<target name="temp:nci">
-		<jboss51-nci-customizations
+	<target name="temp:sec">
+		<secure-jboss51-console
 			/>
 	</target>
 	<target name="temp:enc">
 		<delete file="${jboss.home}/keystore/server.keystore"/>
-		<jboss51-encrypt-passwd
+		<jboss51-encrypt-messaging-passwd
 			/>
 	</target>
 </project>

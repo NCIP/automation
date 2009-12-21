@@ -564,6 +564,8 @@ $HeadURL$
 					jboss.server.ports.name="PortsDefaultBindings"
 					proxy.update.connector.port.ssl="${jboss.ssl.port}"
 					/>
+				<jboss51-encrypt-messaging-passwd
+					/>
 			</then>
 		</if>
 	</target>
