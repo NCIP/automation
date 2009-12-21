@@ -956,3 +956,23 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ct
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.install.init.target','install:init');
+
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.project.url','https://ncisvn.nci.nih.gov/svn/caadapter/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.master.build.location','${caAdapter.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.exploded.dir.location','${caAdapter.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caAdapter/properties');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.url','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','install:init');
