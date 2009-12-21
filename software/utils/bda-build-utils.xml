@@ -5489,23 +5489,13 @@ $HeadURL$
 						</else>
 					</if>
 
-					<if>
-						<not>
-							<isset property="jboss.is.51"/>
-						</not>
-						<then>
-							<echo message="Adding user and password to JBoss console apps"/>
-							<secure-jboss-console
-								jboss.home="@{jboss.home}"
-								jboss.server.name="@{jboss.server.name}"
-								jboss.web.user="@{jboss.web.user}"
-								jboss.web.password="@{jboss.web.password}"
-								/>
-						</then>
-						<else>
-							<echo message="Skipping securing console because jboss is 5.1"/>
-						</else>
-					</if>
+					<echo message="Adding user and password to JBoss console apps"/>
+					<secure-jboss-console
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.web.user="@{jboss.web.user}"
+						jboss.web.password="@{jboss.web.password}"
+						/>
 
 					<echo message="Updating JBoss shutdown.jar to allow shutdown without command line args"/>
 					<jboss-update-shutdown
@@ -9449,6 +9439,7 @@ $HeadURL$
 			<if>
 				<equals arg1="${jboss-sec.major.version}" arg2="4"/>
 				<then>
+					<echo message="Securing the WEB console for JBoss 4"/>
 					<secure-jboss41-console
 						jboss.home="@{jboss.home}"
 						jboss.server.name="@{jboss.server.name}"
@@ -9460,6 +9451,7 @@ $HeadURL$
 			<if>
 				<equals arg1="${jboss-sec.major.version}" arg2="5"/>
 				<then>
+					<echo message="Securing the WEB console for JBoss 5"/>
 					<secure-jboss51-console
 						jboss.home="@{jboss.home}"
 						jboss.server.name="@{jboss.server.name}"
@@ -9476,7 +9468,7 @@ $HeadURL$
 		<attribute name="jboss.web.user" default="${jboss.web.user}"/>
 		<attribute name="jboss.web.password" default="${jboss.web.password}"/>
 		<sequential>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml">
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/jboss-web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove	path="/jboss-web/security-domain"/>
 			</xmltask>
@@ -9488,25 +9480,25 @@ $HeadURL$
 					]]>
 				</insert>
 			</xmltask>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove	path="/jboss-web/security-domain"/>
 			</xmltask>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
-				<insert path="/jboss-web" position="under">
+				<insert path="/jboss-web/depends" position="before">
 					<![CDATA[
-					 <security-domain>java:/jaas/jmx-console</security-domain>
+					<security-domain>java:/jaas/web-console</security-domain>
 					]]>
 				</insert>
 			</xmltask>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml">
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
-				<remove	path="/web-webapp/security-constraint"/>
+				<remove	path="/:web-webapp/:security-constraint"/>
 			</xmltask>
 			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
-				<insert path="/web-app/login-config" position="before">
+				<insert path="/:web-app/:login-config" position="before">
 					<![CDATA[
 					<security-constraint>
 						<web-resource-collection>
@@ -9526,11 +9518,11 @@ $HeadURL$
 					]]>
 				</insert>
 			</xmltask>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<remove	path="/web-app/security-constraint"/>
 			</xmltask>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss.web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
 				<insert path="/web-app/login-config" position="before">
 					<![CDATA[
@@ -9551,8 +9543,110 @@ $HeadURL$
 
 					]]>
 				</insert>
-		</sequential>
-	</macrodef>
+			</xmltask>
+			<!-- Clean bogus xmlns="" -->
+			<echo message="Cleaning bogus xmlns=&quot;&quot;"/>
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/web.xml"
+				match="xmlns=&quot;&quot;"
+				replace=""
+				flags="g" byline="true"/>
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-console.war/WEB-INF/web.xml"
+				match="xmlns=&quot;&quot;"
+				replace=""
+				flags="g" byline="true"/>
+
+
+			<!-- copy in web-console files-->
+			<var name="web-console.classes.dir" value="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes"/>
+			<var name="jboss.props.dir" value="@{jboss.home}/server/@{jboss.server.name}/conf/props"/>
+			<if>
+				<not>
+					<available file="${jboss.props.dir}/web-console-users.properties"/>
+				</not>
+				<then>
+					<copy todir="${jboss.props.dir}">
+						<fileset dir="${web-console.classes.dir}">
+							<include name="web-console-*.properties"/>
+						</fileset>                      
+					</copy>                 
+				</then>
+			</if>
+
+			<!-- fix reference to web.xml files -->
+			<var name="login-config.xml" value="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"/>
+			<echo message="Updating ${login-config.xml}"/>
+
+			<replaceregexp file="${login-config.xml}"
+				match="web-console-"
+				replace="props\/web-console-"
+				flags="g" byline="true"/>
+
+			<!-- Cleanup users -->
+			<var name="file.user.pass.list" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-users.properties::@{jboss.web.user}::@{jboss.web.password},@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-users.properties::@{jboss.web.user}::@{jboss.web.password}"/>
+			<for list="${file.user.pass.list}" param="file.user.pass.item">
+				<sequential>
+					<var name="file.user.pass" value="@{file.user.pass.item}"/>
+					<groovy>
+						List tempList=properties["file.user.pass"].split("::")
+						println tempList
+						File userFile = new File(tempList[0])
+						String user=tempList[1]
+						String pass=tempList[2]
+						Boolean matchFound=false
+						String writeBuffer=""
+						List lines = userFile.readLines()
+						lines.each
+						{ line ->
+						if (line.matches("^"+user+"=.*"))
+						{
+						matchFound=true
+						writeBuffer=writeBuffer + user + "=" + pass + "\n"
+						} else
+						{
+						writeBuffer=writeBuffer + line + "\n"
+						}
+						}
+						if (! matchFound) 
+						{
+						writeBuffer=writeBuffer + user + "=" + pass + "\n"
+						}
+						println writeBuffer
+						userFile.write(writeBuffer)
+					</groovy>
+				</sequential>
+			</for>
+			<var name="file.user.list" value="@{jboss.home}/server/@{jboss.server.name}/conf/props/jmx-console-roles.properties::@{jboss.web.user},@{jboss.home}/server/@{jboss.server.name}/conf/props/web-console-roles.properties::@{jboss.web.user}"/>
+			<for list="${file.user.list}" param="file.user.item">
+				<sequential>
+					<var name="file.user" value="@{file.user.item}"/>
+					<groovy>
+						List tempList=properties["file.user"].split("::")
+						println tempList
+						File userFile = new File(tempList[0])
+						String user=tempList[1]
+						Boolean matchFound=false
+						String writeBuffer=""
+						List lines = userFile.readLines()
+						lines.each
+						{ line ->
+						if (line.matches("^"+user+"=.*"))
+						{
+						matchFound=true
+						writeBuffer=writeBuffer + user + "=JBossAdmin,HttpInvoker\n"
+						} else
+						{
+						writeBuffer=writeBuffer + line + "\n"
+						}
+						}
+						if (! matchFound) 
+						{
+						writeBuffer=writeBuffer + user + "=JBossAdmin,HttpInvoker\n"
+						}
+						println writeBuffer
+						userFile.write(writeBuffer)
+					</groovy>
+				</sequential>
+			</for>
 		</sequential>
 	</macrodef>
 	<macrodef name="jboss51-encrypt-messaging-passwd">
@@ -9630,20 +9724,23 @@ $HeadURL$
 					<echo message="@{jboss.server.keystore.location} found."/>
 				</else>
 			</if>
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/messaging/messaging-jboss-beans.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/messaging/messaging-jboss-beans.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove	path="/:deployment/:bean[@name='SecurityStore']/:annotation[2]"/>
+			</xmltask>
 			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/deploy/messaging/messaging-jboss-beans.xml" dest="@{jboss.home}/server/@{jboss.server.name}/deploy/messaging/messaging-jboss-beans.xml">
 				<xmlcatalog refid="bda.xml.catalog"/>
-				<remove	path="/jboss-web/security-domain"/>
-			</xmltask>
-			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml" dest="@{jboss.home}/server/@{jboss.server.name}/conf/jboss-log4j.xml">
-				<xmlcatalog refid="bda.xml.catalog"/>
-				<insert path="/jboss-web" position="under">
+				<insert path="/:deployment/:bean[@name='SecurityStore']/:annotation[1]" position="after">
 					<![CDATA[
-					<security-domain>java:/jaas/jmx-console</security-domain>
+					<annotation>@org.jboss.security.integration.password.Password(securityDomain="messaging",methodName="setSuckerPassword")</annotation>
 					]]>
 				</insert>
 			</xmltask>
-		</sequential>
-	</macrodef>
+			<!-- Clean bogus xmlns="" -->
+			<replaceregexp file="@{jboss.home}/server/@{jboss.server.name}/deploy/messaging/messaging-jboss-beans.xml"
+				match="xmlns=&quot;&quot;"
+				replace=""
+				flags="g" byline="true"/>
 		</sequential>
 	</macrodef>
 </project>
