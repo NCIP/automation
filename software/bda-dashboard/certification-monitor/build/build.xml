@@ -307,7 +307,7 @@
 				<arg value="-Ddatabase.system.url=${database.system.url}" />
 				<arg line="${override.properties.string}"/>
 				<arg line="${override.remote.properties.string}"/>
-				<arg value="deploy:remote:upgrade" />
+				<arg value="${remote-upgrade.target}" />
 			</exec>
 			<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
 				<arg value="-Dproperties.file=upgrade.properties" />
@@ -323,7 +323,7 @@
 				<arg value="-Ddatabase.system.url=${database.system.url}" />
 				<arg line="${override.properties.string}"/>
 				<arg line="${override.remote.properties.string}"/>
-				<arg value="deploy:remote:upgrade" />
+				<arg value="${remote-upgrade.target}" />
 		</exec>
 	
 	<!--

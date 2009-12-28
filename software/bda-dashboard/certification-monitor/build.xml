@@ -132,6 +132,9 @@
 		<copy todir="${sql.dist.dir}">
 			<fileset dir="${sql.src.dir}">
 					<include name="**"/>
+					<filterset>
+						<filtersfile file="${properties.file}"/>
+					</filterset>
 			</fileset>		
 		</copy>		
 	</target>
