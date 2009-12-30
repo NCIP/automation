@@ -975,4 +975,4 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdap
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','common:init');
