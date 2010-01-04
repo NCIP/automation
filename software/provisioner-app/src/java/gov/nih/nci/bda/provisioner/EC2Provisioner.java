@@ -218,7 +218,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 		KeyPairInfo keyPair = new EC2PrivateKey(privateKey).findKeyPair(jec2);
 		if (keyPair == null)
 			throw new EC2Exception("No matching keypair found on EC2. Is the EC2 private key a valid one?");
-		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-4ea14327", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
+		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-3c47a355", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
 		do
 		{

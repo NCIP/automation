@@ -10,7 +10,7 @@
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${createLinkTo(dir:'images',file:'spinner.gif')}" alt="Spinner" />
         </div>	
-        <div class="logo"><img src="${createLinkTo(dir:'images',file:'logotype.gif')}" alt="NCI" /></div>	
+        <div class="logo"><img src="${createLinkTo(dir:'images',file:'nci-logo.gif')}" alt="NCI" /></div>	
         <g:layoutBody />		
     </body>	
 </html>
