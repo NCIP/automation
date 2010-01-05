@@ -329,7 +329,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.jobname','cabioapi');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','init:common');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.use.genericDB','false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.build:database-integration.macro.list','database-install');
 
@@ -876,6 +876,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.properties','application.base.path.linux=${user.home}/apps/labviewer,exclude.tomcat.backup=true,tomcat.grid.secure.enable=false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.optional.features','build:check-commandline-installer');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.type','postgresql');
@@ -922,9 +923,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk/sdk-toolkit/example-project/');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/example-project/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.target','dist:installer:prep');
@@ -958,3 +959,23 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ct
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.install.init.target','install:init');
+
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.project.url','https://ncisvn.nci.nih.gov/svn/caadapter/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.master.build.location','${caAdapter.svn.local.checkout}/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.exploded.dir.location','${caAdapter.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caAdapter/properties');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.url','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','common:init');
