@@ -10,6 +10,7 @@
          <property name="certificationStatus" column="CERTIFICATION_STATUS"/>
          <property name="singleCommandBuild" column="SINGLE_COMMAND_BUILD"/>
          <property name="singleCommandDeployment" column="SINGLE_COMMAND_DEPLOYMENT"/>
+         <property name="remoteUpgrade" column="REMOTE_UPGRADE"/>
          <property name="databaseIntegration" column="DATABASE_INTEGRATION"/>
          <property name="bdaEnabled" column="BDA_ENABLED"/>
          <property name="templateValidation" column="TEMPLATE_VALIDATION"/>

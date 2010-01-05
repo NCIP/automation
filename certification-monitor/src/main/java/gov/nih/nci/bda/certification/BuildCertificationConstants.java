@@ -21,4 +21,5 @@ public class BuildCertificationConstants {
 	public static final String WIKI_SYSTEMS_WAIVER = "(on)";
 	public static final String OPTIONAL_MESSAGE = "Feature is Optional";
 	public static final String WAIVER_MESSAGE = "Systems team Waiver";
+	public static final String SUCCESSFUL_MESSAGE = "Feature implementation is successful";
 }

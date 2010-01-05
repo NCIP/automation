@@ -7,6 +7,7 @@ public class ProjectCertificationStatus {
 	private String certificationStatus;
 	private String singleCommandBuild;
 	private String singleCommandDeployment;
+	private String remoteUpgrade;
 	private String databaseIntegration;
 	private String templateValidation;
 	private String privateRepositoryProperties;
@@ -87,6 +88,11 @@ public class ProjectCertificationStatus {
 	public void setCommandLineInstaller(String commandLineInstaller) {
 		this.commandLineInstaller = commandLineInstaller;
 	}
-	
+	public String getRemoteUpgrade() {
+		return remoteUpgrade;
+	}
+	public void setRemoteUpgrade(String remoteUpgrade) {
+		this.remoteUpgrade = remoteUpgrade;
+	}
 		
 }

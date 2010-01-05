@@ -99,6 +99,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.install.init.target','common:common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.remote.properties','ssh.server.username=bdauser,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/remote-deploy,tomcat.ssh.server.username=bdauser,tomcat.ssh.server.hostname=@remote.hostname@,tomcat.ssh.port=22,tomcat.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,tomcat.ssh.dir.temp=${user.home}/remote-deploy,ctp.ssh.server.username=bdauser,ctp.ssh.server.hostname=@remote.hostname@,ctp.ssh.port=22,ctp.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ctp.ssh.dir.temp=${user.home}/remote-deploy');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
