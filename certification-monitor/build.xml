@@ -2,6 +2,7 @@
 <project name="buildmonitor" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
 
 	<!-- PROPERTIES -->
+	<property environment="env" />
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="source.dir" value="${software.dir}/src/main/java" />
@@ -12,12 +13,10 @@
 	<property name="selenium.tests.src.dir" value="${software.dir}/src/tests/functional" />
 	<property name="dist.dir" value="${target.dir}/dist" />
 	<property name="build.certification.jar" value="build-certification.jar" />
+	<property name="cron.expr" value="\110 07 * * *\2"/>
 	
 	<property name="properties.file" value="dev-install.properties" />
 	<property file="${basedir}/${properties.file}"/>
-
-		
-	
 	
 	<property name="deploy.dir" value="${user.home}/buildcertification" />
 	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
@@ -134,6 +133,9 @@
 			<fileset dir="${sql.src.dir}">
 					<include name="**"/>
 			</fileset>		
+			<filterset>
+						<filtersfile file="${properties.file}"/>
+			</filterset>
 		</copy>		
 	</target>
 
@@ -181,6 +183,14 @@
 			</sql>
 		</sequential>
 	</macrodef>
+	
+	<echo message="HOME is: ${env.HOME}" />
+	<target name="update:build:schedule">
+		<echo message="match : (&lt;spec&gt;).*(&lt;/spec&gt;)"/>
+		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\10 20 * * *\2"  byline="true">
+   			 <fileset dir="${env.HOME}/hudson_data/jobs" includes="certify*/config.xml"/>
+		</replaceregexp>
+	</target>
 
 
 </project>
