@@ -134,7 +134,7 @@
 					<include name="**"/>
 			</fileset>		
 			<filterset>
-						<filtersfile file="${properties.file}"/>
+					<filtersfile file="${properties.file}"/>
 			</filterset>
 		</copy>		
 	</target>
