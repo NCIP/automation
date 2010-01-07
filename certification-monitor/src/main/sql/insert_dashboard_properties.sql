@@ -1068,8 +1068,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdap
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.exploded.dir.location','${caAdapter.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caAdapter/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.url','http://ncias-d341-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.jobname','caadapter-mms');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','common:init');
