@@ -125,7 +125,7 @@ public class BuildCertificationHelper {
     			else
     				pbs.getClass().getMethod(methodName, new Class[] {String.class}).invoke(pbs,bmb.getPropertyValue());
     		}
-    			
+
 	}
 
 	private void setProductValue(ProjectCertificationStatus pbs,
@@ -225,8 +225,9 @@ public class BuildCertificationHelper {
 		    	session.save(pbs);
 		    }
 		}
-		certLogger.info("Update the Project Certification Status");
+		certLogger.info("Update the Project Certification Status to " + getWikiProjectCertificationStatus());
 		invokeSetMethodValue(pbs,"setCertificationStatus",getWikiProjectCertificationStatus());
+		certLogger.info("Get the Project Certification Status before update " + pbs.getCertificationStatus());
 		session.update(pbs);
 		certLogger.info("Commit to Database");
 	    session.getTransaction().commit();
