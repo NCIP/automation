@@ -144,6 +144,7 @@ public class SingleCommandListener implements BuildListener {
 		}
 		*/
 		String execTaskList = event.getProject().getProperty("task.list");
+		certLogger.info("execTaskList:: " + execTaskList);
 		if(execTaskList != null && execTaskList.equals(""))
 		{
 			String macroArray[] = macroList.split(",");
