@@ -145,10 +145,11 @@ public class SingleCommandListener implements BuildListener {
 		*/
 		String execTaskList = event.getProject().getProperty("task.list");
 		certLogger.info("execTaskList:: " + execTaskList);
-		if(execTaskList != null && execTaskList.equals(""))
+		if(execTaskList != null && !execTaskList.equals(""))
 		{
-			String macroArray[] = macroList.split(",");
 			certLogger.info("macroList:: " + macroList);
+			String macroArray[] = macroList.split(",");
+
 			for ( int i =0 ; i < macroArray.length ; i++){
 				certLogger.info("Checking for the Macro " + macroArray[i] + " called during the execution path " + execTaskList.contains(macroArray[i]));
 				if (!execTaskList.contains(macroArray[i])){
