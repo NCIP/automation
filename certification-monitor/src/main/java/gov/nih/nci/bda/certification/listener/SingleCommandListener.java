@@ -148,17 +148,23 @@ public class SingleCommandListener implements BuildListener {
 		if(execTaskList != null && !execTaskList.equals(""))
 		{
 			certLogger.info("macroList:: " + macroList);
-			String macroArray[] = macroList.split(",");
+			if(macroList != null && !macroList.equals(""))
+			{
+				String macroArray[] = macroList.split(",");
 
-			for ( int i =0 ; i < macroArray.length ; i++){
-				certLogger.info("Checking for the Macro " + macroArray[i] + " called during the execution path " + execTaskList.contains(macroArray[i]));
-				if (!execTaskList.contains(macroArray[i])){
-					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
-					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
-					return false;
-				}else
+				for ( int i =0 ; i < macroArray.length ; i++)
 				{
-					certLogger.info("Macro " + macroArray[i] + " was called during the execution path  " + execTaskList.contains(macroArray[i]));
+					certLogger.info("Checking for the Macro " + macroArray[i] + " called during the execution path " + execTaskList.contains(macroArray[i]));
+					if (!execTaskList.contains(macroArray[i]))
+					{
+						certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
+						event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
+						return false;
+					}
+					else
+					{
+						certLogger.info("Macro " + macroArray[i] + " was called during the execution path  " + execTaskList.contains(macroArray[i]));
+					}
 				}
 			}
 		}
