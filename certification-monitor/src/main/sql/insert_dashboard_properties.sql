@@ -1028,7 +1028,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.properties','exclude.database=true,application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost');
