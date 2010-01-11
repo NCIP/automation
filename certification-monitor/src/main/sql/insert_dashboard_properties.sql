@@ -1024,8 +1024,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exploded.dir.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/example-project/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cacoresdk/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.url','http://ncias-c124-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.jobname','sdk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','common:init');
