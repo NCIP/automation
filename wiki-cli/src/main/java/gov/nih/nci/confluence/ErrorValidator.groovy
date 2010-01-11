@@ -19,7 +19,7 @@ class ErrorValidator {
 	
 	public void validateData()
 	{
-	    String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS order by product desc"
+	    String statement   = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,DATABASE_INTEGRATION,REMOTE_UPGRADE,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS order by product desc"
 
 	    List projectRows = connection.rows(statement)	
 	    	
@@ -30,6 +30,7 @@ class ErrorValidator {
 			String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
 			String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
 			String databaseIntegration = row.DATABASE_INTEGRATION;
+			String remoteUpgrade = row.REMOTE_UPGRADE;
 			String templateValidation = row.TEMPLATE_VALIDATION;
 			String privateProperties = row.PRIVATE_PROPERTIES;	    
 			String ciBuild = row.CI_BUILD;
@@ -48,7 +49,7 @@ class ErrorValidator {
 			{
 				
 				println "bda enabled string:: " + bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|"))
-				if(bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+				if(bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 				{				
 					if (!singleCommandBuild.equals("(/)"))
 					{
@@ -64,6 +65,11 @@ class ErrorValidator {
 					{
 						mailString = mailString + properties.getProperty("mail.database.integration")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
+					}
+					if (!remoteUpgrade.equals("(/)"))
+					{
+						mailString = mailString + properties.getProperty("mail.remote.upgrade")
+						mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
 					}
 					if (!templateValidation.equals("(/)"))
 					{
@@ -99,7 +105,7 @@ class ErrorValidator {
 					{
 						mailString = mailString + properties.getProperty("mail.commandLine.installer")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",commandLineInstaller.substring(commandLineInstaller.lastIndexOf("|")+1, commandLineInstaller.indexOf("]")))
-					}
+					}					
 					mailString = mailString + properties.getProperty("mail.post.template")
 					sendEmailToProjectTeam(productName,mailString.replaceAll("INSERT_SVN_URL",productUrl))
 				}
@@ -107,7 +113,7 @@ class ErrorValidator {
 				{
 				     println (" Beta Message :: " +bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")))
 				     
-					if (bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
+					if (bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
 					{
 						mailString = mailString + properties.getProperty("mail.beta.version")
 						if (!singleCommandBuild.equals("(/)"))
@@ -125,6 +131,11 @@ class ErrorValidator {
 							mailString = mailString + properties.getProperty("mail.database.integration")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
 						}
+						if (!remoteUpgrade.equals("(/)"))
+						{
+							mailString = mailString + properties.getProperty("mail.remote.upgrade")
+							mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
+						}						
 						if (!templateValidation.equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.template.validation")
