@@ -30,6 +30,7 @@ class ErrorValidator {
 			String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
 			String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
 			String databaseIntegration = row.DATABASE_INTEGRATION;
+			String remoteUpgrade = row.REMOTE_UPGRADE;
 			String templateValidation = row.TEMPLATE_VALIDATION;
 			String privateProperties = row.PRIVATE_PROPERTIES;	    
 			String ciBuild = row.CI_BUILD;
@@ -65,6 +66,11 @@ class ErrorValidator {
 						mailString = mailString + properties.getProperty("mail.database.integration")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
 					}
+					if (!remoteUpgrade.equals("(/)"))
+					{
+						mailString = mailString + properties.getProperty("mail.remote.upgrade")
+						mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
+					}
 					if (!templateValidation.equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.template.validation")
@@ -99,7 +105,7 @@ class ErrorValidator {
 					{
 						mailString = mailString + properties.getProperty("mail.commandLine.installer")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",commandLineInstaller.substring(commandLineInstaller.lastIndexOf("|")+1, commandLineInstaller.indexOf("]")))
-					}
+					}					
 					mailString = mailString + properties.getProperty("mail.post.template")
 					sendEmailToProjectTeam(productName,mailString.replaceAll("INSERT_SVN_URL",productUrl))
 				}
@@ -125,6 +131,11 @@ class ErrorValidator {
 							mailString = mailString + properties.getProperty("mail.database.integration")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
 						}
+						if (!remoteUpgrade.equals("(/)"))
+						{
+							mailString = mailString + properties.getProperty("mail.remote.upgrade")
+							mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
+						}						
 						if (!templateValidation.equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.template.validation")
