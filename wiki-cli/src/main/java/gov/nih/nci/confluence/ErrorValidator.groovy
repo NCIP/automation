@@ -51,32 +51,32 @@ class ErrorValidator {
 				println "bda enabled string:: " + bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|"))
 				if(bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 				{				
-					if (!singleCommandBuild.equals("(/)"))
+					if (singleCommandBuild != null && !singleCommandBuild.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.single.command.build")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandBuild.substring(singleCommandBuild.lastIndexOf("|")+1, singleCommandBuild.indexOf("]")))
 					}
-					if (!singleCommandDeployment.equals("(/)"))
+					if (singleCommandDeployment != null &&  !singleCommandDeployment.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.single.command.deployment")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandDeployment.substring(singleCommandDeployment.lastIndexOf("|")+1, singleCommandDeployment.indexOf("]")))
 					}					
-					if (!databaseIntegration.equals("(/)"))
+					if (databaseIntegration != null &&  !databaseIntegration.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.database.integration")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
 					}
-					if (!remoteUpgrade.equals("(/)"))
+					if (remoteUpgrade != null &&  !remoteUpgrade.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.remote.upgrade")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
 					}
-					if (!templateValidation.equals("(/)"))
+					if (templateValidation != null && !templateValidation.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.template.validation")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",templateValidation.substring(templateValidation.lastIndexOf("|")+1, templateValidation.indexOf("]")))
 					}
-					if (!privateProperties.equals("(/)"))
+					if (privateProperties != null && !privateProperties.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.private.properties")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",privateProperties.substring(privateProperties.lastIndexOf("|")+1, privateProperties.indexOf("]")))
@@ -96,12 +96,12 @@ class ErrorValidator {
 							mailString = mailString.replaceAll("ERROR_MESSAGE","")
 					}
 					
-					if (!deploymentShakeout.equals("(/)"))
+					if (deploymentShakeout != null && !deploymentShakeout.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.deployment.shakeout")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",deploymentShakeout.substring(deploymentShakeout.lastIndexOf("|")+1, deploymentShakeout.indexOf("]")))
 					}
-					if (!commandLineInstaller.equals("(/)"))
+					if (commandLineInstaller != null && !commandLineInstaller.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 					{
 						mailString = mailString + properties.getProperty("mail.commandLine.installer")
 						mailString = mailString.replaceAll("ERROR_MESSAGE",commandLineInstaller.substring(commandLineInstaller.lastIndexOf("|")+1, commandLineInstaller.indexOf("]")))
@@ -116,32 +116,32 @@ class ErrorValidator {
 					if (bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
 					{
 						mailString = mailString + properties.getProperty("mail.beta.version")
-						if (!singleCommandBuild.equals("(/)"))
+						if (singleCommandBuild != null && !singleCommandBuild.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.single.command.build")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandBuild.substring(singleCommandBuild.lastIndexOf("|")+1, singleCommandBuild.indexOf("]")))
 						}
-						if (!singleCommandDeployment.equals("(/)"))
+						if (singleCommandDeployment != null && !singleCommandDeployment.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.single.command.deployment")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandDeployment.substring(singleCommandDeployment.lastIndexOf("|")+1, singleCommandDeployment.indexOf("]")))
 						}					
-						if (!databaseIntegration.equals("(/)"))
+						if (databaseIntegration != null && !databaseIntegration.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.database.integration")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
 						}
-						if (!remoteUpgrade.equals("(/)"))
+						if (remoteUpgrade != null && !remoteUpgrade.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.remote.upgrade")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
 						}						
-						if (!templateValidation.equals("(/)"))
+						if (templateValidation != null && !templateValidation.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.template.validation")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",templateValidation.substring(templateValidation.lastIndexOf("|")+1, templateValidation.indexOf("]")))
 						}
-						if (!privateProperties.equals("(/)"))
+						if (privateProperties != null && !privateProperties.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.private.properties")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",privateProperties.substring(privateProperties.lastIndexOf("|")+1, privateProperties.indexOf("]")))
@@ -161,12 +161,12 @@ class ErrorValidator {
 								mailString = mailString.replaceAll("ERROR_MESSAGE","")
 						}
 
-						if (!deploymentShakeout.equals("(/)"))
+						if (deploymentShakeout != null && !deploymentShakeout.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.deployment.shakeout")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",deploymentShakeout.substring(deploymentShakeout.lastIndexOf("|")+1, deploymentShakeout.indexOf("]")))
 						}
-						if (!commandLineInstaller.equals("(/)"))
+						if (commandLineInstaller != null && !commandLineInstaller.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 						{
 							mailString = mailString + properties.getProperty("mail.commandLine.installer")
 							mailString = mailString.replaceAll("ERROR_MESSAGE",commandLineInstaller.substring(commandLineInstaller.lastIndexOf("|")+1, commandLineInstaller.indexOf("]")))
