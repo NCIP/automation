@@ -537,7 +537,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.exploded.dir.location','${cadsr-sentinel.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/sentinel');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/sentinel-tool');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.jobname','');
@@ -1076,3 +1076,4 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdap
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.optional.features','build:private-repository-properties');
