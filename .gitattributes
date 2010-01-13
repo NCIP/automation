@@ -3480,6 +3480,7 @@ software/bda-project-start-helper/helper.properties -text
 software/bda-project-start-helper/readme.txt -text
 software/cloud-arch/junk -text
 software/cloud-arch/nbia-gen-testdata.pl -text
+software/cloud-arch/readme.txt -text
 software/easyb/behaviors/MyStory.story -text
 software/easyb/build.xml -text
 software/easyb/lib/commons-cli-1.1.jar -text
