@@ -1,4 +1,4 @@
-INSERT INTO project_poc VALUES( 'bioportal','Raghu Chintalapati','chintalr@mail.nih.gov' ,'Dave Hau', 'haudt@mail.nih.gov','ncicbiitbda@mail.nih.gov');
+INSERT INTO project_poc VALUES( 'bioportal','Noble Dzakpasu','dzakpasuns@mail.nih.gov' ,'Dave Hau', 'haudt@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'caAdapter','Eugene Wang','wangeug@mail.nih.gov','Sichen Liu','liusi@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'caarray','Maki Duncan','duncanmk@mail.nih.gov','Juli Klemm','klemmj@mail.nih.gov','ncicbiitbda@mail.nih.gov');
 INSERT INTO project_poc VALUES( 'cab2b','Chris Piepenbring','piepenbringc@mail.nih.gov','Anand Basu','basuan@mail.nih.gov','ncicbiitbda@mail.nih.gov');
