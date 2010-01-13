@@ -3478,6 +3478,8 @@ software/bda-project-start-helper/bdaProjectStartHelper.groovy -text
 software/bda-project-start-helper/build.xml -text
 software/bda-project-start-helper/helper.properties -text
 software/bda-project-start-helper/readme.txt -text
+software/cloud-arch/junk -text
+software/cloud-arch/nbia-gen-testdata.pl -text
 software/easyb/behaviors/MyStory.story -text
 software/easyb/build.xml -text
 software/easyb/lib/commons-cli-1.1.jar -text
