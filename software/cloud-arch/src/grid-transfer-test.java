@@ -35,11 +35,17 @@ public class NCIACoreServiceClientTestCaseFunctional extends TestCase
 
 public void testRetrieveDicomDataBySeriesUID() throws Exception
 {
+	long startq = System.currentTimeMillis();
 	String seriesInstanceUID = "1.3.6.1.4.1.9328.50.1.8862";
+	String patientID = "000001";
 	NBIAServiceClient client = new NBIAServiceClient(gridServiceUrl);
 	InputStream istream = null;
 	TransferServiceContextClient tclient = null;
-	TransferServiceContextReference tscr = client.retrieveDicomDataBySeriesUID(seriesInstanceUID);
+	//TransferServiceContextReference tscr = client.retrieveDicomDataBySeriesUID(seriesInstanceUID);
+	TransferServiceContextReference tscr = client.retrieveDicomDataByPatient(patientID);
+	long endq = System.currentTimeMillis();
+	System.out.println("Submit Query " + (endq - startq) + " milli seconds");
+	long start = System.currentTimeMillis();
 	tclient = new TransferServiceContextClient(tscr.getEndpointReference());
 	istream = TransferClientHelper.getData(tclient.getDataTransferDescriptor());
 	if(istream == null)
@@ -62,15 +68,47 @@ public void testRetrieveDicomDataBySeriesUID() throws Exception
 			break;
 		}
 		String unzzipedFile = downloadLocation();
-		System.out.println(ii++ + " filenam = (bis.read(data, 0, data.length))) > 0)
-		{
-			bos.write(data, 0, bytesRead);
+		System.out.println(ii++ + " filename: " + zeis.getName());
+		              
+		bis = new BufferedInputStream(zeis);
+		              
+		byte[] data = new byte[8192]; 
+		int bytesRead = 0;
+		try
+		{             
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(unzzipedFile + File.separator + zeis.getName()));
+			                                
+			while ((bytesRead = (bis.read(data, 0, data.length))) > 0)
+			{
+				bos.write(data, 0, bytesRead);                  
+			}                                 
+
+			bos.flush();
+			bos.close();
 		}
-		bos.flush();
-		bos.close();
+		catch (IOException e)
+		{
+			fail("IOException thrown when reading the zip stream " + e);
+			System.out.println("IOException " + e);
+		}
+
 	}
 	zis.close();
 	tclient.destroy();
+	long end = System.currentTimeMillis();
+	System.out.println("Total time download images is " + (end - start) + " milli seconds");
+
+}
+
+private String downloadLocation()
+{
+	String localClient= System.getProperty("java.io.tmpdir") + File.separator + clientDownLoadLocation;
+	if(!new File(localClient).exists())
+	{
+		new File(localClient).mkdir();
+	}
+	System.out.println("Local download location: "+localClient); 
+	return localClient;
 }
 
 }
