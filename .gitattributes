@@ -3529,7 +3529,7 @@ software/cloud-arch/lib/wss4j.jar -text
 software/cloud-arch/nbia-gen-testdata.pl -text
 software/cloud-arch/readme.txt -text
 software/cloud-arch/sql/csm_seed.sql -text
-software/cloud-arch/src/gov/nih/nci/cagrid/ncia/client/grid-transfer-test.java -text
+software/cloud-arch/src/gov/nih/nci/cagrid/ncia/client/NCIACoreServiceClientTestCaseFunctional.java -text
 software/easyb/behaviors/MyStory.story -text
 software/easyb/build.xml -text
 software/easyb/lib/commons-cli-1.1.jar -text
