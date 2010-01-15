@@ -6,8 +6,9 @@ import gov.nih.nci.cagrid.cqlresultset.CQLQueryResults;
 import gov.nih.nci.cagrid.data.faults.MalformedQueryExceptionType;
 import gov.nih.nci.cagrid.data.faults.QueryProcessingExceptionType;
 import gov.nih.nci.cagrid.data.utilities.CQLQueryResultsIterator;
-import gov.nih.nci.ivi.utils.ZipEntryInputStream;
 */
+
+import gov.nih.nci.ivi.utils.ZipEntryInputStream;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -28,21 +29,27 @@ import org.cagrid.transfer.context.client.helper.TransferClientHelper;
 import org.cagrid.transfer.descriptor.DataTransferDescriptor;
 
 
-public class NCIACoreServiceClientTestCaseFunctional extends TestCase
+public class NCIACoreServiceClientTestCaseFunctional 
 {
 	String gridServiceUrl = "http://localhost:21080/wsrf/services/cagrid/NCIACoreService";
 	String clientDownLoadLocation ="NBIAGridClientDownLoad";
 
-public void testRetrieveDicomDataBySeriesUID() throws Exception
+	public static void main (String [] args) throws Exception
+	{
+		NCIACoreServiceClientTestCaseFunctional x = new NCIACoreServiceClientTestCaseFunctional();
+		x.testRetrieveDicomDataByPersonID();
+	}
+
+public void testRetrieveDicomDataByPersonID() throws Exception
 {
 	long startq = System.currentTimeMillis();
 	String seriesInstanceUID = "1.3.6.1.4.1.9328.50.1.8862";
 	String patientID = "000001";
-	NBIAServiceClient client = new NBIAServiceClient(gridServiceUrl);
+	NCIACoreServiceClient client = new NCIACoreServiceClient(gridServiceUrl);
 	InputStream istream = null;
 	TransferServiceContextClient tclient = null;
 	//TransferServiceContextReference tscr = client.retrieveDicomDataBySeriesUID(seriesInstanceUID);
-	TransferServiceContextReference tscr = client.retrieveDicomDataByPatient(patientID);
+	org.cagrid.transfer.context.stubs.types.TransferServiceContextReference tscr = client.retrieveDicomDataByPatientId(patientID);
 	long endq = System.currentTimeMillis();
 	System.out.println("Submit Query " + (endq - startq) + " milli seconds");
 	long start = System.currentTimeMillis();
@@ -88,7 +95,6 @@ public void testRetrieveDicomDataBySeriesUID() throws Exception
 		}
 		catch (IOException e)
 		{
-			fail("IOException thrown when reading the zip stream " + e);
 			System.out.println("IOException " + e);
 		}
 
