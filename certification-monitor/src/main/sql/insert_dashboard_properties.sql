@@ -1015,13 +1015,13 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.password','Temp123$');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.local.checkout','working/bda_certification');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/example-project/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.install.location','working/installer');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:all');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exploded.dir.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/example-project/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exploded.dir.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cacoresdk/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.url','http://ncias-c124-v.nci.nih.gov:48080');
