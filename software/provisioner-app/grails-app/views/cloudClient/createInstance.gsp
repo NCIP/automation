@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>BDA Provisioner
+		<title>Application Provisioner
 		</title>
 		<meta name="layout" content="main"/>
 		
@@ -18,65 +18,88 @@
 	
 			.fieldWrapper .radioWrapper { margin-left: 150px; } 
 		</style>
+		<gui:resources components="['toolTip','tabView']"/>
 	</head>
 	<body>
 		<formset>
-			<legend><b>BDA Provisioner</b></legend>
-			<h4>After entering the information below and clicking the <b>Provision Instance</b> button, you will receive a follow-up email with further instructions. </h4>
-			<h4>By default, the BDA Provisioner will open the following ports: 22,48080,48210. See the <a href="http://aws.amazon.com/ec2/#pricing">AWS EC2 pricing</a> page to estimate the cost for using your virtual instance.</h4>
-			<br>
-			<!--
-			<g:if test="${flash.message}">
-				<div class="errors">
-					${flash.message}
-				</div>
-			</g:if>
-			-->
-	    		<g:form action="provisionInstance">
-				<g:hasErrors>
-					<div class="errors">
-						<g:renderErrors bean="${instance}" as="list" />
-					</div>
-				</g:hasErrors>
-				<form:textField label="Port List"  name="portList" title="TextField" readonly="false" value="${params.portList}">
-				  Enter the external ports (in comma-delimited, no spaces format. For example: 46210,48080) you wish to expose in the <strong>Port List</strong> field
-				</form:textField>		
-				<form:textField label="Project SCM URL"  name="projectSCMUrl" title="TextField" readonly="false" value="${params.projectSCMUrl}">
-				  Enter the publicly accessible project source Subversion URL
-				</form:textField>
-<!--
-				<form:textField label="Project SCM User"  name="projectSCMUser" title="TextField" readonly="false" value="${params.projectSCMUser}">
-				  Enter the user name for the Subversion repository
-				</form:textField>
+		<legend><b>Application Provisioner</b></legend>
+			<g:form>
+				<br>
 
-				<form:textField label="Project SCM Password"  name="projectSCMPassword" title="TextField" readonly="false" value="${params.projectSCMPassword}">
-				  Enter the password for the Subversion repository
-				</form:textField>
--->
-				<form:textField label="Project Build Targets"  name="projectBuildTargets" title="TextField" readonly="false" value="${params.projectBuildTargets}">
-				  Enter the Ant build targets (space delimited)
-				</form:textField>
-				<form:textField label="Project Build File"  name="projectBuildFile" title="TextField" readonly="false" value="${params.projectBuildFile}">
-				  Enter the location of the Ant build file (relative to Project SCM URL)
-				</form:textField>				
-				<form:textField label="Project Build Options"  name="projectBuildOptions" title="TextField" readonly="false" value="${params.projectBuildOptions}">
-				  Enter the Project Build Options
-				</form:textField>				
-				
-				<tr><td><label>Instance Type</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<g:select label="Instance Type " name="instanceType" from="['default','medium']" /></td></tr>				
-				<br><br><br>
-				<form:textField label="Email Address"  name="email" title="TextField" readonly="false" value="${params.email}">
-				  Enter the email address where you wish to receive further instructions
-				</form:textField>
-				
+						<g:hasErrors>
+							<div class="errors">
+								<g:renderErrors bean="${instance}" as="list" />
+							</div>
+						</g:hasErrors>
+					<table>
+						<tr>
+							<td>
+								<b><label for="appConfig">Application Configuration</label></b>
+								<br>
+								<br>
+								<gui:toolTip text="Enter the Mail Server .">
+									<form:textField label="Mail Server Hostname"  name="mailServerHostname" title="TextField" readonly="false" value="${params.mailServerHostname}"/>
+								</gui:toolTip>	
+								<gui:toolTip text="Enter the UPT server URL .">
+									<form:textField label="UPT Server URL"  name="uptServerUrl" title="TextField" readonly="false" value="${params.uptServerUrl}"/>
+								</gui:toolTip>
+								<gui:toolTip text="Enter the LDAP URL .">
+									<form:textField label="LDAP URL"  name="ldapUrl" title="TextField" readonly="false" value="${params.ldapUrl}"/>
+								</gui:toolTip>
+							</td>
+						</tr>
+					</table>
+					<table width="100%">	
+
+						<tr>
+							<td width="30%">
+								<b><label for="gridTechPOC">Grid Tech POC Research Center Information</label></b>
+								<br>
+								<br>
+								<gui:toolTip text="Grid Tech POC Research Center Display Name .">
+									<form:textField label="Display Name"  name="gridTechPOCDisplayName" title="TextField" readonly="false" value="${params.gridTechPOCDisplayName}"/>
+								</gui:toolTip>	
+								<gui:toolTip text="Grid Tech POC Research Center Short Name .">
+									<form:textField label="Short Name"  name="gridTechPOCShortName" title="TextField" readonly="false" value="${params.gridTechPOCShortName}"/>
+								</gui:toolTip>
+								<gui:toolTip text="Grid Tech POC Last Name  .">
+									<form:textField label="Last Name"  name="gridTechPOCLastName" title="TextField" readonly="false" value="${params.gridTechPOCFirstName}"/>
+								</gui:toolTip>
+								<gui:toolTip text="Grid Tech POC Phone Number .">
+									<form:textField label="Phone Number"  name="gridTechPOCPhoneNumber" title="TextField" readonly="false" value="${params.gridTechPOCPhoneNumber}"/>
+								</gui:toolTip>	
+								<gui:toolTip text="Grid Tech POC Email Address .">
+									<form:textField label="Email Address"  name="gridTechPOCEmail" title="TextField" readonly="false" value="${params.gridTechPOCEmail}"/>
+								</gui:toolTip>									
+		
+							</td>
+							<td width="30%">
+								<br>
+								<br>
+									<form:textField label="Address1" name="address1" />
+									<form:textField label="City" name="city" />
+									<form:textField label="Province/State" name="province" />
+									<form:textField label="Postal Code" name="postalCode" />
+									<label>Country</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<select name="averageSizeOfProjects" >
+										<option value="null">Select Country</option>
+										<option value="USA">USA</option>
+										<option value="Canada">Canada </option>
+									</select> 
+								
+							</td>
+							
+							<td width="40%">
+
+								
+							</td>
+						</tr>
+					</table>					
 				<div class="buttons">
-					<g:actionSubmit value="Provision Instance" action="provisionInstance" />
-					<g:actionSubmit value="List Instances" action="listInstances" />
-					<g:actionSubmit value="Logoff" action="index" />
-				</div>
-	    		</g:form>
-	    		<br>
-	    		<h4>Important: To terminate your EC2 instances, select the <u>List Instances</u> button and select the instance(s) to terminate. You will continue to be charged until you terminate your instances.</h4>
+					<g:actionSubmit value="Provision Application" action="provisionSystem" />
+					<g:actionSubmit value="Applications" action="validate" />
+				</div>							
+			</g:form>	
 		</formset>
 	</body>
 </html>

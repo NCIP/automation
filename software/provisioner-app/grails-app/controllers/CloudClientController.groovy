@@ -3,23 +3,79 @@ import org.codehaus.groovy.runtime.InvokerHelper
 import com.xerox.amazonws.ec2.ReservationDescription;
 import com.xerox.amazonws.ec2.ReservationDescription.Instance;
 import gov.nih.nci.bda.provisioner.validator.CreateInstanceCommand;
+import gov.nih.nci.bda.provisioner.validator.SystemInfoCommand;
+import gov.nih.nci.bda.provisioner.validator.ScmInfoCommand;
+import gov.nih.nci.bda.provisioner.validator.ProjectDetailsCommand;
 
 class CloudClientController {
 	def cloudClientService
 	
     def index = { 
+    	println 'index..'
 		session.accessId=null
 		session.secretId=null
     }
-     
+
       
-     def generateKey = {
-    	Provisioner ec2p = new EC2Provisioner();
-    	def privateKey1 = "KEYFILE"
-    	//ec2p.generateKey(params.accessId.trim(),params.secretId.trim())
-    	//redirect(controller: 'cloudClient',action: 'createInstance',params: [accessId:params.accessId,secretId:params.secretId,privateKey:privateKey])
-    	render(view: 'createInstance',model: [privateKey:'privateKey1'])
-	}
+    def saveSystemInfo = {
+		SystemInfoCommand systemCmd ->
+        if(!systemCmd.hasErrors()) {
+        println 'NO ERRORS'
+        	cloudClientService.configureSystemInfo(params)
+			render(view: 'createInstance',model: [ tabName:'systemInfo' ])
+        }
+		else
+		{
+		println 'HAS ERRORS'
+			render(view: 'createInstance', model: [ instance: systemCmd,tabName:'systemInfo' ])
+		}	
+	}     
+
+    def saveScmInfo = {
+		ScmInfoCommand scmCmd ->
+        if(!scmCmd.hasErrors()) {
+        println 'NO ERRORS'
+			render(view: 'createInstance',model: [ tabName:'scmRepo' ])
+        }
+		else
+		{
+		println 'HAS ERRORS'
+			render(view: 'createInstance', model: [ instance: scmCmd,tabName:'scmRepo' ])
+		}	
+	} 
+	
+    def saveProjectDetails = {
+		ProjectDetailsCommand projectCmd ->
+        if(!projectCmd.hasErrors()) {
+        println 'NO ERRORS'
+			render(view: 'createInstance',model: [ tabName:'projectDetails' ])
+        }
+		else
+		{
+		println 'HAS ERRORS'
+			render(view: 'createInstance', model: [ instance: projectCmd,tabName:'projectDetails' ])
+		}	
+	} 
+		
+    def provisionSystem = {
+		CreateInstanceCommand cmd ->
+        if(!cmd.hasErrors()) {
+        println 'NO ERRORS'
+			render(view: 'confirm')
+        }
+		else
+		{
+		println 'HAS ERRORS'
+			render(view: 'createInstance', model: [ instance: cmd,tabName:'systemInfo' ])
+		}			 
+		
+	}       
+
+    def isApplicationAuthorised = {
+		
+		render(view: 'createInstance', model: [ tabName:'systemInfo' ])
+	}       
+
 	
 	def provisionInstance = {CreateInstanceCommand cmd ->
         if(!cmd.hasErrors()) {
@@ -55,7 +111,8 @@ class CloudClientController {
 		redirect(controller: 'cloudClient',action: 'listInstances')		
 	}
 
-    def validate = {  	
+    def validate = {
+    /*  	
     	if(!session.accessId && !session.secretId)
     	{
     	println "Using access id ${params.accessId} and Secret key ${params.secretId}"
@@ -88,7 +145,8 @@ class CloudClientController {
 					redirect(controller: 'cloudClient',action: 'index',params: [accessId:params.accessId,secretId:params.secretId])
 				}
 		}		
-				
-	}			
-	
+		*/		
+	//render(view: 'createInstance',model: [ tabName:'systemInfo' ])
+	render(view: 'applications')
+	}	
 }

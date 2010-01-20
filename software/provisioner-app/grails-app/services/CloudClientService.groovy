@@ -39,6 +39,13 @@ class CloudClientService {
  		Provisioner ec2p = new EC2Provisioner(); 	
 		ec2p.terminateInstance(accessId,secretId,instancesTerminating)
 	}
+
+ 	def configureSystemInfo(params) {
+ 		ApplicationBO appBo = new ApplicationBO(); 		
+		appBo.addCommand()
+		appBo.addCommand("createRootUserMysql_cmd","mysqladmin -u ${params.databaseSystemUser} password ${params.databaseSystemPassword}")
+		appBo.addCommand()
+	}	
 	
 	void onMessage(msg) 
 	{
@@ -60,7 +67,7 @@ println 'configure started'
 			
 			println 'configure complete'
 
-			def defaultPortList = '22,48080,48210'
+			def defaultPortList = '22,18080,38080'
 			def fullPortList 
 			if(msg.portList)
 			{ 	
