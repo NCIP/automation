@@ -3480,6 +3480,7 @@ software/bda-project-start-helper/build.xml -text
 software/bda-project-start-helper/helper.properties -text
 software/bda-project-start-helper/readme.txt -text
 software/cloud-arch/build.xml -text
+software/cloud-arch/crontab.dat -text
 software/cloud-arch/dicom-template.dicom -text
 software/cloud-arch/junk -text
 software/cloud-arch/lib/NCIACoreService-client.jar -text
