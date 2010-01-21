@@ -31,8 +31,18 @@ import org.cagrid.transfer.descriptor.DataTransferDescriptor;
 
 public class NCIACoreServiceClientTestCaseFunctional 
 {
-	String gridServiceUrl = "http://localhost:21080/wsrf/services/cagrid/NCIACoreService";
 	String clientDownLoadLocation ="NBIAGridClientDownLoad";
+	Properties props = new Properties();
+	try {
+		props.load(new FileInputStream("nbia-perf.properties"));
+		envPrefix = props.getProperty("env");
+		patientID = props.getProperty("patient.id");
+		gridServiceUrl = props.getProperty("grid.service.url");
+	}
+	catch(IOException e)
+	{
+		e.printStackTrace();
+	}
 
 	public static void main (String [] args) throws Exception
 	{
@@ -43,14 +53,13 @@ public class NCIACoreServiceClientTestCaseFunctional
 public void testRetrieveDicomDataByPersonID() throws Exception
 {
 	long startq = System.currentTimeMillis();
-	String seriesInstanceUID = "1.3.6.1.4.1.9328.50.1.8862";
-	String patientID = "000001";
 	NCIACoreServiceClient client = new NCIACoreServiceClient(gridServiceUrl);
 	InputStream istream = null;
 	TransferServiceContextClient tclient = null;
 	//TransferServiceContextReference tscr = client.retrieveDicomDataBySeriesUID(seriesInstanceUID);
 	org.cagrid.transfer.context.stubs.types.TransferServiceContextReference tscr = client.retrieveDicomDataByPatientId(patientID);
 	long endq = System.currentTimeMillis();
+	int qtime=(endq - startq);
 	System.out.println("Submit Query " + (endq - startq) + " milli seconds");
 	long start = System.currentTimeMillis();
 	tclient = new TransferServiceContextClient(tscr.getEndpointReference());
@@ -63,7 +72,7 @@ public void testRetrieveDicomDataByPersonID() throws Exception
 	ZipInputStream zis = new ZipInputStream(istream);
 	ZipEntryInputStream zeis = null;
 	BufferedInputStream bis = null;
-	int ii = 1;
+	int zipCount = 1;
 	while(true)
 	{
 		try
@@ -75,7 +84,7 @@ public void testRetrieveDicomDataByPersonID() throws Exception
 			break;
 		}
 		String unzzipedFile = downloadLocation();
-		System.out.println(ii++ + " filename: " + zeis.getName());
+		System.out.println(zipCount++ + " filename: " + zeis.getName());
 		              
 		bis = new BufferedInputStream(zeis);
 		              
@@ -102,7 +111,16 @@ public void testRetrieveDicomDataByPersonID() throws Exception
 	zis.close();
 	tclient.destroy();
 	long end = System.currentTimeMillis();
+	int dtime=(end - start);
 	System.out.println("Total time download images is " + (end - start) + " milli seconds");
+	try{
+		FileWriter fstream = new FileWriter("nbia-perf.csv",true);
+		BufferedWriter out = new BufferedWriter(fstream);
+		out.write(envPrefix+","+zipCount+","+qtime+","+dtime);
+		out.close();
+	}catch (Exception e){//Catch exception if any 
+		System.err.println("Error: " + e.getMessage());
+	}   
 
 }
 
