@@ -9,6 +9,7 @@
 	</path>
 
 	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true">
 			<classpath refid="compile.project.classpath" />
 		</javac>
