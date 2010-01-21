@@ -10,6 +10,7 @@ import gov.nih.nci.cagrid.data.utilities.CQLQueryResultsIterator;
 
 import gov.nih.nci.ivi.utils.ZipEntryInputStream;
 
+/*
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.EOFException;
@@ -20,28 +21,48 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+*/
+
 import java.rmi.RemoteException;
 import java.util.zip.ZipInputStream;
 
+import java.io.*;
 import junit.framework.TestCase;
 import org.cagrid.transfer.context.client.TransferServiceContextClient;
 import org.cagrid.transfer.context.client.helper.TransferClientHelper;
 import org.cagrid.transfer.descriptor.DataTransferDescriptor;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 
 public class NCIACoreServiceClientTestCaseFunctional 
 {
+	String envPrefix;
+	String patientID;
+	String gridServiceUrl;
 	String clientDownLoadLocation ="NBIAGridClientDownLoad";
-	Properties props = new Properties();
-	try {
-		props.load(new FileInputStream("nbia-perf.properties"));
-		envPrefix = props.getProperty("env");
-		patientID = props.getProperty("patient.id");
-		gridServiceUrl = props.getProperty("grid.service.url");
-	}
-	catch(IOException e)
+	String currentDateTime;
+
+	public NCIACoreServiceClientTestCaseFunctional()
 	{
-		e.printStackTrace();
+		Date curTime = new java.util.Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss");
+		currentDateTime = formatter.format(curTime);
+
+		Properties props = new Properties();
+		try {
+			props.load(new FileInputStream("nbia-perf.properties"));
+			envPrefix = props.getProperty("env");
+			patientID = props.getProperty("patient.id");
+			gridServiceUrl = props.getProperty("grid.service.url");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public static void main (String [] args) throws Exception
@@ -59,7 +80,7 @@ public void testRetrieveDicomDataByPersonID() throws Exception
 	//TransferServiceContextReference tscr = client.retrieveDicomDataBySeriesUID(seriesInstanceUID);
 	org.cagrid.transfer.context.stubs.types.TransferServiceContextReference tscr = client.retrieveDicomDataByPatientId(patientID);
 	long endq = System.currentTimeMillis();
-	int qtime=(endq - startq);
+	long qtime=(endq - startq);
 	System.out.println("Submit Query " + (endq - startq) + " milli seconds");
 	long start = System.currentTimeMillis();
 	tclient = new TransferServiceContextClient(tscr.getEndpointReference());
@@ -111,12 +132,12 @@ public void testRetrieveDicomDataByPersonID() throws Exception
 	zis.close();
 	tclient.destroy();
 	long end = System.currentTimeMillis();
-	int dtime=(end - start);
+	long dtime=(end - start);
 	System.out.println("Total time download images is " + (end - start) + " milli seconds");
 	try{
 		FileWriter fstream = new FileWriter("nbia-perf.csv",true);
 		BufferedWriter out = new BufferedWriter(fstream);
-		out.write(envPrefix+","+zipCount+","+qtime+","+dtime);
+		out.write(currentDateTime+","+envPrefix+","+(zipCount-1)+","+qtime+","+dtime+"\n");
 		out.close();
 	}catch (Exception e){//Catch exception if any 
 		System.err.println("Error: " + e.getMessage());
