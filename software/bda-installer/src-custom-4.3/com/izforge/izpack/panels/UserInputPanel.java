@@ -368,6 +368,8 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 
     private Vector<UIElement> elements = new Vector<UIElement>();
     
+    private IXMLElement panelReaderToExecuteAtValidation = null;
+    
     static File destinationDir = null;
 
     /*--------------------------------------------------------------------------*/
@@ -572,8 +574,16 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
 
 		if (panelReader != null)
 		{
-			processReader(panelReader);
-		}
+			String shouldExecuteAtPanelValidationTime = panelReader.getAttribute("shouldExecuteAtPanelValidationTime");
+            if (TRUE.equalsIgnoreCase(shouldExecuteAtPanelValidationTime))
+            {
+                panelReaderToExecuteAtValidation = panelReader;
+            }
+            else
+            {
+                processReader(panelReader);
+            }
+        }
         eventsActivated = true;
     }
 
@@ -1308,7 +1318,12 @@ public class UserInputPanel extends IzPanel implements ActionListener, ItemListe
     /*--------------------------------------------------------------------------*/
     public boolean isValidated()
     {
-        return readInput();
+        boolean wasSuccessfullyValidated = readInput();
+        if(wasSuccessfullyValidated && null != panelReaderToExecuteAtValidation)
+        {
+            processReader(panelReaderToExecuteAtValidation);
+        }
+        return wasSuccessfullyValidated;
     }
 
     /*--------------------------------------------------------------------------*/
