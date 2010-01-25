@@ -18,9 +18,9 @@ my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= localtime(time());
 my $runDate=sprintf("%02d/%02d/%02d %02d:%02d",$mon+1,$mday,$year-100,$hour,$min);
 
 &verifyOptions();
-&testDisk();
 
 my $out=qx(dd if=/dev/zero of=tmpfile bs=1M count=${fileSize} 2>&1);
+&testDisk();
 
 sub testDisk ()
 {
@@ -31,8 +31,9 @@ sub testDisk ()
 		@getFileTimeArray=();
 	for ($count = 1 ; $count <= $numOps; $count++)
 	{
+	print "$server\t$count\tsend\n";
 	my $begTime=time();
-	my $out=qx(scp tmpfile $server);
+	my $out=qx(scp tmpfile $server:);
 	my $exitcode= $? >> 8;
 
 	my $endTime=time();
@@ -44,6 +45,7 @@ sub testDisk ()
 
 	push(@sendFileTimeArray,$totTime);
 
+	print "$server\t$count\tget\n";
 	my $begTime=time();
 	my $out=qx(scp $server:tmpfile .);
 	my $exitcode= $? >> 8;
