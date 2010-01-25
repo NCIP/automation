@@ -99,6 +99,7 @@ class CertificationUtils
 			def jbossServerPort = project.properties['jboss.server.port']
 			def jbossServerHostName = project.properties['jboss.server.hostname']
 			println 'HOSTNAME ::: http://'+jbossServerHostName+':'+jbossServerPort;
+			Thread.sleep(100000);
 			ant.runseliniumtest(hostname:'http://'+jbossServerHostName+':'+jbossServerPort)
 		}
 		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:tomcat'))
