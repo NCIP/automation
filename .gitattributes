@@ -3530,7 +3530,7 @@ software/cloud-arch/lib/wsrf_core.jar -text
 software/cloud-arch/lib/wsrf_core_stubs.jar -text
 software/cloud-arch/lib/wss4j.jar -text
 software/cloud-arch/lib/xercesImpl-2.6.2.jar -text
-software/cloud-arch/merge-reports.pl -text
+software/cloud-arch/merge-query.pl -text
 software/cloud-arch/nbia-gen-testdata.pl -text
 software/cloud-arch/nbia-perf.properties -text
 software/cloud-arch/readme.txt -text
