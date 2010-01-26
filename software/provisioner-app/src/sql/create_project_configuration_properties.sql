@@ -7,6 +7,7 @@ INSERT INTO project_configuration_properties (project_key, project_value) VALUES
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('secret.id','VrI2TFJMZKdVfm4z1tqz4hICPMXhASLMVf3dRtyF');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('instance.type','default');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.portlist','18080,38080');
+INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.force.reinstall','true');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.bda.version','1.5.18');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.application.base.path.linux','\/mnt\/appuser\/apps');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.database.type','mysql');
