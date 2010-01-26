@@ -26,6 +26,10 @@ anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/listener/BDABuildListener.
 anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/util/HibernateUtil.java -text
 anthill-monitor/src/main/resources/hibernate.cfg.xml -text
 anthill-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
+bda-webapp/build.properties -text
+bda-webapp/build.xml -text
+bda-webapp/war/WEB-INF/web.xml -text
+bda-webapp/war/index.jsp -text
 certification-monitor/Testing.txt -text
 certification-monitor/build.xml -text
 certification-monitor/build/CertificationUtils.groovy -text
