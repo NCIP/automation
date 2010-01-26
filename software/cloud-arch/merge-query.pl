@@ -77,5 +77,5 @@ foreach my $date (sort keys %perfHash)
 
 	print MREP "${date},${awsNumRec},${awsQTime},${awsDTime},${vmwareNumRec},${vmwareQTime},${vmwareDTime},${vcloudNumRec},${vcloudQTime},${vcloudDTime}\n";
 	print QREP "${date},${awsQTime},${vmwareQTime},${vcloudQTime}\n";
-	print DREP "${date},${awsDTime},${vmwareDTime},,${vcloudDTime}\n";
+	print DREP "${date},${awsDTime},${vmwareDTime},${vcloudDTime}\n";
 }
