@@ -37,7 +37,7 @@ while (my $line = <DL>)
 	chomp($line);
 	my @splitLine=split(/,/,$line);
 	my $dateTime=@splitLine[0];
-	next if ($dateTime="date");
+	next if ($dateTime=="date");
 	my $aws=@splitLine[1];
 	my $vmware=@splitLine[2];
 	my $vcloud=@splitLine[3];
@@ -80,6 +80,7 @@ open (DREP,">cloud-perf-download-bucket.csv") || die "Cannot open download repor
 print DREP "date,aws-download,vmware-download,vcloud-download,cout,aws-sum,vmware-sum,vcloud-sum\n";
 foreach my $bucketDate (sort keys %downloadBucketHash)
 {
+	print "$bucketDate\n";
 	my $count=$downloadBucketHash{$bucketDate}{'count'};
 	my $awsSum=$downloadBucketHash{$bucketDate}{'aws-query'};
 	my $vmwareSum=$downloadBucketHash{$bucketDate}{'vmware-query'};
