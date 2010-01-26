@@ -26,27 +26,57 @@ package gov.nih.nci.bda.provisioner.util;
  *
  * @author Mahidhar Narra
  */
-
 import java.io.File;
 
+import javax.sql.DataSource;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.DataConfiguration;
+import org.apache.commons.configuration.DatabaseConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-public final class ConfigurationHelper {
-	private static Log logger = LogFactory.getLog(ConfigurationHelper.class);
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 
-	public static org.apache.commons.configuration.Configuration getConfiguration(File propertyFile) {
+public class ConfigurationHelper {
+	private static final String CONFIGURATION_KEY_COLUMN = "project_key";
+	private static final String CONFIGURATION_VALUE_COLUMN = "project_value";
+	private static final String TABLE_NAME = "project_configuration_properties";
+
+	public static org.apache.commons.configuration.DataConfiguration getConfiguration() {
+		DataSource ds = null;
+		try {
+			ds = getDataSource();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		DatabaseConfiguration config = new DatabaseConfiguration(ds,
+				TABLE_NAME, CONFIGURATION_KEY_COLUMN, CONFIGURATION_VALUE_COLUMN);
+		config.setDelimiterParsingDisabled(true);
+
+		return new DataConfiguration(config);
+	}
+
+	private static DataSource getDataSource() {
+
+		MysqlDataSource ds = new MysqlDataSource();
+		Configuration hibernateConfig = HibernateUtil.getConfiguration();
+		ds.setUrl(hibernateConfig.getProperty(Environment.URL));
+		ds.setUser(hibernateConfig.getProperty(Environment.USER));
+		ds.setPassword(hibernateConfig.getProperty(Environment.PASS));
+		return ds;
+	}
+
+
+	public static PropertiesConfiguration getPropertyConfiguration(File propertyFile) {
 		PropertiesConfiguration config = null;
-		logger.info(" Set the FileConfiguration " );
 		try {
 			config = new PropertiesConfiguration(propertyFile);
 		} catch (ConfigurationException e) {
-			logger.error(" Could not load the  properties from the file" );
 			e.printStackTrace();
 		}
 		return config;
 	}
+
+	
 }

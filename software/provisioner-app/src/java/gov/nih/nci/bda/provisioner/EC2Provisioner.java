@@ -67,7 +67,7 @@ public class EC2Provisioner extends BaseProvisioner
   public EC2Provisioner ()
   {
 	  super();
-	  config = ConfigurationHelper.getConfiguration(new File("instance.properties").getAbsoluteFile());
+	  //config = ConfigurationHelper.getConfiguration(new File("instance.properties").getAbsoluteFile());
   }
 
   public synchronized String generateKey(String accessId, String secretKey) throws IOException
@@ -200,7 +200,7 @@ private List terminateInstance(String accessId, String secretKey, String[] insta
     return info;
   }
 
-private String  runInstance(String accessId, String secretKey,String privateKey,String instanceType) throws IOException
+private String  runInstance(String accessId, String secretKey,String privateKey,String instanceType) throws IOException, InterruptedException
 {
 	Jec2 jec2 = new Jec2(accessId, secretKey);
 	String instanceState = null;
@@ -219,6 +219,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 		if (keyPair == null)
 			throw new EC2Exception("No matching keypair found on EC2. Is the EC2 private key a valid one?");
 		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-3c47a355", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
+		Thread.sleep(10000);
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
 		do
 		{
@@ -234,7 +235,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 						}
 					}
 				}
-			}
+			}		
 		}while(!instanceState.equalsIgnoreCase("running"));
 
 		LOGGER.info("Connect Instance using the below string : ");
@@ -256,7 +257,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 		generateSecurityGroup(accessId, secretKey, (ArrayList) config.getProperty("ec2.port.list"));
 		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName));
 		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName),"default");
-		initializeInstance();
+		initializeInstance("caarray");
 }
 
 
@@ -311,16 +312,16 @@ private void generateSecurityGroup(String accessId, String secretKey, ArrayList<
 }
 
 
-private void initializeInstance() throws IOException, InvalidStateException, InterruptedException
+private void initializeInstance(String projectName) throws Exception
 	{
 	  try
 	  {
-		EC2SystemInitiator si = new EC2SystemInitiator(dnsName,privateKeyFileLocation+"/"+privateKeyFileName);
+		EC2SystemInitiator si = new EC2SystemInitiator(dnsName,privateKeyFileLocation+"/"+privateKeyFileName, projectName);
 		si.initializeSystem();
 	  }
 	  catch (EC2Exception e)
 	  {
-		throw new AssertionError();
+		throw new ProvisionerException();
 	  }
 	}
 }

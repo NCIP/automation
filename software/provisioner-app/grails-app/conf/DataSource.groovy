@@ -1,8 +1,8 @@
 dataSource {
 	pooled = true
-	driverClassName = "org.hsqldb.jdbcDriver"
-	username = "sa"
-	password = ""
+	driverClassName = "org.gjt.mm.mysql.Driver"
+	username = "provisioneruser"
+	password = "password"
 }
 hibernate {
     cache.use_second_level_cache=true
@@ -14,19 +14,19 @@ environments {
 	development {
 		dataSource {
 			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
-			url = "jdbc:hsqldb:mem:devDB"
+			url = "jdbc:mysql://localhost:3306/provisionerdb"
 		}
 	}
 	test {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:hsqldb:mem:testDb"
+			url = "jdbc:mysql://localhost:3306/provisionerdb"
 		}
 	}
 	production {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:hsqldb:file:prodDb;shutdown=true"
+			url = "jdbc:mysql://cbvapp-c1006.nci.nih.gov:3306/provisionerdb"
 		}
 	}
 }

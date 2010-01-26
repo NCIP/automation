@@ -1,4 +1,5 @@
 import gov.nih.nci.bda.provisioner.*
+import gov.nih.nci.bda.provisioner.util.*
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.springframework.mail.MailException
 
@@ -8,16 +9,19 @@ class CloudClientService {
 	static expose = ['jms']
 	static destination = "provionerQ"
 	static listenerCount = 1
-	  
+	ProjectConfigurationHelper projectProperties = new ProjectConfigurationHelper()
     
-    void sendMessage(accessId, secretId,params) {
+    void sendMessage(params) {
     	Provisioner ec2p = new EC2Provisioner(); 
     	println(params)
-    	println(params.instanceType)
+    	//println(params.instanceType
+    	def accessId=projectProperties.getProperty("access.id")
+    	def secretId=projectProperties.getProperty("secret.id")
     	params.accessId = accessId
     	params.secretId = secretId
-    	params.instanceType = params.instanceType
-    				
+    	params.instanceType = projectProperties.getProperty("instance.type")
+    	params.portList = projectProperties.getProperty(params.projectName+".portlist")
+    	
 		println 'Generating the Private Key with AccessID ' + accessId + ' and SecretID ' + secretId
 		String privateKeyFileName = ec2p.generateKey(accessId.trim(), secretId.trim()); 
 		println 'privateKeyFileName ' + privateKeyFileName
@@ -40,12 +44,6 @@ class CloudClientService {
 		ec2p.terminateInstance(accessId,secretId,instancesTerminating)
 	}
 
- 	def configureSystemInfo(params) {
- 		ApplicationBO appBo = new ApplicationBO(); 		
-		appBo.addCommand()
-		appBo.addCommand("createRootUserMysql_cmd","mysqladmin -u ${params.databaseSystemUser} password ${params.databaseSystemPassword}")
-		appBo.addCommand()
-	}	
 	
 	void onMessage(msg) 
 	{
@@ -55,19 +53,11 @@ class CloudClientService {
 			
 			def aID = msg.accessId.trim()
 			def sId = msg.secretId.trim()
-println 'configure started'
-			
-			gov.nih.nci.bda.provisioner.util.ConfigHelper config = new gov.nih.nci.bda.provisioner.util.ConfigHelper()
-			config.setSCMProjectUrlValue("resources/project/config.xml","scm.locations.'hudson.scm.SubversionSCM_-ModuleLocation'.remote",msg.projectSCMUrl)
-			//config.setSCMProjectUserValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.userName",msg.projectSCMUser)
-			//config.setSCMProjectPasswordValue("resources/hudson.scm.SubversionSCM.xml","credentials.entry.'hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential'.password",msg.projectSCMPassword)
-			config.setProjectBuildTargets("resources/project/config.xml","builders.'hudson.tasks.Ant'.targets",msg.projectBuildTargets)
-			config.setProjectBuildLocation("resources/project/config.xml","builders.'hudson.tasks.Ant'.buildFile",msg.projectBuildFile)
-			config.setProjectBuildOptions("resources/project/config.xml","builders.'hudson.tasks.Ant'.antOpts",msg.projectBuildOptions)
+			println 'configure started'
 			
 			println 'configure complete'
 
-			def defaultPortList = '22,18080,38080'
+			def defaultPortList = '22,48080'
 			def fullPortList 
 			if(msg.portList)
 			{ 	
@@ -80,8 +70,10 @@ println 'configure started'
 			ec2p.generateSecurityGroup(aID,sId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
 			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +msg.privateKeyFileName
   			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home")+"/provisioner-key",msg.privateKeyFileName),msg.instanceType)
-			println 'Configuring the AMI'	
-			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/provisioner-key"+"/"+msg.privateKeyFileName);			
+			println 'Loading the local.properties'
+			loadLocalProperties(msg,hostName)
+			println 'Configuring the AMI'
+			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/provisioner-key"+"/"+msg.privateKeyFileName,msg.projectName);			
 			si.initializeSystem()
 			println 'System Initiation complete'
 			confirmationEmail(msg,hostName)	
@@ -102,7 +94,25 @@ println 'configure started'
 			}				
 		}
 	}
+    
+    def loadLocalProperties(msg,hostName) 
+	{ 	
+        	PropertyHelper localProperties = new PropertyHelper("resources/local.properties")        	
+         	projectProperties.loadProjectConfiguration(msg.projectName,localProperties)
 
+        	for ( e in msg ) {
+   				if(e.key != null && e.key.startsWith("projectproperty"))
+   				{
+   					String propertyKey = e.key.substring(e.key.indexOf('_')+1,e.key.length()) 
+   					localProperties.addProperty(propertyKey.replace('_','.'),e.value)
+   					
+   				}   			
+			}
+			localProperties.addProperty("grid.server.hostname",hostName)
+			localProperties.addProperty("jboss.server.hostname",hostName)
+			localProperties.saveConfiguration()
+	}
+	
 	def confirmationEmail(msg,hostName) 
 	{
 		try
@@ -115,13 +125,11 @@ println 'configure started'
 					to msg.email
 					cc "aws@stelligent.com"					
 					subject "Instance Ready (${hostName})"
-					body """ Continuous Integration Server is ready and configured.
+					body """ caArray Server is ready and configured.
 					
-					1) To view your application build running, launch the Hudson CI server dashboard by going to your web browser and typing 
-					  http://${hostName}:48080/hudson/?auto_refresh=true
-					2) After successful build/deployment (about 15 minutes after you received this email), open your web browser and type the following to launch the application: 
-					  http://${hostName}:48210/caintegrator2/
-					
+					1) To access the caarray application, navigate to the below URL 
+					  http://${hostName}:38080/caarray
+
 					"""
 				}
 			println 'Mail sent  to '+ msg.email		

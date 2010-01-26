@@ -40,7 +40,10 @@ import com.sshtools.j2ssh.transport.publickey.SshPrivateKeyFile;
 import com.sshtools.j2ssh.util.InvalidStateException;
 import com.xerox.amazonws.ec2.EC2Exception;
 
+import gov.nih.nci.bda.provisioner.domain.ProjectInitialization;
+import gov.nih.nci.bda.provisioner.util.HibernateUtil;
 import gov.nih.nci.bda.provisioner.util.PropertyHelper;
+import gov.nih.nci.bda.provisioner.util.SystemUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,26 +53,54 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-public class EC2SystemInitiator {
+public class EC2SystemInitiator extends SystemInitiator implements Initiator{
 	private static final Logger LOGGER = Logger
 			.getLogger(EC2SystemInitiator.class.getName());
-	private String hostName;
-	private String privateKeyFile;
-	private SshClient sshRoot = new SshClient();
-	private SshClient sshHudson = new SshClient();
 
-	PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper();
 
-	public EC2SystemInitiator(String hostName, String privateKeyFile) {
-		this.hostName = hostName.trim();
-		this.privateKeyFile = privateKeyFile.trim();
+	public EC2SystemInitiator(String hostName, String privateKeyFile, String projectName) throws Exception {
+		super(hostName, privateKeyFile,projectName);		
 	}
+	/*
+	public void initializeSystem() throws IOException, InvalidStateException, InterruptedException, EC2Exception {
+		
+			
+		
+		if(rootUserUtils.isUserAuthorised())
+		{
+			rootUserUtils.createRemoteFile(new File("resources/init.sh").getAbsolutePath(), "");
 
-	public void initializeSystem() throws IOException, EC2Exception,
-			InvalidStateException, InterruptedException {
-		LOGGER.info("Connecting to " + hostName);
-		LOGGER.info("Using key at " + privateKeyFile);
+			rootUserUtils.executeRemoteCommand("chmod 700 init.sh");
+			rootUserUtils.executeRemoteCommand("yum install sysutils");
+			rootUserUtils.executeRemoteCommand("dos2unix init.sh");
+			rootUserUtils.executeRemoteCommand("sh init.sh");
+			rootUserUtils.executeRemoteCommand("reboot");
+			Thread.sleep(100000);
+			rootUserUtils.resetConnection(hostName);
+		}
+		//rootUserUtils.disconnectClient();
+		//SystemUtils rootMysqlUtils = new SystemUtils(hostName,"root",privateKeyFile,"KEY");
+		if(rootUserUtils.isUserAuthorised())
+		{
+			rootUserUtils.createRemoteFile(new File("resources/mysqld").getAbsolutePath(), "/etc/init.d/");
+			rootUserUtils.createRemoteFile(new File("resources/my.cnf").getAbsolutePath(), "/etc/");
+			rootUserUtils.executeRemoteCommand("/etc/init.d/mysqld start");
+			rootUserUtils.executeRemoteCommand("mysqladmin -u root password mysql");
+		}
+		//rootMysqlUtils.disconnectClient();
+		
+		if(hudsonUserUtils.isUserAuthorised())
+		{
+			hudsonUserUtils.createRemoteFile(new File("resources/build-hudson.xml").getAbsolutePath(), "");
+			hudsonUserUtils.createRemoteFile(new File("resources/.bash_profile").getAbsolutePath(), "");			
+			hudsonUserUtils.executeRemoteCommand(". .bash_profile >> profile.log");
+			hudsonUserUtils.executeRemoteCommand("mkdir ~/project-working");	
+		}
+		hudsonUserUtils.disconnectClient();
+		/*
 
 		PublicKeyAuthenticationClient authenticationClient = connectToRemoteHost("root");
 
@@ -140,10 +171,14 @@ public class EC2SystemInitiator {
 					true);
 
 			connectToPseudoTerminal(ssh1, ". .bash_profile >> profile.log");
-
+			
+			connectToPseudoTerminal(ssh1, "mkdir ~/project-working");
+			ProvisionerCommands.getCommand("checkout_url"); 
+			connectToPseudoTerminal(ssh1,"ant -f build.xml >> build.log");			
+		
 			connectToPseudoTerminal(ssh1,
-					"ant -f build-hudson.xml >> build.log");
-			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data");
+					"ant -f build.xml >> build.log");
+
 			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs");
 			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/cai2");
 			connectToPseudoTerminal(ssh1, "mkdir ~/hudson_data/jobs/project");
@@ -185,92 +220,5 @@ public class EC2SystemInitiator {
 		sshRoot.disconnect();
 
 	}
-
-	private void connectToRemoteNode(String username,
-			PublicKeyAuthenticationClient authenticationClient, String command)
-			throws IOException, EC2Exception, InvalidStateException,
-			InterruptedException {
-		SshClient ssh = createSshConnection();
-		if (ssh.authenticate(authenticationClient) == AuthenticationProtocolState.COMPLETE) {
-			connectToPseudoTerminal(ssh, command);
-		}
-
-		ssh.disconnect();
-	}
-
-	private void connectToPseudoTerminal(SshClient ssh1, String command)
-			throws IOException, EC2Exception, InvalidStateException,
-			InterruptedException {
-
-		SessionChannelClient bash1 = ssh1.openSessionChannel();
-		bash1.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		bash1.executeCommand(command);
-		bash1.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		bash1.close();
-
-	}
-
-	private PasswordAuthenticationClient connectToHudsonUser(SshClient ssh1,
-			String username, String password) throws IOException, EC2Exception,
-			InvalidStateException, InterruptedException {
-
-		Thread.sleep(100000);
-		ssh1.connect(hostName, new IgnoreHostKeyVerification());
-
-		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
-		pwd.setUsername(username);
-		pwd.setPassword(password);
-
-		return pwd;
-	}
-
-	private PublicKeyAuthenticationClient connectToRemoteHost(String username)
-			throws IOException, EC2Exception, InvalidStateException,
-			InterruptedException {
-		Thread.sleep(100000);
-		sshRoot.connect(hostName, new IgnoreHostKeyVerification());
-
-		// Authenticate
-		// Open up the private key file
-		SshPrivateKeyFile pkFile = SshPrivateKeyFile.parse(new File(
-				privateKeyFile));
-		PublicKeyAuthenticationClient authenticationClient = new PublicKeyAuthenticationClient();
-		authenticationClient.setUsername(username);
-		authenticationClient.setKey(pkFile.toPrivateKey(null));
-		LOGGER.log(Level.INFO, "KEY FILE " + authenticationClient.getKeyfile());
-		return authenticationClient;
-	}
-
-	private void createFile(String path, String dir) throws IOException {
-		LOGGER.log(Level.INFO, "Writing to file with path: " + path);
-		ScpClient scp = sshRoot.openScpClient();
-		scp.put(new File(path).getAbsolutePath(), dir, true);
-	}
-
-	private SshClient createSshConnection() throws InterruptedException,
-			IOException {
-		SshClient ssh = new SshClient();
-		Thread.sleep(100000);
-		ssh.connect(hostName, new IgnoreHostKeyVerification());
-		return ssh;
-	}
-
-	private ScpClient createScpConnection(SshClient ssh)
-			throws InterruptedException, IOException {
-		ScpClient scp = ssh.openScpClient();
-		return scp;
-	}
-
-	private int executeRemoteCommand(String command) throws IOException,
-			EC2Exception, InvalidStateException, InterruptedException {
-		LOGGER.log(Level.INFO, "Executing System command using " + command);
-		SessionChannelClient sc = sshRoot.openSessionChannel();
-		sc.requestPseudoTerminal("ansi", 80, 24, 0, 0, "");
-		sc.executeCommand(command);
-		sc.getState().waitForState(ChannelState.CHANNEL_CLOSED);
-		int exitStatus = sc.getExitCode().intValue();
-		sc.close();
-		return exitStatus;
-	}
-
+	*/
 }

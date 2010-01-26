@@ -1,4 +1,5 @@
 import gov.nih.nci.bda.provisioner.*
+import gov.nih.nci.bda.provisioner.util.*
 import org.codehaus.groovy.runtime.InvokerHelper
 import com.xerox.amazonws.ec2.ReservationDescription;
 import com.xerox.amazonws.ec2.ReservationDescription.Instance;
@@ -6,6 +7,7 @@ import gov.nih.nci.bda.provisioner.validator.CreateInstanceCommand;
 import gov.nih.nci.bda.provisioner.validator.SystemInfoCommand;
 import gov.nih.nci.bda.provisioner.validator.ScmInfoCommand;
 import gov.nih.nci.bda.provisioner.validator.ProjectDetailsCommand;
+
 
 class CloudClientController {
 	def cloudClientService
@@ -59,27 +61,29 @@ class CloudClientController {
 		
     def provisionSystem = {
 		CreateInstanceCommand cmd ->
-        if(!cmd.hasErrors()) {
-        println 'NO ERRORS'
-			render(view: 'confirm')
+        if(!cmd.hasErrors()) 
+        {
+        	cloudClientService.sendMessage(params)
+			render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
         }
 		else
 		{
-		println 'HAS ERRORS'
-			render(view: 'createInstance', model: [ instance: cmd,tabName:'systemInfo' ])
+			def viewName = params.projectName+'_createInstance'
+			println viewName
+			render(view: viewName, model: [ instance: cmd ])
 		}			 
 		
 	}       
 
     def isApplicationAuthorised = {
-		
-		render(view: 'createInstance', model: [ tabName:'systemInfo' ])
+		def viewName = params.projectName+'_createInstance'
+		println viewName
+		render(view: viewName)
 	}       
-
 	
 	def provisionInstance = {CreateInstanceCommand cmd ->
-        if(!cmd.hasErrors()) {
-        	cloudClientService.sendMessage(session.accessId,session.secretId,params)
+        if(!cmd.hasErrors()) {        
+        	cloudClientService.sendMessage(params)
 			render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
         }
 		else
