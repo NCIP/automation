@@ -63,7 +63,7 @@ while (my $line = <DL>)
 close(DL);
 
 open (QREP,">cloud-perf-query-bucket.csv") || die "Cannot open query report\n";
-print QREP "date,aws-download,vmware-download,vcloud-download,cout,aws-sum,vmware-sum,vcloud-sum\n";
+print QREP "date,aws-query,vmware-query,vcloud-query,cout,aws-sum,vmware-sum,vcloud-sum\n";
 foreach my $bucketDate (sort keys %queryBucketHash)
 {
 	my $count=$queryBucketHash{$bucketDate}{'count'};
