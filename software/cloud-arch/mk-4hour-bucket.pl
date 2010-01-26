@@ -80,7 +80,6 @@ open (DREP,">cloud-perf-download-bucket.csv") || die "Cannot open download repor
 print DREP "date,aws-download,vmware-download,vcloud-download,cout,aws-sum,vmware-sum,vcloud-sum\n";
 foreach my $bucketDate (sort keys %downloadBucketHash)
 {
-	print "$bucketDate\n";
 	my $count=$downloadBucketHash{$bucketDate}{'count'};
 	my $awsSum=$downloadBucketHash{$bucketDate}{'aws-query'};
 	my $vmwareSum=$downloadBucketHash{$bucketDate}{'vmware-query'};
