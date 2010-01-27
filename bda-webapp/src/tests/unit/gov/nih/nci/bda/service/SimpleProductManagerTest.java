@@ -16,7 +16,7 @@ public class SimpleProductManagerTest {
         assertNotNull(products);
         assertEmpty(products);
     }
-
+    
     private void assertEmpty(List<?> list) {
         assertEquals("Expected an empty list.", 0, list.size());
     }
