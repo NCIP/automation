@@ -34,11 +34,14 @@ bda-webapp/lib/servlet-api.jar -text
 bda-webapp/src/main/java/gov/nih/nci/bda/web/HelloController.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/web/HelloControllerTest.java -text
 bda-webapp/war/WEB-INF/bda-webapp-servlet.xml -text
+bda-webapp/war/WEB-INF/jsp/hello.jsp -text
+bda-webapp/war/WEB-INF/jsp/include.jsp -text
 bda-webapp/war/WEB-INF/lib/commons-logging.jar -text
+bda-webapp/war/WEB-INF/lib/jstl.jar -text
 bda-webapp/war/WEB-INF/lib/spring-webmvc.jar -text
 bda-webapp/war/WEB-INF/lib/spring.jar -text
+bda-webapp/war/WEB-INF/lib/standard.jar -text
 bda-webapp/war/WEB-INF/web.xml -text
-bda-webapp/war/hello.jsp -text
 bda-webapp/war/index.jsp -text
 certification-monitor/Testing.txt -text
 certification-monitor/build.xml -text

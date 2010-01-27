@@ -5,8 +5,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-  <!-- the application context definition for the DispatcherServlet -->
+    <!-- the application context definition for the DispatcherServlet -->
 
-  <bean name="/hello.htm" class="gov.nih.nci.bda.web.HelloController"/>
+    <bean name="/hello.htm" class="gov.nih.nci.bda.web.HelloController"/>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
 
 </beans>
