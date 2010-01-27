@@ -34,6 +34,9 @@
         <delete dir="${test.build.dir}"/>
     </target>
 
+    <target name="ci-build" depends="clean, tests"
+            description="Used by Hudson when running the Continuous Integration build."/>
+
     <target name="build" description="Compile main source tree java files">
         <mkdir dir="${build.dir}"/>
         <javac destdir="${build.dir}" source="1.5" target="1.5" debug="true"
