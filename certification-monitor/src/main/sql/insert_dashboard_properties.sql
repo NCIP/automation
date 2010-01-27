@@ -493,8 +493,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.exploded.dir.location','${cadsr-umlmodelbrowser.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/umlmodelbrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.jobname','UMLModelBrowser_Hudson_Build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.install.init.target','common:init');
@@ -516,8 +516,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.exploded.dir.location','${cadsr-formbuilder.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/formbuilder');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.jobname','Formbuilder_Hudson_Build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.install.init.target','common:init');
@@ -539,8 +539,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.exploded.dir.location','${cadsr-sentinel.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/sentinel-tool');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.jobname','Sentinel_Hudson_Build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.install.init.target','common:init');
@@ -562,8 +562,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.exploded.dir.location','${cadsr-freestylesearch.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/freestylesearch');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.jobname','FreestyleSearch_Hudson_Build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.install.init.target','common:init');
