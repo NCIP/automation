@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 
-<project name="bda-webapp" basedir="." default="build">
+<project name="bda-webapp" basedir="." default="tests">
     <property file="build.properties"/>
 
-    <property name="src.dir" value="src"/>
+    <property name="src.dir" value="src/main/java"/>
+    <property name="unit.test.dir" value="src/tests/unit"/>
     <property name="web.dir" value="war"/>
     <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+    <property name="test.build.dir" value="target/test-classes" />
     <property name="name" value="${ant.project.name}"/>
 
     <path id="master-classpath">
@@ -20,8 +22,16 @@
         <pathelement path="${build.dir}"/>
     </path>
 
+    <path id="test-classpath">
+        <pathelement location="${test.build.dir}" />
+        <path location="lib/junit-4.4.jar" />
+        <path location="${build.dir}" />
+        <fileset dir="${web.dir}/WEB-INF/lib" />
+    </path>
+
     <target name="clean">
-        <delete dir="${build.dir}" />
+        <delete dir="${build.dir}"/>
+        <delete dir="${test.build.dir}"/>
     </target>
 
     <target name="build" description="Compile main source tree java files">
@@ -31,6 +41,37 @@
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
+    </target>
+
+    <target name="buildtests" description="Compile test tree java files">
+        <mkdir dir="${test.build.dir}"/>
+        <javac destdir="${test.build.dir}" source="1.5" target="1.5" debug="true"
+               deprecation="false" optimize="false" failonerror="true">
+            <src path="${unit.test.dir}"/>
+            <classpath refid="test-classpath"/>
+        </javac>
+    </target>
+
+    <target name="tests" depends="build, buildtests" description="Run tests">
+        <junit haltonfailure="false" failureproperty="tests.failed">
+            <classpath refid="test-classpath" />
+
+            <formatter type="brief" usefile="false"/>
+            <batchtest>
+                <fileset dir="${test.build.dir}">
+                    <include name="**/*Test.*"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <fail if="tests.failed">
+            tests.failed=${tests.failed}
+            ***********************************************************
+            ***********************************************************
+            **** One or more tests failed! Check the output ... ****
+            ***********************************************************
+            ***********************************************************
+        </fail>
     </target>
 
     <target name="deploy" depends="build" description="Deploy application">
@@ -55,9 +96,9 @@
         </copy>
     </target>
 
-<!-- ============================================================== -->
-<!-- Tomcat tasks                                                   -->
-<!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Tomcat tasks                                                   -->
+    <!-- ============================================================== -->
 
     <path id="catalina-ant-classpath">
         <!-- We need the Catalina jars for Tomcat -->
@@ -92,31 +133,31 @@
 
     <target name="reload" description="Reload application in Tomcat">
         <reload url="${tomcat.manager.url}"
-                 username="${tomcat.manager.username}"
-                 password="${tomcat.manager.password}"
-                 path="/${name}"/>
+                username="${tomcat.manager.username}"
+                password="${tomcat.manager.password}"
+                path="/${name}"/>
     </target>
 
     <target name="start" description="Start Tomcat application">
         <start url="${tomcat.manager.url}"
-                 username="${tomcat.manager.username}"
-                 password="${tomcat.manager.password}"
-                 path="/${name}"/>
+               username="${tomcat.manager.username}"
+               password="${tomcat.manager.password}"
+               path="/${name}"/>
     </target>
 
     <target name="stop" description="Stop Tomcat application">
         <stop url="${tomcat.manager.url}"
-                 username="${tomcat.manager.username}"
-                 password="${tomcat.manager.password}"
-                 path="/${name}"/>
+              username="${tomcat.manager.username}"
+              password="${tomcat.manager.password}"
+              path="/${name}"/>
     </target>
 
     <target name="list" description="List Tomcat applications">
         <list url="${tomcat.manager.url}"
-                 username="${tomcat.manager.username}"
-                 password="${tomcat.manager.password}"/>
+              username="${tomcat.manager.username}"
+              password="${tomcat.manager.password}"/>
     </target>
 
-<!-- End Tomcat tasks -->
+    <!-- End Tomcat tasks -->
 
 </project>
