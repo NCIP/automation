@@ -12,13 +12,17 @@
         <fileset dir="${web.dir}/WEB-INF/lib">
             <include name="*.jar"/>
         </fileset>
-        <!-- We need the servlet API classes: -->
-        <!--  * for Tomcat 5/6 use servlet-api.jar -->
-        <fileset dir="${appserver.lib}">
+        <!-- We need the servlet API classes at build time, but not at deployment because
+        the container will provide them: -->
+        <fileset dir="lib">
             <include name="servlet*.jar"/>
         </fileset>
         <pathelement path="${build.dir}"/>
     </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
 
     <target name="build" description="Compile main source tree java files">
         <mkdir dir="${build.dir}"/>
@@ -57,8 +61,7 @@
 
     <path id="catalina-ant-classpath">
         <!-- We need the Catalina jars for Tomcat -->
-        <!--  * for other app servers - check the docs -->
-        <fileset dir="${appserver.lib}">
+        <fileset dir="lib">
             <include name="catalina-ant.jar"/>
         </fileset>
     </path>
