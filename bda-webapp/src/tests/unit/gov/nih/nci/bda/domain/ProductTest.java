@@ -5,9 +5,24 @@ import static junit.framework.Assert.assertEquals;
 
 public class ProductTest {
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldBombWhenCreatingAProductWithNullName() {
+        new Product(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldBombWhenCreatingAProductWithEmptyName() {
+        new Product("");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldBombWhenCreatingAProductWithBlankName() {
+        new Product("   ");
+    }
+
     @Test
     public void shouldNeverHaveNullPracticeWhenOtherwiseEmptyProduct() {
-        Product blank = new Product();
+        Product blank = new Product("TestName");
         assertDefaultPracticeValue(blank.getCertificationStatus());
         assertDefaultPracticeValue(blank.getBdaEnabled());
         assertDefaultPracticeValue(blank.getSingleCommandBuild());
@@ -23,7 +38,7 @@ public class ProductTest {
 
     @Test
     public void shouldAlwaysGetSameValueWhenSet() {
-        Product p = new Product();
+        Product p = new Product("TestName");
 
         PracticeStatus status = PracticeStatus.random();
         p.setBdaEnabled(status);
@@ -67,6 +82,55 @@ public class ProductTest {
 
         status = PracticeStatus.random();
         p.setTemplateValidation(status);
+        assertEquals(status, p.getTemplateValidation());
+    }
+
+    @Test
+    public void shouldBeAbleToSetWhenUsingStringStatusToo() {
+        Product p = new Product("TestName");
+
+        PracticeStatus status = PracticeStatus.random();
+        p.setBdaEnabled(status.toString());
+        assertEquals(status, p.getBdaEnabled());
+
+        status = PracticeStatus.random();
+        p.setCertificationStatus(status.toString());
+        assertEquals(status, p.getCertificationStatus());
+
+        status = PracticeStatus.random();
+        p.setCiBuild(status.toString());
+        assertEquals(status, p.getCiBuild());
+
+        status = PracticeStatus.random();
+        p.setCommandLineInstall(status.toString());
+        assertEquals(status, p.getCommandLineInstall());
+
+        status = PracticeStatus.random();
+        p.setDbIntegration(status.toString());
+        assertEquals(status, p.getDbIntegration());
+
+        status = PracticeStatus.random();
+        p.setDeploymentShakeout(status.toString());
+        assertEquals(status, p.getDeploymentShakeout());
+
+        status = PracticeStatus.random();
+        p.setPrivateProperties(status.toString());
+        assertEquals(status, p.getPrivateProperties());
+
+        status = PracticeStatus.random();
+        p.setRemoteUpgrade(status.toString());
+        assertEquals(status, p.getRemoteUpgrade());
+
+        status = PracticeStatus.random();
+        p.setSingleCommandBuild(status.toString());
+        assertEquals(status, p.getSingleCommandBuild());
+
+        status = PracticeStatus.random();
+        p.setSingleCommandDeploy(status.toString());
+        assertEquals(status, p.getSingleCommandDeploy());
+
+        status = PracticeStatus.random();
+        p.setTemplateValidation(status.toString());
         assertEquals(status, p.getTemplateValidation());
     }
 

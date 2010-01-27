@@ -1,6 +1,7 @@
 package gov.nih.nci.bda.domain;
 
 import static gov.nih.nci.bda.domain.PracticeStatus.NOT_SUCCESSFUL;
+import static gov.nih.nci.bda.domain.PracticeStatus.valueOf;
 
 public class Product {
     private PracticeStatus certificationStatus;
@@ -15,7 +16,11 @@ public class Product {
     private PracticeStatus ciBuild;
     private PracticeStatus commandLineInstall;
 
-    public Product() {
+    public Product(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("'Name' cannot be null or blank.");
+        }
+
         certificationStatus = NOT_SUCCESSFUL;
         bdaEnabled = NOT_SUCCESSFUL;
         singleCommandBuild = NOT_SUCCESSFUL;
@@ -117,4 +122,47 @@ public class Product {
         this.commandLineInstall = commandLineInstall;
     }
 
+    public void setBdaEnabled(String bdaEnabled) {
+        setBdaEnabled(valueOf(bdaEnabled));
+    }
+
+    public void setCertificationStatus(String certificationStatus) {
+        setCertificationStatus(valueOf(certificationStatus));
+    }
+
+    public void setSingleCommandDeploy(String singleCommandDeploy) {
+        setSingleCommandDeploy(valueOf(singleCommandDeploy));
+    }
+
+    public void setTemplateValidation(String templateValidation) {
+        setTemplateValidation(valueOf(templateValidation));
+    }
+
+    public void setSingleCommandBuild(String singleCommandBuild) {
+        setSingleCommandBuild(valueOf(singleCommandBuild));
+    }
+
+    public void setRemoteUpgrade(String remoteUpgrade) {
+        setRemoteUpgrade(valueOf(remoteUpgrade));
+    }
+
+    public void setPrivateProperties(String privateProperties) {
+        setPrivateProperties(valueOf(privateProperties));
+    }
+
+    public void setDeploymentShakeout(String deploymentShakeout) {
+        setDeploymentShakeout(valueOf(deploymentShakeout));
+    }
+
+    public void setDbIntegration(String dbIntegration) {
+        setDbIntegration(valueOf(dbIntegration));
+    }
+
+    public void setCommandLineInstall(String commandLineInstall) {
+        setCommandLineInstall(valueOf(commandLineInstall));
+    }
+
+    public void setCiBuild(String ciBuild) {
+        setCiBuild(valueOf(ciBuild));
+    }
 }

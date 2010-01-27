@@ -6,4 +6,6 @@ public enum PracticeStatus {
     protected static PracticeStatus random() {
         return values()[(int)(Math.random() * values().length)];
     }
+
+    
 }
