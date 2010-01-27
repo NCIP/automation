@@ -31,7 +31,11 @@ bda-webapp/build.xml -text
 bda-webapp/lib/catalina-ant.jar -text
 bda-webapp/lib/junit-4.4.jar -text
 bda-webapp/lib/servlet-api.jar -text
+bda-webapp/src/main/java/gov/nih/nci/bda/domain/Product.java -text
+bda-webapp/src/main/java/gov/nih/nci/bda/service/ProductManager.java -text
+bda-webapp/src/main/java/gov/nih/nci/bda/service/SimpleProductManager.java -text
 bda-webapp/src/main/java/gov/nih/nci/bda/web/HelloController.java -text
+bda-webapp/src/tests/unit/gov/nih/nci/bda/service/SimpleProductManagerTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/web/HelloControllerTest.java -text
 bda-webapp/war/WEB-INF/bda-webapp-servlet.xml -text
 bda-webapp/war/WEB-INF/jsp/hello.jsp -text
