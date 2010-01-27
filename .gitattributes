@@ -26,9 +26,6 @@ anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/listener/BDABuildListener.
 anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/util/HibernateUtil.java -text
 anthill-monitor/src/main/resources/hibernate.cfg.xml -text
 anthill-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
-bda-webapp/bda-webapp.iml -text
-bda-webapp/bda-webapp.ipr -text
-bda-webapp/bda-webapp.iws -text
 bda-webapp/build.properties -text
 bda-webapp/build.xml -text
 bda-webapp/war/WEB-INF/web.xml -text

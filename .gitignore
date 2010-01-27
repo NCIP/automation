@@ -1,2 +1,5 @@
+bda-webapp/*.iml
+bda-webapp/*.ipr
+bda-webapp/*.iws
 certification-monitor/classes
 certification-monitor/target
