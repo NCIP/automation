@@ -24,7 +24,7 @@
 
     <path id="test-classpath">
         <pathelement location="${test.build.dir}" />
-        <path location="lib/junit-4.4.jar" />
+        <fileset dir="lib" includes="*.jar"/>
         <path location="${build.dir}" />
         <fileset dir="${web.dir}/WEB-INF/lib" />
     </path>
@@ -43,7 +43,7 @@
         </javac>
     </target>
 
-    <target name="buildtests" description="Compile test tree java files">
+    <target name="buildtests" depends="build" description="Compile test tree java files">
         <mkdir dir="${test.build.dir}"/>
         <javac destdir="${test.build.dir}" source="1.5" target="1.5" debug="true"
                deprecation="false" optimize="false" failonerror="true">
