@@ -34,7 +34,7 @@
         <delete dir="${test.build.dir}"/>
     </target>
 
-    <target name="ci-build" depends="clean, tests"
+    <target name="ci-build" depends="clean, tests, war"
             description="Used by Hudson when running the Continuous Integration build."/>
 
     <target name="build" description="Compile main source tree java files">
@@ -85,17 +85,18 @@
         </copy>
     </target>
 
-    <target name="deploywar" depends="build" description="Deploy application as a WAR file">
-        <war destfile="${name}.war"
+    <target name="war" depends="build" description="Deploy application as a WAR file">
+        <war destfile="target/${name}.war"
              webxml="${web.dir}/WEB-INF/web.xml">
             <fileset dir="${web.dir}">
                 <include name="**/*.*"/>
             </fileset>
         </war>
+    </target>
+
+    <target name="deploywar" depends="build, war" description="Deploy application as a WAR file">
         <copy todir="${deploy.path}" preservelastmodified="true">
-            <fileset dir=".">
-                <include name="*.war"/>
-            </fileset>
+            <fileset dir="target" includes="${name}.war" />
         </copy>
     </target>
 
