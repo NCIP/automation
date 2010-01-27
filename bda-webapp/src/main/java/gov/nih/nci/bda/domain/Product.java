@@ -15,8 +15,10 @@ public class Product {
     private PracticeStatus templateValidation;
     private PracticeStatus ciBuild;
     private PracticeStatus commandLineInstall;
+    private final String name;
 
     public Product(String name) {
+        this.name = name;
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("'Name' cannot be null or blank.");
         }
@@ -164,5 +166,9 @@ public class Product {
 
     public void setCiBuild(String ciBuild) {
         setCiBuild(valueOf(ciBuild));
+    }
+
+    public String getName() {
+        return name;
     }
 }

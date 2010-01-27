@@ -7,7 +7,7 @@
     <property name="unit.test.dir" value="src/tests/unit"/>
     <property name="web.dir" value="war"/>
     <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
-    <property name="test.build.dir" value="target/test-classes" />
+    <property name="test.build.dir" value="target/test-classes"/>
     <property name="name" value="${ant.project.name}"/>
 
     <path id="master-classpath">
@@ -23,10 +23,10 @@
     </path>
 
     <path id="test-classpath">
-        <pathelement location="${test.build.dir}" />
+        <pathelement location="${test.build.dir}"/>
         <fileset dir="lib" includes="*.jar"/>
-        <path location="${build.dir}" />
-        <fileset dir="${web.dir}/WEB-INF/lib" />
+        <path location="${build.dir}"/>
+        <fileset dir="${web.dir}/WEB-INF/lib"/>
     </path>
 
     <target name="clean">
@@ -57,7 +57,7 @@
 
     <target name="tests" depends="build, buildtests" description="Run tests">
         <junit haltonfailure="false" failureproperty="tests.failed">
-            <classpath refid="test-classpath" />
+            <classpath refid="test-classpath"/>
 
             <formatter type="brief" usefile="false"/>
             <batchtest>
@@ -159,6 +159,14 @@
         <list url="${tomcat.manager.url}"
               username="${tomcat.manager.username}"
               password="${tomcat.manager.password}"/>
+    </target>
+
+    <target name="undeploy" description="Un-Deploy application">
+        <delete>
+            <fileset dir="${deploy.path}/${name}">
+                <include name="**/*.*"/>
+            </fileset>
+        </delete>
     </target>
 
     <!-- End Tomcat tasks -->

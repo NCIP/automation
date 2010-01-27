@@ -21,6 +21,11 @@ public class ProductTest {
     }
 
     @Test
+    public void shouldGetTheNameAsSet() {
+        assertEquals("Foo", new Product("Foo").getName());
+    }
+
+    @Test
     public void shouldNeverHaveNullPracticeWhenOtherwiseEmptyProduct() {
         Product blank = new Product("TestName");
         assertDefaultPracticeValue(blank.getCertificationStatus());

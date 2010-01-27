@@ -5,16 +5,18 @@ import static junit.framework.Assert.assertNotNull;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-public class HelloControllerTest {
+import java.util.Map;
+
+public class DashboardControllerTest {
 
     @Test
     public void shouldAlwaysSendToHelloPage() throws Exception {
-        HelloController controller = new HelloController();
+        DashboardController controller = new DashboardController();
         ModelAndView modelAndView = controller.handleRequest(null, null);
         assertEquals("hello", modelAndView.getViewName());
         assertNotNull(modelAndView.getModel());
-        String nowValue = (String) modelAndView.getModel().get("now");
-        assertNotNull(nowValue);
+        Map model = (Map) modelAndView.getModel().get("model");
+        assertNotNull(model.get("now"));
 
     }
 }
