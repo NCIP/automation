@@ -11,11 +11,16 @@ import gov.nih.nci.bda.provisioner.validator.ProjectDetailsCommand;
 
 class CloudClientController {
 	def cloudClientService
-	
+	def authenticateService 
+	 
     def index = { 
-    	println 'index..'
-		session.accessId=null
-		session.secretId=null
+
+		println 'index..'
+    	if(authenticateService.isLoggedIn())
+    	{
+    	    def user = authenticateService.userDomain()
+    		render(view: 'applications')
+    	}
     }
 
       
@@ -61,24 +66,30 @@ class CloudClientController {
 		
     def provisionSystem = {
 		CreateInstanceCommand cmd ->
-        if(!cmd.hasErrors()) 
-        {
-        	cloudClientService.sendMessage(params)
-			render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
-        }
-		else
-		{
-			def viewName = params.projectName+'_createInstance'
-			println viewName
-			render(view: viewName, model: [ instance: cmd ])
+		if(authenticateService.isLoggedIn())
+    	{		
+	        if(!cmd.hasErrors()) 
+	        {
+	        	cloudClientService.sendMessage(params)
+				render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
+	        }
+			else
+			{
+				def viewName = params.projectName+'_createInstance'
+				println viewName
+				render(view: viewName, model: [ instance: cmd ])
+			}
 		}			 
 		
 	}       
 
     def isApplicationAuthorised = {
-		def viewName = params.projectName+'_createInstance'
-		println viewName
-		render(view: viewName)
+    	if(authenticateService.isLoggedIn())
+    	{
+			def viewName = params.projectName+'_createInstance'
+			println viewName
+			render(view: viewName)
+		}
 	}       
 	
 	def provisionInstance = {CreateInstanceCommand cmd ->

@@ -26,7 +26,7 @@ environments {
 	production {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:mysql://cbvapp-c1006.nci.nih.gov:3306/provisionerdb"
+			url = "jdbc:mysql://localhost:3306/provisionerdb"
 		}
 	}
 }

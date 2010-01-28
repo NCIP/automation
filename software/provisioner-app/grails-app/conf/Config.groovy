@@ -62,9 +62,9 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
-grails.mail.host="mailfwd.nih.gov"
+//grails.mail.host="mailfwd.nih.gov"
 
-//grails.mail.host="localhost"
+grails.mail.host="localhost"
 grails.mail.port="25"
 grails.mail.default.from="aws@stelligent.com"	
 //grails.mail.username="Mahidhar.Narra@stelligent.com"
@@ -73,3 +73,5 @@ grails.mail.default.from="aws@stelligent.com"
 
 
      
+
+//log4j.logger.org.springframework.security='off,stdout'

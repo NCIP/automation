@@ -1,34 +1,35 @@
 <html>
 	<head>
-		<title>BDA Provisioner</title>
+		<title><g:loggedInUserInfo field="username">Guest</g:loggedInUserInfo>@Apllication Provisioner</title>
 		<meta name="layout" content="main"/>
 		<g:javascript library="jquery" />
 		 <style>
-			.fieldWrapper { margin-bottom: 20px;}
-
-			.fieldWrapper label { float: left; width: 150px; }
-
-			.fieldWrapper .fieldText { margin-left: 150px; }
-
-			.fieldWrapper .fieldText .error { color: red; }
-
-			.fieldWrapper .error label { color: red; }
-
-			.fieldWrapper .radioWrapper { margin-left: 150px; } 
+			.right
+			{
+				position:absolute;
+				right:0px;
+				width:300px;
+			}
 		</style>
 	</head>
 	<body>
 	<formset>
-	<legend><b>BDA Provisioner</b></legend>
+		<div class='right'>
+			<p>
+				<g:isLoggedIn>
+					<g:link controller="logout" action="index">sign out</g:link>
+				</g:isLoggedIn>
+			<p>
+		</div>
+		<br>
+		<legend><b>caArray Application Provisioner</b></legend>	
 	    <g:form action="validate">
-		<label><b>A new Amazon EC2 virtual instance has been created and the Hudson CI Server is being configured </b></label><br>
-		<label><b>A follow up email will be sent in around 20 minutes to the email address provided </b></label><br>	
+		<label><b>The caArray Application will be installed and configured for you cancer center. In about 30 minutes, you will receive an email with the link to the newly installed application. </b></label><br>
 		<label><b>Click on the 'Download Key' button below to download the Private Key file you can use to access your instance.</b></label><br>	
 		<g:hiddenField name="privateKeyFileName" value="${fileName}" />
 		<div class="buttons">
 			<g:actionSubmit value="Download Key" action="downloadKey" />
 			<g:actionSubmit value="Request Another Instance" action="validate" />
-			<g:actionSubmit value="Logoff" action="index" />
 		</div>
 	    </g:form>
 	</formset>

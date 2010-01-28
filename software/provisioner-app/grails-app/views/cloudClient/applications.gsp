@@ -1,30 +1,34 @@
 <html>
 	<head>
-		<title>BDA Provisioner
+		<title><g:loggedInUserInfo field="username">Guest</g:loggedInUserInfo>@Apllication Provisioner
 		</title>
 		<meta name="layout" content="main"/>
 		
 		 <style>
-		        .fieldWrapper { margin-bottom: 20px;}
-	
-			.fieldWrapper label { float: left; width: 150px; }
-	
-			.fieldWrapper .fieldText { margin-left: 150px; }
-	
-			.fieldWrapper .fieldText .error { color: red; }
-	
-			.fieldWrapper .error label { color: red; }
-	
-			.fieldWrapper .radioWrapper { margin-left: 150px; } 
+			.right
+			{
+				position:absolute;
+				right:0px;
+				width:300px;
+			}
+
 		</style>
 		<gui:resources components="['toolTip','tabView']"/>	</head>
 	<body>
 		<formset>
-		<legend><b>Application Provisioner</b></legend>
+		
+		<div class='right'>
+			<p>
+				<g:isLoggedIn>
+					<g:link controller="logout" action="index">sign out</g:link>
+				</g:isLoggedIn>
+			<p>
+		</div>	
 		<br>
 		<legend><b>Available applications</b></legend>
 		<br>
 			<g:form>
+
 			<table>
 				<tr>
 					<td>
@@ -33,9 +37,9 @@
 						</g:link>
 					</td>
 					<td>
-						<g:link action="isApplicationAuthorised" params="[projectName:'nbia']">
-							<img src="${createLinkTo(dir:'/images', file:'Logo-NCIA-2.gif')}" alt="NBIA Application"/>
-						</g:link>
+						
+						<img src="${createLinkTo(dir:'/images', file:'Logo-NCIA-2.gif')}" alt="NBIA Application"/>
+						
 					</td>
 
 				</tr>	

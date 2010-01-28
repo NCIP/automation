@@ -1,62 +1,70 @@
 <html>
 	<head>
-		<title>Application Provisioner
+		<title><g:loggedInUserInfo field="username">Guest</g:loggedInUserInfo>@Apllication Provisioner
 		</title>
 		<meta name="layout" content="main"/>
 		
 		<g:javascript library="jquery" />
 		 <style>
-		        .fieldWrapper { margin-bottom: 20px;}
-	
-			.fieldWrapper label { float: left; width: 150px; }
-	
-			.fieldWrapper .fieldText { margin-left: 150px; }
-	
-			.fieldWrapper .fieldText .error { color: red; }
-	
-			.fieldWrapper .error label { color: red; }
-	
-			.fieldWrapper .radioWrapper { margin-left: 150px; } 
+			.right
+			{
+				position:absolute;
+				right:0px;
+				width:300px;
+			}
+			.required 
+			{
+			    background: transparent url(../images/required_star.gif) 5px 50% no-repeat;
+			}
+			
 		</style>
 		<gui:resources components="['toolTip','tabView']"/>
 	</head>
 	<body>
 		<formset>
-		<legend><b>caArray Application Provisioner</b></legend>
-			<g:form>
-				<br>
+			<div class='right'>
+				<p>
+					<g:isLoggedIn>
+						<g:link controller="logout" action="index">sign out</g:link>
+					</g:isLoggedIn>
+				<p>
+			</div>	
+			<br>
+			<g:form >			
+					<g:hasErrors>
+						<div class="errors">
+							<g:renderErrors bean="${instance}" as="list" />
+						</div>
+					</g:hasErrors>
 
-						<g:hasErrors>
-							<div class="errors">
-								<g:renderErrors bean="${instance}" as="list" />
-							</div>
-						</g:hasErrors>
+					<br>									
 					<table>
 						<tr>
 							<td>
-								<b><label for="appConfig">caArray Application Configuration</label></b>
-								<br>
-								<br>
-								<gui:toolTip text="Enter the Email Address .">
-									<form:textField label="Email Address"  name="email" title="TextField" readonly="false" value="${params.email}"/>
+								
+			
+								<legend><b>caArray Application Provisioner</b></legend>
+								<br><br>
+								<gui:toolTip text="Enter the email address where you will receive further instructions">
+									<b><form:textField label="Email Address"  name="email" title="TextField" readonly="false" value="${params.email}"/></b>
 								</gui:toolTip>								
-								<gui:toolTip text="Enter the Mail Server .">
+								<gui:toolTip text="Enter the mail server where emails will be sent from for the caArray application">
 									<form:textField label="Mail Server Hostname"  name="projectproperty_mail_smtp_host" title="TextField" readonly="false" value="${params.mailServerHostname}"/>
 								</gui:toolTip>	
-								<gui:toolTip text="Enter the UPT server URL .">
+								<gui:toolTip text="Enter the URL for a functioning User Provisioning Tool">
 									<form:textField label="UPT Server URL"  name="projectproperty_upt_url" title="TextField" readonly="false" value="${params.uptServerUrl}"/>
 								</gui:toolTip>
-								<gui:toolTip text="Enter the LDAP URL .">
+								<gui:toolTip text="Enter the LDAP URL to be used for caArray user authentication For example: ldaps://cancer-ldap.nci.nih.gov:636/">
 									<form:textField label="LDAP URL"  name="projectproperty_ldap_url" title="TextField" readonly="false" value="${params.ldapUrl}"/>
 								</gui:toolTip>
 							</td>
 						</tr>
 					</table>
 									
-					<table width="100%">
+					<table width="100%" border="0">
 						<tr>
 							<td width="30%">
-								<b><label for="gridTechPOC">Grid Tech POC Research Center Information</label></b>
+								<legend><b>Grid Tech POC Research Center Information</b></legend>
 								<br>
 								<br>
 								<gui:toolTip text="Grid Tech POC Research Center Display Name .">

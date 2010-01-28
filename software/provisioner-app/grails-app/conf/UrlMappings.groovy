@@ -5,7 +5,7 @@ class UrlMappings {
 			 // apply constraints here
 		  }
 	  }
-      	  "/"(controller:'cloudClient', action:'index')
+      	  "/"(view:'/index')
 	  "500"(view:'/error')
 	}
 }
