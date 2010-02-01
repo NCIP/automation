@@ -2,7 +2,8 @@ CREATE TABLE `project_configuration_properties` (
   `project_key` VARCHAR(600) DEFAULT NULL,
   `project_value` VARCHAR(2000) DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=latin1
- 
+;
+
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('access.id','AKIAI53FXM32D5P3LZKA');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('secret.id','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');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('instance.type','default');

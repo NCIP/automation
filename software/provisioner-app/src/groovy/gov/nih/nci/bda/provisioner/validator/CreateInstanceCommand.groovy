@@ -8,9 +8,14 @@ package gov.nih.nci.bda.provisioner.validator;
 class CreateInstanceCommand {
 
    String email
+
    
    static constraints = {
-           email(email: true,blank:false)
-   }
-		
+     email(validator: { val, obj ->
+	   		if ( obj.email ) 
+	   		{
+	     		return ['Invalid Email Address']
+	   		}           
+   		})
+	}	
 }

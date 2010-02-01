@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title><g:loggedInUserInfo field="username">Guest</g:loggedInUserInfo>@Apllication Provisioner
+		<title><g:loggedInUserInfo field="username">Guest</g:loggedInUserInfo>@Application Provisioner
 		</title>
 		<meta name="layout" content="main"/>
 		
@@ -37,12 +37,13 @@
 						</div>
 					</g:hasErrors>
 
-					<br>									
+					<br>
+					<b>Enter the below fields and click on the 'Provision Application' button. All the fields in bold are required</b>
 					<table>
 						<tr>
 							<td>
 								
-			
+								
 								<legend><b>caArray Application Provisioner</b></legend>
 								<br><br>
 								<gui:toolTip text="Enter the email address where you will receive further instructions">

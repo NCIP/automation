@@ -52,7 +52,7 @@
 				<g:if test='${flash.message}'>
 					<div class='login_message'>${flash.message}</div>
 				</g:if>
-				<div class='fheader'>Application Provisioner Login</div>
+				<div class='fheader'>Application Provisioner Login (Beta)</div>
 				<form action="${resource(file: 'j_spring_security_check')}" method="POST" id='loginForm' class='cssform'>
 					<p>
 						<label for='j_username'>Login ID</label>

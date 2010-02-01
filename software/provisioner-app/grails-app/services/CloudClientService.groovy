@@ -1,7 +1,10 @@
 import gov.nih.nci.bda.provisioner.*
 import gov.nih.nci.bda.provisioner.util.*
+import gov.nih.nci.bda.provisioner.domain.*
+import gov.nih.nci.bda.provisioner.dao.*
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.springframework.mail.MailException
+
 
 class CloudClientService {
 	def mailService
@@ -10,6 +13,7 @@ class CloudClientService {
 	static destination = "provionerQ"
 	static listenerCount = 1
 	ProjectConfigurationHelper projectProperties = new ProjectConfigurationHelper()
+	
     
     void sendMessage(params) {
     	Provisioner ec2p = new EC2Provisioner(); 
@@ -21,7 +25,7 @@ class CloudClientService {
     	params.secretId = secretId
     	params.instanceType = projectProperties.getProperty("instance.type")
     	params.portList = projectProperties.getProperty(params.projectName+".portlist")
-    	
+    	println 'params.userId::'+params.userId
 		println 'Generating the Private Key with AccessID ' + accessId + ' and SecretID ' + secretId
 		String privateKeyFileName = ec2p.generateKey(accessId.trim(), secretId.trim()); 
 		println 'privateKeyFileName ' + privateKeyFileName
@@ -34,14 +38,22 @@ class CloudClientService {
 		return ec2p.validate(params.accessId.trim(),params.secretId.trim())
 	}
 
- 	def listInstances(accessId, secretId, params) {
- 		Provisioner ec2p = new EC2Provisioner(); 		
-		return ec2p.listAllInstances(accessId,secretId)
+ 	def listInstances(userId) {
+ 		println 'Listing all the instance for userId:'+ userId 
+ 		InstancesDAO instancesDao = new InstancesDAO(); 		
+		return instancesDao.listInstancesByUserId(userId)
 	}
 
- 	def terminateInstances(accessId, secretId, String[] instancesTerminating) {
+ 	def terminateInstances(String[] instancesTerminating) {
+		Instances instance = new Instances();
+		InstancesDAO instancesDao = new InstancesDAO();	
+ 	    def accessId=projectProperties.getProperty("access.id")
+    	def secretId=projectProperties.getProperty("secret.id")
  		Provisioner ec2p = new EC2Provisioner(); 	
 		ec2p.terminateInstance(accessId,secretId,instancesTerminating)
+		for (int i=0;i<instancesTerminating.size();i++){
+			instancesDao.updateInstanceStatus(instancesTerminating[i])		
+		}
 	}
 
 	
@@ -50,13 +62,18 @@ class CloudClientService {
 		try 
 		{
 			Provisioner ec2p = new EC2Provisioner(); 
+			Instances instance = new Instances();
+			InstancesDAO instancesDao = new InstancesDAO();			
 			
 			def aID = msg.accessId.trim()
 			def sId = msg.secretId.trim()
-			println 'configure started'
 			
-			println 'configure complete'
-
+			println 'configure started'
+			println 'msg.userId::'+msg.userId
+			instance.setUserId((int) msg.userId)
+			instance.setProjectName(msg.projectName)
+			instance.setInstanceType(msg.instanceType)
+			
 			def defaultPortList = '22,48080'
 			def fullPortList 
 			if(msg.portList)
@@ -69,14 +86,18 @@ class CloudClientService {
 			println 'Adding the ports ' + fullPortList + ' to the Default security group'
 			ec2p.generateSecurityGroup(aID,sId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
 			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +msg.privateKeyFileName
-  			String hostName = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home")+"/provisioner-key",msg.privateKeyFileName),msg.instanceType)
+  			instance = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home")+"/provisioner-key",msg.privateKeyFileName),msg.instanceType,instance)
 			println 'Loading the local.properties'
-			loadLocalProperties(msg,hostName)
-			println 'Configuring the AMI'
-			EC2SystemInitiator si = new EC2SystemInitiator(hostName,System.getProperty("user.home")+"/provisioner-key"+"/"+msg.privateKeyFileName,msg.projectName);			
+			loadLocalProperties(msg,instance.getInstanceName())
+			println 'Configuring the AMI' + instance.getInstanceName()
+			EC2SystemInitiator si = new EC2SystemInitiator(instance.getInstanceName(),System.getProperty("user.home")+"/provisioner-key"+"/"+msg.privateKeyFileName,msg.projectName);			
 			si.initializeSystem()
 			println 'System Initiation complete'
-			confirmationEmail(msg,hostName)	
+			instance.setInstanceStatus("RUNNING")
+			println 'Saving instance information'
+			instancesDao.saveInstance(instance)
+			println 'Sending confirmation email'
+			confirmationEmail(msg,instance.getInstanceName())	
 		} 
 		catch (ex) {
 			println ("Failed to post:"+ ex)
@@ -122,14 +143,11 @@ class CloudClientService {
 			println 'Sending the confirmation Email to '+ msg.email
 				mailService.sendMail
 				{
-					to msg.email
-					cc "aws@stelligent.com"					
+					to msg.email					
 					subject "Instance Ready (${hostName})"
-					body """ caArray Server is ready and configured.
-					
-					1) To access the caarray application, navigate to the below URL 
-					  http://${hostName}:38080/caarray
-
+					body """caArray Server is configured and ready.
+To access the caarray application, navigate to the below URL. 
+http://${hostName}:38080/caarray
 					"""
 				}
 			println 'Mail sent  to '+ msg.email		

@@ -44,7 +44,9 @@
 
 				</tr>	
 			</table>
-			
+				<div class="buttons">
+					<g:actionSubmit value="List Instances" action="listInstances" />
+				</div>									
 			</g:form>	
 		</formset>
 	</body>

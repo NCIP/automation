@@ -70,6 +70,11 @@ class CloudClientController {
     	{		
 	        if(!cmd.hasErrors()) 
 	        {
+	        	def user = authenticateService.userDomain()
+				
+				params.userId = user.id
+				println 'params.userId:::'+ params.userId
+				println 'user.id:::'+ user.id
 	        	cloudClientService.sendMessage(params)
 				render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
 	        }
@@ -104,9 +109,13 @@ class CloudClientController {
 	}
 
     def listInstances = {
-		def listAllInstances = cloudClientService.listInstances(session.accessId,session.secretId,params)	
-		return [listAllInstances: listAllInstances]
-		render(view: 'listInstances')
+    	if(authenticateService.isLoggedIn())
+    	{		
+	        def user = authenticateService.userDomain()				
+			def listAllInstances = cloudClientService.listInstances((int) user.id)	
+			return [listAllInstances: listAllInstances]
+			render(view: 'listInstances')
+		}
 	}	
 	
     def downloadKey = {
@@ -122,7 +131,7 @@ class CloudClientController {
     	println "Params::: ${params}"
 		println "Instance Check ${params.instancesTerminating}"
 		if(params.instancesTerminating)
-			cloudClientService.terminateInstances(session.accessId,session.secretId,params.instancesTerminating)
+			cloudClientService.terminateInstances(params.instancesTerminating)
 		redirect(controller: 'cloudClient',action: 'listInstances')		
 	}
 

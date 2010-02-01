@@ -1,56 +1,55 @@
 <html>
 	<head>
-		<title>BDA Provisioner</title>
+		<title>Application Provisioner</title>
 		<meta name="layout" content="main"/>
 		<g:javascript library="jquery" />
 		 <style>
-			.fieldWrapper { margin-bottom: 20px;}
-
-			.fieldWrapper label { float: left; width: 150px; }
-
-			.fieldWrapper .fieldText { margin-left: 150px; }
-
-			.fieldWrapper .fieldText .error { color: red; }
-
-			.fieldWrapper .error label { color: red; }
-
-			.fieldWrapper .radioWrapper { margin-left: 150px; } 
+			.right
+			{
+				position:absolute;
+				right:0px;
+				width:300px;
+			}			
 		</style>
 	</head>
 	<body>
-	<legend><b>BDA Provisioner</b></legend>
+	<legend><b>Application Provisioner</b></legend>
+		<div class='right'>
+			<p>
+				<g:isLoggedIn>
+					<g:link controller="logout" action="index">sign out</g:link>
+				</g:isLoggedIn>
+			<p>
+		</div>	
+		<br>
 		<div class="body">
 			<g:form action="terminateInstances" >
 				<div class="list">		
 				<table>
 					<thead>
 						<tr>
-							<g:sortableColumn property="instance_check" title="Select"/> 
-							<g:sortableColumn property="instance_id" title="Instance Id" />
-							<g:sortableColumn property="instance_id" title="Image Id" />
-							<g:sortableColumn property="instance_status" title="Instance Status" />
+							<g:sortableColumn property="instance_check" title="Select"/> 					
+							<g:sortableColumn property="project_name" title="Project Name" />
 							<g:sortableColumn property="instance_dns_name" title="Instance DNS Name" />
+							<g:sortableColumn property="instance_status" title="Instance Status" />
 						</tr>
 					</thead>
 					<g:if test="${listAllInstances}">	
 						<label><b><strong>${listAllInstances.size()}</strong> Instances Running</b></label><br>
 						<tbody>
 						<g:each var="result" in="${listAllInstances}">
-							<g:if test="${result?.getInstances()}">
-								<g:each var="instances" in="${result.getInstances()}" status="i">
-										<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-											<td><g:checkBox name="instancesTerminating" value="${instances.getInstanceId()}" checked="false"/>
-											</td>
-											<td>${instances.getInstanceId()}
-											</td>								
-											<td>${instances.getImageId()}
-											</td>
-											<td>${instances.getState()}
-											</td>
-											<td>${instances.getDnsName()}
-											</td>
-										</div>
-								</g:each>
+							<g:if test="${result}" >
+								<tr >
+									<td><g:checkBox name="instancesTerminating" value="${result.getInstanceId()}" checked="false"/>
+									</td>							
+									<td>${result.getProjectName()}
+									</td>
+									<td>${result.getInstanceName()}
+									</td>
+									<td>${result.getInstanceStatus()}
+									</td>
+								</div>
+
 							</g:if>	
 						</g:each>
 						</tbody>
@@ -61,9 +60,8 @@
 				</table>
 				</div>
 				<div class="buttons">
-					<g:actionSubmit value="Terminate" />
+					<g:actionSubmit value="Terminate" action="terminate" />
 					<g:actionSubmit value="Request Instance" action="validate" />
-					<g:actionSubmit value="Logoff" action="index" />
 				</div>
 			</g:form>
 		</div>

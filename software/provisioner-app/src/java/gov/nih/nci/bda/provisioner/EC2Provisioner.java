@@ -39,6 +39,7 @@ import com.xerox.amazonws.ec2.TerminatingInstanceDescription;
 import com.xerox.amazonws.ec2.GroupDescription.IpPermission;
 import com.xerox.amazonws.ec2.ReservationDescription.Instance;
 
+import gov.nih.nci.bda.provisioner.domain.Instances;
 import gov.nih.nci.bda.provisioner.util.ConfigurationHelper;
 
 import java.io.File;
@@ -200,7 +201,7 @@ private List terminateInstance(String accessId, String secretKey, String[] insta
     return info;
   }
 
-private String  runInstance(String accessId, String secretKey,String privateKey,String instanceType) throws IOException, InterruptedException
+private Instances runInstance(String accessId, String secretKey,String privateKey,String instanceType, Instances instances) throws IOException, InterruptedException
 {
 	Jec2 jec2 = new Jec2(accessId, secretKey);
 	String instanceState = null;
@@ -223,8 +224,9 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
 		do
 		{
-			List<ReservationDescription> instances = jec2.describeInstances(new ArrayList<String>());
-			for (ReservationDescription res : instances) {
+			List<ReservationDescription> ec2Instances = jec2.describeInstances(new ArrayList<String>());
+			for (ReservationDescription res : ec2Instances) 
+			{
 				//LOGGER.info(res.getOwner()+"\t"+res.getReservationId());
 				if(inst.getReservationId().equals(res.getReservationId()) )
 				{
@@ -232,10 +234,12 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 						for (Instance instance : res.getInstances()) {
 							instanceState = instance.getState();
 							dnsName = instance.getDnsName();
+							instances.setInstanceName(dnsName);
+							instances.setInstanceId(instance.getInstanceId());
 						}
 					}
 				}
-			}		
+			}
 		}while(!instanceState.equalsIgnoreCase("running"));
 
 		LOGGER.info("Connect Instance using the below string : ");
@@ -244,7 +248,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 	catch (EC2Exception e) {
 		throw new AssertionError();
 	}
-	return dnsName;
+	return instances;
 }
 
   public void provisionInstance() throws Exception
@@ -256,7 +260,7 @@ private String  runInstance(String accessId, String secretKey,String privateKey,
 		generateKey(accessId, secretKey);
 		generateSecurityGroup(accessId, secretKey, (ArrayList) config.getProperty("ec2.port.list"));
 		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName));
-		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName),"default");
+		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName),"default",new Instances());
 		initializeInstance("caarray");
 }
 

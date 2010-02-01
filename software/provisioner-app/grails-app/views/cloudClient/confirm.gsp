@@ -24,7 +24,7 @@
 		<br>
 		<legend><b>caArray Application Provisioner</b></legend>	
 	    <g:form action="validate">
-		<label><b>The caArray Application will be installed and configured for you cancer center. In about 30 minutes, you will receive an email with the link to the newly installed application. </b></label><br>
+		<label><b>The caArray application will be installed and configured for your cancer center. In about 30 minutes, you will receive an email with the link to the newly installed application. </b></label><br>
 		<label><b>Click on the 'Download Key' button below to download the Private Key file you can use to access your instance.</b></label><br>	
 		<g:hiddenField name="privateKeyFileName" value="${fileName}" />
 		<div class="buttons">

@@ -7,6 +7,7 @@ CREATE TABLE `project_initialization` (
    `RUN_AS_ROOT` VARCHAR(5) DEFAULT NULL,
    `IS_REBOOT_REQUIRED` VARCHAR(5) DEFAULT NULL
  ) ENGINE=MYISAM DEFAULT CHARSET=latin1
+ ;
  
  INSERT INTO project_initialization VALUES (1,'caarray','resources/init.sh','','true','true','false');
  INSERT INTO project_initialization VALUES (2,'caarray','resources/hosts','/etc/','true','true','false');

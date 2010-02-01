@@ -42,6 +42,9 @@ public abstract class SystemInitiator{
 		this.hostName = hostName.trim();
 		this.privateKeyFile = privateKeyFile.trim();
 		this.projectName = projectName.trim();
+		System.out.println("hostName::"+hostName);
+		System.out.println("projectName::"+projectName);
+		System.out.println("privateKeyFile::"+privateKeyFile);
 		rootUserUtils = new SystemUtils(hostName,"root",privateKeyFile,"KEY");
 		appUserUtils = new SystemUtils(hostName,"appuser","password","PASSWORD");
 	}
