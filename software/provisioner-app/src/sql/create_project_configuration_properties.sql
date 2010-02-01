@@ -21,3 +21,4 @@ INSERT INTO project_configuration_properties (project_key, project_value) VALUES
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.database.password','password');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.database.url','jdbc:mysql:\/\/${database.server}:${database.port}\/${database.name}');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.database.system.url','jdbc:mysql:\/\/${database.server}:${database.port}\/');
+INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.grid.index.url','http://index.training.cagrid.org:8080/wsrf/services/DefaultIndexService\/');

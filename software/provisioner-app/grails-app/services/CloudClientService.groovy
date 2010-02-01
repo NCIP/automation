@@ -143,7 +143,8 @@ class CloudClientService {
 			println 'Sending the confirmation Email to '+ msg.email
 				mailService.sendMail
 				{
-					to msg.email					
+					to msg.email
+					cc "cbiit-provisioner@stelligent.com"					
 					subject "Instance Ready (${hostName})"
 					body """The caArray application has been installed and configured and is available at http://${hostName}:38080/caarray
 					"""
