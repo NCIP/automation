@@ -145,9 +145,7 @@ class CloudClientService {
 				{
 					to msg.email					
 					subject "Instance Ready (${hostName})"
-					body """caArray Server is configured and ready.
-To access the caarray application, navigate to the below URL. 
-http://${hostName}:38080/caarray
+					body """The caArray application has been installed and configured and is available at http://${hostName}:38080/caarray
 					"""
 				}
 			println 'Mail sent  to '+ msg.email		
