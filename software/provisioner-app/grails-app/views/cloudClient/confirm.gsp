@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title><g:loggedInUserInfo field="username">Guest</g:loggedInUserInfo>@Apllication Provisioner</title>
+		<title><g:loggedInUserInfo field="username">Guest</g:loggedInUserInfo>@Application Provisioner</title>
 		<meta name="layout" content="main"/>
 		<g:javascript library="jquery" />
 		 <style>
