@@ -66,7 +66,7 @@ grails.mail.host="mailfwd.nih.gov"
 
 //grails.mail.host="localhost"
 grails.mail.port="25"
-grails.mail.default.from="cbiit-provisioner@stelligent.com"	
+grails.mail.default.from="NCICBIITBDA@mail.nih.gov"	
 //grails.mail.username="Mahidhar.Narra@stelligent.com"
 //grails.mail.password =""
 //grails.mail.props=["mail.smtp.auth":"true"]
