@@ -11,11 +11,7 @@ class CreateInstanceCommand {
 
    
    static constraints = {
-     email(validator: { val, obj ->
-	   		if ( !obj.email ) 
-	   		{
-	     		return ['Invalid Email Address']
-	   		}           
-   		})
-	}	
+           email(email: true,blank:false)
+   }
+		
 }
