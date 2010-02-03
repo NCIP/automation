@@ -362,7 +362,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.jobname','cabioapi');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','init:common');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.use.genericDB','false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.build:database-integration.macro.list','database-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.remote-upgrade.target','deploy:remote:upgrade');
