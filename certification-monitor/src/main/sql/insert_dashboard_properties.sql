@@ -367,6 +367,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.build:database-integration.macro.list','database-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.optional.features','build:database-integration');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.username','narram');
