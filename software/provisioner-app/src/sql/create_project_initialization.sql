@@ -25,7 +25,7 @@ CREATE TABLE `project_initialization` (
  INSERT INTO project_initialization VALUES (14,'caarray','mkdir ~/working/project_checkout','','false','false','false');
  INSERT INTO project_initialization VALUES (15,'caarray','mkdir ~/working/setup','','false','false','false');
  INSERT INTO project_initialization VALUES (16,'caarray','mkdir ~/working/setup/utility-scripts','','false','false','false');
- INSERT INTO project_initialization VALUES (17,'caarray','svn co http://gforge.nci.nih.gov/svnroot/caarray2/trunk/ working/project_checkout','','false','false','false');
+ INSERT INTO project_initialization VALUES (17,'caarray','svn co https://gforge.nci.nih.gov/svnroot/caarray2/tags/CAARRAY_R2_3_1_RC4/ working/project_checkout','','false','false','false');
  INSERT INTO project_initialization VALUES (18,'caarray','resources/local.properties','./working/project_checkout/software/master_build/','true','false','false');
  INSERT INTO project_initialization VALUES (19,'caarray','resources/build.xml','./working/setup/utility-scripts/','true','false','false');
  INSERT INTO project_initialization VALUES (20,'caarray','resources/local.properties','./working/setup/utility-scripts','true','false','false');
