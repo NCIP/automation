@@ -293,6 +293,9 @@
 				override.properties.string.property.name="override.remote.properties.string"
 				/>
 			<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
+			<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="jboss.home.property"/>
+			
+			<delete file="${jboss.home.property}/server/default/bin/default.pid" failonerror="false" />
 			<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 				<arg value="-Dproperties.file=upgrade.properties" />
 				<arg value="-Dforce.reinstall=true" />	
