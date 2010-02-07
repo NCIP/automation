@@ -17,19 +17,23 @@ CREATE TABLE `project_initialization` (
  INSERT INTO project_initialization VALUES (6,'caarray','sh init.sh','','false','true','true');
  INSERT INTO project_initialization VALUES (7,'caarray','resources/mysqld','/etc/init.d/','true','true','false');
  INSERT INTO project_initialization VALUES (8,'caarray','resources/my.cnf','/etc','true','true','false');
- INSERT INTO project_initialization VALUES (9,'caarray','/etc/init.d/mysqld start','','false','true','false');
- INSERT INTO project_initialization VALUES (10,'caarray','mysqladmin -u root password mysql','','false','true','false');
- INSERT INTO project_initialization VALUES (11,'caarray','resources/.bash_profile','','true','false','false');
- INSERT INTO project_initialization VALUES (12,'caarray','. .bash_profile >> profile.log','','false','false','false');
- INSERT INTO project_initialization VALUES (13,'caarray','mkdir ~/working','','false','false','false');
- INSERT INTO project_initialization VALUES (14,'caarray','mkdir ~/working/project_checkout','','false','false','false');
- INSERT INTO project_initialization VALUES (15,'caarray','mkdir ~/working/setup','','false','false','false');
- INSERT INTO project_initialization VALUES (16,'caarray','mkdir ~/working/setup/utility-scripts','','false','false','false');
- INSERT INTO project_initialization VALUES (17,'caarray','svn co https://gforge.nci.nih.gov/svnroot/caarray2/tags/CAARRAY_R2_3_1_RC4/ working/project_checkout','','false','false','false');
- INSERT INTO project_initialization VALUES (18,'caarray','resources/local.properties','./working/project_checkout/software/master_build/','true','false','false');
- INSERT INTO project_initialization VALUES (19,'caarray','resources/build.xml','./working/setup/utility-scripts/','true','false','false');
- INSERT INTO project_initialization VALUES (20,'caarray','resources/local.properties','./working/setup/utility-scripts','true','false','false');
- INSERT INTO project_initialization VALUES (21,'caarray','ant -f ./working/setup/utility-scripts/build.xml database:create >> utility.log','','false','false','false');
- INSERT INTO project_initialization VALUES (22,'caarray','ant -f ./working/project_checkout/software/master_build/build.xml deploy:local:install >> install.log','','false','false','false');
+ INSERT INTO project_initialization VALUES (8,'caarray','resources/my.cnf','/etc','true','true','false');
+ INSERT INTO project_initialization VALUES (10,'caarray','mkfs.ext3 -F /dev/sdi','','false','true','false');
+ INSERT INTO project_initialization VALUES (11,'caarray','mkdir /mnt/datamnt','','false','true','false');
+ INSERT INTO project_initialization VALUES (12,'caarray','mount -t ext3 /dev/sdi /mnt/datamnt','','false','true','false'); 
+ INSERT INTO project_initialization VALUES (13,'caarray','/etc/init.d/mysqld start','','false','true','false');
+ INSERT INTO project_initialization VALUES (14,'caarray','mysqladmin -u root password mysql','','false','true','false');
+ INSERT INTO project_initialization VALUES (15,'caarray','resources/.bash_profile','','true','false','false');
+ INSERT INTO project_initialization VALUES (16,'caarray','. .bash_profile >> profile.log','','false','false','false');
+ INSERT INTO project_initialization VALUES (17,'caarray','mkdir ~/working','','false','false','false');
+ INSERT INTO project_initialization VALUES (18,'caarray','mkdir ~/working/project_checkout','','false','false','false');
+ INSERT INTO project_initialization VALUES (19,'caarray','mkdir ~/working/setup','','false','false','false');
+ INSERT INTO project_initialization VALUES (20,'caarray','mkdir ~/working/setup/utility-scripts','','false','false','false');
+ INSERT INTO project_initialization VALUES (21,'caarray','svn co https://gforge.nci.nih.gov/svnroot/caarray2/tags/CAARRAY_R2_3_1_RC4/ working/project_checkout','','false','false','false');
+ INSERT INTO project_initialization VALUES (22,'caarray','resources/local.properties','./working/project_checkout/software/master_build/','true','false','false');
+ INSERT INTO project_initialization VALUES (23,'caarray','resources/build.xml','./working/setup/utility-scripts/','true','false','false');
+ INSERT INTO project_initialization VALUES (24,'caarray','resources/local.properties','./working/setup/utility-scripts','true','false','false');
+ INSERT INTO project_initialization VALUES (25,'caarray','ant -f ./working/setup/utility-scripts/build.xml database:create >> utility.log','','false','false','false');
+ INSERT INTO project_initialization VALUES (26,'caarray','ant -f ./working/project_checkout/software/master_build/build.xml deploy:local:install >> install.log','','false','false','false');
  
  

@@ -119,20 +119,26 @@ class CloudClientController {
 	}	
 	
     def downloadKey = {
-    	println params.privateKeyFileName
-	    def file = new File(System.getProperty("user.home")+"/provisioner-key/"+params.privateKeyFileName)    
-		response.setContentType("application/octet-stream")
-		response.setHeader("Content-disposition", "attachment;filename=${file.getName()}")
-		response.outputStream << file.newInputStream() 
+        if(authenticateService.isLoggedIn())
+    	{
+	    	println params.privateKeyFileName
+		    def file = new File(System.getProperty("user.home")+"/provisioner-key/"+params.privateKeyFileName)    
+			response.setContentType("application/octet-stream")
+			response.setHeader("Content-disposition", "attachment;filename=${file.getName()}")
+			response.outputStream << file.newInputStream()
+		} 
 	}	
 	
 
     def terminate = {
-    	println "Params::: ${params}"
-		println "Instance Check ${params.instancesTerminating}"
-		if(params.instancesTerminating)
-			cloudClientService.terminateInstances(params.instancesTerminating)
-		redirect(controller: 'cloudClient',action: 'listInstances')		
+        if(authenticateService.isLoggedIn())
+    	{
+	    	println "Params::: ${params}"
+			println "Instance Check ${params.instancesTerminating}"
+			if(params.instancesTerminating)
+				cloudClientService.terminateInstances(params.instancesTerminating)
+			redirect(controller: 'cloudClient',action: 'listInstances')
+		}		
 	}
 
     def validate = {

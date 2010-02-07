@@ -59,7 +59,7 @@ public abstract class SystemInitiator{
 		Session session = HibernateUtil.getSession();
 		LOGGER.info("Begin traansaction " );
 		session.beginTransaction();
-		LOGGER.info("Crete query " );
+		LOGGER.info("Create query " );
 		Query query = session.createQuery(" from ProjectInitialization as projectInitialization where projectInitialization.projectName='" + projectName +"' order by projectInitialization.id");
 		Iterator<Object> projectCommands = query.iterate();
 

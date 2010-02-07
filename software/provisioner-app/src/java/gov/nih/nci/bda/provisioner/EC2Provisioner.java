@@ -29,13 +29,16 @@ package gov.nih.nci.bda.provisioner;
  */
 
 import com.sshtools.j2ssh.util.InvalidStateException;
+import com.xerox.amazonws.ec2.AttachmentInfo;
 import com.xerox.amazonws.ec2.EC2Exception;
 import com.xerox.amazonws.ec2.GroupDescription;
 import com.xerox.amazonws.ec2.InstanceType;
 import com.xerox.amazonws.ec2.Jec2;
 import com.xerox.amazonws.ec2.KeyPairInfo;
 import com.xerox.amazonws.ec2.ReservationDescription;
+import com.xerox.amazonws.ec2.SnapshotInfo;
 import com.xerox.amazonws.ec2.TerminatingInstanceDescription;
+import com.xerox.amazonws.ec2.VolumeInfo;
 import com.xerox.amazonws.ec2.GroupDescription.IpPermission;
 import com.xerox.amazonws.ec2.ReservationDescription.Instance;
 
@@ -328,4 +331,37 @@ private void initializeInstance(String projectName) throws Exception
 		throw new ProvisionerException();
 	  }
 	}
+
+@SuppressWarnings("unchecked")
+private void createAttachVolume(String accessId, String secretKey,String dnsName) throws IOException {
+	Jec2 jec2 = new Jec2(accessId, secretKey);
+    try
+    {
+		System.out.println("Volumes");
+		List<VolumeInfo> vols = jec2.describeVolumes(new String [] {});
+		for (VolumeInfo info : vols) {
+			System.out.println(info.getVolumeId()+"\t"+info.getSize()+"\t"+info.getStatus());
+			List<AttachmentInfo> set = info.getAttachmentInfo();
+			for (AttachmentInfo att : set) {
+				System.out.println("  "+att.getInstanceId()+"\t"+att.getDevice()+"\t"+att.getStatus());
+			}
+		}
+		
+		System.out.println("Snapshots");
+		List<SnapshotInfo> snaps = jec2.describeSnapshots(new String [] {});
+		for (SnapshotInfo info : snaps) {
+			System.out.println(info.getSnapshotId()+"\t"+info.getVolumeId()+"\t"+info.getStatus()+"\t"+info.getProgress());
+		}		
+  	
+  	VolumeInfo vol = jec2.createVolume("1", null, "us-east-1c");
+  	jec2.attachVolume(vol.getVolumeId(), dnsName, "/dev/sdi");
+    }    	
+	catch (EC2Exception e)
+	{
+		LOGGER.log(Level.WARNING, "Failed to generate a EC2 security group", e);
+	}
 }
+
+}
+
+

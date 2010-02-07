@@ -89,6 +89,7 @@ class CloudClientService {
   			instance = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home")+"/provisioner-key",msg.privateKeyFileName),msg.instanceType,instance)
 			println 'Loading the local.properties'
 			loadLocalProperties(msg,instance.getInstanceName())
+			ec2p.createAttachVolume(aID,sId,instance.getInstanceId())
 			println 'Configuring the AMI' + instance.getInstanceName()
 			EC2SystemInitiator si = new EC2SystemInitiator(instance.getInstanceName(),System.getProperty("user.home")+"/provisioner-key"+"/"+msg.privateKeyFileName,msg.projectName);			
 			si.initializeSystem()
