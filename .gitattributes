@@ -3733,6 +3733,9 @@ software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/ProvisionerCommand
 software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/ProvisionerException.java -text
 software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/ProvisionerManager.java -text
 software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/SystemInitiator.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/dao/InstancesDAO.java -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/domain/Instances.hbm.xml -text
+software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/domain/Instances.java -text
 software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/domain/ProjectInitialization.hbm.xml -text
 software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/domain/ProjectInitialization.java -text
 software/provisioner-app/src/java/gov/nih/nci/bda/provisioner/util/ConfigurationHelper.java -text

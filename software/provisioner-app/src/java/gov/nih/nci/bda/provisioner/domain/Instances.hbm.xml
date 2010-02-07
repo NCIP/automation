@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="gov.nih.nci.bda.provisioner.domain.Instances" table="INSTANCES">
+         <id name="id" column="ID"> 
+         	<generator class="increment"/>           
+         </id>
+         <property name="instanceId" column="INSTANCE_ID"/>
+         <property name="userId" column="USER_ID"/>
+         <property name="projectName" column="PROJECT_NAME"/>
+         <property name="instanceName" column="INSTANCE_NAME"/>
+         <property name="instanceType" column="INSTANCE_TYPE"/>
+         <property name="instanceStatus" column="INSTANCE_STATUS"/>
+     </class>	
+</hibernate-mapping>
