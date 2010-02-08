@@ -1,3 +1,5 @@
+anthill-monitor/classes
+anthill-monitor/target
 bda-webapp/*.iml
 bda-webapp/*.ipr
 bda-webapp/*.iws
@@ -5,3 +7,5 @@ bda-webapp/target
 bda-webapp/war/WEB-INF/classes
 certification-monitor/classes
 certification-monitor/target
+wiki-cli/classes
+wiki-cli/target/dist
