@@ -49,7 +49,6 @@ bda-webapp/war/WEB-INF/lib/spring.jar -text
 bda-webapp/war/WEB-INF/lib/standard.jar -text
 bda-webapp/war/WEB-INF/web.xml -text
 bda-webapp/war/index.jsp -text
-certification-monitor/Testing.txt -text
 certification-monitor/build.xml -text
 certification-monitor/build/CertificationUtils.groovy -text
 certification-monitor/build/build.xml -text
