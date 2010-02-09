@@ -41,9 +41,7 @@
 					<b>Enter the below fields and click on the 'Provision Application' button. All the fields in bold are required</b>
 					<table>
 						<tr>
-							<td>
-								
-								
+							<td width="30%">								
 								<legend><b>caArray Application Provisioner</b></legend>
 								<br><br>
 								<gui:toolTip text="Enter the email address where you will receive further instructions">
@@ -59,6 +57,14 @@
 									<form:textField label="LDAP URL"  name="projectproperty_ldap_url" title="TextField" readonly="false" value="${params.ldapUrl}"/>
 								</gui:toolTip>
 							</td>
+							<td width="30%">
+								<br><br>
+								<gui:toolTip text="Enter the EBS volume Id">
+									<form:textField label="Volume Id"  name="volumeId" title="TextField" readonly="false" value="${params.volumeId}"/>
+								</gui:toolTip>								
+							</td>							
+							<td width="40%">
+							</td>							
 						</tr>
 					</table>
 									

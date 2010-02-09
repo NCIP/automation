@@ -10,6 +10,7 @@ public class Instances {
 	private String instanceName;	
 	private String instanceType;
 	private String instanceStatus;
+	private String instanceZone;
 	
 	public int getId() {
 		return id;
@@ -54,4 +55,11 @@ public class Instances {
 	public void setInstanceStatus(String instanceStatus) {
 		this.instanceStatus = instanceStatus;
 	}	
+	public String getInstanceZone() {
+		return instanceZone;
+	}
+	public void setInstanceZone(String instanceZone) {
+		this.instanceZone = instanceZone;
+	}	
 }
+

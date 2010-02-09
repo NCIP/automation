@@ -17,7 +17,7 @@ CREATE TABLE `project_initialization` (
  INSERT INTO project_initialization VALUES (6,'caarray','sh init.sh','','false','true','true');
  INSERT INTO project_initialization VALUES (7,'caarray','resources/mysqld','/etc/init.d/','true','true','false');
  INSERT INTO project_initialization VALUES (8,'caarray','resources/my.cnf','/etc','true','true','false');
- INSERT INTO project_initialization VALUES (8,'caarray','resources/my.cnf','/etc','true','true','false');
+ INSERT INTO project_initialization VALUES (9,'caarray','resources/my.cnf','/etc','true','true','false');
  INSERT INTO project_initialization VALUES (10,'caarray','mkfs.ext3 -F /dev/sdi','','false','true','false');
  INSERT INTO project_initialization VALUES (11,'caarray','mkdir /mnt/datamnt','','false','true','false');
  INSERT INTO project_initialization VALUES (12,'caarray','mount -t ext3 /dev/sdi /mnt/datamnt','','false','true','false'); 

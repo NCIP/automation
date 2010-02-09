@@ -6,6 +6,7 @@ CREATE TABLE `project_configuration_properties` (
 
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('access.id','AKIAI53FXM32D5P3LZKA');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('secret.id','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');
+INSERT INTO project_configuration_properties (project_key, project_value) VALUES('ebsvolume.size','1');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('instance.type','default');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.portlist','18080,38080');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.force.reinstall','true');

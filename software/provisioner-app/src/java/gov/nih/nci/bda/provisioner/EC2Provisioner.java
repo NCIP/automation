@@ -67,17 +67,18 @@ public class EC2Provisioner extends BaseProvisioner
   public String dnsName;
   private static Configuration config;
   private static final Logger LOGGER = Logger.getLogger(EC2Provisioner.class.getName());
+  private Jec2 jec2 = null;
 
-  public EC2Provisioner ()
+  public EC2Provisioner (String accessId, String secretKey)
   {
 	  super();
-	  //config = ConfigurationHelper.getConfiguration(new File("instance.properties").getAbsoluteFile());
+	  jec2 = new Jec2(accessId, secretKey);
   }
 
-  public synchronized String generateKey(String accessId, String secretKey) throws IOException
+  public synchronized String generateKey() throws IOException
   {
 	  System.out.println("GENERATE KEY");
-	  Jec2 jec2 = new Jec2(accessId, secretKey);
+	  //Jec2 jec2 = new Jec2(accessId, secretKey);
 	  KeyPairInfo key = null;
     try
     {
@@ -113,7 +114,7 @@ public class EC2Provisioner extends BaseProvisioner
 
 public String testConnection(String accessId, String secretKey, String privateKey) throws IOException
   {
-    Jec2 jec2 = new Jec2(accessId, secretKey);
+    //Jec2 jec2 = new Jec2(accessId, secretKey);
     try {
 
       List<String> params = new ArrayList<String>();
@@ -139,7 +140,7 @@ public String testConnection(String accessId, String secretKey, String privateKe
   }
 
 private void listAllKeys(String accessId, String secretKey) {
-    Jec2 jec2 = new Jec2(accessId, secretKey);
+   // Jec2 jec2 = new Jec2(accessId, secretKey);
     try {
 	List<KeyPairInfo> info = jec2.describeKeyPairs(new String [] {});
 	LOGGER.info("keypair list");
@@ -152,7 +153,7 @@ private void listAllKeys(String accessId, String secretKey) {
 
 private List listAllInstances(String accessId, String secretKey) {
 	System.out.println("Using accessID " + accessId + "and secretKey " +secretKey);
-    Jec2 jec2 = new Jec2(accessId, secretKey);
+    //Jec2 jec2 = new Jec2(accessId, secretKey);
     List<ReservationDescription> instances = null;
     try {
 		instances = jec2.describeInstances(new String [] {});
@@ -173,7 +174,7 @@ private List listAllInstances(String accessId, String secretKey) {
   }
 
 private boolean validate(String accessId, String secretKey) {
-    Jec2 jec2 = new Jec2(accessId, secretKey);
+   // Jec2 jec2 = new Jec2(accessId, secretKey);
     try
     {
     	List<KeyPairInfo> info = jec2.describeKeyPairs(new String [] {});
@@ -184,8 +185,8 @@ private boolean validate(String accessId, String secretKey) {
     return true;
   }
 
-private List terminateInstance(String accessId, String secretKey, String[] instancesList) {
-    Jec2 jec2 = new Jec2(accessId, secretKey);
+private List terminateInstance(String[] instancesList) {
+    //Jec2 jec2 = new Jec2(accessId, secretKey);
     List<TerminatingInstanceDescription> info = null;
     try
     {
@@ -204,9 +205,9 @@ private List terminateInstance(String accessId, String secretKey, String[] insta
     return info;
   }
 
-private Instances runInstance(String accessId, String secretKey,String privateKey,String instanceType, Instances instances) throws IOException, InterruptedException
+private Instances runInstance(String privateKey,String instanceType, Instances instances) throws IOException, InterruptedException
 {
-	Jec2 jec2 = new Jec2(accessId, secretKey);
+	//Jec2 jec2 = new Jec2(accessId, secretKey);
 	String instanceState = null;
 	InstanceType instanceSize = null;
 	System.out.println("instanceType:"+instanceType);
@@ -222,7 +223,11 @@ private Instances runInstance(String accessId, String secretKey,String privateKe
 		KeyPairInfo keyPair = new EC2PrivateKey(privateKey).findKeyPair(jec2);
 		if (keyPair == null)
 			throw new EC2Exception("No matching keypair found on EC2. Is the EC2 private key a valid one?");
+		// FC
 		ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-3c47a355", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
+		// centos
+		//ReservationDescription inst = (ReservationDescription)jec2.runInstances("ami-0459bc6d", 1, 1, new ArrayList<String>(), null, keyPair.getKeyName(), instanceSize);
+		
 		Thread.sleep(10000);
 		ReservationDescription.Instance ins = inst.getInstances().get(0);
 		do
@@ -239,6 +244,7 @@ private Instances runInstance(String accessId, String secretKey,String privateKe
 							dnsName = instance.getDnsName();
 							instances.setInstanceName(dnsName);
 							instances.setInstanceId(instance.getInstanceId());
+							instances.setInstanceZone(instance.getAvailabilityZone());
 						}
 					}
 				}
@@ -260,17 +266,17 @@ private Instances runInstance(String accessId, String secretKey,String privateKe
 	  	String secretKey = config.getString("ec2.secret.key");
 		listAllKeys(accessId, secretKey);
 		listAllInstances(accessId, secretKey);
-		generateKey(accessId, secretKey);
-		generateSecurityGroup(accessId, secretKey, (ArrayList) config.getProperty("ec2.port.list"));
+		generateKey();
+		generateSecurityGroup((ArrayList) config.getProperty("ec2.port.list"));
 		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName));
-		runInstance(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName),"default",new Instances());
+		runInstance(EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName),"default",new Instances());
 		initializeInstance("caarray");
 }
 
 
 @SuppressWarnings("unchecked")
-private void generateSecurityGroup(String accessId, String secretKey, ArrayList<String> portList) throws IOException {
-	Jec2 jec2 = new Jec2(accessId, secretKey);
+private void generateSecurityGroup(ArrayList<String> portList) throws IOException {
+	//Jec2 jec2 = new Jec2(accessId, secretKey);
     try
     {
     	List<GroupDescription> securityGroups = jec2.describeSecurityGroups(new String [] {});
@@ -333,32 +339,58 @@ private void initializeInstance(String projectName) throws Exception
 	}
 
 @SuppressWarnings("unchecked")
-private void createAttachVolume(String accessId, String secretKey,String dnsName) throws IOException {
-	Jec2 jec2 = new Jec2(accessId, secretKey);
+private void createAttachVolume(String ebsVolumeSize, String instanceId, String ebsVolumeZone) throws IOException {
+	//Jec2 jec2 = new Jec2(accessId, secretKey);
+	
     try
-    {
-		System.out.println("Volumes");
-		List<VolumeInfo> vols = jec2.describeVolumes(new String [] {});
-		for (VolumeInfo info : vols) {
-			System.out.println(info.getVolumeId()+"\t"+info.getSize()+"\t"+info.getStatus());
-			List<AttachmentInfo> set = info.getAttachmentInfo();
-			for (AttachmentInfo att : set) {
-				System.out.println("  "+att.getInstanceId()+"\t"+att.getDevice()+"\t"+att.getStatus());
-			}
-		}
-		
-		System.out.println("Snapshots");
+    {		
+/*
+    	System.out.println("Snapshots");
 		List<SnapshotInfo> snaps = jec2.describeSnapshots(new String [] {});
 		for (SnapshotInfo info : snaps) {
 			System.out.println(info.getSnapshotId()+"\t"+info.getVolumeId()+"\t"+info.getStatus()+"\t"+info.getProgress());
 		}		
+  */	
+  	VolumeInfo vol = jec2.createVolume(ebsVolumeSize, null, ebsVolumeZone);
+  	attachCreatedVolume(vol.getVolumeId(),instanceId,"/dev/sdi");
   	
-  	VolumeInfo vol = jec2.createVolume("1", null, "us-east-1c");
-  	jec2.attachVolume(vol.getVolumeId(), dnsName, "/dev/sdi");
     }    	
 	catch (EC2Exception e)
 	{
-		LOGGER.log(Level.WARNING, "Failed to generate a EC2 security group", e);
+		LOGGER.log(Level.WARNING, "Failed to Create a EBS Volume", e);
+	}
+}
+
+private void attachCreatedVolume(String volumeId, String instanceId,String deviceName) 
+{
+	try
+	{
+		System.out.println("VolumeID :: "+ volumeId);
+		List<VolumeInfo> vols = jec2.describeVolumes(new String [] {});
+		for (VolumeInfo info : vols) 
+		{
+			System.out.println(info.getVolumeId()+"\t"+info.getSize()+"\t"+info.getStatus());
+			if(info.getVolumeId().equals(volumeId))
+			{						
+				if(info.getStatus().equalsIgnoreCase("available"))
+				{
+					LOGGER.log(Level.WARNING, "Attaching Volume ", volumeId);
+					jec2.attachVolume(volumeId, instanceId,deviceName);
+				}
+				else
+				{
+					LOGGER.log(Level.INFO, "Volume is attached to an instance " + instanceId);
+				}
+			}else
+			{
+				LOGGER.log(Level.INFO, "Volume not found :"+volumeId );
+			}
+		}
+
+	}
+	catch (EC2Exception e)
+	{
+		LOGGER.log(Level.WARNING, "Failed to Attach the created  EBS Volume", e);
 	}
 }
 

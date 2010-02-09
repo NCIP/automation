@@ -12,5 +12,6 @@
          <property name="instanceName" column="INSTANCE_NAME"/>
          <property name="instanceType" column="INSTANCE_TYPE"/>
          <property name="instanceStatus" column="INSTANCE_STATUS"/>
+         <property name="instanceZone" column="INSTANCE_ZONE"/>
      </class>	
 </hibernate-mapping>

@@ -50,6 +50,7 @@
 		<div id='login'>
 			<div class='inner'>
 				<g:if test='${flash.message}'>
+					<div class='login_message'>MESSAGE/div>
 					<div class='login_message'>${flash.message}</div>
 				</g:if>
 				<div class='fheader'>Application Provisioner Login (Beta)</div>
