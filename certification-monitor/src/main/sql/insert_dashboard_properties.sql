@@ -1034,6 +1034,29 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.properties','exclude.database=true,application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost');
 
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.master.build.location','${workbench.svn.local.checkout}/sdk-workbench/workbench-webstart-project/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.exploded.dir.location','${workbench.svn.local.checkout}/sdk-workbench/workbench-webstart-project/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/workbench/properties');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.ci-server.url','http://ncias-c124-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.ci-server.jobname','sdk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.properties','exclude.database=true,application.base.path.linux=${user.home}/apps/workbench-app,jboss.server.hostname=localhost');
+
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.password','Temp123$');
