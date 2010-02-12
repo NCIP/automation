@@ -1018,7 +1018,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/example-project/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.install.location','working/installer');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:SDK');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.file','build.xml');
