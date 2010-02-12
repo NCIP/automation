@@ -8,7 +8,14 @@ private String toLocation;
 private String isFile;
 private String runAsRoot;
 private String isRebootRequired;
+private String runCommand;
 
+public String getRunCommand() {
+	return runCommand;
+}
+public void setRunCommand(String runCommand) {
+	this.runCommand = runCommand;
+}
 public String getIsRebootRequired() {
 	return isRebootRequired;
 }

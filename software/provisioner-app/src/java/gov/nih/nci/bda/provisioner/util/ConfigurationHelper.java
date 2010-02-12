@@ -33,6 +33,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.DataConfiguration;
 import org.apache.commons.configuration.DatabaseConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
@@ -61,6 +62,7 @@ public class ConfigurationHelper {
 
 		MysqlDataSource ds = new MysqlDataSource();
 		Configuration hibernateConfig = HibernateUtil.getConfiguration();
+		//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		ds.setUrl(hibernateConfig.getProperty(Environment.URL));
 		ds.setUser(hibernateConfig.getProperty(Environment.USER));
 		ds.setPassword(hibernateConfig.getProperty(Environment.PASS));

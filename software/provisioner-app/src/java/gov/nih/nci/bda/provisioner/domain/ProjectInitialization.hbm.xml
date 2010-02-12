@@ -12,5 +12,6 @@
          <property name="isFile" column="IS_FILE"/>
          <property name="runAsRoot" column="RUN_AS_ROOT"/>
          <property name="isRebootRequired" column="IS_REBOOT_REQUIRED"/>
+         <property name="runCommand" column="RUN_COMMAND"/>
      </class>	
 </hibernate-mapping>

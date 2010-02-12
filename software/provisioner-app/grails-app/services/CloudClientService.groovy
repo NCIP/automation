@@ -16,26 +16,28 @@ class CloudClientService {
 	
     
     void sendMessage(params) {
-    	Provisioner ec2p = new EC2Provisioner(); 
+    	
     	println(params)
     	//println(params.instanceType
     	def accessId=projectProperties.getProperty("access.id")
     	def secretId=projectProperties.getProperty("secret.id")
+    	Provisioner ec2p = new EC2Provisioner(accessId,secretId); 
     	params.accessId = accessId
     	params.secretId = secretId
     	params.instanceType = projectProperties.getProperty("instance.type")
+    	params.ebsVolumeSize = projectProperties.getProperty("ebsvolume.size")
     	params.portList = projectProperties.getProperty(params.projectName+".portlist")
     	println 'params.userId::'+params.userId
 		println 'Generating the Private Key with AccessID ' + accessId + ' and SecretID ' + secretId
-		String privateKeyFileName = ec2p.generateKey(accessId.trim(), secretId.trim()); 
+		String privateKeyFileName = ec2p.generateKey(); 
 		println 'privateKeyFileName ' + privateKeyFileName
 		params.privateKeyFileName = privateKeyFileName
 		sendQueueJMSMessage("provionerQ",params)
 	}
 	
  	def validate(params) {
- 		Provisioner ec2p = new EC2Provisioner(); 		
-		return ec2p.validate(params.accessId.trim(),params.secretId.trim())
+ 		Provisioner ec2p = new EC2Provisioner(params.accessId.trim(),params.secretId.trim()); 		
+		return ec2p.validate()
 	}
 
  	def listInstances(userId) {
@@ -49,8 +51,8 @@ class CloudClientService {
 		InstancesDAO instancesDao = new InstancesDAO();	
  	    def accessId=projectProperties.getProperty("access.id")
     	def secretId=projectProperties.getProperty("secret.id")
- 		Provisioner ec2p = new EC2Provisioner(); 	
-		ec2p.terminateInstance(accessId,secretId,instancesTerminating)
+ 		Provisioner ec2p = new EC2Provisioner(accessId,secretId); 	
+		ec2p.terminateInstance(instancesTerminating)
 		for (int i=0;i<instancesTerminating.size();i++){
 			instancesDao.updateInstanceStatus(instancesTerminating[i])		
 		}
@@ -61,12 +63,16 @@ class CloudClientService {
 	{
 		try 
 		{
-			Provisioner ec2p = new EC2Provisioner(); 
-			Instances instance = new Instances();
-			InstancesDAO instancesDao = new InstancesDAO();			
-			
 			def aID = msg.accessId.trim()
 			def sId = msg.secretId.trim()
+			
+			Provisioner ec2p = new EC2Provisioner(aID,sId); 
+			Instances instance = new Instances();
+			InstancesDAO instancesDao = new InstancesDAO();
+			ProjectInitializationDAO projectInitializationDAO = new ProjectInitializationDAO();
+						
+			
+
 			
 			println 'configure started'
 			println 'msg.userId::'+msg.userId
@@ -84,12 +90,32 @@ class CloudClientService {
 				fullPortList =defaultPortList 
 			}
 			println 'Adding the ports ' + fullPortList + ' to the Default security group'
-			ec2p.generateSecurityGroup(aID,sId,(ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
+			ec2p.generateSecurityGroup((ArrayList<String>) InvokerHelper.createList(fullPortList.split(",")))
 			println 'Creating the AMI with AccessID ' + aID + ' and SecretID ' + sId + 'private key file ' +msg.privateKeyFileName
-  			instance = ec2p.runInstance(aID,sId,EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home")+"/provisioner-key",msg.privateKeyFileName),msg.instanceType,instance)
+  			instance = ec2p.runInstance(EC2PrivateKey.retrivePrivateKey(System.getProperty("user.home")+"/provisioner-key",msg.privateKeyFileName),msg.instanceType,instance)
 			println 'Loading the local.properties'
 			loadLocalProperties(msg,instance.getInstanceName())
-			ec2p.createAttachVolume(aID,sId,instance.getInstanceId())
+			println 'volume id:'+msg.volumeId
+			if(msg.volumeId)
+			{
+				ec2p.attachCreatedVolume(msg.volumeId,instance.getInstanceId(),"/dev/sdi")
+				PropertyHelper localProperties = new PropertyHelper("resources/local.properties")
+				localProperties.removeProperty("force.reinstall")
+				localProperties.addProperty("nodbintegration","true")
+				localProperties.saveConfiguration()	
+				projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mkfs.ext3 -F /dev/sdi","false")
+				//projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mkdir /mnt/datamnt","false")
+				//projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mount -t ext3 /dev/sdi /mnt/datamnt","false")
+				projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mysqladmin -u root password mysql","false")
+			}
+			else
+			{
+				ec2p.createAttachVolume(msg.ebsVolumeSize,instance.getInstanceId(),instance.getInstanceZone())
+				projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mkfs.ext3 -F /dev/sdi","true")
+				//projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mkdir /mnt/datamnt","true")
+				//projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mount -t ext3 /dev/sdi /mnt/datamnt","true")
+				projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mysqladmin -u root password mysql","true")							
+			}
 			println 'Configuring the AMI' + instance.getInstanceName()
 			EC2SystemInitiator si = new EC2SystemInitiator(instance.getInstanceName(),System.getProperty("user.home")+"/provisioner-key"+"/"+msg.privateKeyFileName,msg.projectName);			
 			si.initializeSystem()

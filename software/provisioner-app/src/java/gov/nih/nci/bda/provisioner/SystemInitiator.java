@@ -56,7 +56,8 @@ public abstract class SystemInitiator{
 		//command
 	
 		LOGGER.info("Getting session " );
-		Session session = HibernateUtil.getSession();
+		//Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		LOGGER.info("Begin traansaction " );
 		session.beginTransaction();
 		LOGGER.info("Create query " );
@@ -67,72 +68,76 @@ public abstract class SystemInitiator{
 		{
 			LOGGER.info("getting the projectInitialization object" );
 			ProjectInitialization projectInitialization = (ProjectInitialization) projectCommands.next();
-			
-			if (projectInitialization.getIsFile() != null
-					&& projectInitialization.getIsFile().equals("true")) 
-			{
-
-				if (projectInitialization.getRunAsRoot() != null
-						&& projectInitialization.getRunAsRoot().equals("true")) 
-				{	
-					if(rootUserUtils.isUserAuthorised())
-					{
-						System.out.println ("Executing Command::"+projectInitialization.getCommandName());
-						rootUserUtils.createRemoteFile(new File(projectInitialization.getCommandName()).getAbsolutePath(), projectInitialization.getToLocation());
-					}
-					
-				}
-				else
-				{		
-					if(appUserUtils.isUserAuthorised())
-					{
-						appUserUtils.createRemoteFile(new File(projectInitialization.getCommandName()).getAbsolutePath(), projectInitialization.getToLocation());
-					}
-					
-				}
-				if (projectInitialization.getIsRebootRequired() != null
-						&& projectInitialization.getIsRebootRequired().equals("true")) 
+			if (projectInitialization.getRunCommand() != null
+					&& projectInitialization.getRunCommand().equals("true")) 
+			{				
+				if (projectInitialization.getIsFile() != null
+						&& projectInitialization.getIsFile().equals("true")) 
 				{
-					//executeReboot();
-					rootUserUtils.executeRemoteCommand("reboot");
-					Thread.sleep(100000);						
-				}
-				
-			}else
-			{
-				if (projectInitialization.getRunAsRoot() != null
-						&& projectInitialization.getRunAsRoot().equals("true")) 
-				{	
-
-					if(rootUserUtils.isUserAuthorised())
+	
+					if (projectInitialization.getRunAsRoot() != null
+							&& projectInitialization.getRunAsRoot().equals("true")) 
+					{	
+						if(rootUserUtils.isUserAuthorised())
+						{
+							System.out.println ("Executing Command::"+projectInitialization.getCommandName());
+							rootUserUtils.createRemoteFile(new File(projectInitialization.getCommandName()).getAbsolutePath(), projectInitialization.getToLocation());
+						}
+						
+					}
+					else
+					{		
+						if(appUserUtils.isUserAuthorised())
+						{
+							appUserUtils.createRemoteFile(new File(projectInitialization.getCommandName()).getAbsolutePath(), projectInitialization.getToLocation());
+						}
+						
+					}
+					if (projectInitialization.getIsRebootRequired() != null
+							&& projectInitialization.getIsRebootRequired().equals("true")) 
 					{
-						System.out.println ("Executing Command::"+projectInitialization.getCommandName());
-						rootUserUtils.executeRemoteCommand(projectInitialization.getCommandName());
+						//executeReboot();
+						rootUserUtils.executeRemoteCommand("reboot");
+						Thread.sleep(100000);						
 					}
 					
-				}
-				else
-				{		
-					if(appUserUtils.isUserAuthorised())
-					{
-						System.out.println ("Executing Command as user::"+projectInitialization.getCommandName());
-						appUserUtils.executeRemoteCommand(projectInitialization.getCommandName());
-					}
-					
-				}
-				if (projectInitialization.getIsRebootRequired() != null
-						&& projectInitialization.getIsRebootRequired().equals("true")) 
+				}else
 				{
-					//executeReboot();
-					rootUserUtils.executeRemoteCommand("reboot");
-					Thread.sleep(100000);	
+					if (projectInitialization.getRunAsRoot() != null
+							&& projectInitialization.getRunAsRoot().equals("true")) 
+					{	
+	
+						if(rootUserUtils.isUserAuthorised())
+						{
+							System.out.println ("Executing Command::"+projectInitialization.getCommandName());
+							rootUserUtils.executeRemoteCommand(projectInitialization.getCommandName());
+						}
+						
+					}
+					else
+					{		
+						if(appUserUtils.isUserAuthorised())
+						{
+							System.out.println ("Executing Command as user::"+projectInitialization.getCommandName());
+							appUserUtils.executeRemoteCommand(projectInitialization.getCommandName());
+						}
+						
+					}
+					if (projectInitialization.getIsRebootRequired() != null
+							&& projectInitialization.getIsRebootRequired().equals("true")) 
+					{
+						//executeReboot();
+						rootUserUtils.executeRemoteCommand("reboot");
+						Thread.sleep(100000);	
+					}
+					
 				}
-				
 			}
 			resetConnection();
 		}
+		session.getTransaction().commit();
 		//session.close();
-		HibernateUtil.closeSession();
+		//HibernateUtil.closeSession();
 	}
 
 	protected void connectToPseudoTerminal(SshClient ssh1, String command)

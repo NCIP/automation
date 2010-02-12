@@ -4,7 +4,7 @@
 <session-factory>
     <!-- Database connection settings -->
     <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property>
-    <property name="connection.url">jdbc:mysql://localhost/provisionerdb</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/provisionerdb</property>
     <property name="connection.username">provisioneruser</property>
     <property name="connection.password">password</property>
 
@@ -18,6 +18,7 @@
 
    
     <mapping resource="gov/nih/nci/bda/provisioner/domain/ProjectInitialization.hbm.xml"/>
+    <mapping resource="gov/nih/nci/bda/provisioner/domain/Instances.hbm.xml"/>
 </session-factory>
 
 </hibernate-configuration>

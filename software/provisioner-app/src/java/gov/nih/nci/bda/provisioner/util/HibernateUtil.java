@@ -14,6 +14,31 @@ import org.hibernate.cfg.Configuration;
  *
  */
 public class HibernateUtil {
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static Configuration configuration;
+    
+    private static SessionFactory buildSessionFactory() {
+        try {
+        	configuration = new Configuration().configure();
+            // Create the SessionFactory from hibernate.cfg.xml
+            return configuration.buildSessionFactory();
+        }
+        catch (Throwable ex) {
+            // Make sure you log the exception, as it might be swallowed
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+  
+	public static Configuration getConfiguration() {
+		return configuration;
+	}   
+
+	/*
 	private static Log certLogger = LogFactory.getLog(HibernateUtil.class);
 	private static Configuration configuration;
 	public static final ThreadLocal<Session> session = new ThreadLocal<Session>();
@@ -22,9 +47,9 @@ public class HibernateUtil {
 	static {
 		try {
 			certLogger.info("Create the SessionFactory from hibernate.cfg.xml");
-			URL url = HibernateUtil.class.getClassLoader().getResource("hibernate.cfg.xml");
+			//URL url = HibernateUtil.class.getClassLoader().getResource("hibernate.cfg.xml");
 			//File f = new File(url);
-			configuration = new Configuration().configure(url);
+			configuration = new Configuration().configure();
 			sessionFactory = configuration.buildSessionFactory();
 		} catch (Throwable ex) {
 			certLogger.error("Initial SessionFactory creation failed." + ex);
@@ -77,5 +102,5 @@ public class HibernateUtil {
 			}
 		}
 	}
-
+*/
 }

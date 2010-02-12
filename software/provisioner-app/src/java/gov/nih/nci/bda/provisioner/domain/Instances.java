@@ -1,6 +1,5 @@
 package gov.nih.nci.bda.provisioner.domain;
 
-import com.xerox.amazonws.ec2.InstanceType;
 
 public class Instances {
 	private int id;

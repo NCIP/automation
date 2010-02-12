@@ -112,18 +112,14 @@ public class EC2Provisioner extends BaseProvisioner
   }
 
 
-public String testConnection(String accessId, String secretKey, String privateKey) throws IOException
+public String testConnection(String privateKey) throws IOException
   {
     //Jec2 jec2 = new Jec2(accessId, secretKey);
     try {
 
       List<String> params = new ArrayList<String>();
       jec2.describeInstances(params);
-
-      if (accessId == null)
-        return "Access ID can be not null";
-      if (secretKey == null)
-        return "Secret key can be not null";
+      
       if (privateKey == null)
         return "Private key can be not null";
 
@@ -139,7 +135,7 @@ public String testConnection(String accessId, String secretKey, String privateKe
     return "success";
   }
 
-private void listAllKeys(String accessId, String secretKey) {
+private void listAllKeys() {
    // Jec2 jec2 = new Jec2(accessId, secretKey);
     try {
 	List<KeyPairInfo> info = jec2.describeKeyPairs(new String [] {});
@@ -151,8 +147,8 @@ private void listAllKeys(String accessId, String secretKey) {
     	LOGGER.log(Level.WARNING, "Private Key Authentication Failed", e); }
   }
 
-private List listAllInstances(String accessId, String secretKey) {
-	System.out.println("Using accessID " + accessId + "and secretKey " +secretKey);
+private List listAllInstances() {
+	//System.out.println("Using accessID " + accessId + "and secretKey " +secretKey);
     //Jec2 jec2 = new Jec2(accessId, secretKey);
     List<ReservationDescription> instances = null;
     try {
@@ -262,13 +258,11 @@ private Instances runInstance(String privateKey,String instanceType, Instances i
 
   public void provisionInstance() throws Exception
   {
-	 	String accessId = config.getString("ec2.access.id");
-	  	String secretKey = config.getString("ec2.secret.key");
-		listAllKeys(accessId, secretKey);
-		listAllInstances(accessId, secretKey);
+		listAllKeys();
+		listAllInstances();
 		generateKey();
 		generateSecurityGroup((ArrayList) config.getProperty("ec2.port.list"));
-		testConnection(accessId, secretKey,EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName));
+		testConnection(EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName));
 		runInstance(EC2PrivateKey.retrivePrivateKey(privateKeyFileLocation,privateKeyFileName),"default",new Instances());
 		initializeInstance("caarray");
 }

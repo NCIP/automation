@@ -22,20 +22,29 @@ programs. However, if You incorporate the Software into third party proprietary 
 * 6. THIS SOFTWARE IS PROVIDED "AS IS," AND ANY EXPRESSED OR IMPLIED WARRANTIES, (INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE) ARE DISCLAIMED. IN NO EVENT SHALL THE NATIONAL CANCER INSTITUTE, STELLIGENT OR THEIR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package gov.nih.nci.bda.provisioner;
+
+import org.apache.commons.configuration.Configuration;
+
 /**
  *
  * @author Mahidhar Narra
  */
 
 public class ProvisionerManager {
+	private static Configuration config;
 	  public static void main(String args[])
 	  {
-		  Provisioner ec2p = new EC2Provisioner();
-		  try {
+		 
+		 String accessId = config.getString("ec2.access.id");
+		 String secretKey = config.getString("ec2.secret.key");
+		 Provisioner ec2p = new EC2Provisioner(accessId,secretKey);
+		 try 
+		 {
 			ec2p.provisionInstance();
-
-		} catch (Exception e) {
+		 } 
+		 catch (Exception e) 
+		 {
 			e.printStackTrace();
-		}
+		 }
 	  }
 }

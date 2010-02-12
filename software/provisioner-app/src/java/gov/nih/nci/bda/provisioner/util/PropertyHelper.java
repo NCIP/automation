@@ -38,6 +38,19 @@ public class PropertyHelper {
 			   config.addProperty(propertyName, propertyValue);
 			   
 	   }	   
+
+	   public void removeProperty(String propertyName)
+	   {
+		   Iterator keys = config.getKeys();
+		   boolean keyExists = false;
+		   while (keys.hasNext())
+		   {
+			   if(propertyName.equalsIgnoreCase((String) keys.next()))
+				   keyExists= true;
+		   }
+		   if(keyExists)
+			   config.clearProperty(propertyName);			   
+	   }	
 	   
 	   public void saveConfiguration() throws ConfigurationException
 	   {

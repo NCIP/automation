@@ -15,18 +15,22 @@ public class InstancesDAO {
 
 	public void saveInstance(Instances instance)
 	{
-		Session session = HibernateUtil.getSession();
+		//Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
 	    session.beginTransaction();
 	    
 	    session.save(instance);
 
 	    session.getTransaction().commit();
-	    HibernateUtil.closeSession();
+	    //HibernateUtil.closeSession();
 	}
 
 	public List listInstancesByUserId(int userId)
 	{
-		Session session = HibernateUtil.getSession();
+		//Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
 		//Query query = session.createQuery("select instances.instanceId,instances.projectName,instances.instanceName,instances.instanceType from Instances as instances,USER as user where user.id = instances.userId and instances.userId='" + userId +"' order by instances.instanceId");
 		Query query = session.createQuery(" from Instances as instances where instances.userId='" + userId +"' order by instances.instanceStatus");
 		//and instances.instanceStatus != 'TERMINATED' 
@@ -42,20 +46,22 @@ public class InstancesDAO {
 			System.out.println(is.getInstanceType());
 			System.out.println(is.getProjectName());			
 		}
-		HibernateUtil.closeSession();
+		session.getTransaction().commit();
+		//HibernateUtil.closeSession();
 		return instances;	    
 	}
 	
 	public void updateInstanceStatus(String instanceId)
 	{
-		Session session = HibernateUtil.getSession();
+		//Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 		Query query = session.createQuery("update Instances set instanceStatus = 'TERMINATED' where instanceId = :instanceId" );
 		query.setString("instanceId",instanceId);
 	    int rowCount = query.executeUpdate();
 	    System.out.println("Rows affected: " + rowCount);
 	    session.getTransaction().commit();
-	    HibernateUtil.closeSession();
+	    //HibernateUtil.closeSession();
 	}	
 	
 }
