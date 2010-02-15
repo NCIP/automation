@@ -10,7 +10,9 @@ public class Instances {
 	private String instanceType;
 	private String instanceStatus;
 	private String instanceZone;
+	private String volumeAttached;
 	
+
 	public int getId() {
 		return id;
 	}
@@ -59,6 +61,12 @@ public class Instances {
 	}
 	public void setInstanceZone(String instanceZone) {
 		this.instanceZone = instanceZone;
+	}
+	public String getVolumeAttached() {
+		return volumeAttached;
+	}
+	public void setVolumeAttached(String volumeAttached) {
+		this.volumeAttached = volumeAttached;
 	}	
 }
 

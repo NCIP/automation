@@ -110,7 +110,10 @@ class CloudClientService {
 			}
 			else
 			{
-				ec2p.createAttachVolume(msg.ebsVolumeSize,instance.getInstanceId(),instance.getInstanceZone())
+				instance = ec2p.createAttachVolume(msg.ebsVolumeSize,instance)
+				PropertyHelper localProperties = new PropertyHelper("resources/local.properties")
+				localProperties.removeProperty("nodbintegration")
+				localProperties.saveConfiguration()
 				projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mkfs.ext3 -F /dev/sdi","true")
 				//projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mkdir /mnt/datamnt","true")
 				//projectInitializationDAO.updateRunCommandStatus(msg.projectName,"mount -t ext3 /dev/sdi /mnt/datamnt","true")

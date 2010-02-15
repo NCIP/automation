@@ -32,10 +32,11 @@
 							<g:sortableColumn property="project_name" title="Project Name" />
 							<g:sortableColumn property="instance_dns_name" title="Instance DNS Name" />
 							<g:sortableColumn property="instance_status" title="Instance Status" />
+							<g:sortableColumn property="volume_attached" title="Attached Volume" />
 						</tr>
 					</thead>
 					<g:if test="${listAllInstances}">	
-						<label><b><strong>${listAllInstances.size()}</strong> Instances Running</b></label><br>
+						<label><b><strong>${listAllInstances.size()}</strong> Instances </b></label><br>
 						<tbody>
 						<g:each var="result" in="${listAllInstances}">
 							<g:if test="${result}" >
@@ -48,6 +49,8 @@
 									</td>
 									<td>${result.getInstanceStatus()}
 									</td>
+									<td>${result.getVolumeAttached()}
+									</td>									
 								</div>
 
 							</g:if>	

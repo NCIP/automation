@@ -333,9 +333,8 @@ private void initializeInstance(String projectName) throws Exception
 	}
 
 @SuppressWarnings("unchecked")
-private void createAttachVolume(String ebsVolumeSize, String instanceId, String ebsVolumeZone) throws IOException {
+private Instances createAttachVolume(String ebsVolumeSize,Instances instances) throws IOException {
 	//Jec2 jec2 = new Jec2(accessId, secretKey);
-	
     try
     {		
 /*
@@ -345,14 +344,15 @@ private void createAttachVolume(String ebsVolumeSize, String instanceId, String 
 			System.out.println(info.getSnapshotId()+"\t"+info.getVolumeId()+"\t"+info.getStatus()+"\t"+info.getProgress());
 		}		
   */	
-  	VolumeInfo vol = jec2.createVolume(ebsVolumeSize, null, ebsVolumeZone);
-  	attachCreatedVolume(vol.getVolumeId(),instanceId,"/dev/sdi");
-  	
+  	VolumeInfo vol = jec2.createVolume(ebsVolumeSize, null, instances.getInstanceZone());
+  	attachCreatedVolume(vol.getVolumeId(),instances.getInstanceId(),"/dev/sdi");
+  	instances.setVolumeAttached(vol.getVolumeId());
     }    	
 	catch (EC2Exception e)
 	{
 		LOGGER.log(Level.WARNING, "Failed to Create a EBS Volume", e);
 	}
+	return instances;
 }
 
 private void attachCreatedVolume(String volumeId, String instanceId,String deviceName) 
