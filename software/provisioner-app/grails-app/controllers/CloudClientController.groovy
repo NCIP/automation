@@ -22,48 +22,7 @@ class CloudClientController {
     		render(view: 'applications')
     	}
     }
-
-      
-    def saveSystemInfo = {
-		SystemInfoCommand systemCmd ->
-        if(!systemCmd.hasErrors()) {
-        println 'NO ERRORS'
-        	cloudClientService.configureSystemInfo(params)
-			render(view: 'createInstance',model: [ tabName:'systemInfo' ])
-        }
-		else
-		{
-		println 'HAS ERRORS'
-			render(view: 'createInstance', model: [ instance: systemCmd,tabName:'systemInfo' ])
-		}	
-	}     
-
-    def saveScmInfo = {
-		ScmInfoCommand scmCmd ->
-        if(!scmCmd.hasErrors()) {
-        println 'NO ERRORS'
-			render(view: 'createInstance',model: [ tabName:'scmRepo' ])
-        }
-		else
-		{
-		println 'HAS ERRORS'
-			render(view: 'createInstance', model: [ instance: scmCmd,tabName:'scmRepo' ])
-		}	
-	} 
 	
-    def saveProjectDetails = {
-		ProjectDetailsCommand projectCmd ->
-        if(!projectCmd.hasErrors()) {
-        println 'NO ERRORS'
-			render(view: 'createInstance',model: [ tabName:'projectDetails' ])
-        }
-		else
-		{
-		println 'HAS ERRORS'
-			render(view: 'createInstance', model: [ instance: projectCmd,tabName:'projectDetails' ])
-		}	
-	} 
-		
     def provisionSystem = {
 		CreateInstanceCommand cmd ->
 		if(authenticateService.isLoggedIn())
@@ -73,7 +32,11 @@ class CloudClientController {
 	        	def user = authenticateService.userDomain()
 				
 				params.userId = user.id
+				params.accessId = user.accessId
+    	        params.secretKey = user.secretKey				
 				println 'params.userId:::'+ params.userId
+				println 'params.accessId:::'+ params.accessId
+				println 'params.secretId:::'+ params.secretKey
 				println 'user.id:::'+ user.id
 	        	cloudClientService.sendMessage(params)
 				render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
@@ -97,21 +60,12 @@ class CloudClientController {
 		}
 	}       
 	
-	def provisionInstance = {CreateInstanceCommand cmd ->
-        if(!cmd.hasErrors()) {        
-        	cloudClientService.sendMessage(params)
-			render(view: 'confirm', model: [ fileName: params.privateKeyFileName ])
-        }
-		else
-		{
-			render(view: 'createInstance', model: [ instance: cmd ])
-		}
-	}
-
     def listInstances = {
     	if(authenticateService.isLoggedIn())
     	{		
-	        def user = authenticateService.userDomain()				
+	        def user = authenticateService.userDomain()
+	        println user.accessId
+	        println user.secretKey				
 			def listAllInstances = cloudClientService.listInstances((int) user.id)	
 			return [listAllInstances: listAllInstances]
 			render(view: 'listInstances')
@@ -133,50 +87,20 @@ class CloudClientController {
     def terminate = {
         if(authenticateService.isLoggedIn())
     	{
-	    	println "Params::: ${params}"
+    		def user = authenticateService.userDomain()
+	    	params.accessId = user.accessId
+    	    params.secretKey = user.secretKey
+    	   	println params.accessId
+	        println params.secretKey	
 			println "Instance Check ${params.instancesTerminating}"
 			if(params.instancesTerminating)
-				cloudClientService.terminateInstances(params.instancesTerminating)
+				cloudClientService.terminateInstances(params)
 			redirect(controller: 'cloudClient',action: 'listInstances')
 		}		
 	}
 
     def validate = {
-    /*  	
-    	if(!session.accessId && !session.secretId)
-    	{
-    	println "Using access id ${params.accessId} and Secret key ${params.secretId}"
-			if(params.accessId && params.secretId)
-			{	
-				if(cloudClientService.validate(params))
-				{	
-					session.accessId=params.accessId
-					session.secretId=params.secretId
-					render(view: 'createInstance')
-				}else
-				{
-					flash.message = "Authentication with AWS Failed. Either Access Key ID  or Secret Access Key is invalid. You must have a valid AWS EC2 account."
-					redirect(controller: 'cloudClient',action: 'index',params: [accessId:params.accessId,secretId:params.secretId])
-				}					
-			}
-			else
-			{
-				flash.message = "Access Key ID  and Secret Access Key cannot be empty."
-				render(view: 'index')
-			}
-		}else
-		{
-				if(cloudClientService.validate(session))
-				{	
-					render(view: 'createInstance')
-				}else
-				{
-					flash.message = "Authentication with AWS Failed. Either Access Key ID  or Secret Access Key is invalid. You must have a valid AWS EC2 account."
-					redirect(controller: 'cloudClient',action: 'index',params: [accessId:params.accessId,secretId:params.secretId])
-				}
-		}		
-		*/		
-	//render(view: 'createInstance',model: [ tabName:'systemInfo' ])
-	render(view: 'applications')
+		//render(view: 'createInstance',model: [ tabName:'systemInfo' ])
+		render(view: 'applications')
 	}	
 }

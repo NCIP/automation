@@ -19,11 +19,9 @@ class CloudClientService {
     	
     	println(params)
     	//println(params.instanceType
-    	def accessId=projectProperties.getProperty("access.id")
-    	def secretId=projectProperties.getProperty("secret.id")
-    	Provisioner ec2p = new EC2Provisioner(accessId,secretId); 
-    	params.accessId = accessId
-    	params.secretId = secretId
+    	def accessId=params.accessId
+    	def secretId=params.secretKey
+    	Provisioner ec2p = new EC2Provisioner(params.accessId,params.secretKey); 
     	params.instanceType = projectProperties.getProperty("instance.type")
     	params.ebsVolumeSize = projectProperties.getProperty("ebsvolume.size")
     	params.portList = projectProperties.getProperty(params.projectName+".portlist")
@@ -46,16 +44,40 @@ class CloudClientService {
 		return instancesDao.listInstancesByUserId(userId)
 	}
 
- 	def terminateInstances(String[] instancesTerminating) {
+ 	def terminateInstances(params) {
 		Instances instance = new Instances();
 		InstancesDAO instancesDao = new InstancesDAO();	
- 	    def accessId=projectProperties.getProperty("access.id")
-    	def secretId=projectProperties.getProperty("secret.id")
+    	def accessId=params.accessId
+    	def secretId=params.secretKey
+    	println accessId
+    	println secretId
+    	String[] instancesTerminatingArray
+    	if(params.instancesTerminating instanceof java.lang.String)
+    	{
+    		instancesTerminatingArray = (String[]) params.instancesTerminating.split(',') 
+    	}
+    	else
+    	{
+    		instancesTerminatingArray = params.instancesTerminating	
+    	}
+    	
+    	println 'instancesTerminatingArray:::::::::' + instancesTerminatingArray
+    	println 'params.instancesTerminating:::::::::'+ params.instancesTerminating
+    	//println 'LENGTH:::::::::' + params.instancesTerminating.length()
+    	println 'SIZE:::::::::'+ params.instancesTerminating.size()
+    	
+    	println 'SIZE::ARRAY:::::::'+ instancesTerminatingArray.size()
  		Provisioner ec2p = new EC2Provisioner(accessId,secretId); 	
-		ec2p.terminateInstance(instancesTerminating)
-		for (int i=0;i<instancesTerminating.size();i++){
-			instancesDao.updateInstanceStatus(instancesTerminating[i])		
+		ec2p.terminateInstance(instancesTerminatingArray)
+		//System.out.println("instancesTerminatingArray.length@@@@::");
+		//System.out.println("instancesTerminatingArray.size::"+instancesTerminatingArray.size());
+		//System.out.println("instancesTerminatingArray.length::"+params.instancesTerminating.length);
+		//System.out.println("instancesTerminatingArray.size::"+params.instancesTerminating.size());
+	
+		for (int i=0;i<instancesTerminatingArray.size();i++){
+			instancesDao.updateInstanceStatus(instancesTerminatingArray[i])		
 		}
+
 	}
 
 	
@@ -64,7 +86,7 @@ class CloudClientService {
 		try 
 		{
 			def aID = msg.accessId.trim()
-			def sId = msg.secretId.trim()
+			def sId = msg.secretKey.trim()
 			
 			Provisioner ec2p = new EC2Provisioner(aID,sId); 
 			Instances instance = new Instances();

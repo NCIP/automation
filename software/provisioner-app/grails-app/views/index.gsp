@@ -43,10 +43,23 @@
 			#login .inner .login_message {color:red;}
 			#login .inner .text_ {width:120px;}
 			#login .inner .chk {height:12px;}
+			.right
+			{
+				position:absolute;
+				right:0px;
+				width:300px;
+			}			
 
 		</style>
 	</head>
 	<body>
+		<div class='right'>
+			<p>				
+				<g:link controller="register" >
+					Register
+				</g:link>
+			<p>
+		</div>
 		<div id='login'>
 			<div class='inner'>
 				<g:if test='${flash.message}'>

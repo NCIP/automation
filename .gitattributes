@@ -3634,10 +3634,12 @@ software/provisioner-app/grails-app/conf/SecurityConfig.groovy -text
 software/provisioner-app/grails-app/conf/UrlMappings.groovy -text
 software/provisioner-app/grails-app/conf/hibernate/hibernate.cfg.xml -text
 software/provisioner-app/grails-app/conf/spring/resources.groovy -text
+software/provisioner-app/grails-app/controllers/CaptchaController.groovy -text
 software/provisioner-app/grails-app/controllers/CloudClientController.groovy -text
 software/provisioner-app/grails-app/controllers/ListController.groovy -text
 software/provisioner-app/grails-app/controllers/LoginController.groovy -text
 software/provisioner-app/grails-app/controllers/LogoutController.groovy -text
+software/provisioner-app/grails-app/controllers/RegisterController.groovy -text
 software/provisioner-app/grails-app/domain/gov/nih/nci/bda/provisioner/Requestmap.groovy -text
 software/provisioner-app/grails-app/domain/gov/nih/nci/bda/provisioner/Role.groovy -text
 software/provisioner-app/grails-app/domain/gov/nih/nci/bda/provisioner/User.groovy -text
@@ -3653,6 +3655,7 @@ software/provisioner-app/grails-app/i18n/messages_ru.properties -text
 software/provisioner-app/grails-app/i18n/messages_th.properties -text
 software/provisioner-app/grails-app/i18n/messages_zh_CN.properties -text
 software/provisioner-app/grails-app/services/CloudClientService.groovy -text
+software/provisioner-app/grails-app/services/EmailerService.groovy -text
 software/provisioner-app/grails-app/views/cloudClient/applications.gsp -text
 software/provisioner-app/grails-app/views/cloudClient/caarray_createInstance.gsp -text
 software/provisioner-app/grails-app/views/cloudClient/confirm.gsp -text
@@ -3666,6 +3669,9 @@ software/provisioner-app/grails-app/views/list/listInstances.gsp -text
 software/provisioner-app/grails-app/views/login/auth.gsp -text
 software/provisioner-app/grails-app/views/login/denied.gsp -text
 software/provisioner-app/grails-app/views/login/openIdAuth.gsp -text
+software/provisioner-app/grails-app/views/register/edit.gsp -text
+software/provisioner-app/grails-app/views/register/index.gsp -text
+software/provisioner-app/grails-app/views/register/show.gsp -text
 software/provisioner-app/ivy.xml -text
 software/provisioner-app/ivysettings.xml -text
 software/provisioner-app/lib/JAXB2_20070122.jar -text
@@ -3676,6 +3682,7 @@ software/provisioner-app/lib/activemq-core-5.2.0.jar -text
 software/provisioner-app/lib/activemq-jaas-5.2.0.jar -text
 software/provisioner-app/lib/activemq-web-5.2.0.jar -text
 software/provisioner-app/lib/bcprov-jdk16-143.jar -text
+software/provisioner-app/lib/c3p0-0.9.1.2.jar -text
 software/provisioner-app/lib/camel-core-1.5.0.jar -text
 software/provisioner-app/lib/camel-jetty-1.5.0.jar -text
 software/provisioner-app/lib/camel-jms-1.5.0.jar -text
@@ -3700,6 +3707,7 @@ software/provisioner-app/lib/jaxb-api-2.0.jar -text
 software/provisioner-app/lib/jaxb-impl-2.0.3.jar -text
 software/provisioner-app/lib/jta-1.1.jar -text
 software/provisioner-app/lib/jtds-1.2.jar -text
+software/provisioner-app/lib/mail-1.4.jar -text
 software/provisioner-app/lib/mysql-connector-java-5.0.5.jar -text
 software/provisioner-app/lib/stax-1.2.0.jar -text
 software/provisioner-app/lib/typica.jar -text
@@ -3720,6 +3728,7 @@ software/provisioner-app/slf4j-api-1.5.2.jar -text
 software/provisioner-app/slf4j-simple-1.5.2.jar -text
 software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/util/ConfigHelper.groovy -text
 software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/validator/CreateInstanceCommand.groovy -text
+software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/validator/CreateUserCommand.groovy -text
 software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/validator/ProjectDetailsCommand.groovy -text
 software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/validator/ScmInfoCommand.groovy -text
 software/provisioner-app/src/groovy/gov/nih/nci/bda/provisioner/validator/SystemInfoCommand.groovy -text

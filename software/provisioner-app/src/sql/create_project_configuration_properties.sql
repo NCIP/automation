@@ -4,8 +4,6 @@ CREATE TABLE `project_configuration_properties` (
 ) ENGINE=INNODB DEFAULT CHARSET=latin1
 ;
 
-INSERT INTO project_configuration_properties (project_key, project_value) VALUES('access.id','AKIAI53FXM32D5P3LZKA');
-INSERT INTO project_configuration_properties (project_key, project_value) VALUES('secret.id','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');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('ebsvolume.size','1');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('instance.type','default');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.portlist','18080,38080');
@@ -22,4 +20,4 @@ INSERT INTO project_configuration_properties (project_key, project_value) VALUES
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.database.password','password');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.database.url','jdbc:mysql:\/\/${database.server}:${database.port}\/${database.name}');
 INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.database.system.url','jdbc:mysql:\/\/${database.server}:${database.port}\/');
-INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.grid.index.url','http://index.training.cagrid.org:8080/wsrf/services/DefaultIndexService\/');
+INSERT INTO project_configuration_properties (project_key, project_value) VALUES('caarray.grid.index.url','http://index.training.cagrid.org:8080/wsrf/services/DefaultIndexService');

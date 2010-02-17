@@ -169,7 +169,7 @@ private List listAllInstances() {
     return instances;
   }
 
-private boolean validate(String accessId, String secretKey) {
+private boolean validate() {
    // Jec2 jec2 = new Jec2(accessId, secretKey);
     try
     {

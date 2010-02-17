@@ -10,7 +10,7 @@ class BootStrap {
 		{
 		
 	        def password = authenticateService.encodePassword("password") 
-	        def superadmin = new User(username:"admin",userRealName:"Administrator",passwd:password,enabled:true,emailShow:true,description:"admin user",email:"put email here").save()
+	        def superadmin = new User(username:"admin",userRealName:"Administrator",passwd:password,enabled:true,emailShow:true,description:"admin user",email:"put email here",accessId:"AKIAI53FXM32D5P3LZKA",secretKey:"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").save()
 	
 	        //create admin role
 	        def sudo = new Role(authority:"ROLE_ADMIN",description:"Site Administrator")
