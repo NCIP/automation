@@ -47,6 +47,7 @@ bda-webapp/src/tests/integration/gov/nih/nci/bda/repository/JdbcProductDaoTest.j
 bda-webapp/src/tests/integration/jdbc.properties -text
 bda-webapp/src/tests/integration/test-context.xml -text
 bda-webapp/src/tests/sql/load_data.sql -text
+bda-webapp/src/tests/sql/load_real_data.sql -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/domain/ProductTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/service/SimpleProductManagerTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/web/DashboardControllerTest.java -text
