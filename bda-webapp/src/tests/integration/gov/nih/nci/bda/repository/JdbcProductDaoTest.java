@@ -21,7 +21,7 @@ public class JdbcProductDaoTest extends AbstractTransactionalDataSourceSpringCon
     @Override
     protected void onSetUpInTransaction() throws Exception {
         super.deleteFromTables(new String[]{"project_certification_status"});
-        super.executeSqlScript("file:src/main/sql/load_data.sql", true);
+        super.executeSqlScript("file:src/tests/sql/load_data.sql", true);
     }
 
     public void testGetProductList() {
