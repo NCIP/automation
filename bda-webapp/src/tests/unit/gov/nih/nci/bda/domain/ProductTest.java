@@ -1,7 +1,7 @@
 package gov.nih.nci.bda.domain;
 
-import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
+import org.junit.Test;
 
 public class ProductTest {
 
@@ -23,6 +23,16 @@ public class ProductTest {
     @Test
     public void shouldGetTheNameAsSet() {
         assertEquals("Foo", new Product("Foo").getName());
+    }
+
+    @Test
+    public void shouldGoToDefaultWhenSettingStatusValuesToNull() {
+        Product product = new Product("Foo");
+        product.setBdaEnabled(PracticeStatus.OPTIONAL);
+        assertEquals(PracticeStatus.OPTIONAL, product.getBdaEnabled());
+        product.setBdaEnabled((String) null);
+        assertEquals("Null strings should set the status to the default.", 
+                Product.DEFAULT_STATUS, product.getBdaEnabled());
     }
 
     @Test
@@ -140,6 +150,6 @@ public class ProductTest {
     }
 
     private void assertDefaultPracticeValue(PracticeStatus status) {
-        assertEquals("Expected the default practice", PracticeStatus.NOT_SUCCESSFUL, status);
+        assertEquals("Expected the default practice", Product.DEFAULT_STATUS, status);
     }
 }

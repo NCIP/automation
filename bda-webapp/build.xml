@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 
-<project name="bda-webapp" basedir="." default="tests">
+<project name="bda-webapp" basedir="." default="unit-test">
     <property file="build.properties"/>
 
     <property name="src.dir" value="src/main/java"/>
     <property name="unit.test.dir" value="src/tests/unit"/>
+    <property name="int.test.dir" value="src/tests/integration"/>
     <property name="web.dir" value="war"/>
     <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
-    <property name="test.build.dir" value="target/test-classes"/>
+    <property name="unit.test.build.dir" value="target/unit-test-classes"/>
+    <property name="int.test.build.dir" value="target/integration-test-classes"/>
     <property name="name" value="${ant.project.name}"/>
 
     <path id="master-classpath">
@@ -23,7 +25,10 @@
     </path>
 
     <path id="test-classpath">
-        <pathelement location="${test.build.dir}"/>
+        <pathelement location="${unit.test.build.dir}"/>
+        <pathelement location="${int.test.build.dir}"/>
+        <pathelement location="${int.test.dir}"/>
+        <pathelement location="${web.dir}/WEB-INF/classes"/>
         <fileset dir="lib" includes="*.jar"/>
         <path location="${build.dir}"/>
         <fileset dir="${web.dir}/WEB-INF/lib"/>
@@ -31,37 +36,63 @@
 
     <target name="clean">
         <delete dir="${build.dir}"/>
-        <delete dir="${test.build.dir}"/>
+        <delete dir="target"/>
     </target>
 
-    <target name="ci-build" depends="clean, tests, war"
+    <target name="ci-build" depends="clean, unit-test, war"
             description="Used by Hudson when running the Continuous Integration build."/>
 
     <target name="build" description="Compile main source tree java files">
         <mkdir dir="${build.dir}"/>
         <javac destdir="${build.dir}" source="1.5" target="1.5" debug="true"
-               deprecation="false" optimize="false" failonerror="true">
+               deprecation="false" optimize="false" failonerror="true" includeantruntime="false">
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
     </target>
 
-    <target name="buildtests" depends="build" description="Compile test tree java files">
-        <mkdir dir="${test.build.dir}"/>
-        <javac destdir="${test.build.dir}" source="1.5" target="1.5" debug="true"
-               deprecation="false" optimize="false" failonerror="true">
+    <target name="unit-test" depends="build" description="Run unit tests">
+        <mkdir dir="${unit.test.build.dir}"/>
+        <javac destdir="${unit.test.build.dir}" source="1.5" target="1.5" debug="true"
+               deprecation="false" optimize="false" failonerror="true" includeantruntime="false">
             <src path="${unit.test.dir}"/>
             <classpath refid="test-classpath"/>
         </javac>
-    </target>
-
-    <target name="tests" depends="build, buildtests" description="Run tests">
         <junit haltonfailure="false" failureproperty="tests.failed">
             <classpath refid="test-classpath"/>
 
             <formatter type="brief" usefile="false"/>
             <batchtest>
-                <fileset dir="${test.build.dir}">
+                <fileset dir="${unit.test.build.dir}">
+                    <include name="**/*Test.*"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <fail if="tests.failed">
+            tests.failed=${tests.failed}
+            ***********************************************************
+            ***********************************************************
+            **** One or more tests failed! Check the output ... ****
+            ***********************************************************
+            ***********************************************************
+        </fail>
+    </target>
+
+    <target name="integration-test" depends="build" description="Run integration tests">
+        <mkdir dir="${int.test.build.dir}"/>
+        <mkdir dir="target/test-results"/>
+        <javac destdir="${int.test.build.dir}" source="1.5" target="1.5" debug="true"
+               deprecation="false" optimize="false" failonerror="true" includeantruntime="false">
+            <src path="${int.test.dir}"/>
+            <classpath refid="test-classpath"/>
+        </javac>
+        <junit haltonfailure="false" failureproperty="tests.failed" printsummary="true">
+            <classpath refid="test-classpath"/>
+
+            <formatter type="plain" />
+            <batchtest todir="target/test-results">
+                <fileset dir="${int.test.build.dir}">
                     <include name="**/*Test.*"/>
                 </fileset>
             </batchtest>
@@ -96,7 +127,7 @@
 
     <target name="deploywar" depends="build, war" description="Deploy application as a WAR file">
         <copy todir="${deploy.path}" preservelastmodified="true">
-            <fileset dir="target" includes="${name}.war" />
+            <fileset dir="target" includes="${name}.war"/>
         </copy>
     </target>
 
@@ -171,5 +202,19 @@
     </target>
 
     <!-- End Tomcat tasks -->
+
+    <!-- DB Tasks -->
+    <target name="update-database">
+        <taskdef name="updateDatabase" classname="liquibase.ant.DatabaseUpdateTask"
+                 classpathref="test-classpath"/>
+        <updateDatabase changeLogFile="src/main/sql/create.project_certification_status.xml"
+                        driver="com.mysql.jdbc.Driver"
+                        url="jdbc:mysql://localhost:3306/buildmonitordb-dev"
+                        username="buildmonitoruser"
+                        password="password"
+                        dropFirst="true"
+                        classpathref="test-classpath"/>
+    </target>
+
 
 </project>

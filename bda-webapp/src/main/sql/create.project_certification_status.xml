@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.6"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.6
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.6.xsd">
+
+
+    <changeSet id="1" author="pj">
+        <createTable tableName="project_certification_status">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product" type="varchar(500)" />
+            <column name="certification_status" type="varchar(500)" />
+            <column name="single_command_build" type="varchar(500)" />
+            <column name="single_command_deployment" type="varchar(500)" />
+            <column name="remote_upgrade" type="varchar(500)" />
+            <column name="database_integration" type="varchar(500)" />
+            <column name="template_validation" type="varchar(500)" />
+            <column name="private_properties" type="varchar(500)" />
+            <column name="ci_build" type="varchar(500)" />
+            <column name="deployment_shakeout" type="varchar(500)" />
+            <column name="bda_enabled" type="varchar(500)" />
+            <column name="commandline_installer" type="varchar(500)" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
+        

@@ -4,6 +4,10 @@ import static gov.nih.nci.bda.domain.PracticeStatus.NOT_SUCCESSFUL;
 import static gov.nih.nci.bda.domain.PracticeStatus.valueOf;
 
 public class Product {
+
+    public static final PracticeStatus DEFAULT_STATUS = NOT_SUCCESSFUL;
+
+    private int id;
     private PracticeStatus certificationStatus;
     private PracticeStatus bdaEnabled;
     private PracticeStatus singleCommandBuild;
@@ -23,17 +27,17 @@ public class Product {
             throw new IllegalArgumentException("'Name' cannot be null or blank.");
         }
 
-        certificationStatus = NOT_SUCCESSFUL;
-        bdaEnabled = NOT_SUCCESSFUL;
-        singleCommandBuild = NOT_SUCCESSFUL;
-        singleCommandDeploy = NOT_SUCCESSFUL;
-        remoteUpgrade = NOT_SUCCESSFUL;
-        dbIntegration = NOT_SUCCESSFUL;
-        privateProperties = NOT_SUCCESSFUL;
-        deploymentShakeout = NOT_SUCCESSFUL;
-        templateValidation = NOT_SUCCESSFUL;
-        ciBuild = NOT_SUCCESSFUL;
-        commandLineInstall = NOT_SUCCESSFUL;
+        certificationStatus = DEFAULT_STATUS;
+        bdaEnabled = DEFAULT_STATUS;
+        singleCommandBuild = DEFAULT_STATUS;
+        singleCommandDeploy = DEFAULT_STATUS;
+        remoteUpgrade = DEFAULT_STATUS;
+        dbIntegration = DEFAULT_STATUS;
+        privateProperties = DEFAULT_STATUS;
+        deploymentShakeout = DEFAULT_STATUS;
+        templateValidation = DEFAULT_STATUS;
+        ciBuild = DEFAULT_STATUS;
+        commandLineInstall = DEFAULT_STATUS;
     }
 
     public PracticeStatus getCertificationStatus() {
@@ -125,50 +129,102 @@ public class Product {
     }
 
     public void setBdaEnabled(String bdaEnabled) {
-        setBdaEnabled(valueOf(bdaEnabled));
+        if (bdaEnabled == null) {
+            setBdaEnabled(DEFAULT_STATUS);
+        } else {
+            setBdaEnabled(valueOf(bdaEnabled));
+        }
     }
 
     public void setCertificationStatus(String certificationStatus) {
-        setCertificationStatus(valueOf(certificationStatus));
+        if (certificationStatus == null) {
+            setCertificationStatus(DEFAULT_STATUS);
+        } else {
+            setCertificationStatus(valueOf(certificationStatus));
+        }
     }
 
     public void setSingleCommandDeploy(String singleCommandDeploy) {
-        setSingleCommandDeploy(valueOf(singleCommandDeploy));
+        if (singleCommandDeploy == null) {
+            setSingleCommandDeploy(DEFAULT_STATUS);
+        } else {
+            setSingleCommandDeploy(valueOf(singleCommandDeploy));
+        }
     }
 
     public void setTemplateValidation(String templateValidation) {
-        setTemplateValidation(valueOf(templateValidation));
+        if (templateValidation == null) {
+            setTemplateValidation(DEFAULT_STATUS);
+        } else {
+            setTemplateValidation(valueOf(templateValidation));
+        }
     }
 
     public void setSingleCommandBuild(String singleCommandBuild) {
-        setSingleCommandBuild(valueOf(singleCommandBuild));
+        if (singleCommandBuild == null) {
+            setSingleCommandBuild(DEFAULT_STATUS);
+        } else {
+            setSingleCommandBuild(valueOf(singleCommandBuild));
+        }
     }
 
     public void setRemoteUpgrade(String remoteUpgrade) {
-        setRemoteUpgrade(valueOf(remoteUpgrade));
+        if (remoteUpgrade == null) {
+            setRemoteUpgrade(DEFAULT_STATUS);
+        } else {
+            setRemoteUpgrade(valueOf(remoteUpgrade));
+        }
     }
 
     public void setPrivateProperties(String privateProperties) {
-        setPrivateProperties(valueOf(privateProperties));
+        if (privateProperties == null) {
+            setPrivateProperties(DEFAULT_STATUS);
+        } else {
+            setPrivateProperties(valueOf(privateProperties));
+        }
     }
 
     public void setDeploymentShakeout(String deploymentShakeout) {
-        setDeploymentShakeout(valueOf(deploymentShakeout));
+        if (deploymentShakeout == null) {
+            setDeploymentShakeout(DEFAULT_STATUS);
+        } else {
+            setDeploymentShakeout(valueOf(deploymentShakeout));
+        }
     }
 
     public void setDbIntegration(String dbIntegration) {
-        setDbIntegration(valueOf(dbIntegration));
+        if (dbIntegration == null) {
+            setDbIntegration(DEFAULT_STATUS);
+        } else {
+            setDbIntegration(valueOf(dbIntegration));
+        }
     }
 
     public void setCommandLineInstall(String commandLineInstall) {
-        setCommandLineInstall(valueOf(commandLineInstall));
+        if (commandLineInstall == null) {
+            setCommandLineInstall(DEFAULT_STATUS);
+        } else {
+            setCommandLineInstall(valueOf(commandLineInstall));
+        }
     }
 
     public void setCiBuild(String ciBuild) {
-        setCiBuild(valueOf(ciBuild));
+        if (ciBuild == null) {
+            setCiBuild(DEFAULT_STATUS);
+        } else {
+            setCiBuild(valueOf(ciBuild));
+        }
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
