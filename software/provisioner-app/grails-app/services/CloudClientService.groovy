@@ -60,19 +60,8 @@ class CloudClientService {
     	{
     		instancesTerminatingArray = params.instancesTerminating	
     	}
-    	
-    	println 'instancesTerminatingArray:::::::::' + instancesTerminatingArray
-    	println 'params.instancesTerminating:::::::::'+ params.instancesTerminating
-    	//println 'LENGTH:::::::::' + params.instancesTerminating.length()
-    	println 'SIZE:::::::::'+ params.instancesTerminating.size()
-    	
-    	println 'SIZE::ARRAY:::::::'+ instancesTerminatingArray.size()
  		Provisioner ec2p = new EC2Provisioner(accessId,secretId); 	
 		ec2p.terminateInstance(instancesTerminatingArray)
-		//System.out.println("instancesTerminatingArray.length@@@@::");
-		//System.out.println("instancesTerminatingArray.size::"+instancesTerminatingArray.size());
-		//System.out.println("instancesTerminatingArray.length::"+params.instancesTerminating.length);
-		//System.out.println("instancesTerminatingArray.size::"+params.instancesTerminating.size());
 	
 		for (int i=0;i<instancesTerminatingArray.size();i++){
 			instancesDao.updateInstanceStatus(instancesTerminatingArray[i])		
