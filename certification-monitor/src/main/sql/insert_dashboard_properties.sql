@@ -999,7 +999,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.exploded.dir.location','${ccts-clinicalconnector.svn.local.checkout}/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.exploded.dir.location','${ccts-clinicalconnector.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.private.url','http://gforge.nci.nih.gov/svn/scm-private/trunk/psc');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.url','');
