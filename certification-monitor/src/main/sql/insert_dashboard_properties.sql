@@ -1010,7 +1010,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.use.genericDB','false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.override.properties','database.type=oracle');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.override.properties','database.type=oracle,grid.secure.enable=false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.username','narram');
