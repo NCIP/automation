@@ -1006,7 +1006,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.use.genericDB','false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
