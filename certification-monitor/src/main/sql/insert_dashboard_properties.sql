@@ -472,7 +472,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/cdebrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.url','http://ncias-c357-v:48080');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.jobname','CDEBrowser_Hudson_Build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.jobname','CDEBrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.install.init.target','common:init');
