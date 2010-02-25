@@ -1,5 +1,6 @@
 package gov.nih.nci.bda.repository;
 
+import gov.nih.nci.bda.domain.PracticeStatus;
 import gov.nih.nci.bda.domain.Product;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,18 +32,49 @@ public class JdbcProductDao extends SimpleJdbcDaoSupport implements ProductDao {
         public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
             Product prod = new Product(rs.getString("product"));
             prod.setId(rs.getInt("id"));
-            prod.setCertificationStatus(rs.getString("certification_status"));
-            prod.setSingleCommandBuild(rs.getString("single_command_build"));
-            prod.setSingleCommandDeploy(rs.getString("single_command_deployment"));
-            prod.setRemoteUpgrade(rs.getString("remote_upgrade"));
-            prod.setDbIntegration(rs.getString("database_integration"));
-            prod.setTemplateValidation(rs.getString("template_validation"));
-            prod.setPrivateProperties(rs.getString("private_properties"));
-            prod.setCiBuild(rs.getString("ci_build"));
-            prod.setDeploymentShakeout(rs.getString("deployment_shakeout"));
-            prod.setBdaEnabled(rs.getString("bda_enabled"));
-            prod.setCommandLineInstall(rs.getString("commandline_installer"));
+            prod.setCertificationStatus(mapStatus(rs.getString("certification_status")));
+            prod.setSingleCommandBuild(mapStatus(rs.getString("single_command_build")));
+            prod.setSingleCommandDeploy(mapStatus(rs.getString("single_command_deployment")));
+            prod.setRemoteUpgrade(mapStatus(rs.getString("remote_upgrade")));
+            prod.setDbIntegration(mapStatus(rs.getString("database_integration")));
+            prod.setTemplateValidation(mapStatus(rs.getString("template_validation")));
+            prod.setPrivateProperties(mapStatus(rs.getString("private_properties")));
+            prod.setCiBuild(mapStatus(rs.getString("ci_build")));
+            prod.setDeploymentShakeout(mapStatus(rs.getString("deployment_shakeout")));
+            prod.setBdaEnabled(mapStatus(rs.getString("bda_enabled")));
+            prod.setCommandLineInstall(mapStatus(rs.getString("commandline_installer")));
             return prod;
         }
+
+        /**
+         * Maps legacy data values to the PracticeStatus with which they are associated.
+         */
+        private PracticeStatus mapStatus(String dbValue) {
+            if (dbValue.startsWith("'[")) {
+                dbValue = dbValue.substring(dbValue.indexOf('[') + 1, dbValue.indexOf('|'));
+            }
+
+            if ("(/)".equals(dbValue)) {
+                return PracticeStatus.SUCCESS;
+            }
+            if ("(x)".equals(dbValue)) {
+                return PracticeStatus.NOT_SUCCESSFUL;
+            }
+            if ("(+)".equals(dbValue)) {
+                return PracticeStatus.OPTIONAL;
+            }
+            if ("(off)".equals(dbValue)) {
+                return PracticeStatus.DEFERRED;
+            }
+            if ("(!)".equals(dbValue)) {
+                return PracticeStatus.PROBLEM;
+            }
+            if ("(on)".equals(dbValue)) {
+                return PracticeStatus.WAIVER;
+            }
+            throw new IllegalArgumentException(dbValue + " is not recognized.");
+        }
+
+
     }
 }
