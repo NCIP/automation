@@ -149,6 +149,62 @@ public class ProductTest {
         assertEquals(status, p.getTemplateValidation());
     }
 
+    @Test
+    public void shouldParseSuccessWhenUsingLegacyDataFormat() {
+        String legacySuccess = "(/)";
+
+        Product p = new Product("TestName");
+        p.setCertificationStatus(legacySuccess);
+        assertEquals(PracticeStatus.SUCCESS, p.getCertificationStatus());
+    }
+
+    @Test
+    public void shouldParseDefferedWhenUsingLegacyDataFormat() {
+        String legacySuccess = "(off)";
+
+        Product p = new Product("TestName");
+        p.setBdaEnabled(legacySuccess);
+        assertEquals(PracticeStatus.DEFERRED, p.getBdaEnabled());
+    }
+
+    @Test
+    public void shouldParseProblemWhenUsingLegacyDataFormat() {
+        String legacySuccess = "(!)";
+
+        Product p = new Product("TestName");
+        p.setCommandLineInstall(legacySuccess);
+        assertEquals(PracticeStatus.PROBLEM, p.getCommandLineInstall());
+    }
+
+    @Test
+    public void shouldParseNotSuccessfulWhenUsingLegacyDataFormat() {
+        String legacySuccess = "(x)";
+
+        Product p = new Product("TestName");
+        p.setDbIntegration(legacySuccess);
+        assertEquals(PracticeStatus.NOT_SUCCESSFUL, p.getDbIntegration());
+    }
+
+    @Test
+    public void shouldParseOptionalWhenUsingLegacyDataFormat() {
+        String legacyFormat = "(+)";
+
+        Product p = new Product("TestName");
+        p.setDeploymentShakeout(legacyFormat);
+        assertEquals(PracticeStatus.OPTIONAL, p.getDeploymentShakeout());
+    }
+
+    @Test
+    public void shouldParseWaiverWhenUsingLegacyDataFormat() {
+        String legacyFormat = "(on)";
+
+        Product p = new Product("TestName");
+        p.setPrivateProperties(legacyFormat);
+        assertEquals(PracticeStatus.WAIVER, p.getPrivateProperties());
+    }
+
+
+
     private void assertDefaultPracticeValue(PracticeStatus status) {
         assertEquals("Expected the default practice", Product.DEFAULT_STATUS, status);
     }

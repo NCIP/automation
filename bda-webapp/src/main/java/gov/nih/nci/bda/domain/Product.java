@@ -1,7 +1,7 @@
 package gov.nih.nci.bda.domain;
 
 import static gov.nih.nci.bda.domain.PracticeStatus.NOT_SUCCESSFUL;
-import static gov.nih.nci.bda.domain.PracticeStatus.valueOf;
+import static gov.nih.nci.bda.domain.PracticeStatus.parse;
 
 public class Product {
 
@@ -132,7 +132,7 @@ public class Product {
         if (bdaEnabled == null) {
             setBdaEnabled(DEFAULT_STATUS);
         } else {
-            setBdaEnabled(valueOf(bdaEnabled));
+            setBdaEnabled(parse(bdaEnabled));
         }
     }
 
@@ -140,7 +140,7 @@ public class Product {
         if (certificationStatus == null) {
             setCertificationStatus(DEFAULT_STATUS);
         } else {
-            setCertificationStatus(valueOf(certificationStatus));
+            setCertificationStatus(parse(certificationStatus));
         }
     }
 
@@ -148,7 +148,7 @@ public class Product {
         if (singleCommandDeploy == null) {
             setSingleCommandDeploy(DEFAULT_STATUS);
         } else {
-            setSingleCommandDeploy(valueOf(singleCommandDeploy));
+            setSingleCommandDeploy(parse(singleCommandDeploy));
         }
     }
 
@@ -156,7 +156,7 @@ public class Product {
         if (templateValidation == null) {
             setTemplateValidation(DEFAULT_STATUS);
         } else {
-            setTemplateValidation(valueOf(templateValidation));
+            setTemplateValidation(parse(templateValidation));
         }
     }
 
@@ -164,7 +164,7 @@ public class Product {
         if (singleCommandBuild == null) {
             setSingleCommandBuild(DEFAULT_STATUS);
         } else {
-            setSingleCommandBuild(valueOf(singleCommandBuild));
+            setSingleCommandBuild(parse(singleCommandBuild));
         }
     }
 
@@ -172,7 +172,7 @@ public class Product {
         if (remoteUpgrade == null) {
             setRemoteUpgrade(DEFAULT_STATUS);
         } else {
-            setRemoteUpgrade(valueOf(remoteUpgrade));
+            setRemoteUpgrade(parse(remoteUpgrade));
         }
     }
 
@@ -180,7 +180,7 @@ public class Product {
         if (privateProperties == null) {
             setPrivateProperties(DEFAULT_STATUS);
         } else {
-            setPrivateProperties(valueOf(privateProperties));
+            setPrivateProperties(parse(privateProperties));
         }
     }
 
@@ -188,7 +188,7 @@ public class Product {
         if (deploymentShakeout == null) {
             setDeploymentShakeout(DEFAULT_STATUS);
         } else {
-            setDeploymentShakeout(valueOf(deploymentShakeout));
+            setDeploymentShakeout(parse(deploymentShakeout));
         }
     }
 
@@ -196,7 +196,7 @@ public class Product {
         if (dbIntegration == null) {
             setDbIntegration(DEFAULT_STATUS);
         } else {
-            setDbIntegration(valueOf(dbIntegration));
+            setDbIntegration(parse(dbIntegration));
         }
     }
 
@@ -204,7 +204,7 @@ public class Product {
         if (commandLineInstall == null) {
             setCommandLineInstall(DEFAULT_STATUS);
         } else {
-            setCommandLineInstall(valueOf(commandLineInstall));
+            setCommandLineInstall(parse(commandLineInstall));
         }
     }
 
@@ -212,7 +212,7 @@ public class Product {
         if (ciBuild == null) {
             setCiBuild(DEFAULT_STATUS);
         } else {
-            setCiBuild(valueOf(ciBuild));
+            setCiBuild(parse(ciBuild));
         }
     }
 
