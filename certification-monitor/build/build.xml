@@ -284,6 +284,19 @@
 	</target>
 
 	<target name="build:remote-upgrade" depends="init">
+			<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
+                        <antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="application.base.path"/>
+                        <antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="jboss.binaries.relative.dir"/>
+			
+			<delete file="${application.base.path}/${jboss.binaries.relative.dir}/server/default/bin/default.pid" failonerror="false" />
+<!--
+			<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
+				<arg value="${single-command.package.target}" />
+			</exec>
+			<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
+				<arg value="${single-command.package.target}" />
+			</exec>			
+-->
 			<override-properties-prep
 				override.properties="${override.properties}"
 				override.properties.string.property.name="override.properties.string"
@@ -292,11 +305,7 @@
 				override.properties="${override.remote.properties}"
 				override.properties.string.property.name="override.remote.properties.string"
 				/>
-			<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
-                        <antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="application.base.path"/>
-                        <antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="jboss.binaries.relative.dir"/>
-			
-			<delete file="${application.base.path}/${jboss.binaries.relative.dir}/server/default/bin/default.pid" failonerror="false" />
+
 			<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 				<arg value="-Dproperties.file=upgrade.properties" />
 				<arg value="-Dforce.reinstall=true" />	
