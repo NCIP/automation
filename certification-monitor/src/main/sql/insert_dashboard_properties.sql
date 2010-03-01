@@ -1055,8 +1055,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('workbe
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.remote-upgrade.target','deploy:remote:upgrade:ahp');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.properties','exclude.database=true,application.base.path.linux=${user.home}/apps/workbench-app,jboss.server.hostname=localhost');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,application.base.path.linux=${user.home}/apps/workbench-app');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.properties','application.base.path.linux=${user.home}/apps/workbench-app');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.username','narram');
