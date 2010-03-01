@@ -8629,8 +8629,8 @@ $HeadURL$
 						<then>
 							<echo message="Setting server name in build-deploy.xml"/>
 							<replaceregexp file="@{sync-gts.build.dir}/build-deploy.xml"
-								match="jboss.dir}/server/default"
-								replace="jboss.dir}/server/@{appserver.server.name}"
+								match="jboss.dir}/server/.*?/"
+								replace="jboss.dir}/server/@{appserver.server.name}/"
 								/>
 							<!-- Deploy to app server -->
 							<echo message="Deploying to App Server"/>
