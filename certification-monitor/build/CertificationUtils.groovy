@@ -311,6 +311,7 @@ println privatePropertiesLocation
 		def basedir=project.properties['basedir']
 		println basedir
 		String installerPropertyName;
+		String propertiesList = null
 		HashMap installerProperties;
 		
 		def antFile = new File(basedir +"/"+buildFileLocation+"/build.xml")
@@ -333,8 +334,9 @@ println privatePropertiesLocation
 		String installerFile = build.getProperty("dist.dir") + "/" + build.getProperty(installerPropertyName)		
 		println installerFile
 		ant.unzip(src: installerFile,dest:'working/installer' )
-
-		String propertiesList = getListOfobfuscatedProperties()		
+		
+		if(!project.properties['exclude.obfuscate.properties'])
+			propertiesList = getListOfobfuscatedProperties()		
 		
 		if(propertiesList != null)
 			installerProperties = getPropertyValuesList(propertiesList.substring(1,propertiesList.length() -1))	

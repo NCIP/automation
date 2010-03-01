@@ -290,11 +290,11 @@
 
 		<delete file="${application.base.path}/${jboss.binaries.relative.dir}/server/default/bin/default.pid" failonerror="false" />
 
-		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.package.target}" />
+		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="false">
+			<arg value="${single-command.package.upgrader.target}" />
 		</exec>
-		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="true">
-			<arg value="${single-command.package.target}" />
+		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="false">
+			<arg value="${single-command.package.upgrader.target}" />
 		</exec>			
 
 		<override-properties-prep
