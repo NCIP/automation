@@ -1047,9 +1047,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('workbe
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.exploded.dir.location','${workbench.svn.local.checkout}/sdk-workbench/workbench-webstart-project/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/workbench/properties');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/sdk-workbench/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.ci-server.url','http://ncias-c124-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.ci-server.url','http://ncias-c125-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.ci-server.jobname','workbench');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.distribution.target','dist');
