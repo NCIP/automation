@@ -32,7 +32,7 @@ public class JdbcProductDaoTest extends AbstractTransactionalDataSourceSpringCon
         assertEquals("wrong number of products?", 46, products.size());        
     }
 
-    public void testShouldHaveUrlAndAltTextSetWhenAppropriate() throws MalformedURLException {
+    public void testShouldHaveNameAndUrlAndAltTextSetWhenAppropriate() throws MalformedURLException {
         URL testUrl =
                 new URL("http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-cadsr-cdecurate/lastBuild/console");
         String testAltText = "The following error occurred while executing this line:: " +
@@ -42,6 +42,7 @@ public class JdbcProductDaoTest extends AbstractTransactionalDataSourceSpringCon
 
         List<Product> products = productDao.getProductList();
         Product product = products.get(10);
+        assertEquals("cadsr-cdecurate", product.getName());
         assertEquals(PracticeStatus.NOT_SUCCESSFUL, product.getBdaEnabled().getStatus());
         assertEquals(testUrl, product.getBdaEnabled().getUrl());
         assertEquals(testAltText, product.getBdaEnabled().getAlternateText());

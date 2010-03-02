@@ -32,7 +32,6 @@ bda-webapp/lib/catalina-ant.jar -text
 bda-webapp/lib/dbchangelog-1.6.xsd -text
 bda-webapp/lib/junit-4.4.jar -text
 bda-webapp/lib/liquibase-1.9.5.jar -text
-bda-webapp/lib/mysql-connector-java-5.0.5.jar -text
 bda-webapp/lib/servlet-api.jar -text
 bda-webapp/lib/spring-test.jar -text
 bda-webapp/src/main/java/gov/nih/nci/bda/domain/Practice.java -text
@@ -53,11 +52,16 @@ bda-webapp/src/tests/unit/gov/nih/nci/bda/domain/PracticeTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/domain/ProductTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/service/SimpleProductManagerTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/web/DashboardControllerTest.java -text
+bda-webapp/war/WEB-INF/applicationContext.xml -text
 bda-webapp/war/WEB-INF/bda-webapp-servlet.xml -text
 bda-webapp/war/WEB-INF/jsp/hello.jsp -text
 bda-webapp/war/WEB-INF/jsp/include.jsp -text
+bda-webapp/war/WEB-INF/lib/aspectjweaver.jar -text
+bda-webapp/war/WEB-INF/lib/commons-dbcp.jar -text
 bda-webapp/war/WEB-INF/lib/commons-logging.jar -text
+bda-webapp/war/WEB-INF/lib/commons-pool.jar -text
 bda-webapp/war/WEB-INF/lib/jstl.jar -text
+bda-webapp/war/WEB-INF/lib/mysql-connector-java-5.0.5.jar -text
 bda-webapp/war/WEB-INF/lib/spring-webmvc.jar -text
 bda-webapp/war/WEB-INF/lib/spring.jar -text
 bda-webapp/war/WEB-INF/lib/standard.jar -text

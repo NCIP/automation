@@ -32,7 +32,7 @@ public class JdbcProductDao extends SimpleJdbcDaoSupport implements ProductDao {
     private static class ProductMapper implements ParameterizedRowMapper<Product> {
 
         public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Product prod = new Product(rs.getString("product"));
+            Product prod = mapName(rs.getString("product"));
             prod.setId(rs.getInt("id"));
             prod.setCertificationStatus(mapStatus(rs.getString("certification_status")));
             prod.setSingleCommandBuild(mapStatus(rs.getString("single_command_build")));
@@ -46,6 +46,18 @@ public class JdbcProductDao extends SimpleJdbcDaoSupport implements ProductDao {
             prod.setBdaEnabled(mapStatus(rs.getString("bda_enabled")));
             prod.setCommandLineInstall(mapStatus(rs.getString("commandline_installer")));
             return prod;
+        }
+
+        private Product mapName(String result) {
+            System.out.println("result = " + result);
+            String name = result;
+            String url = null;
+            if (result.startsWith("'[")) {
+                int firstPipeIndex = result.indexOf('|');
+                name = result.substring(result.indexOf('[') + 1, firstPipeIndex);
+                url = result.substring(firstPipeIndex + 1, result.length() - 2);
+            }
+            return new Product(name);
         }
 
         /**

@@ -109,6 +109,7 @@
     </target>
 
     <target name="deploy" depends="build" description="Deploy application">
+        <copy todir="${build.dir}" file="src/tests/integration/jdbc.properties" />
         <copy todir="${deploy.path}/${name}" preservelastmodified="true">
             <fileset dir="${web.dir}">
                 <include name="**/*.*"/>

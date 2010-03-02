@@ -1,22 +1,18 @@
 package gov.nih.nci.bda.service;
 
 import gov.nih.nci.bda.domain.Product;
+import gov.nih.nci.bda.repository.ProductDao;
 
 import java.util.List;
-import java.util.Collections;
-import java.util.ArrayList;
 
 public class SimpleProductManager implements ProductManager {
+    private ProductDao productDao;
+    
     public List<Product> getProducts() {
-        return Collections.EMPTY_LIST;
+        return productDao.getProductList();
     }
 
-    public static List<Product> getDefaultProducts() {
-        List<Product> products = new ArrayList<Product>();
-        products.add(new Product("Test Product 1"));
-        products.add(new Product("Test Product 2"));
-        products.add(new Product("Test Product 3"));
-        products.add(new Product("Test Product 4"));
-        return products;
+    public void setProductDao(ProductDao dao) {
+        this.productDao = dao;
     }
 }

@@ -24,17 +24,17 @@
     <c:forEach items="${model.products}" var="prod">
         <tr>
             <td><c:out value="${prod.name}"/></td>
-            <td>$<c:out value="${prod.certificationStatus}"/></td>
-            <td>$<c:out value="${prod.bdaEnabled}"/></td>
-            <td>$<c:out value="${prod.singleCommandBuild}"/></td>
-            <td>$<c:out value="${prod.singleCommandDeploy}"/></td>
-            <td>$<c:out value="${prod.remoteUpgrade}"/></td>
-            <td>$<c:out value="${prod.dbIntegration}"/></td>
-            <td>$<c:out value="${prod.privateProperties}"/></td>
-            <td>$<c:out value="${prod.deploymentShakeout}"/></td>
-            <td>$<c:out value="${prod.templateValidation}"/></td>
-            <td>$<c:out value="${prod.ciBuild}"/></td>
-            <td>$<c:out value="${prod.commandLineInstall}"/></td>
+            <td>$<c:out value="${prod.certificationStatus.status}"/></td>
+            <td>$<c:out value="${prod.bdaEnabled.status}"/></td>
+            <td>$<c:out value="${prod.singleCommandBuild.status}"/></td>
+            <td>$<c:out value="${prod.singleCommandDeploy.status}"/></td>
+            <td>$<c:out value="${prod.remoteUpgrade.status}"/></td>
+            <td>$<c:out value="${prod.dbIntegration.status}"/></td>
+            <td>$<c:out value="${prod.privateProperties.status}"/></td>
+            <td>$<c:out value="${prod.deploymentShakeout.status}"/></td>
+            <td>$<c:out value="${prod.templateValidation.status}"/></td>
+            <td>$<c:out value="${prod.ciBuild.status}"/></td>
+            <td>$<c:out value="${prod.commandLineInstall.status}"/></td>
         </tr>
     </c:forEach>
 </table>
