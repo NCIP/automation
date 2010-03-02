@@ -1,13 +1,14 @@
 package gov.nih.nci.bda.repository;
 
+import gov.nih.nci.bda.domain.Practice;
 import gov.nih.nci.bda.domain.PracticeStatus;
 import gov.nih.nci.bda.domain.Product;
-import gov.nih.nci.bda.domain.Practice;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
+import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -50,30 +51,51 @@ public class JdbcProductDao extends SimpleJdbcDaoSupport implements ProductDao {
         /**
          * Maps legacy data values to the PracticeStatus with which they are associated.
          */
-        private Practice mapStatus(String dbValue) {
+        private Practice mapStatus(String dbValue) throws SQLException {
+            String status = dbValue;
+            String url = null;
+            String altText = null;
             if (dbValue.startsWith("'[")) {
-                dbValue = dbValue.substring(dbValue.indexOf('[') + 1, dbValue.indexOf('|'));
+                int firstPipeIndex = dbValue.indexOf('|');
+                int secondPipeIndex = dbValue.indexOf('|', firstPipeIndex + 1);
+                status = dbValue.substring(dbValue.indexOf('[') + 1, firstPipeIndex);
+                url = dbValue.substring(firstPipeIndex + 1, secondPipeIndex);
+                altText = dbValue.substring(secondPipeIndex + 1, dbValue.length() - 2);
             }
 
-            if ("(/)".equals(dbValue)) {
-                return new Practice(PracticeStatus.SUCCESS);
+            if ("(/)".equals(status)) {
+                return buildPractice(PracticeStatus.SUCCESS, url, altText);
             }
-            if ("(x)".equals(dbValue)) {
-                return new Practice(PracticeStatus.NOT_SUCCESSFUL);
+            if ("(x)".equals(status)) {
+                return buildPractice(PracticeStatus.NOT_SUCCESSFUL, url, altText);
             }
-            if ("(+)".equals(dbValue)) {
-                return new Practice(PracticeStatus.OPTIONAL);
+            if ("(+)".equals(status)) {
+                return buildPractice(PracticeStatus.OPTIONAL, url, altText);
             }
-            if ("(off)".equals(dbValue)) {
-                return new Practice(PracticeStatus.DEFERRED);
+            if ("(off)".equals(status)) {
+                return buildPractice(PracticeStatus.DEFERRED, url, altText);
             }
-            if ("(!)".equals(dbValue)) {
-                return new Practice(PracticeStatus.PROBLEM);
+            if ("(!)".equals(status)) {
+                return buildPractice(PracticeStatus.PROBLEM, url, altText);
             }
-            if ("(on)".equals(dbValue)) {
-                return new Practice(PracticeStatus.WAIVER);
+            if ("(on)".equals(status)) {
+                return buildPractice(PracticeStatus.WAIVER, url, altText);
             }
-            throw new IllegalArgumentException(dbValue + " is not recognized.");
+            throw new IllegalArgumentException(status + " is not recognized.");
+        }
+
+        private Practice buildPractice(PracticeStatus status, String url, String altText) throws SQLException {
+            if (url != null) {
+                try {
+                    if (altText != null) {
+                        return new Practice(status, url, altText);
+                    }
+                    return new Practice(status, url);
+                } catch (MalformedURLException e) {
+                    throw new SQLException(e);
+                }
+            }
+            return new Practice(status);
         }
 
 
