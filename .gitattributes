@@ -66,7 +66,13 @@ bda-webapp/war/WEB-INF/lib/spring-webmvc.jar -text
 bda-webapp/war/WEB-INF/lib/spring.jar -text
 bda-webapp/war/WEB-INF/lib/standard.jar -text
 bda-webapp/war/WEB-INF/web.xml -text
+bda-webapp/war/images/not_successful.gif -text
+bda-webapp/war/images/optional.gif -text
+bda-webapp/war/images/problem.gif -text
+bda-webapp/war/images/success.gif -text
+bda-webapp/war/images/waiver.gif -text
 bda-webapp/war/index.jsp -text
+bda-webapp/war/styles.css -text
 certification-monitor/build.xml -text
 certification-monitor/build/CertificationUtils.groovy -text
 certification-monitor/build/build.xml -text

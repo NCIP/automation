@@ -1,0 +1,34 @@
+
+body {
+    background-color: antiquewhite;
+}
+
+.success {
+    background-image: url("images/success.gif");
+    text-indent: -99999px;
+}
+
+.not_successful {
+    background-image: url("images/not_successful.gif");
+    background-repeat: no-repeat;
+    text-indent: -99999px;
+}
+
+.optional {
+    background-image: url("images/optional.gif");
+    background-repeat: no-repeat;
+    text-indent: -99999px;
+}
+
+table {
+    width: 95%;
+    font-size:.7em;
+    border: 1px solid black;
+}
+
+td {
+    text-align: center;
+    background-position:center;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+}
