@@ -35,6 +35,7 @@ bda-webapp/lib/liquibase-1.9.5.jar -text
 bda-webapp/lib/mysql-connector-java-5.0.5.jar -text
 bda-webapp/lib/servlet-api.jar -text
 bda-webapp/lib/spring-test.jar -text
+bda-webapp/src/main/java/gov/nih/nci/bda/domain/Practice.java -text
 bda-webapp/src/main/java/gov/nih/nci/bda/domain/PracticeStatus.java -text
 bda-webapp/src/main/java/gov/nih/nci/bda/domain/Product.java -text
 bda-webapp/src/main/java/gov/nih/nci/bda/repository/JdbcProductDao.java -text
@@ -48,6 +49,7 @@ bda-webapp/src/tests/integration/jdbc.properties -text
 bda-webapp/src/tests/integration/test-context.xml -text
 bda-webapp/src/tests/sql/load_data.sql -text
 bda-webapp/src/tests/sql/load_real_data.sql -text
+bda-webapp/src/tests/unit/gov/nih/nci/bda/domain/PracticeTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/domain/ProductTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/service/SimpleProductManagerTest.java -text
 bda-webapp/src/tests/unit/gov/nih/nci/bda/web/DashboardControllerTest.java -text

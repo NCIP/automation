@@ -3,6 +3,8 @@ package gov.nih.nci.bda.domain;
 import static gov.nih.nci.bda.domain.PracticeStatus.NOT_SUCCESSFUL;
 import static gov.nih.nci.bda.domain.PracticeStatus.valueOf;
 
+import java.net.URL;
+
 public class Product {
 
     public static final PracticeStatus DEFAULT_STATUS = NOT_SUCCESSFUL;
@@ -226,5 +228,9 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setBdaEnabled(PracticeStatus status, URL url, String altText) {
+        
     }
 }

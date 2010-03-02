@@ -3,6 +3,9 @@ package gov.nih.nci.bda.domain;
 import static junit.framework.Assert.assertEquals;
 import org.junit.Test;
 
+import java.net.URL;
+import java.net.MalformedURLException;
+
 public class ProductTest {
 
     @Test(expected = IllegalArgumentException.class)
@@ -33,6 +36,14 @@ public class ProductTest {
         product.setBdaEnabled((String) null);
         assertEquals("Null strings should set the status to the default.", 
                 Product.DEFAULT_STATUS, product.getBdaEnabled());
+    }
+
+    @Test
+    public void shouldStoreUrlAndAltTextWhenProvided() throws MalformedURLException {
+        Product product = new Product("Foo");
+
+        product.setBdaEnabled(PracticeStatus.OPTIONAL, new URL("http://stelligent.com"),
+                "Some alternate text to display.");
     }
 
     @Test
