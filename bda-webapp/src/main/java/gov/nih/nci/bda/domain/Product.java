@@ -10,17 +10,17 @@ public class Product {
     public static final PracticeStatus DEFAULT_STATUS = NOT_SUCCESSFUL;
 
     private int id;
-    private PracticeStatus certificationStatus;
-    private PracticeStatus bdaEnabled;
-    private PracticeStatus singleCommandBuild;
-    private PracticeStatus singleCommandDeploy;
-    private PracticeStatus remoteUpgrade;
-    private PracticeStatus dbIntegration;
-    private PracticeStatus privateProperties;
-    private PracticeStatus deploymentShakeout;
-    private PracticeStatus templateValidation;
-    private PracticeStatus ciBuild;
-    private PracticeStatus commandLineInstall;
+    private Practice certificationStatus;
+    private Practice bdaEnabled;
+    private Practice singleCommandBuild;
+    private Practice singleCommandDeploy;
+    private Practice remoteUpgrade;
+    private Practice dbIntegration;
+    private Practice privateProperties;
+    private Practice deploymentShakeout;
+    private Practice templateValidation;
+    private Practice ciBuild;
+    private Practice commandLineInstall;
     private final String name;
 
     public Product(String name) {
@@ -28,194 +28,94 @@ public class Product {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("'Name' cannot be null or blank.");
         }
-
-        certificationStatus = DEFAULT_STATUS;
-        bdaEnabled = DEFAULT_STATUS;
-        singleCommandBuild = DEFAULT_STATUS;
-        singleCommandDeploy = DEFAULT_STATUS;
-        remoteUpgrade = DEFAULT_STATUS;
-        dbIntegration = DEFAULT_STATUS;
-        privateProperties = DEFAULT_STATUS;
-        deploymentShakeout = DEFAULT_STATUS;
-        templateValidation = DEFAULT_STATUS;
-        ciBuild = DEFAULT_STATUS;
-        commandLineInstall = DEFAULT_STATUS;
     }
 
-    public PracticeStatus getCertificationStatus() {
+    public Practice getCertificationStatus() {
         return certificationStatus;
     }
 
-    public PracticeStatus getBdaEnabled() {
+    public Practice getBdaEnabled() {
         return bdaEnabled;
     }
 
-    public PracticeStatus getSingleCommandBuild() {
+    public Practice getSingleCommandBuild() {
         return singleCommandBuild;
     }
 
-    public PracticeStatus getSingleCommandDeploy() {
+    public Practice getSingleCommandDeploy() {
         return singleCommandDeploy;
     }
 
-    public PracticeStatus getRemoteUpgrade() {
+    public Practice getRemoteUpgrade() {
         return remoteUpgrade;
     }
 
-    public PracticeStatus getDbIntegration() {
+    public Practice getDbIntegration() {
         return dbIntegration;
     }
 
-    public PracticeStatus getPrivateProperties() {
+    public Practice getPrivateProperties() {
         return privateProperties;
     }
 
-    public PracticeStatus getDeploymentShakeout() {
+    public Practice getDeploymentShakeout() {
         return deploymentShakeout;
     }
 
-    public PracticeStatus getTemplateValidation() {
+    public Practice getTemplateValidation() {
         return templateValidation;
     }
 
-    public PracticeStatus getCiBuild() {
+    public Practice getCiBuild() {
         return ciBuild;
     }
 
-    public PracticeStatus getCommandLineInstall() {
+    public Practice getCommandLineInstall() {
         return commandLineInstall;
     }
 
-    public void setCertificationStatus(PracticeStatus certificationStatus) {
+    public void setCertificationStatus(Practice certificationStatus) {
         this.certificationStatus = certificationStatus;
     }
 
-    public void setBdaEnabled(PracticeStatus bdaEnabled) {
+    public void setBdaEnabled(Practice bdaEnabled) {
         this.bdaEnabled = bdaEnabled;
     }
 
-    public void setSingleCommandBuild(PracticeStatus singleCommandBuild) {
+    public void setSingleCommandBuild(Practice singleCommandBuild) {
         this.singleCommandBuild = singleCommandBuild;
     }
 
-    public void setSingleCommandDeploy(PracticeStatus singleCommandDeploy) {
+    public void setSingleCommandDeploy(Practice singleCommandDeploy) {
         this.singleCommandDeploy = singleCommandDeploy;
     }
 
-    public void setRemoteUpgrade(PracticeStatus remoteUpgrade) {
+    public void setRemoteUpgrade(Practice remoteUpgrade) {
         this.remoteUpgrade = remoteUpgrade;
     }
 
-    public void setDbIntegration(PracticeStatus dbIntegration) {
+    public void setDbIntegration(Practice dbIntegration) {
         this.dbIntegration = dbIntegration;
     }
 
-    public void setPrivateProperties(PracticeStatus privateProperties) {
+    public void setPrivateProperties(Practice privateProperties) {
         this.privateProperties = privateProperties;
     }
 
-    public void setDeploymentShakeout(PracticeStatus deploymentShakeout) {
+    public void setDeploymentShakeout(Practice deploymentShakeout) {
         this.deploymentShakeout = deploymentShakeout;
     }
 
-    public void setTemplateValidation(PracticeStatus templateValidation) {
+    public void setTemplateValidation(Practice templateValidation) {
         this.templateValidation = templateValidation;
     }
 
-    public void setCiBuild(PracticeStatus ciBuild) {
+    public void setCiBuild(Practice ciBuild) {
         this.ciBuild = ciBuild;
     }
 
-    public void setCommandLineInstall(PracticeStatus commandLineInstall) {
+    public void setCommandLineInstall(Practice commandLineInstall) {
         this.commandLineInstall = commandLineInstall;
-    }
-
-    public void setBdaEnabled(String bdaEnabled) {
-        if (bdaEnabled == null) {
-            setBdaEnabled(DEFAULT_STATUS);
-        } else {
-            setBdaEnabled(valueOf(bdaEnabled));
-        }
-    }
-
-    public void setCertificationStatus(String certificationStatus) {
-        if (certificationStatus == null) {
-            setCertificationStatus(DEFAULT_STATUS);
-        } else {
-            setCertificationStatus(valueOf(certificationStatus));
-        }
-    }
-
-    public void setSingleCommandDeploy(String singleCommandDeploy) {
-        if (singleCommandDeploy == null) {
-            setSingleCommandDeploy(DEFAULT_STATUS);
-        } else {
-            setSingleCommandDeploy(valueOf(singleCommandDeploy));
-        }
-    }
-
-    public void setTemplateValidation(String templateValidation) {
-        if (templateValidation == null) {
-            setTemplateValidation(DEFAULT_STATUS);
-        } else {
-            setTemplateValidation(valueOf(templateValidation));
-        }
-    }
-
-    public void setSingleCommandBuild(String singleCommandBuild) {
-        if (singleCommandBuild == null) {
-            setSingleCommandBuild(DEFAULT_STATUS);
-        } else {
-            setSingleCommandBuild(valueOf(singleCommandBuild));
-        }
-    }
-
-    public void setRemoteUpgrade(String remoteUpgrade) {
-        if (remoteUpgrade == null) {
-            setRemoteUpgrade(DEFAULT_STATUS);
-        } else {
-            setRemoteUpgrade(valueOf(remoteUpgrade));
-        }
-    }
-
-    public void setPrivateProperties(String privateProperties) {
-        if (privateProperties == null) {
-            setPrivateProperties(DEFAULT_STATUS);
-        } else {
-            setPrivateProperties(valueOf(privateProperties));
-        }
-    }
-
-    public void setDeploymentShakeout(String deploymentShakeout) {
-        if (deploymentShakeout == null) {
-            setDeploymentShakeout(DEFAULT_STATUS);
-        } else {
-            setDeploymentShakeout(valueOf(deploymentShakeout));
-        }
-    }
-
-    public void setDbIntegration(String dbIntegration) {
-        if (dbIntegration == null) {
-            setDbIntegration(DEFAULT_STATUS);
-        } else {
-            setDbIntegration(valueOf(dbIntegration));
-        }
-    }
-
-    public void setCommandLineInstall(String commandLineInstall) {
-        if (commandLineInstall == null) {
-            setCommandLineInstall(DEFAULT_STATUS);
-        } else {
-            setCommandLineInstall(valueOf(commandLineInstall));
-        }
-    }
-
-    public void setCiBuild(String ciBuild) {
-        if (ciBuild == null) {
-            setCiBuild(DEFAULT_STATUS);
-        } else {
-            setCiBuild(valueOf(ciBuild));
-        }
     }
 
     public String getName() {
@@ -228,9 +128,5 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setBdaEnabled(PracticeStatus status, URL url, String altText) {
-        
     }
 }

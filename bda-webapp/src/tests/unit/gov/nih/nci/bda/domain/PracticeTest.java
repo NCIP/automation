@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.MalformedURLException;
 
 public class PracticeTest {
+    private static final String GOOD_URL = "http://stelligent.com";
+    private static final String BAD_URL = "bad";
 
     @Test
     public void shouldHaveNullUrlWhenNoneProvided() {
@@ -23,14 +25,24 @@ public class PracticeTest {
 
     @Test
     public void shouldHaveSameUrlWhenProvided() throws MalformedURLException {
-        String expected = "http://stelligent.com";
-        Practice p = new Practice(PracticeStatus.DEFERRED, expected);
-        assertEquals(expected, p.getUrl().toString());
+        Practice p = new Practice(PracticeStatus.DEFERRED, GOOD_URL);
+        assertEquals(GOOD_URL, p.getUrl().toString());
     }
 
     @Test (expected = MalformedURLException.class)
     public void shouldBombWhenBadUrlProvided() throws MalformedURLException {
-        String badUrl = "bad";
-        new Practice(PracticeStatus.DEFERRED, badUrl);
+        new Practice(PracticeStatus.DEFERRED, BAD_URL);
+    }
+
+    @Test (expected = MalformedURLException.class)
+    public void shouldBombWhenBadUrlProvidedBothConstructors() throws MalformedURLException {
+        new Practice(PracticeStatus.DEFERRED, BAD_URL, "Alternate text");
+    }
+
+    @Test
+    public void shouldHaveSameAlternateTextWhenProvided() throws MalformedURLException {
+        String expected = "This is some alternate text.";
+        Practice p = new Practice(PracticeStatus.DEFERRED, GOOD_URL, expected);
+        assertEquals(expected, p.getAlternateText());
     }
 }

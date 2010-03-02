@@ -9,13 +9,20 @@ import java.net.MalformedURLException;
 public class Practice {
     private URL url;
     private String alternateText;
+    private final PracticeStatus status;
 
     public Practice(PracticeStatus status) {
-        
+        this.status = status;
     }
 
     public Practice(PracticeStatus status, String url) throws MalformedURLException {
+        this(status);
         this.url = new URL(url);
+    }
+
+    public Practice(PracticeStatus status, String url, String alternateText) throws MalformedURLException {
+        this(status, url);
+        this.alternateText = alternateText;
     }
 
     public URL getUrl() {
@@ -24,5 +31,9 @@ public class Practice {
 
     public String getAlternateText() {
         return alternateText;
+    }
+
+    public PracticeStatus getStatus() {
+        return status;
     }
 }

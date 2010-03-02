@@ -25,7 +25,6 @@ public class JdbcProductDaoTest extends AbstractTransactionalDataSourceSpringCon
     }
 
     public void testGetProductList() {
-
         List<Product> products = productDao.getProductList();
         assertEquals("wrong number of products?", 46, products.size());
     }

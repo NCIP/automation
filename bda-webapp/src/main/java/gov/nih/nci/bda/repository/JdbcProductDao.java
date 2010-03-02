@@ -2,6 +2,7 @@ package gov.nih.nci.bda.repository;
 
 import gov.nih.nci.bda.domain.PracticeStatus;
 import gov.nih.nci.bda.domain.Product;
+import gov.nih.nci.bda.domain.Practice;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -49,28 +50,28 @@ public class JdbcProductDao extends SimpleJdbcDaoSupport implements ProductDao {
         /**
          * Maps legacy data values to the PracticeStatus with which they are associated.
          */
-        private PracticeStatus mapStatus(String dbValue) {
+        private Practice mapStatus(String dbValue) {
             if (dbValue.startsWith("'[")) {
                 dbValue = dbValue.substring(dbValue.indexOf('[') + 1, dbValue.indexOf('|'));
             }
 
             if ("(/)".equals(dbValue)) {
-                return PracticeStatus.SUCCESS;
+                return new Practice(PracticeStatus.SUCCESS);
             }
             if ("(x)".equals(dbValue)) {
-                return PracticeStatus.NOT_SUCCESSFUL;
+                return new Practice(PracticeStatus.NOT_SUCCESSFUL);
             }
             if ("(+)".equals(dbValue)) {
-                return PracticeStatus.OPTIONAL;
+                return new Practice(PracticeStatus.OPTIONAL);
             }
             if ("(off)".equals(dbValue)) {
-                return PracticeStatus.DEFERRED;
+                return new Practice(PracticeStatus.DEFERRED);
             }
             if ("(!)".equals(dbValue)) {
-                return PracticeStatus.PROBLEM;
+                return new Practice(PracticeStatus.PROBLEM);
             }
             if ("(on)".equals(dbValue)) {
-                return PracticeStatus.WAIVER;
+                return new Practice(PracticeStatus.WAIVER);
             }
             throw new IllegalArgumentException(dbValue + " is not recognized.");
         }
