@@ -204,8 +204,11 @@ println privatePropertiesLocation
 	def getBdaUtilsVersion ()
 	{
 		try
-		{
-			def buildFileLocation=project.properties['master.build.location']
+		{			
+			if(project.properties['bdautils.build.location'])			
+				def buildFileLocation=project.properties['bdautils.build.location']
+			else
+				def buildFileLocation=project.properties['master.build.location']
 			def basedir=project.properties['basedir']
 			println basedir
 
