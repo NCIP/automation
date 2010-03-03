@@ -1098,7 +1098,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.remote-upgrade.target','deploy:remote:install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,INSTALL_CONTAINER=false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.properties','application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost,properties.file=install.properties,DB_TYPE=mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.properties','application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost,properties.file=install.properties,DB_TYPE=mysql,DB_SERVER=localhost,DB_SERVER_PORT=${database.port},DB_NAME=${database.name},DB_USERNAME=${database.user},DB_PASSWORD=${database.password}');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.upgrader.target','dist:upgrader');
 
 
