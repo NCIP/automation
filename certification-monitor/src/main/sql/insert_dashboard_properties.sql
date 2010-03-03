@@ -1100,8 +1100,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,INSTALL_CONTAINER=false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.properties','application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost,properties.file=install.properties,DB_TYPE=mysql,DB_SERVER=localhost,DB_SERVER_PORT=3306,DB_NAME=genericdb,DB_USERNAME=genericuser,DB_PASSWORD=password');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.upgrader.target','dist:upgrader');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.bdautils.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.bdautils.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.optional.features','build:remote-upgrade,build:private-repository-properties,build:check-commandline-installer');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.database.type','mysql');
