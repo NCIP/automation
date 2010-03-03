@@ -1102,6 +1102,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.bdautils.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/software/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.optional.features','build:remote-upgrade,build:private-repository-properties,build:check-commandline-installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exclude.obfuscate.properties','true');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.database.type','mysql');
