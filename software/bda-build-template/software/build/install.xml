@@ -162,11 +162,14 @@ $HeadURL$
 							<property name="jboss.server.bindingfile.location" value="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"/>
 							<property name="temp.bindings.file" value="${temp.dir}/unmodified-bindings-jboss-beans.xml"/>
 							<copy tofile="${temp.bindings.file}" file="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/unmodified-bindings-jboss-beans.xml"/>
+							<property name="temp.ejb.file" value="${temp.dir}/ejb3-connectors-jboss-beans.xml"/>
+							<copy tofile="${temp.ejb.file}" file="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/ejb3-connectors-jboss-beans.xml"/>
 							<jboss51-bindings-nci
 								jboss.server.bindingfile.location="${temp.bindings.file}"
 								/>
 							<jboss51-read-ports-nci
 								jboss.server.bindingfile.location="${temp.bindings.file}"
+								jboss.server.ejbfile.location="${temp.ejb.file}"
 								/>
 						</then>
 					</elseif>
@@ -432,6 +435,8 @@ $HeadURL$
 		<jboss-install-binaries
 			/>
 		<jboss-nci-customizations
+			/>
+		<jboss-nci-filter
 			/>
 	</target>
 

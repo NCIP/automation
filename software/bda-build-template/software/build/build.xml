@@ -1126,8 +1126,7 @@ $HeadURL$
 	</target>
 	<target name="report:erd">
 		<generate-erd   
-			schemaspy.jar="schemaspy-3.1.1.jar"
-			database.driver.jar="mysql-connector-java-5.0.5.jar"
+			schemaspy.jar="schemaspy-4.1.1.jar"
 			/>                      
 	</target>
 
@@ -1485,6 +1484,14 @@ $HeadURL$
 	<target name="temp:enc">
 		<delete file="${jboss.home}/keystore/server.keystore"/>
 		<jboss51-encrypt-messaging-passwd
+			/>
+	</target>
+	<target name="temp:filter" depends="init">
+		<jboss-nci-filter
+			jboss.init.file.location="51-init.conf"
+			/>
+		<jboss-nci-filter
+			jboss.init.file.location="40-init.conf"
 			/>
 	</target>
 </project>
