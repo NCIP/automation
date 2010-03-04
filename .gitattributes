@@ -4127,6 +4127,7 @@ software/utils/resource/jboss-5.1.0.GA/dtd/web-facesconfig_1_0.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/web-facesconfig_1_1.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/web-jsptaglibrary_1_1.dtd -text
 software/utils/resource/jboss-5.1.0.GA/dtd/web-jsptaglibrary_1_2.dtd -text
+software/utils/resource/jboss-5.1.0.GA/ejb3-connectors-jboss-beans.xml -text
 software/utils/resource/jboss-5.1.0.GA/unmodified-bindings-jboss-beans.xml -text
 software/utils/resource/ncicb/jboss-custom/bin/init.conf -text
 software/utils/resource/ncicb/jboss-custom/bin/restart_jboss -text
