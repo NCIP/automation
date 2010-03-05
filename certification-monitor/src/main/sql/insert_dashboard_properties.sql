@@ -106,7 +106,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.install.init.target','common:common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.build:database-integration.macro.list','database-install');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,tomcat.ssh.server.username=@remote.username@,tomcat.ssh.server.hostname=@remote.hostname@,tomcat.ssh.port=22,tomcat.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,tomcat.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,ctp.ssh.server.username=@remote.username@,ctp.ssh.server.hostname=@remote.hostname@,ctp.ssh.port=22,ctp.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ctp.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,authentication.type=db');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.properties','');
@@ -501,7 +501,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.override.properties','');
@@ -526,7 +526,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.override.properties','');
@@ -551,7 +551,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.override.properties','');
@@ -577,7 +577,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.override.properties','');
@@ -602,7 +602,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.override.properties','');
@@ -627,7 +627,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.override.properties','');
@@ -652,7 +652,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.override.properties','');
@@ -677,7 +677,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.override.properties','');
@@ -702,7 +702,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.use.genericDB','false');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.override.properties','');
