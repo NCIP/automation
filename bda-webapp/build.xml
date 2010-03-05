@@ -39,7 +39,7 @@
         <delete dir="target"/>
     </target>
 
-    <target name="ci-build" depends="clean, unit-test, war"
+    <target name="ci-build" depends="clean, unit-test, war, installer"
             description="Used by Hudson when running the Continuous Integration build."/>
 
     <target name="build" description="Compile main source tree java files">
@@ -49,6 +49,7 @@
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
+        <copy todir="${build.dir}" file="src/main/sql/jdbc.properties" />
     </target>
 
     <target name="unit-test" depends="build" description="Run unit tests">
@@ -109,7 +110,7 @@
     </target>
 
     <target name="deploy" depends="build" description="Deploy application">
-        <copy todir="${build.dir}" file="src/tests/integration/jdbc.properties" />
+        <copy todir="${build.dir}" file="src/main/sql/jdbc.properties" />
         <copy todir="${deploy.path}/${name}" preservelastmodified="true">
             <fileset dir="${web.dir}">
                 <include name="**/*.*"/>
@@ -209,13 +210,19 @@
         <taskdef name="updateDatabase" classname="liquibase.ant.DatabaseUpdateTask"
                  classpathref="test-classpath"/>
         <updateDatabase changeLogFile="src/main/sql/create.project_certification_status.xml"
-                        driver="com.mysql.jdbc.Driver"
-                        url="jdbc:mysql://localhost:3306/buildmonitordb-dev"
-                        username="buildmonitoruser"
-                        password="password"
+                        driver="org.hsqldb.jdbcDriver"
+                        url="jdbc:hsqldb:mem:buildmonitordb-dev"
+                        username="sa"
+                        password=""
                         dropFirst="true"
                         classpathref="test-classpath"/>
     </target>
 
-
+    <target name="installer" depends="build, war">
+        <zip destfile="target/${name}.zip">
+            <fileset dir="jetty" />
+            <zipfileset dir="target" includes="${name}.war" prefix="webapps" />
+            <zipfileset dir="src/main/jetty" includes="*.xml" prefix="contexts" />
+        </zip>
+    </target>
 </project>

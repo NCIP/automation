@@ -122,9 +122,10 @@ bda-webapp/src/main/java/gov/nih/nci/bda/repository/ProductDao.java -text
 bda-webapp/src/main/java/gov/nih/nci/bda/service/ProductManager.java -text
 bda-webapp/src/main/java/gov/nih/nci/bda/service/SimpleProductManager.java -text
 bda-webapp/src/main/java/gov/nih/nci/bda/web/DashboardController.java -text
+bda-webapp/src/main/jetty/bda-webapp.xml -text
 bda-webapp/src/main/sql/create.project_certification_status.xml -text
+bda-webapp/src/main/sql/jdbc.properties -text
 bda-webapp/src/tests/integration/gov/nih/nci/bda/repository/JdbcProductDaoTest.java -text
-bda-webapp/src/tests/integration/jdbc.properties -text
 bda-webapp/src/tests/integration/test-context.xml -text
 bda-webapp/src/tests/sql/load_data.sql -text
 bda-webapp/src/tests/sql/load_real_data.sql -text
