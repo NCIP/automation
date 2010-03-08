@@ -106,7 +106,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.install.init.target','common:common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.build:database-integration.macro.list','database-install');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,tomcat.ssh.server.username=@remote.username@,tomcat.ssh.server.hostname=@remote.hostname@,tomcat.ssh.port=22,tomcat.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,tomcat.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,ctp.ssh.server.username=@remote.username@,ctp.ssh.server.hostname=@remote.hostname@,ctp.ssh.port=22,ctp.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ctp.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,authentication.type=db');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.single-command.package.upgrader.target','dist:upgrader');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.properties','');
@@ -379,7 +379,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.use.genericDB','false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.build:database-integration.macro.list','database-install');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.optional.features','build:database-integration');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.package.upgrader.target','dist:upgrader');
@@ -1174,7 +1174,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdap
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','common:init');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.optional.features','build:private-repository-properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.package.upgrader.target','dist:upgrader');
