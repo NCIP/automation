@@ -3967,9 +3967,13 @@ software/utils/ivy.xml.oldrepo -text
 software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
-software/utils/resource/generic-ivy.xml -text
 software/utils/resource/groovy/updatePropertiesService.groovy -text
 software/utils/resource/groovy/verifyPasswordValue.groovy -text
+software/utils/resource/ivy/cbiit-ivy-settings-with-cagrid12.xml -text
+software/utils/resource/ivy/cbiit-ivy-settings-with-cagrid13.xml -text
+software/utils/resource/ivy/cbiit-ivy-settings.xml -text
+software/utils/resource/ivy/generic-ivy.xml -text
+software/utils/resource/ivy/project-download.xml -text
 software/utils/resource/jboss-4.0.4.GA/bindings.xml -text
 software/utils/resource/jboss-4.0.4.GA/dtd/README-DTD.txt -text
 software/utils/resource/jboss-4.0.4.GA/dtd/XMLSchema.dtd -text
@@ -4211,7 +4215,6 @@ software/utils/resource/ncicb/jboss-custom/conf/log4j.xml -text
 software/utils/resource/ncicb/jboss51-custom/init.conf -text
 software/utils/resource/other-dtds/hibernate-configuration-3.0.dtd -text
 software/utils/resource/other-dtds/hibernate-mapping-3.0.dtd -text
-software/utils/resource/project-download.xml -text
 software/utils/resource/psexec.exe -text
 software/utils/resource/template-db-integrate.xml -text
 software/utils/resource/version.properties -text
