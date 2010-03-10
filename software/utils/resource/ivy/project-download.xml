@@ -12,7 +12,7 @@
 	<property name="project.version" value="0.6.0"/>
 	<property name="project.lib.dir" location="${lib.dir}/${project.name}"/>
 	<property name="ivy.dep.dir" value="${bda-utils.dir}/resources/ivy"/>
-	<property name="ivy.dep.file" value="${ivy.dep.dir}/${project.name}-ivy.xml"/>
+	<property name="ivy.dep.file" value="${ivy.dep.dir}/generic-ivy.xml"/>
 	<property name="ivy.settings.file" value="${ivy.dir}/cbiit-ivy-settings-with-cagrid12.xml"/>
 
 	<path id="ivy.classpath">
