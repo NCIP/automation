@@ -32,7 +32,7 @@
 	  <!-- copied to deployment and used by ant for db tasks -->
 	  <dependency name="mysql-connector-java" org="mysql" rev="5.0.8"/>
 	  <!-- copied to deployment and used by ant for db tasks, rename of jar file requires update of build files -->
-	  <dependency name="postgresql" org="postgresql" rev="8.3-603.jdbc3"/>
+	  <dependency name="postgresql" org="postgresql" rev="8.4-701.jdbc3"/>
 	  <!-- copied to deployment and used by ant for db tasks -->
 	  <dependency name="ojdbc14" org="com.oracle" rev="10.2.0.3.0"/>
 	  <!-- copied to deployment and used by ant for db tasks -->

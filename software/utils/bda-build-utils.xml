@@ -7240,6 +7240,8 @@ $HeadURL$
 		<attribute name="database.type" default="${database.type}"/>
 		<attribute name="start.jboss" default="Y"/>
 		<attribute name="env.name" default="${env.name}"/>
+		<attribute name="jboss.init.file.location" default="@{jboss.home}/bin/init.conf"/>
+		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
 		<sequential>
 			<var name="nci.env" unset="true"/>
 			<if>
@@ -7296,20 +7298,42 @@ $HeadURL$
 					<if>
 						<equals arg1="${jboss-ncic.major.version}" arg2="5"/>
 						<then>
-							<jboss51-nci-customizations
-								jboss.home="@{jboss.home}"
-								jboss.server.name="@{jboss.server.name}"
-								application.base.path="@{application.base.path}"
-								project.name="@{project.name}"
-								logname="@{logname}"
-								java.home="@{java.home}"
-								jboss.server.jndi.port="@{jboss.server.jndi.port}"
-								filterset.name="@{filterset.name}"
-								jboss.java.opts="@{jboss.java.opts}"
-								database.type="@{database.type}"
-								start.jboss="@{start.jboss}"
-								env.name="@{env.name}"
+							<propertyregex property="nci.jboss"
+								input="@{jboss.home}"
+								regexp="nci$"
+								select="true"
+								override="true"
 								/>
+							<if>
+								<equals arg1="${nci.jboss}" arg2="true"/>
+								<then>
+									<jboss51-nci-filter
+										jboss.home="@{jboss.home}"
+										jboss.server.name="@{jboss.server.name}"
+										jboss.init.file.location="@{jboss.init.file.location}"
+										project.name="@{project.name}"
+										application.base.path="@{application.base.path}"
+										jboss.server.port="@{jboss.server.port}"
+										jboss.server.jndi.port="@{jboss.server.jndi.port}"
+										/>
+								</then>
+								<else>
+									<jboss51-nci-customizations
+										jboss.home="@{jboss.home}"
+										jboss.server.name="@{jboss.server.name}"
+										application.base.path="@{application.base.path}"
+										project.name="@{project.name}"
+										logname="@{logname}"
+										java.home="@{java.home}"
+										jboss.server.jndi.port="@{jboss.server.jndi.port}"
+										filterset.name="@{filterset.name}"
+										jboss.java.opts="@{jboss.java.opts}"
+										database.type="@{database.type}"
+										start.jboss="@{start.jboss}"
+										env.name="@{env.name}"
+										/>
+								</else>
+							</if>
 						</then>
 					</if>
 				</then>
@@ -9873,7 +9897,7 @@ $HeadURL$
 				flags="g" byline="true"/>
 		</sequential>
 	</macrodef>
-	<macrodef name="jboss-nci-filter">
+	<macrodef name="jboss51-nci-filter">
 		<attribute name="jboss.home" default="${jboss.home}"/>
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.init.file.location" default="@{jboss.home}/bin/init.conf"/>
