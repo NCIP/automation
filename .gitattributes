@@ -2869,10 +2869,8 @@ software/bda-build-template/software/common/grand/generic-root-install.xml.pdf -
 software/bda-build-template/software/common/ivy/cbiit-ivy-settings-with-cagrid12.xml -text
 software/bda-build-template/software/common/ivy/cbiit-ivy-settings-with-cagrid13.xml -text
 software/bda-build-template/software/common/ivy/cbiit-ivy-settings.xml -text
-software/bda-build-template/software/common/ivy/generic-ivy.xml -text
 software/bda-build-template/software/common/ivy/ivy-settings.xml -text
 software/bda-build-template/software/common/ivy/ivy-test.xml -text
-software/bda-build-template/software/common/ivy/project-download.xml -text
 software/bda-build-template/software/common/ivysettings.xml -text
 software/bda-build-template/software/common/javancss/javancss2methodhtml.xsl -text
 software/bda-build-template/software/common/maven/profiles.xml -text
