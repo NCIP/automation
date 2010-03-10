@@ -9968,6 +9968,55 @@ $HeadURL$
 			-->
 		</sequential>
 	</macrodef>
+	<macrodef name="ivy-retrieve">
+		<attribute name="software.dir" default="${software.dir}"/>
+		<attribute name="project.name" default="${project.name}"/>
+		<attribute name="project.ivy.conf" default="rutime"/>
+		<attribute name="project.lib.dir" default="${lib.dir}/@{project.name}"/>
+		<attribute name="project.org"/>
+		<attribute name="project.version"/>
+		<sequential>
+			<ant inheritAll="false" inheritRefs="false" antfile="project-download.xml" target="project-download" dir="${bda-utils.resource.dir}/ivy">
+				<property name="software.dir" location="@{software.dir}" />
+				<property name="project.ivy.conf" value="@{project.ivy.conf}"/>
+				<property name="project.lib.dir" location="@{project.lib.dir}"/>
+				<property name="project.org" value="@{project.org}"/>
+				<property name="project.name" value="@{project.name}"/>
+				<property name="project.version" value="@{project.version}"/>
+			</ant>          
+		</sequential>
+	</macrodef>
+	<macrodef name="ivy-retrieve-cgmm">
+		<attribute name="project.lib.dir.base" default="${lib.dir}"/>
+		<attribute name="project.version" default="0.6.0"/>
+		<sequential>
+			<ivy-retrieve
+				software.dir="${software.dir}"
+				project.name="cgmm"
+				project.ivy.conf="cgmm-api"
+				project.lib.dir="@{project.lib.dir.base}/cgmm"
+				project.org="gov.nih.nci.security"
+				project.version="@{project.version}"
+				/>
+			<ivy-retrieve
+				software.dir="${software.dir}"
+				project.name="cgmm"
+				project.ivy.conf="runtime"
+				project.lib.dir="@{project.lib.dir.base}/jbossweb-tomcat55-sar-jars"
+				project.org="gov.nih.nci.security"
+				project.version="@{project.version}"
+				/>
+			<ivy-retrieve
+				software.dir="${software.dir}"
+				project.name="cgmm"
+				project.ivy.conf="jboss-default-lib"
+				project.lib.dir="@{project.lib.dir.base}/jboss-default-lib"
+				project.org="gov.nih.nci.security"
+				project.version="@{project.version}"
+				/>
+		</sequential>
+	</macrodef>
+
 </project>
 <!--
 -->
