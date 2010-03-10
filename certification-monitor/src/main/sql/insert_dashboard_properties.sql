@@ -849,7 +849,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.build:database-integration.macro.list','database-install');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.optional.features','build:check-commandline-installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.optional.features','build:check-commandline-installer,build:database-integration');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.package.upgrader.target','dist:upgrader');
