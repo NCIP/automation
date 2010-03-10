@@ -1494,4 +1494,24 @@ $HeadURL$
 			jboss.init.file.location="40-init.conf"
 			/>
 	</target>
+	<target name="project:download">
+		<property name="ivy.dir" location="${software.dir}/common/ivy"/>
+		<ant inheritAll="false" inheritRefs="false" antfile="project-download.xml" target="project-download" dir="${ivy.dir}">
+			<property name="ivy.dep.dir" value="${ivy.dir}"/>
+			<property name="software.dir" location="${software.dir}" />
+			<property name="project.lib.dir" location="${target.dir}/lib/jbossweb-tomcat55-sar-jars"/>
+		</ant>
+		<ant inheritAll="false" inheritRefs="false" antfile="project-download.xml" target="project-download" dir="${ivy.dir}">
+			<property name="ivy.dep.dir" value="${ivy.dir}"/>
+			<property name="software.dir" location="${software.dir}" />
+			<property name="project.ivy.conf" value="jboss-default-lib"/>
+			<property name="project.lib.dir" location="${target.dir}/lib/jboss-default-lib"/>
+		</ant>
+		<ant inheritAll="false" inheritRefs="false" antfile="project-download.xml" target="project-download" dir="${ivy.dir}">
+			<property name="ivy.dep.dir" value="${ivy.dir}"/>
+			<property name="software.dir" location="${software.dir}" />
+			<property name="project.ivy.conf" value="cgmm-api"/>
+			<property name="project.lib.dir" location="${target.dir}/lib/cgmm"/>
+		</ant>
+	</target>
 </project>

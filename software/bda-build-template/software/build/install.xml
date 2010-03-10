@@ -161,9 +161,9 @@ $HeadURL$
 						<then>
 							<property name="jboss.server.bindingfile.location" value="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"/>
 							<property name="temp.bindings.file" value="${temp.dir}/unmodified-bindings-jboss-beans.xml"/>
-							<copy tofile="${temp.bindings.file}" file="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/unmodified-bindings-jboss-beans.xml"/>
+							<copy tofile="${temp.bindings.file}" file="${bda-utils.dir}/resource/jboss-5.1.0.GA/unmodified-bindings-jboss-beans.xml"/>
 							<property name="temp.ejb.file" value="${temp.dir}/ejb3-connectors-jboss-beans.xml"/>
-							<copy tofile="${temp.ejb.file}" file="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/ejb3-connectors-jboss-beans.xml"/>
+							<copy tofile="${temp.ejb.file}" file="${bda-utils.dir}/resource/jboss-5.1.0.GA/ejb3-connectors-jboss-beans.xml"/>
 							<jboss51-bindings-nci
 								jboss.server.bindingfile.location="${temp.bindings.file}"
 								/>
@@ -435,8 +435,6 @@ $HeadURL$
 		<jboss-install-binaries
 			/>
 		<jboss-nci-customizations
-			/>
-		<jboss-nci-filter
 			/>
 	</target>
 
