@@ -210,10 +210,10 @@
         <taskdef name="updateDatabase" classname="liquibase.ant.DatabaseUpdateTask"
                  classpathref="test-classpath"/>
         <updateDatabase changeLogFile="src/main/sql/create.project_certification_status.xml"
-                        driver="org.hsqldb.jdbcDriver"
-                        url="jdbc:hsqldb:mem:buildmonitordb-dev"
-                        username="sa"
-                        password=""
+                        driver="com.mysql.jdbc.Driver"
+                        url="jdbc:mysql://localhost:3306/buildmonitordb-dev"
+                        username="buildmonitoruser"
+                        password="password"
                         dropFirst="true"
                         classpathref="test-classpath"/>
     </target>
