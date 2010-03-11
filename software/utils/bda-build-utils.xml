@@ -10016,7 +10016,61 @@ $HeadURL$
 				/>
 		</sequential>
 	</macrodef>
+	<macrodef name="jboss-configure-cgmm">
+		<attribute name="jboss.home" default="${jboss.home}"/>
+		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
+		<attribute name="jboss.tomcat.dir" default="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar"/>
+		<attribute name="jboss.lib.dir" default="@{jboss.home}/server/@{jboss.server.name}/lib"/>
+		<attribute name="cgmm.conf.dest.dir" default="@{jboss.home}/server/@{jboss.server.name}/cgmm_config"/>
+		<attribute name="cgmm.conf.src.dir" default="${jboss-conf.dir.dest}/cgmm"/>
+		<attribute name="cgmm.jars.base.dir" default="${basedir}/cgmm-libs"/>
+		<attribute name="cgmm.version" default="0.6.0"/>
+		<attribute name="cagrid-target.dir" default="${basedir}/cagrid-target"/>
+		<attribute name="grid.target" default="${grid.target}"/>
+		<attribute name="login-config.policy.file" default="@{cgmm.conf.dest.dir}/login-config.cgmm-block.xml"/>
+		<!--
+		-->
+		<sequential>
+			<mkdir dir="@{cgmm.conf.dest.dir}"/>
+			<copy todir="@{jboss.tomcat.dir}">
+				<fileset dir="@{cgmm.jars.base.dir}/jbossweb-tomcat55-sar-jars">
+					<include name="*.jar"/>
+				</fileset>
+			</copy>
+			<copy file="@{cgmm.jars.base.dir}/cgmm/cgmmapi-@{cgmm.version}.jar" todir="@{jboss.tomcat.dir}"/>
+			<copy file="@{jboss.tomcat.dir}/catalina.jar" tofile="@{jboss.tomcat.dir}/catalina.jar.orig"/>
+			<copy file="@{cgmm.jars.base.dir}/jbossweb-tomcat55-sar-jars/catalina-5.0.jar" tofile="@{jboss.tomcat.dir}/catalina.jar"/>
+			<copy todir="@{jboss.lib.dir}">
+				<fileset dir="@{cgmm.jars.base.dir}/jboss-default-lib">
+					<include name="*.jar"/>
+				</fileset>
+			</copy>
+			<copy todir="@{cgmm.conf.dest.dir}">
+				<fileset dir="@{cgmm.conf.src.dir}">
+					<include name="*"/>
+				</fileset>
+			</copy>
+			<copy file="@{cagrid-target.dir}/${grid.target}/sync-description.xml" todir="${cgmm.conf.dest.dir}"/>
+			<var name="property.block" value="gov.nih.nci.security.cgmm.syncgts.file=@{cgmm.conf.dest.dir}/sync-description.xml${line.separator}
+gov.nih.nci.security.cgmm.properties.file=@{cgmm.conf.dest.dir}/cgmm-properties.xml${line.separator}
+gov.nih.nci.security.configFile=@{cgmm.conf.dest.dir}/ApplicationSecurityConfig.xml${line.separator}
+gov.nih.nci.security.cgmm.login.config.file=@{cgmm.conf.dest.dir}/cgmm.login.config${line.separator}"/>
 
+			<jboss-update-properties-service
+				property.block="${property.block}"
+				/>
+			<xmltask preservetype="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
+				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<remove path="//policy/application-policy[@name='@{application.context.name}']"/>
+			</xmltask>
+			<xmltask preservetype="true" failWithoutMatch="true" source="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml"
+				dest="@{jboss.home}/server/@{jboss.server.name}/conf/login-config.xml">
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<insert path="//policy" file="@{login-config.policy.file}"/>
+			</xmltask>
+		</sequential>
+	</macrodef>
 </project>
 <!--
 -->
