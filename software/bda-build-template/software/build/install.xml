@@ -68,7 +68,7 @@ $HeadURL$
 	<property name="jboss-conf.dir.dest" location="${working.dir}/${jboss-conf.dist.relative.dir}" />
 	<property name="sync-gts.dir" location="${basedir}/${sync-gts.dist.relative.dir}"/>
 	<property name="sync-gts.build.dir" location="${sync-gts.dir}/syncgts"/>
-	<property name="cagrid-target.dir" location="${sync-gts.dir}/cagrid-target"/>
+	<property name="cagrid-target.dir" location="${basedir}/cagrid-target"/>
 
 	<!-- *-ds.xml and WAR -->
 	<property name="bda-blueprints-webapp.dir.dist" location="${basedir}/${bda-blueprints-webapp.dist.relative.dir}" />
@@ -268,6 +268,7 @@ $HeadURL$
 		</path>
 
 		<property name="properties.template.file" value="${basedir}/properties.template" />
+		<property file="${basedir}/cagrid-target/${grid.target}/service_urls.properties"/>
 		<filterset id="embedded.filterset">
 			<filter token="application.base.path" value="${application.base.path}"/>
 			<filter token="application.url" value="${application.url}"/>
@@ -286,6 +287,8 @@ $HeadURL$
 			<filter token="env.LOGNAME" value="${env.LOGNAME}"/>
 			<filter token="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
 			<filter token="project.name" value="project.name"/>
+			<filter token="grid.dorian.name" value="${grid.target}-Dorian"/>
+			<filter token="grid.dorian.url" value="${cagrid.master.dorian.service.url}"/>
 			<filter token="" value=""/>
 		</filterset>
 
@@ -553,6 +556,8 @@ $HeadURL$
 			<then>
 				<jboss-configure
 					jboss.grid.configure="true"
+					/>
+				<jboss-configure-cgmm
 					/>
 			</then>
 		</if>

@@ -130,6 +130,7 @@ $HeadURL$
 	<property name="cagrid-libs.dest.file" value="${download.dir}/${cagrid-libs.binaries.file}" />
 	<property name="cagrid-base-war.dest.file" value="${download.dir}/${cagrid-base-war.binaries.file}" />
 	<property name="cagrid-console.dest.file" value="${download.dir}/${cagrid-console.binaries.file}" />
+	<property name="cagrid.target.co.dir" location="${target.dir}/cagrid-target"/>
 
 	<!-- Default install time targets passed by deploy targets to the installer, can be overridden by being set on the command line if different target is desitred.  -->
 	<property name="install.target" value="install" />
@@ -410,6 +411,8 @@ $HeadURL$
 		dist:tools:retrieve:tomcat,
 		dist:tools:retrieve:cagrid,
 		dist:tools:retrieve:cagrid-console,
+		dist:tools:retrieve:cagrid-target,
+		dist:tools:retrieve:cgmm,
 		dist:tools:retrieve:sync-gts
 		" >
 	</target>
@@ -495,7 +498,7 @@ $HeadURL$
 		</if>
 	</target>
 
-	<target name="dist:tools:retrieve:sync-gts"  description="Downloads JBOSS bindings filefrom binary repository and verifies checksum">
+	<target name="dist:tools:retrieve:sync-gts"  description="Downloads JBOSS bindings filefrom binary repository and verifies checksum" depends="dist:tools:retrieve:cagrid-target">
 		<if>
 			<not>
 				<available file="${download.dir}/${sync-gts.binaries.file}"/>
@@ -513,7 +516,8 @@ $HeadURL$
 			dir="${sync-gts.dist.dir}/syncgts"
 			/>
 		-->
-		<property name="cagrid.target.co.dir" location="${target.dir}/cagrid-target"/>
+	</target>
+	<target name="dist:tools:retrieve:cagrid-target">
 		<mkdir dir="${cagrid.target.co.dir}"/>
 		<if>
 			<not>
@@ -528,8 +532,19 @@ $HeadURL$
 					/>
 			</then>
 		</if>
-		<copy todir="${sync-gts.dist.dir}/cagrid-target">
+		<copy todir="${dist.exploded.dir}/cagrid-target">
 			<fileset dir="${cagrid.target.co.dir}"/>
+		</copy>
+	</target>
+	<target name="dist:tools:retrieve:cgmm">
+		<ivy-retrieve-cgmm
+			/>
+		<copy todir="${dist.exploded.dir}/cgmm-libs">
+			<fileset dir="${lib.dir}">
+				<include name="cgmm/*"/>
+				<include name="jboss-default-lib/*"/>
+				<include name="jbossweb-tomcat55-sar-jars/*"/>
+			</fileset>
 		</copy>
 	</target>
 
@@ -1520,5 +1535,9 @@ $HeadURL$
 		-->
 		<ivy-retrieve-cgmm
 			/>
+	</target>
+	<target name="temp:parse-cagrid">
+		<property file="${cagrid.target.co.dir}/${grid.target}/service_urls.properties" />
+		<echoproperties prefix="cagrid.master"/>
 	</target>
 </project>
