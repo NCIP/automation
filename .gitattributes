@@ -2882,10 +2882,10 @@ software/bda-build-template/software/common/resources/jboss-conf/cgmm/Applicatio
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/cgmm-properties.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/cgmm.login.config -text
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/cgmmweb.hibernate.cfg.xml -text
+software/bda-build-template/software/common/resources/jboss-conf/cgmm/login-config.cgmm-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/sync-description.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/jbossmq-destinations-service.block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/log4j.dtd -text
-software/bda-build-template/software/common/resources/jboss-conf/login-config.cgmm-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/login-config.db-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/login-config.ldap-block.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/template-log4j.xml -text
