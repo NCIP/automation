@@ -1540,4 +1540,16 @@ $HeadURL$
 		<property file="${cagrid.target.co.dir}/${grid.target}/service_urls.properties" />
 		<echoproperties prefix="cagrid.master"/>
 	</target>
+	<target name="temp:doug">
+		<echo message="Starting Selenium RC server on port ${selenium.server.port}" />
+		<property name="selenium-server.jar" location="${bda-utils.dir}/selenium-server-1.0.3.jar"/>
+		<!--<java jar="${bda-utils.dir}/${selenium-server.jar}" fork="true" spawn="true">-->
+		<java jar="${selenium-server.jar}" fork="true" spawn="true">
+			<arg value="-port" />
+			<arg value="4447" />
+			<arg value="-debug" />
+			<arg value="-log" />
+			<arg value="selenium.log" />
+		</java>
+	</target>
 </project>
