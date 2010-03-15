@@ -3027,6 +3027,8 @@ $HeadURL$
 		<attribute name="sync-gts.build.dir" default="${sync-gts.build.dir}"/>
 		<attribute name="cagrid-target.dir" default="${cagrid-target.dir}"/>
 		<attribute name="grid.target" default="${grid.target}"/>
+		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
+		<attribute name="cagrid-console.target" default="deployJBoss"/>
 		<sequential>
 			<grid-appserver-configure
 				appserver.home="@{jboss.home}"
@@ -3077,6 +3079,8 @@ $HeadURL$
 				sync-gts.build.dir="@{sync-gts.build.dir}"
 				cagrid-target.dir="@{cagrid-target.dir}"
 				grid.target="@{grid.target}"
+				cagrid-console.dir="@{cagrid-console.dir}"
+				cagrid-console.target="@{cagrid-console.target}"
 				/>
 		</sequential>
 	</macrodef>
@@ -3130,6 +3134,8 @@ $HeadURL$
 		<attribute name="sync-gts.build.dir" default="${sync-gts.build.dir}"/>
 		<attribute name="cagrid-target.dir" default="${cagrid-target.dir}"/>
 		<attribute name="grid.target" default="${grid.target}"/>
+		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
+		<attribute name="cagrid-console.target" default="deployTomcat"/>
 		<sequential>
 			<grid-appserver-configure
 				appserver.home="@{tomcat.home}"
@@ -3180,6 +3186,8 @@ $HeadURL$
 				sync-gts.build.dir="@{sync-gts.build.dir}"
 				cagrid-target.dir="@{cagrid-target.dir}"
 				grid.target="@{grid.target}"
+				cagrid-console.dir="@{cagrid-console.dir}"
+				cagrid-console.target="@{cagrid-console.target}"
 				/>
 		</sequential>
 	</macrodef>
@@ -3232,6 +3240,8 @@ $HeadURL$
 		<attribute name="sync-gts.build.dir" default="${sync-gts.build.dir}"/>
 		<attribute name="cagrid-target.dir" default="${cagrid-target.dir}"/>
 		<attribute name="grid.target" default="${grid.target}"/>
+		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
+		<attribute name="cagrid-console.target" default="deployJboss"/>
 		<sequential>
 			<if>
 				<equals arg1="@{grid.secure.enable}" arg2="true"/>
@@ -3408,6 +3418,24 @@ $HeadURL$
 				</fileset>
 			</replaceregexp>
 
+			<!-- installs cagrid console -->
+			<replaceregexp file="@{cagrid-console.dir}/ivy-build.xml" byline="true"
+				match="ivy.instance"
+				replace="console-jboss"
+				/>
+			<ant inheritAll="false" inheritRefs="false"
+				antfile="build.xml"
+				target="@{cagrid-console.target}"
+				dir="@{cagrid-console.dir}"
+				>
+				<property name="jboss.dir" value="@{appserver.home}"/>
+				<property name="wsrf.webapp.dir" value="@{appserver.webapp.dir}/@{grid.application.relative.dir}"/>
+			</ant>
+			<delete>
+				<fileset dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/lib">
+					<include name="commons-logging*.jar"/>
+				</fileset>
+			</delete>
 		</sequential>
 	</macrodef>
 	<macrodef name="check-absolute-directory" description="Diagnose the host system before the installation">
@@ -5922,6 +5950,7 @@ $HeadURL$
 			</groovy>
 		</sequential>
 	</macrodef>
+	<!--
 	<macrodef name="maven">
 		<attribute name="maven.profile.list"/>
 		<attribute name="maven.goal.list"/>
@@ -5942,6 +5971,34 @@ $HeadURL$
 			</exec>
 		</sequential>
 	</macrodef>
+	-->
+	<macrodef name="maven">
+		<attribute name="maven.profile.list" default="" />
+		<attribute name="maven.goal.list" />
+		<attribute name="maven.dir" />
+		<attribute name="maven.home" default="${env.M2_HOME}"/>
+		<attribute name="resultproperty" default="maven.result" />
+		<attribute name="maven.mem" default="-Xmx1024m"/>
+		<element name="args" implicit="true" optional="true" />
+		<sequential>              
+			<java classname="org.codehaus.classworlds.Launcher" fork="true"
+				dir="@{maven.dir}" resultproperty="@{resultproperty}">
+				<jvmarg value="-Xmx1024m"/>       
+				<classpath>                               
+					<fileset dir="@{maven.home}/boot">
+						<include name="*.jar" />          
+					</fileset>                                
+					<fileset dir="@{maven.home}/lib"> 
+						<include name="*.jar" />  
+					</fileset>                
+				</classpath>
+				<sysproperty key="classworlds.conf" value="@{maven.home}/bin/m2.conf" />
+				<sysproperty key="maven.home" value="@{maven.home}" />
+				<arg line="--batch-mode @{maven.profile.list} @{maven.goal.list}" />
+			</java>           
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-cacore-sdk">
 		<attribute name="cacore-sdk.required" default="${cacore-sdk.required}"/>
 		<attribute name="cacore-sdk.src.url" default="${cacore-sdk.src.url}"/>
@@ -7761,7 +7818,7 @@ $HeadURL$
 				</then>
 			</if>
 			<echo message="******* INSTALLATION COMPLETED SUCESSFULLY *******"/>
-			<echo message="${line.separator}To view your application goto ${jboss.application.url}."/>
+			<echo message="${line.separator}To view your application goto @{jboss.application.url}."/>
 		</sequential>
 	</macrodef>
 	<macrodef name="validate-post-tomcat" description="Diagnose the host system after the installation">
@@ -9553,10 +9610,10 @@ $HeadURL$
 									<role-name>JBossAdmin</role-name>
 								</auth-constraint>
 								<user-data-constraint>
-									<transport-guarantee>CONFIDENTIAL</transport-guarantee>         
+									<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 								</user-data-constraint>
 							</security-constraint>
-		
+
 							]]>
 						</insert>
 					</xmltask>
@@ -9582,7 +9639,7 @@ $HeadURL$
 									<role-name>JBossAdmin</role-name>
 								</auth-constraint>
 								<user-data-constraint>
-									<transport-guarantee>CONFIDENTIAL</transport-guarantee>         
+									<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 								</user-data-constraint>
 							</security-constraint>
 							]]>
@@ -9610,10 +9667,10 @@ $HeadURL$
 									<role-name>JBossAdmin</role-name>
 								</auth-constraint>
 								<user-data-constraint>
-									<transport-guarantee>CONFIDENTIAL</transport-guarantee>         
+									<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 								</user-data-constraint>
 							</security-constraint>
-		
+
 							]]>
 						</insert>
 					</xmltask>
@@ -9637,7 +9694,7 @@ $HeadURL$
 									<role-name>JBossAdmin</role-name>
 								</auth-constraint>
 							</security-constraint>
-		
+
 							]]>
 						</insert>
 					</xmltask>
@@ -9688,7 +9745,7 @@ $HeadURL$
 									<role-name>JBossAdmin</role-name>
 								</auth-constraint>
 							</security-constraint>
-		
+
 							]]>
 						</insert>
 					</xmltask>
@@ -9983,7 +10040,7 @@ $HeadURL$
 				<property name="project.org" value="@{project.org}"/>
 				<property name="project.name" value="@{project.name}"/>
 				<property name="project.version" value="@{project.version}"/>
-			</ant>          
+			</ant>
 		</sequential>
 	</macrodef>
 	<macrodef name="ivy-retrieve-cgmm">
@@ -10039,7 +10096,7 @@ $HeadURL$
 			</copy>
 			<copy file="@{cgmm.jars.base.dir}/cgmm/cgmmapi-@{cgmm.version}.jar" todir="@{jboss.tomcat.dir}"/>
 			<copy file="@{jboss.tomcat.dir}/catalina.jar" tofile="@{jboss.tomcat.dir}/catalina.jar.orig"/>
-			<copy file="@{cgmm.jars.base.dir}/jbossweb-tomcat55-sar-jars/catalina-5.0.jar" tofile="@{jboss.tomcat.dir}/catalina.jar"/>
+			<move file="@{cgmm.jars.base.dir}/jbossweb-tomcat55-sar-jars/catalina-5.0.jar" tofile="@{jboss.tomcat.dir}/catalina.jar"/>
 			<copy todir="@{jboss.lib.dir}">
 				<fileset dir="@{cgmm.jars.base.dir}/jboss-default-lib">
 					<include name="*.jar"/>
