@@ -286,7 +286,7 @@ $HeadURL$
 			<filter token="hibernate.cfg.file.path" value="${hibernate.cfg.file.path}"/>
 			<filter token="env.LOGNAME" value="${env.LOGNAME}"/>
 			<filter token="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
-			<filter token="project.name" value="project.name"/>
+			<filter token="project.name" value="${project.name}"/>
 			<filter token="grid.dorian.name" value="${grid.target}-Dorian"/>
 			<filter token="grid.dorian.url" value="${cagrid.master.dorian.service.url}"/>
 			<filter token="" value=""/>
@@ -1199,21 +1199,6 @@ $HeadURL$
 		<tomcat-configure-grid
 			grid.application.relative.dir="${grid.dir.dest.tomcat}"
 			/>
-		<property name="cagrid-console.dir" location="${basedir}/${cagrid-console.dist.relative.dir}"/>
-		<replaceregexp file="${cagrid-console.dir}/ivy-build.xml" byline="true"
-			match="ivy.instance"
-			replace="console-tomcat"
-			/>
-		<echoproperties prefix="ivy"/>
-		<ant inheritAll="false" inheritRefs="false"
-			antfile="build.xml"
-			target="deployTomcat"
-			dir="${cagrid-console.dir}"
-			>
-			<property name="tomcat.dir" value="${tomcat.home}"/>
-		</ant>
-
-
 	</target>
 
 	<target name="install:jboss:grid" description="Deploy  to jboss" unless="exclude.jboss" depends="common:init">
@@ -1227,24 +1212,6 @@ $HeadURL$
 		<jboss-configure-grid
 			grid.application.relative.dir="${grid.dir.dest.jboss}"
 			/>
-		<property name="cagrid-console.dir" location="${basedir}/${cagrid-console.dist.relative.dir}"/>
-		<replaceregexp file="${cagrid-console.dir}/ivy-build.xml" byline="true"
-			match="ivy.instance"
-			replace="console-jboss"
-			/>
-		<ant inheritAll="false" inheritRefs="false"
-			antfile="build.xml"
-			target="deployJBoss"
-			dir="${cagrid-console.dir}"
-			>
-			<property name="jboss.dir" value="${jboss.home}"/>
-			<property name="wsrf.webapp.dir" value="${jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"/>
-		</ant>
-		<delete>
-			<fileset dir="${jboss.home}/server/${jboss.server.name}/deploy/wsrf.war/WEB-INF/lib">
-				<include name="commons-logging*.jar"/>
-			</fileset>
-		</delete>
 	</target>
 
 	<target name="install:common:post" depends="common:init,install:post:jboss, install:post:tomcat">

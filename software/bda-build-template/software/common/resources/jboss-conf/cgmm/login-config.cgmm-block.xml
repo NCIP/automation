@@ -1,4 +1,3 @@
-<policy>
 	<application-policy name ="@project.name@">
 		<authentication> 
 			<login-module code=" gov.nih.nci.security.cgmm.loginmodules.NullPasswordStackingLoginModule" flag="optional">
@@ -11,5 +10,3 @@
 			</login-module>
 		</authentication>
 	</application-policy>
-</policy>
-
