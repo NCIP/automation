@@ -1248,4 +1248,11 @@ $HeadURL$
 			output.file.name="${just.file}"
 			/>
 	</target>
+	<target name="temp:cgmm">
+		<ivy-retrieve-cgmm
+			ivy.dir="${bda-utils.dir}/resource/ivy"
+			ivy.settings.file="${bda-utils.dir}/resource/ivy/cbiit-ivy-settings-with-cagrid13.xml"
+			project.version="0.7.0"
+			/>
+	</target>
 </project>
