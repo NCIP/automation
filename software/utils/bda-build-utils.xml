@@ -10049,9 +10049,9 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="ivy-retrieve-cgmm">
 		<attribute name="project.lib.dir.base" default="${lib.dir}"/>
-		<attribute name="project.version" default="0.6.0"/>
+		<attribute name="project.version" default="0.7.0"/>
 		<attribute name="ivy.dir" default="${bda-utils.resource.dir}/ivy"/>
-		<attribute name="ivy.settings.file" default="@{ivy.dir}/cbiit-ivy-settings-with-cagrid12.xml"/>
+		<attribute name="ivy.settings.file" default="@{ivy.dir}/cbiit-ivy-settings-with-cagrid13.xml"/>
 		<sequential>
 			<ivy-retrieve
 				software.dir="${software.dir}"
