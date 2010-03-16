@@ -10028,14 +10028,17 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="ivy-retrieve">
 		<attribute name="software.dir" default="${software.dir}"/>
+		<attribute name="ivy.dir" default="${bda-utils.resource.dir}/ivy"/>
+		<attribute name="ivy.settings.file" default="@{ivy.dir}/cbiit-ivy-settings-with-cagrid12.xml"/>
 		<attribute name="project.name" default="${project.name}"/>
 		<attribute name="project.ivy.conf" default="rutime"/>
 		<attribute name="project.lib.dir" default="${lib.dir}/@{project.name}"/>
 		<attribute name="project.org"/>
 		<attribute name="project.version"/>
 		<sequential>
-			<ant inheritAll="false" inheritRefs="false" antfile="project-download.xml" target="project-download" dir="${bda-utils.resource.dir}/ivy">
+			<ant inheritAll="false" inheritRefs="false" antfile="project-download.xml" target="project-download" dir="@{ivy.dir}">
 				<property name="software.dir" location="@{software.dir}" />
+				<property name="ivy.settings.file" location="@{ivy.settings.file}"/>
 				<property name="project.ivy.conf" value="@{project.ivy.conf}"/>
 				<property name="project.lib.dir" location="@{project.lib.dir}"/>
 				<property name="project.org" value="@{project.org}"/>
@@ -10047,9 +10050,13 @@ $HeadURL$
 	<macrodef name="ivy-retrieve-cgmm">
 		<attribute name="project.lib.dir.base" default="${lib.dir}"/>
 		<attribute name="project.version" default="0.6.0"/>
+		<attribute name="ivy.dir" default="${bda-utils.resource.dir}/ivy"/>
+		<attribute name="ivy.settings.file" default="@{ivy.dir}/cbiit-ivy-settings-with-cagrid12.xml"/>
 		<sequential>
 			<ivy-retrieve
 				software.dir="${software.dir}"
+				ivy.dir="@{ivy.dir}"
+				ivy.settings.file="@{ivy.settings.file}"
 				project.name="cgmm"
 				project.ivy.conf="cgmm-api"
 				project.lib.dir="@{project.lib.dir.base}/cgmm"
@@ -10058,6 +10065,8 @@ $HeadURL$
 				/>
 			<ivy-retrieve
 				software.dir="${software.dir}"
+				ivy.dir="@{ivy.dir}"
+				ivy.settings.file="@{ivy.settings.file}"
 				project.name="cgmm"
 				project.ivy.conf="runtime"
 				project.lib.dir="@{project.lib.dir.base}/jbossweb-tomcat55-sar-jars"
@@ -10066,6 +10075,8 @@ $HeadURL$
 				/>
 			<ivy-retrieve
 				software.dir="${software.dir}"
+				ivy.dir="@{ivy.dir}"
+				ivy.settings.file="@{ivy.settings.file}"
 				project.name="cgmm"
 				project.ivy.conf="jboss-default-lib"
 				project.lib.dir="@{project.lib.dir.base}/jboss-default-lib"
