@@ -346,6 +346,7 @@ $HeadURL$
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
 		<attribute name="jboss.web.user" default="${jboss.web.user}" />
 		<attribute name="jboss.web.password" default="${jboss.web.password}" />
+		<attribute name="sleep.time" default="5"/>
 		<sequential>
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
@@ -374,7 +375,7 @@ $HeadURL$
 				</else>
 			</if>
 
-			<sleep seconds="5" />
+			<sleep seconds="@{sleep.time}" />
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
@@ -387,7 +388,7 @@ $HeadURL$
 					</java>
 				</then>
 			</if>
-			<sleep seconds="5" />
+			<sleep seconds="@{sleep.time}" />
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
@@ -400,7 +401,7 @@ $HeadURL$
 					</java>
 				</then>
 			</if>
-			<sleep seconds="5" />
+			<sleep seconds="@{sleep.time}" />
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>

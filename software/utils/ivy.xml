@@ -76,7 +76,6 @@
 	  <!-- Library for grid HTTPSValve -->
 	  <dependency name="commons-logging" org="commons-logging" rev="1.1.1"/>
 	  <dependency name="expectj" org="net.sourceforge.expectj" rev="2.0"/>
-	  <dependency org="openqa" name="selenium-server" rev="1.0.3"/>
   </dependencies>
 
 </ivy-module>
