@@ -10093,7 +10093,7 @@ $HeadURL$
 		<attribute name="cgmm.conf.dest.dir" default="@{jboss.home}/server/@{jboss.server.name}/cgmm_config"/>
 		<attribute name="cgmm.conf.src.dir" default="${jboss-conf.dir.dest}/cgmm"/>
 		<attribute name="cgmm.jars.base.dir" default="${basedir}/cgmm-libs"/>
-		<attribute name="cgmm.version" default="0.6.0"/>
+		<attribute name="cgmm.version" default="0.7.0"/>
 		<attribute name="cagrid-target.dir" default="${basedir}/cagrid-target"/>
 		<attribute name="grid.target" default="${grid.target}"/>
 		<attribute name="login-config.policy.file" default="@{cgmm.conf.dest.dir}/login-config.cgmm-block.xml"/>
