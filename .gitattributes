@@ -107,6 +107,8 @@ bda-webapp/jetty/lib/xbean/jetty-xbean-6.1.22.jar -text
 bda-webapp/jetty/logs/2010_03_05.request.log -text
 bda-webapp/jetty/resources/log4j.properties -text
 bda-webapp/jetty/start.jar -text
+bda-webapp/jetty/start.sh -text
+bda-webapp/jetty/stop.sh -text
 bda-webapp/jetty/webapps/README.TXT -text
 bda-webapp/lib/catalina-ant.jar -text
 bda-webapp/lib/dbchangelog-1.6.xsd -text
