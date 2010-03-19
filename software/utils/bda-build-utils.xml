@@ -10044,6 +10044,7 @@ $HeadURL$
 				<property name="project.org" value="@{project.org}"/>
 				<property name="project.name" value="@{project.name}"/>
 				<property name="project.version" value="@{project.version}"/>
+				<property name="ivy.dep.dir" value="@{ivy.dir}"/>
 			</ant>
 		</sequential>
 	</macrodef>
