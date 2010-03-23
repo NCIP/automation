@@ -10105,6 +10105,8 @@ $HeadURL$
 			<copy todir="@{jboss.tomcat.dir}">
 				<fileset dir="@{cgmm.jars.base.dir}/jbossweb-tomcat55-sar-jars">
 					<include name="*.jar"/>
+					<exclude name="xerces*.jar"/>
+					<exclude name="xalan*.jar"/>
 				</fileset>
 			</copy>
 			<copy file="@{cgmm.jars.base.dir}/cgmm/cgmmapi-@{cgmm.version}.jar" todir="@{jboss.tomcat.dir}"/>
