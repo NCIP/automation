@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<project name="certificationclient" basedir="." default="jar">
+
+    <property name="src.dir" value="src"/>
+    <property name="resources.dir" value="src/resources"/>
+    <property name="output.dir" value="classes"/>
+
+    <target name="compile" depends="create">
+        <javac destdir="classes">
+            <src path="${src.dir}"/>
+            <classpath refid="client-classpath"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="create,compile,bind-classes">
+    	<echo message="${src.dir}/applicationContextExample.xml"/>
+        <jar destfile="certificationclient.jar">
+            	<fileset dir="${output.dir}"/>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${output.dir}"/>
+    </target>
+
+    <target name="create" depends="clean">
+        <mkdir dir="${output.dir}"/>
+    </target>
+
+	<target name="run">
+		<java classname="gov.nih.nci.bda.CertificationClientManager"
+			classpath="./certificationclient.jar"
+			classpathref="client-classpath"
+			fork="true"
+			/>		
+	</target>
+
+    <path id="client-classpath">
+        <fileset dir="./lib">
+            <include name="*.jar"/>
+        </fileset>
+        <path location="${resources.dir}"/>
+    </path>
+    
+    <taskdef name="bind" classname="org.jibx.binding.ant.CompileTask">
+        <classpath refid="client-classpath"/>
+    </taskdef>
+
+    <target name="bind-classes" depends="compile">
+    <echo message="BINDING CLASSES"/>
+	  <bind verbose="true" load="true" binding="${resources.dir}/certificationservice_jibx_binding.xml">
+	   <classpath>
+	      <pathelement path="./classes"/>
+	      <pathelement location="./lib/jibx-run.jar"/>
+	    </classpath>
+	  </bind> 
+    </target>    
+</project>
