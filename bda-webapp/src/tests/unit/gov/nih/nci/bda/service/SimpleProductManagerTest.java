@@ -19,6 +19,11 @@ public class SimpleProductManagerTest {
             public List<Product> getProductList() {
                 return new ArrayList<Product>();
             }
+
+			public Product getProduct(String productName) {
+
+				return new Product(productName);
+			}
         });
         List<Product> products = manager.getProducts();
         assertNotNull(products);

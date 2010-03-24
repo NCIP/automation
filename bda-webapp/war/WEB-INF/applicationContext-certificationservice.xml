@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+
+	<bean id="payloadMapping"
+		class="org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping">
+		<property name="endpointMap">
+			<map>
+				<entry key="{http://localhost:48080/certificationservice/}ProjectCertificationRequest"
+					value-ref="getProjectCertificationEndpoint" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="projectCertificationManager" class="gov.nih.nci.bda.service.ProjectCertificationManagerImpl">
+		<property name="productManager" ref="productManager"/>
+	</bean>
+	<bean id="getProjectCertificationEndpoint" class="gov.nih.nci.bda.endpoint.GetProjectCertificationEndpoint">
+		<property name="marshaller" ref="marshaller" />
+		<property name="unmarshaller" ref="unmarshaller" />
+		<property name="projectCertificationManager" ref="projectCertificationManager" />
+	</bean>
+
+	<bean id="ProjectCertificationRequest"
+		class="org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition">
+		<property name="wsdl" value="WEB-INF/schema/certificationservice.wsdl" />
+	</bean>
+
+
+	<bean id="marshaller" class="org.springframework.oxm.jibx.JibxMarshaller">
+		<property name="targetClass"
+			value="gov.nih.nci.bda.message.ProjectCertificationResponse" />
+	</bean>
+
+	<bean id="unmarshaller" class="org.springframework.oxm.jibx.JibxMarshaller">
+		<property name="targetClass"
+			value="gov.nih.nci.bda.message.ProjectCertificationRequest" />
+	</bean>
+
+</beans>

@@ -112,4 +112,14 @@ public class JdbcProductDao extends SimpleJdbcDaoSupport implements ProductDao {
 
 
     }
+
+	public Product getProduct(String productName) {
+        logger.info("Getting certification details for the product :" +productName);
+        List<Product> productList = getSimpleJdbcTemplate().query(
+                "select id, product, certification_status, single_command_build, single_command_deployment," +
+                        " remote_upgrade, database_integration, template_validation, private_properties, ci_build," +
+                        " deployment_shakeout, bda_enabled, commandline_installer from project_certification_status where product like '%"+productName+"|%'",
+                new ProductMapper());
+        return (Product) productList.get(0);   
+	}
 }

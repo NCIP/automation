@@ -15,4 +15,8 @@ public class SimpleProductManager implements ProductManager {
     public void setProductDao(ProductDao dao) {
         this.productDao = dao;
     }
+
+	public Product getProduct(String projectName) {
+		return productDao.getProduct(projectName);		
+	}
 }

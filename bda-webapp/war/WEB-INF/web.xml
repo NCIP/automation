@@ -25,6 +25,25 @@
 
     <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>    
+    </listener>  
+  
+    <servlet>
+        <servlet-name>certificationservice</servlet-name>
+        <servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
+        <init-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>WEB-INF/applicationContext-certificationservice.xml</param-value>
+	</init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>certificationservice</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>certificationservice</servlet-name>
+        <url-pattern>*.wsdl</url-pattern>
+    </servlet-mapping>  
 
 </web-app>

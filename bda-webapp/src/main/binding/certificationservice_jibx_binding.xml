@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<binding>
+	<mapping name="ProjectCertificationRequest"
+		class="gov.nih.nci.bda.message.ProjectCertificationRequest">
+		<namespace prefix="ms" uri="http://localhost:48080/certificationservice/" default="all"/>
+		<value name="projectName" field="projectName" />
+	</mapping>
+
+	<mapping name="ProjectCertificationResponse"
+		class="gov.nih.nci.bda.message.ProjectCertificationResponse">
+		<namespace prefix="ms" uri="http://localhost:48080/certificationservice/" default="all"/>
+		<structure field="projectCertification"/>		
+	</mapping>
+
+	<mapping name="projectcertification"
+		class="gov.nih.nci.bda.types.ProjectCertification">
+		<namespace prefix="ms" uri="http://localhost:48080/certificationservice/" default="all"/>
+		<structure field="product"/>
+	</mapping>
+	
+	<mapping name="product"
+		class="gov.nih.nci.bda.types.Product">
+		<namespace prefix="ms" uri="http://localhost:48080/certificationservice/" default="all"/>
+		<value name="name" field="name" />
+		<value name="id" field="id" />
+		<structure field="certificationStatus"/>
+		<structure field="bdaEnabled"/>
+		<structure field="singleCommandBuild"/>
+		<structure field="singleCommandDeploy"/>
+		<structure field="remoteUpgrade"/>
+		<structure field="dbIntegration"/>
+		<structure field="privateProperties"/>
+		<structure field="deploymentShakeout"/>
+		<structure field="templateValidation"/>
+		<structure field="ciBuild"/>
+		<structure field="commandLineInstall"/>
+	</mapping>
+	<mapping name="practice"
+		class="gov.nih.nci.bda.types.Practice">
+		<namespace prefix="ms" uri="http://localhost:48080/certificationservice/" default="all"/>
+		<value name="name" field="name" />
+		<value name="status" field="status" />
+		<value name="errorMessage" field="errorMessage" />
+		<value name="errorLocation" field="errorLocation" />
+	</mapping>	
+</binding>

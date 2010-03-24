@@ -11,6 +11,9 @@
     <property name="unit.test.build.dir" value="target/unit-test-classes"/>
     <property name="int.test.build.dir" value="target/integration-test-classes"/>
     <property name="name" value="${ant.project.name}"/>
+    <property name="binding.dir" value="src/main/binding"/>
+
+
 
     <path id="master-classpath">
         <fileset dir="${web.dir}/WEB-INF/lib">
@@ -118,7 +121,7 @@
         </copy>
     </target>
 
-    <target name="war" depends="build" description="Deploy application as a WAR file">
+    <target name="war" depends="build,bind-classes" description="Deploy application as a WAR file">
         <war destfile="target/${name}.war"
              webxml="${web.dir}/WEB-INF/web.xml">
             <fileset dir="${web.dir}">
@@ -225,4 +228,21 @@
             <zipfileset dir="src/main/jetty" includes="*.xml" prefix="contexts" />
         </zip>
     </target>
+
+<!-- JiBX binding tasks  -->
+    
+    <taskdef name="bind" classname="org.jibx.binding.ant.CompileTask">
+        <classpath refid="master-classpath"/>
+    </taskdef>
+
+    <target name="bind-classes" depends="build">
+	  <bind verbose="true" load="true" binding="${binding.dir}/certificationservice_jibx_binding.xml">
+	   <classpath>
+	      <pathelement path="${web.dir}/WEB-INF/classes"/>
+	      <pathelement location="${web.dir}/WEB-INF/lib/jibx-run.jar"/>
+	    </classpath>
+	  </bind> 
+    </target>
+
+
 </project>
