@@ -1934,11 +1934,13 @@ $HeadURL$
 		<attribute name="search.jboss.ejbinvoker.port" default="3873"/>
 		<attribute name="jboss.ncicb-standard.port-config" default="${jboss.ncicb-standard.port-config}"/>
 		<sequential>
+			<!--
 			<if>
 				<not>
 					<equals arg1="@{jboss.ncicb-standard.port-config}" arg2="true"/>
 				</not>
 				<then>
+			-->
 					<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
 					<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true">
 						<filterset>
@@ -1980,12 +1982,14 @@ $HeadURL$
 						match="(.*)&gt;@{search.jboss.ejbinvoker.port}&lt;(.*)"
 						replace="\1&gt;@{jboss.ejbinvoker.port}&lt;\2"
 						/>
+		<!--
 				</then>
 				<else>
 					<jboss51-bindings-nci
 						/>
 				</else>
 			</if>
+		-->
 		</sequential>
 	</macrodef>
 
@@ -10122,7 +10126,7 @@ $HeadURL$
 					<include name="*"/>
 				</fileset>
 			</copy>
-			<copy file="@{cagrid-target.dir}/${grid.target}/sync-description.xml" todir="${cgmm.conf.dest.dir}"/>
+			<copy file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml" todir="@{cgmm.conf.dest.dir}"/>
 			<var name="property.block" value="gov.nih.nci.security.cgmm.syncgts.file=@{cgmm.conf.dest.dir}/sync-description.xml${line.separator}
 gov.nih.nci.security.cgmm.properties.file=@{cgmm.conf.dest.dir}/cgmm-properties.xml${line.separator}
 gov.nih.nci.security.configFile=@{cgmm.conf.dest.dir}/ApplicationSecurityConfig.xml${line.separator}
