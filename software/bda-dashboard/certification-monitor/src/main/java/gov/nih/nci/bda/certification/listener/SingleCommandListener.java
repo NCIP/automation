@@ -76,10 +76,18 @@ public class SingleCommandListener implements BuildListener {
 			certLogger.info(" macro list value False " + checkMacroList(macroList,event));
 			bmb.setBuildSuccessful(false);
 			bmb.setFailureMessage(event.getException().getMessage());
-			if (bmb.isOptional() || bmb.isSystemsWaiver()) {
+			if (bmb.isOptional() || bmb.isSystemsWaiver())
+			{
 				certLogger.info(" IS OPTIONAL OR HAS SYSTEMS WAIVER  " );
-				bmb.setCertificationStatus(true);
-				CertificationManager.projectCertificationStatus = true;				
+				if (CertificationManager.projectCertificationStatus)
+				{
+					bmb.setCertificationStatus(true);
+					CertificationManager.projectCertificationStatus = true;
+				}else
+				{
+					bmb.setCertificationStatus(false);
+					CertificationManager.projectCertificationStatus = false;
+				}
 			}else
 			{
 				bmb.setCertificationStatus(false);
@@ -136,14 +144,27 @@ public class SingleCommandListener implements BuildListener {
 		}
 		*/
 		String execTaskList = event.getProject().getProperty("task.list");
-		if(execTaskList != null && execTaskList.equals(""))
+		certLogger.info("execTaskList:: " + execTaskList);
+		if(execTaskList != null && !execTaskList.equals(""))
 		{
-			String macroArray[] = macroList.split(",");
-			for ( int i =0 ; i < macroArray.length ; i++){
-				if (!execTaskList.contains(macroArray[i])){
-					certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
-					event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
-					return false;
+			certLogger.info("macroList:: " + macroList);
+			if(macroList != null && !macroList.equals(""))
+			{
+				String macroArray[] = macroList.split(",");
+
+				for ( int i =0 ; i < macroArray.length ; i++)
+				{
+					certLogger.info("Checking for the Macro " + macroArray[i] + " called during the execution path " + execTaskList.contains(macroArray[i]));
+					if (!execTaskList.contains(macroArray[i]))
+					{
+						certLogger.info("Macro " + macroArray[i] + " was not called during the execution path ");
+						event.setException(new Exception("Macro " + macroArray[i] + " was not called during the execution path"));
+						return false;
+					}
+					else
+					{
+						certLogger.info("Macro " + macroArray[i] + " was called during the execution path  " + execTaskList.contains(macroArray[i]));
+					}
 				}
 			}
 		}

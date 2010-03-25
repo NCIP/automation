@@ -55,7 +55,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:private-repository-properties.macro.list','svn');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:database-integration.macro.list','database-install');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.svn.username','narram');
@@ -78,6 +81,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.build:database-integration.macro.list','database-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.override.properties','application.base.path=${user.home}/apps/caarray');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.svn.username','narram');
@@ -100,8 +107,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.install.init.target','common:common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.build:database-integration.macro.list','database-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.remote-upgrade.target','deploy:remote:upgrade');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.remote.properties','ssh.server.username=bdauser,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/remote-deploy,tomcat.ssh.server.username=bdauser,tomcat.ssh.server.hostname=@remote.hostname@,tomcat.ssh.port=22,tomcat.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,tomcat.ssh.dir.temp=${user.home}/remote-deploy,ctp.ssh.server.username=bdauser,ctp.ssh.server.hostname=@remote.hostname@,ctp.ssh.port=22,ctp.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ctp.ssh.dir.temp=${user.home}/remote-deploy');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,tomcat.ssh.server.username=@remote.username@,tomcat.ssh.server.hostname=@remote.hostname@,tomcat.ssh.port=22,tomcat.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,tomcat.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,ctp.ssh.server.username=@remote.username@,ctp.ssh.server.hostname=@remote.hostname@,ctp.ssh.port=22,ctp.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ctp.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,authentication.type=db');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('nbia.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.username','narram');
@@ -123,6 +131,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.svn.username','narram');
@@ -144,6 +156,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('protex
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('protexpress.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.svn.username','narram');
@@ -165,6 +181,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('biopor
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('bioportal.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.svn.username','narram');
@@ -186,6 +206,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('lexevs.override.properties','');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.database.type','mysql');
@@ -208,6 +232,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.si
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.override.properties','upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.single-command.package.upgrader.target','dist:upgrader');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.username','narram');
@@ -228,6 +256,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.username','narram');
@@ -249,6 +281,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cainte
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.svn.username','narram');
@@ -269,7 +305,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('canano
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.install.init.target','install:init');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cananolab.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.username','narram');
@@ -290,6 +329,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.ci-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.svn.username','narram');
@@ -310,6 +353,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('rembra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('rembrandt.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.svn.username','narram');
@@ -329,9 +376,14 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.ci-server.jobname','cabioapi');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','init:common');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.use.genericDB','false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.build:database-integration.macro.list','database-install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.optional.features','build:database-integration');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cabio.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.svn.username','narram');
@@ -352,6 +404,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ispy.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.svn.username','narram');
@@ -372,6 +428,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cpas.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.svn.username','narram');
@@ -392,6 +452,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.svn.username','narram');
@@ -412,6 +476,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('tcga.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.username','narram');
@@ -425,14 +493,18 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.exploded.dir.location','${cadsr-cdebrowser.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/cdebrowser');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/CDEBrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.ci-server.jobname','CDEBrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdebrowser.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.username','narram');
@@ -446,14 +518,18 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.exploded.dir.location','${cadsr-umlmodelbrowser.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/umlmodelbrowser');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/UMLModelBrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.ci-server.jobname','UMLModelBrowser');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-umlmodelbrowser.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.username','narram');
@@ -467,14 +543,19 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.exploded.dir.location','${cadsr-formbuilder.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/formbuilder');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/FormBuilder');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.ci-server.jobname','Formbuilder');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-formbuilder.override.properties','');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.username','narram');
@@ -488,14 +569,18 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.exploded.dir.location','${cadsr-sentinel.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/sentinel');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/Sentinel');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.ci-server.jobname','Sentinel');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-sentinel.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.username','narram');
@@ -509,14 +594,18 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.master.build.file','build.xml');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.exploded.dir.location','${cadsr-freestylesearch.svn.local.checkout}/software/target/dist/exploded');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/freestylesearch');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.svn.private.url','https://ncisvn.nci.nih.gov/svn/scm-props/trunk/dev/Freestyle_Search');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.url','http://ncias-c357-v:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.ci-server.jobname','FreestyleSearch');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-freestylesearch.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.svn.username','narram');
@@ -538,6 +627,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cdecurate.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.svn.username','narram');
@@ -559,6 +652,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-semanticTools.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.svn.username','narram');
@@ -580,8 +677,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.use.genericDB','false');
-
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr-cadsrdb.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.svn.username','narram');
@@ -603,7 +702,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.use.genericDB','false');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cadsr.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.svn.username','narram');
@@ -625,6 +727,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('camod.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.svn.username','narram');
@@ -646,6 +752,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('evstre
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('evstree.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.svn.username','narram');
@@ -666,6 +776,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('catiss
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('catissue.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.svn.username','narram');
@@ -686,6 +800,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cab2b.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.svn.username','narram');
@@ -706,6 +824,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagrid.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.username','narram');
@@ -727,7 +849,11 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.s
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.build:database-integration.macro.list','database-install');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.optional.features','build:check-commandline-installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.optional.features','build:check-commandline-installer,build:database-integration');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.username','narram');
@@ -749,6 +875,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.optional.features','build:check-commandline-installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.svn.username','narram');
@@ -769,7 +899,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('genepa
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.install.init.target','install:init');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('genepattern.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.svn.username','narram');
@@ -790,7 +923,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.install.init.target','install:init');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ctods.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.svn.username','narram');
@@ -811,7 +947,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.install.init.target','common:init');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c3pr.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.svn.username','narram');
@@ -833,6 +972,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.override.properties','tomcat.hostname=localhost');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caaers.single-command.package.upgrader.target','dist:upgrader');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.database.type','mysql');
@@ -854,7 +996,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.install.init.target','install:init');
-
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-caXchange.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.svn.username','narram');
@@ -877,6 +1022,9 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-l
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.install.init.target','install:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.properties','application.base.path.linux=${user.home}/apps/labviewer,exclude.tomcat.backup=true,tomcat.grid.secure.enable=false');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.optional.features','build:check-commandline-installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-labviewer.single-command.package.upgrader.target','dist:upgrader');
 
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.database.type','postgresql');
@@ -898,6 +1046,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-p
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-psc.override.properties','');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.database.type','oracle');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.username','narram');
@@ -910,15 +1062,20 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-c
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.exploded.dir.location','${ccts-clinicalconnector.svn.local.checkout}/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.exploded.dir.location','${ccts-clinicalconnector.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.svn.private.url','http://gforge.nci.nih.gov/svn/scm-private/trunk/psc');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.url','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.ci-server.jobname','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.use.genericDB','false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.override.properties','database.type=oracle,tomcat.grid.secure.enable=false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ccts-clinicalconnector.single-command.package.upgrader.target','dist:upgrader');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.username','narram');
@@ -927,18 +1084,52 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cacore
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/example-project/build');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.install.location','working/installer');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.build.target','build:SDK');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exploded.dir.location','${cacoresdk.svn.local.checkout}/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exploded.dir.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/example-project/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cacoresdk/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.url','http://ncias-c124-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.ci-server.jobname','sdk-package-modules');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.remote-upgrade.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,INSTALL_CONTAINER=false');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.override.properties','application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost,properties.file=install.properties,DB_TYPE=mysql,DB_SERVER=localhost,DB_SERVER_PORT=3306,DB_NAME=genericdb,DB_USERNAME=genericuser,DB_PASSWORD=password,exclude.jboss.backup=true');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.bdautils.build.location','${cacoresdk.svn.local.checkout}/sdk-toolkit/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.optional.features','build:remote-upgrade,build:private-repository-properties');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cacoresdk.exclude.obfuscate.properties','true');
+
+
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.database.type','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.username','narram');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.password','Temp123$');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.project.url','http://gforge.nci.nih.gov/svnroot/cacoresdk/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.local.checkout','working/bda_certification');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.master.build.location','${workbench.svn.local.checkout}/sdk-workbench/workbench-webstart-project/software/build');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.master.install.location','working/installer');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.build.target','build:all');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.package.target','dist:installer:prep');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.database.integration.target','install:database');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.master.build.file','build.xml');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.exploded.dir.location','${workbench.svn.local.checkout}/sdk-workbench/workbench-webstart-project/software/target/dist/exploded');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/sdk-workbench/properties');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.local.private.checkout','working/scm_private');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.ci-server.url','http://ncias-c125-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.ci-server.jobname','workbench');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.deployment.target','install');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.distribution.target','dist');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.exclude.obfuscate.properties','true');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,application.base.path.linux=${user.home}/apps/workbench-app');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('workbench.override.properties','application.base.path.linux=${user.home}/apps/workbench-app');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.svn.username','narram');
@@ -959,6 +1150,10 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ct
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pro-ctcae.single-command.package.upgrader.target','dist:upgrader');
+
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.username','narram');
@@ -974,8 +1169,13 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdap
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.exploded.dir.location','${caAdapter.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/caAdapter/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.url','http://ncias-d341-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.ci-server.jobname','caadapter-mms');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.install.init.target','common:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.remote-upgrade.target','deploy:remote:upgrade:ahp');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.optional.features','build:private-repository-properties');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.single-command.package.upgrader.target','dist:upgrader');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caAdapter.override.properties','');
