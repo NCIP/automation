@@ -32,7 +32,9 @@
 			classpath="./certificationclient.jar"
 			classpathref="client-classpath"
 			fork="true"
-			/>		
+			>
+			<arg value="${project.name}"/>
+		</java>	
 	</target>
 
     <path id="client-classpath">

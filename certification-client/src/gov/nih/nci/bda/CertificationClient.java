@@ -27,7 +27,10 @@ public class CertificationClient implements ICertificationClient{
     {
 		ProjectCertificationResponse response = processCertification(projectName);
 		String certificationStatus = response.getProjectCertification().getProduct().getCertificationStatus().getStatus();
-		return new Boolean(certificationStatus).booleanValue();
-
+		System.out.println("certificationStatus::" +certificationStatus);
+		if ("SUCCESS".equals(certificationStatus))
+			return true;
+		else
+			return false;
     }
  }
