@@ -248,7 +248,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.sin
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.package.target','dist:installer:prep');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.integration.target','install:database');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.build.file','build.xml');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.exploded.dir.location','${po.svn.local.checkout}/code/target');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.exploded.dir.location','${po.svn.local.checkout}/code/target/po/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.url','http://cbvapp-c1005.nci.nih.gov:48080');
