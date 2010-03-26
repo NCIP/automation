@@ -259,7 +259,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ins
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.package.upgrader.target','dist:upgrader');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.override.properties','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.override.properties','po-grid-jboss.grid.secure.enable=false');
 
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.database.type','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caintegrator2.svn.username','narram');
