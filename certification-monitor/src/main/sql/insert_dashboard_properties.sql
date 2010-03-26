@@ -255,7 +255,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.jobname','coppa-po-ci-full');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.distribution.target','dist');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.install.init.target','install:init');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.remote-upgrade.target','deploy:remote:upgrade');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.package.upgrader.target','dist:upgrader');
