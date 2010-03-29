@@ -284,6 +284,7 @@ docs/wiki/flash/src/gov/nih/nci/bda/wiki/vo/WikiButtonVO.as -text
 resources/ahp3/template-project.xml -text
 resources/eclipse/bda-plugins.xml -text
 resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml -text
+resources/jboss-bindings/ncicb-jboss-5.1.0-dac-bindings.xml -text
 resources/jboss-bindings/ncicb-jboss4.0.x-bindings.xml -text
 resources/jboss/security_config.dtd -text
 resources/lsdb/installed-products.xml -text
