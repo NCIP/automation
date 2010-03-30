@@ -30,6 +30,7 @@ class CertificationUtils
 
 	void populateDefaultProperties ()
 	{
+	/*
 		defaultProperties.put("application.base.path.linux","\${user.home}/apps/petstore-webapp");
 		defaultProperties.put("application.base.path.windows","C:/apps/petstore-webapp");
 		if(project.properties['database.type']=='mysql')
@@ -52,6 +53,7 @@ class CertificationUtils
 			defaultProperties.put("database.user",project.properties["postgresql.database.user"])
 			defaultProperties.put("database.password",project.properties["postgresql.database.password"])
 		}
+	*/
 		defaultProperties.put("mail.smtp.host","localhost")
 		defaultProperties.put("jboss.server.hostname","localhost")
 	}
