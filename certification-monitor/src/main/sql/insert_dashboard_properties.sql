@@ -53,7 +53,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('petsto
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.install.init.target','common:init');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:private-repository-properties.macro.list','svn');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:private-repository-properties.macro.list','');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.build:database-integration.macro.list','database-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('petstore.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
