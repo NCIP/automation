@@ -239,7 +239,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('upt.si
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.project.url','http://gforge.nci.nih.gov/svnroot/coppa/trunk');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.project.url','https://ncisvn.nci.nih.gov/svn/coppa/trunk');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.build.location','${po.svn.local.checkout}/code/build-po');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.master.install.location','working/installer');
@@ -251,7 +251,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('po.exp
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/coppa/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.local.private.checkout','working/scm_private');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.url','http://cbvapp-c1005.nci.nih.gov:48080');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.jobname','coppa-po-ci-full');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('po.ci-server.jobname','po-bda-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('po.install.init.target','common:init');
