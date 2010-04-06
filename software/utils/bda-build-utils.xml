@@ -1934,14 +1934,13 @@ $HeadURL$
 		<attribute name="search.jboss.ejbinvoker.port" default="3873"/>
 		<attribute name="jboss.ncicb-standard.port-config" default="${jboss.ncicb-standard.port-config}"/>
 		<sequential>
-			<!--
 			<if>
 				<not>
 					<equals arg1="@{jboss.ncicb-standard.port-config}" arg2="true"/>
 				</not>
 				<then>
-			-->
 					<echo message="Bindings file location @{jboss.server.bindingfile.location}"/>
+					<echo message="jboss.server.ports.name-@{jboss.server.ports.name}"/>
 					<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true">
 						<filterset>
 							<filter token="jboss.server.ports.name" value="@{jboss.server.ports.name}"/>
@@ -1982,14 +1981,18 @@ $HeadURL$
 						match="(.*)&gt;@{search.jboss.ejbinvoker.port}&lt;(.*)"
 						replace="\1&gt;@{jboss.ejbinvoker.port}&lt;\2"
 						/>
-		<!--
 				</then>
 				<else>
 					<jboss51-bindings-nci
+						jboss.home="@{jboss.home}"
+						jboss.server.name="@{jboss.server.name}"
+						jboss.server.ports.name="@{jboss.server.ports.name}"
+						jboss.ncicb-standard.port-config="@{jboss.ncicb-standard.port-config}"
+						jboss.server.bindingfile.location="@{jboss.server.bindingfile.location}"
+
 						/>
 				</else>
 			</if>
-		-->
 		</sequential>
 	</macrodef>
 
@@ -9107,9 +9110,11 @@ $HeadURL$
 		<attribute name="jboss.server.name" default="${jboss.server.name}"/>
 		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
 		<attribute name="jboss.ncicb-standard.port-config" default="${jboss.ncicb-standard.port-config}"/>
-		<attribute name="jboss.port.offset" default="${jboss.port.offset}"/>
+		<!--<attribute name="jboss.port.offset" default="${jboss.port.offset}"/>-->
 		<attribute name="jboss.server.bindingfile.location" default="@{jboss.home}/server/@{jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"/>
+		<attribute name="jboss.server.binding.template.location" default="${jboss.server.binding.template.location}"/>
 		<sequential>
+			<!--
 			<var name="port.config" value="@{jboss.server.ports.name}"/>
 			<groovy>
 				matcher = (properties["port.config"] =~ /[^A-Za-z0-9]/)
@@ -9163,6 +9168,14 @@ $HeadURL$
    </bean>
 					]]>
 				</insert>
+			</xmltask>
+			-->
+			<copy tofile="@{jboss.server.bindingfile.location}" file="@{jboss.server.binding.template.location}" overwrite="true"/>
+			<xmltask preservetype="true" source="@{jboss.server.bindingfile.location}"
+				dest="@{jboss.server.bindingfile.location}"
+				failWithoutMatch="true" >
+				<xmlcatalog refid="bda.xml.catalog"/>
+				<replace path="/:deployment/:bean[@name='ServiceBindingManagementObject']/:constructor/:parameter[1]/text()" withtext="${jboss.service.binding.set:@{jboss.server.ports.name}}"/>
 			</xmltask>
 			<replaceregexp file="@{jboss.server.bindingfile.location}" byline="true"
 				match="xmlns=&quot;&quot;"
@@ -10039,6 +10052,7 @@ $HeadURL$
 		<attribute name="project.lib.dir" default="${lib.dir}/@{project.name}"/>
 		<attribute name="project.org"/>
 		<attribute name="project.version"/>
+		<attribute name="lib.dir" default="${lib.dir}"/>
 		<sequential>
 			<ant inheritAll="false" inheritRefs="false" antfile="project-download.xml" target="project-download" dir="@{ivy.dir}">
 				<property name="software.dir" location="@{software.dir}" />
@@ -10049,6 +10063,7 @@ $HeadURL$
 				<property name="project.name" value="@{project.name}"/>
 				<property name="project.version" value="@{project.version}"/>
 				<property name="ivy.dep.dir" value="@{ivy.dir}"/>
+				<property name="lib.dir" location="@{lib.dir}"/>
 			</ant>
 		</sequential>
 	</macrodef>
@@ -10057,6 +10072,7 @@ $HeadURL$
 		<attribute name="project.version" default="0.7.0"/>
 		<attribute name="ivy.dir" default="${bda-utils.resource.dir}/ivy"/>
 		<attribute name="ivy.settings.file" default="@{ivy.dir}/cbiit-ivy-settings-with-cagrid13.xml"/>
+		<attribute name="lib.dir" default="${lib.dir}"/>
 		<sequential>
 			<ivy-retrieve
 				software.dir="${software.dir}"
@@ -10067,6 +10083,7 @@ $HeadURL$
 				project.lib.dir="@{project.lib.dir.base}/cgmm"
 				project.org="gov.nih.nci.security"
 				project.version="@{project.version}"
+				lib.dir="@{lib.dir}"
 				/>
 			<ivy-retrieve
 				software.dir="${software.dir}"
@@ -10077,6 +10094,7 @@ $HeadURL$
 				project.lib.dir="@{project.lib.dir.base}/jbossweb-tomcat55-sar-jars"
 				project.org="gov.nih.nci.security"
 				project.version="@{project.version}"
+				lib.dir="@{lib.dir}"
 				/>
 			<ivy-retrieve
 				software.dir="${software.dir}"
@@ -10087,6 +10105,7 @@ $HeadURL$
 				project.lib.dir="@{project.lib.dir.base}/jboss-default-lib"
 				project.org="gov.nih.nci.security"
 				project.version="@{project.version}"
+				lib.dir="@{lib.dir}"
 				/>
 		</sequential>
 	</macrodef>
