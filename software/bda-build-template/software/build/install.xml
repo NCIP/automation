@@ -159,16 +159,17 @@ $HeadURL$
 					<elseif>
 						<equals arg1="${jboss.major.version}" arg2="5"/>
 						<then>
+							<property name="jboss.server.binding.template.location" value="${basedir}/${jboss-bindings.file}"/>
 							<property name="jboss.server.bindingfile.location" value="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"/>
-							<property name="temp.bindings.file" value="${temp.dir}/unmodified-bindings-jboss-beans.xml"/>
-							<copy tofile="${temp.bindings.file}" file="${bda-utils.dir}/resource/jboss-5.1.0.GA/unmodified-bindings-jboss-beans.xml"/>
 							<property name="temp.ejb.file" value="${temp.dir}/ejb3-connectors-jboss-beans.xml"/>
 							<copy tofile="${temp.ejb.file}" file="${bda-utils.dir}/resource/jboss-5.1.0.GA/ejb3-connectors-jboss-beans.xml"/>
+							<!--
 							<jboss51-bindings-nci
-								jboss.server.bindingfile.location="${temp.bindings.file}"
+								jboss.server.bindingfile.location="${jboss-bindings.file}"
 								/>
+							-->
 							<jboss51-read-ports-nci
-								jboss.server.bindingfile.location="${temp.bindings.file}"
+								jboss.server.bindingfile.location="${jboss-bindings.file}"
 								jboss.server.ejbfile.location="${temp.ejb.file}"
 								/>
 						</then>
@@ -556,7 +557,6 @@ $HeadURL$
 			<equals arg1="${jboss.major.version}" arg2="4"/>
 			<then>
 				<jboss-configure
-					jboss.grid.configure="true"
 					/>
 				<if>
 					<equals arg1="${jboss.cgmm.enable}" arg2="true"/>
@@ -571,15 +571,16 @@ $HeadURL$
 			<equals arg1="${jboss.major.version}" arg2="5"/>
 			<then>
 				<jboss-configure
-					jboss.grid.configure="true"
+					jboss.grid.configure="false"
 					jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"
-					jboss.server.binding.template.location="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings-jboss-beans.xml"
+					jboss.server.binding.template.location="${jboss.server.binding.template.location}"
 					jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
-					jboss.server.ports.name="PortsDefaultBindings"
 					proxy.update.connector.port.ssl="${jboss.ssl.port}"
 					/>
+				<!--
 				<jboss51-encrypt-messaging-passwd
 					/>
+				-->
 			</then>
 		</if>
 	</target>
@@ -625,7 +626,7 @@ $HeadURL$
 			java.check.version.minor="${java.minor.version}"
 			/>
 	</target>
-	<target name="install:jboss:validation:pre-install" description="Runs pre-install validation checks bda-utils"
+	<target name="install:jboss:validation:pre-install" description="Runs pre-install validation checks bda-utils" unless="exclude.jboss"
 		depends="
 		common:jboss:init,common:init,
 		install:common:validation:pre-install
@@ -633,7 +634,7 @@ $HeadURL$
 		<validate-pre-install-jboss
 			/>
 	</target>
-	<target name="install:tomcat:validation:pre-install" description="Runs pre-install validation checks bda-utils"
+	<target name="install:tomcat:validation:pre-install" description="Runs pre-install validation checks bda-utils" unless="exclude.tomcat"
 		depends="
 		common:tomcat:init,
 		common:init,
@@ -653,7 +654,7 @@ $HeadURL$
 	</target>
 
 
-	<target name="install:jboss:validation:pre-install:ports" description="Checks to see if configured ports are listenting and fails buld, meant to be run after jboss:stop"
+	<target name="install:jboss:validation:pre-install:ports" description="Checks to see if configured ports are listenting and fails buld, meant to be run after jboss:stop" unless="exclude.jboss"
 		depends="
 		common:init,
 		install:jboss:stop
@@ -661,7 +662,7 @@ $HeadURL$
 		<validate-pre-jboss-ports
 			/>
 	</target>
-	<target name="install:tomcat:validation:pre-install:ports" description="Checks to see if configured ports are listenting and fails buld, meant to be run after jboss:stop"
+	<target name="install:tomcat:validation:pre-install:ports" description="Checks to see if configured ports are listenting and fails buld, meant to be run after jboss:stop" unless="exclude.tomcat"
 		depends="
 		common:init,
 		install:tomcat:stop
@@ -676,7 +677,7 @@ $HeadURL$
 		">
 		<validate-post-common />
 	</target>
-	<target name="install:jboss:validation:post-install" description="Run post-install checks from bda-utils"
+	<target name="install:jboss:validation:post-install" description="Run post-install checks from bda-utils" unless="exclude.jboss"
 		depends="
 		common:jboss:init,
 		common:init,
@@ -691,7 +692,7 @@ $HeadURL$
 			</then>
 		</if>
 	</target>
-	<target name="install:tomcat:validation:post-install" description="Run post-install checks from bda-utils"
+	<target name="install:tomcat:validation:post-install" description="Run post-install checks from bda-utils" unless="exclude.tomcat"
 		depends="
 		common:tomcat:init,
 		common:init,
@@ -1146,7 +1147,7 @@ $HeadURL$
 
 	<!-- Grid Targets for jboss and tomcat -->
 
-	<target name="install:bda-blueprints-grid" description="Wrapper target for Grid application targets"
+	<target name="install:bda-blueprints-grid" description="Wrapper target for Grid application targets" unless="exclude.jboss.grid"
 		depends="
 
 		common:init,
@@ -1155,7 +1156,7 @@ $HeadURL$
 	">
 	</target>
 
-	<target name="install:tomcat:grid" description="Deploy grid to tomcat" unless="exclude.tomcat" depends="common:init">
+	<target name="install:tomcat:grid" description="Deploy grid to tomcat" unless="exclude.tomcat.grid" depends="common:init">
 		<mkdir dir="${tomcat.home}/webapps/${grid.dir.dest.tomcat}"/>
 		<!--
 		<unzip dest="${tomcat.home}/common/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}">
@@ -1187,7 +1188,7 @@ $HeadURL$
 		<unzip dest="${tomcat.home}/webapps/${grid.dir.dest.tomcat}" src="${grid.application.dir}/${grid.artifact.file}" />
 	</target>
 
-	<target name="install:tomcat:grid:configure" description="Configure tomcat-application" unless="exclude.tomcat" depends="common:init">
+	<target name="install:tomcat:grid:configure" description="Configure tomcat-application" unless="exclude.tomcat.grid" depends="common:init">
 		<!--
 		<grid-appserver-configure
 			appserver.conf.dir="${tomcat.home}/conf"
@@ -1207,14 +1208,14 @@ $HeadURL$
 			/>
 	</target>
 
-	<target name="install:jboss:grid" description="Deploy  to jboss" unless="exclude.jboss" depends="common:init">
+	<target name="install:jboss:grid" description="Deploy  to jboss" unless="exclude.jboss.grid" depends="common:init">
 		<mkdir dir="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest.jboss}"/>
 		<unzip dest="${jboss.home}/server/${jboss.server.name}/lib" src="${grid.resource.dir}/${resource.file.jboss-globus-lib}" />
 		<unzip dest="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest.jboss}" src="${grid.resource.dir}/${resource.file.jboss-globus-war}" />
 		<unzip dest="${jboss.home}/server/${jboss.server.name}/deploy/${grid.dir.dest.jboss}" src="${grid.application.dir}/${grid.artifact.file}" />
 	</target>
 
-	<target name="install:jboss:grid:configure" description="Configure tomcat-application" unless="exclude.jboss" depends="common:init">
+	<target name="install:jboss:grid:configure" description="Configure tomcat-application" unless="exclude.jboss.grid" depends="common:init">
 		<jboss-configure-grid
 			grid.application.relative.dir="${grid.dir.dest.jboss}"
 			/>
