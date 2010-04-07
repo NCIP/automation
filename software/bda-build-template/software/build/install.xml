@@ -184,7 +184,16 @@ $HeadURL$
 			<else>
 				<!-- else ensure that all ports are set, since these will be removed from install-properties.template we will verify here.  They have to be removed so the validator works with or without the properties or we have to change the format of the file. -->
 				<echo message="Using custom JBoss port configurations"/>
-				<property name="jboss.server.binding.template.location" value="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings.xml"/>
+				<if>
+					<equals arg1="${jboss.major.version}" arg2="4"/>
+					<then>
+						<property name="jboss.server.binding.template.location" value="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings.xml"/>
+					</then>
+					<else>
+						<property name="jboss.server.binding.template.location" value="${bda-utils.dir}/resource/${jboss.binaries.relative.dir}/bindings-jboss-beans.xml"/>
+
+					</else>
+				</if>
 				<properties-exist
 					properties.list="jboss.server.jndi.port,jboss.server.port,jboss.cobraorb.port,jboss.hajndi.port,jboss.hajrmi.port,jboss.jmx-rmi.port,jboss.messaging.port,jboss.pooledha.port,jboss.server.bind.port,jboss.server.rmi.port,jboss.service.rmiobject.port,jboss.snmp.port,jboss.snmp-trapd.port,jboss.web.service.port,jboss.unifiedinvoker.port,jboss.hajndi.auto.port,jboss.ssl.port,jboss.jms2.netty.port,jboss.jms2.netty-ssl.port,jboss.transaction.recovery.port,jboss.transaction.status.port,jboss.transaction.processid.port"
 					/>
@@ -212,6 +221,15 @@ $HeadURL$
 		<dirname file="${jboss.grid.secure.cert.location}" property="jboss.grid.secure.dir"/>
 		<basename file="${jboss.grid.secure.key.location}" property="jboss.grid.secure.key.file"/>
 		<property name="jboss.socket.ports" value="${jboss.server.port},${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+		<if>
+			<isset property="exclude.jboss.grid"/>
+			<then>
+				<property name="jboss.grid.enable" value="false"/>
+			</then>
+			<else>
+				<property name="jboss.grid.enable" value="true"/>
+			</else>
+		</if>
 	</target>
 	<target name="common:tomcat:init" depends="common:init:pre" unless="exclude.tomcat">
 		<property name="tomcat.ssl.enable" value="false"/>
@@ -234,6 +252,15 @@ $HeadURL$
 		<dirname file="${tomcat.grid.secure.cert.location}" property="tomcat.grid.secure.dir"/>
 		<basename file="${tomcat.grid.secure.key.location}" property="tomcat.grid.secure.key.file"/>
 		<property name="tomcat.sock.ports" value="${tomcat.port.http},${tomcat.port.ajp},${tomcat.port.shutdown}"/>
+		<if>
+			<isset property="exclude.tomcat.grid"/>
+			<then>
+				<property name="tomcat.grid.enable" value="false"/>
+			</then>
+			<else>
+				<property name="tomcat.grid.enable" value="true"/>
+			</else>
+		</if>
 	</target>
 
 
@@ -557,6 +584,7 @@ $HeadURL$
 			<equals arg1="${jboss.major.version}" arg2="4"/>
 			<then>
 				<jboss-configure
+					jboss.grid.configure="${jboss.grid.enable}"
 					/>
 				<if>
 					<equals arg1="${jboss.cgmm.enable}" arg2="true"/>
@@ -1116,7 +1144,7 @@ $HeadURL$
 
 	<target name="install:tomcat:configure" description="Configure tomcat (change ports)" unless="exclude.tomcat" depends="common:init">
 		<tomcat-configure
-			tomcat.grid.configure="true"
+			tomcat.grid.configure="${tomcat.grid.enable}"
 			/>
 	</target>
 
