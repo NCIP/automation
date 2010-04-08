@@ -6402,15 +6402,15 @@ $HeadURL$
 			<var name="read.keystore.file.location" unset="true"/>
 			<xmltask preservetype="true" source="@{appserver.server-xml.file}">
 				<xmlcatalog refid="bda.xml.catalog"/>
-				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']/@port" property="read.ssl.port" attrValue="true"/>
-				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']/@keystoreFile" property="read.keystore.file.location" attrValue="true"/>
-				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']/@keystorePass" property="read.keystore.password" attrValue="true"/>
-				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@scheme='https']/@keyAlias" property="read.keystore.alias" attrValue="true"/>
+				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@secure='true']/@port" property="read.ssl.port" attrValue="true"/>
+				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@secure='true']/@keystoreFile" property="read.keystore.file.location" attrValue="true"/>
+				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@secure='true']/@keystorePass" property="read.keystore.password" attrValue="true"/>
+				<copy path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Connector[@secure='true']/@keyAlias" property="read.keystore.alias" attrValue="true"/>
 			</xmltask>
-			<echo level="debug" message="read.ssl.port = ${read.ssl.port}"/>
-			<echo level="debug" message="read.keystore.file.location = ${read.keystore.file.location}"/>
-			<echo level="debug" message="read.keystore.password = #####"/>
-			<echo level="debug" message="read.keystore.alias = ${read.keystore.alias}"/>
+			<echo message="read.ssl.port = ${read.ssl.port}"/>
+			<echo message="read.keystore.file.location = ${read.keystore.file.location}"/>
+			<echo message="read.keystore.password = #####"/>
+			<echo message="read.keystore.alias = ${read.keystore.alias}"/>
 			<echo level="debug" message="read.ssl.port = ${read.ssl.port}"/>
 
 			<var name="ssl.port.set" unset="true"/>
