@@ -1589,9 +1589,11 @@ $HeadURL$
 					/>
 			</then>
 		</if>
+		<!--
 		<grid-read-index-url
 			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
 			/>
+		-->
 		<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
 		<if>
 			<equals arg1="${jboss.major.version}" arg2="4"/>
