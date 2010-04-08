@@ -1589,42 +1589,47 @@ $HeadURL$
 					/>
 			</then>
 		</if>
-		<!--
-		<grid-read-index-url
-			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
-			/>
-		-->
-		<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
 		<if>
-			<equals arg1="${jboss.major.version}" arg2="4"/>
+			<not>
+				<isset property="exclude.jboss.grid"/>
+			</not>
 			<then>
-				<jboss-read-grid-secure
-					jboss.home="${read.jboss.home}"
-					copied.keystore.dir="${jboss.grid.secure.dir}"
+				<grid-read-index-url
+					grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
+					/>
+				<var name="jboss.grid.secure.dir" value="${working.dir}/keys/jboss"/>
+				<if>
+					<equals arg1="${jboss.major.version}" arg2="4"/>
+					<then>
+						<jboss-read-grid-secure
+							jboss.home="${read.jboss.home}"
+							copied.keystore.dir="${jboss.grid.secure.dir}"
+							/>
+					</then>
+				</if>
+				<if>
+					<equals arg1="${jboss.major.version}" arg2="5"/>
+					<then>
+						<jboss-read-grid-secure
+							jboss.home="${read.jboss.home}"
+							jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
+							copied.keystore.dir="${jboss.grid.secure.dir}"
+							/>
+					</then>
+				</if>
+				<!-- will have to add code to install:post:jboss to copy this back if exists -->
+				<!-- no longer needed
+				<property name="copied.jboss.service-metadata.dir" value="${working.dir}/jboss-grid"/>
+				<grid-copy-service-metadata
+					copied.service-metadata.dir="${copied.service-metadata.dir}"
+					/>
+				-->
+				<grid-read-poc
+					grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
+					grid.service.name="Sample"
 					/>
 			</then>
 		</if>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="5"/>
-			<then>
-				<jboss-read-grid-secure
-					jboss.home="${read.jboss.home}"
-					jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
-					copied.keystore.dir="${jboss.grid.secure.dir}"
-					/>
-			</then>
-		</if>
-		<!-- will have to add code to install:post:jboss to copy this back if exists -->
-		<!-- no longer needed
-		<property name="copied.jboss.service-metadata.dir" value="${working.dir}/jboss-grid"/>
-		<grid-copy-service-metadata
-			copied.service-metadata.dir="${copied.service-metadata.dir}"
-			/>
-		-->
-		<grid-read-poc
-			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
-			grid.service.name="Sample"
-			/>
 		<read-property-from-properties-service
 			jboss.home="${read.jboss.home}"
 			property.name="property1"
@@ -1668,27 +1673,32 @@ $HeadURL$
 		<tomcat-read-external-hostname
 			tomcat.home="${read.tomcat.home}"
 			/>
-		<grid-read-index-url
-			grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
-			/>
-		<var name="tomcat.grid.secure.dir" value="${working.dir}/keys/tomcat"/>
-		<tomcat-read-grid-secure
-			tomcat.home="${read.tomcat.home}"
-			copied.keystore.dir="${tomcat.grid.secure.dir}"
-			/>
-		<!--
-		<property name="copied.tomcat.service-metadata.dir" value="${working.dir}/tomcat-grid"/>
-		<grid-copy-service-metadata
-			grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
-			copied.service-metadata.dir="${copied.service-metadata.dir1}"
-			/>
-		-->
-		<grid-read-poc
-			grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
-			grid.service.name="Sample"
-			/>
-
-
+		<if>
+			<not>
+				<isset property="exclude.tomcat.grid"/>
+			</not>
+			<then>
+				<grid-read-index-url
+					grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
+					/>
+				<var name="tomcat.grid.secure.dir" value="${working.dir}/keys/tomcat"/>
+				<tomcat-read-grid-secure
+					tomcat.home="${read.tomcat.home}"
+					copied.keystore.dir="${tomcat.grid.secure.dir}"
+					/>
+				<!--
+				<property name="copied.tomcat.service-metadata.dir" value="${working.dir}/tomcat-grid"/>
+				<grid-copy-service-metadata
+					grid.wsrf.dir="${tomcat.home}/webapps/wsrf"
+					copied.service-metadata.dir="${copied.service-metadata.dir1}"
+					/>
+				-->
+				<grid-read-poc
+					grid.wsrf.dir="${read.tomcat.home}/webapps/wsrf"
+					grid.service.name="Sample"
+					/>
+			</then>
+		</if>
 		<!-- Fail if any read properties are not set -->
 		<echo message="All properties after readers"/>
 		<tomcat-read-dbconfig
