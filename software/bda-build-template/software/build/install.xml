@@ -598,6 +598,12 @@ $HeadURL$
 		<if>
 			<equals arg1="${jboss.major.version}" arg2="5"/>
 			<then>
+				<!-- clean up ssl config from systems provided jboss -->
+				<xmltask preservetype="true" source="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
+					dest="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml">
+					<xmlcatalog refid="bda.xml.catalog"/>           
+					<remove path="/Server/Service[@name='jboss.web']/Connector[@keystoreFile='${jboss.server.home.dir}/conf/keystore/server.keystore']" />
+				</xmltask>
 				<jboss-configure
 					jboss.grid.configure="false"
 					jboss.server.bindingfile.location="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"
