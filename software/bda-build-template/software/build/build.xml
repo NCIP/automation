@@ -413,8 +413,8 @@ $HeadURL$
 		dist:tools:retrieve:cagrid,
 		dist:tools:retrieve:cagrid-console,
 		dist:tools:retrieve:cagrid-target,
-		dist:tools:retrieve:cgmm,
-		dist:tools:retrieve:sync-gts
+		dist:tools:retrieve:grid:cgmm,
+		dist:tools:retrieve:grid:sync-gts
 		" >
 	</target>
 
@@ -499,7 +499,7 @@ $HeadURL$
 		</if>
 	</target>
 
-	<target name="dist:tools:retrieve:sync-gts"  description="Downloads JBOSS bindings filefrom binary repository and verifies checksum" depends="dist:tools:retrieve:cagrid-target">
+	<target name="dist:tools:retrieve:grid:sync-gts"  description="Downloads JBOSS bindings filefrom binary repository and verifies checksum" depends="dist:tools:retrieve:cagrid-target">
 		<if>
 			<not>
 				<available file="${download.dir}/${sync-gts.binaries.file}"/>
@@ -537,7 +537,7 @@ $HeadURL$
 			<fileset dir="${cagrid.target.co.dir}"/>
 		</copy>
 	</target>
-	<target name="dist:tools:retrieve:cgmm" if="jboss.cgmm.enable">
+	<target name="dist:tools:retrieve:grid:cgmm" if="jboss.cgmm.enable">
 		<ivy-retrieve-cgmm
 			/>
 		<copy todir="${dist.exploded.dir}/cgmm-libs">
