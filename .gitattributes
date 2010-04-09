@@ -2845,6 +2845,16 @@ software/bda-build-template/software/build/install.properties -text
 software/bda-build-template/software/build/install.xml -text
 software/bda-build-template/software/build/project.properties -text
 software/bda-build-template/software/build/properties.template -text
+software/bda-build-template/software/build/test/bkp-test.sh -text
+software/bda-build-template/software/build/test/install-40-dac.properties -text
+software/bda-build-template/software/build/test/install-40-nondac.properties -text
+software/bda-build-template/software/build/test/install-51-dac.properties -text
+software/bda-build-template/software/build/test/install-51-nondac.properties -text
+software/bda-build-template/software/build/test/project-40-dac.properties -text
+software/bda-build-template/software/build/test/project-40-nondac.properties -text
+software/bda-build-template/software/build/test/project-51-dac.properties -text
+software/bda-build-template/software/build/test/project-51-nondac.properties -text
+software/bda-build-template/software/build/test/test.sh -text
 software/bda-build-template/software/build/upgrade.properties -text
 software/bda-build-template/software/common/bda-download/bda-ivy-2.0.0-build.xml -text
 software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
