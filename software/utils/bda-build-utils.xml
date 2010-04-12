@@ -359,10 +359,9 @@ $HeadURL$
 							<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/stop_jboss" osfamily="unix"/>
 						</then>
 						<else>
-							<echo message="Shutting down jboss with shutdown.jar with user and password"/>
-
+							<echo message="Shutting down jboss with no user/password."/>
 							<java classname="org.jboss.Shutdown" fork="true" spawn="false">
-								<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
+								<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
 								<classpath>
 									<pathelement location="@{jboss.home}/bin/shutdown.jar" />
 								</classpath>
@@ -379,9 +378,9 @@ $HeadURL$
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
-					<echo message="Shutting down jboss with no user/password."/>
+					<echo message="Shutting down jboss with shutdown.jar with user and password"/>
 					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
-						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
+						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
 						<classpath>
 							<pathelement location="@{jboss.home}/bin/shutdown.jar" />
 						</classpath>
