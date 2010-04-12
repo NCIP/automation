@@ -285,18 +285,17 @@
 
 	<target name="build:remote-upgrade" depends="init">
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
+		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="application.base.path"/>
+		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="jboss.binaries.relative.dir"/>
+
+		<delete file="${application.base.path}/${jboss.binaries.relative.dir}/server/default/bin/default.pid" failonerror="false" />
 
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="false">
 			<arg value="${single-command.package.upgrader.target}" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${master.build.location}" failonerror="false">
 			<arg value="${single-command.package.upgrader.target}" />
-		</exec>
-
-		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="application.base.path"/>
-		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="jboss.binaries.relative.dir"/>
-
-		<delete file="${application.base.path}/${jboss.binaries.relative.dir}/server/default/bin/default.pid" failonerror="false" />			
+		</exec>			
 
 		<override-properties-prep
 			override.properties="${override.properties}"
