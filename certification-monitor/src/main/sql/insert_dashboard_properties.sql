@@ -124,8 +124,8 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.exploded.dir.location','${cagwas.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/cagwas/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.url','');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.jobname','');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.url','http://cbvapp-c1004.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.ci-server.jobname','cagwas-ci');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.single-command.distribution.target','dist');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('cagwas.install.init.target','common:init');
