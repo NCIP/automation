@@ -200,7 +200,7 @@ $HeadURL$
 			</else>
 		</if>
 	</target>
-	<target name="common:jboss:init" depends="common:init:pre" unless="exclude.jboss">
+	<target name="common:jboss:init" depends="common:init:pre,common:jboss:grid:init" unless="exclude.jboss">
 		<property name="jboss.ssl.enable" value="false"/>
 		<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
 		<jboss-version
@@ -221,6 +221,8 @@ $HeadURL$
 		<dirname file="${jboss.grid.secure.cert.location}" property="jboss.grid.secure.dir"/>
 		<basename file="${jboss.grid.secure.key.location}" property="jboss.grid.secure.key.file"/>
 		<property name="jboss.socket.ports" value="${jboss.server.port},${jboss.server.rmi.port},${jboss.server.jndi.port},${jboss.service.rmiobject.port},${jboss.jms.port},${jboss.web.service.port}"/>
+	</target>
+	<target name="common:jboss:grid:init" depends="common:init:pre" unless="exclude.jboss">
 		<if>
 			<isset property="exclude.jboss.grid"/>
 			<then>
@@ -231,7 +233,7 @@ $HeadURL$
 			</else>
 		</if>
 	</target>
-	<target name="common:tomcat:init" depends="common:init:pre" unless="exclude.tomcat">
+	<target name="common:tomcat:init" depends="common:init:pre,common:tomcat:grid:init" unless="exclude.tomcat">
 		<property name="tomcat.ssl.enable" value="false"/>
 		<property name="tomcat.home" value="${application.base.path}/${tomcat.relative.path}"/>
 		<tomcat-version
@@ -252,6 +254,8 @@ $HeadURL$
 		<dirname file="${tomcat.grid.secure.cert.location}" property="tomcat.grid.secure.dir"/>
 		<basename file="${tomcat.grid.secure.key.location}" property="tomcat.grid.secure.key.file"/>
 		<property name="tomcat.sock.ports" value="${tomcat.port.http},${tomcat.port.ajp},${tomcat.port.shutdown}"/>
+	</target>
+	<target name="common:tomcat:grid:init" depends="common:init:pre" unless="exclude.tomcat">
 		<if>
 			<isset property="exclude.tomcat.grid"/>
 			<then>
