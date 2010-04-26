@@ -842,7 +842,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.m
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.exploded.dir.location','${ncit.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/ncit/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.url','http://ncias-d171-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.url','http://ncias-c171-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.ci-server.jobname','ncitbrowser-nightly');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('ncit.single-command.distribution.target','dist');
@@ -868,7 +868,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('report
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.exploded.dir.location','${reportwriter.svn.local.checkout}/software/target/dist/exploded');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.svn.private.url','http://gforge.nci.nih.gov/svnroot/scm-private/trunk/projects/reportwriter/properties');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.local.private.checkout','working/scm_private');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.url','http://ncias-d171-v.nci.nih.gov:48080');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.url','http://ncias-c171-v.nci.nih.gov:48080');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.ci-server.jobname','reportwriter');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.deployment.target','install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('reportwriter.single-command.distribution.target','dist');
