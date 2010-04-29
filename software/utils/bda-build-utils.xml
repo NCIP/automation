@@ -4156,7 +4156,10 @@ $HeadURL$
 			<available file="@{jbosscp.binaries.file}" property="jbosscp.exists"/>
 			<if>
 				<and>
-					<isset property="jboss.is.405"/>
+					<or>
+						<isset property="jboss.is.405"/>
+						<isset property="jboss.is.jar"/>
+					</or>
 					<isset property="jbosscp.exists"/>
 				</and>
 				<then>
