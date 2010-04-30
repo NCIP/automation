@@ -12,6 +12,7 @@ cp test/install-40-nondac.properties install.properties
 cp test/install-40-nondac.properties upgrade.properties
 cp test/project-40-nondac.properties project.properties
 
+perl -i -pe 's/common:init,upgrade-dac/common:init,upgrade-ncm/' install.xml
 # install
 ps -ef |grep java |grep -v grep |awk '{print "kill -9 "$2}' |sh
 banner "i40nd"
@@ -52,6 +53,29 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+# Copy in test properties files
+cp test/install-40ejb-dac.properties install.properties
+cp test/install-40ejb-dac.properties upgrade.properties
+cp test/project-40ejb-dac.properties project.properties
+
+perl -i -pe 's/common:init,upgrade-ncm/common:init,upgrade-dac/' install.xml
+# install
+ps -ef |grep java |grep -v grep |awk '{print "kill -9 "$2}' |sh
+banner "i40ed"
+ant -Denable.install.debug=true deploy:local:install
+if [ $? -ne 0 ]; then
+	mail -s "Test failed install-40e-dac" steven.saksa@stelligent.com < /dev/null
+	exit 1
+fi
+# upgrade
+ps -ef |grep java |grep -v grep |awk '{print "kill -9 "$2}' |sh
+banner "u40ed"
+ant -Denable.install.debug=true deploy:local:upgrade
+if [ $? -ne 0 ]; then
+	mail -s "Test failed upgrade-40e-dac" steven.saksa@stelligent.com < /dev/null
+	exit 1
+fi
+
 # set java home
 export JAVA_HOME=/opt/jdk1.6.0_14-64bit
 export PATH=$JAVA_HOME/bin:$PATH
@@ -60,6 +84,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 cp test/install-51-nondac.properties install.properties
 cp test/install-51-nondac.properties upgrade.properties
 cp test/project-51-nondac.properties project.properties
+perl -i -pe 's/common:init,upgrade-dac/common:init,upgrade-ncm/' install.xml
 
 svn revert install.xml
 # install
