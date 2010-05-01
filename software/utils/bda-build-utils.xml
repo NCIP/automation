@@ -4152,6 +4152,18 @@ $HeadURL$
 					</java>
 				</then>
 			</if>
+			<!-- make sure default server is renamed if applicable -->
+			<if>
+				<not>
+					<equals arg1="@{jboss.server.name}" arg2="default"/>
+				</not>
+				<then>
+					<move todir="@{jboss.home}/server/@{jboss.server.name}">
+						<fileset dir="@{jboss.home}/server/default"/>
+					</move>
+				</then>
+			</if>
+
 
 			<available file="@{jbosscp.binaries.file}" property="jbosscp.exists"/>
 			<if>
@@ -4166,24 +4178,12 @@ $HeadURL$
 					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
 					<unzip dest="@{jboss.home}" src="@{jbosscp.binaries.file}" />
 					<!-- Copy of patched configuration files -->
-					<copy file="@{jboss.home}/config-patches/jboss-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
-					<copy file="@{jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-invoker-service.xml"/>
-					<copy file="@{jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
-					<copy file="@{jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
-					<copy file="@{jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
-					<copy file="@{jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/>
-				</then>
-			</if>
-
-			<!-- make sure default server is renamed if applicable -->
-			<if>
-				<not>
-					<equals arg1="@{jboss.server.name}" arg2="default"/>
-				</not>
-				<then>
-					<move todir="@{jboss.home}/server/@{jboss.server.name}">
-						<fileset dir="@{jboss.home}/server/default"/>
-					</move>
+					<copy file="@{jboss.home}/config-patches/jboss-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-invoker-service.xml" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp" overwrite="true"/>
 				</then>
 			</if>
 
@@ -5507,7 +5507,7 @@ $HeadURL$
 								jboss.transaction.status.port="@{jboss.transaction.status.port}"
 								jboss.transaction.processid.port="@{jboss.transaction.processid.port}"
 								jboss.http-connector.remove="@{jboss.http-connector.remove}"
-								grid.secure.port="@{grid.secure.port}"
+								grid.secure.port="@{jboss.grid.secure.port}"
 								/>
 						</then>
 						<else>
