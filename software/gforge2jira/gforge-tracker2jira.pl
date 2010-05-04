@@ -13,12 +13,17 @@ use Data::Dumper;
 use DBI;
 use Switch;
 use Cwd 'abs_path';
+use File::Path qw(make_path remove_tree);
+#use utf8;
+use MIME::Base64;
+use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 
 
 my $requestGroup, $dbServer, $dbPort, $dbUser,$dbPass="";
 my $groupName="";
 my %userHash;
 my %artifactHash;
+my %artifactQueueHash;
 my %elementIDHash;
 my @artifactIDList;
 my %queueFieldList;
@@ -48,6 +53,8 @@ print "Reading Custom Field Elements\n";
 &getCustomFieldsElements();
 print "Reading artifacts for ${groupName}\n";
 &getArtifacts;
+print "Reading artifact files for ${groupName}\n";
+&getArtifactFiles;
 print "Adding custom fields with null values\n";
 &getCustomFields();
 print "Adding custom field values\n";
@@ -149,6 +156,8 @@ sub getArtifacts()
 		$artifactHash{$trackerId}{"TrackerFollowup"}="##############\nGforge Tracker Followups\n##############\n\n";
 		$artifactHash{$trackerId}{"TrackerCustomFields"}="##############\nGforge Tracker Custom Fields\n##############\n\n";
 
+		# added for artifact_file ssaksa 20100504
+		$artifactQueueHash{$trackerId}=$trackerQue;
 		switch ($trackerQueue)
 		{
 			case /bug/i {$artifactHash{$trackerId}{"JiraIssueType"}="Bug"}
@@ -508,4 +517,71 @@ sub verifyOptions ()
 	$dbPort=$optdbPort;
 	$dbUser=$optdbUser;
 	$dbPass=$optdbPass;
+}
+sub getArtifactFiles ()
+{
+	my $project=$groupName;
+	$project=~s/\s+//g;
+
+	my $binFile;
+	make_path("target/$project");
+	open (AFL, ">target/$project/attachment_file_list.csv") || die "Could not write attachment_file_list.csv\n";
+	my $artifactFileQuery="select id, artifact_id, description, filename, filesize, filetype, adddate, submitted_by
+	from artifact_file af
+	order by  artifact_id,adddate";
+	print LOG "Using Query String - $artifactFileQuery\n";
+	print LOG "Processing Attachemnts\n";
+	print AFL "GforgeID, FileName, FileSize, FileSize, AddDate, AddedBy, Description\n";
+
+	my $sth = $dbh->prepare($artifactFileQuery) or die "Couldn't prepare statement: " . $dbh->errstr;
+	$sth->execute;
+	while( my ($afid, $artifactID, $afdescription, $affilename, $affilesize, $affiletype,$afadddate, $afuserid ) = $sth->fetchrow_array)
+	{
+		my $idmatch=0;
+		foreach my $aid (@artifactIDList)
+		{
+			$idmatch=1 if $aid == $artifactID;
+		}
+		if ($idmatch == 1)
+		{
+			$affilename=~s/\s+/_/g;
+			# write file metadata
+			my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)= gmtime($afadddate);
+			my $afdate=sprintf("%02d/%02d/%04d %02d:%02d:%02d",$mon+1,$mday,$year+1900,$hour,$min,$sec);
+			my $afuser=$userHash{$afuserid};
+			print AFL "$artifactID, $affilename, $affilesize, $affiletype, $afdate, $afuser, $afdescription\n";
+
+			my $queue=$artifactQueueHash{$artifactID};
+			$queue=~s/\s+//g;
+			print LOG "$queue, $artifactID, $affilename, $affilesize, $affiletype, $afdate, $afuser, $afdescription\n";
+	
+			# Now read binary file
+			my $binFileQuery="select bin_data from artifact_file where id=?";
+			my $sth = $dbh->prepare($binFileQuery) or die "Couldn't prepare statement: " . $dbh->errstr;
+			$sth->execute($afid);
+	
+			$binFile = $sth->fetchrow_array();
+			my $decodeBinFile=decode_base64($binFile);
+
+			#if ($affiletype eq "text/plain")
+			#{
+			#		my $utf8file=decode_base64($binFile);
+			#		my $decodeBinFile=utf8::decode($utf8file);
+			#	}
+			#	else
+			#	{
+			#		my $decodeBinFile=decode_base64($binFile);
+			#	}
+			
+			make_path("target/$project/$queue/$artifactID/");
+			open (AF, ">target/$project/$queue/$artifactID/$affilename") || die "Could not write $affilename\n";
+			print AF "$decodeBinFile";
+			close(AF);
+		}
+	}
+	close(AFL);
+	my $rc=qx(cd target;zip -rp ${project}.zip ${project});
+	print LOG "$rc\n";
+	remove_tree("target/$project");
+
 }
