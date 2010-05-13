@@ -3430,14 +3430,37 @@ $HeadURL$
 				match="ivy.instance"
 				replace="console-jboss"
 				/>
-			<ant inheritAll="false" inheritRefs="false"
-				antfile="build.xml"
-				target="@{cagrid-console.target}"
-				dir="@{cagrid-console.dir}"
-				>
-				<property name="jboss.dir" value="@{appserver.home}"/>
-				<property name="wsrf.webapp.dir" value="@{appserver.webapp.dir}/@{grid.application.relative.dir}"/>
-			</ant>
+			
+			<var name="classpath.colon.found" unset="true"/>
+			<propertyregex property="classpath.colon.found"
+				input="${java.classpath}"
+				regexp=":"
+				select="true"
+				/>
+			<if>
+				<equals arg1="${classpath.colon.found}" arg2="true"/>
+				<then>
+					<echo message="not in gui-installer, using ant to run cagrid-console build"/>
+
+					<ant inheritAll="false" inheritRefs="false"
+						antfile="build.xml"
+						target="@{cagrid-console.target}"
+						dir="@{cagrid-console.dir}"
+						>
+						<property name="jboss.dir" value="@{appserver.home}"/>
+						<property name="wsrf.webapp.dir" value="@{appserver.webapp.dir}/@{grid.application.relative.dir}"/>
+					</ant>
+				</then>
+				<else>
+					<echo message="in gui-installer, using exec to run cagrid-console build"/>
+					<exec osfamily="unix" executable="ant" dir="@{cagrid-console.dir}">
+						<arg line="-Djboss.dir=@{appserver.home} -Dwsrf.webapp.dir=@{appserver.webapp.dir}/@{grid.application.relative.dir} @{cagrid-console.target}"/>
+					</exec>
+					<exec osfamily="windows" executable="ant.bat" dir="@{cagrid-console.dir}">
+						<arg line="-Djboss.dir=@{appserver.home} -Dwsrf.webapp.dir=@{appserver.webapp.dir}/@{grid.application.relative.dir} @{cagrid-console.target}"/>
+					</exec>
+				</else>
+			</if>
 			<delete>
 				<fileset dir="@{appserver.webapp.dir}/@{grid.application.relative.dir}/WEB-INF/lib">
 					<include name="commons-logging*.jar"/>
