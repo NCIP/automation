@@ -3983,6 +3983,7 @@ software/utils/build.properties -text
 software/utils/build.xml -text
 software/utils/ivy.xml -text
 software/utils/ivy.xml.oldrepo -text
+software/utils/legacy-ivy.xml -text
 software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
