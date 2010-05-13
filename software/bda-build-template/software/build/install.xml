@@ -301,6 +301,8 @@ $HeadURL$
 
 		<property name="properties.template.file" value="${basedir}/properties.template" />
 		<property file="${basedir}/cagrid-target/${grid.target}/service_urls.properties"/>
+		<set-grid-auth-service
+			/>
 		<property name="grid.index.url" value="${cagrid.master.index.service.url}"/>
 		<filterset id="embedded.filterset">
 			<filter token="application.base.path" value="${application.base.path}"/>
@@ -322,6 +324,8 @@ $HeadURL$
 			<filter token="project.name" value="${project.name}"/>
 			<filter token="grid.dorian.name" value="${grid.target}-Dorian"/>
 			<filter token="grid.dorian.url" value="${cagrid.master.dorian.service.url}"/>
+			<filter token="grid.auth.service.url" value="${grid.auth.service.url}"/>
+			<filter token="grid.auth.service.name" value="${grid.auth.service.name}"/>
 			<filter token="" value=""/>
 		</filterset>
 
@@ -1241,6 +1245,7 @@ $HeadURL$
 			grid.external.secure.port="${grid.external.secure.port}"
 			/>
 		-->
+		<mkdir dir="${basedir}/lib"/>
 		<tomcat-configure-grid
 			grid.application.relative.dir="${grid.dir.dest.tomcat}"
 			/>

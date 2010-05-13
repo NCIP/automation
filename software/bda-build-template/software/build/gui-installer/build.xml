@@ -18,6 +18,11 @@ $HeadURL$
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />
 			<exclude name="**/sync-gts/**/*"/>
+			<exclude name="**/caGrid-console/**/*"/>
+		</replace>
+		<!-- fix for cagrid-console/build.xml getting wrong path-->
+		<replace dir="${install.path}/${application_installer}/caGrid-console/" token="basedir}" value="install.path}/${application_installer}/caGrid-console">
+			<include name="**/*.xml" />
 		</replace>
 		<replace file="${install.path}/${application_installer}/build.xml" token="project.properties" value="${install.path}/${application_installer}/project.properties"/>
 		<replace file="${install.path}/${application_installer}/build.xml" token="install-properties.template" value="${install.path}/${application_installer}/install-properties.template"/>
