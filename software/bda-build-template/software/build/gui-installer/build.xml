@@ -6,7 +6,7 @@ $HeadURL$
 	<!-- Generic properties -->
 	<property name="application_installer" value="bda-blueprints_installer" />
 	<property name="application_installer_zip" value="bda-blueprints_install_0.1.0.zip" />
-	<property name="application_upgrader_zip" value="bda-blueprints_ugprade_0.1.0.zip" />
+	<property name="application_upgrader_zip" value="bda-blueprints_upgrade_0.1.0.zip" />
 	<!-- TARGETS -->
 	<target name="install" >
 		<echo message="${install.path}"/>

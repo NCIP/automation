@@ -88,7 +88,7 @@ $HeadURL$
 					plastic3D: use the Plastic 3D look
 					plasticXP: use the Plastic XP look (default).
 				-->
-				
+
 				<guiprefs width="1024" height="768" resizable="yes">
 					<laf name="liquid">
 						<os family="unix" />
@@ -121,7 +121,7 @@ $HeadURL$
 					<variable name="jboss.binaries.relative.dir" value="@{jboss.binaries.relative.dir}"/>
 					<variable name="JDKPathPanel.minVersion" value="1.5.0"/>
 					<variable name="JDKPathPanel.maxVersion" value="1.6.99"/>
-					<variable name="JDKPathPanel.skipIfValid" value="yes"/> 
+					<variable name="JDKPathPanel.skipIfValid" value="yes"/>
 
 				</variables>
 
@@ -435,7 +435,7 @@ $HeadURL$
 				<jar src="@{bda-utils.dir}/xml-commons-resolver-1.2.jar" stage="both"/>
 				<jar src="@{bda-utils.dir}/mysql-connector-java-5.0.8.jar" stage="both"/>
 				<jar src="@{bda-utils.dir}/ojdbc14-10.2.0.3.0.jar" stage="both"/>
-				<jar src="@{bda-utils.dir}/postgresql-8.3-603.jdbc3.jar" stage="both"/>
+				<jar src="@{bda-utils.dir}/postgresql-8.4-701.jdbc3.jar" stage="both"/>
 				<!-- added to address issues with missing libraries -->
 				<jar src="@{ant.lib.dir}/ant-antlr.jar" stage="both" />
 				<jar src="@{ant.lib.dir}/ant-apache-bcel.jar" stage="both" />
@@ -480,12 +480,12 @@ $HeadURL$
 
 		<copy todir="${pre-install.dir}/bda-utils" overwrite="true">
 			<fileset dir="${bda-utils.dir}">
-				<include name="**/*" />                 
-			</fileset>                      
-		</copy>                 
+				<include name="**/*" />
+			</fileset>
+		</copy>
 		<jar update="true" destfile="${dist.location}/${gui-installer.dist.base.name}-${build.time}.jar"
-			basedir="${target.location}/working"        
-			includes="pre-install/**/*"     
-			/>                              
+			basedir="${target.location}/working"
+			includes="pre-install/**/*"
+			/>
 	</target>
 </project>
