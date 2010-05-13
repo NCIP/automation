@@ -10127,27 +10127,35 @@ $HeadURL$
 		-->
 		<sequential>
 			<mkdir dir="@{cgmm.conf.dest.dir}"/>
-			<copy todir="@{jboss.tomcat.dir}">
+			<copy todir="@{jboss.tomcat.dir}" overwrite="true">
 				<fileset dir="@{cgmm.jars.base.dir}/jbossweb-tomcat55-sar-jars">
 					<include name="*.jar"/>
 					<exclude name="xerces*.jar"/>
 					<exclude name="xalan*.jar"/>
 				</fileset>
 			</copy>
-			<copy file="@{cgmm.jars.base.dir}/cgmm/cgmmapi-@{cgmm.version}.jar" todir="@{jboss.tomcat.dir}"/>
-			<copy file="@{jboss.tomcat.dir}/catalina.jar" tofile="@{jboss.tomcat.dir}/catalina.jar.orig"/>
+			<copy file="@{cgmm.jars.base.dir}/cgmm/cgmmapi-@{cgmm.version}.jar" todir="@{jboss.tomcat.dir}" overwrite="true"/>
+			<copy file="@{jboss.tomcat.dir}/catalina.jar" tofile="@{jboss.tomcat.dir}/catalina.jar.orig" overwrite="true"/>
 			<move file="@{cgmm.jars.base.dir}/jbossweb-tomcat55-sar-jars/catalina-5.0.jar" tofile="@{jboss.tomcat.dir}/catalina.jar"/>
-			<copy todir="@{jboss.lib.dir}">
+			<copy todir="@{jboss.lib.dir}" overwrite="true">
 				<fileset dir="@{cgmm.jars.base.dir}/jboss-default-lib">
 					<include name="*.jar"/>
 				</fileset>
 			</copy>
-			<copy todir="@{cgmm.conf.dest.dir}">
+			<copy todir="@{cgmm.conf.dest.dir}" overwrite="true">
 				<fileset dir="@{cgmm.conf.src.dir}">
 					<include name="*"/>
 				</fileset>
 			</copy>
-			<copy file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml" todir="@{cgmm.conf.dest.dir}"/>
+			<if>
+				<equals arg1="@{grid.target}" arg2="training-1.3"/>
+				<then>
+					<echo message="Training grid selected using alternate cgmm-properties.xml."/>
+					<copy file="@{cgmm.conf.dest.dir}/cgmm-properties.xml" tofile="@{cgmm.conf.dest.dir}/cgmm-properties.xml-orig" overwrite="true"/>
+					<copy file="@{cgmm.conf.dest.dir}/alt-cgmm-properties.xml" tofile="@{cgmm.conf.dest.dir}/cgmm-properties.xml" overwrite="true"/>
+				</then>
+			</if>
+			<copy file="@{cagrid-target.dir}/@{grid.target}/sync-description.xml" todir="@{cgmm.conf.dest.dir}" overwrite="true"/>
 			<var name="property.block" value="gov.nih.nci.security.cgmm.syncgts.file=@{cgmm.conf.dest.dir}/sync-description.xml${line.separator}
 gov.nih.nci.security.cgmm.properties.file=@{cgmm.conf.dest.dir}/cgmm-properties.xml${line.separator}
 gov.nih.nci.security.configFile=@{cgmm.conf.dest.dir}/ApplicationSecurityConfig.xml${line.separator}
@@ -10168,6 +10176,33 @@ gov.nih.nci.security.cgmm.login.config.file=@{cgmm.conf.dest.dir}/cgmm.login.con
 			</xmltask>
 		</sequential>
 	</macrodef>
+	<macrodef name="set-grid-auth-service">
+		<attribute name="grid.target" default="${grid.target}"/>
+		<attribute name="grid.auth.service.url.property.name" default="grid.auth.service.url"/>
+		<attribute name="grid.auth.service.name.property.name" default="grid.auth.service.name"/>
+		<sequential>
+			<var name="{grid.auth.service.url.property.name}" unset="true"/>
+			<switch value="@{grid.target}">
+				<case value="nci_prod-1.3">
+					<property name="@{grid.auth.service.url.property.name}" value="https://cagrid-auth.nci.nih.gov:8443/wsrf/services/cagrid/AuthenticationService"/>
+					<property name="@{grid.auth.service.name.property.name}" value="nci_prod-1.3-Auth-Svc"/>
+				</case>
+				<case value="nci_stage-1.3">
+					<property name="@{grid.auth.service.url.property.name}" value="https://cagrid-auth-stage.nci.nih.gov:8443/wsrf/services/cagrid/AuthenticationServic"/>
+					<property name="@{grid.auth.service.name.property.name}" value="nci_stage-1.3-Auth-Svc"/>
+				</case>
+				<case value="nci_qa-1.3">
+					<property name="@{grid.auth.service.url.property.name}" value="https://cagrid-auth-qa.nci.nih.gov:8443/wsrf/services/cagrid/AuthenticationService"/>
+					<property name="@{grid.auth.service.name.property.name}" value="nci_qa-1.3-Auth-Svc"/>
+				</case>
+				<case value="training-1.3">
+					<property name="@{grid.auth.service.url.property.name}" value=""/>
+					<property name="@{grid.auth.service.name.property.name}" value=""/>
+				</case>
+				<default>
+					<fail message="grid.target=@{grid.target} is an invalid option, please use a valid name (nci_prod-1.3 nci_stage-1.3 nci_qa-1.3 training-1.3)"/>
+				</default>
+			</switch>
+		</sequential>
+	</macrodef>
 </project>
-<!--
--->
