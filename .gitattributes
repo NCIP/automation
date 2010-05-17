@@ -3458,6 +3458,7 @@ software/bda-installer/src-custom-4.3/com/izforge/izpack/util/LogFileTailer.java
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/LogFileTailerListener.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/MySQLConnection.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/OracleConnection.java -text
+software/bda-installer/src-custom-4.3/com/izforge/izpack/util/PostgresConnection.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/TailerFrame.java -text
 software/bda-installer/src-custom-4.3/com/izforge/izpack/util/URLCheckValidator.java -text
 software/bda-installer/src-custom-4.3/resources/CustomPanels.xml -text
