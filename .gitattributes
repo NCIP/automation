@@ -2894,6 +2894,7 @@ software/bda-build-template/software/common/pmd/pmd-report.xslt -text
 software/bda-build-template/software/common/pmd/pmd-ruleset-basic.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/bda-blueprints-ds.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/ApplicationSecurityConfig.xml -text
+software/bda-build-template/software/common/resources/jboss-conf/cgmm/alt-cgmm-properties.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/cgmm-properties.xml -text
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/cgmm.login.config -text
 software/bda-build-template/software/common/resources/jboss-conf/cgmm/cgmmweb.hibernate.cfg.xml -text
