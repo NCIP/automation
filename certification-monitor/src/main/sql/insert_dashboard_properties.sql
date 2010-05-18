@@ -312,7 +312,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('canano
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.database.type','postgresql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.username','narram');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.password','Temp123$');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.project.url','http://gforge.nci.nih.gov/svnroot/coppa/trunk/');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.project.url','https://ncisvn.nci.nih.gov/svn/coppa/trunk/');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.svn.local.checkout','working/bda_certification');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.master.build.location','${pa.svn.local.checkout}/code/build-pa');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('pa.master.install.location','working/installer');
