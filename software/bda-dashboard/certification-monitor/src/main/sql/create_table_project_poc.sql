@@ -5,5 +5,7 @@ create table project_poc (
 	DEV_POC_EMAIL varchar (200),
 	GOV_POC varchar (200),
 	GOV_POC_EMAIL varchar (200),
-	BDA_POC_EMAIL varchar (200)
+	COTR varchar (200),
+	COTR_EMAIL varchar (200),
+	BDA_POC_EMAIL varchar (200)	
 );
