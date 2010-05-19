@@ -1,0 +1,3 @@
+software/blueprints-webapp/target
+software/build/target[!!-~]local.properties
+software/target
