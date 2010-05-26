@@ -27,6 +27,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 
 	<property name="working.dir" value="${basedir}/working"/>
 	<property name="lib.dir" value="${working.dir}/lib" />
+	<property name="target.dir" location="${basedir}/target"/>
+	<property name="temp.dir" location="${target.dir}/temp"/>
 
 
 	<!-- retrive ivy files then retrieve bda files and librarires -->
@@ -328,6 +330,85 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			build.file.location="build.xml" 
 			output.file.dir="." 
 			output.file.name="relase-manager-build.xml" />
+	</target>
+	<target name="patch:dev" 
+		depends="
+		patch:init,
+		patch:check-tag,
+		patch:get-next-version
+		">
+	</target>
+
+	<target name="patch:init">
+		<var name="patching.version.has-value" unset="true"/>
+		<propertyregex property="patching.version.has-value"
+			input="${patching.version}"
+			regexp="\S+"
+			select="true"
+			/>
+		<var name="patching.version.unexpanded" unset="true"/>
+		<propertyregex property="patching.version.unexpanded"
+			input="${patching.version}"
+			regexp="\$\{.*\}"
+			select="true"
+			/>
+		<if>
+			<or>
+				<isset property="patching.version.unexpanded"/>
+				<not>
+					<isset property="patching.version.has-value"/>
+				</not>
+			</or>
+			<then>
+				<fail message="Must set patching.version variable"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="patch:check-tag" depends="patch:init">
+		<if>
+			<not>
+				<http url="https://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version}"/>
+			</not>
+			<then>
+				<fail message="https://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version} does not exist"/>
+			</then>
+		</if>
+	</target>
+	<target name="patch:get-next-version" depends="patch:init">
+		<echo message="patching version is - ${patching.version}"/>
+		<groovy>
+			 List versionList=properties["patching.version"].split("\\.")
+			 String majorVersion=versionList[0]
+			 String minorVersion=versionList[1]
+			 String patchVersion=versionList[2].toInteger().plus(1).toString()
+			 properties["patched.version"]= majorVersion + "." + minorVersion + "." + patchVersion
+		</groovy>
+		<echo message="patched version is - ${patched.version}"/>
+	</target>
+	<target name="list:tags" depends="patch:init">
+		<osfamily property="os.family"/>
+		<if>
+			<equals arg1="${os.family}" arg2="unix"/>
+			<then>
+				<groovy>
+					 List versionList=properties["patching.version"].split("\\.")
+					 String majorVersion=versionList[0]
+					 String minorVersion=versionList[1]
+					 String baseVersion = majorVersion + "." + minorVersion 
+					 String cmd= "svn list https://gforge.nci.nih.gov/svnroot/automation/tags"
+					 println cmd
+					 process=cmd.execute()
+					 process.in.eachLine{line->if(line.contains(baseVersion)){println line}}
+				</groovy>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<echo message="sorry did not implement"/>
+			</then>
+		</if>
 	</target>
 
 </project>
