@@ -335,7 +335,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		depends="
 		patch:init,
 		patch:check-tag,
-		patch:get-next-version
+		patch:max-tag-version,
+		patch:get-next-version,
+		patch:create-branch,
+		patch:checkout-branch
 		">
 	</target>
 
@@ -456,5 +459,27 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			</then>
 		</if>
 	</target>
+	<target name="patch:create-branch">
+		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
+		<property name="svn.automation.previous.tag.url" value="${svn.automation.base.url}/tags/automation-${patching.version}"/>
+		<property name="svn.automation.new.branch.url" value="${svn.automation.base.url}/branches/automation-${patched.version}"/>
+		<echo message="svn.automation.previous.tag.url - ${svn.automation.previous.tag.url}"/>
+		<echo message="svn.automation.new.branch.url - ${svn.automation.new.branch.url}"/>
 
+		<!--
+		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+			<copy srcUrl="${svn.automation.previous.tag.url}" destURL="${svn.automation.new.branch.url}" message="Created by release manager patch:dev target"/>
+		</svn>
+		-->
+	</target>
+	<target name="patch:checkout-branch">
+		<property name="svn.automation.new.branch.dir" location="${target.dir}/automation-${patched.version}"/>
+		<mkdir dir="${svn.automation.new.branch.dir}"/>
+		<echo message="svn.automation.new.branch.dir - ${svn.automation.new.branch.dir}"/>
+		<!--
+		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+			<checkout srcUrl="${svn.automation.new.branch.url}" destURL="${svn.automation.new.branch.dir}"/>
+		</svn>
+		-->
+	</target>
 </project>
