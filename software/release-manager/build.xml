@@ -368,10 +368,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<target name="patch:check-tag" depends="patch:init">
 		<if>
 			<not>
-				<http url="https://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version}"/>
+				<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version}"/>
 			</not>
 			<then>
-				<fail message="https://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version} does not exist"/>
+				<fail message="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version} does not exist"/>
 			</then>
 		</if>
 	</target>
@@ -400,6 +400,52 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 					 println cmd
 					 process=cmd.execute()
 					 process.in.eachLine{line->if(line.contains(baseVersion)){println line}}
+				</groovy>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<echo message="sorry did not implement"/>
+			</then>
+		</if>
+	</target>
+	<target name="patch:max-tag-version" depends="patch:init">
+		<osfamily property="os.family"/>
+		<if>
+			<equals arg1="${os.family}" arg2="unix"/>
+			<then>
+				<groovy>
+					 List versionList=properties["patching.version"].split("\\.")
+					 String majorVersion=versionList[0]
+					 String minorVersion=versionList[1]
+					 Integer patchVersion=versionList[2].toInteger()
+					 String baseVersion = majorVersion + "." + minorVersion 
+					 String cmd= "svn list https://gforge.nci.nih.gov/svnroot/automation/tags"
+					 Integer maxVersion=0
+					 process=cmd.execute()
+					 process.in.eachLine{line->
+					 if(line.contains(baseVersion))
+					 {
+					 m = line =~ /(^.*)\.(\d+)\//
+					 if (m.matches())
+					 {
+					 junk = m.group(1)
+					 curPatchVersion=m.group(2).toInteger()
+					 if( curPatchVersion > maxVersion) {maxVersion=curPatchVersion}
+					 }
+					 }
+					 }
+					 if (maxVersion > patchVersion)
+					 {
+					 String latestVersion = majorVersion + "." + minorVersion + "." + maxVersion
+					 println "WARNING - There is a newer patch version ${latestVersion}"
+					 if(properties["patching.version"] != "true")
+					 {
+					 println "BUILD FAILED - To proceed with this version run the build with -Dpatch.force=true on your command line"
+					 System.exit(2)
+					 }
+					 }
 				</groovy>
 			</then>
 		</if>
