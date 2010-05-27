@@ -359,10 +359,9 @@ $HeadURL$
 							<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/stop_jboss" osfamily="unix"/>
 						</then>
 						<else>
-							<echo message="Shutting down jboss with shutdown.jar with user and password"/>
-
+							<echo message="Shutting down jboss with no user/password."/>
 							<java classname="org.jboss.Shutdown" fork="true" spawn="false">
-								<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
+								<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
 								<classpath>
 									<pathelement location="@{jboss.home}/bin/shutdown.jar" />
 								</classpath>
@@ -379,9 +378,9 @@ $HeadURL$
 			<if>
 				<socket server="@{jboss.server.hostname}" port="@{jboss.server.jndi.port}" />
 				<then>
-					<echo message="Shutting down jboss with no user/password."/>
+					<echo message="Shutting down jboss with shutdown.jar with user and password"/>
 					<java classname="org.jboss.Shutdown" fork="true" spawn="false">
-						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -S" />
+						<arg line="-s @{jboss.server.hostname}:@{jboss.server.jndi.port} -u @{jboss.web.user} -p @{jboss.web.password} -S" />
 						<classpath>
 							<pathelement location="@{jboss.home}/bin/shutdown.jar" />
 						</classpath>
@@ -4154,25 +4153,6 @@ $HeadURL$
 				</then>
 			</if>
 
-			<available file="@{jbosscp.binaries.file}" property="jbosscp.exists"/>
-			<if>
-				<and>
-					<isset property="jboss.is.405"/>
-					<isset property="jbosscp.exists"/>
-				</and>
-				<then>
-					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
-					<unzip dest="@{jboss.home}" src="@{jbosscp.binaries.file}" />
-					<!-- Copy of patched configuration files -->
-					<copy file="@{jboss.home}/config-patches/jboss-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
-					<copy file="@{jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-invoker-service.xml"/>
-					<copy file="@{jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
-					<copy file="@{jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
-					<copy file="@{jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
-					<copy file="@{jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/>
-				</then>
-			</if>
-
 			<!-- make sure default server is renamed if applicable -->
 			<if>
 				<not>
@@ -4184,6 +4164,28 @@ $HeadURL$
 					</move>
 				</then>
 			</if>
+			<available file="@{jbosscp.binaries.file}" property="jbosscp.exists"/>
+			<if>
+				<and>
+					<or>
+						<isset property="jboss.is.405"/>
+						<isset property="jboss.is.jar"/>
+					</or>
+					<isset property="jbosscp.exists"/>
+				</and>
+				<then>
+					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
+					<unzip dest="@{jboss.home}" src="@{jbosscp.binaries.file}" />
+					<!-- Copy of patched configuration files -->
+					<copy file="@{jboss.home}/config-patches/jboss-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-invoker-service.xml" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp" overwrite="true"/>
+					<copy file="@{jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp" overwrite="true"/>
+				</then>
+			</if>
+
 
 			<if>
 				<os family="unix"/>
@@ -5505,7 +5507,7 @@ $HeadURL$
 								jboss.transaction.status.port="@{jboss.transaction.status.port}"
 								jboss.transaction.processid.port="@{jboss.transaction.processid.port}"
 								jboss.http-connector.remove="@{jboss.http-connector.remove}"
-								grid.secure.port="@{grid.secure.port}"
+								grid.secure.port="@{jboss.grid.secure.port}"
 								/>
 						</then>
 						<else>
