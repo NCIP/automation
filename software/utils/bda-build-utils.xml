@@ -18,14 +18,14 @@ $HeadURL$
 	<property name="tomcat.version.min" value="5.0.0"/>
 	<property name="tomcat.version.max" value="5.5.999"/>
 	<!-- conditionals -->
-	<condition property="os.temp.dir" value="/tmp">
+	<condition property="os.temp.dir" value="/tmp/${project.name}">
 		<or>
 			<os family="unix" />
 			<os family="mac" />
 		</or>
 	</condition>
 
-	<condition property="os.temp.dir" value="c:/temp">
+	<condition property="os.temp.dir" value="c:/temp/${project.name}">
 		<os family="windows" />
 	</condition>
 
@@ -240,10 +240,12 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="onerror" default="abort" />
+		<attribute name="database.driver.file" default="${database.driver.file}"/>
+		<attribute name="database.driver" default="${database.driver}"/>
 		<sequential>
-			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+			<sql driver="@{database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
 				<classpath>
-					<pathelement location="${database.driver.file}" />
+					<pathelement location="@{database.driver.file}" />
 				</classpath>
 			</sql>
 		</sequential>
@@ -259,8 +261,9 @@ $HeadURL$
 		<attribute name="remoteSshUser" default="${ssh.server.username}" />
 		<attribute name="remoteSshKeyfile" default="${ssh.key.file}" />
 		<attribute name="remoteSshSleep" default="5" />
+		<attribute name="remoteSshPassPhrase" default="${ssh.key.passphrase}"/>
 		<sequential>
-			<sshexec port="@{remoteSshPort}" host="@{remoteSshHost}" username="@{remoteSshUser}" keyfile="@{remoteSshKeyfile}" trust="true" passphrase="" verbose="true" command="@{remoteSshCommand}" />
+			<sshexec port="@{remoteSshPort}" host="@{remoteSshHost}" username="@{remoteSshUser}" keyfile="@{remoteSshKeyfile}" trust="true" passphrase="@{remoteSshPassPhrase}" verbose="true" command="@{remoteSshCommand}" />
 			<sleep seconds="@{remoteSshSleep}" />
 			<echo message="Performed @{remoteSshCommand} command on @{remoteSshHost}:@{remoteSshPort} using SSH..." />
 		</sequential>
@@ -276,7 +279,7 @@ $HeadURL$
 		<attribute name="remoteScpFileToCopy" />
 		<attribute name="remoteScpToDir" />
 		<attribute name="remoteScpKeyFile" default="${ssh.key.file}" />
-		<attribute name="remoteScpPassphrase" default="" />
+		<attribute name="remoteScpPassphrase" default="${ssh.key.passphrase}" />
 		<attribute name="remoteScpTrust" default="true" />
 		<attribute name="remoteScpVerbose" default="true" />
 		<attribute name="remoteScpSleep" default="5"  />
@@ -410,13 +413,13 @@ $HeadURL$
 
 					<exec executable="sh" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
-						<env key="JBOSS_HOME" value=""/> 
+						<env key="JBOSS_HOME" value=""/>
 						<arg line="run.sh -c @{jboss.server.name}" />
 					</exec>
 
 					<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
-						<env key="JBOSS_HOME" value=""/> 
+						<env key="JBOSS_HOME" value=""/>
 						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat -c @{jboss.server.name}" />
 					</exec>
 					<sleep seconds="15" />
@@ -517,6 +520,9 @@ $HeadURL$
 		<attribute name="tomcat.ssl.fullyqualified.hostname" default="${tomcat.ssl.fullyqualified.hostname}"/>
 		<attribute name="jboss.binaries.relative.dir" default="${jboss.binaries.relative.dir}"/>
 		<attribute name="tomcat.binaries.relative.dir" default="${tomcat.binaries.relative.dir}"/>
+		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="database.re-create" default="${database.re-create}" />
+		<attribute name="database.drop-schema" default="${database.drop-schema}" />
 		<sequential>
 			<validate-environment
 				ant.check.version="@{ant.check.version}"
@@ -533,6 +539,9 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.version="@{database.version}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
+				database.drop-schema="@{database.drop-schema}"
+				database.re-create="@{database.re-create}"
 				/>
 			<validate-properties/>
 			<compare-properties
@@ -616,7 +625,7 @@ $HeadURL$
 		<attribute name="java.check.version.minor" default="1.5.0_10" />
 		<sequential>
 			<!-- Echo the properties for diagnostic purposes -->
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 			<!-- Validate Ant version is 1.7.x -->
 			<echo message="Validating Ant version..." />
 			<condition property="ant.version.success">
@@ -1095,7 +1104,7 @@ $HeadURL$
 		<sequential>
 
 			<!-- Echo the properties for diagnostic purposes -->
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
@@ -1336,6 +1345,7 @@ $HeadURL$
 	-->
 	<macrodef name="database-create">
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
 		<attribute name="database.system.password" default="${database.system.password}" />
@@ -1365,7 +1375,7 @@ $HeadURL$
 								onerror="continue"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 								<transaction>
 									REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'@{database.server}';
@@ -1380,7 +1390,7 @@ $HeadURL$
 								expandproperties="true"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 								<transaction>
 									DROP DATABASE IF EXISTS @{database.name};
@@ -1401,7 +1411,7 @@ $HeadURL$
 								autocommit="true"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 									drop database if exists @{database.name};
 									drop user if exists @{database.user};
@@ -1436,6 +1446,9 @@ $HeadURL$
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.type" default="${database.type}" />
+		<attribute name="database.re-create" default="${database.re-create}" />
+		<attribute name="database.drop-schema" default="${database.drop-schema}" />
 		<sequential>
 			<!-- Only validates connection for oracle -->
 			<if>
@@ -1452,7 +1465,7 @@ $HeadURL$
 					<switch value="${database.type}">
 						<case value="mysql">
 							<if>
-								<isset property="database.re-create"/>
+								<equals arg1="@{database.re-create}" arg2="true"/>
 								<then>
 									<dbconfig property="db.connection.success"
 										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
@@ -1473,6 +1486,27 @@ $HeadURL$
 								</else>
 							</if>
 						</case>
+						<case value="postgresql">
+							<if>
+								<equals arg1="@{database.re-create}" arg2="true"/>
+								<then>
+									<dbconfig property="db.connection.success"
+										driver="@{database.driver}" url="@{database.system.url}"  user="@{database.system.user}" password="@{database.system.password}">
+										<validate />
+									</dbconfig>
+									<antunit:assertPropertyEquals message="Database connection failed for @{database.url}. Verify that your database.user and database.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+									<echo message="Database Connection: PASSED" />
+								</then>
+								<else>
+									<dbconfig property="db.connection.success"
+										driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
+										<validate />
+									</dbconfig>
+									<antunit:assertPropertyEquals message="Database connection failed for @{database.url}. Verify that your database.user and database.password property values are valid in the *-install.properties file.  Your database version must be least @{database.version}" name="db.connection.success" value="true" />
+									<echo message="Database Connection: PASSED" />
+								</else>
+							</if>
+						</case>
 						<case value="oracle">
 							<dbconfig property="oracle.connection.success"
 								driver="@{database.driver}"
@@ -1484,20 +1518,6 @@ $HeadURL$
 							<antunit:assertPropertyEquals
 								message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
 								name="oracle.connection.success"
-							       	value="true" />
-							<echo message="Database Connection: PASSED" />
-						</case>
-						<case value="postgresql">
-							<dbconfig property="postgresql.connection.success"
-								driver="@{database.driver}"
-								url="@{database.url}"
-								user="@{database.user}"
-								password="@{database.password}">
-									<validate />
-									</dbconfig>
-							<antunit:assertPropertyEquals
-								message="Database connection failed for @{database.system.url}. Validate your database related properties in the *-install.properties file."
-								name="postgresql.connection.success"
 							       	value="true" />
 							<echo message="Database Connection: PASSED" />
 						</case>
@@ -1543,17 +1563,17 @@ $HeadURL$
 			<echo message="Starting Tomcat instance at @{tomcat.home}" />
 			<exec executable="sh" osfamily="unix" dir="@{tomcat.home}/bin" spawn="true">
 				<env key="NOPAUSE" value="true" />
-				<env key="CATALINA_BASE" value=""/> 
-				<env key="CATALINA_HOME" value=""/> 
-				<env key="CATALINA_TMPDIR" value=""/> 
+				<env key="CATALINA_BASE" value=""/>
+				<env key="CATALINA_HOME" value=""/>
+				<env key="CATALINA_TMPDIR" value=""/>
 				<arg line="startup.sh" />
 			</exec>
 			<echo message="executing ${bda-utils.dir}/resource/psexec.exe"/>
 			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{tomcat.home}/bin" spawn="true" >
 				<env key="NOPAUSE" value="true" />
-				<env key="CATALINA_BASE" value=""/> 
-				<env key="CATALINA_HOME" value=""/> 
-				<env key="CATALINA_TMPDIR" value=""/> 
+				<env key="CATALINA_BASE" value=""/>
+				<env key="CATALINA_HOME" value=""/>
+				<env key="CATALINA_TMPDIR" value=""/>
 				<arg line="-d -i -w @{tomcat.home}/bin @{tomcat.home}/bin/startup.bat" />
 			</exec>
 			<sleep seconds="5" />
@@ -1643,7 +1663,7 @@ $HeadURL$
 				</then>
 			</if>
 			<echo message="Checking out @{svn.checkout.url} to @{svn.checkout.dir}."/>
-			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}">
+			<svn username="@{svn.checkout.user}" password="@{svn.checkout.pass}" javahl="false" svnkit="true">
 				<!-- <checkout url="@{svn.checkout.url}" revision="HEAD" destPath="@{svn.checkout.dir}" />-->
 				<checkout url="@{svn.checkout.url}"  destPath="@{svn.checkout.dir}" />
 			</svn>
@@ -1654,7 +1674,7 @@ $HeadURL$
 		<attribute name="svn.add.dir"/>
 		<sequential>
 			<echo message="Adding @{svn.add.dir} to svn."/>
-			<svn failonerror="false">
+			<svn failonerror="false" javahl="false" svnkit="true">
 				<add dir="@{svn.add.dir}" force="true"/>
 			</svn>
 		</sequential>
@@ -1663,7 +1683,7 @@ $HeadURL$
 		<attribute name="svn.update.dir"/>
 		<sequential>
 			<echo message="Adding @{svn.update.dir} to svn."/>
-			<svn failonerror="false">
+			<svn failonerror="false" javahl="false" svnkit="true">
 				<update dir="@{svn.update.dir}"/>
 			</svn>
 		</sequential>
@@ -1676,7 +1696,7 @@ $HeadURL$
 		<attribute name="svn.commit.message" default="Added by build process"/>
 		<sequential>
 			<echo message="Commiting @{svn.commit.dir} to svn."/>
-			<svn username="@{svn.commit.user}" password="@{svn.commit.pass}">
+			<svn username="@{svn.commit.user}" password="@{svn.commit.pass}" javahl="false" svnkit="true">
 				<commit dir="@{svn.commit.dir}" message="@{svn.commit.message}"/>
 			</svn>
 		</sequential>
@@ -1800,7 +1820,7 @@ $HeadURL$
 		<attribute name="database.type.property.name" default="database.type" />
 		<attribute name="database.schema.property.name" default="database.schema" />
 		<sequential>
-			<var name="db.properties.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name},@{database.type.property.name},@{database.schema.property.name}"/>
+			<var name="db.properties.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name},@{database.type.property.name}"/>
 			<properties-missing
 				properties.list="${db.properties.list}"
 				properties.missing.property.name="db.properties.missing"
@@ -1881,7 +1901,7 @@ $HeadURL$
 							<propertycopy name="db.type" from="@{database.type.property.name}" override="true"/>
 							<switch value="${db.type}">
 								<case value="oracle">
-									<var name="@{database.schema.property.name}" value="${database.name}"/>
+									<var name="@{database.schema.property.name}" value="${database.user}"/>
 								</case>
 								<case value="mysql">
 									<var name="@{database.schema.property.name}" value="${database.name}"/>
@@ -1894,7 +1914,7 @@ $HeadURL$
 								<isset property="db.appuser.works"/>
 								<then>
 									<echo level="debug" message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- #### NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
 								</then>
 								<else>
 									<fail  message="Failed to connect to database TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
@@ -1919,7 +1939,7 @@ $HeadURL$
 	<macrodef name="svn-getinfo">
 		<attribute name="my.path" default="${basedir}"/>
 		<sequential>
-			<svn javahl="false">
+			<svn javahl="false" svnkit="true">
 				<status path="@{my.path}" revisionProperty="svn.revision" urlProperty="svn.url"/>
 			</svn>
 			<var name="lsd.revision" value="${svn.revision}" />
@@ -2183,11 +2203,11 @@ $HeadURL$
 		<attribute name="old.revision.number" />
 		<attribute name="differential.file.name" default="diff_list.txt" />
 		<sequential>
-			<svn javahl="false">
+			<svn javahl="false" svnkit="true"> 
 				<status path="${basedir}"  revisionProperty="build.svn.revision" urlProperty="svn.source.url"/>
 			</svn>
 
-			<svn javahl="false">
+			<svn javahl="false" svnkit="true">
 				<diff oldUrl="${svn.source.url}" oldTargetRevision="@{old.revision.number}" newTargetRevision="${build.svn.revision}" outFile="${basedir}/patch.txt"/>
 			</svn>
 			<loadfile
@@ -2253,7 +2273,9 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="database-clean">
+		<attribute name="database.type" default="${database.type}"/>
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
 		<attribute name="database.system.password" default="${database.system.password}" />
@@ -2290,34 +2312,36 @@ $HeadURL$
 			<if>
 				<equals arg1="@{database.re-create}" arg2="true"/>
 				<then>
-					<switch value="${database.type}">
+					<switch value="@{database.type}">
 						<case value="postgresql">
-							<database-create                                       
-								database.driver="@{database.driver}"                            
-								database.system.url="@{database.system.url}"                    
-								database.system.user="@{database.system.user}"                  
-								database.system.password="@{database.system.password}"          
-								database.version="@{database.version}"                          
-								database.name="@{database.name}"                                
-								database.server="@{database.server}"                            
-								database.url="@{database.url}"                                  
-								database.user="@{database.user}"                                
-								database.password="@{database.password}"                        
-								/>                                                  
+							<database-create
+								database.driver="@{database.driver}"
+								database.driver.file="@{database.driver.file}"
+								database.system.url="@{database.system.url}"
+								database.system.user="@{database.system.user}"
+								database.system.password="@{database.system.password}"
+								database.version="@{database.version}"
+								database.name="@{database.name}"
+								database.server="@{database.server}"
+								database.url="@{database.url}"
+								database.user="@{database.user}"
+								database.password="@{database.password}"
+								/>
 						</case>
 						<case value="mysql">
-							<database-create                                       
-								database.driver="@{database.driver}"                            
-								database.system.url="@{database.system.url}"                    
-								database.system.user="@{database.system.user}"                  
-								database.system.password="@{database.system.password}"          
-								database.version="@{database.version}"                          
-								database.name="@{database.name}"                                
-								database.server="@{database.server}"                            
-								database.url="@{database.url}"                                  
-								database.user="@{database.user}"                                
-								database.password="@{database.password}"                        
-								/>                                                  
+							<database-create
+								database.driver="@{database.driver}"
+								database.driver.file="@{database.driver.file}"
+								database.system.url="@{database.system.url}"
+								database.system.user="@{database.system.user}"
+								database.system.password="@{database.system.password}"
+								database.version="@{database.version}"
+								database.name="@{database.name}"
+								database.server="@{database.server}"
+								database.url="@{database.url}"
+								database.user="@{database.user}"
+								database.password="@{database.password}"
+								/>
 						</case>
 						<default>
 							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
@@ -2361,6 +2385,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="database-install">
+		<attribute name="database.type" default="${database.type}" />
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
@@ -2369,6 +2394,8 @@ $HeadURL$
 		<attribute name="onerror" default="abort" />
 		<attribute name="db-install.dir" default="${db-install.dir.dest}" />
 		<attribute name="db.install.create.file.list" />
+		<attribute name="database.driver.file" default="${database.driver.file}"/>
+		<attribute name="database.driver" default="${database.driver}"/>
 		<sequential>
 			<for list="@{db.install.create.file.list}" param="db.install.file">
 				<sequential>
@@ -2377,7 +2404,9 @@ $HeadURL$
 						database.password="@{database.password}"
 						sql.delimiter="@{sql.delimiter}"
 						sql.delimitertype="@{sql.delimitertype}"
-						sql.file="@{db-install.dir}/${database.type}/@{db.install.file}"
+						sql.file="@{db-install.dir}/@{database.type}/@{db.install.file}"
+						database.driver.file="@{database.driver.file}"
+						database.driver="@{database.driver}"
 						onerror="@{onerror}"/>
 				</sequential>
 			</for>
@@ -2385,6 +2414,7 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="database-upgrade">
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
@@ -3770,14 +3800,14 @@ $HeadURL$
 				</and>
 				<then>
 					<echo message="Patching jboss with @{jbosscp.binaries.file}."/>
-					<unzip dest="${jboss.home}" src="@{jbosscp.binaries.file}" />
+					<unzip dest="@{jboss.home}" src="@{jbosscp.binaries.file}" />
 					<!-- Copy of patched configuration files -->
-					<copy file="${jboss.home}/config-patches/jboss-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
-					<copy file="${jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/jmx-invoker-service.xml"/>
-					<copy file="${jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
-					<copy file="${jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
-					<copy file="${jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
-					<copy file="${jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="${jboss.home}/server/${jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/jboss-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jbossweb-tomcat55.sar/META-INF/jboss-service.xml"/>
+					<copy file="@{jboss.home}/config-patches/jmx-invoker-service.xml.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/jmx-invoker-service.xml"/>
+					<copy file="@{jboss.home}/config-patches/EntityEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/EntityEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/MdbEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/MdbEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/StatefulEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatefulEjb.jsp"/>
+					<copy file="@{jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp"/>
 				</then>
 			</if>
 
@@ -3965,6 +3995,7 @@ $HeadURL$
 		<attribute name="target.name" />
 		<attribute name="enable.install.debug" default="${enable.install.debug}"/>
 		<attribute name="enable.install.timing" default="${enable.install.timing}"/>
+		<attribute name="override.properties" default="${override.properties}" />
 		<sequential>
 			<var name="install.debug" unset="true"/>
 			<if>
@@ -3988,6 +4019,10 @@ $HeadURL$
 					<property name="install.timing" value=""/>
 				</else>
 			</if>
+			<override-properties-prep
+				override.properties="@{override.properties}"
+				override.properties.string.property.name="override.properties.string"
+				/>
 			<!-- Copies over all files so linux and windows properties are present -->
 			<copy todir="@{install.dir}">
 				<fileset dir="@{build.dir}">
@@ -3997,12 +4032,12 @@ $HeadURL$
 			<exec osfamily="unix" executable="ant" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
 				<!-- force reinstall of database and jboss without prompting -->
-				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}" />
+				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true ${override.properties.string} @{target.name}" />
 			</exec>
 			<exec osfamily="windows" executable="ant.bat" dir="@{install.dir}" failonerror="true">
 				<!-- use alternate properties file since default has replace values -->
 				<!-- force reinstall of database and jboss without prompting -->
-				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true @{target.name}" />
+				<arg line="${install.debug} ${install.timing} -Dproperties.file=@{properties.file} -Dforce.reinstall=true ${override.properties.string} @{target.name}" />
 			</exec>
 			<!-- ant returns exit code zero on failure to psexec, issue still lives on
 			<exec osfamily="windows" executable="${bda-utils.dir}/resource/psexec.exe" dir="@{install.dir}" failonerror="true">
@@ -4020,6 +4055,7 @@ $HeadURL$
 		<attribute name="dist.file" />
 		<attribute name="ssh.port" default="22"/>
 		<attribute name="ssh.key.file" default="${ssh.key.file}"/>
+		<attribute name="ssh.key.passphrase" default="${ssh.key.passphrase}"/>
 		<sequential>
 			<!-- Validate remote directory is valid -->
 			<propertycopy name="remote.dir" from="@{remote.directory.property.name}" override="true" />
@@ -4028,24 +4064,36 @@ $HeadURL$
 			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
+				remoteSshKeyfile="@{ssh.key.file}"
+				remoteSshPassPhrase="@{ssh.key.passphrase}"
 				remotesshcommand="rm -rf ${remote.dir};mkdir -p ${remote.dir}" />
 			<!-- work around for issue where basedir is required but is not currently used -->
 			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
+				remoteSshKeyfile="@{ssh.key.file}"
+				remoteSshPassPhrase="@{ssh.key.passphrase}"
 				remotesshcommand="mkdir -p ${remote.dir}/lib" />
 
 			<!-- copy distribution and prop file to remote system -->
 			<remote-scp
-				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+				remoteScpFileToCopy="@{dist.dir}/@{dist.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}"
+				remoteScpKeyFile="@{ssh.key.file}"
+				remoteScpPassphrase="@{ssh.key.passphrase}"
+				/>
 			<!-- Extract zip file -->
 			<remote-ssh
 				remoteSshHost="@{ssh.host}"
 				remoteSshUser="@{ssh.user}"
+				remoteSshKeyfile="@{ssh.key.file}"
+				remoteSshPassPhrase="@{ssh.key.passphrase}"
 				remotesshcommand="cd ${remote.dir}; unzip -q @{dist.file}" />
 			<!-- copy properties after unzip to ensure that zip does not prompt for file existence if properties file is already in distribution. -->
 			<remote-scp
-				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}" />
+				remoteScpFileToCopy="@{properties.file}" remoteScpToDir="@{ssh.user}@@@{ssh.host}:${remote.dir}"
+				remoteScpKeyFile="@{ssh.key.file}"
+				remoteScpPassphrase="@{ssh.key.passphrase}"
+				/>
 		</sequential>
 	</macrodef>
 	<macrodef name="dist-prep" description="Macro for copying files to dist area">
@@ -4210,20 +4258,19 @@ $HeadURL$
 					<var name="keytool.result" unset="true"/>
 					<echo message="Validating JBoss SSL configurations"/>
 					<osfamily property="os.family"/>
-					<property name="os.tmp.dir" value="/tmp"/>
 					<if>
-						<and>
+						<or>
 							<equals arg1="${os.family}" arg2="unix"/>
 							<equals arg1="${os.family}" arg2="mac"/>
-						</and>
+						</or>
 						<then>
-							<property name="os.tmp.dir" value="/tmp"/>
+							<property name="os.tmp.dir" value="/tmp/${project.name}"/>
 						</then>
 					</if>
 					<if>
 						<equals arg1="${os.family}" arg2="windows"/>
 						<then>
-							<property name="os.tmp.dir" value="c:/tmp"/>
+							<property name="os.tmp.dir" value="c:/tmp/${project.name}"/>
 						</then>
 					</if>
 					<mkdir dir="${os.tmp.dir}"/>
@@ -4315,7 +4362,7 @@ $HeadURL$
 					<var name="is.jboss40" unset="true"/>
 					<propertyregex property="is.jboss40"
 						input="@{appserver.conf.dir}"
-						regexp="jboss-4.0...GA"
+						regexp="jboss-4.0.*"
 						select="\1"
 						/>
 					<var name="is.tomcat50" unset="true"/>
@@ -4392,9 +4439,7 @@ $HeadURL$
 								cert="@{appserver.conf.dir}/@{grid.secure.cert.file}"
 								key="@{appserver.conf.dir}/@{grid.secure.key.file}"
 								${tomcat55.extras}
-								>
-									<Valve className="${valve.name}"/>
-								</Connector>
+								/>
 							]]>
 						</insert>
 					</xmltask>
@@ -4409,28 +4454,71 @@ $HeadURL$
 		<attribute name="appserver.server-xml.file" default="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb-tomcat55.sar/server.xml"/>
 		<attribute name="appserver.server-xml.service.name" default="jboss.web"/>
 		<sequential>
-			<!-- Functionallity moved to grid-secure-configure-connector
-			<switch value="@{appserver.server-xml.service.name}">
-				<case value="jboss.web">
+			<var name="is.jboss40" unset="true"/>
+			<propertyregex property="is.jboss40"
+				input="@{appserver.server-xml.file}"
+				regexp="jboss-4.0.*"
+				select="\1"
+				/>
+			<var name="is.tomcat50" unset="true"/>
+			<propertyregex property="is.tomcat50"
+				input="@{appserver.server-xml.file}"
+				regexp="tomcat-5.0..."
+				select="\1"
+				/>
+			<var name="is.tomcat55" unset="true"/>
+			<propertyregex property="is.tomcat55"
+				input="@{appserver.server-xml.file}"
+				regexp="tomcat-5.5..."
+				select="\1"
+				/>
+			<!-- not sure if grid will work with .*tomcat-6.0, assuming it uses same as 5.5-->
+			<var name="is.tomcat60" unset="true"/>
+			<propertyregex property="is.tomcat60"
+				input="@{appserver.server-xml.file}"
+				regexp=".*tomcat-6.0.*"
+				select="\1"
+				/>
+			<var name="is.jboss51" unset="true"/>
+			<propertyregex property="is.jboss51"
+				input="@{appserver.server-xml.file}"
+				regexp=".*jboss-5.1.*"
+				select="true"
+				/>
+			<echo message="is.jboss40 = ${is.jboss40}"/>
+			<echo message="is.jboss51 = ${is.jboss51}"/>
+			<echo message="is.tomcat55 = ${is.tomcat55}"/>
+			<echo message="is.tomcat60 = ${is.tomcat60}"/>
+			<echo message="@{appserver.server-xml.file}"/>
+			<if>
+				<or>
+					<isset property="is.jboss40"/>
+					<isset property="is.jboss51"/>
+					<isset property="is.tomcat55"/>
+					<isset property="is.tomcat60"/>
+				</or>
+				<then>
 					<var name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve55"/>
-				</case>
-				<case value="Catalina">
+				</then>
+				<else>
 					<var name="valve.name" value="org.globus.tomcat.coyote.valves.HTTPSValve"/>
-				</case>
-				<default>
-					<fail message="Unkown server.xml service name - @{appserver.server-xml.service.name}, don't know how to handle"/>
-				</default>
-			</switch>
+				</else>
+			</if>
+			<echo message="Deleting vavle from @{appserver.server-xml.file}"/>
 			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
 				dest="@{appserver.server-xml.file}">
-				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/ConnenctorEngine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
+				<remove path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']/Valve[@className='${valve.name}']" />
+			</xmltask>
+			<echo message="Inserting vavle from @{appserver.server-xml.file}"/>
+			<xmltask preservetype="true" source="@{appserver.server-xml.file}"
+				dest="@{appserver.server-xml.file}"
+				failWithoutMatch="true">
 				<insert path="/Server/Service[@name='@{appserver.server-xml.service.name}']/Engine[@name='@{appserver.server-xml.service.name}']">
 					<![CDATA[
 					<Valve className="${valve.name}"/>
 					]]>
 				</insert>
 			</xmltask>
-			-->
 		</sequential>
 	</macrodef>
 
@@ -4696,7 +4784,7 @@ $HeadURL$
 						<equals arg1="${datasource.not.variable}" arg2="true"/>
 					</not>
 				</and>
-				<then>	
+				<then>
 					<echo message="Configuring tomcat datasource"/>
 					<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml">
 						<xmlcatalog refid="bda.xml.catalog"/>
@@ -4858,6 +4946,10 @@ $HeadURL$
 								grid.secure.key.file="@{tomcat.grid.secure.key.file}"
 								/>
 							<!-- needs to be done after adding connector -->
+							<grid-secure-configure-valve
+								appserver.server-xml.file="@{tomcat.server-xml.file}"
+								appserver.server-xml.service.name="@{tomcat.server-xml.service.name}"
+								/>
 							<if>
 								<equals arg1="@{tomcat.grid.secure.enable}" arg2="true"/>
 								<then>
@@ -5103,12 +5195,10 @@ $HeadURL$
 								grid.secure.key.file="@{jboss.grid.secure.key.file}"
 								grid.secure.cert.file="@{jboss.grid.secure.cert.file}"
 								/>
-							<!--
 							<grid-secure-configure-valve
 								appserver.server-xml.file="@{jboss.server-xml.file}"
 								appserver.server-xml.service.name="@{jboss.server-xml.service.name}"
 								/>
-							-->
 							<!-- needs to be done after adding connector -->
 							<if>
 								<equals arg1="@{jboss.grid.secure.enable}" arg2="true"/>
@@ -5155,6 +5245,12 @@ $HeadURL$
 					<jboss-configure-java_opts
 						jboss.bin.dir="@{jboss.home}/server/@{jboss.server.name}/bin"
 						jboss.java.opts="@{jboss.java.opts}"
+						/>
+					<replaceregexp
+						file="@{jboss.server-xml.file}"
+						byline="true"
+						match="emptySessionPath=&quot;true&quot;"
+						replace="emptySessionPath=&quot;false&quot;"
 						/>
 				</then>
 				<else>
@@ -5824,7 +5920,7 @@ $HeadURL$
 			</xmltask>
 			<echo level="debug" message="read.ssl.port = ${read.ssl.port}"/>
 			<echo level="debug" message="read.keystore.file.location = ${read.keystore.file.location}"/>
-			<echo level="debug" message="read.keystore.password = ${read.keystore.password}"/>
+			<echo level="debug" message="read.keystore.password = #####"/>
 			<echo level="debug" message="read.keystore.alias = ${read.keystore.alias}"/>
 			<echo level="debug" message="read.ssl.port = ${read.ssl.port}"/>
 
@@ -5853,20 +5949,19 @@ $HeadURL$
 					<var name="keytool.error" unset="true"/>
 					<var name="keytool.result" unset="true"/>
 					<osfamily property="os.family"/>
-					<property name="os.tmp.dir" value="/tmp"/>
 					<if>
-						<and>
+						<or>
 							<equals arg1="${os.family}" arg2="unix"/>
 							<equals arg1="${os.family}" arg2="mac"/>
-						</and>
+						</or>
 						<then>
-							<property name="os.tmp.dir" value="/tmp"/>
+							<property name="os.tmp.dir" value="/tmp/${project.name}"/>
 						</then>
 					</if>
 					<if>
 						<equals arg1="${os.family}" arg2="windows"/>
 						<then>
-							<property name="os.tmp.dir" value="c:/tmp"/>
+							<property name="os.tmp.dir" value="c:/tmp/${project.name}"/>
 						</then>
 					</if>
 					<mkdir dir="${os.tmp.dir}"/>
@@ -6810,14 +6905,6 @@ $HeadURL$
 						</else>
 					</if>
 							<!-- Write to apptab -->
-					<if>
-						<not>
-							<available file="@{application.base.path}/../apptab"/>
-						</not>
-						<then>
-							<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
-						</then>
-					</if>
 					<switch value="@{start.jboss}">
 						<case value="Y"/>
 						<case value="N"/>
@@ -6829,10 +6916,41 @@ $HeadURL$
 							<fail message="start.jboss must be Y/N or y/n"/>
 						</default>
 					</switch>
-					<replaceregexp file="@{application.base.path}/../apptab" byline="true"
-						match="^@{logname}.*"
-						replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
+					<if>
+						<not>
+							<available file="@{application.base.path}/../apptab"/>
+						</not>
+						<then>
+							<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+						</then>
+					</if>
+					<loadfile
+						property="apptab.contents"
+						srcFile="@{application.base.path}/../apptab">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"/>
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+					<var name="apptab.user.found" unset="true"/>
+					<propertyregex property="apptab.user.found"
+						input="${apptab.contents}"
+						regexp="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
+						select="true"
 						/>
+					<if>
+						<isset property="apptab.user.found"/>
+						<then>
+							<replaceregexp file="@{application.base.path}/../apptab" byline="true"
+								match="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
+								replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
+								/>
+						</then>
+						<else>
+							<echo append="true" file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+						</else>
+					</if>
 				</then>
 				<else>
 					<echo message="NOT setting up jboss-nci-customizations because this system is not Unix or Mac NCI environment"/>
@@ -6947,7 +7065,7 @@ $HeadURL$
 			<var name="jboss.home.good" unset="true"/>
 			<propertyregex property="jboss.home.good"
 				input="@{jboss.home}"
-				regexp="\S+@{jboss.binaries.relative.dir}$"
+				regexp="\S+jboss-\d.\d.\d.*"
 				select="true"
 				/>
 			<if>
@@ -6973,6 +7091,9 @@ $HeadURL$
 		<attribute name="database.version" default="5.0.27" />
 		<attribute name="database.name" default="${database.name}" />
 		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="database.re-create" default="${database.re-create}" />
+		<attribute name="database.drop-schema" default="${database.drop-schema}" />
+
 		<sequential>
 
 			<echo message="
@@ -6982,7 +7103,7 @@ $HeadURL$
 				database.system.password=@{database.system.password}
 				database.url=@{database.url}
 				database.user=@{database.user}
-				database.password=@{database.password}
+				database.password=####
 				database.version=@{database.version}
 				database.name=@{database.name}
 				"/>
@@ -6997,6 +7118,9 @@ $HeadURL$
 				database.password="@{database.password}"
 				database.version="@{database.version}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
+				database.drop-schema="@{database.drop-schema}"
+				database.re-create="@{database.re-create}"
 				/>
 			<!-- Make sure system and app user are different -->
 			<if>
@@ -7025,6 +7149,9 @@ $HeadURL$
 						</default>
 					</switch>
 				</case>
+				<default>
+					<echo message="Skipping database.name check since database type is not MySQL."/>
+				</default>
 			</switch>
 			<check-database-exists
 				database.driver="@{database.driver}"
@@ -7155,7 +7282,7 @@ $HeadURL$
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<echo message="Waiting for @{jboss.application.url} to respond."/>
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
-				<http url="@{jboss.application.url}"/> 
+				<http url="@{jboss.application.url}"/>
 			</waitfor>
 
 			<!-- For each socket port call validate:post:socket -->
@@ -7192,7 +7319,7 @@ $HeadURL$
 			<!-- Give JBOSS another couple of seconds to come up -->
 			<echo message="Waiting for @{tomcat.application.url} to respond."/>
 			<waitfor maxwait="90" maxwaitunit="second" checkevery="5" checkeveryunit="second">
-				<http url="@{tomcat.application.url}"/> 
+				<http url="@{tomcat.application.url}"/>
 			</waitfor>
 
 			<!-- For each socket port call validate:post:socket -->
@@ -7224,7 +7351,7 @@ $HeadURL$
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="propertyfile.backup.location" default="@{application.base.path}/change-logs" />
 		<sequential>
-			<echoproperties/>
+			<echoproperties > <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 			<tstamp>
 				<format property="run.date" pattern="yyMMddHHmm"/>
 			</tstamp>
@@ -7314,7 +7441,7 @@ $HeadURL$
 		<attribute name="database.type.property.name" default="database.type" />
 		<attribute name="database.schema.property.name" default="database.schema" />
 		<sequential>
-			<var name="db.properties.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name},@{database.type.property.name},@{database.schema.property.name}"/>
+			<var name="db.properties.list" value="@{database.url.property.name},@{database.name.property.name},@{database.user.property.name},@{database.password.property.name},@{database.server.property.name},@{database.port.property.name},@{database.type.property.name}"/>
 			<properties-missing
 				properties.list="${db.properties.list}"
 				properties.missing.property.name="db.properties.missing"
@@ -7395,7 +7522,7 @@ $HeadURL$
 							<propertycopy name="db.type" from="@{database.type.property.name}" override="true"/>
 							<switch value="${db.type}">
 								<case value="oracle">
-									<var name="@{database.schema.property.name}" value="${database.name}"/>
+									<var name="@{database.schema.property.name}" value="${database.user}"/>
 								</case>
 								<case value="mysql">
 									<var name="@{database.schema.property.name}" value="${database.name}"/>
@@ -7408,7 +7535,7 @@ $HeadURL$
 								<isset property="db.appuser.works"/>
 								<then>
 									<echo level="debug" message="Read application database configuration from ${jboss.home}/server/${jboss.server.name}/deploy/@{jboss.ds-xml.file}"/>
-									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
+									<echo level="debug"  message="Value after read of *-ds.xml: TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- #### NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
 								</then>
 								<else>
 									<fail  message="Failed to connect to database TYPE - ${read.database.type} URL- ${database.url}  USER- ${database.user} PASS- ${database.password} NAME- ${database.name} SERVER- ${database.server} PORT- ${database.port}"/>
@@ -7438,15 +7565,15 @@ $HeadURL$
 				import org.apache.tools.ant.DefaultLogger;
 
 				workingDir=new File(args[0]).getAbsoluteFile()
-				targetName=args[1]      
-				propertiesFile=args[2]  
-				println "dir= " + workingDir.toString() 
-				println "target =" + targetName 
+				targetName=args[1]
+				propertiesFile=args[2]
+				println "dir= " + workingDir.toString()
+				println "target =" + targetName
 				println "properties.file= " + propertiesFile
 
 				File buildFile = new File(workingDir.toString() + "/build.xml")
-				Project project = new Project() 
-				project.init()          
+				Project project = new Project()
+				project.init()
 				project.setBaseDir(workingDir)
 				DefaultLogger logger = new DefaultLogger();
 				logger.setMessageOutputLevel(Project.MSG_INFO);
@@ -7457,18 +7584,62 @@ $HeadURL$
 				ProjectHelper.configureProject(project, buildFile)
 				project.setProperty("force.reinstall", "true")
 				project.setProperty("properties.file", propertiesFile)
-				try                     
-				{                       
+				try
+				{
 				project.executeTarget(targetName)
 				println "Ran sucessfully"
-				}                       
-				catch(Exception err)    
-				{                       
+				}
+				catch(Exception err)
+				{
 				println "Execution of ant failed with the following error:"
-				println err             
-				System.exit 1           
-				}                 
-			</groovy>       
+				println err
+				System.exit 1
+				}
+			</groovy>
 		</sequential>
 	</macrodef>
+	<macrodef name="override-properties-prep">
+		<attribute name="override.properties" default="${override.properties}"/>
+		<attribute name="override.properties.string.property.name" default="override.properties.string"/>
+		<sequential>
+			<var name="@{override.properties.string.property.name}" value=""/>
+			<echo message="override.properties=@{override.properties}"/>
+			<var name="override.props.set" unset="true"/>
+			<propertyregex property="override.props.set"
+				input="@{override.properties}"
+				regexp="\$\{override.properties\}"
+				select="true"
+				/>
+			<if>
+				<not>
+					<isset property="override.props.set"/>
+				</not>
+				<then>
+
+					<for list="@{override.properties}" param="prop.val" delimiter=",">
+						<sequential>
+							<var name="prop" unset="true"/>
+							<propertyregex property="prop"
+								input="@{prop.val}"
+								regexp="^(.*)=(.*)"
+								select="\1"
+								/>
+							<var name="val" unset="true"/>
+							<propertyregex property="val"
+								input="@{prop.val}"
+								regexp="^(.*)=(.*)"
+								select="\2"
+								/>
+							<var name="@{override.properties.string.property.name}" value="${@{override.properties.string.property.name}} -D${prop}=&quot;${val}&quot;"/>
+						</sequential>
+					</for>
+				</then>
+				<else>
+					<echo message="Override Properties not set, setting command line option to plank."/>
+				</else>
+			</if>
+			<echo message="override.properties.string=${@{override.properties.string.property.name}}"/>
+		</sequential>
+	</macrodef>
+
 </project>
