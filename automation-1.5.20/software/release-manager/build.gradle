@@ -1,0 +1,28 @@
+import org.apache.ivy.plugins.resolver.*
+import org.gradle.util.GradleUtil
+import org.gradle.api.DependencyManager
+import org.gradle.build.release.Svn
+import org.gradle.build.release.Version
+
+svn = new Svn(project)
+
+type = 'jar'
+version = new Version(svn, project, false)
+version='2.0.0'
+
+dependencies {
+    addConfiguration('compile')
+    addMavenStyleRepo('gradle_sourceforge', 'http://gradle.sourceforge.net/repository/', 'http://gradle.sourceforge.net/otherrepo/').allownomd = false    
+    addMavenRepo()    
+    compile  "com.svnkit:svnkit:1.1.6", "com.svnkit:svnkit-javahl:1.1.6", 'org.hamcrest:hamcrest-core:1.1', 'org.hamcrest:hamcrest-library:1.1'
+}
+
+
+
+createTask('distribution') {
+println "We build the zip with version=$version"
+}
+
+createTask('release', dependsOn: 'distribution') {
+println 'We release now'
+}

@@ -1,0 +1,9 @@
+!path /tools/nci-projects/bda/software/bda-build-template/software/target/lib/test-acceptance/bda-blueprints-acceptance-tests.jar
+
+!|gov.nih.nci.bda.CalculatorFixture|
+|left|right|operator|result()|
+|5|3|+|8|
+|5|3|-|2|
+|6|3|-|3|
+|5|3|*|15|
+|5|3|/|1.666666667|

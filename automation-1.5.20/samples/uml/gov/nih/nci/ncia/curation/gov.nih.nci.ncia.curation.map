@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" href="./CurationConstants.html" title="&lt;TABLE&gt;" alt="" coords="16,10,299,418"/>
+<area shape="rect" href="./CurationDataDownload.html" title="&lt;TABLE&gt;" alt="" coords="344,26,1147,402"/>
+<area shape="rect" href="./CurationDataDownload.CurationDataResultType.html" title="&lt;TABLE&gt;" alt="" coords="1192,106,1451,322"/>
+<area shape="rect" href="./CurationError.html" title="&lt;TABLE&gt;" alt="" coords="1496,154,1755,274"/>
+<area shape="rect" href="./CurationError.ErrorLevel.html" title="&lt;TABLE&gt;" alt="" coords="1800,162,1909,266"/>
+<area shape="rect" href="./CurationError.CurationErrorType.html" title="&lt;TABLE&gt;" alt="" coords="1955,82,2168,346"/>
+<area shape="rect" href="./CurationManager.html" title="&lt;TABLE&gt;" alt="" coords="2213,66,3117,362"/>
+<area shape="rect" href="./CurationParsingException.html" title="&lt;TABLE&gt;" alt="" coords="3163,178,3355,250"/>
+<area shape="rect" href="./CurationSpreadsheetParser.html" title="&lt;TABLE&gt;" alt="" coords="3400,170,3784,258"/>
+</map>

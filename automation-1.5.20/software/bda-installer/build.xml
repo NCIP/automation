@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project name="bda-installer" default="build:all" basedir=".">
+	<description>
+		Creates an LSD Product Installer
+	</description>
+
+	<!-- basedir placeholder property -->
+	<property name="cbasedir" value="${basedir}" />
+
+	<property name="src.dir" value="${cbasedir}/src-custom" />
+	<property name="lib.dir" value="${cbasedir}/lib" />
+	<property name="resources.dir" value="${cbasedir}/resources" />
+	<property name="target.dir" value="${cbasedir}/target" />
+	<property name="izpack.binary.name" value="izpack-4.0.1" />
+	<property name="izpack.binary.file" value="${izpack.binary.name}.zip" />
+	<property name="izpack.binary.uri" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2008/os-independent" />
+	<property name="product.name" value="caArray-installer" />
+	<property name="product.version" value="2.1.0" />
+
+	<tstamp>
+		<format property="JAR_STAMP" pattern="MMddyyyyhhmmss" unit="millisecond" />
+	</tstamp>
+
+	<available file="${target.dir}/${izpack.binary.file}" property="izpack.binary.exists" />
+
+	<path id="project.classpath">
+		<pathelement location="${lib.dir}/xmlconfig-0.1.9.jar" />
+		<pathelement location="${lib.dir}/jdom-1.1.jar" />
+		<pathelement location="${lib.dir}/jaxen-1.1.1.jar" />
+		<pathelement location="${lib.dir}/ant-contrib-1.0b3.jar" />
+	</path>
+
+	<taskdef name="xmlconfig" classname="com.xmlconfig.anttask.XmlConfig" classpathref="project.classpath" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${lib.dir}/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+	<target name="-pre:clean" description="Clean before build">
+		<delete dir="${target.dir}/${izpack.binary.name}" />
+		<delete>
+			<fileset dir="${target.dir}">
+				<include name="${product.name}*.*" />
+				<exclude name="*.zip" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="download:izpack" description="Download IzPack binaries" unless="izpack.binary.exists">
+		<get src="${izpack.binary.uri}/${izpack.binary.file}" dest="${target.dir}/${izpack.binary.file}" />
+	</target>
+
+	<target name="unzip:izpack" description="Unzip IzPack binaries">
+		<unzip dest="${target.dir}" src="${target.dir}/${izpack.binary.file}" />
+	</target>
+
+	<target name="build:copy-custom-code" description="Prepare before build">
+		<copy todir="${target.dir}/${izpack.binary.name}/src/lib" overwrite="true">
+			<fileset dir="${src.dir}" />
+		</copy>
+	</target>
+
+	<target name="configure:izpack" description="Configure IzPack build.xml">
+		<xmlconfig in="${target.dir}/${izpack.binary.name}/src/build.xml" verbose="false">
+			<insertbranch path="//target[@name='build.listeners']" srcxmlfile="${resources.dir}/ProgressBarInstallerListener.xml" srcpath="//build-installer-listener" />
+		</xmlconfig>
+
+		<copy file="${resources.dir}/eng.xml" todir="${target.dir}/${izpack.binary.name}/bin/langpacks/installer" overwrite="true" />
+	</target>
+
+	<target name="build:izpack" description="Build IzPack">
+		<ant inheritall="false" antfile="${target.dir}/${izpack.binary.name}/src/build.xml" />
+	</target>
+
+	<target name="build:installer" description="Build product installer">
+		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile.bat" osfamily="windows">
+			<arg line="src-installer/install.xml -b src-installer -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
+		</exec>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<chmod dir="${target.dir}/${izpack.binary.name}/bin" perm="ugo+rx" includes="compile" />
+			</then>
+		</if>
+
+		<exec executable="${target.dir}/${izpack.binary.name}/bin/compile" osfamily="unix">
+			<arg line="src-installer/install.xml -b src-installer -o ${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar -k standard" />
+		</exec>
+
+	</target>
+
+	<target name="build:all" depends="-pre:clean, download:izpack, unzip:izpack, build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Default target" />
+	<target name="build:hot" depends="build:copy-custom-code, configure:izpack, build:izpack, build:installer" description="Builds everything without cleaning. Used for faster hot development." />
+
+	<target name="run:all" depends="build:all" description="Runs the installer by building it first">
+		<java fork="true" jar="${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar" />
+	</target>
+
+	<target name="run:hot" depends="build:hot" description="Similar to hot-deploy. Runs the installer by building it first">
+		<java fork="true" jar="${target.dir}/${product.name}-${product.version}-${JAR_STAMP}.jar" />
+	</target>
+
+</project>

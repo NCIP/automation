@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="common-environment" default="none" basedir=".">
+	<property environment="env"  />
+	<property name="environment" value="local"/>
+	<property file="${environment}.properties"/>
+	<property file="default.properties" />
+
+    <target name="none"/>
+    <filterset id="all.filter.tokens">
+	</filterset>	
+</project>

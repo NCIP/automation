@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="buildmonitor" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+	<!-- PROPERTIES -->
+	<property name="software.dir" value="${basedir}" />
+	<property name="lib.dir" value="${software.dir}/lib" />
+	<property name="source.dir" value="${software.dir}/src/main/java" />
+	<property name="resource.dir" value="${software.dir}/src/main/resources" />
+	<property name="classes.dir" value="${software.dir}/classes" />
+	<property name="build.dir" value="${software.dir}/build" />
+	<property name="target.dir" value="${software.dir}/target" />
+	<property name="selenium.tests.src.dir" value="${software.dir}/src/tests/functional" />
+	<property name="dist.dir" value="${target.dir}/dist" />
+	<property name="build.certification.jar" value="build-certification.jar" />
+	
+	<property name="properties.file" value="dev-install.properties" />
+	<property file="${basedir}/${properties.file}"/>
+
+		
+	
+	
+	<property name="deploy.dir" value="${user.home}/buildcertification" />
+	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
+	<property name="tests.dir" value="${deploy.dir}/certification-tests/tests" />
+	<property name="results.dir" value="${deploy.dir}/certification-tests/results" />	
+
+	<property name="tests.unit.source.dir" value="${software.dir}/src/tests/unit/groovy" />
+	<property name="tests.unit.classes.dir" value="${target.dir}/unit/classes" />
+	
+	<property name="sql.dist.dir" value="${deploy.dir}/sql" />
+	<property name="sql.src.dir" value="${software.dir}/src/main/sql" />
+
+
+	<!-- PATHS -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="project.classpath"/>
+	
+	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="project.classpath"/>
+
+	<target name="init" depends="clean" description="create table and populate data">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${tests.unit.classes.dir}" />		
+	</target>
+
+	<target name="clean" description="create table and populate data">
+		<delete dir="${classes.dir}" />
+		<delete dir="${target.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="deploy:init" depends="deploy:clean" description="create table and populate data">
+		<mkdir dir="${deploy.dir}" />
+		<mkdir dir="${tests.dir}/" />
+		<mkdir dir="${results.dir}/" />
+	</target>
+
+	<target name="deploy:clean" description="create table and populate data">
+		<delete dir="${deploy.dir}" />
+	</target>
+
+	<target name="deploy:sql" description="create table and populate data">
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+	</target>
+
+	<target name="install:database" description="Runs install scripts">
+		<database-install
+			db.install.create.file.list="${db.deploy.mysql.file.list}"
+			/>
+	</target>
+
+
+	<target name="run" depends="init,compile,package,deploy" description="Run the class to update Wiki">
+
+	</target>
+	
+	<target name="compile"  description="Compile the build monitor source">
+		<javac srcdir="${source.dir}" destdir="${classes.dir}" classpathref="project.classpath"/>		
+	</target>
+
+	<target name="prepare" description="Package the build monitor">		
+		<copy todir="${classes.dir}" overwrite="true">
+			<fileset dir="${source.dir}">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+	</target>
+
+
+	<target name="package" depends="prepare" description="Package the build monitor">
+		<jar destfile="${dist.dir}/${build.certification.jar}" basedir="${classes.dir}" update="true" >
+		    <manifest>
+		      <attribute name="Main-Class" value="gov.nih.nci.bda.certification.CertificationManager"/>
+		    </manifest>
+		</jar>
+	</target>
+
+	<target name="deploy:artifacts" depends="deploy:init,package" description="Package the build monitor">
+		<copy todir="${deploy.dir}" overwrite="true">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+
+		<copy file="${dist.dir}/${build.certification.jar}" todir="${deploy.dir}" />
+		<copy file="${resource.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
+		<copy file="${resource.dir}/build.xml" todir="${deploy.dir}" />
+		
+		<copy file="${build.dir}/build.xml" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/project.properties" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/CertificationUtils.groovy" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/lookup.properties" todir="${deploy.dir}/build" />
+		
+		<copy todir="${tests.dir}">
+			<fileset dir="${selenium.tests.src.dir}">
+					<include name="**"/>
+			</fileset>		
+		</copy>
+		<copy todir="${sql.dist.dir}">
+			<fileset dir="${sql.src.dir}">
+					<include name="**"/>
+			</fileset>		
+		</copy>		
+	</target>
+
+	<target name="deploy:configure"  description="Package the build monitor">
+		<xmltask failWithoutMatch="true" source="${deploy.dir}/${hibernate.config.file}" 
+			dest="${deploy.dir}/${hibernate.config.file}"
+			public="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+               		system="http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"
+               		omitHeader="true"
+		>		
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.driver_class']/text()" withtext="${database.driver}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.url']/text()" withtext="${database.url}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.username']/text()" withtext="${database.user}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.password']/text()" withtext="${database.password}"/>
+		</xmltask>
+	</target>
+
+	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
+		
+	</target>
+		
+	<target name="test:execute" description="Run the class to update Wiki">
+		<groovy>
+		   <arg line="${tests.unit.source.dir}"/>
+		   def loader = new GroovyClassLoader(getClass().getClassLoader())
+		   def testClass = loader.parseClass(new File(args[0]+"/BDACertificationTest.groovy"))
+		   println testClass
+		   junit.textui.TestRunner.run(testClass)
+		</groovy>		
+	</target>
+	
+	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
+		<attribute name="sql.file" />
+		<attribute name="sql.delimiter" default=";" />
+		<attribute name="sql.delimitertype" default="normal" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="onerror" default="abort" />
+		<sequential>
+			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+				<classpath>
+					<pathelement location="${deploy.dir}/mysql-connector-java-5.0.5.jar" />
+				</classpath>
+			</sql>
+		</sequential>
+	</macrodef>
+
+
+</project>
