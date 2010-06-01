@@ -5366,7 +5366,7 @@ $HeadURL$
 				autocommit="true"
 				>
 				<classpath>
-					<pathelement location="${database.driver.file}" />
+					<pathelement location="@{database.driver.file}" />
 				</classpath>
 				update databasechangelog set filename='@{database.changelog.file}' where filename like '%${changelog.file}';
 			</sql>
