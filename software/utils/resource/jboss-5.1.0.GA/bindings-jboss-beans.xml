@@ -21,7 +21,7 @@
          
       <constructor>
          <!-- The name of the set of bindings to use for this server -->
-         <parameter>${jboss.service.binding.set:ports-default}</parameter>
+         <parameter>${jboss.service.binding.set:@jboss.server.ports.name@}</parameter>
           
          <!--  The binding sets -->
          <parameter>
@@ -44,7 +44,7 @@
    <bean name="PortsDefaultBindings"  class="org.jboss.services.binding.impl.ServiceBindingSet">
       <constructor>
          <!--  The name of the set -->
-         <parameter>ports-default</parameter>
+         <parameter>@jboss.server.ports.name@</parameter>
          <!-- Default host name -->
          <parameter>${jboss.bind.address}</parameter>
          <!-- The port offset -->
