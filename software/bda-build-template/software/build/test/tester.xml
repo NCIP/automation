@@ -1,0 +1,116 @@
+<project name="tester" default="run" basedir=".">
+	<property name="test.dir" location="."/>
+	<dirname property="build.dir" file="${test.dir}"/>
+	<dirname property="software.dir" file="${build.dir}"/>
+	<property name="target.dir" location="${software.dir}/target"/>
+	<property name="report.dir" location="${target.dir}/reports"/>
+	<property name="bda-utils.dir" location="${target.dir}/bda-utils"/>
+	<!-- to get bda.version -->
+	<property file="${build.dir}/project.properties"/>
+
+	<echo message="If it fails after this line 'cd ..; ant'"/>
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+	<!-- -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="org/apache/ant/antunit/antlib.xml" classpathref="bda-utils.classpath" />
+
+	<target name="run">
+		<property name="antunit.report.dir" location="${report.dir}/ant-unit-xml"/>
+		<mkdir dir="${antunit.report.dir}"/>
+		<antunit failOnError="true">
+			<file file="${basedir}/tester.xml" />
+			<xmllistener toDir="${antunit.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>
+	</target>
+
+	<!--
+	<target name="test:init">
+	</target>
+	<target name="test:all"
+		depends="
+		test:init,
+		test:fail,
+		test:pass,
+		test:report
+		">
+	</target>
+	<target name="test:report">
+	</target>
+	-->
+	<target name="test:pass">
+		<!-- clear the vars out from previous runs -->
+
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"
+			dir="${build.dir}"
+			target="build:all"
+			>
+		</ant>
+		<!--
+		<exec osfamily="unix" 
+			outputproperty="exec.out"
+			errorproperty="exec.err"
+			resultproperty="exec.rc"
+			executable="ant"
+			dir="${build.dir}"
+			failonerror="true">
+			<arg line="deploy:local:install"/>
+		</exec>
+		<groovy>
+			println "\n==== Standard Out ===="
+			property["exec.out"].eachLine{println "\t" + it}
+			println "\n==== Standard Err ===="
+			property["exec.err"].eachLine{println "\t" + it}
+			println "\n==== Return Code ===="
+			property["exec.rc"].eachLine{println "\t" + it}
+		</groovy>
+		-->
+	</target>
+	<target name="test:fail">
+		<!-- clear the vars out from previous runs -->
+		<var name="exec.out" unset="true"/>
+		<var name="exec.err" unset="true"/>
+		<var name="exec.rc" unset="true"/>
+		<var name="try.property" unset="true"/>
+
+		<trycatch property="try.property">
+			<try>
+				<ant inheritAll="false" inheritrefs="false"
+					antfile="build.xml"
+					dir="${build.dir}"
+					target="junk:target"
+					>
+				</ant>
+				<fail message="Should have failed"/>
+				<!--
+				<exec osfamily="unix" 
+					outputproperty="exec.out"
+					errorproperty="exec.err"
+					resultproperty="exec.rc"
+					executable="ant"
+					dir="${build.dir}"
+					failonerror="true">
+					<arg line="junk:target"/>
+				</exec>
+				<groovy>
+					println "\n==== Standard Out ===="
+					property["exec.out"].eachLine{println "\t" + it}
+					println "\n==== Standard Err ===="
+					property["exec.err"].eachLine{println "\t" + it}
+					println "\n==== Return Code ===="
+					property["exec.rc"].eachLine{println "\t" + it}
+				</groovy>
+				-->
+			</try>
+			<catch>
+				<echo message="build failed as anticipated"/>
+			</catch>
+		</trycatch>
+	</target>
+</project>

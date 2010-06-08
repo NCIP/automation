@@ -19,6 +19,9 @@ serr.toString().eachLine{println "\t" + it}
 */
 
 def antFail = new AntBuilder()
+// check for os family
+// check for ant existence
+
 try{
 antFail.exec(
 	outputProperty: "sout",
@@ -33,6 +36,7 @@ antFail.exec(
 		env(key: "TESTENVVAR", value: "TESTENVVALUE")
 	}
 }
+// print error message
 catch (e) {}
 println "\n==== Standard Out ====" 
 antFail.project.properties.sout.eachLine{println "\t" + it}
