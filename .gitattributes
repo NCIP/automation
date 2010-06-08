@@ -2859,6 +2859,7 @@ software/bda-build-template/software/build/test/project-40ejb-dac.properties -te
 software/bda-build-template/software/build/test/project-51-dac.properties -text
 software/bda-build-template/software/build/test/project-51-nondac.properties -text
 software/bda-build-template/software/build/test/test.sh -text
+software/bda-build-template/software/build/test/tester.groovy -text
 software/bda-build-template/software/build/upgrade.properties -text
 software/bda-build-template/software/common/bda-download/bda-ivy-2.0.0-build.xml -text
 software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
