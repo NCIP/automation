@@ -35,11 +35,11 @@ antFail.exec(
 }
 catch (e) {}
 println "\n==== Standard Out ====" 
-println antFail.project.properties.sout
+antFail.project.properties.sout.eachLine{println "\t" + it}
 println "\n==== Standard Err ====" 
-println antFail.project.properties.serr
+antFail.project.properties.serr.eachLine{println "\t" + it}
 println "\n=== Return Code ====" 
-println antFail.project.properties.rc
+antFail.project.properties.rc.eachLine{println "\t" + it}
 
 def antPass = new AntBuilder()
 antPass.exec(
@@ -55,9 +55,9 @@ antPass.exec(
 		env(key: "TESTENVVAR", value: "TESTENVVALUE")
 	}
 println "\n==== Standard Out ====" 
-println antPass.project.properties.sout
+antPass.project.properties.sout.eachLine{println "\t" + it}
 println "\n==== Standard Err ====" 
-println antPass.project.properties.serr
+antPass.project.properties.serr.eachLine{println "\t" + it}
 println "\n=== Return Code ====" 
-println antPass.project.properties.rc
+antPass.project.properties.rc.eachLine{println "\t" + it}
 
