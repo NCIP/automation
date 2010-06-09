@@ -1,0 +1,36 @@
+<project name="test-jboss-upgrade" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+	</target>
+	<target name="test:jboss:upgrade:dac:pass">
+		<antcall target="clean"/>
+		<echo file="${build.dir}/local.properties" message=""/>
+		<xmltask preservetype="true" source="${build.dir}/install.xml"
+			dest="${build.dir}/install.xml"
+			failWithoutMatch="true" >       
+			<xmlcatalog refid="bda.xml.catalog"/>
+			<replace path="//text()" withtext="${jboss.service.binding.set:@{jboss.server.ports.name}}"/>
+		</xmltask>              
+
+		<!--
+		<replaceregexp file="${build.dir}/install.properties" byline="true"
+			match="^database.re-create=.*"
+			replace=""
+			/>
+		-->
+		<buildExpectPass
+			/>
+	</target>
+	<target name="test:template:fail">
+		<antcall target="clean"/>
+		<echo file="${build.dir}/local.properties" message=""/>
+		<buildExpectFail
+			/>
+	</target>
+</project>

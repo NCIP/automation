@@ -27,7 +27,7 @@
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="false" errorproperty="antunit-failure">
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
-			<plainlistener logLevel="error"/>
+			<plainlistener logLevel="${screen.log.level}"/>
 			<fileset dir="${basedir}">
 				<include name="test-suite*.xml"/>
 			</fileset>
@@ -38,7 +38,15 @@
 		<antunit failOnError="true">
 			<file file="${basedir}/test-suite-db.xml" />
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
-			<plainlistener logLevel="error"/>
+			<plainlistener logLevel="${screen.log.level}"/>
+		</antunit>
+	</target>
+	<target name="test:suite:jboss:upgrade" depends="test:init">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="true">
+			<file file="${basedir}/test-suite-jboss-upgrade.xml" />
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
+			<plainlistener logLevel="${screen.log.level}"/>
 		</antunit>
 	</target>
 
@@ -50,6 +58,6 @@
 		</junitreport>
 		<fail if="antunit-failure">At least one test has failed</fail>
 	</target>
-	<target name="run" depends="test:all,report-tests">
+	<target name="run" depends="test:all,clean,report-tests">
 	</target>
 </project>

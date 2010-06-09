@@ -2850,6 +2850,8 @@ software/bda-build-template/software/build/properties.template -text
 software/bda-build-template/software/build/test/test-common.xml -text
 software/bda-build-template/software/build/test/test-run.xml -text
 software/bda-build-template/software/build/test/test-suite-db.xml -text
+software/bda-build-template/software/build/test/test-suite-jboss-upgrade.xml -text
+software/bda-build-template/software/build/test/test-suite.template -text
 software/bda-build-template/software/build/test/tmp/bkp-test.sh -text
 software/bda-build-template/software/build/test/tmp/install-40-dac.properties -text
 software/bda-build-template/software/build/test/tmp/install-40-nondac.properties -text

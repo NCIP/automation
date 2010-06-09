@@ -10,6 +10,7 @@
 	<property name="antunit-style.dir" location="${common.dir}/antunit"/>
 	<property name="antunit.xml.report.dir" location="${report.dir}/ant-unit-xml"/>
 	<property name="antunit.html.report.dir" location="${report.dir}/ant-unit-html"/>
+	<property name="screen.log.level" value="error"/>
 	<!-- to get bda.version -->
 	<property file="${build.dir}/project.properties"/>
 	<!-- Rely on running build once befor tests -->
@@ -55,10 +56,10 @@
 			</trycatch>
 		</sequential>
 	</macrodef>
-	<target name="setUp">
+	<target name="clean">
 		<!-- svn revert some files to ensure that you are testing  -->
 		<svn javahl="false" svnkit="true">
-			<revert dir="${build.dir}">
+			<revert>
 				<fileset dir="${build.dir}">
 					<include name="install.xml"/>
 					<include name="install.properties"/>

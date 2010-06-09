@@ -10,7 +10,8 @@
 	</target>
 	<target name="test:db:mysql:install:drop-schema:pass">
 		<!-- defaults to mysql -->
-		<echo file="${build.dir}/local.properties" message=""/>
+		<antcall target="clean"/>
+		<echo file="${build.dir}/local.properties" message="database.drop-schema=true"/>
 		<replaceregexp file="${build.dir}/install.properties" byline="true"
 			match="^database.re-create=.*"
 			replace=""
@@ -20,7 +21,8 @@
 	</target>
 	<target name="test:db:mysql:install:re-create:pass">
 		<!-- defaults to mysql -->
-		<echo file="${build.dir}/local.properties" message=""/>
+		<antcall target="clean"/>
+		<echo file="${build.dir}/local.properties" message="database.re-create=true"/>
 		<replaceregexp file="${build.dir}/install.properties" byline="true"
 			match="^database.drop-schema=.*"
 			replace=""
@@ -29,6 +31,7 @@
 			/>
 	</target>
 	<target name="test:db:mysql:both-install-flags:fail">
+		<antcall target="clean"/>
 		<echo file="${build.dir}/local.properties" message="database.drop-schema=true${line.separator}database.re-create=true"/>
 		<buildExpectFail
 			/>
