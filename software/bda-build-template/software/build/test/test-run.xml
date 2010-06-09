@@ -1,0 +1,34 @@
+<project name="test-run" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<!-- -->
+	<target name="test:all">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="true">
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener toDir="${log.dir}" logLevel="info"/>
+			<plainlistener/>
+			<fileset dir="${basedir}">
+				<include name="test-suite*.xml"/>
+			</fileset>
+		</antunit>
+	</target>
+	<target name="test:suite:db">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="true">
+			<file file="${basedir}/test-suite-db.xml" />
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>
+	</target>
+
+	<target name="report-tests">
+		<junitreport>
+			<fileset dir="${antunit.xml.report.dir}" includes="*.xml"/>
+			<report format="frames" styledir="${antunit-style.dir}"
+				todir="${antunit.html.report.dir}"/>
+		</junitreport>
+		<fail if="antunit-failure">At least one test has failed</fail>
+	</target>
+	<target name="run" depends="test:all,report-tests">
+	</target>
+</project>

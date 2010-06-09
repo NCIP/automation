@@ -1,0 +1,53 @@
+<project name="test-common" basedir=".">
+	<property name="test.dir" location="."/>
+	<dirname property="build.dir" file="${test.dir}"/>
+	<dirname property="software.dir" file="${build.dir}"/>
+	<property name="target.dir" location="${software.dir}/target"/>
+	<property name="report.dir" location="${target.dir}/reports"/>
+	<property name="bda-utils.dir" location="${target.dir}/bda-utils"/>
+	<property name="log.dir" location="${target.dir}/logs"/>
+	<property name="common.dir" location="${software.dir}/common"/>
+	<property name="antunit-style.dir" location="${common.dir}/antunit"/>
+	<property name="antunit.xml.report.dir" location="${report.dir}/ant-unit-xml"/>
+	<property name="antunit.html.report.dir" location="${report.dir}/ant-unit-html"/>
+	<!-- to get bda.version -->
+	<property file="${build.dir}/project.properties"/>
+	<!-- Rely on running build once befor tests -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+	<!-- -->
+	<mkdir dir="${antunit.xml.report.dir}"/>
+	<mkdir dir="${antunit.html.report.dir}"/>
+	<!-- -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="org/apache/ant/antunit/antlib.xml" classpathref="bda-utils.classpath" />
+
+	<macrodef name="buildExpectPass">
+		<attribute name="build.target" default="deploy:local:install"/>
+		<sequential>
+			<ant inheritAll="false" inheritrefs="false"
+				antfile="build.xml"
+				dir="${build.dir}"
+				target="@{build.target}"
+				>
+			</ant>
+		</sequential>
+	</macrodef>
+	<macrodef name="buildExpectFail" >
+		<attribute name="build.target" default="deploy:local:install"/>
+		<sequential>
+			<expectfailure expectedMessage="Build failed as expected">
+				<ant inheritAll="false" inheritrefs="false"
+					antfile="build.xml"
+					dir="${build.dir}"
+					target="@{build.target}"
+					>
+				</ant>
+			</expectfailure>
+		</sequential>
+	</macrodef>
+</project>

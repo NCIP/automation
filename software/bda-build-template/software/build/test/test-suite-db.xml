@@ -1,0 +1,21 @@
+<project name="test-suite-db" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="true">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+	</target>
+	<target name="test:db:mysql:pass:install">
+		<!-- defaults to mysql -->
+		<buildExpectPass
+			/>
+	</target>
+	<target name="test:db:mysql:fail:bothflags">
+		<echo file="${build.dir}/local.properties" message="database.drop-schema=true${line.separator}database.re-create=true"/>
+		<buildExpectFail
+			/>
+	</target>
+</project>

@@ -2847,8 +2847,10 @@ software/bda-build-template/software/build/install.properties -text
 software/bda-build-template/software/build/install.xml -text
 software/bda-build-template/software/build/project.properties -text
 software/bda-build-template/software/build/properties.template -text
-software/bda-build-template/software/build/test/bkp-test.sh -text
-software/bda-build-template/software/build/test/tester.xml -text
+software/bda-build-template/software/build/test/test-common.xml -text
+software/bda-build-template/software/build/test/test-run.xml -text
+software/bda-build-template/software/build/test/test-suite-db.xml -text
+software/bda-build-template/software/build/test/tmp/bkp-test.sh -text
 software/bda-build-template/software/build/test/tmp/install-40-dac.properties -text
 software/bda-build-template/software/build/test/tmp/install-40-nondac.properties -text
 software/bda-build-template/software/build/test/tmp/install-40ejb-dac.properties -text
