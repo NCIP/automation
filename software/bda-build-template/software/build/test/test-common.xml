@@ -40,14 +40,33 @@
 	<macrodef name="buildExpectFail" >
 		<attribute name="build.target" default="deploy:local:install"/>
 		<sequential>
-			<expectfailure expectedMessage="Build failed as expected">
-				<ant inheritAll="false" inheritrefs="false"
-					antfile="build.xml"
-					dir="${build.dir}"
-					target="@{build.target}"
-					>
-				</ant>
-			</expectfailure>
+			<trycatch property="try.property">
+				<try>        
+					<ant inheritAll="false" inheritrefs="false"
+						antfile="build.xml"
+						dir="${build.dir}"
+						target="@{build.target}"
+						>
+					</ant>
+				</try>
+				<catch>                 
+					<echo message="Build failed as anticipated"/>
+				</catch>    
+			</trycatch>
 		</sequential>
 	</macrodef>
+	<target name="setUp">
+		<!-- svn revert some files to ensure that you are testing  -->
+		<svn javahl="false" svnkit="true">
+			<revert dir="${build.dir}">
+				<fileset dir="${build.dir}">
+					<include name="install.xml"/>
+					<include name="install.properties"/>
+					<include name="upgrade.properties"/>
+					<include name="project.properties"/>
+				</fileset>
+			</revert>
+		</svn>
+		<delete file="${build.dir}/local.properties"/>
+	</target>
 </project>

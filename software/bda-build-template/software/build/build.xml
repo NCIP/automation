@@ -1257,4 +1257,10 @@ $HeadURL$
 			project.version="0.7.0"
 			/>
 	</target>
+	<target name="temp:http">
+		<waitfor maxwait="10" maxwaitunit="second" checkevery="5" checkeveryunit="second" timeoutproperty="jboss.timeout">
+			<http url="https://login.yahoo.com"/>
+		</waitfor>              
+		<echo message="jboss.timeout = ${jboss.timeout}"/>
+	</target>
 </project>

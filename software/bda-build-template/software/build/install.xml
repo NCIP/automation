@@ -730,7 +730,9 @@ $HeadURL$
 				<isset property="exclude.start.servers"/>
 			</not>
 			<then>
-				<validate-post-jboss />
+				<validate-post-jboss
+					connect.wait.seconds="10"
+				       />
 			</then>
 		</if>
 	</target>
@@ -745,7 +747,9 @@ $HeadURL$
 				<isset property="exclude.start.servers"/>
 			</not>
 			<then>
-				<validate-post-tomcat />
+				<validate-post-tomcat
+					connect.wait.seconds="10"
+				       />
 			</then>
 		</if>
 	</target>

@@ -1,23 +1,44 @@
 <project name="test-run" default="run" basedir=".">
 	<import file="test-common.xml" />
 	<!-- -->
-	<target name="test:all">
+	<target name="test:init">
+		<var name="svn.changed" unset="true"/>
+		<groovy>                                 
+			String cmd= "svn status -N .."
+			println cmd                              
+			process=cmd.execute()                    
+			if (process.toString().length() > 0)
+			{
+			properties["svn.changed"]="true"
+			}
+		</groovy>                       
+		<if>
+			<isset property="svn.changed"/>
+			<then>
+				<echo message="WARNING ${build.dir} has changed files, commit them or changes may be lost because this process changes and reverts files."/>
+				<!--
+				<fail message="${build.dir} has changed files, commit them or changes may be lost because this process changes and reverts files."/>
+				-->
+			</then>
+		</if>
+			
+	</target>
+	<target name="test:all" depends="test:init">
 		<mkdir dir="${antunit.xml.report.dir}"/>
-		<antunit failOnError="true">
-			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
-			<plainlistener toDir="${log.dir}" logLevel="info"/>
-			<plainlistener/>
+		<antunit failOnError="false" errorproperty="antunit-failure">
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
+			<plainlistener logLevel="error"/>
 			<fileset dir="${basedir}">
 				<include name="test-suite*.xml"/>
 			</fileset>
 		</antunit>
 	</target>
-	<target name="test:suite:db">
+	<target name="test:suite:db" depends="test:init">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="true">
 			<file file="${basedir}/test-suite-db.xml" />
-			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
-			<plainlistener logLevel="info"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
+			<plainlistener logLevel="error"/>
 		</antunit>
 	</target>
 
