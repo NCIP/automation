@@ -2865,6 +2865,8 @@ software/bda-build-template/software/build/test/tmp/project-51-nondac.properties
 software/bda-build-template/software/build/test/tmp/test.sh -text
 software/bda-build-template/software/build/test/tmp/tester.groovy -text
 software/bda-build-template/software/build/upgrade.properties -text
+software/bda-build-template/software/common/antunit/junit-frames.xsl -text
+software/bda-build-template/software/common/antunit/junit-noframes.xsl -text
 software/bda-build-template/software/common/bda-download/bda-ivy-2.0.0-build.xml -text
 software/bda-build-template/software/common/bda-download/bda-ivy-build.xml -text
 software/bda-build-template/software/common/bda-download/cbiit-ivy-bda-settings.xml -text
