@@ -2853,6 +2853,7 @@ software/bda-build-template/software/build/test/install-40-nondac.properties -te
 software/bda-build-template/software/build/test/install-40ejb-dac.properties -text
 software/bda-build-template/software/build/test/install-51-dac.properties -text
 software/bda-build-template/software/build/test/install-51-nondac.properties -text
+software/bda-build-template/software/build/test/install-pg.properties -text
 software/bda-build-template/software/build/test/project-40-dac.properties -text
 software/bda-build-template/software/build/test/project-40-nondac.properties -text
 software/bda-build-template/software/build/test/project-40ejb-dac.properties -text
