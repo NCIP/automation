@@ -2847,8 +2847,8 @@ software/bda-build-template/software/build/install.properties -text
 software/bda-build-template/software/build/install.xml -text
 software/bda-build-template/software/build/project.properties -text
 software/bda-build-template/software/build/properties.template -text
+software/bda-build-template/software/build/test/build.xml -text
 software/bda-build-template/software/build/test/test-common.xml -text
-software/bda-build-template/software/build/test/test-run.xml -text
 software/bda-build-template/software/build/test/test-suite-db.xml -text
 software/bda-build-template/software/build/test/test-suite-jboss-upgrade.xml -text
 software/bda-build-template/software/build/test/test-suite.template -text
