@@ -1,4 +1,4 @@
-<project name="test-common" basedir=".">
+<project name="bda-test-common" basedir=".">
 	<property name="test.dir" location="."/>
 	<dirname property="build.dir" file="${test.dir}"/>
 	<dirname property="software.dir" file="${build.dir}"/>
@@ -56,7 +56,8 @@
 			</trycatch>
 		</sequential>
 	</macrodef>
-	<target name="clean">
+	<target name="setUp">
+		<echo message="**** Entering Setup"/>
 		<!-- svn revert some files to ensure that you are testing  -->
 		<svn javahl="false" svnkit="true">
 			<revert>
@@ -69,5 +70,6 @@
 			</revert>
 		</svn>
 		<delete file="${build.dir}/local.properties"/>
+		<echo message="**** Exiting Setup"/>
 	</target>
 </project>

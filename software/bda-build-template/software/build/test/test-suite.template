@@ -9,7 +9,7 @@
 		</antunit>      
 	</target>
 	<target name="test:template:pass">
-		<antcall target="clean"/>
+		<echo message="**** Entering test:template:pass"/>
 		<echo file="${build.dir}/local.properties" message=""/>
 		<!--
 		<replaceregexp file="${build.dir}/install.properties" byline="true"
@@ -19,11 +19,19 @@
 		-->
 		<buildExpectPass
 			/>
+		<echo message="**** Exiting test:template:pass"/>
 	</target>
 	<target name="test:template:fail">
-		<antcall target="clean"/>
+		<echo message="**** Entering test:template:fail"/>
 		<echo file="${build.dir}/local.properties" message=""/>
 		<buildExpectFail
 			/>
+		<echo message="**** Exiting test:template:fail"/>
 	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering suiteSetUp"/>
+		<echo message="**** Exiting suiteSetUp"/>
+	</target>
+
 </project>

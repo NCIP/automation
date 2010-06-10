@@ -58,7 +58,7 @@
 		</junitreport>
 		<fail if="antunit-failure">At least one test has failed</fail>
 	</target>
-	<target name="run" depends="test:all,clean,report-tests">
+	<target name="run" depends="test:all,setUp,report-tests">
 	</target>
 	<target name="temp:dac">
 		<xmltask preservetype="true" source="${build.dir}/install.xml"

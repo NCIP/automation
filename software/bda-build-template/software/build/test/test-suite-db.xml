@@ -10,7 +10,7 @@
 	</target>
 	<target name="test:db:mysql:install:drop-schema:pass">
 		<!-- defaults to mysql -->
-		<antcall target="clean"/>
+		<echo message="**** Entering test:db:mysql:install:drop-schema:pass"/>
 		<echo file="${build.dir}/local.properties" message="database.drop-schema=true"/>
 		<replaceregexp file="${build.dir}/install.properties" byline="true"
 			match="^database.re-create=.*"
@@ -18,10 +18,11 @@
 			/>
 		<buildExpectPass
 			/>
+		<echo message="**** Exiting test:db:mysql:install:drop-schema:pass"/>
 	</target>
 	<target name="test:db:mysql:install:re-create:pass">
 		<!-- defaults to mysql -->
-		<antcall target="clean"/>
+		<echo message="**** Entering test:db:mysql:install:re-create:pass"/>
 		<echo file="${build.dir}/local.properties" message="database.re-create=true"/>
 		<replaceregexp file="${build.dir}/install.properties" byline="true"
 			match="^database.drop-schema=.*"
@@ -29,11 +30,13 @@
 			/>
 		<buildExpectPass
 			/>
+		<echo message="**** Exiting test:db:mysql:install:re-create:pass"/>
 	</target>
 	<target name="test:db:mysql:both-install-flags:fail">
-		<antcall target="clean"/>
+		<echo message="**** Entering test:db:mysql:both-install-flags:fail"/>
 		<echo file="${build.dir}/local.properties" message="database.drop-schema=true${line.separator}database.re-create=true"/>
 		<buildExpectFail
 			/>
+		<echo message="**** Exiting test:db:mysql:both-install-flags:fail"/>
 	</target>
 </project>
