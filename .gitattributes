@@ -29,6 +29,7 @@ anthill-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
 certification-monitor/build.xml -text
 certification-monitor/build/CertificationUtils.groovy -text
 certification-monitor/build/build.xml -text
+certification-monitor/build/caarray.properties -text
 certification-monitor/build/lookup.properties -text
 certification-monitor/build/project.properties -text
 certification-monitor/dev-install.properties -text
@@ -65,6 +66,7 @@ certification-monitor/lib/tools.jar -text
 certification-monitor/lib/xercesImpl.jar -text
 certification-monitor/lib/xmltask-1.15.1.jar -text
 certification-monitor/prod-install.properties -text
+certification-monitor/src/main/Main.iml -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationConstants.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationHelper.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/CertificationManager.java -text

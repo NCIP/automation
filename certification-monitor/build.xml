@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="buildmonitor" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
 
+    <property environment="env" />
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="${env.ANT_HOME}/lib/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>
+    
+
 	<!-- PROPERTIES -->
-	<property environment="env" />
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="source.dir" value="${software.dir}/src/main/java" />
@@ -123,6 +131,18 @@
 		<copy file="${build.dir}/project.properties" todir="${deploy.dir}/build" />
 		<copy file="${build.dir}/CertificationUtils.groovy" todir="${deploy.dir}/build" />
 		<copy file="${build.dir}/lookup.properties" todir="${deploy.dir}/build" />
+
+        <!--this allows you to deploy locally with a project-->
+        <!--properties file without having the build server copy-->
+        <!--these properties file in.  build server uses the values out-->
+        <!--of the database.-->
+        <if>
+            <available file="${build.dir}/${project.name}.properties" /> 
+            <then>
+                <copy file="${build.dir}/${project.name}.properties" todir="${deploy.dir}/build" />
+            </then>
+        </if>
+
 		
 		<copy todir="${tests.dir}">
 			<fileset dir="${selenium.tests.src.dir}">
