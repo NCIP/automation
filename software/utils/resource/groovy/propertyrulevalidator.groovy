@@ -8,9 +8,11 @@ class propertyRuleValidator
 	def antPropsConv
 	def failureMessages=""
 	def debug=false
-	public propertyRuleValidator(antPropsIn)
+	def rulesFileLocation
+	public propertyRuleValidator(antPropsIn, File rulesFileLocationIn)
 	{
 		antProps=antPropsIn
+		rulesFileLocation=rulesFileLocationIn
 		println antProps.getClass()
 		//System.getProperties().sort{it.key}.each{println it.key +"\t"+ it.value}
 		if (antProps['groovy.debug'])
@@ -65,8 +67,7 @@ class propertyRuleValidator
 	}
 	private void antEvaluateAntProperties()
 	{
-		def file = new File("p.xml")
-		def xml = new XmlParser().parse(file)
+		def xml = new XmlParser().parse(rulesFileLocation)
 
 		/*
 		println xml.getClass()
@@ -153,12 +154,15 @@ class propertyRuleValidator
 				*/
 				if(debug) println "\t\tcondition - > " + c.text()
 				if(debug) println "${childCount}\t${cnt}"
+
+				def condConv=antStripDot(c.text())
+
 				if (cnt < childCount)
 				{
-					tempCondString=tempCondString + c.text().replaceAll('\\.','') + cond
+					tempCondString=tempCondString + condConv + cond
 				} else
 				{
-					tempCondString=tempCondString + c.text().replaceAll('\\.','') 
+					tempCondString=tempCondString + condConv 
 				}
 				if(debug) println "\t\ttempCondString -> " + tempCondString
 				if(debug) println "retrun condition"
@@ -175,7 +179,7 @@ class propertyRuleValidator
 	{
 		Binding binding = new Binding();
 		GroovyShell shell = new GroovyShell(binding);
-		def propertyNameConv = propertyName.replaceAll('\\.','')
+		def propertyNameConv = antStripDot(propertyName)
 		binding.setVariable(propertyNameConv, antProps[propertyName]);
 		
 		if (shell.evaluate(ruleCondition))
@@ -186,8 +190,15 @@ class propertyRuleValidator
 			return false
 		}
 	}
+	private antStripDot(String convStr)
+	{
+		def splitArray=convStr.split("\\s+")
+		splitArray[0]=splitArray[0].replaceAll("\\.", "")
+		return splitArray.join(" ");
+	}
 }
-def prv = new propertyRuleValidator(properties)
+def rulesFileLocation=new File(args[0]).getAbsoluteFile()
+def prv = new propertyRuleValidator(properties, rulesFileLocation)
 //prv.testAntEvaluate()
 //prv.antTestReadXML()
 prv.antEvaluateAntProperties()
