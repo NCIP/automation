@@ -77,7 +77,7 @@ caarray.single-command.deployment.target,install
 caarray.single-command.distribution.target,dist
 caarray.install.init.target,common:init
 caarray.build:database-integration.macro.list,database-install
-caarray.override.properties,application.base.path=${user.home}/apps/caarray,grid.server.hostname=localhost,grid.static.hostname=localhost,jboss.server.hostname=localhost,jboss.web.password=admin,grid.web.password=admin
+caarray.override.properties,"application.base.path=${user.home}/apps/caarray,grid.server.hostname=localhost,grid.static.hostname=localhost,jboss.server.hostname=localhost,jboss.web.password=admin,grid.web.password=admin"
 caarray.remote-upgrade.target,deploy:remote:upgrade:ahp
 caarray.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 caarray.single-command.package.upgrader.target,dist:upgrader
@@ -214,7 +214,7 @@ upt.ci-server.jobname,csm-install
 upt.single-command.deployment.target,install
 upt.single-command.distribution.target,dist
 upt.install.init.target,common:init
-upt.override.properties,upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false
+upt.override.properties,"upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false"
 upt.remote-upgrade.target,deploy:remote:upgrade
 upt.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 upt.single-command.package.upgrader.target,dist:upgrader
@@ -780,7 +780,7 @@ ncit.single-command.deployment.target,install
 ncit.single-command.distribution.target,dist
 ncit.install.init.target,common:init
 ncit.build:database-integration.macro.list,database-install
-ncit.optional.features,build:check-commandline-installer,build:database-integration
+ncit.optional.features,"build:check-commandline-installer,build:database-integration"
 ncit.remote-upgrade.target,deploy:remote:upgrade
 ncit.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ncit.single-command.package.upgrader.target,dist:upgrader
@@ -936,7 +936,7 @@ ccts-labviewer.ci-server.jobname,LabViewer
 ccts-labviewer.single-command.deployment.target,install
 ccts-labviewer.single-command.distribution.target,dist
 ccts-labviewer.install.init.target,install:init
-ccts-labviewer.override.properties,application.base.path.linux=${user.home}/apps/labviewer,exclude.tomcat.backup=true,tomcat.grid.secure.enable=false
+ccts-labviewer.override.properties,"application.base.path.linux=${user.home}/apps/labviewer,exclude.tomcat.backup=true,tomcat.grid.secure.enable=false"
 ccts-labviewer.optional.features,build:check-commandline-installer
 ccts-labviewer.remote-upgrade.target,deploy:remote:upgrade
 ccts-labviewer.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
@@ -984,7 +984,7 @@ ccts-clinicalconnector.install.init.target,common:init
 ccts-clinicalconnector.use.genericDB,false
 ccts-clinicalconnector.remote-upgrade.target,deploy:remote:upgrade
 ccts-clinicalconnector.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
-ccts-clinicalconnector.override.properties,database.type=oracle,tomcat.grid.secure.enable=false
+ccts-clinicalconnector.override.properties,"database.type=oracle,tomcat.grid.secure.enable=false"
 ccts-clinicalconnector.single-command.package.upgrader.target,dist:upgrader
 cacoresdk.database.type,mysql
 cacoresdk.svn.username,tbassett
@@ -1006,10 +1006,10 @@ cacoresdk.single-command.distribution.target,dist
 cacoresdk.install.init.target,common:init
 cacoresdk.remote-upgrade.target,install
 cacoresdk.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,INSTALL_CONTAINER=false"
-cacoresdk.override.properties,application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost,properties.file=install.properties,DB_TYPE=mysql,DB_SERVER=localhost,DB_SERVER_PORT=3306,DB_NAME=genericdb,DB_USERNAME=genericuser,DB_PASSWORD=password,exclude.jboss.backup=true
+cacoresdk.override.properties,"application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost,properties.file=install.properties,DB_TYPE=mysql,DB_SERVER=localhost,DB_SERVER_PORT=3306,DB_NAME=genericdb,DB_USERNAME=genericuser,DB_PASSWORD=password,exclude.jboss.backup=true"
 cacoresdk.single-command.package.upgrader.target,dist:upgrader
 cacoresdk.bdautils.build.location,${cacoresdk.svn.local.checkout}/sdk-toolkit/software/build
-cacoresdk.optional.features,build:remote-upgrade,build:private-repository-properties
+cacoresdk.optional.features,"build:remote-upgrade,build:private-repository-properties"
 cacoresdk.exclude.obfuscate.properties,true
 workbench.database.type,mysql
 workbench.svn.username,tbassett
