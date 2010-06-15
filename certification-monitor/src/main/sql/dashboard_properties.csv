@@ -55,7 +55,7 @@ petstore.single-command.distribution.target,dist
 petstore.install.init.target,common:init
 petstore.build:database-integration.macro.list,database-install
 petstore.remote-upgrade.target,deploy:remote:upgrade:ahp
-petstore.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+petstore.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 petstore.single-command.package.upgrader.target,dist:upgrader
 petstore.override.properties,
 caarray.database.type,mysql
@@ -79,7 +79,7 @@ caarray.install.init.target,common:init
 caarray.build:database-integration.macro.list,database-install
 caarray.override.properties,application.base.path=${user.home}/apps/caarray,grid.server.hostname=localhost,grid.static.hostname=localhost,jboss.server.hostname=localhost,jboss.web.password=admin,grid.web.password=admin
 caarray.remote-upgrade.target,deploy:remote:upgrade:ahp
-caarray.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+caarray.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 caarray.single-command.package.upgrader.target,dist:upgrader
 nbia.database.type,mysql
 nbia.svn.username,narram
@@ -101,7 +101,7 @@ nbia.single-command.distribution.target,dist
 nbia.install.init.target,common:common:init
 nbia.build:database-integration.macro.list,database-install
 nbia.remote-upgrade.target,deploy:remote:upgrade
-nbia.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,tomcat.ssh.server.username=@remote.username@,tomcat.ssh.server.hostname=@remote.hostname@,tomcat.ssh.port=22,tomcat.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,tomcat.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,ctp.ssh.server.username=@remote.username@,ctp.ssh.server.hostname=@remote.hostname@,ctp.ssh.port=22,ctp.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ctp.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,db.ssh.server.username=@remote.username@,db.ssh.server.hostname=@remote.hostname@,db.ssh.port=22,db.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,db.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,authentication.type=db
+nbia.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,tomcat.ssh.server.username=@remote.username@,tomcat.ssh.server.hostname=@remote.hostname@,tomcat.ssh.port=22,tomcat.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,tomcat.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,ctp.ssh.server.username=@remote.username@,ctp.ssh.server.hostname=@remote.hostname@,ctp.ssh.port=22,ctp.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ctp.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,db.ssh.server.username=@remote.username@,db.ssh.server.hostname=@remote.hostname@,db.ssh.port=22,db.ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,db.ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,authentication.type=db"
 nbia.single-command.package.upgrader.target,dist:upgrader
 nbia.override.properties,
 cagwas.database.type,mysql
@@ -124,7 +124,7 @@ cagwas.single-command.distribution.target,dist
 cagwas.install.init.target,common:init
 cagwas.build:database-integration.macro.list,database-install
 cagwas.remote-upgrade.target,deploy:remote:upgrade
-cagwas.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cagwas.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cagwas.single-command.package.upgrader.target,dist:upgrader
 cagwas.override.properties,
 protexpress.database.type,postgresql
@@ -147,7 +147,7 @@ protexpress.single-command.distribution.target,dist
 protexpress.install.init.target,install:init
 protexpress.build:database-integration.macro.list,database-install
 protexpress.remote-upgrade.target,deploy:remote:upgrade
-protexpress.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+protexpress.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 protexpress.single-command.package.upgrader.target,dist:upgrader
 protexpress.override.properties,
 bioportal.database.type,mysql
@@ -170,7 +170,7 @@ bioportal.single-command.distribution.target,dist
 bioportal.install.init.target,install:init
 bioportal.build:database-integration.macro.list,database-install
 bioportal.remote-upgrade.target,deploy:remote:upgrade
-bioportal.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+bioportal.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 bioportal.single-command.package.upgrader.target,dist:upgrader
 bioportal.override.properties,
 lexevs.database.type,mysql
@@ -193,7 +193,7 @@ lexevs.single-command.distribution.target,dist
 lexevs.install.init.target,install:init
 lexevs.build:database-integration.macro.list,database-install
 lexevs.remote-upgrade.target,deploy:remote:upgrade
-lexevs.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+lexevs.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 lexevs.single-command.package.upgrader.target,dist:upgrader
 lexevs.override.properties,
 upt.database.type,mysql
@@ -216,7 +216,7 @@ upt.single-command.distribution.target,dist
 upt.install.init.target,common:init
 upt.override.properties,upt.31.installed=false,upt.32.installed=false,upt.40.installed=false,upt.41.installed=false,upt.42.installed=false
 upt.remote-upgrade.target,deploy:remote:upgrade
-upt.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+upt.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 upt.single-command.package.upgrader.target,dist:upgrader
 po.database.type,postgresql
 po.svn.username,narram
@@ -237,7 +237,7 @@ po.single-command.deployment.target,install
 po.single-command.distribution.target,dist
 po.install.init.target,common:init
 po.remote-upgrade.target,deploy:remote:upgrade:ahp
-po.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,database.system.user=${database.system.user},database.system.password=${database.system.password},database.server=${database.server},database.port=${database.port},database.name=${database.name},database.user=${database.user}
+po.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,database.system.user=${database.system.user},database.system.password=${database.system.password},database.server=${database.server},database.port=${database.port},database.name=${database.name},database.user=${database.user}"
 po.single-command.package.upgrader.target,dist:upgrader
 po.override.properties,po-grid-jboss.grid.secure.enable=false
 caintegrator2.database.type,mysql
@@ -260,7 +260,7 @@ caintegrator2.single-command.distribution.target,dist
 caintegrator2.install.init.target,common:init
 caintegrator2.build:database-integration.macro.list,database-install
 caintegrator2.remote-upgrade.target,deploy:remote:upgrade
-caintegrator2.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+caintegrator2.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 caintegrator2.single-command.package.upgrader.target,dist:upgrader
 caintegrator2.override.properties,
 cananolab.database.type,mysql
@@ -282,7 +282,7 @@ cananolab.single-command.deployment.target,install
 cananolab.single-command.distribution.target,dist
 cananolab.install.init.target,install:init
 cananolab.remote-upgrade.target,deploy:remote:upgrade
-cananolab.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cananolab.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cananolab.single-command.package.upgrader.target,dist:upgrader
 cananolab.override.properties,
 pa.database.type,postgresql
@@ -304,7 +304,7 @@ pa.single-command.deployment.target,install
 pa.single-command.distribution.target,dist
 pa.install.init.target,install:init
 pa.remote-upgrade.target,deploy:remote:upgrade
-pa.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+pa.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 pa.single-command.package.upgrader.target,dist:upgrader
 pa.override.properties,
 rembrandt.database.type,mysql
@@ -326,7 +326,7 @@ rembrandt.single-command.deployment.target,install
 rembrandt.single-command.distribution.target,dist
 rembrandt.install.init.target,install:init
 rembrandt.remote-upgrade.target,deploy:remote:upgrade
-rembrandt.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+rembrandt.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 rembrandt.single-command.package.upgrader.target,dist:upgrader
 rembrandt.override.properties,
 cabio.database.type,oracle
@@ -350,7 +350,7 @@ cabio.install.init.target,common:init
 cabio.use.genericDB,false
 cabio.build:database-integration.macro.list,database-install
 cabio.remote-upgrade.target,deploy:remote:upgrade:ahp
-cabio.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cabio.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cabio.optional.features,build:database-integration
 cabio.single-command.package.upgrader.target,dist:upgrader
 cabio.override.properties,
@@ -373,7 +373,7 @@ ispy.single-command.deployment.target,install
 ispy.single-command.distribution.target,dist
 ispy.install.init.target,install:init
 ispy.remote-upgrade.target,deploy:remote:upgrade
-ispy.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ispy.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ispy.single-command.package.upgrader.target,dist:upgrader
 ispy.override.properties,
 cpas.database.type,mysql
@@ -395,7 +395,7 @@ cpas.single-command.deployment.target,install
 cpas.single-command.distribution.target,dist
 cpas.install.init.target,install:init
 cpas.remote-upgrade.target,deploy:remote:upgrade
-cpas.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cpas.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cpas.single-command.package.upgrader.target,dist:upgrader
 cpas.override.properties,
 ccts.database.type,mysql
@@ -417,7 +417,7 @@ ccts.single-command.deployment.target,install
 ccts.single-command.distribution.target,dist
 ccts.install.init.target,install:init
 ccts.remote-upgrade.target,deploy:remote:upgrade
-ccts.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ccts.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ccts.single-command.package.upgrader.target,dist:upgrader
 ccts.override.properties,
 tcga.database.type,mysql
@@ -439,7 +439,7 @@ tcga.single-command.deployment.target,install
 tcga.single-command.distribution.target,dist
 tcga.install.init.target,install:init
 tcga.remote-upgrade.target,deploy:remote:upgrade
-tcga.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+tcga.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 tcga.single-command.package.upgrader.target,dist:upgrader
 tcga.override.properties,
 cadsr-cdebrowser.database.type,oracle
@@ -462,7 +462,7 @@ cadsr-cdebrowser.single-command.distribution.target,dist
 cadsr-cdebrowser.install.init.target,common:init
 cadsr-cdebrowser.use.genericDB,false
 cadsr-cdebrowser.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-cdebrowser.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-cdebrowser.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-cdebrowser.single-command.package.upgrader.target,dist:upgrader
 cadsr-cdebrowser.override.properties,
 cadsr-umlmodelbrowser.database.type,oracle
@@ -485,7 +485,7 @@ cadsr-umlmodelbrowser.single-command.distribution.target,dist
 cadsr-umlmodelbrowser.install.init.target,common:init
 cadsr-umlmodelbrowser.use.genericDB,false
 cadsr-umlmodelbrowser.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-umlmodelbrowser.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-umlmodelbrowser.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-umlmodelbrowser.single-command.package.upgrader.target,dist:upgrader
 cadsr-umlmodelbrowser.override.properties,
 cadsr-formbuilder.database.type,oracle
@@ -508,7 +508,7 @@ cadsr-formbuilder.single-command.distribution.target,dist
 cadsr-formbuilder.install.init.target,common:init
 cadsr-formbuilder.use.genericDB,false
 cadsr-formbuilder.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-formbuilder.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-formbuilder.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-formbuilder.single-command.package.upgrader.target,dist:upgrader
 cadsr-formbuilder.override.properties,
 cadsr-sentinel.database.type,oracle
@@ -531,7 +531,7 @@ cadsr-sentinel.single-command.distribution.target,dist
 cadsr-sentinel.install.init.target,common:init
 cadsr-sentinel.use.genericDB,false
 cadsr-sentinel.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-sentinel.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-sentinel.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-sentinel.single-command.package.upgrader.target,dist:upgrader
 cadsr-sentinel.override.properties,
 cadsr-freestylesearch.database.type,oracle
@@ -554,7 +554,7 @@ cadsr-freestylesearch.single-command.distribution.target,dist
 cadsr-freestylesearch.install.init.target,common:init
 cadsr-freestylesearch.use.genericDB,false
 cadsr-freestylesearch.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-freestylesearch.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-freestylesearch.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-freestylesearch.single-command.package.upgrader.target,dist:upgrader
 cadsr-freestylesearch.override.properties,
 cadsr-cdecurate.database.type,oracle
@@ -577,7 +577,7 @@ cadsr-cdecurate.single-command.distribution.target,dist
 cadsr-cdecurate.install.init.target,common:init
 cadsr-cdecurate.use.genericDB,false
 cadsr-cdecurate.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-cdecurate.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-cdecurate.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-cdecurate.single-command.package.upgrader.target,dist:upgrader
 cadsr-cdecurate.override.properties,
 cadsr-semanticTools.database.type,oracle
@@ -600,7 +600,7 @@ cadsr-semanticTools.single-command.distribution.target,dist
 cadsr-semanticTools.install.init.target,common:init
 cadsr-semanticTools.use.genericDB,false
 cadsr-semanticTools.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-semanticTools.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-semanticTools.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-semanticTools.single-command.package.upgrader.target,dist:upgrader
 cadsr-semanticTools.override.properties,
 cadsr-cadsrdb.database.type,oracle
@@ -623,7 +623,7 @@ cadsr-cadsrdb.single-command.distribution.target,dist
 cadsr-cadsrdb.install.init.target,common:init
 cadsr-cadsrdb.use.genericDB,false
 cadsr-cadsrdb.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr-cadsrdb.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr-cadsrdb.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr-cadsrdb.single-command.package.upgrader.target,dist:upgrader
 cadsr-cadsrdb.override.properties,
 cadsr.database.type,oracle
@@ -646,7 +646,7 @@ cadsr.single-command.distribution.target,dist
 cadsr.install.init.target,common:init
 cadsr.use.genericDB,false
 cadsr.remote-upgrade.target,deploy:remote:upgrade:ahp
-cadsr.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cadsr.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cadsr.single-command.package.upgrader.target,dist:upgrader
 cadsr.override.properties,
 camod.database.type,oracle
@@ -669,7 +669,7 @@ camod.single-command.distribution.target,dist
 camod.install.init.target,common:init
 camod.use.genericDB,false
 camod.remote-upgrade.target,deploy:remote:upgrade
-camod.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+camod.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 camod.single-command.package.upgrader.target,dist:upgrader
 camod.override.properties,
 evstree.database.type,oracle
@@ -692,7 +692,7 @@ evstree.single-command.distribution.target,dist
 evstree.install.init.target,common:init
 evstree.use.genericDB,false
 evstree.remote-upgrade.target,deploy:remote:upgrade
-evstree.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+evstree.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 evstree.single-command.package.upgrader.target,dist:upgrader
 evstree.override.properties,
 catissue.database.type,mysql
@@ -714,7 +714,7 @@ catissue.single-command.deployment.target,install
 catissue.single-command.distribution.target,dist
 catissue.install.init.target,install:init
 catissue.remote-upgrade.target,deploy:remote:upgrade
-catissue.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+catissue.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 catissue.single-command.package.upgrader.target,dist:upgrader
 catissue.override.properties,
 cab2b.database.type,mysql
@@ -736,7 +736,7 @@ cab2b.single-command.deployment.target,install
 cab2b.single-command.distribution.target,dist
 cab2b.install.init.target,install:init
 cab2b.remote-upgrade.target,deploy:remote:upgrade
-cab2b.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cab2b.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cab2b.single-command.package.upgrader.target,dist:upgrader
 cab2b.override.properties,
 cagrid.database.type,mysql
@@ -758,7 +758,7 @@ cagrid.single-command.deployment.target,install
 cagrid.single-command.distribution.target,dist
 cagrid.install.init.target,install:init
 cagrid.remote-upgrade.target,deploy:remote:upgrade
-cagrid.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+cagrid.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 cagrid.single-command.package.upgrader.target,dist:upgrader
 cagrid.override.properties,
 ncit.database.type,mysql
@@ -782,7 +782,7 @@ ncit.install.init.target,common:init
 ncit.build:database-integration.macro.list,database-install
 ncit.optional.features,build:check-commandline-installer,build:database-integration
 ncit.remote-upgrade.target,deploy:remote:upgrade
-ncit.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ncit.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ncit.single-command.package.upgrader.target,dist:upgrader
 ncit.override.properties,
 reportwriter.database.type,mysql
@@ -805,7 +805,7 @@ reportwriter.single-command.distribution.target,dist
 reportwriter.install.init.target,common:init
 reportwriter.optional.features,build:check-commandline-installer
 reportwriter.remote-upgrade.target,deploy:remote:upgrade
-reportwriter.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+reportwriter.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 reportwriter.single-command.package.upgrader.target,dist:upgrader
 reportwriter.override.properties,
 genepattern.database.type,mysql
@@ -827,7 +827,7 @@ genepattern.single-command.deployment.target,install
 genepattern.single-command.distribution.target,dist
 genepattern.install.init.target,install:init
 genepattern.remote-upgrade.target,deploy:remote:upgrade
-genepattern.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+genepattern.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 genepattern.single-command.package.upgrader.target,dist:upgrader
 genepattern.override.properties,
 ctods.database.type,mysql
@@ -849,7 +849,7 @@ ctods.single-command.deployment.target,install
 ctods.single-command.distribution.target,dist
 ctods.install.init.target,install:init
 ctods.remote-upgrade.target,deploy:remote:upgrade
-ctods.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ctods.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ctods.single-command.package.upgrader.target,dist:upgrader
 ctods.override.properties,
 ccts-c3pr.database.type,mysql
@@ -871,7 +871,7 @@ ccts-c3pr.single-command.deployment.target,install
 ccts-c3pr.single-command.distribution.target,dist
 ccts-c3pr.install.init.target,common:init
 ccts-c3pr.remote-upgrade.target,deploy:remote:upgrade
-ccts-c3pr.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ccts-c3pr.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ccts-c3pr.single-command.package.upgrader.target,dist:upgrader
 ccts-c3pr.override.properties,
 ccts-caaers.database.type,mysql
@@ -894,7 +894,7 @@ ccts-caaers.single-command.distribution.target,dist
 ccts-caaers.install.init.target,common:init
 ccts-caaers.override.properties,tomcat.hostname=localhost
 ccts-caaers.remote-upgrade.target,deploy:remote:upgrade
-ccts-caaers.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ccts-caaers.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ccts-caaers.single-command.package.upgrader.target,dist:upgrader
 ccts-caXchange.database.type,mysql
 ccts-caXchange.svn.username,narram
@@ -915,7 +915,7 @@ ccts-caXchange.single-command.deployment.target,install
 ccts-caXchange.single-command.distribution.target,dist
 ccts-caXchange.install.init.target,install:init
 ccts-caXchange.remote-upgrade.target,deploy:remote:upgrade
-ccts-caXchange.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ccts-caXchange.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ccts-caXchange.single-command.package.upgrader.target,dist:upgrader
 ccts-caXchange.override.properties,
 ccts-labviewer.database.type,postgresql
@@ -939,7 +939,7 @@ ccts-labviewer.install.init.target,install:init
 ccts-labviewer.override.properties,application.base.path.linux=${user.home}/apps/labviewer,exclude.tomcat.backup=true,tomcat.grid.secure.enable=false
 ccts-labviewer.optional.features,build:check-commandline-installer
 ccts-labviewer.remote-upgrade.target,deploy:remote:upgrade
-ccts-labviewer.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ccts-labviewer.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ccts-labviewer.single-command.package.upgrader.target,dist:upgrader
 ccts-psc.database.type,postgresql
 ccts-psc.svn.username,narram
@@ -960,7 +960,7 @@ ccts-psc.single-command.deployment.target,install
 ccts-psc.single-command.distribution.target,dist
 ccts-psc.install.init.target,install:init
 ccts-psc.remote-upgrade.target,deploy:remote:upgrade
-ccts-psc.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ccts-psc.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ccts-psc.single-command.package.upgrader.target,dist:upgrader
 ccts-psc.override.properties,
 ccts-clinicalconnector.database.type,oracle
@@ -983,7 +983,7 @@ ccts-clinicalconnector.single-command.distribution.target,dist
 ccts-clinicalconnector.install.init.target,common:init
 ccts-clinicalconnector.use.genericDB,false
 ccts-clinicalconnector.remote-upgrade.target,deploy:remote:upgrade
-ccts-clinicalconnector.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ccts-clinicalconnector.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ccts-clinicalconnector.override.properties,database.type=oracle,tomcat.grid.secure.enable=false
 ccts-clinicalconnector.single-command.package.upgrader.target,dist:upgrader
 cacoresdk.database.type,mysql
@@ -1005,7 +1005,7 @@ cacoresdk.single-command.deployment.target,install
 cacoresdk.single-command.distribution.target,dist
 cacoresdk.install.init.target,common:init
 cacoresdk.remote-upgrade.target,install
-cacoresdk.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,INSTALL_CONTAINER=false
+cacoresdk.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,INSTALL_CONTAINER=false"
 cacoresdk.override.properties,application.base.path.linux=${user.home}/apps/cacoresdk-app,jboss.server.hostname=localhost,properties.file=install.properties,DB_TYPE=mysql,DB_SERVER=localhost,DB_SERVER_PORT=3306,DB_NAME=genericdb,DB_USERNAME=genericuser,DB_PASSWORD=password,exclude.jboss.backup=true
 cacoresdk.single-command.package.upgrader.target,dist:upgrader
 cacoresdk.bdautils.build.location,${cacoresdk.svn.local.checkout}/sdk-toolkit/software/build
@@ -1032,7 +1032,7 @@ workbench.install.init.target,common:init
 workbench.remote-upgrade.target,deploy:remote:upgrade:ahp
 workbench.single-command.package.upgrader.target,dist:upgrader
 workbench.exclude.obfuscate.properties,true
-workbench.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,application.base.path.linux=${user.home}/apps/workbench-app
+workbench.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy,application.base.path.linux=${user.home}/apps/workbench-app"
 workbench.override.properties,application.base.path.linux=${user.home}/apps/workbench-app
 pro-ctcae.database.type,mysql
 pro-ctcae.svn.username,narram
@@ -1053,7 +1053,7 @@ pro-ctcae.single-command.deployment.target,install
 pro-ctcae.single-command.distribution.target,dist
 pro-ctcae.install.init.target,install:init
 pro-ctcae.remote-upgrade.target,deploy:remote:upgrade
-pro-ctcae.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+pro-ctcae.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 pro-ctcae.single-command.package.upgrader.target,dist:upgrader
 caAdapter.database.type,mysql
 caAdapter.svn.username,narram
@@ -1074,7 +1074,7 @@ caAdapter.single-command.deployment.target,install
 caAdapter.single-command.distribution.target,dist
 caAdapter.install.init.target,common:init
 caAdapter.remote-upgrade.target,deploy:remote:upgrade:ahp
-caAdapter.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+caAdapter.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 caAdapter.optional.features,build:private-repository-properties
 caAdapter.single-command.package.upgrader.target,dist:upgrader
 caAdapter.override.properties,
@@ -1097,6 +1097,6 @@ ESD.single-command.deployment.target,install
 ESD.single-command.distribution.target,dist
 ESD.install.init.target,common:init
 ESD.remote-upgrade.target,deploy:remote:upgrade:ahp
-ESD.override.remote.properties,ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy
+ESD.override.remote.properties,"ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy"
 ESD.single-command.package.upgrader.target,dist:upgrader
 ESD.override.properties,
