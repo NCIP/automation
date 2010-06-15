@@ -4000,6 +4000,8 @@ software/utils/legacy-ivy.xml -text
 software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
+software/utils/resource/groovy/property-rules.xml -text
+software/utils/resource/groovy/propertyrulevalidator.groovy -text
 software/utils/resource/groovy/updatePropertiesService.groovy -text
 software/utils/resource/groovy/verifyPasswordValue.groovy -text
 software/utils/resource/ivy/cbiit-ivy-settings-with-cagrid12.xml -text
