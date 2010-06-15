@@ -3,13 +3,6 @@
 
     <property environment="env" />
 
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
-        <classpath>
-            <pathelement location="${env.ANT_HOME}/lib/ant-contrib.jar"/>
-        </classpath>
-    </taskdef>
-    
-
 	<!-- PROPERTIES -->
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
@@ -52,6 +45,7 @@
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
 	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="project.classpath"/>
     <taskdef resource="liquibasetasks.properties" classpathref="project.classpath" />
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="project.classpath"/>
 
 	<target name="init" depends="clean" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
