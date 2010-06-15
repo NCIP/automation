@@ -1,0 +1,13 @@
+ID,TARGET_NAME,MAP_NAME,IS_VALUE
+1,validate:JAD,singleCommandBuild,NULL
+2,validate:svn:checkout-project,singleCommandBuild,NULL
+3,build:single-command-build,singleCommandBuild,NULL
+4,build:single-command-deployment,singleCommandDeployment,NULL
+5,build:database-integration,databaseIntegration,NULL
+6,build:remote-upgrade,remoteUpgrade,NULL
+7,build:check-bdafied,bdaEnabled,true
+8,build:template-properties,templateValidation,NULL
+9,build:private-repository-properties,privateRepositoryProperties,NULL
+10,build:ci-server,latestCIBuild,true
+11,build:validate-app-servers,deploymentShakeout,NULL
+12,build:check-commandline-installer,commandLineInstaller,NULL

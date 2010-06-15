@@ -26,6 +26,7 @@ anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/listener/BDABuildListener.
 anthill-monitor/src/main/java/gov/nih/nci/bda/monitor/util/HibernateUtil.java -text
 anthill-monitor/src/main/resources/hibernate.cfg.xml -text
 anthill-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
+certification-monitor/Main.iml -text
 certification-monitor/build.xml -text
 certification-monitor/build/CertificationUtils.groovy -text
 certification-monitor/build/build.xml -text
@@ -50,6 +51,7 @@ certification-monitor/lib/hibernate3.jar -text
 certification-monitor/lib/javassist-3.4.GA.jar -text
 certification-monitor/lib/jsch-0.1.39.jar -text
 certification-monitor/lib/jta-1.1.jar -text
+certification-monitor/lib/liquibase-core-1.9.3.jar -text
 certification-monitor/lib/mysql-connector-java-5.0.5.jar -text
 certification-monitor/lib/selenium-java-client-driver-sources.jar -text
 certification-monitor/lib/selenium-java-client-driver-test-sources.jar -text
@@ -88,9 +90,17 @@ certification-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
 certification-monitor/src/main/sql/create_table_dashboard_properties.sql -text
 certification-monitor/src/main/sql/create_table_project_poc.sql -text
 certification-monitor/src/main/sql/create_table_target_lookup.sql -text
+certification-monitor/src/main/sql/dashboard_properties.csv -text
+certification-monitor/src/main/sql/dashboard_properties_changelog.xml -text
+certification-monitor/src/main/sql/dbchangelog-1.9.xsd -text
 certification-monitor/src/main/sql/insert_dashboard_properties.sql -text
 certification-monitor/src/main/sql/insert_project_poc.sql -text
 certification-monitor/src/main/sql/insert_target_lookup.sql -text
+certification-monitor/src/main/sql/project_poc.csv -text
+certification-monitor/src/main/sql/project_poc.xml -text
+certification-monitor/src/main/sql/structure.xml -text
+certification-monitor/src/main/sql/target_lookup.csv -text
+certification-monitor/src/main/sql/target_lookup.xml -text
 certification-monitor/src/tests/functional/certification-test-case.html -text
 certification-monitor/src/tests/functional/certification-test-suite.html -text
 certification-monitor/src/tests/unit/groovy/BDACertificationTest.groovy -text

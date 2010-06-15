@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+
+    <changeSet id="2010.06.14.22.29.01" author="bassetttj">
+        <createTable tableName="dashboard_properties">
+            <column name="dashboard_key" type="varchar(600)"/>
+            <column name="dashboard_value" type="varchar(2000)" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2010.06.14.19.30.01" author="bassetttj">
+        <createTable tableName="target_lookup">
+            <column name="ID" type="int8"/>
+            <column name="TARGET_NAME" type="varchar(150)"/>
+            <column name="MAP_NAME" type="varchar(150)"/>
+            <column name="IS_VALUE" type="varchar(15)"/>
+            <column name="IS_OPTIONAL" type="varchar(15)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2010.06.14.22.17.01" author="bassettj">
+        <createTable tableName="project_poc">
+            <column name="PROJECT_NAME" type="varchar(100)"/>
+            <column name="DEV_POC" type="varchar(200)"/>
+            <column name="DEV_POC_EMAIL" type="varchar(200)" />
+            <column name="GOV_POC" type="varchar(200)" />
+            <column name="GOV_POC_EMAIL" type="varchar(200)" />
+            <column name="BDA_POC_EMAIL" type="varchar(200)" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
+

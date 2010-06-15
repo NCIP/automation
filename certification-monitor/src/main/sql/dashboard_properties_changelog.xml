@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+
+
+    <changeSet id="2010.06.14.20.06.01" author="bassetttj">
+        <delete tableName="dashboard_properties">
+            <where>dashboard_key NOT LIKE '%svn.password%'</where>
+        </delete>
+        <loadData tableName="dashboard_properties"
+                  file="${sql.dist.dir}/dashboard_properties.csv">
+        </loadData>
+    </changeSet>
+
+
+
+</databaseChangeLog>

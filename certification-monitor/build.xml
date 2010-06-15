@@ -51,6 +51,7 @@
 	
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
 	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="project.classpath"/>
+    <taskdef resource="liquibasetasks.properties" classpathref="project.classpath" />
 
 	<target name="init" depends="clean" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
@@ -76,12 +77,46 @@
 	</target>
 
 	<target name="deploy:sql" description="create table and populate data">
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.project.poc}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
-		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.project.poc}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+        <changeLogSync  changelogfile="${sql.dist.dir}/structure.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath" />
+
+        <updateDatabase changelogfile="${sql.dist.dir}/structure.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath" />
+
+        <updateDatabase changelogfile="${sql.dist.dir}/dashboard_properties_changelog.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
+
+        <updateDatabase changelogfile="${sql.dist.dir}/project_poc.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
+
+        <updateDatabase changelogfile="${sql.dist.dir}/target_lookup.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
 	</target>
 
 	<target name="install:database" description="Runs install scripts">
@@ -174,7 +209,7 @@
 	</target>
 
 	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
-		
+
 	</target>
 		
 	<target name="test:execute" description="Run the class to update Wiki">

@@ -1,4 +1,5 @@
 insert into dashboard_properties (dashboard_key, dashboard_value) values('mysql.database.system.user','mysql');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('mysql.database.system.user','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('mysql.database.system.password','mysql');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('mysql.database.server','localhost');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('mysql.database.port','3306');
@@ -80,7 +81,7 @@ insert into dashboard_properties (dashboard_key, dashboard_value) values('caarra
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.install.init.target','common:init');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.build:database-integration.macro.list','database-install');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.override.properties','application.base.path=${user.home}/apps/caarray,grid.server.hostname=localhost,grid.static.hostname=localhost,jboss.server.hostname=localhost,jboss.web.password=admin,grid.web.password=admin');
-insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.remote-upgrade.target','deploy:remote:upgrade');
+insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.remote-upgrade.target','deploy:remote:upgrade:ahp');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.override.remote.properties','ssh.server.username=@remote.username@,ssh.server.hostname=@remote.hostname@,ssh.port=22,ssh.key.file=${user.home}/ssh-pub-key/id_dsa_bda,ssh.dir.temp=${user.home}/buildcertification/build/working/remote-deploy');
 insert into dashboard_properties (dashboard_key, dashboard_value) values('caarray.single-command.package.upgrader.target','dist:upgrader');
 
