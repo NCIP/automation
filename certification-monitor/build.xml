@@ -71,6 +71,15 @@
 	</target>
 
 	<target name="deploy:sql" description="create table and populate data">
+
+        <changeLogSync  changelogfile="${sql.dist.dir}/structure.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath" />
+
+
         <updateDatabase changelogfile="${sql.dist.dir}/structure.xml"
                         url="${database.url}"
                         username="${database.user}"
@@ -104,6 +113,8 @@
                         classpathref="project.classpath">
             <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
         </updateDatabase>
+
+        
 	</target>
 
 	<target name="install:database" description="Runs install scripts">

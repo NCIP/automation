@@ -15,5 +15,20 @@
     </changeSet>
 
 
+    <changeSet id="2010.06.15.11.43.01" author="bassetttj">
+        <sql>
+            update dashboard_properties
+                set dashboard_key = replace(dashboard_key,'ESD.', 'caEHR-ESD.')
+                , dashboard_value = replace(dashboard_value,'ESD.', 'caEHR-ESD.')
+            where dashboard_key like 'ESD.%';
+        </sql>
+        <sql>
+            delete from project_certification_status where product like '%[ESD|%';
+        </sql>
+    </changeSet>
+
+    
+
+
 
 </databaseChangeLog>
