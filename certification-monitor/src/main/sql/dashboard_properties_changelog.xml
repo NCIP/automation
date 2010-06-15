@@ -15,7 +15,7 @@
     </changeSet>
 
 
-    <changeSet id="2010.06.15.11.43.01" author="bassetttj">
+    <changeSet id="2010.06.15.11.43.01" author="bassetttj" runAlways="true" runOnChange="true">
         <sql>
             update dashboard_properties
                 set dashboard_key = replace(dashboard_key,'ESD.', 'caEHR-ESD.')
