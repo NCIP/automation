@@ -239,9 +239,11 @@
 	                                                
 	<echo message="HOME is: ${env.HOME}" />
 	<target name="update:build:schedule">
-        <property name="build.schedule" value="0 20 * * *" />
+        <property name="build.schedule.hour" value="20" />
+        <property name="build.schedule.minute" value="0" />
+        <property name="build.schedule" value="${build.schedule.minute} ${build.schedule.hour} * * *" />
         <echo>build.schedule=${build.schedule}</echo>
-		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\10 20 * * *\2"  byline="true">
+		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\1${build.schedule}\2"  byline="true">
    			 <fileset dir="${env.HOME}/hudson_data/jobs" includes="certify*/config.xml"/>
 		</replaceregexp>
 	</target>
