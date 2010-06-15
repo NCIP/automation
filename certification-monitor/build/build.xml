@@ -318,6 +318,26 @@
 			override.properties.string.property.name="override.remote.properties.string"
 			/>
 
+        <echoxml>
+        <exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
+            <arg value="-Dproperties.file=upgrade.properties" />
+            <arg value="-Dforce.reinstall=true" />
+            <arg value="-Ddatabase.system.user=${database.system.user}" />
+            <arg value="-Ddatabase.system.password=${database.system.password}" />
+            <arg value="-Ddatabase.server=${database.server}" />
+            <arg value="-Ddatabase.port=${database.port}" />
+            <arg value="-Ddatabase.name=${database.name}" />
+            <arg value="-Ddatabase.user=${database.user}" />
+            <arg value="-Ddatabase.password=${database.password}" />
+            <arg value="-Ddatabase.url=${database.url}" />
+            <arg value="-Ddatabase.system.url=${database.system.url}" />
+            <arg value="-Doverride.properties=${override.properties}" />
+            <arg line="${override.properties.string}"/>
+            <arg line="${override.remote.properties.string}"/>
+            <arg value="${remote-upgrade.target}" />
+        </exec>
+        </echoxml>
+
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 			<arg value="-Dproperties.file=upgrade.properties" />
 			<arg value="-Dforce.reinstall=true" />	
