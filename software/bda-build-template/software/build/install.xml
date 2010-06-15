@@ -609,7 +609,7 @@ $HeadURL$
 				<!-- clean up ssl config from systems provided jboss -->
 				<xmltask preservetype="true" source="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
 					dest="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml">
-					<xmlcatalog refid="bda.xml.catalog"/>           
+					<xmlcatalog refid="bda.xml.catalog"/>
 					<remove path="/Server/Service[@name='jboss.web']/Connector[@keystoreFile='${jboss.server.home.dir}/conf/keystore/server.keystore']" />
 				</xmltask>
 				<jboss-configure
@@ -1739,5 +1739,27 @@ $HeadURL$
 	</target>
 	<target name="test:fail">
 		<fail message="This target is supposed to cause a build failure.  This target can be used to verfiy that &lt;exec/&gt; calls are catching failures."/>
+	</target>
+	<target name="install:common:property-validate" description=""
+		depends="
+		common:jboss:init,
+		common:tomcat:init,
+		common:init,
+		install:jboss:init
+		">
+		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
+			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
+		</groovy>
+	</target>
+	<target name="upgrade:common:property-validate" description=""
+		depends="
+		upgrade:common:init,
+		common:init,
+		common:jboss:init,
+		common:tomcat:init
+		">
+		<groovy src="${bda-utils.dir}resource//groovy/propertyrulevalidator.groovy">
+			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
+		</groovy>
 	</target>
 </project>
