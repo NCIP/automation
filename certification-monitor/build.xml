@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="buildmonitor" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
 
-    <property environment="env" />
-
 	<!-- PROPERTIES -->
+	<property environment="env" />
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="source.dir" value="${software.dir}/src/main/java" />
@@ -44,8 +43,6 @@
 	
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
 	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="project.classpath"/>
-    <taskdef resource="liquibasetasks.properties" classpathref="project.classpath" />
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="project.classpath"/>
 
 	<target name="init" depends="clean" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
@@ -71,50 +68,12 @@
 	</target>
 
 	<target name="deploy:sql" description="create table and populate data">
-
-        <changeLogSync  changelogfile="${sql.dist.dir}/structure.xml"
-                        url="${database.url}"
-                        username="${database.user}"
-                        password="${database.password}"
-                        driver="${database.driver}"
-                        classpathref="project.classpath" />
-
-
-        <updateDatabase changelogfile="${sql.dist.dir}/structure.xml"
-                        url="${database.url}"
-                        username="${database.user}"
-                        password="${database.password}"
-                        driver="${database.driver}"
-                        classpathref="project.classpath" />
-
-        <updateDatabase changelogfile="${sql.dist.dir}/dashboard_properties_changelog.xml"
-                        url="${database.url}"
-                        username="${database.user}"
-                        password="${database.password}"
-                        driver="${database.driver}"
-                        classpathref="project.classpath">
-            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
-        </updateDatabase>
-
-        <updateDatabase changelogfile="${sql.dist.dir}/project_poc.xml"
-                        url="${database.url}"
-                        username="${database.user}"
-                        password="${database.password}"
-                        driver="${database.driver}"
-                        classpathref="project.classpath">
-            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
-        </updateDatabase>
-
-        <updateDatabase changelogfile="${sql.dist.dir}/target_lookup.xml"
-                        url="${database.url}"
-                        username="${database.user}"
-                        password="${database.password}"
-                        driver="${database.driver}"
-                        classpathref="project.classpath">
-            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
-        </updateDatabase>
-
-        
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.target.lookup}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.dashboard.properties}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.create.project.poc}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
+		<run-sql-script sql.file="${sql.dist.dir}/${sql.file.insert.project.poc}"  database.url="${database.url}" database.user="${database.user}" database.password="${database.password}"/>
 	</target>
 
 	<target name="install:database" description="Runs install scripts">
@@ -164,18 +123,6 @@
 		<copy file="${build.dir}/project.properties" todir="${deploy.dir}/build" />
 		<copy file="${build.dir}/CertificationUtils.groovy" todir="${deploy.dir}/build" />
 		<copy file="${build.dir}/lookup.properties" todir="${deploy.dir}/build" />
-
-        <!--this allows you to deploy locally with a project-->
-        <!--properties file without having the build server copy-->
-        <!--these properties file in.  build server uses the values out-->
-        <!--of the database.-->
-        <if>
-            <available file="${build.dir}/${project.name}.properties" /> 
-            <then>
-                <copy file="${build.dir}/${project.name}.properties" todir="${deploy.dir}/build" />
-            </then>
-        </if>
-
 		
 		<copy todir="${tests.dir}">
 			<fileset dir="${selenium.tests.src.dir}">
@@ -207,7 +154,7 @@
 	</target>
 
 	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
-
+		
 	</target>
 		
 	<target name="test:execute" description="Run the class to update Wiki">
@@ -236,14 +183,11 @@
 			</sql>
 		</sequential>
 	</macrodef>
-	                                                
+	
 	<echo message="HOME is: ${env.HOME}" />
 	<target name="update:build:schedule">
-        <property name="build.schedule.hour" value="20" />
-        <property name="build.schedule.minute" value="0" />
-        <property name="build.schedule" value="${build.schedule.minute} ${build.schedule.hour} * * *" />
-        <echo>build.schedule=${build.schedule}</echo>
-		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\1${build.schedule}\2"  byline="true">
+		<echo message="match : (&lt;spec&gt;).*(&lt;/spec&gt;)"/>
+		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\10 20 * * *\2"  byline="true">
    			 <fileset dir="${env.HOME}/hudson_data/jobs" includes="certify*/config.xml"/>
 		</replaceregexp>
 	</target>
