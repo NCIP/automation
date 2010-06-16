@@ -7,6 +7,8 @@
 	<property name="bda-utils.dir" location="${target.dir}/bda-utils"/>
 	<property name="log.dir" location="${target.dir}/logs"/>
 	<property name="common.dir" location="${software.dir}/common"/>
+	<property name="dist.dir" location="${target.dir}/dist"/>
+	<property name="dist.exploded.dir" location="${dist.dir}/exploded"/>
 	<property name="antunit-style.dir" location="${common.dir}/antunit"/>
 	<property name="antunit.xml.report.dir" location="${report.dir}/ant-unit-xml"/>
 	<property name="antunit.html.report.dir" location="${report.dir}/ant-unit-html"/>
@@ -54,6 +56,17 @@
 					<echo message="Build failed as anticipated"/>
 				</catch>    
 			</trycatch>
+		</sequential>
+	</macrodef>
+	<macrodef name="execute-property-test">
+		<attribute name="build.target" default="install:common:property-validate"/>
+		<sequential>
+			<ant inheritAll="false" inheritrefs="false"
+				antfile="build.xml"
+				dir="${dist.exploded.dir}"
+				target="@{build.target}"
+				>
+			</ant>
 		</sequential>
 	</macrodef>
 	<target name="setUp">

@@ -1750,6 +1750,8 @@ $HeadURL$
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
 			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		</groovy>
+		<echo message="====== Property Validation Errors ======"/>
+		<echo message="${property.rule.validator.msg}"/>
 	</target>
 	<target name="upgrade:common:property-validate" description=""
 		depends="
@@ -1761,5 +1763,7 @@ $HeadURL$
 		<groovy src="${bda-utils.dir}resource//groovy/propertyrulevalidator.groovy">
 			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		</groovy>
+		<echo message="====== Property Validation Errors ======"/>
+		<echo message="${property.rule.validator.msg}"/>
 	</target>
 </project>

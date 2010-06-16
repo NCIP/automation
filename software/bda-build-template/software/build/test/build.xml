@@ -49,6 +49,14 @@
 			<plainlistener logLevel="${screen.log.level}"/>
 		</antunit>
 	</target>
+	<target name="test:suite:properties" depends="test:init">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="true">
+			<file file="${basedir}/test-suite-properties.xml" />
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
+			<plainlistener logLevel="${screen.log.level}"/>
+		</antunit>
+	</target>
 
 	<target name="report-tests">
 		<junitreport>
