@@ -1747,6 +1747,7 @@ $HeadURL$
 		common:init,
 		install:jboss:init
 		">
+		<echo message="**** Begin Property Rule Validation"/>
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
 			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		</groovy>
@@ -1755,6 +1756,7 @@ $HeadURL$
 			<then>
 				<echo message="====== Property Validation Errors ======"/>
 				<echo message="${property.rule.validator.msg}"/>
+				<fail message="Failed build, see property errors above"/>
 			</then>
 			<else>
 				<echo message="All property validation rules pased, hoorahhh."/>
@@ -1769,6 +1771,7 @@ $HeadURL$
 		common:jboss:init,
 		common:tomcat:init
 		">
+		<echo message="**** Begin Property Rule Validation"/>
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
 			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		</groovy>
@@ -1777,6 +1780,7 @@ $HeadURL$
 			<then>
 				<echo message="====== Property Validation Errors ======"/>
 				<echo message="${property.rule.validator.msg}"/>
+				<fail message="Failed build, see property errors above"/>
 			</then>
 			<else>
 				<echo message="All property validation rules pased, hoorahhh."/>
