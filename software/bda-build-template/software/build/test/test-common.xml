@@ -20,6 +20,9 @@
 	<!-- -->
 	<mkdir dir="${antunit.xml.report.dir}"/>
 	<mkdir dir="${antunit.html.report.dir}"/>
+	<tstamp>
+		<format property="run.time" pattern="yyyy-MM-dd-HH-mm-ss" />
+	</tstamp>
 	<!-- -->
 	<path id="bda-utils.classpath">
 		<fileset dir="${bda-utils.dir}">
@@ -58,7 +61,7 @@
 			</trycatch>
 		</sequential>
 	</macrodef>
-	<macrodef name="execute-property-test">
+	<macrodef name="execute-property-test-pass">
 		<attribute name="build.target" default="install:common:property-validate"/>
 		<sequential>
 			<ant inheritAll="false" inheritrefs="false"
@@ -67,6 +70,25 @@
 				target="@{build.target}"
 				>
 			</ant>
+		</sequential>
+	</macrodef>
+	<macrodef name="execute-property-test-fail">
+		<attribute name="build.target" default="install:common:property-validate"/>
+		<sequential>
+			<trycatch property="try.property">
+				<try>        
+					<ant inheritAll="false" inheritrefs="false"
+						antfile="build.xml"
+						dir="${dist.exploded.dir}"
+						target="@{build.target}"
+						>
+					</ant>
+					<echo message="Build should have failed"/>
+				</try>
+				<catch>                 
+					<echo message="Build failed as anticipated"/>
+				</catch>    
+			</trycatch>
 		</sequential>
 	</macrodef>
 	<target name="setUp">

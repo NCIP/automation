@@ -1,0 +1,57 @@
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+	</target>
+	<target name="test:property:fail:abp1">
+		<record name="${log.dir}test-property-fail-abp1-${run.time}.log" action="start"/>
+		<echo message="**** Entering test:property:fail:abp1"/>
+		<echo file="${dist.exploded.dir}/local.properties">
+			application.base.path=invalidpath
+			evaluate.property.name=application.base.path
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.explodeded.dir}/local.properties}" byline="true"
+			match="^\s\+(.*)$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:abp1"/>
+		<record name="${log.dir}test-property-fail-abp1-${run.time}.log" action="stop"/>
+	</target>
+	<target name="test:property:pass:abp2">
+		<record name="${log.dir}test-property-pass-abp2-${run.time}.log" action="start"/>
+		<echo message="**** Entering test:property:pass:abp2"/>
+		<echo file="${dist.exploded.dir}/local.properties">
+			application.base.path=/valid/path-syntax
+			evaluate.property.name=application.base.path
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.explodeded.dir}/local.properties}" byline="true"
+			match="^\s\+(.*)$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:abp2"/>
+		<record name="${log.dir}test-property-pass-abp2-${run.time}.log" action="stop"/>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+
+</project>
