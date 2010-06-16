@@ -1750,8 +1750,17 @@ $HeadURL$
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
 			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		</groovy>
-		<echo message="====== Property Validation Errors ======"/>
-		<echo message="${property.rule.validator.msg}"/>
+		<if>
+			<equals arg1="${property.rule.validator.failed}" arg2="true"/>
+			<then>
+				<echo message="====== Property Validation Errors ======"/>
+				<echo message="${property.rule.validator.msg}"/>
+			</then>
+			<else>
+				<echo message="All property validation rules pased, hoorahhh."/>
+			</else>
+		</if>
+
 	</target>
 	<target name="upgrade:common:property-validate" description=""
 		depends="
@@ -1760,10 +1769,18 @@ $HeadURL$
 		common:jboss:init,
 		common:tomcat:init
 		">
-		<groovy src="${bda-utils.dir}resource//groovy/propertyrulevalidator.groovy">
+		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
 			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		</groovy>
-		<echo message="====== Property Validation Errors ======"/>
-		<echo message="${property.rule.validator.msg}"/>
+		<if>
+			<equals arg1="${property.rule.validator.failed}" arg2="true"/>
+			<then>
+				<echo message="====== Property Validation Errors ======"/>
+				<echo message="${property.rule.validator.msg}"/>
+			</then>
+			<else>
+				<echo message="All property validation rules pased, hoorahhh."/>
+			</else>
+		</if>
 	</target>
 </project>
