@@ -52,7 +52,11 @@
 				<description>Checks application.base.path is a valid unix path syntax.</description>
 				<conditions>
 					<and>
-						<condition>application.base.path ==~ /^[\w\d\-\_\.\/]+$/</condition>
+						<!-- property value begins with "/" includes only \w \d - _ . / -->
+						<condition>application.base.path ==~ /^\/[\w\d\-\_\.\/]+$/</condition>
+						<!-- can't contain spaces -->
+						<condition>application.base.path !=~ /^.*\s+.*$/</condition>
+						<!-- can't be null -->
 						<condition>application.base.path != null</condition>
 					</and>
 				</conditions>
