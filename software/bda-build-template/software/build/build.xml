@@ -65,7 +65,7 @@ $HeadURL$
 
 
 	<!-- Ivy Related props -->
-	<property name="ivy.settings.file" value="ivy-settings.xml" />
+	<property name="ivy.settings.file" location="${ivy.settings.dir}/cbiit-ivy-settings.xml" />
 
 	<!-- Properties that relate to how to call build targets from sub-projects-->
 	<!-- Working directory passed to Ant tasks -->
@@ -957,18 +957,15 @@ $HeadURL$
 		<selenese suite="${selenium.test.suite}" browser="${selenium.browser}" results="${selenium.report.dir}/${selenium.report.file}" multiWindow="falsE" timeoutInSeconds="60" port="${selenium.proxy.port}" startURL="${selenium.url}" />
 	</target>
 
-	<target name="ivy-resolve-all" depends="init:ivy" description="Downloads all libraries included in the ivy definition file from ivy into local lib directory">
+	<target name="report:ivy:bda" description="Runs ivy reports on all dependencies in the ivy defnintion file, also produces dependency diagrams" >
+		<property name="ivy.dep.file" value="${bda-download.dir}/ivy-bda-2.0.0.xml" />
+		<ivy:settings file="${ivy.settings.file}" />
 		<ivy:resolve refresh="true" />
-	</target>
-
-	<target name="report:ivy" description="Runs ivy reports on all dependencies in the ivy defnintion file, also produces dependency diagrams" depends="
-		ivy-resolve-all
-		">
 		<property name="ivy.report.dir" value="${reports.dir}/ivy" />
 		<delete dir="${ivy.report.dir}" />
 		<mkdir dir="${ivy.report.dir}" />
-		<ivy:report outputpattern="target/reports/ivy/[organisation]-[module]-[conf].[ext]" dot="true" graph="false" />
-		<util-dot-on-dir dot-file.dir="target/reports/ivy" />
+		<ivy:report outputpattern="../target/reports/ivy/[organisation]-[module]-[conf].[ext]" dot="true" graph="false" />
+		<util-dot-on-dir dot-file.dir="../target/reports/ivy" />
 	</target>
 
 	<!--  Though the general rule was that all install tasks happen as part of the install.xml we did decide to add hot deploys of the ear and web content as part of build.xml to increase the developer "friendlyness" of the build :) -->
@@ -1181,86 +1178,8 @@ $HeadURL$
 		<!-- SSH to machine ant run ant command line to install application -->
 		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${override.properties.string} ${upgrade.target}" />
 	</target>
-	<target name="temp-read-bindings">
-		<xmltask preservetype="true" source="${jboss.home}/server/${jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml">
-			<xmlcatalog refid="bda.xml.catalog"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.web:service=WebServer']/../:property[@name='port']/text()" property="read.server.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=Naming']/../:property[text()='Port']/../:property[@name='port']/text()" property="read.server.jndi.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=Naming']/../:property[text()='RmiPort']/../:property[@name='port']/text()" property="read.server.rmi.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=WebService']/../:property[@name='port']/text()" property="read.web.service.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='UnifiedInvokerConnector']/../:property[@name='port']/text()" property="read.unifiedinvoker.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=jrmp']/../:property[@name='port']/text()" property="read.service.rmiobject.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=pooled']/../:property[@name='port']/text()" property="read.server.bind.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=HAJNDI']/../:property[text()='Port']/../:property[@name='port']/text()" property="read.hajndi.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=HAJNDI']/../:property[text()='RmiPort']/../:property[@name='port']/text()" property="read.hajrmi.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='AutoDiscovery']/../:property[@name='port']/text()" property="read.hajndi.auto.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=jrmpha']/../:property[@name='port']/text()" property="read.service.rmiobject.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=invoker,type=pooledha']/../:property[@name='port']/text()" property="read.pooledha.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss:service=CorbaORB']/../:property[@name='port']/text()" property="read.cobraorb.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.jmx:name=SnmpAgent,service=trapd,type=logger']/../:property[@name='port']/text()" property="read.snmp-trapd.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor']/../:property[@name='port']/text()" property="read.snmp.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.remoting:service=JMXConnectorServer,protocol=rmi']/../:property[@name='port']/text()" property="read.jmx-rmi.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.web:service=WebServer']/../:property[text()='HttpsConnector']/../:property[@name='port']/text()" property="read.ssl.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='jboss.messaging:service=Connector,transport=bisocket']/../:property[@name='port']/text()" property="read.messaging.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='netty-port']/../:property[@name='port']/text()" property="read.jms2.netty.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='netty-ssl-port']/../:property[@name='port']/text()" property="read.jms2.netty-ssl.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='recoveryManager']/../:property[@name='port']/text()" property="read.transaction.recovery.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='transactionStatusManager']/../:property[@name='port']/text()" property="read.transaction.status.port"/>
-			<copy path="/:deployment/:bean[@name='StandardBindings']/:constructor/:parameter/:set/:bean/:property[text()='socketProcessId']/../:property[@name='port']/text()" property="read.transaction.processid.port"/>
-		</xmltask>
-		<xmltask preservetype="true" source="/data/apps/bda-blueprints-webapp/jboss-5.1.0.GA/server/default/deploy/ejb3-connectors-jboss-beans.xml">
-			<xmlcatalog refid="bda.xml.catalog"/> 
-			<copy path="/:deployment/:bean[@name='org.jboss.ejb3.RemotingConnector']/:property[@name='invokerLocator']/:value-factory/:parameter[5]/text()" property="read.ejbinvoker.port"/>
-		</xmltask>              
-
-		<echo  message="read.ejbinvoker.port=${read.ejbinvoker.port}"/>
-		<echo  message="read.server.jndi.port=${read.server.jndi.port}"/>
-		<echo  message="read.server.port=${read.server.port}"/>
-		<echo  message="read.cobraorb.port=${read.cobraorb.port}"/>
-		<echo  message="read.hajndi.port=${read.hajndi.port}"/>
-		<echo  message="read.hajrmi.port=${read.hajrmi.port}"/>
-		<echo  message="read.jmx-rmi.port=${read.jmx-rmi.port}"/>
-		<echo  message="read.messaging.port=${read.messaging.port}"/>
-		<echo  message="read.pooledha.port=${read.pooledha.port}"/>
-		<echo  message="read.server.bind.port=${read.server.bind.port}"/>
-		<echo  message="read.server.rmi.port=${read.server.rmi.port}"/>
-		<echo  message="read.service.rmiobject.port=${read.service.rmiobject.port}"/>
-		<echo  message="read.snmp.port=${read.snmp.port}"/>
-		<echo  message="read.snmp-trapd.port=${read.snmp-trapd.port}"/>
-		<echo  message="read.web.service.port=${read.web.service.port}"/>
-		<echo  message="read.unifiedinvoker.port=${read.unifiedinvoker.port}"/>
-		<echo  message="read.hajndi.auto.port=${read.hajndi.auto.port}"/>
-		<echo  message="read.ssl.port=${read.ssl.port}"/>
-		<echo  message="read.jms2.netty.port=${read.jms2.netty.port}"/>
-		<echo  message="read.jms2.netty-ssl.port=${read.jms2.netty-ssl.port}"/>
-		<echo  message="read.transaction.recovery.port=${read.transaction.recovery.port}"/>
-		<echo  message="read.transaction.status.port=${read.transaction.status.port}"/>
-		<echo  message="read.transaction.processid.port=${read.transaction.processid.port}"/>
-	</target>
 	<target name="keygen">
 		<generate-jar-signing-keystore
 			/>
-	</target>
-	<target name="temp:report:grand">
-
-		<basename file="${xml.file}" property="just.file"/>
-		<report-grand 
-			build.file.location="${xml.file}" 
-			output.file.dir="${target.dir}" 
-			output.file.name="${just.file}"
-			/>
-	</target>
-	<target name="temp:cgmm">
-		<ivy-retrieve-cgmm
-			ivy.dir="${bda-utils.dir}/resource/ivy"
-			ivy.settings.file="${bda-utils.dir}/resource/ivy/cbiit-ivy-settings-with-cagrid13.xml"
-			project.version="0.7.0"
-			/>
-	</target>
-	<target name="temp:http">
-		<waitfor maxwait="10" maxwaitunit="second" checkevery="5" checkeveryunit="second" timeoutproperty="jboss.timeout">
-			<http url="https://login.yahoo.com"/>
-		</waitfor>              
-		<echo message="jboss.timeout = ${jboss.timeout}"/>
 	</target>
 </project>
