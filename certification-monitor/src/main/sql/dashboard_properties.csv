@@ -80,6 +80,7 @@
 "caarray.remote-upgrade.target","deploy:remote:upgrade:ahp"
 "caarray.override.remote.properties","ssh.server.username=hudsonuser,ssh.server.hostname=cbvapp-c1006.nci.nih.gov,ssh.port=22,ssh.key.file=/usr/local/hudsonuser/ssh-pub-key/id_dsa_bda,ssh.dir.temp=/usr/local/hudsonuser/buildcertification/build/working/remote-deploy"
 "caarray.single-command.package.upgrader.target","dist:upgrader"
+"caarray.optional.features","build:database-integration"
 "nbia.database.type","mysql"
 "nbia.svn.username","saksass"
 "nbia.svn.project.url","https://ncisvn.nci.nih.gov/svn/nbia/trunk"
