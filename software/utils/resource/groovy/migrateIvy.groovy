@@ -8,17 +8,19 @@ class migrateIvyRepos
 	def ivyDepFile
 	def migrateOutFile
 	def mavenModuleList=[]
-	def cagridModuleList=[]
+	def cagrid12ModuleList=[]
+	def cagrid13ModuleList=[]
 	def cbiitIvyModuleList=[]
 	
-	public migrateIvyRepos(mavenFileName, cagridFileName, cbiitIvyFileName,ivyFileName,outFile)
+	public migrateIvyRepos(mavenFileName, cagrid12FileName, cagrid13FileName, cbiitIvyFileName,ivyFileName,outFile)
 	{
 		this.ivyDepFile=ivyFileName
 		this.migrateOutFile=outFile
 		println "Loading Files"
 		loadRepoFile(mavenFileName,mavenModuleList)
 		loadRepoFile(cbiitIvyFileName,cbiitIvyModuleList)
-		loadRepoFile(cagridFileName,cagridModuleList)
+		loadRepoFile(cagrid12FileName,cagrid12ModuleList)
+		loadRepoFile(cagrid13FileName,cagrid13ModuleList)
 	}
 	public loadRepoFile(fileName, moduleList)
 	{
@@ -52,12 +54,13 @@ class migrateIvyRepos
 				out.writeLine "\nOld Dependency - " + org + " " + module + " " + version
 				def foundMaven=searchRepo(module,version,majorVersion,conf,'maven', mavenModuleList,out)
 				def foundCbiit=searchRepo(module,version,majorVersion,conf,'cbiit-ivy', cbiitIvyModuleList,out)
-				def foundCagrid=searchRepo(module,version,majorVersion,conf,'cagrid', cagridModuleList,out)
-				//println "${module} FOUND? maven - ${foundMaven} cbiit - ${foundCbiit} cagrid - ${foundCagrid}"
-				if (!foundMaven && !foundCbiit && !foundCagrid)
+				def foundCagrid12=searchRepo(module,version,majorVersion,conf,'cagrid12', cagrid12ModuleList,out)
+				def foundCagrid13=searchRepo(module,version,majorVersion,conf,'cagrid13', cagrid13ModuleList,out)
+				//println "${module} FOUND? maven - ${foundMaven} cbiit - ${foundCbiit} cagrid12 - ${foundCagrid12}"
+				if (!foundMaven && !foundCbiit && !foundCagrid12 && ! foundCagrid13)
 				{
-					println "NO MATCH FOUND ${org} ${module} ${version}"
-					out.writeLine "NO MATCH FOUND ${org} ${module} ${version}"
+					println "\tNO MATCH FOUND ${org} ${module} ${version}"
+					out.writeLine "\tNO MATCH FOUND ${org} ${module} ${version}"
 				}
 			}
 		}
@@ -142,5 +145,5 @@ class migrateIvyRepos
 		}
 	}
 }
-def  mivy= new migrateIvyRepos(args[0],args[1],args[2],args[3],args[4])
+def  mivy= new migrateIvyRepos(args[0],args[1],args[2],args[3],args[4],args[5])
 mivy.processDependencies()
