@@ -1182,4 +1182,19 @@ $HeadURL$
 		<generate-jar-signing-keystore
 			/>
 	</target>
+	<target name="temp:ivy-migrate">
+		<property name="maven.filelist.dest" location="${target.dir}/maven-filelist.txt"/>
+		<property name="cagrid.filelist.dest" location="${target.dir}/cagrid-filelist.txt"/>
+		<property name="cbiit-ivy.filelist.dest" location="${target.dir}/cbiit-ivy-filelist.txt"/>
+		<property name="ivy.analyze.file" location="${basedir}/ivy.xml"/>
+		<property name="migrate.out.file" location="${target.dir}/migration-ivy.out"/>
+		<get src="https://ncisvn.nci.nih.gov/svn/maven-mirror/trunk/file-list.txt" dest="${maven.filelist.dest}" usetimestamp="true"/>
+		<get src="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/file-list.txt" dest="${cbiit-ivy.filelist.dest}" usetimestamp="true"/>
+		<get src="https://ncisvn.nci.nih.gov/svn/cagrid-repo-copy/trunk/file-list.txt" dest="${cagrid.filelist.dest}" usetimestamp="true"/>
+		<groovy src="migrateIvy.groovy"/>
+	</target>
+	<target name="report:migrate-ivy">
+		<migrate-ivy-report
+			/>
+	</target>
 </project>
