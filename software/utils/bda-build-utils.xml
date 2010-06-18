@@ -10239,10 +10239,13 @@ gov.nih.nci.security.cgmm.login.config.file=@{cgmm.conf.dest.dir}/cgmm.login.con
 		<attribute name="ivy.analyze.file" default="${basedir}/ivy.xml"/>
 		<attribute name="migrate.out.file" default="${target.dir}/migration-ivy.out"/>
 		<sequential>
-			<get src="@{maven.filelist.dest}" dest="${maven.filelist.dest}" usetimestamp="true"/>
-			<get src="@{cbiit-ivy.filelist.dest}" dest="${cbiit-ivy.filelist.dest}" usetimestamp="true"/>
-			<get src="@{cagrid.filelist.dest}" dest="${cagrid.filelist.dest}" usetimestamp="true"/>
-			<groovy src="@{groovy.file}"/>
+			<get src="@{maven.filelist.src}" dest="@{maven.filelist.dest}" usetimestamp="true"/>
+			<get src="@{cbiit-ivy.filelist.src}" dest="@{cbiit-ivy.filelist.dest}" usetimestamp="true"/>
+			<get src="@{cagrid.filelist.src}" dest="@{cagrid.filelist.dest}" usetimestamp="true"/>
+			<echo message="Executing @{groovy.file}"/>
+			<groovy src="@{groovy.file}">
+				<arg line="@{maven.filelist.dest} @{cagrid.filelist.dest} @{cbiit-ivy.filelist.dest} @{ivy.analyze.file} @{migrate.out.file}"/>
+			</groovy>	
 		</sequential>
 	</macrodef>
 
