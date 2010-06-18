@@ -10228,4 +10228,22 @@ gov.nih.nci.security.cgmm.login.config.file=@{cgmm.conf.dest.dir}/cgmm.login.con
 			</switch>
 		</sequential>
 	</macrodef>
+	<macrodef name="migrate-ivy-report">
+		<attribute name="groovy.file" default="${bda-utils.dir}/resource/groovy/migrateIvy.groovy"/>
+		<attribute name="maven.filelist.src" default="https://ncisvn.nci.nih.gov/svn/maven-mirror/trunk/file-list.txt"/>
+		<attribute name="maven.filelist.dest" default="${target.dir}/maven-filelist.txt"/>
+		<attribute name="cagrid.filelist.dest" default="${target.dir}/cagrid-filelist.txt"/>
+		<attribute name="cagrid.filelist.src" default="https://ncisvn.nci.nih.gov/svn/cagrid-repo-copy/trunk/file-list.txt"/>
+		<attribute name="cbiit-ivy.filelist.dest" default="${target.dir}/cbiit-ivy-filelist.txt"/>
+		<attribute name="cbiit-ivy.filelist.src" default="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/file-list.txt"/>
+		<attribute name="ivy.analyze.file" default="${basedir}/ivy.xml"/>
+		<attribute name="migrate.out.file" default="${target.dir}/migration-ivy.out"/>
+		<sequential>
+			<get src="@{maven.filelist.dest}" dest="${maven.filelist.dest}" usetimestamp="true"/>
+			<get src="@{cbiit-ivy.filelist.dest}" dest="${cbiit-ivy.filelist.dest}" usetimestamp="true"/>
+			<get src="@{cagrid.filelist.dest}" dest="${cagrid.filelist.dest}" usetimestamp="true"/>
+			<groovy src="@{groovy.file}"/>
+		</sequential>
+	</macrodef>
+
 </project>
