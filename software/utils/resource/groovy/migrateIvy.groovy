@@ -142,5 +142,5 @@ class migrateIvyRepos
 		}
 	}
 }
-def  mivy= new migrateIvyRepos(properties["maven.filelist.dest"], properties["cbiit-ivy.filelist.dest"], properties["cagrid.filelist.dest"],properties["ivy.analyze.file"],properties["migrate.out.file"])
+def  mivy= new migrateIvyRepos(properties["maven.filelist.dest"], properties["cagrid.filelist.dest"], properties["cbiit-ivy.filelist.dest"], properties["ivy.analyze.file"],properties["migrate.out.file"])
 mivy.processDependencies()
