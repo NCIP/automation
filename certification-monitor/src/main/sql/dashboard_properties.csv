@@ -62,7 +62,7 @@
 "caarray.svn.project.url","http://gforge.nci.nih.gov/svnroot/caarray2/trunk"
 "caarray.svn.local.checkout","working/bda_certification"
 "caarray.master.build.location","${caarray.svn.local.checkout}/software/master_build"
-"caarray.master.install.location","working/installer"
+"caarray.master.install.location","working/installer/caarray_install_2_4_0"
 "caarray.single-command.build.target","build:all"
 "caarray.single-command.package.target","dist:installer:prep"
 "caarray.database.integration.target","install:database"
