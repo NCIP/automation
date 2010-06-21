@@ -319,6 +319,7 @@ $HeadURL$
 
 	<target name="validate:pre:build">
 		<mkdir dir="${download.dir}"/>
+		<mkdir dir="${application.base.path}"/>
 		<validate-pre-build
 			/>
 	</target>
