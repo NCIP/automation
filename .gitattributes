@@ -292,6 +292,39 @@ resources/lsdb/installed-products.xml -text
 resources/ncia-schema-spy.zip -text
 resources/ncia-uml.zip -text
 resources/public-keys/id_dsa_bda.pub -text
+samples/ivy-dep-report/ncicb-bda-download-compile.dot -text
+samples/ivy-dep-report/ncicb-bda-download-compile.html -text
+samples/ivy-dep-report/ncicb-bda-download-compile.pdf -text svneol=unset#unset
+samples/ivy-dep-report/ncicb-bda-download-default.dot -text
+samples/ivy-dep-report/ncicb-bda-download-default.html -text
+samples/ivy-dep-report/ncicb-bda-download-default.pdf -text svneol=unset#unset
+samples/ivy-dep-report/ncicb-bda-download-runtime.dot -text
+samples/ivy-dep-report/ncicb-bda-download-runtime.html -text
+samples/ivy-dep-report/ncicb-bda-download-runtime.pdf -text
+samples/ivy-dep-report/ncicb-bda-download-test-checkstyle.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test-checkstyle.html -text
+samples/ivy-dep-report/ncicb-bda-download-test-checkstyle.pdf -text
+samples/ivy-dep-report/ncicb-bda-download-test-cobertura.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test-cobertura.html -text
+samples/ivy-dep-report/ncicb-bda-download-test-cobertura.pdf -text
+samples/ivy-dep-report/ncicb-bda-download-test-findbugs.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test-findbugs.html -text
+samples/ivy-dep-report/ncicb-bda-download-test-findbugs.pdf -text svneol=unset#unset
+samples/ivy-dep-report/ncicb-bda-download-test-javancss.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test-javancss.html -text
+samples/ivy-dep-report/ncicb-bda-download-test-javancss.pdf -text
+samples/ivy-dep-report/ncicb-bda-download-test-junit.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test-junit.html -text
+samples/ivy-dep-report/ncicb-bda-download-test-junit.pdf -text
+samples/ivy-dep-report/ncicb-bda-download-test-pmd.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test-pmd.html -text
+samples/ivy-dep-report/ncicb-bda-download-test-pmd.pdf -text
+samples/ivy-dep-report/ncicb-bda-download-test-selenium.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test-selenium.html -text
+samples/ivy-dep-report/ncicb-bda-download-test-selenium.pdf -text
+samples/ivy-dep-report/ncicb-bda-download-test.dot -text
+samples/ivy-dep-report/ncicb-bda-download-test.html -text
+samples/ivy-dep-report/ncicb-bda-download-test.pdf -text
 samples/schema-spy/anomalies.html -text
 samples/schema-spy/columns.byAuto.html -text
 samples/schema-spy/columns.byChildren.html -text
