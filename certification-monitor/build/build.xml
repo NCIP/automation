@@ -233,7 +233,10 @@
 		<mkdir dir="working"/>
 	</target>
 	
-	<target name="build:single-command-build" depends="init">		
+	<target name="build:single-command-build" depends="init">
+        <!--output the application.base.path to a local.properties file so-->
+        <!--that it is available to all builds and overridden-->
+        <echo file="${master.build.location}/local.properties" message="application.base.path=${user.home}/apps/${project.name}"/>
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">
 			<arg value="${single-command.build.target}" />			
 		</exec>
@@ -608,6 +611,9 @@
 	<attribute name="groovy-file-name" />
 	<attribute name="groovy-method-name" />
 		<sequential>
+            <echo>groovy-file-location=@{groovy-file-location}</echo>
+            <echo>groovy-file-name=@{groovy-file-name}</echo>
+            <echo>groovy-method-name=@{groovy-method-name}</echo>            
 			<groovy>
 				import org.codehaus.groovy.runtime.InvokerHelper
 				<arg line="@{groovy-file-location}"/>
