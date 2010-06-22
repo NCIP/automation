@@ -1788,6 +1788,7 @@ samples/uml/package-list -text
 samples/uml/resources/inherit.gif -text
 samples/uml/serialized-form.html -text
 samples/uml/stylesheet.css -text
+scratch/main/build.xml -text
 software/ant-contrib/build.properties -text
 software/ant-contrib/build.xml -text
 software/ant-contrib/docs/LICENSE.txt -text
