@@ -284,10 +284,12 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="onerror" default="abort" />
+		<attribute name="database.driver.file" default="${database.driver.file}"/>
+		<attribute name="database.driver" default="${database.driver}"/>
 		<sequential>
-			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+			<sql driver="@{database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
 				<classpath>
-					<pathelement location="${database.driver.file}" />
+					<pathelement location="@{database.driver.file}" />
 				</classpath>
 			</sql>
 		</sequential>
@@ -1387,6 +1389,7 @@ $HeadURL$
 	-->
 	<macrodef name="database-create">
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
 		<attribute name="database.system.password" default="${database.system.password}" />
@@ -1416,7 +1419,7 @@ $HeadURL$
 								onerror="continue"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 								<transaction>
 									REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'@{database.server}';
@@ -1431,7 +1434,7 @@ $HeadURL$
 								expandproperties="true"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 								<transaction>
 									DROP DATABASE IF EXISTS @{database.name};
@@ -1452,7 +1455,7 @@ $HeadURL$
 								autocommit="true"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 									drop database if exists @{database.name};
 									drop user if exists @{database.user};
@@ -2569,6 +2572,8 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="database-clean">
+		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
@@ -2606,10 +2611,11 @@ $HeadURL$
 			<if>
 				<equals arg1="@{database.re-create}" arg2="true"/>
 				<then>
-					<switch value="${database.type}">
+					<switch value="@{database.type}">
 						<case value="postgresql">
 							<database-create
 								database.driver="@{database.driver}"
+								database.driver.file="@{database.driver.file}"
 								database.system.url="@{database.system.url}"
 								database.system.user="@{database.system.user}"
 								database.system.password="@{database.system.password}"
@@ -2624,6 +2630,7 @@ $HeadURL$
 						<case value="mysql">
 							<database-create
 								database.driver="@{database.driver}"
+								database.driver.file="@{database.driver.file}"
 								database.system.url="@{database.system.url}"
 								database.system.user="@{database.system.user}"
 								database.system.password="@{database.system.password}"
@@ -2636,7 +2643,7 @@ $HeadURL$
 								/>
 						</case>
 						<default>
-							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
+							<echo message="Re-creation (drop and re-create) of @{database.type} databases is not supported, nothing done."/>
 						</default>
 					</switch>
 				</then>
@@ -2677,6 +2684,7 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="database-install">
+		<attribute name="database.type" default="${database.type}" />
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
@@ -2685,6 +2693,8 @@ $HeadURL$
 		<attribute name="onerror" default="abort" />
 		<attribute name="db-install.dir" default="${db-install.dir.dest}" />
 		<attribute name="db.install.create.file.list" />
+		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<sequential>
 			<for list="@{db.install.create.file.list}" param="db.install.file">
 				<sequential>
@@ -2693,7 +2703,9 @@ $HeadURL$
 						database.password="@{database.password}"
 						sql.delimiter="@{sql.delimiter}"
 						sql.delimitertype="@{sql.delimitertype}"
-						sql.file="@{db-install.dir}/${database.type}/@{db.install.file}"
+						sql.file="@{db-install.dir}/@{database.type}/@{db.install.file}"
+						database.driver="@{database.driver}"
+						database.driver.file="@{database.driver.file}"
 						onerror="@{onerror}"/>
 				</sequential>
 			</for>
@@ -2701,6 +2713,7 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="database-upgrade">
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
@@ -5785,7 +5798,7 @@ $HeadURL$
 				autocommit="true"
 				>
 				<classpath>
-					<pathelement location="${database.driver.file}" />
+					<pathelement location="@{database.driver.file}" />
 				</classpath>
 				update databasechangelog set filename='@{database.changelog.file}' where filename like '%${changelog.file}';
 			</sql>
