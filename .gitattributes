@@ -96,9 +96,10 @@ certification-monitor/src/main/sql/dbchangelog-1.9.xsd -text
 certification-monitor/src/main/sql/insert_dashboard_properties.sql -text
 certification-monitor/src/main/sql/insert_project_poc.sql -text
 certification-monitor/src/main/sql/insert_target_lookup.sql -text
+certification-monitor/src/main/sql/project-poc-for-import.csv -text
+certification-monitor/src/main/sql/project-poc-working-with-legacy.ods -text
 certification-monitor/src/main/sql/project_poc.csv -text
 certification-monitor/src/main/sql/project_poc.xml -text
-certification-monitor/src/main/sql/project_poc2.csv -text
 certification-monitor/src/main/sql/structure.xml -text
 certification-monitor/src/main/sql/target_lookup.csv -text
 certification-monitor/src/main/sql/target_lookup.xml -text

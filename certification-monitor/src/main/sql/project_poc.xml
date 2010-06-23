@@ -12,6 +12,21 @@
         </loadData>
     </changeSet>
 
+    <changeSet id="2010.06.23.1543" author="bassetttj">
+        <rollback changeSetAuthor="bassetttj" changeSetId="2010.06.14.22.33.01"/>
+        <delete tableName="project_poc" />
+        <loadData tableName="project_poc"
+                  file="${sql.dist.dir}/project-poc-for-import.csv">
+            <!--<column name="PROJECT_NAME" index="0"/>-->
+            <!--<column name="COTR_EMAIL" index="1"/>-->
+            <!--<column name="GOV_POC" index="2"/>-->
+            <!--<column name="COTR" index="3" />-->
+            <!--<column name="DEV_POC" index="4"/>-->
+            <!--<column name="DEV_POC_EMAIL" index="5"/>-->
+            <!--<column name="GOV_POC_EMAIL" index="6"/>-->
+            <!--<column name="BDA_POC_EMAIL" index="7"/>-->
+        </loadData>
+    </changeSet>
 
 
 </databaseChangeLog>

@@ -50,5 +50,25 @@
             <column name="COMMANDLINE_INSTALLER" type="VARCHAR(500)" />
         </createTable>
     </changeSet>
+
+    <!--http://stelligent.jira.com/browse/BDA-107-->
+    <changeSet id="2010.06.16.2010" author="bassetttj">
+        <addColumn tableName="project_poc">
+            <column name="COTR" type="varchar(200)"/>
+            <column name="COTR_EMAIL" type="varchar (200)" />
+        </addColumn>
+    </changeSet>
+
+    <!--http://stelligent.jira.com/browse/BDA-107-->
+    <changeSet id="2010.06.23.1542" author="bassetttj">
+        <addColumn tableName="project_poc">
+            <column name="PROJECT_FRIENDLY" type="varchar(500)"/>
+        </addColumn>
+    </changeSet>
+
+
+    
+
+
 </databaseChangeLog>
 
