@@ -1101,3 +1101,4 @@
 "caEHR-ESD.single-command.package.upgrader.target","dist:upgrader"
 "caEHR-ESD.override.properties",""
 "caEHR-ESD.build:database-integration.macro.list","database-install"
+"caEHR-ESD.optional.features","build:database-integration,build:private-repository-properties"
