@@ -1102,3 +1102,5 @@
 "caEHR-ESD.override.properties",""
 "caEHR-ESD.build:database-integration.macro.list","database-install"
 "caEHR-ESD.optional.features","build:database-integration,build:private-repository-properties"
+"caEHR-ESD.java.major.version","1.6"
+"caEHR-ESD.java.minor.version","1.6.0_14"
