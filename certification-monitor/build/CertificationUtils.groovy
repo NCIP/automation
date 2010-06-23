@@ -435,7 +435,8 @@ println privatePropertiesLocation
 
           java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #(.*)/)
           java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9]?[0-9], [0-9][0-9][0-9][0-9].*/)
-          java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
+          java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/alt=\"([^\"]+)\"/)
+          java.util.regex.Pattern isBuildStatus = java.util.regex.Pattern.compile(/src=\"buildStatus\"/)
 
           StringBuffer sb = new StringBuffer()
 
@@ -444,9 +445,12 @@ println privatePropertiesLocation
           file.eachLine {line->
               def matcher = ciStatusPattern.matcher(line)
               def buildMatcher = pattern.matcher(line)
+              def buildStatusMatcher = isBuildStatus.matcher(line)
 
-              println "parseAndFormatDate:buildMatcher=" + buildMatcher
               println "parseAndFormatDate:line=" + line
+              println "parseAndFormatDate:buildMatcher=" + buildMatcher
+              println "parseAndFormatDate:buildStatusMatcher=" + buildStatusMatcher
+
 
               if(buildMatcher)
               {
@@ -459,10 +463,16 @@ println privatePropertiesLocation
                 println "parseAndFormatDate:datePattern.matcher(line) matched: line=" + line
                 sb.append(line.trim())
               }
-              if(matcher.find())
+
+              if(buildStatusMatcher.find())
               {
-                println "parseAndFormatDate:matcher.find() matched: matcher.group(2)=" + matcher.group(2)
-                ciStatusStr = matcher.group(2)
+                // we've found the line that has src="buildStatus" in it
+                // now, let's capture the alt's value
+                if(matcher.find())
+                {
+                  println "parseAndFormatDate:matcher.find() matched: matcher.group(1)=" + matcher.group(1)
+                  ciStatusStr = matcher.group(1)
+                }
               }
 
           }
