@@ -547,8 +547,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<target name="patch:local-repo:release" depends="patch:local-repo:init">
 		<copy tofile="${svn.bda-utils.branch.dir}/bda-build-utils.xml" file="${bda-local-repo.dir}/bda-build-utils-${patched.version}.xml"/>
 		<copy tofile="${svn.bda-utils.branch.dir}/ivy.xml" file="${bda-local-repo.dir}/ivy.xml"/>
-		<zip destfile="local-repo-old.zip" basedir="${bda-local-repo.base.dir}"/>
-		<delete file="${bda-local-repo.base.dir}/ncicb"/>
+		<zip destfile="${target.dir}/local-repo-old.zip" basedir="${bda-local-repo.base.dir}"/>
+		<echo message="cleaning ${bda-local-repo.base.dir}/ncicb"/>
+		<delete dir="${bda-local-repo.base.dir}/ncicb"/>
 	</target>
 	<target name="patch:release"
 		depends="
