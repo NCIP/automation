@@ -422,85 +422,88 @@ println privatePropertiesLocation
 			return false
 	}
 	
-	def parseAndFormatDate (String propertiesList)
-	{	
-		def ciStatusStr 
-		try
-		{
-			def buildFileLocation=project.properties['master.build.location']
-			def basedir=project.properties['basedir']
-			println basedir
-			String installFile = new File(basedir +"/"+ buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
-			StringBuffer wikiStr = new StringBuffer("'[");
+  def parseAndFormatDate (String propertiesList)
+  {
+      def ciStatusStr
+      try
+      {
+          def buildFileLocation=project.properties['master.build.location']
+          def basedir=project.properties['basedir']
+          println "parseAndFormatDate:basedir=" + basedir
+          String installFile = new File(basedir +"/"+ buildFileLocation+"/ciBuildLog.xml").getAbsoluteFile()
+          StringBuffer wikiStr = new StringBuffer("'[");
 
-			java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #(.*)/)
-			java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9]?[0-9], [0-9][0-9][0-9][0-9].*/)
-			java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
+          java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(/.*Build #(.*)/)
+          java.util.regex.Pattern datePattern = java.util.regex.Pattern.compile(/.*[A-Z][a-z][a-z] [0-9]?[0-9], [0-9][0-9][0-9][0-9].*/)
+          java.util.regex.Pattern ciStatusPattern = java.util.regex.Pattern.compile(/(.*buildStatus.*alt=\")([A-Z][a-z]*)(\".*)/)
 
-			StringBuffer sb = new StringBuffer()
-			
-			def buildNumber 
-			def file = new File(installFile);
-			file.eachLine {line->
-				def matcher = ciStatusPattern.matcher(line)
-				def buildMatcher = pattern.matcher(line)
-				
-				if(buildMatcher)
-				{
-					sb.append(line.trim())
-					buildNumber = buildMatcher.group(1)
-					println line
-					println buildNumber
-				}
-				if(datePattern.matcher(line))
-				{
-					sb.append(line.trim())
-					println line
-				}
-				if(matcher.find())
-				{				
-					ciStatusStr = matcher.group(2)
-				}
+          StringBuffer sb = new StringBuffer()
 
-			}
+          def buildNumber
+          def file = new File(installFile);
+          file.eachLine {line->
+              def matcher = ciStatusPattern.matcher(line)
+              def buildMatcher = pattern.matcher(line)
+
+              println "parseAndFormatDate:buildMatcher=" + buildMatcher
+              println "parseAndFormatDate:line=" + line
+
+              if(buildMatcher)
+              {
+                  sb.append(line.trim())
+                  buildNumber = buildMatcher.group(1)
+                  println "parseAndFormatDate:buildNumber" + buildNumber
+              }
+              if(datePattern.matcher(line))
+              {
+                println "parseAndFormatDate:datePattern.matcher(line) matched: line=" + line
+                sb.append(line.trim())
+              }
+              if(matcher.find())
+              {
+                println "parseAndFormatDate:matcher.find() matched: matcher.group(2)=" + matcher.group(2)
+                ciStatusStr = matcher.group(2)
+              }
+
+          }
 
 
-			String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
-			println "Date of the build:" + dataStr	
-			println "Status of the build:" + ciStatusStr	
-			if (ciStatusStr=="Success")
-			{
-				wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+project.properties['ci-server.url']+"/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
-				if (sb!= null)
-					wikiStr = wikiStr.append("|"+sb+"]'")
+          String dataStr = sb.substring(sb.indexOf('(')+1,sb.indexOf(')'))
+          println "parseAndFormatDate:Date of the build:" + dataStr
+          println "parseAndFormatDate:Status of the build:" + ciStatusStr
+          if (ciStatusStr=="Success")
+          {
+              wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL+"|"+project.properties['ci-server.url']+"/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
+              if (sb!= null)
+                  wikiStr = wikiStr.append("|"+sb+"]'")
 
-				println wikiStr
-				project.setProperty("certification.property.value",wikiStr.toString());
-			}
-			else
-			{
-				wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+project.properties['ci-server.url']+"/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
-				if (sb!= null)
-					wikiStr = wikiStr.append("|"+sb+"]'")
 
-				println wikiStr
+              project.setProperty("certification.property.value",wikiStr.toString());
+          }
+          else
+          {
+              wikiStr = wikiStr.append(getStatusOnDate(dataStr)+"|"+project.properties['ci-server.url']+"/hudson/job/"+project.properties['ci-server.jobname']+"/"+buildNumber+"/")
+              if (sb!= null)
+                  wikiStr = wikiStr.append("|"+sb+"]'")
 
-				project.setProperty("certification.property.value",wikiStr.toString());
+              project.setProperty("certification.property.value",wikiStr.toString());
 
-			}		
-		
-		}
-		catch(Exception ex)
-		{	
-			project.setProperty("is.value","false")
-			ant.fail("Exception occured while evalation the ci build::" + ex.getMessage())
-		}
-		if(ciStatusStr!="Success")
-		{
-			project.setProperty("is.value","true")
-			//ant.fail("CI Builds failing")
-		}
-	}
+          }
+
+          println "parseAndFormatDate:wikiStr+" wikiStr
+
+      }
+      catch(Exception ex)
+      {
+          project.setProperty("is.value","false")
+          ant.fail("Exception occured while evalation the ci build::" + ex.getMessage())
+      }
+      if(ciStatusStr!="Success")
+      {
+          project.setProperty("is.value","true")
+          //ant.fail("CI Builds failing")
+      }
+  }
 	
 	
 	def getStatusOnDate (String dataStr)
