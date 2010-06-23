@@ -65,7 +65,7 @@ $HeadURL$
 
 
 	<!-- Ivy Related props -->
-	<property name="ivy.settings.file" location="${ivy.settings.dir}/cbiit-ivy-settings.xml" />
+	<property name="ivy.settings.file" location="${ivy.settings.dir}/cbiit-ivy-settings-with-cagrid12.xml" />
 
 	<!-- Properties that relate to how to call build targets from sub-projects-->
 	<!-- Working directory passed to Ant tasks -->
@@ -319,7 +319,6 @@ $HeadURL$
 
 	<target name="validate:pre:build">
 		<mkdir dir="${download.dir}"/>
-		<mkdir dir="${application.base.path}"/>
 		<validate-pre-build
 			/>
 	</target>
@@ -960,8 +959,11 @@ $HeadURL$
 
 	<target name="report:ivy:bda" description="Runs ivy reports on all dependencies in the ivy defnintion file, also produces dependency diagrams" >
 		<property name="ivy.dep.file" value="${bda-download.dir}/ivy-bda-2.0.0.xml" />
+		<property name="test.lib.dir" location="${target.dir}/lib"/>
+		<mkdir dir="${test.lib.dir}"/> 
 		<ivy:settings file="${ivy.settings.file}" />
 		<ivy:resolve refresh="true" />
+		<ivy:retrieve pattern="${test.lib.dir}/[conf]/[artifact]-[revision].[ext]" sync="true" />
 		<property name="ivy.report.dir" value="${reports.dir}/ivy" />
 		<delete dir="${ivy.report.dir}" />
 		<mkdir dir="${ivy.report.dir}" />
@@ -1183,19 +1185,9 @@ $HeadURL$
 		<generate-jar-signing-keystore
 			/>
 	</target>
-	<target name="temp:ivy-migrate">
-		<property name="maven.filelist.dest" location="${target.dir}/maven-filelist.txt"/>
-		<property name="cagrid.filelist.dest" location="${target.dir}/cagrid-filelist.txt"/>
-		<property name="cbiit-ivy.filelist.dest" location="${target.dir}/cbiit-ivy-filelist.txt"/>
-		<property name="ivy.analyze.file" location="${basedir}/ivy.xml"/>
-		<property name="migrate.out.file" location="${target.dir}/migration-ivy.out"/>
-		<get src="https://ncisvn.nci.nih.gov/svn/maven-mirror/trunk/file-list.txt" dest="${maven.filelist.dest}" usetimestamp="true"/>
-		<get src="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/file-list.txt" dest="${cbiit-ivy.filelist.dest}" usetimestamp="true"/>
-		<get src="https://ncisvn.nci.nih.gov/svn/cagrid-repo-copy/trunk/file-list.txt" dest="${cagrid.filelist.dest}" usetimestamp="true"/>
-		<groovy src="migrateIvy.groovy"/>
-	</target>
 	<target name="report:migrate-ivy">
 		<migrate-ivy-report
+			ivy.analyze.file="ivy-caintegrator2.xml"
 			/>
 	</target>
 </project>
