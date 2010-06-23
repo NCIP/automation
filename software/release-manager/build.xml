@@ -331,18 +331,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			output.file.dir="." 
 			output.file.name="relase-manager-build.xml" />
 	</target>
-	<target name="patch:dev" 
-		depends="
-		patch:init,
-		patch:check-tag,
-		patch:max-tag-version,
-		patch:get-next-version,
-		patch:create-branch,
-		patch:checkout-branch
-		">
-	</target>
 
-	<target name="patch:init">
+	<target name="patch:create:init">
 		<var name="patching.version.has-value" unset="true"/>
 		<propertyregex property="patching.version.has-value"
 			input="${patching.version}"
@@ -368,7 +358,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</if>
 	</target>
 
-	<target name="patch:check-tag" depends="patch:init">
+	<target name="patch:create:check-tag" depends="patch:create:init">
 		<if>
 			<not>
 				<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version}"/>
@@ -378,7 +368,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			</then>
 		</if>
 	</target>
-	<target name="patch:get-next-version" depends="patch:init">
+	<target name="patch:get-next-version" depends="patch:create:init">
 		<echo message="patching version is - ${patching.version}"/>
 		<groovy>
 			 List versionList=properties["patching.version"].split("\\.")
@@ -389,7 +379,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</groovy>
 		<echo message="patched version is - ${patched.version}"/>
 	</target>
-	<target name="list:tags" depends="patch:init">
+	<target name="list:tags" depends="patch:create:init">
 		<osfamily property="os.family"/>
 		<if>
 			<equals arg1="${os.family}" arg2="unix"/>
@@ -413,7 +403,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			</then>
 		</if>
 	</target>
-	<target name="patch:max-tag-version" depends="patch:init">
+	<target name="patch:max-tag-version" depends="patch:create:init">
 		<osfamily property="os.family"/>
 		<if>
 			<equals arg1="${os.family}" arg2="unix"/>
@@ -459,27 +449,172 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			</then>
 		</if>
 	</target>
-	<target name="patch:create-branch">
+	<target name="patch:branch:create"
+		depends="
+		patch:create:init,
+		patch:create:check-tag,
+		patch:max-tag-version,
+		patch:get-next-version
+		">
 		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
 		<property name="svn.automation.previous.tag.url" value="${svn.automation.base.url}/tags/automation-${patching.version}"/>
 		<property name="svn.automation.new.branch.url" value="${svn.automation.base.url}/branches/automation-${patched.version}"/>
 		<echo message="svn.automation.previous.tag.url - ${svn.automation.previous.tag.url}"/>
 		<echo message="svn.automation.new.branch.url - ${svn.automation.new.branch.url}"/>
 
-		<!--
 		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
 			<copy srcUrl="${svn.automation.previous.tag.url}" destURL="${svn.automation.new.branch.url}" message="Created by release manager patch:dev target"/>
 		</svn>
-		-->
 	</target>
-	<target name="patch:checkout-branch">
-		<property name="svn.automation.new.branch.dir" location="${target.dir}/automation-${patched.version}"/>
-		<mkdir dir="${svn.automation.new.branch.dir}"/>
-		<echo message="svn.automation.new.branch.dir - ${svn.automation.new.branch.dir}"/>
-		<!--
+	<target name="patch:co:init">
+		<var name="patched.version.has-value" unset="true"/>
+		<propertyregex property="patched.version.has-value"
+			input="${patched.version}"
+			regexp="\S+"
+			select="true"
+			/>
+		<var name="patched.version.unexpanded" unset="true"/>
+		<propertyregex property="patched.version.unexpanded"
+			input="${patched.version}"
+			regexp="\$\{.*\}"
+			select="true"
+			/>
+		<if>
+			<or>
+				<isset property="patched.version.unexpanded"/>
+				<not>
+					<isset property="patched.version.has-value"/>
+				</not>
+			</or>
+			<then>
+				<fail message="Must set patched.version variable"/>
+			</then>
+		</if>
+		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
+		<property name="svn.automation.branch.url" value="${svn.automation.base.url}/branches/automation-${patched.version}"/>
+		<property name="svn.automation.tag.url" value="${svn.automation.base.url}/tags/automation-${patched.version}"/>
+		<property name="svn.bda-template.branch.url" value="${svn.automation.branch.url}/software/bda-build-template"/>
+		<property name="svn.bda-utils.branch.url" value="${svn.automation.branch.url}/software/utils"/>
+		<property name="svn.bda-template.branch.dir" location="${target.dir}/bda-template-${patched.version}"/>
+		<property name="svn.bda-utils.branch.dir" location="${target.dir}/utils-${patched.version}"/>
+		<echo message="svn.bda-template.branch.dir - ${svn.bda-template.branch.dir}"/>
+		<echo message="svn.bda-utils.branch.dir - ${svn.bda-utils.branch.dir}"/>
+	</target>
+	<target name="patch:branch:co" depends="patch:co:init">
 		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
-			<checkout srcUrl="${svn.automation.new.branch.url}" destURL="${svn.automation.new.branch.dir}"/>
+			<checkout url="${svn.bda-template.branch.url}" destpath="${svn.bda-template.branch.dir}"/>
+			<checkout url="${svn.bda-utils.branch.url}" destpath="${svn.bda-utils.branch.dir}"/>
 		</svn>
-		-->
+		<!-- update version comment -->
+		<replaceregexp
+			byline="true"
+			match="( bda-build-template version )(\S+)"
+			replace="\1${patched.version}"
+			>
+			<fileset dir="${svn.bda-template.branch.dir}/software/build">
+				<include name="*.xml"/>
+				<include name="*.properties"/>
+			</fileset>
+		</replaceregexp>
+		<!-- update bda.version -->
+		<replaceregexp file="${svn.bda-template.branch.dir}/software/build/project.properties"
+			byline="true"
+			match="(bda.version=).*"
+			replace="\1${patched.version}"
+			/>
+		<!-- update ivy.xml -->
+		<replaceregexp file="${svn.bda-utils.branch.dir}/ivy.xml"
+			byline="true"
+			match="(.*module=&quot;bda-utils&quot;.*revision=&quot;)[^&quot;]+(&quot;.*)"
+			replace="\1${patched.version}\2"
+			/>
+		<!-- update ivy.xml -->
+	</target>
+	<target name="patch:local-repo:init" depends="patch:co:init">
+		<property name="bda-local-repo.base.dir" location="${target.dir}/bda-local-ivy-repo/"/>
+		<property name="bda-local-repo.dir" location="${bda-local-repo.base.dir}/ncicb/bda-utils/${patched.version}"/>
+	</target>
+	<target name="patch:local-repo:create" depends="patch:local-repo:init">
+		<!-- make local repository -->
+		<echo message="Create bda-local-repo-dir ${bda-local-repo.dir}"/>
+		<mkdir dir="${bda-local-repo.dir}"/>
+		<copy file="${svn.bda-utils.branch.dir}/bda-build-utils.xml" tofile="${bda-local-repo.dir}/bda-build-utils-${patched.version}.xml"/>
+		<copy file="${svn.bda-utils.branch.dir}/ivy.xml" tofile="${bda-local-repo.dir}/ivy.xml"/>
+		<zip destfile="${bda-local-repo.dir}/bda-build-utils-${patched.version}.zip">
+			<zipfileset dir="${svn.bda-utils.branch.dir}/resource" prefix="resource" />
+		</zip>
+	</target>
+	<target name="patch:local-repo:release" depends="patch:local-repo:init">
+		<copy tofile="${svn.bda-utils.branch.dir}/bda-build-utils.xml" file="${bda-local-repo.dir}/bda-build-utils-${patched.version}.xml"/>
+		<copy tofile="${svn.bda-utils.branch.dir}/ivy.xml" file="${bda-local-repo.dir}/ivy.xml"/>
+		<zip destfile="local-repo-old.zip" basedir="${bda-local-repo.base.dir}"/>
+		<delete file="${bda-local-repo.base.dir}/ncicb"/>
+	</target>
+	<target name="patch:release"
+		depends="
+		patch:co:init,
+		patch:release:check-tag,
+		patch:release:commit-branch,
+		patch:release:create-tag,
+		patch:release:cbiit-ivy
+		">
+	</target>
+	<target name="patch:release:check-tag" depends="patch:co:init">
+		<if>
+			<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patched.version}"/>
+			<then>
+				<fail message="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patched.version} already exists"/>
+			</then>
+		</if>
+	</target>
+	<target name="patch:release:commit-branch">
+		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+			<commit dir="${svn.bda-template.branch.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+			<commit dir="${svn.bda-utils.branch.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+		</svn>
+	</target>
+	<target name="patch:release:create-tag">
+		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+			<copy srcUrl="${svn.automation.branch.url}" destURL="${svn.automation.tag.url}" message="Created by release manager patch:dev target"/>
+		</svn>
+	</target>
+	<target name="patch:release:cbiit-ivy"
+		depends="
+		patch:co:init,
+		patch:release:cbiit-ivy:init,
+		patch:release:cbiit-ivy:co,
+		patch:release:cbiit-ivy:copy,
+		patch:release:cbiit-ivy:commit
+		">
+	</target>
+	<target name="patch:release:cbiit-ivy:init">
+		<property name="svn.cbiit-ivy.base.url" value="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk"/>
+		<property name="svn.cbiit-ivy.utils.url" value="${svn.cbiit-ivy.base.url}/ncicb/bda-utils"/>
+		<property name="svn.cbiit-ivy.utils.dir" value="${target.dir}/cbiit-bda-utils"/>
+	</target>
+	<target name="patch:release:cbiit-ivy:co" depends="patch:release:cbiit-ivy:init">
+		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+			<checkout url="${svn.cbiit-ivy.utils.url}" destpath="${svn.cbiit-ivy.utils.dir}"/>
+		</svn>
+	</target>
+	<target name="patch:release:cbiit-ivy:copy" depends="patch:release:cbiit-ivy:init">
+		<mkdir dir="${svn.cbiit-ivy.utils.dir}/${patched.version}"/>
+		<copy file="${svn.bda-utils.branch.dir}/bda-build-utils.xml" tofile="${svn.cbiit-ivy.utils.dir}/${patched.version}/bda-build-utils-${patched.version}.xml"/>
+		<copy file="${svn.bda-utils.branch.dir}/ivy.xml" tofile="${svn.cbiit-ivy.utils.dir}/${patched.version}/ivy.xml"/>
+		<zip destfile="${svn.cbiit-ivy.utils.dir}/${patched.version}/bda-build-utils-${patched.version}.zip">
+			<zipfileset dir="${svn.bda-utils.branch.dir}/resource" prefix="resource" />
+		</zip>
+		<zip destfile="${svn.cbiit-ivy.utils.dir}/${patched.version}/bda-build-template-${patched.version}.zip">
+			<zipfileset dir="${svn.bda-template.branch.dir}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${svn.bda-template.branch.dir}/software/common" excludes="**/.svn/*" prefix="common"/>
+		</zip>
+	</target>
+	<target name="patch:release:cbiit-ivy:commit" depends="patch:release:cbiit-ivy:init">
+		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+			<add dir="${svn.cbiit-ivy.utils.dir}/${patched.version}"/>
+		</svn>
+		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+			<commit dir="${svn.cbiit-ivy.utils.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+		</svn>
 	</target>
 </project>
