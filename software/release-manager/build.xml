@@ -462,7 +462,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<echo message="svn.automation.previous.tag.url - ${svn.automation.previous.tag.url}"/>
 		<echo message="svn.automation.new.branch.url - ${svn.automation.new.branch.url}"/>
 
-		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
 			<copy srcUrl="${svn.automation.previous.tag.url}" destURL="${svn.automation.new.branch.url}" message="Created by release manager patch:dev target"/>
 		</svn>
 	</target>
@@ -501,7 +501,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<echo message="svn.bda-utils.branch.dir - ${svn.bda-utils.branch.dir}"/>
 	</target>
 	<target name="patch:branch:co" depends="patch:co:init">
-		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
 			<checkout url="${svn.bda-template.branch.url}" destpath="${svn.bda-template.branch.dir}"/>
 			<checkout url="${svn.bda-utils.branch.url}" destpath="${svn.bda-utils.branch.dir}"/>
 		</svn>
@@ -528,6 +528,16 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			match="(.*module=&quot;bda-utils&quot;.*revision=&quot;)[^&quot;]+(&quot;.*)"
 			replace="\1${patched.version}\2"
 			/>
+		<if>
+			<available file="${svn.bda-utils.branch.dir}/ivy.xml.oldrepo}"/>
+			<then>
+				<replaceregexp file="${svn.bda-utils.branch.dir}/ivy.xml.oldrepo"
+					byline="true"
+					match="(.*module=&quot;bda-utils&quot;.*revision=&quot;)[^&quot;]+(&quot;.*)"
+					replace="\1${patched.version}\2"
+					/>
+			</then>
+		</if>
 		<!-- update ivy.xml -->
 	</target>
 	<target name="patch:local-repo:init" depends="patch:co:init">
@@ -557,9 +567,22 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		patch:release:check-tag,
 		patch:release:commit-branch,
 		patch:release:create-tag,
-		patch:release:cbiit-ivy
+		patch:release:cbiit-ivy,
+		patch:release:legacy-ivy
 		">
 	</target>
+	<!--
+	<target name="patch:release"
+		depends="
+		patch:co:init,
+		patch:release:check-tag,
+		patch:release:commit-branch,
+		patch:release:create-tag,
+		patch:release:cbiit-ivy,
+		patch:release:legacy-ivy
+		">
+	</target>
+	-->
 	<target name="patch:release:check-tag" depends="patch:co:init">
 		<if>
 			<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patched.version}"/>
@@ -568,14 +591,14 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			</then>
 		</if>
 	</target>
-	<target name="patch:release:commit-branch">
-		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+	<target name="patch:release:commit-branch" depends="patch:co:init">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
 			<commit dir="${svn.bda-template.branch.dir}" message="Created by bda-release-manager utility as part of patch process"/>
 			<commit dir="${svn.bda-utils.branch.dir}" message="Created by bda-release-manager utility as part of patch process"/>
 		</svn>
 	</target>
-	<target name="patch:release:create-tag">
-		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
+	<target name="patch:release:create-tag" depends="patch:co:init">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
 			<copy srcUrl="${svn.automation.branch.url}" destURL="${svn.automation.tag.url}" message="Created by release manager patch:dev target"/>
 		</svn>
 	</target>
@@ -616,6 +639,47 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</svn>
 		<svn username="${new.svn.username}" password="${new.svn.password}" javahl="false" svnkit="true">
 			<commit dir="${svn.cbiit-ivy.utils.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+		</svn>
+	</target>
+
+
+	<target name="patch:release:legacy-ivy"
+		depends="
+		patch:co:init,
+		patch:release:legacy-ivy:init,
+		patch:release:legacy-ivy:co,
+		patch:release:legacy-ivy:copy,
+		patch:release:legacy-ivy:commit
+		">
+	</target>
+	<target name="patch:release:legacy-ivy:init">
+		<property name="svn.legacy-ivy.base.url" value="https://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo"/>
+		<property name="svn.legacy-ivy.utils.url" value="${svn.legacy-ivy.base.url}/ncicb/bda-utils"/>
+		<property name="svn.legacy-ivy.utils.dir" value="${target.dir}/legacy-ivy-utils"/>
+	</target>
+	<target name="patch:release:legacy-ivy:co" depends="patch:release:legacy-ivy:init">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<checkout url="${svn.legacy-ivy.utils.url}" destpath="${svn.legacy-ivy.utils.dir}"/>
+		</svn>
+	</target>
+	<target name="patch:release:legacy-ivy:copy" depends="patch:release:legacy-ivy:init">
+		<mkdir dir="${svn.legacy-ivy.utils.dir}/${patched.version}"/>
+		<copy file="${svn.bda-utils.branch.dir}/bda-build-utils.xml" tofile="${svn.legacy-ivy.utils.dir}/${patched.version}/bda-build-utils-${patched.version}.xml"/>
+		<copy file="${svn.bda-utils.branch.dir}/ivy.xml" tofile="${svn.legacy-ivy.utils.dir}/${patched.version}/ivy.xml"/>
+		<zip destfile="${svn.legacy-ivy.utils.dir}/${patched.version}/bda-build-utils-${patched.version}.zip">
+			<zipfileset dir="${svn.bda-utils.branch.dir}/resource" prefix="resource" />
+		</zip>
+		<zip destfile="${svn.legacy-ivy.utils.dir}/${patched.version}/bda-build-template-${patched.version}.zip">
+			<zipfileset dir="${svn.bda-template.branch.dir}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${svn.bda-template.branch.dir}/software/common" excludes="**/.svn/*" prefix="common"/>
+		</zip>
+	</target>
+	<target name="patch:release:legacy-ivy:commit" depends="patch:release:legacy-ivy:init">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<add dir="${svn.legacy-ivy.utils.dir}/${patched.version}"/>
+		</svn>
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<commit dir="${svn.legacy-ivy.utils.dir}" message="Created by bda-release-manager utility as part of patch process"/>
 		</svn>
 	</target>
 </project>
