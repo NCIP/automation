@@ -490,7 +490,7 @@ println privatePropertiesLocation
 
           }
 
-          println "parseAndFormatDate:wikiStr+" wikiStr
+          println "parseAndFormatDate:wikiStr" + wikiStr
 
       }
       catch(Exception ex)
