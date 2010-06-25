@@ -571,6 +571,7 @@ $HeadURL$
 				database.user="@{database.user}"
 				database.password="@{database.password}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
 				/>
 			<validate-appserver-versions
 				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
@@ -1042,8 +1043,9 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.type" default="${database.type}" />
 		<sequential>
-			<switch value="${database.type}">
+			<switch value="@{database.type}">
 				<case value="mysql">
 					<dbconfig property="database.exists"
 						driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
@@ -1078,7 +1080,7 @@ $HeadURL$
 					</if>
 				</case>
 				<default>
-					<echo message="Database is ${database.type}, warning prompt not displayed."/>
+					<echo message="Database is @{database.type}, warning prompt not displayed."/>
 					<var name="force.reinstall" value="true"/>
 				</default>
 			</switch>
@@ -1355,13 +1357,14 @@ $HeadURL$
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.type" default="${database.type}"/>
 		<sequential>
 			<echo message="Entering database-create"/>
 			<if>
 				<isset property="force.reinstall"/>
 				<then>
-					<echo message="Creating ${database.type} database named @{database.name}."/>
-					<switch value="${database.type}">
+					<echo message="Creating @{database.type} database named @{database.name}."/>
+					<switch value="@{database.type}">
 						<case value="mysql">
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 							<var name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
@@ -1462,7 +1465,7 @@ $HeadURL$
 				</and>
 				<then>
 					<echo message="Validating database connection..." />
-					<switch value="${database.type}">
+					<switch value="@{database.type}">
 						<case value="mysql">
 							<if>
 								<equals arg1="@{database.re-create}" arg2="true"/>
@@ -2326,6 +2329,7 @@ $HeadURL$
 								database.url="@{database.url}"
 								database.user="@{database.user}"
 								database.password="@{database.password}"
+								database.type="@{database.type}"
 								/>
 						</case>
 						<case value="mysql">
@@ -2341,10 +2345,11 @@ $HeadURL$
 								database.url="@{database.url}"
 								database.user="@{database.user}"
 								database.password="@{database.password}"
+								database.type="@{database.type}"
 								/>
 						</case>
 						<default>
-							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
+							<echo message="Re-creation (drop and re-create) of @{database.type} databases is not supported, nothing done."/>
 						</default>
 					</switch>
 				</then>
@@ -7159,6 +7164,7 @@ $HeadURL$
 				database.user="@{database.user}"
 				database.password="@{database.password}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
 				/>
 
 		</sequential>
