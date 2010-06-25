@@ -615,6 +615,7 @@ $HeadURL$
 				database.user="@{database.user}"
 				database.password="@{database.password}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
 				/>
 			<validate-appserver-versions
 				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
@@ -1086,8 +1087,9 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.type" default="${database.type}" />
 		<sequential>
-			<switch value="${database.type}">
+			<switch value="@{database.type}">
 				<case value="mysql">
 					<dbconfig property="database.exists"
 						driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
@@ -1122,7 +1124,7 @@ $HeadURL$
 					</if>
 				</case>
 				<default>
-					<echo message="Database is ${database.type}, warning prompt not displayed."/>
+					<echo message="Database is @{database.type}, warning prompt not displayed."/>
 					<var name="force.reinstall" value="true"/>
 				</default>
 			</switch>
@@ -1388,6 +1390,7 @@ $HeadURL$
 		database.password is the password of the user for the database
 	-->
 	<macrodef name="database-create">
+		<attribute name="database.type" default="${database.type}"/>
 		<attribute name="database.driver" default="${database.driver}" />
 		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
@@ -1404,8 +1407,8 @@ $HeadURL$
 			<if>
 				<isset property="force.reinstall"/>
 				<then>
-					<echo message="Creating ${database.type} database named @{database.name}."/>
-					<switch value="${database.type}">
+					<echo message="Creating @{database.type} database named @{database.name}."/>
+					<switch value="@{database.type}">
 						<case value="mysql">
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 							<var name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
@@ -1509,7 +1512,7 @@ $HeadURL$
 				</and>
 				<then>
 					<echo message="Validating database connection..." />
-					<switch value="${database.type}">
+					<switch value="@{database.type}">
 						<case value="mysql">
 							<echoproperties  prefix="database"> <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 							<if>
@@ -7626,6 +7629,7 @@ $HeadURL$
 				database.user="@{database.user}"
 				database.password="@{database.password}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
 				/>
 			<!-- allow for checks for different types of db, right now only mysql-->
 			<switch value="@{database.type}">
