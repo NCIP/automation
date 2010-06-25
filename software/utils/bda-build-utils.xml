@@ -283,10 +283,12 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="onerror" default="abort" />
+		<attribute name="database.driver" default="${database.driver}"/>
+		<attribute name="database.driver.file" default="${database.driver.file}"/>
 		<sequential>
-			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+			<sql driver="@{database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
 				<classpath>
-					<pathelement location="${database.driver.file}" />
+					<pathelement location="@{database.driver.file}" />
 				</classpath>
 			</sql>
 		</sequential>
@@ -612,6 +614,7 @@ $HeadURL$
 				database.user="@{database.user}"
 				database.password="@{database.password}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
 				/>
 			<validate-appserver-versions
 				jboss.binaries.relative.dir="@{jboss.binaries.relative.dir}"
@@ -1083,8 +1086,9 @@ $HeadURL$
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
 		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.type" default="${database.type}" />
 		<sequential>
-			<switch value="${database.type}">
+			<switch value="@{database.type}">
 				<case value="mysql">
 					<dbconfig property="database.exists"
 						driver="@{database.driver}" url="@{database.url}"  user="@{database.user}" password="@{database.password}">
@@ -1119,7 +1123,7 @@ $HeadURL$
 					</if>
 				</case>
 				<default>
-					<echo message="Database is ${database.type}, warning prompt not displayed."/>
+					<echo message="Database is @{database.type}, warning prompt not displayed."/>
 					<var name="force.reinstall" value="true"/>
 				</default>
 			</switch>
@@ -1385,7 +1389,9 @@ $HeadURL$
 		database.password is the password of the user for the database
 	-->
 	<macrodef name="database-create">
+		<attribute name="database.type" default="${database.type}"/>
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
 		<attribute name="database.system.password" default="${database.system.password}" />
@@ -1400,8 +1406,8 @@ $HeadURL$
 			<if>
 				<isset property="force.reinstall"/>
 				<then>
-					<echo message="Creating ${database.type} database named @{database.name}."/>
-					<switch value="${database.type}">
+					<echo message="Creating @{database.type} database named @{database.name}."/>
+					<switch value="@{database.type}">
 						<case value="mysql">
 							<echo message="Database @{database.name} does not exist or the force.reinstall property is set."/>
 							<var name="create.sql.dir" value="${bda-utils.resource.dir}/target" />
@@ -1415,7 +1421,7 @@ $HeadURL$
 								onerror="continue"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 								<transaction>
 									REVOKE ALL ON @{database.name}.* FROM '@{database.user}'@'@{database.server}';
@@ -1430,7 +1436,7 @@ $HeadURL$
 								expandproperties="true"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 								<transaction>
 									DROP DATABASE IF EXISTS @{database.name};
@@ -1451,7 +1457,7 @@ $HeadURL$
 								autocommit="true"
 								>
 								<classpath>
-									<pathelement location="${database.driver.file}" />
+									<pathelement location="@{database.driver.file}" />
 								</classpath>
 									drop database if exists @{database.name};
 									drop user if exists @{database.user};
@@ -1505,7 +1511,7 @@ $HeadURL$
 				</and>
 				<then>
 					<echo message="Validating database connection..." />
-					<switch value="${database.type}">
+					<switch value="@{database.type}">
 						<case value="mysql">
 							<echoproperties  prefix="database"> <propertyset negate="yes" > <propertyref regex="passw" /> </propertyset> </echoproperties>
 							<if>
@@ -2540,6 +2546,7 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="database-clean">
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.system.url" default="${database.system.url}" />
 		<attribute name="database.system.user" default="${database.system.user}" />
 		<attribute name="database.system.password" default="${database.system.password}" />
@@ -2552,6 +2559,7 @@ $HeadURL$
 		<attribute name="database.schema" default="${database.schema}" />
 		<attribute name="database.re-create" default="${database.re-create}" />
 		<attribute name="database.drop-schema" default="${database.drop-schema}" />
+		<attribute name="database.type" default="${database.type}"/>
 		<sequential>
 			<if>
 				<and>
@@ -2576,10 +2584,11 @@ $HeadURL$
 			<if>
 				<equals arg1="@{database.re-create}" arg2="true"/>
 				<then>
-					<switch value="${database.type}">
+					<switch value="@{database.type}">
 						<case value="postgresql">
 							<database-create
 								database.driver="@{database.driver}"
+								database.driver.file="@{database.driver.file}"
 								database.system.url="@{database.system.url}"
 								database.system.user="@{database.system.user}"
 								database.system.password="@{database.system.password}"
@@ -2594,6 +2603,7 @@ $HeadURL$
 						<case value="mysql">
 							<database-create
 								database.driver="@{database.driver}"
+								database.driver.file="@{database.driver.file}"
 								database.system.url="@{database.system.url}"
 								database.system.user="@{database.system.user}"
 								database.system.password="@{database.system.password}"
@@ -2606,7 +2616,7 @@ $HeadURL$
 								/>
 						</case>
 						<default>
-							<echo message="Re-creation (drop and re-create) of ${database.type} databases is not supported, nothing done."/>
+							<echo message="Re-creation (drop and re-create) of @{database.type} databases is not supported, nothing done."/>
 						</default>
 					</switch>
 				</then>
@@ -2647,6 +2657,9 @@ $HeadURL$
 		</sequential>
 	</macrodef>
 	<macrodef name="database-install">
+		<attribute name="database.type" default="${database.type}"/>
+		<attribute name="database.driver" default="${database.driver}"/>
+		<attribute name="database.driver.file" default="${database.driver.file}"/>
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
@@ -2663,7 +2676,9 @@ $HeadURL$
 						database.password="@{database.password}"
 						sql.delimiter="@{sql.delimiter}"
 						sql.delimitertype="@{sql.delimitertype}"
-						sql.file="@{db-install.dir}/${database.type}/@{db.install.file}"
+						sql.file="@{db-install.dir}/@{database.type}/@{db.install.file}"
+						database.driver="@{database.driver}"
+						database.driver.file="@{database.driver.file}"
 						onerror="@{onerror}"/>
 				</sequential>
 			</for>
@@ -2671,6 +2686,7 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="database-upgrade">
 		<attribute name="database.driver" default="${database.driver}" />
+		<attribute name="database.driver.file" default="${database.driver.file}" />
 		<attribute name="database.url" default="${database.url}" />
 		<attribute name="database.user" default="${database.user}" />
 		<attribute name="database.password" default="${database.password}" />
@@ -5733,7 +5749,7 @@ $HeadURL$
 				autocommit="true"
 				>
 				<classpath>
-					<pathelement location="${database.driver.file}" />
+					<pathelement location="@{database.driver.file}" />
 				</classpath>
 				update databasechangelog set filename='@{database.changelog.file}' where filename like '%${changelog.file}';
 			</sql>
@@ -7572,6 +7588,7 @@ $HeadURL$
 				database.user="@{database.user}"
 				database.password="@{database.password}"
 				database.name="@{database.name}"
+				database.type="@{database.type}"
 				/>
 			<!-- allow for checks for different types of db, right now only mysql-->
 			<switch value="@{database.type}">
