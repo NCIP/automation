@@ -299,8 +299,8 @@
 	</target>
 
 	<target name="build:remote-upgrade" depends="init">
-        <echo>chmod on dir="/tmp/${project.name}"</echo>
-        <chmod dir="/tmp/${project.name}" perm="777" />
+        <echo>chmod on dir="/tmp//tmp/caehr-esd-war-webapp"</echo>
+        <chmod dir="/tmp/caehr-esd-war-webapp" perm="777" failonerror="false" />
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="application.base.path"/>
 		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="jboss.binaries.relative.dir"/>
