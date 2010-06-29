@@ -265,6 +265,24 @@
 			override.properties.string.property.name="override.properties.string"
 			/>
 
+        <echoxml>
+            <exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
+                <arg value="-Dproperties.file=install.properties" />
+                <arg value="-Dforce.reinstall=true" />
+                <arg value="-Ddatabase.system.user=${database.system.user}" />
+                <arg value="-Ddatabase.system.password=${database.system.password}" />
+                <arg value="-Ddatabase.server=${database.server}" />
+                <arg value="-Ddatabase.port=${database.port}" />
+                <arg value="-Ddatabase.name=${database.name}" />
+                <arg value="-Ddatabase.user=${database.user}" />
+                <arg value="-Ddatabase.password=${database.password}" />
+                <arg value="-Ddatabase.url=${database.url}" />
+                <arg value="-Ddatabase.system.url=${database.system.url}" />
+                <arg line="${override.properties.string}"/>
+                <arg value="${single-command.deployment.target}" />
+            </exec>
+        </echoxml>
+
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
 			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
@@ -299,7 +317,7 @@
 	</target>
 
 	<target name="build:remote-upgrade" depends="init">
-        <echo>chmod on dir="/tmp//tmp/caehr-esd-war-webapp"</echo>
+        <echo>chmod on dir="/tmp/caehr-esd-war-webapp"</echo>
         <chmod dir="/tmp/caehr-esd-war-webapp" perm="777" failonerror="false" />
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="application.base.path"/>
