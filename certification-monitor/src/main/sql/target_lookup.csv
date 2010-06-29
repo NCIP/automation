@@ -1,5 +1,4 @@
 ID,TARGET_NAME,MAP_NAME,IS_VALUE
-1,validate:JAD,singleCommandBuild,NULL
 2,validate:svn:checkout-project,singleCommandBuild,NULL
 3,build:single-command-build,singleCommandBuild,NULL
 4,build:single-command-deployment,singleCommandDeployment,NULL

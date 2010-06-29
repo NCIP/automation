@@ -5,7 +5,7 @@
 
 
 
-    <changeSet id="2010.06.14.22.33.01" author="bassetttj">
+    <changeSet id="2010.06.14.22.33.01" author="bassetttj" runOnChange="true">
         <delete tableName="target_lookup" />
         <loadData tableName="target_lookup"
                   file="${sql.dist.dir}/target_lookup.csv">
