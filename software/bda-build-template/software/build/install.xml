@@ -1151,6 +1151,8 @@ $HeadURL$
 		<delete dir="${tomcat.home}"/>
 		<dirname file="${tomcat.home}" property="tomcat.base.dir"/>
 		<unzip dest="${tomcat.base.dir}" src="${tools.dir}/${tomcat.binaries.file}" />
+		<tomcat-nci-customizations
+			/>
 		<if>
 			<os family="unix"/>
 			<then>
@@ -1161,7 +1163,12 @@ $HeadURL$
 	</target>
 
 	<target name="install:tomcat:configure" description="Configure tomcat (change ports)" unless="exclude.tomcat" depends="common:init">
+		<!-- need to pass ports for new override functionality.  It appears macros attribute defaults get initialized at load time not and invoke.  When I changed the value of the property then called the macro the old values were being used. -->
 		<tomcat-configure
+			tomcat.port.http="${tomcat.port.http}"
+			tomcat.port.ajp="${tomcat.port.ajp}"
+			tomcat.port.ssl="${tomcat.port.ssl}"
+			tomcat.port.shutdown="${tomcat.port.shutdown}"
 			tomcat.grid.configure="${tomcat.grid.enable}"
 			/>
 	</target>
