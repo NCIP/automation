@@ -144,6 +144,7 @@ $HeadURL$
 	<property name="bda-blueprints-webapp.file.name"  value="${bda-blueprints-webapp.name}.war"/>
 	<property name="bda-blueprints-webapp.src.dir" value="${bda-blueprints-webapp.base.dir}/src/web"/>
 
+	<property name="override.properties.delimiter" value=","/>
 
 	<!-- retrive ivy.jar.files then retrieve bda files and librarires -->
 	<condition property="commonlibrary.dir" value="">
