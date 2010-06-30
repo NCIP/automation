@@ -610,6 +610,8 @@
 "cadsr-semanticTools.database.name","DSRDEV"
 "cadsr-semanticTools.database.user","THE_SIW"
 "cadsr-semanticTools.database.password","THE_SIW"
+"cadsr-semanticTools.database.url","jdbc:oracle:thin:@${cadsr-semanticTools.database.server}:${cadsr-semanticTools.database.port}:${cadsr-semanticTools.database.name}"
+"cadsr-semanticTools.database.system.url","jdbc:oracle:thin:@${cadsr-semanticTools.database.server}:${cadsr-semanticTools.database.port}"
 "cadsr-cadsrdb.database.type","oracle"
 "cadsr-cadsrdb.svn.username","narram"
 "cadsr-cadsrdb.svn.project.url","https://ncisvn.nci.nih.gov/svn/cadsrdb/trunk"
