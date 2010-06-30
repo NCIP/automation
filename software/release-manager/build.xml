@@ -806,7 +806,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				<fail message="Must set current.version variable to upt comments in files, ie  1.7.0."/>
 			</then>
 		</if>
-		<property name="svn.automation.trunk.url" value="https://gforge.nci.nih.gov/svnroot/automation/trunk"/>
+		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
+		<property name="svn.automation.trunk.url" value="${svn.automation.base.url}/trunk"/>
 		<property name="svn.bda-template.trunk.url" value="${svn.automation.trunk.url}/software/bda-build-template"/>
 		<property name="svn.bda-utils.trunk.url" value="${svn.automation.trunk.url}/software/utils"/>
 		<property name="svn.bda-template.trunk.dir" location="${target.dir}/bda-template-trunk"/>
@@ -854,9 +855,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		depends="
 		trunk:init,
 		trunk:release:automation,
+		trunk:release:tag,
 		trunk:release:cbiit-ivy,
 		trunk:release:legacy-ivy
 		">
+	</target>
+
+	<target name="trunk:release:tag">
+		<property name="svn.automation.tag.url" value="${svn.automation.base.url}/tags/automation-${current.version}"/>
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<copy srcUrl="${svn.automation.trunk.url}" destURL="${svn.automation.tag.url}" message="Created by release manager patch:dev target"/>
+		</svn>
 	</target>
 	<target name="trunk:release:automation" depends="trunk:init" description="Commits the bda-templates and utils under target">
 		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
@@ -872,7 +881,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
 			bda-templates.dir="${svn.bda-template.trunk.dir}"
-			bda.version="${current.version}-beta"
+			bda.version="${current.version}"
 			legacy="true"
 			/>
 	</target>
@@ -884,7 +893,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
 			bda-templates.dir="${svn.bda-template.trunk.dir}"
-			bda.version="${current.version}-beta"
+			bda.version="${current.version}"
 			legacy="true"
 			/>
 	</target>
@@ -917,5 +926,43 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				 <echo message="${current.version} is greater than 1.6 skipping legacy repo."/>
 			 </then>
 		 </if>
+	</target>
+	<target name="trunk:release:beta" description="Releasese the patch - commits working code in target, creates a tag,  checks out cbiit and legacy repos and creates new version of bda-utils in each repo (based on version)"
+		depends="
+		trunk:init,
+		trunk:release:beta:automation,
+		trunk:release:beta:cbiit-ivy,
+		trunk:release:beta:legacy-ivy
+		">
+	</target>
+	<target name="trunk:release:beta:automation" depends="trunk:init" description="Commits the bda-templates and utils under target">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<commit dir="${svn.bda-template.trunk.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+			<commit dir="${svn.bda-utils.trunk.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+		</svn>
+	</target>
+	<target name="trunk:release:beta:legacy-ivy" description="Creates a nw version of bda-utils in the legacy-ivy-repo if the patched.version is less than 1.6" depends="trunk:init,trunk:release:legacy-ivy:init" unless="skip.legacy-ivy">
+		<add2ivy
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.ivy.bda-utils.url="${svn.legacy-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${current.version}-beta"
+			legacy="true"
+			/>
+	</target>
+	<target name="trunk:release:beta:cbiit-ivy" description="Creates a nw version of bda-utils in the legacy-ivy-repo if the patched.version is less than 1.6" depends="trunk:init,trunk:release:cbiit-ivy:init" unless="skip.cbiit-ivy">
+		<add2ivy
+			svn.user="${new.svn.username}"
+			svn.pass="${new.svn.password}"
+			svn.ivy.bda-utils.url="${svn.cbiit-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${current.version}-beta"
+			legacy="true"
+			/>
 	</target>
 </project>
