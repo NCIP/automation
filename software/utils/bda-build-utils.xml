@@ -4399,6 +4399,7 @@ $HeadURL$
 		<attribute name="enable.install.debug" default="${enable.install.debug}"/>
 		<attribute name="enable.install.timing" default="${enable.install.timing}"/>
 		<attribute name="override.properties" default="${override.properties}" />
+		<attribute name="override.properties.delimiter" default="${override.properties.delimiter}" />
 		<sequential>
 			<var name="install.debug" unset="true"/>
 			<if>
@@ -4430,6 +4431,7 @@ $HeadURL$
 			</copy>
 			<override-properties-prep
 				override.properties="@{override.properties}"
+				override.properties.delimiter="@{override.properties.delimiter}"
 				override.properties.string.property.name="override.properties.string"
 				/>
 			<exec osfamily="unix" executable="ant" dir="@{install.dir}" failonerror="true">
@@ -8860,10 +8862,12 @@ $HeadURL$
 	</macrodef>
 	<macrodef name="override-properties-prep">
 		<attribute name="override.properties" default="${override.properties}"/>
+		<attribute name="override.properties.delimiter" default="${override.properties.delimiter}"/>
 		<attribute name="override.properties.string.property.name" default="override.properties.string"/>
 		<sequential>
 			<var name="@{override.properties.string.property.name}" value=""/>
 			<echo message="override.properties=@{override.properties}"/>
+			<echo message="override.properties.delimiter=@{override.properties.delimiter}"/>
 			<var name="override.props.set" unset="true"/>
 			<propertyregex property="override.props.set"
 				input="@{override.properties}"
@@ -8876,7 +8880,7 @@ $HeadURL$
 				</not>
 				<then>
 
-					<for list="@{override.properties}" param="prop.val" delimiter=",">
+					<for list="@{override.properties}" param="prop.val" delimiter="@{override.properties.delimiter}">
 						<sequential>
 							<var name="prop" unset="true"/>
 							<propertyregex property="prop"
