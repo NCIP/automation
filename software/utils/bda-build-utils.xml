@@ -5338,6 +5338,10 @@ $HeadURL$
 					-->
 
 					<echo message="Updating Tomcat Ports"/>
+					<properties-print
+						properties.list="tomcat.port.http,tomcat.port.ajp,tomcat.port.ssl,tomcat.port.shutdown"
+						/>
+					<echo message="@{tomcat.port.http} @{tomcat.port.ajp} @{tomcat.port.ssl} @{tomcat.port.shutdown}"/>
 					<xmltask preservetype="true" source="@{tomcat.home}/conf/server.xml" dest="@{tomcat.home}/conf/server.xml" failWithoutMatch="true">
 						<xmlcatalog refid="bda.xml.catalog"/>
 						<replace path="(//Connector)[1]/@port" withtext="@{tomcat.port.http}" />
@@ -10268,5 +10272,172 @@ gov.nih.nci.security.cgmm.login.config.file=@{cgmm.conf.dest.dir}/cgmm.login.con
 			</groovy>	
 		</sequential>
 	</macrodef>
+	<macrodef name="tomcat-nci-customizations">
+		<attribute name="application.base.path" default="${application.base.path}"/>
+		<attribute name="tomcat.home" default="${tomcat.home}"/>
+		<attribute name="tomcat.port.http.property.name" default="tomcat.port.http"/>
+		<attribute name="tomcat.port.ajp.property.name" default="tomcat.port.ajp"/>
+		<attribute name="tomcat.port.ssl.property.name" default="tomcat.port.ssl"/>
+		<attribute name="tomcat.port.shutdown.property.name" default="tomcat.port.shutdown"/>
+		<attribute name="tomcat.ncicb-standard.port-config" default="${tomcat.ncicb-standard.port-config}"/>
+		<attribute name="tomcat.server.ports.name" default="${tomcat.server.ports.name}"/>
+		<attribute name="project.name" default="${project.name}"/>
+		<attribute name="java.home" default="${env.JAVA_HOME}"/>
+		<attribute name="logname" default="${env.LOGNAME}"/>
+		<sequential>
+			<var name="is.tomcat-nci.distribution" unset="true"/>
+			<propertyregex property="is.tomcat-nci.distribution"
+				input="@{tomcat.home}"
+				regexp=".*nci$"
+				select="true"
+				/>
+			<if>
+				<isset property="is.tomcat-nci.distribution"/>
+				<then>
+					<echo message="This is a NCI distribution of tomcat, starting customizations."/>
+					<replaceregexp file="@{tomcat.home}/bin/init.conf" byline="true"
+						match="(APPSRV_HOME=).*"
+						replace="\1@{application.base.path}"
+						flags="g"
+						/>
+					<replaceregexp file="@{tomcat.home}/bin/init.conf" byline="true"
+						match="(CATALINA_HOME=).*"
+						replace="\1@{tomcat.home}"
+						flags="g"
+						/>
+					<replaceregexp file="@{tomcat.home}/bin/init.conf" byline="true"
+						match="(CATALINA_USER=).*"
+						replace="\1@{logname}"
+						flags="g"
+						/>
+					<replaceregexp file="@{tomcat.home}/bin/init.conf" byline="true"
+						match="(JAVA_HOME=).*"
+						replace="\1${java.home}"
+						flags="g"
+						/>
+					<replaceregexp file="@{tomcat.home}/bin/init.conf" byline="true"
+						match="(CATALINA_PROJECT=).*"
+						replace="\1"
+						flags="g"
+						/>
+					<var name="flist" unset="true"/>
+					<property name="flist" value="startup.sh,shutdown.sh"/>
+					<for list="${flist}" param="file">
+						<sequential>
+							<replaceregexp file="@{tomcat.home}/bin/@{file}" byline="true"
+								match="(.*PRG=&quot;\$0&quot;.*)"
+								replace="#### Begin NCI Customization${line.separator}DIRNAME=`dirname $0`${line.separator}INIT_CONF=&quot;$DIRNAME/init.conf&quot;${line.separator}if [ -r &quot;$INIT_CONF&quot; ]; then${line.separator}. &quot;$INIT_CONF&quot;${line.separator}else${line.separator}echo &quot;${PROGNAME}: Missing init.conf! exiting...&quot;${line.separator}exit 1${line.separator}fi${line.separator}#### End NCI customization${line.separator}\1"
+								/>
+						</sequential>
+					</for>
+					<if>
+						<equals arg1="@{tomcat.ncicb-standard.port-config}" arg2="true"/>
+						<then>
+							<echo message="tomcat.ncicb-standard.port-config is set to true overriding values for tomcat.port.(http|ajp|ssl|shutdown)"/>
+							<properties-print
+								properties.list="@{tomcat.port.http.property.name},@{tomcat.port.ajp.property.name},@{tomcat.port.ssl.property.name},@{tomcat.port.shutdown.property.name}"
+								/>
+							<switch value="@{tomcat.server.ports.name}">
+								<case value="8080">
+									<var name="@{tomcat.port.http.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ajp.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ssl.property.name}" unset="true"/>
+									<var name="@{tomcat.port.shutdown.property.name}" unset="true"/>
+									<property name="@{tomcat.port.http.property.name}" value="8080"/>
+									<property name="@{tomcat.port.ajp.property.name}" value="8009"/>
+									<property name="@{tomcat.port.ssl.property.name}" value="8443"/>
+									<property name="@{tomcat.port.shutdown.property.name}" value="8005"/>
+									<echo message="Tomcat Ports overriden to following values"/>
+									<properties-print
+										properties.list="@{tomcat.port.http.property.name},@{tomcat.port.ajp.property.name},@{tomcat.port.ssl.property.name},@{tomcat.port.shutdown.property.name}"
+										/>
+								</case>
+								<case value="18080">
+									<var name="@{tomcat.port.http.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ajp.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ssl.property.name}" unset="true"/>
+									<var name="@{tomcat.port.shutdown.property.name}" unset="true"/>
+									<property name="@{tomcat.port.http.property.name}" value="18080"/>
+									<property name="@{tomcat.port.ajp.property.name}" value="18009"/>
+									<property name="@{tomcat.port.ssl.property.name}" value="18443"/>
+									<property name="@{tomcat.port.shutdown.property.name}" value="18005"/>
+									<echo message="Tomcat Ports overriden to following values"/>
+									<properties-print
+										properties.list="@{tomcat.port.http.property.name},@{tomcat.port.ajp.property.name},@{tomcat.port.ssl.property.name},@{tomcat.port.shutdown.property.name}"
+										/>
+								</case>
+								<case value="28080">
+									<var name="@{tomcat.port.http.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ajp.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ssl.property.name}" unset="true"/>
+									<var name="@{tomcat.port.shutdown.property.name}" unset="true"/>
+									<property name="@{tomcat.port.http.property.name}" value="28080"/>
+									<property name="@{tomcat.port.ajp.property.name}" value="28009"/>
+									<property name="@{tomcat.port.ssl.property.name}" value="28443"/>
+									<property name="@{tomcat.port.shutdown.property.name}" value="28005"/>
+									<echo message="Tomcat Ports overriden to following values"/>
+									<properties-print
+										properties.list="@{tomcat.port.http.property.name},@{tomcat.port.ajp.property.name},@{tomcat.port.ssl.property.name},@{tomcat.port.shutdown.property.name}"
+										/>
+								</case>
+								<case value="38080">
+									<var name="@{tomcat.port.http.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ajp.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ssl.property.name}" unset="true"/>
+									<var name="@{tomcat.port.shutdown.property.name}" unset="true"/>
+									<property name="@{tomcat.port.http.property.name}" value="38080"/>
+									<property name="@{tomcat.port.ajp.property.name}" value="38009"/>
+									<property name="@{tomcat.port.ssl.property.name}" value="38443"/>
+									<property name="@{tomcat.port.shutdown.property.name}" value="38005"/>
+									<echo message="Tomcat Ports overriden to following values"/>
+									<properties-print
+										properties.list="@{tomcat.port.http.property.name},@{tomcat.port.ajp.property.name},@{tomcat.port.ssl.property.name},@{tomcat.port.shutdown.property.name}"
+										/>
+								</case>
+								<case value="48080">
+									<var name="@{tomcat.port.http.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ajp.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ssl.property.name}" unset="true"/>
+									<var name="@{tomcat.port.shutdown.property.name}" unset="true"/>
+									<property name="@{tomcat.port.http.property.name}" value="48080"/>
+									<property name="@{tomcat.port.ajp.property.name}" value="48009"/>
+									<property name="@{tomcat.port.ssl.property.name}" value="48443"/>
+									<property name="@{tomcat.port.shutdown.property.name}" value="48005"/>
+									<echo message="Tomcat Ports overriden to following values"/>
+									<properties-print
+										properties.list="@{tomcat.port.http.property.name},@{tomcat.port.ajp.property.name},@{tomcat.port.ssl.property.name},@{tomcat.port.shutdown.property.name}"
+										/>
+								</case>
+								<case value="58080">
+									<var name="@{tomcat.port.http.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ajp.property.name}" unset="true"/>
+									<var name="@{tomcat.port.ssl.property.name}" unset="true"/>
+									<var name="@{tomcat.port.shutdown.property.name}" unset="true"/>
+									<property name="@{tomcat.port.http.property.name}" value="58080"/>
+									<property name="@{tomcat.port.ajp.property.name}" value="58009"/>
+									<property name="@{tomcat.port.ssl.property.name}" value="58443"/>
+									<property name="@{tomcat.port.shutdown.property.name}" value="58005"/>
+									<echo message="Tomcat Ports overriden to following values"/>
+									<properties-print
+										properties.list="@{tomcat.port.http.property.name},@{tomcat.port.ajp.property.name},@{tomcat.port.ssl.property.name},@{tomcat.port.shutdown.property.name}"
+										/>
+								</case>
+								<default>
+									<fail message="tomcat.server.ports.name not set to a valid value (8080,18080,28080,38080,48080,58080)"/>
+								</default>
+							</switch>
+						</then>
+						<else>
+							<echo message="tomcat.ncicb-standard.port-config is not set using set propery values"/>
 
+						</else>
+					</if>
+					
+				</then>
+				<else>
+					<echo message="This does not appear to be a NCI distribution of tomcat, skipping customizations."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
 </project>
