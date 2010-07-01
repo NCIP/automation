@@ -44,6 +44,7 @@
 		<delete dir="${classes.dir}" />
 		<delete dir="${target.dir}" />
 		<delete dir="${dist.dir}" />
+        <delete dir="${test-classes.dir}" />
 	</target>
 
 
@@ -72,6 +73,7 @@
 
     <target name="test"
             depends="build">
+        <mkdir dir="${test-classes.dir}" />
         <!--<property name="source.dir" value="${software.dir}/src/main/java/gov/nih/nci/confluence" />-->
         <groovyc srcdir="${source.dir}/../../../../test/gov/nih/nci/confluence"
                  destdir="${test-classes.dir}">
