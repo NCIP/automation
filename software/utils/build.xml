@@ -1,6 +1,6 @@
 <project name="build-cai2" default="bda2local" basedir=".">
 	<property file="build.properties" />
-	<property name="bda.local.repo.dir" location="../../../bda-local-ivy-repo"/>
+	<property name="bda.local.repo.dir" location="../bda-local-ivy-repo"/>
 	<property name="bda.local.org.dir" location="${bda.local.repo.dir}/ncicb"/>
 	<property name="bda.ivy.relative.dir" value="ncicb/bda-utils/${bda.version}"/>
 	<property name="bda.local.version.dir" location="${bda.local.repo.dir}/${bda.ivy.relative.dir}"/>
@@ -16,14 +16,26 @@
 		<format property="run.time" pattern="yyyyMMddHHmm" />
 	</tstamp>
 
-	<target name="bda2local" >
-		<mkdir dir="${bda.local.version.dir}"/>
+	<available file="${bda.local.repo.dir}" property="bda.local.repo.dir.exists"/>
+
+	<target name="bda2local:usage" unless="bda.local.repo.dir.exists">
+		<fail>
+This tool is meant to be used within the target folder of the relase-manager project.  To set things up to work do the following:
+* svn co  https://gforge.nci.nih.gov/svnroot/automation/trunk/software/release-manager [somedir]
+* cd [somedir]
+* ant -Dcurrent.version=x.x.x trunk:dev 
+* cd target/utils-trunk
+* ant bda2local
+		</fail>
+	</target>
+
+	<target name="bda2local" depends="bda2local:usage">
 		<mkdir dir="${bda.local.version.dir}"/>
 		<zip destfile="${bda.local.version.dir}/${bda-utils.zip.file}">
 			<zipfileset dir="resource" prefix="resource" />
 		</zip>
-		<copy tofile="${bda.local.version.dir}/${bda-utils.xml.file}" file="bda-build-utils.xml"/>
-		<copy todir="${bda.local.version.dir}" file="${ivy.def.file}"/>
+		<copy tofile="${bda.local.version.dir}/${bda-utils.xml.file}" file="bda-build-utils.xml" overwrite="true"/>
+		<copy todir="${bda.local.version.dir}" file="${ivy.def.file}" overwrite="true"/>
 	</target>
 	<target name="local2bda" >
 		<copy file="${bda.local.version.dir}/${bda-utils.xml.file}" tofile="bda-build-utils.xml" overwrite="true"/>
