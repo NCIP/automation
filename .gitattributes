@@ -131,6 +131,7 @@ wiki-cli/lib/confluence-soap-model-0.2.jar -text
 wiki-cli/lib/derby.jar -text
 wiki-cli/lib/groovy-all-1.6-beta-1.jar -text
 wiki-cli/lib/jsap-2.1.jar -text
+wiki-cli/lib/junit-4.8.2.jar -text
 wiki-cli/lib/log4j-1.2.12.jar -text
 wiki-cli/lib/logkit-1.0.1.jar -text
 wiki-cli/lib/mail-1.4.jar -text
