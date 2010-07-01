@@ -17,5 +17,6 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
   void testCtor() {
 //    BuildStatusUpdater target = new BuildStatusUpdater();
 //    assertNotNull (target);
+    assertEquals ("x","z");
   }
 }
