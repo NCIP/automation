@@ -59,7 +59,7 @@
 	<target name="test:suite:db" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="true">
-			<file file="${basedir}/test-suite-db.xml" />
+			<file file="${basedir}/test-suite-db-jdk15.xml" />
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
 			<plainlistener logLevel="${screen.log.level}"/>
 		</antunit>
@@ -67,7 +67,7 @@
 	<target name="test:suite:jboss:upgrade" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="true">
-			<file file="${basedir}/test-suite-jboss-upgrade.xml" />
+			<file file="${basedir}/test-suite-jboss-upgrade-jdk15.xml" />
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
 			<plainlistener logLevel="${screen.log.level}"/>
 		</antunit>
@@ -75,7 +75,7 @@
 	<target name="test:suite:properties" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="true">
-			<file file="${basedir}/test-suite-properties.xml" />
+			<file file="${basedir}/test-suite-properties-jdk15.xml" />
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
 			<plainlistener logLevel="${screen.log.level}"/>
 		</antunit>

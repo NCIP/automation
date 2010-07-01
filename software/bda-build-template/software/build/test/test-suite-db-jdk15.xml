@@ -11,7 +11,7 @@
 	<target name="test:db:mysql:install:drop-schema:pass">
 		<!-- defaults to mysql -->
 		<echo message="**** Entering test:db:mysql:install:drop-schema:pass"/>
-		<echo file="${build.dir}/local.properties" message="database.drop-schema=true"/>
+		<echo file="${build.dir}/local.properties" message="database.drop-schema=true" append="false"/>
 		<replaceregexp file="${build.dir}/install.properties" byline="true"
 			match="^database.re-create=.*"
 			replace=""
@@ -23,7 +23,7 @@
 	<target name="test:db:mysql:install:re-create:pass">
 		<!-- defaults to mysql -->
 		<echo message="**** Entering test:db:mysql:install:re-create:pass"/>
-		<echo file="${build.dir}/local.properties" message="database.re-create=true"/>
+		<echo file="${build.dir}/local.properties" message="database.re-create=true" append="false"/>
 		<replaceregexp file="${build.dir}/install.properties" byline="true"
 			match="^database.drop-schema=.*"
 			replace=""
@@ -34,7 +34,7 @@
 	</target>
 	<target name="test:db:mysql:both-install-flags:fail">
 		<echo message="**** Entering test:db:mysql:both-install-flags:fail"/>
-		<echo file="${build.dir}/local.properties" message="database.drop-schema=true${line.separator}database.re-create=true"/>
+		<echo file="${build.dir}/local.properties" message="database.drop-schema=true${line.separator}database.re-create=true" append="false"/>
 		<buildExpectFail
 			/>
 		<echo message="**** Exiting test:db:mysql:both-install-flags:fail"/>

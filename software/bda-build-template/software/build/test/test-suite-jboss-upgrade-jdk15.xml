@@ -10,7 +10,7 @@
 	</target>
 	<target name="test:jboss:upgrade:dac:pass">
 		<echo message="**** Entering test:jboss:upgrade:dac:pass"/>
-		<echo file="${build.dir}/local.properties" message=""/>
+		<echo file="${build.dir}/local.properties" message="" append="false"/>
 		<xmltask preservetype="true" source="${build.dir}/install.xml"
 			dest="${build.dir}/install.xml"
 			failWithoutMatch="true" >       
@@ -21,12 +21,13 @@
 		</xmltask>              
 
 		<buildExpectPass
+			build.target="deploy:local:upgrade"
 			/>
 		<echo message="**** Exiting test:jboss:upgrade:dac:pass"/>
 	</target>
 	<target name="test:jboss:upgrade:cm:pass">
 		<echo message="**** Entering test:jboss:upgrade:cm:pass"/>
-		<echo file="${build.dir}/local.properties" message=""/>
+		<echo file="${build.dir}/local.properties" message="" append="false"/>
 		<xmltask preservetype="true" source="${build.dir}/install.xml"
 			dest="${build.dir}/install.xml"
 			failWithoutMatch="true" >       
@@ -37,12 +38,13 @@
 		</xmltask>              
 
 		<buildExpectPass
+			build.target="deploy:local:upgrade"
 			/>
 		<echo message="**** Exiting test:jboss:upgrade:cm:pass"/>
 	</target>
 	<target name="test:jboss:upgrade:ncm:pass">
 		<echo message="**** Entering test:jboss:upgrade:ncm:pass"/>
-		<echo file="${build.dir}/local.properties" message=""/>
+		<echo file="${build.dir}/local.properties" message="" append="false"/>
 		<xmltask preservetype="true" source="${build.dir}/install.xml"
 			dest="${build.dir}/install.xml"
 			failWithoutMatch="true" >       
@@ -53,6 +55,7 @@
 		</xmltask>              
 
 		<buildExpectPass
+			build.target="deploy:local:upgrade"
 			/>
 		<echo message="**** Exiting test:jboss:upgrade:ncm:pass"/>
 	</target>
@@ -60,7 +63,7 @@
 		<!-- Need to install once before upgrades -->
 		<echo message="**** Entering suiteSetUp"/>
 		<antcall target="setUp"/>
-		<echo file="${build.dir}/local.properties" message=""/>
+		<echo file="${build.dir}/local.properties" message="" append="false"/>
 		<buildExpectPass
 			/>
 		<echo message="**** Exiting suiteSetUp"/>
