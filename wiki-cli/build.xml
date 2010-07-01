@@ -84,6 +84,7 @@
             </classpath>
             <javac source="1.5" target="1.5" debug="on" />
         </groovyc>
+        <mkdir dir="${basedir}/testresult" />
         <junit printsummary="yes">
             <classpath refid="project.classpath" />
             <batchtest fork="yes" todir="${basedir}/testresult">
