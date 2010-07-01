@@ -2883,9 +2883,9 @@ software/bda-build-template/software/build/project.properties -text
 software/bda-build-template/software/build/properties.template -text
 software/bda-build-template/software/build/test/build.xml -text
 software/bda-build-template/software/build/test/test-common.xml -text
-software/bda-build-template/software/build/test/test-suite-db.xml -text
-software/bda-build-template/software/build/test/test-suite-jboss-upgrade.xml -text
-software/bda-build-template/software/build/test/test-suite-properties.xml -text
+software/bda-build-template/software/build/test/test-suite-db-jdk15.xml -text
+software/bda-build-template/software/build/test/test-suite-jboss-upgrade-jdk15.xml -text
+software/bda-build-template/software/build/test/test-suite-properties-jdk15.xml -text
 software/bda-build-template/software/build/test/test-suite.template -text
 software/bda-build-template/software/build/test/tmp/bkp-test.sh -text
 software/bda-build-template/software/build/test/tmp/install-40-dac.properties -text
