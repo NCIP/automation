@@ -84,8 +84,13 @@
             </classpath>
             <javac source="1.5" target="1.5" debug="on" />
         </groovyc>
-        <junit dir="${test-classes.dir}">
+        <junit printsummary="yes">
             <classpath refid="project.classpath" />
+            <batchtest fork="yes" todir="${basedir}/testresult">
+                <fileset dir="${test-classes.dir}">
+                  <include name="**/*.class"/>
+                </fileset>
+            </batchtest>
             <formatter type="brief" usefile="true" />
         </junit>
     </target>
