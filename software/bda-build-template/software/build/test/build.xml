@@ -2,6 +2,14 @@
 	<import file="test-common.xml" />
 	<!-- -->
 	<target name="test:init">
+		<if>
+			<not>
+				<equals arg1="${java.specification.version}" arg2="1.5"/>
+			</not>
+			<then>
+				<fail message="This test script requires JDK 1.5"/>
+			</then>
+		</if>
 		<var name="svn.changed" unset="true"/>
 		<groovy>                                 
 			String cmd= "svn status -N .."
