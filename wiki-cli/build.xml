@@ -86,6 +86,7 @@
         </groovyc>
         <junit dir="${test-classes.dir}">
             <classpath refid="project.classpath" />
+            <formatter type="brief" usefile="true" />
         </junit>
     </target>
 
