@@ -213,7 +213,7 @@ class ErrorValidator {
 			message = message.replaceAll("INSERT_PROJECT_NAME",projectName)
 
 
-			String pocStatement = "SELECT DEV_POC, DEV_POC_EMAIL, GOV_POC_EMAIL FROM PROJECT_POC WHERE PROJECT_NAME='"+projectName + "'"
+			String pocStatement = "SELECT DEV_POC, DEV_POC_EMAIL, GOV_POC_EMAIL, COTR_EMAIL FROM PROJECT_POC WHERE PROJECT_NAME='"+projectName + "'"
 			connection.eachRow(pocStatement) { row ->
 				devPoc    = row.DEV_POC;
 				devPocEmail    = row.DEV_POC_EMAIL;

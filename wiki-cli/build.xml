@@ -45,6 +45,7 @@
 		<delete dir="${target.dir}" />
 		<delete dir="${dist.dir}" />
         <delete dir="${test-classes.dir}" />
+        <delete dir="${basedir}/testresult" />
 	</target>
 
 
@@ -84,6 +85,8 @@
             </classpath>
             <javac source="1.5" target="1.5" debug="on" />
         </groovyc>
+        <jar destfile="${dist.dir}/tests.jar" basedir="${test-classes.dir}" update="true" />
+
         <mkdir dir="${basedir}/testresult" />
         <echo>jar=${dist.dir}/${wiki_cli_jar}</echo>
         <path id="test.classpath">
@@ -93,15 +96,15 @@
             <fileset dir="${dist.dir}">
                 <include name="**/*.jar" />
             </fileset>
-            <fileset dir="${test-classes.dir}">
-                <include name="**/*.class" />
-            </fileset>
+            <!--<fileset dir="${source.dir}/../../../../test/gov/nih/nci/confluence">-->
+                <!--<include name="**/*.groovy" />-->
+            <!--</fileset>-->
         </path>
         <property name="xxx" refid="test.classpath"/>
         <echo>classpath=${xxx}</echo>
         <junit printsummary="yes">
             <classpath refid="test.classpath"/>
-            <batchtest fork="yes" todir="${basedir}/testresult">
+            <batchtest todir="${basedir}/testresult">
                 <fileset dir="${test-classes.dir}">
                   <include name="**/*.class"/>
                 </fileset>
@@ -112,7 +115,7 @@
 
 
 	<target name="package"
-            depends="build"
+            depends="clean,build"
             description="package the jar to update Wiki">
 		<jar destfile="${dist.dir}/${wiki_cli_jar}" basedir="${classes.dir}" update="true" />
 	</target>

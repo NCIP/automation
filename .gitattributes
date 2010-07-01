@@ -151,10 +151,10 @@ wiki-cli/prod-build.properties -text
 wiki-cli/source.txt -text
 wiki-cli/sql/populate_wikiDB.sql -text
 wiki-cli/src/assembly/release.xml -text
+wiki-cli/src/main/Main.iml -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/MailSender.groovy -text
-wiki-cli/src/main/java/org/swift/confluence/cli/ConfluenceClient.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy -text
 wiki-cli/src/main/resources/build.xml -text
 wiki-cli/src/main/resources/confluence.bat -text
