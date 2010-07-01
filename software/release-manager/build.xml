@@ -548,7 +548,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				replace="\1@{bda.version}\2"
 				/>
 			<if>
-				<available file="@{svn.bda-utils.dir}/ivy.xml.oldrepo}"/>
+				<available file="@{svn.bda-utils.dir}/ivy.xml.oldrepo"/>
 				<then>
 					<replaceregexp file="@{svn.bda-utils.dir}/ivy.xml.oldrepo"
 						byline="true"
@@ -709,17 +709,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				<checkout url="@{svn.ivy.bda-utils.url}" destpath="@{svn.ivy.bda-utils.dir}"/>
 			</svn>
 			<mkdir dir="@{svn.ivy.bda-utils.dir}/@{bda.version}"/>
-			<copy file="@{bda-utils.dir}/bda-build-utils.xml" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/bda-build-utils-@{bda.version}.xml"/>
+			<copy file="@{bda-utils.dir}/bda-build-utils.xml" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/bda-build-utils-@{bda.version}.xml" overwrite="true"/>
 			<if>
 				<and>
 					<equals arg1="@{legacy}" arg2="true"/>
 					<available file="@{bda-utils.dir}/ivy.xml.oldrepo"/>
 				</and>
 				<then>
-					<copy file="@{bda-utils.dir}/ivy.xml.oldrepo" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/ivy.xml"/>
+					<copy file="@{bda-utils.dir}/ivy.xml.oldrepo" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/ivy.xml" overwrite="true"/>
 				</then>
 				<else>
-					<copy file="@{bda-utils.dir}/ivy.xml" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/ivy.xml"/>
+					<copy file="@{bda-utils.dir}/ivy.xml" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/ivy.xml" overwrite="true"/>
 				</else>
 			</if>
 			<zip destfile="@{svn.ivy.bda-utils.dir}/@{bda.version}/bda-build-utils-@{bda.version}.zip">
