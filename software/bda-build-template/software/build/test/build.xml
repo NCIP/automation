@@ -1,15 +1,20 @@
 <project name="test-run" default="run" basedir=".">
 	<import file="test-common.xml" />
 	<!-- -->
+	<switch value="${java.specification.version}">
+		<case value="1.5">
+			<echo message="Using jdk15"/>
+			<property name="using.jdk15" value="true"/>
+		</case>
+		<case value="1.6">
+			<echo message="Using jdk16"/>
+			<property name="using.jdk16" value="true"/>
+		</case>
+		<default>
+			<fail message="unknown jdk version ${java.specification.version}"/>
+		</default>
+	</switch>
 	<target name="test:init">
-		<if>
-			<not>
-				<equals arg1="${java.specification.version}" arg2="1.5"/>
-			</not>
-			<then>
-				<fail message="This test script requires JDK 1.5"/>
-			</then>
-		</if>
 		<var name="svn.changed" unset="true"/>
 		<groovy>                                 
 			String cmd= "svn status -N .."
@@ -31,7 +36,7 @@
 		</if>
 			
 	</target>
-	<target name="test:jdk15" depends="test:init">
+	<target name="test:jdk15" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="false" errorproperty="antunit-failure">
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
@@ -41,7 +46,17 @@
 			</fileset>
 		</antunit>
 	</target>
-	<target name="test:suite:db" depends="test:init">
+	<target name="test:jdk16" depends="test:init" if="using.jdk16">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false" errorproperty="antunit-failure">
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
+			<plainlistener logLevel="${screen.log.level}"/>
+			<fileset dir="${basedir}">
+				<include name="test-suite*-jdk16.xml"/>
+			</fileset>
+		</antunit>
+	</target>
+	<target name="test:suite:db" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="true">
 			<file file="${basedir}/test-suite-db.xml" />
@@ -49,7 +64,7 @@
 			<plainlistener logLevel="${screen.log.level}"/>
 		</antunit>
 	</target>
-	<target name="test:suite:jboss:upgrade" depends="test:init">
+	<target name="test:suite:jboss:upgrade" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="true">
 			<file file="${basedir}/test-suite-jboss-upgrade.xml" />
@@ -57,7 +72,7 @@
 			<plainlistener logLevel="${screen.log.level}"/>
 		</antunit>
 	</target>
-	<target name="test:suite:properties" depends="test:init">
+	<target name="test:suite:properties" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="true">
 			<file file="${basedir}/test-suite-properties.xml" />
@@ -74,7 +89,7 @@
 		</junitreport>
 		<fail if="antunit-failure">At least one test has failed</fail>
 	</target>
-	<target name="run" depends="test:jdk15,setUp,report-tests">
+	<target name="run" depends="test:init,test:jdk15,test:jdk16,setUp,report-tests">
 	</target>
 	<target name="temp:dac">
 		<xmltask preservetype="true" source="${build.dir}/install.xml"
