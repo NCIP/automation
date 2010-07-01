@@ -71,16 +71,28 @@
 						</and>
 					</or>
 				</conditions>
-				<!--
 				<fail-message>application.base.path did not pass validation.  
 For unix systems the path needs to look like /dir1/dir2/dir3.  There can be no spaces in the path, if there are any please rename the directories to not include spaces (maybe replace with _ ?).
 
 
 For windows systems the path needs to look like c:/dir1/dir2/dir3.  Which means you should use &quot;/&quot; instead of &quot;\&quot;. And Java programs often have problems with spaces in directory (or file) names so there can be no spaces in the path, chose a directory without spaces in it. Therefore we recommend not using "any directory under "Documents and Settings".
 				</fail-message>
-				-->
-				<fail-message>Syntax validation failed for applicaiton.base.path</fail-message>
 			</rule>
+			<rule>
+				<name>value-checker</name>
+				<description></description>
+				<conditions>
+					<or>
+						<and>
+							<condition>application.base.path !=~ / </condition>
+						</and>
+						<and>
+							<condition>application.base.path !=~ / </condition>
+						</and>
+					</or>
+				</conditions>
+				<fail-message>
+				</fail-mesage>
 		</rules>
 	</property>
 
