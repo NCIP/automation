@@ -8,8 +8,9 @@
 	<property name="sql.dir" value="${software.dir}/sql" />
 	<property name="resources.dir" value="${software.dir}/src/main/resources" />
 	<property name="source.dir" value="${software.dir}/src/main/java/gov/nih/nci/confluence" />
-	<property name="classes.dir" value="${software.dir}/classes" />
-	<property name="database.name" value="wikiDB" />	
+    <property name="classes.dir" value="${software.dir}/classes" />
+    <property name="test-classes.dir" value="${software.dir}/test-classes" />
+	<property name="database.name" value="wikiDB" />
 	<property name="database.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
 	<property name="database.url" value="jdbc:derby:${database.name};create=true" />
 	<property name="sql.file" value="${sql.dir}/populate_wikiDB.sql" />
@@ -68,6 +69,22 @@
 			<javac source="1.5" target="1.5" debug="on" />
 		</groovyc>
 	</target>
+
+    <target name="test"
+            depends="build">
+        <!--<property name="source.dir" value="${software.dir}/src/main/java/gov/nih/nci/confluence" />-->
+        <groovyc srcdir="${source.dir}/../../../../test/gov/nih/nci/confluence"
+                 destdir="${test-classes.dir}">
+            <classpath>
+                <pathelement location="${lib.dir}/groovy-all-1.6-beta-1.jar"/>
+                <pathelement location="${lib.dir}/commons-net-2.0.jar"/>
+            </classpath>
+            <javac source="1.5" target="1.5" debug="on" />
+        </groovyc>
+        <junit dir="${test-classes.dir}">
+            <classpath refid="project.classpath" />
+        </junit>
+    </target>
 
 
 	<target name="package" description="package the jar to update Wiki">
