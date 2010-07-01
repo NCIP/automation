@@ -31,12 +31,12 @@
 		</if>
 			
 	</target>
-	<target name="test:all" depends="test:init">
+	<target name="test:jdk15" depends="test:init">
 		<mkdir dir="${antunit.xml.report.dir}"/>
 		<antunit failOnError="false" errorproperty="antunit-failure">
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
 			<plainlistener logLevel="${screen.log.level}"/>
-			<fileset dir="${basedir}">
+			<fileset dir="${basedir}/tests-jdk-1.5">
 				<include name="test-suite*.xml"/>
 			</fileset>
 		</antunit>
@@ -74,7 +74,7 @@
 		</junitreport>
 		<fail if="antunit-failure">At least one test has failed</fail>
 	</target>
-	<target name="run" depends="test:all,setUp,report-tests">
+	<target name="run" depends="test:jdk15,setUp,report-tests">
 	</target>
 	<target name="temp:dac">
 		<xmltask preservetype="true" source="${build.dir}/install.xml"

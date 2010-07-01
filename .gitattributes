@@ -2883,10 +2883,10 @@ software/bda-build-template/software/build/project.properties -text
 software/bda-build-template/software/build/properties.template -text
 software/bda-build-template/software/build/test/build.xml -text
 software/bda-build-template/software/build/test/test-common.xml -text
+software/bda-build-template/software/build/test/test-suite-db.xml -text
+software/bda-build-template/software/build/test/test-suite-jboss-upgrade.xml -text
+software/bda-build-template/software/build/test/test-suite-properties.xml -text
 software/bda-build-template/software/build/test/test-suite.template -text
-software/bda-build-template/software/build/test/tests-jdk-1.5/test-suite-db.xml -text
-software/bda-build-template/software/build/test/tests-jdk-1.5/test-suite-jboss-upgrade.xml -text
-software/bda-build-template/software/build/test/tests-jdk-1.5/test-suite-properties.xml -text
 software/bda-build-template/software/build/test/tmp/bkp-test.sh -text
 software/bda-build-template/software/build/test/tmp/install-40-dac.properties -text
 software/bda-build-template/software/build/test/tmp/install-40-nondac.properties -text
