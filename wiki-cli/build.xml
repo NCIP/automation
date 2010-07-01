@@ -75,7 +75,7 @@
             depends="build">
         <mkdir dir="${test-classes.dir}" />
         <!--<property name="source.dir" value="${software.dir}/src/main/java/gov/nih/nci/confluence" />-->
-        <groovyc srcdir="${source.dir}/../../../../test/gov/nih/nci/confluence"
+        <groovyc srcdir="${source.dir}/../../../../../../test/gov/nih/nci/confluence"
                  destdir="${test-classes.dir}">
             <classpath>
                 <pathelement location="${lib.dir}/groovy-all-1.6-beta-1.jar"/>
