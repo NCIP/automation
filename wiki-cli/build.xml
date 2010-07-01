@@ -29,6 +29,9 @@
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
+        <fileset dir="${dist.dir}">
+            <include name="${wiki_cli_jar}" />
+        </fileset>
 	</path>
 
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
