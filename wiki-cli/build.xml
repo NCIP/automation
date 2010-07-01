@@ -85,14 +85,28 @@
             <javac source="1.5" target="1.5" debug="on" />
         </groovyc>
         <mkdir dir="${basedir}/testresult" />
+        <echo>jar=${dist.dir}/${wiki_cli_jar}</echo>
+        <path id="test.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="${test-classes.dir}">
+                <include name="**/*.class" />
+            </fileset>
+        </path>
+        <property name="xxx" refid="test.classpath"/>
+        <echo>classpath=${xxx}</echo>
         <junit printsummary="yes">
-            <classpath refid="project.classpath" />
+            <classpath refid="test.classpath"/>
             <batchtest fork="yes" todir="${basedir}/testresult">
                 <fileset dir="${test-classes.dir}">
                   <include name="**/*.class"/>
                 </fileset>
             </batchtest>
-            <formatter type="brief" usefile="true" />
+            <formatter type="xml" usefile="true" />
         </junit>
     </target>
 
