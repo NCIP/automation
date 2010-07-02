@@ -7,13 +7,28 @@
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
 			<plainlistener logLevel="info"/>
 		</antunit>      
+		<osfamily property="os.family"/>
+		<if>                    
+			<or>                            
+				<equals arg1="${os.family}" arg2="mac"/>
+				<equals arg1="${os.family}" arg2="unix"/>
+			</or>                   
+			<then>                          
+				<exec executable="egrep">               
+					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
+				</exec>                         
+			</then>                 
+			<else>                  
+				<echo mesage="Grep not supported on windows"/>
+			</else>                 
+		</if>           
 	</target>
-	<target name="test:property:fail:abp1">
-		<echo message="**** Entering test:property:fail:abp1"/>
+	<target name="test:property:fail:abp-linux-syntax">
+		<echo message="**** Entering test:property:fail:abp-linux-syntax"/>
 		<echo message="dist.exploded.dir-${dist.exploded.dir}"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			application.base.path=invalidpath
-			evaluate.property.name=application.base.path
+			application.base.path.linux=invalidpath
+			evaluate.property.name=application.base.path.linux
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -22,13 +37,13 @@
 			/>
 		<execute-property-test-fail
 			/>
-		<echo message="**** Exiting test:property:fail:abp1"/>
+		<echo message="**** Exiting test:property:fail:abp-linux-syntax"/>
 	</target>
-	<target name="test:property:pass:abp2">
-		<echo message="**** Entering test:property:pass:abp2"/>
+	<target name="test:property:pass:abp-linux-syntax">
+		<echo message="**** Entering test:property:pass:abp-linux-syntax"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			application.base.path=/valid/path-syntax
-			evaluate.property.name=application.base.path
+			application.base.path.linux=/valid/path-syntax
+			evaluate.property.name=application.base.path.linux
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -37,7 +52,100 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:abp2"/>
+		<echo message="**** Exiting test:property:pass:abp-linux-syntax"/>
+	</target>
+	<target name="test:property:pass:abp-win-syntax">
+		<echo message="**** Entering test:property:pass:abp-win-syntax"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.windows=c:/valid/path-syntax
+			evaluate.property.name=application.base.path.windows
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:abp-win-syntax"/>
+	</target>
+	<target name="test:property:fail:abp-win-syntax">
+		<echo message="**** Entering test:property:fail:abp-win-syntax"/>
+		<echo message="dist.exploded.dir-${dist.exploded.dir}"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.windows=invalidpath
+			evaluate.property.name=application.base.path.windows
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:abp-win-syntax"/>
+	</target>
+	<target name="test:property:pass:abp-value-linux">
+		<echo message="**** Entering test:property:pass:abp-value-linux"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.linux=/valid/path-value
+			evaluate.property.name=application.base.path.linux
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:abp-value-linux"/>
+	</target>
+	<target name="test:property:pass:abp-value-win">
+		<echo message="**** Entering test:property:pass:abp-value-win"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.windows=c:/valid/path-value
+			evaluate.property.name=application.base.path.windows
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:abp-value-win"/>
+	</target>
+	<target name="test:property:fail:abp-value-linux">
+		<echo message="**** Entering test:property:fail:abp-value-linux"/>
+		<echo message="dist.exploded.dir-${dist.exploded.dir}"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.linux=/usr
+			evaluate.property.name=application.base.path.linux
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:abp-value-linux"/>
+	</target>
+	<target name="test:property:fail:abp-value-win">
+		<echo message="**** Entering test:property:fail:abp-value-win"/>
+		<echo message="dist.exploded.dir-${dist.exploded.dir}"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.windows=c:/
+			evaluate.property.name=application.base.path.windows
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:abp-value-win"/>
 	</target>
 	<target name="suiteSetUp">
 		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
@@ -50,5 +158,21 @@
 		</ant>                  
 		<echo message="**** Exiting Properties suiteSetUp"/>
 	</target>
-
+	<target name="suiteTearDown">
+		<osfamily property="os.family"/>
+		<if>
+			<or>
+				<equals arg1="${os.family}" arg2="mac"/>
+				<equals arg1="${os.family}" arg2="unix"/>
+			</or>
+			<then>
+				<exec executable="egrep">
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
+				</exec>
+			</then>
+			<else>
+				<echo mesage="Grep not supported on windows"/>
+			</else>
+		</if>
+	</target>
 </project>
