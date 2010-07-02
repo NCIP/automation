@@ -65,7 +65,7 @@ class propertyRuleValidator
 				rightMatcher.each{rightCnt++}
 				def missingRightCnt=leftCnt - rightCnt
 				def ruleCondMod=tmpStr;
-				(1..missingRightCnt).each{ruleCondMod=ruleCondMod +")"}
+				if (missingRightCnt > 0){(1..missingRightCnt).each{ruleCondMod=ruleCondMod +")"}}
 
 				if(debug) println "\t\tCondition -> " + ruleCondMod
 				if(debug) println prop.@name + "\t" + antProps[prop.@name] + "\t" + antProps[prop.@name].getClass()
@@ -115,6 +115,12 @@ class propertyRuleValidator
 				// println "${childCount}\t${cnt}"
 
 				def condConv=antStripDot(c.text())
+				if(debug) println "negate value - " + c.@negate
+				if (c.@negate =="true")
+				{
+					condConv = "! ("+condConv+")"
+					if(debug) println "negate conv - " + condConv
+				}
 
 				if (cnt < childCount)
 				{
@@ -152,7 +158,14 @@ class propertyRuleValidator
 	private antStripDot(String convStr)
 	{
 		def splitArray=convStr.split("\\s+")
-		splitArray[0]=splitArray[0].replaceAll("\\.", "")
+		if (splitArray[0].equals("!"))
+		{
+			splitArray[1]=splitArray[1].replaceAll("\\.", "")
+		}
+		else
+		{
+			splitArray[0]=splitArray[0].replaceAll("\\.", "")
+		}
 		return splitArray.join(" ");
 	}
 }

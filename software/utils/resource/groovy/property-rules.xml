@@ -47,34 +47,62 @@
 		</rules>
 	</property>
 	-->
-	<property name="application.base.path" name-pattern="application.base.path" default="" description="" skip-property="">
+	<property name="application.base.path.linux" name-pattern="application.base.path.linux" default="" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
-				<description>Checks application.base.path is a valid unix or window path syntax.</description>
+				<description>Checks application.base.path.linux is a valid unix path syntax.</description>
 				<conditions>
-					<or>
-						<!-- Unix -->
-						<and>
-							<!-- property value begins with "/" includes only \w \d - _ . / -->
-							<condition>application.base.path ==~ /^\/[\w\d\-\_\.\/]+$/</condition>
-							<!-- can't contain spaces -->
-							<condition>application.base.path !=~ /^.*\s+.*$/</condition>
-							<!-- can't be null -->
-							<condition>application.base.path != null</condition>
-						</and>
-						<and>
-							<condition>application.base.path ==~ /^\w:[\w\d\-\_\.\/]+$/</condition>
-							<condition>application.base.path !=~ /^.*\s+.*$/</condition>
-							<condition>application.base.path !=~ /^.*\\.*$/</condition>
-							<condition>application.base.path != null</condition>
-						</and>
-					</or>
+					<and>
+						<!-- property value begins with "/" includes only \w \d - _ . / -->
+						<condition>application.base.path.linux ==~ /^\/\S+$/</condition>
+						<!-- can't contain spaces -->
+						<condition>application.base.path.linux !=~ /\s/</condition>
+						<!-- can't contain \ -->
+						<condition>application.base.path.linux !=~ /\x5c/</condition>
+						<!-- can't be null -->
+						<condition>application.base.path.linux != null</condition>
+					</and>
 				</conditions>
-				<fail-message>application.base.path did not pass validation.  
+				<fail-message>application.base.path.linux did not pass validation.  
 For unix systems the path needs to look like /dir1/dir2/dir3.  There can be no spaces in the path, if there are any please rename the directories to not include spaces (maybe replace with _ ?).
-
-
+				</fail-message>
+			</rule>
+			<rule>
+				<name>value-checker</name>
+				<description></description>
+				<conditions>
+					<and>
+						<condition>application.base.path.linux != "/"</condition>
+						<condition>application.base.path.linux != "/usr"</condition>
+						<condition>application.base.path.linux !=~ "/opt"</condition>
+					</and>
+				</conditions>
+				<fail-message>
+application.base.path.linux failed value check.
+* /
+* /usr
+* /opt
+* no spaces
+* no \
+				</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="application.base.path.windows" name-pattern="application.base.path.windows" default="" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks application.base.path.windows is a valid window path syntax.</description>
+				<conditions>
+					<and>
+						<condition>application.base.path.windows ==~ /^\w:\S+$/</condition>
+						<condition>application.base.path.windows !=~ /\s/</condition>
+						<condition>application.base.path.windows !=~ /\x5c/</condition>
+						<condition>application.base.path.windows != null</condition>
+					</and>
+				</conditions>
+				<fail-message>application.base.path.windows did not pass validation.
 For windows systems the path needs to look like c:/dir1/dir2/dir3.  Which means you should use &quot;/&quot; instead of &quot;\&quot;. And Java programs often have problems with spaces in directory (or file) names so there can be no spaces in the path, chose a directory without spaces in it. Therefore we recommend not using "any directory under "Documents and Settings".
 				</fail-message>
 			</rule>
@@ -82,20 +110,22 @@ For windows systems the path needs to look like c:/dir1/dir2/dir3.  Which means 
 				<name>value-checker</name>
 				<description></description>
 				<conditions>
-					<or>
-						<and>
-							<condition>application.base.path !=~ / </condition>
-						</and>
-						<and>
-							<condition>application.base.path !=~ / </condition>
-						</and>
-					</or>
+					<and>
+						<condition negate="true">application.base.path.windows ==~ /^(?i)\w:\/$/ </condition>
+						<condition negate="true">application.base.path.windows ==~ /^(?i)\w:\/win\w*$/ </condition>
+					</and>
 				</conditions>
 				<fail-message>
-				</fail-mesage>
+application.base.path.windows failed value check.
+Windows
+* x:/ (x is any char)
+* x:/win.* (case insensitive)
+				</fail-message>
+			</rule>
 		</rules>
 	</property>
 
+	-->
 	<!--
 	<property name="application.context.name" name-pattern="application.context.name" default="bda" description="" skip-property="">
 		<rules>
