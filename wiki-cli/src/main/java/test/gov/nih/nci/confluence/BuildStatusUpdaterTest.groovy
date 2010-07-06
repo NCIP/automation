@@ -60,7 +60,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains the Product
-    assertContains(PRODUCT + " | ", actual);
+    assertContains(PRODUCT + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
 
 
   }
