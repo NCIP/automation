@@ -36,7 +36,7 @@
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
 	<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask" classpathref="project.classpath"/>
 	
-	<target name="init" description="create table and populate data">
+	<target name="init" depends="clean" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${target.dir}" />
 		<mkdir dir="${dist.dir}" />
@@ -63,7 +63,7 @@
 	
 	
 	<target name="build"
-            depends="init,clean"
+            depends="init"
             description="build the class to update Wiki">
 		<groovyc srcdir="${source.dir}" destdir="${classes.dir}">
 			<classpath>
