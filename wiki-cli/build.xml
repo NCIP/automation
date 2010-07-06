@@ -21,6 +21,8 @@
 	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
 	<property name="properties.file" value="build.properties" />
 	<property name="wiki.properties.file" value="wiki.properties" />
+    <property name="software.assert.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
+    <property name="assert.target.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
 	
 	<echo message="${lib.dir}"/>
 
@@ -83,11 +85,12 @@
             <classpath>
                 <pathelement location="${dist.dir}/${wiki_cli_jar}"/>
             </classpath>
+            <classpath>
+                <pathelement location="${dist.dir}/assert.jar"/>
+            </classpath>
             <javac source="1.5" target="1.5" debug="on" />
         </groovyc>
-        <jar destfile="${dist.dir}/tests.jar" basedir="${software.dir}" update="true">
-            <include name="**/test*" />
-        </jar>
+        <jar destfile="${dist.dir}/tests.jar" basedir="${test-classes.dir}" update="true" />
 
         <mkdir dir="${basedir}/testresult" />
         <echo>jar=${dist.dir}/${wiki_cli_jar}</echo>
@@ -115,6 +118,14 @@
         </junit>
     </target>
 
+
+    <target name="package-assert">
+        <javac srcdir="${software.assert.dir}"
+               destdir="${assert.target.dir}"
+               classpathref = "project.classpath"
+               debug = "on" />
+        <jar basedir="${assert.target.dir}" destfile="${dist.dir}/assert.jar" />
+    </target>
 
 	<target name="package"
             depends="clean,build"
