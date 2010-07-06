@@ -152,6 +152,7 @@ class BuildStatusUpdater {
     returnValue += singleCommandDeploy + " | " ;
     returnValue += remoteUpgrade + " | " ;
     returnValue += databaseIntegration + " | " ;
+    returnValue += privateProperties + " | " ;
 
 
     returnValue += " ||" ;
