@@ -149,6 +149,7 @@ class BuildStatusUpdater {
     returnValue += certification + " | " ;
     returnValue += bdaEnabled + " | " ;
     returnValue += singleCommandBuild + " | " ;
+    returnValue += singleCommandDeploy + " | " ;
 
 
     returnValue += " ||" ;
