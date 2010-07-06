@@ -153,6 +153,7 @@ class BuildStatusUpdater {
     returnValue += remoteUpgrade + " | " ;
     returnValue += databaseIntegration + " | " ;
     returnValue += privateProperties + " | " ;
+    returnValue += ciBuild + " | " ;
 
 
     returnValue += " ||" ;

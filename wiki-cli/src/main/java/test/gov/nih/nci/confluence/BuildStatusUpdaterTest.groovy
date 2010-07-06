@@ -127,4 +127,14 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
 //    make sure it contains Single Command Build
       assertContains(PRIVATE_PROPERTIES + " | ", actual);
     }
+
+  void testGetWikiMarkupForRowContainsCIBuild() {
+      BuildStatusUpdater target = new BuildStatusUpdater();
+
+      String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
+
+//    make sure it contains Single Command Build
+      assertContains(CI_BUILD + " | ", actual);
+    }
+
 }
