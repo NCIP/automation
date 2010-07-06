@@ -150,6 +150,8 @@ class BuildStatusUpdater {
     returnValue += bdaEnabled + " | " ;
     returnValue += singleCommandBuild + " | " ;
     returnValue += singleCommandDeploy + " | " ;
+    returnValue += remoteUpgrade + " | " ;
+    returnValue += databaseIntegration + " | " ;
 
 
     returnValue += " ||" ;
