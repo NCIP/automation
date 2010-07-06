@@ -16,18 +16,18 @@ import static gov.nih.nci.test.StringAssert.assertContains
  */
 class BuildStatusUpdaterTest extends GroovyTestCase {
 
-  final static String PRODUCT = "[caEHR-ESD|http://caehrorg.jira.com/svn/ESD/trunk]";
-  final static String CERTIFICATION_STATUS = '(/)'
-  final static String SINGLE_COMMAND_BUILD = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successfulSCB]'
-  final static String SINGLE_COMMAND_DEPLOYMENT = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]'
-  final static String REMOTE_UPGRADE = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successfulREMOTE]'
-  final static String DATABASE_INTEGRATION = "[(+)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature is OptionalDATABASE]";
-  final static String TEMPLATE_VALIDATION = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successfulTEMPLATE]";
-  final static String PRIVATE_PROPERTIES = "[(+)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature is OptionalPRIVATE_PROPERTIES]";
-  final static String CI_BUILD = "[(/)|http://ci.caehr.net:48080/hudson/job/ESD_Full_Deploy/241/|Build #241(Jun 30, 2010 5:59:20 PM)Jun 30, 2010 8:56:11 PM</span><a href=\"http://hudson-ci.org/\">Hudson ver. 1.362</a></td></tr></table></body></html>]";
-  final static String DEPLOYMENT_SHAKEOUT = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successfulDEPLOYMENT_SHAKEOUT]" ;
-  final static String BDA_ENABLED = "[(/)|http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/1.6.3|1.6.3]";
-  final static String COMMANDLINE_INSTALLER = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successfulINSTALLER]";
+  final static String PRODUCT = "PR";
+  final static String CERTIFICATION_STATUS = 'CS'
+  final static String SINGLE_COMMAND_BUILD = 'SCB'
+  final static String SINGLE_COMMAND_DEPLOYMENT = 'SCD'
+  final static String REMOTE_UPGRADE = 'RU'
+  final static String DATABASE_INTEGRATION = "DI";
+  final static String TEMPLATE_VALIDATION = "TV";
+  final static String PRIVATE_PROPERTIES = "PP";
+  final static String CI_BUILD = "CI";
+  final static String DEPLOYMENT_SHAKEOUT = "DS" ;
+  final static String BDA_ENABLED = "BDA";
+  final static String COMMANDLINE_INSTALLER = "CLI";
 
   void testCtor() {
     BuildStatusUpdater target = new BuildStatusUpdater();
@@ -40,7 +40,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it starts with a row marker
-    assertStartsWith("|| ", actual);
+    assertStartsWith(BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW, actual);
 
   }
 
@@ -50,7 +50,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it ends with a row marker
-    assertEndsWith(" ||", actual);
+    assertEndsWith( BuildStatusUpdater.WIKI_TABLE_END_ROW , actual);
 
   }
 
@@ -71,7 +71,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains the Certification status
-    assertContains(CERTIFICATION_STATUS + " | ", actual);
+    assertContains(CERTIFICATION_STATUS + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
   }
 
   void testGetWikiMarkupForRowContainsBDAEnabled() {
@@ -80,7 +80,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains the BDA Enabled status
-      assertContains(BDA_ENABLED + " | ", actual);
+      assertContains(BDA_ENABLED + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsSingleCommandBuild() {
@@ -89,7 +89,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(SINGLE_COMMAND_BUILD + " | ", actual);
+      assertContains(SINGLE_COMMAND_BUILD + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsSingleCommandDeployment() {
@@ -98,7 +98,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(SINGLE_COMMAND_DEPLOYMENT + " | ", actual);
+      assertContains(SINGLE_COMMAND_DEPLOYMENT + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsRemoteUpgrade() {
@@ -107,7 +107,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(REMOTE_UPGRADE + " | ", actual);
+      assertContains(REMOTE_UPGRADE + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsDatabaseIntegration() {
@@ -116,7 +116,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(DATABASE_INTEGRATION + " | ", actual);
+      assertContains(DATABASE_INTEGRATION + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsPrivateProperties() {
@@ -125,7 +125,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(PRIVATE_PROPERTIES + " | ", actual);
+      assertContains(PRIVATE_PROPERTIES + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsCIBuild() {
@@ -134,7 +134,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(CI_BUILD + " | ", actual);
+      assertContains(CI_BUILD + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsDeploymentShakeout() {
@@ -143,7 +143,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(DEPLOYMENT_SHAKEOUT + " | ", actual);
+      assertContains(DEPLOYMENT_SHAKEOUT + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
   void testGetWikiMarkupForRowContainsCommandLineInstaller() {
@@ -152,6 +152,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it contains Single Command Build
-      assertContains(COMMANDLINE_INSTALLER + " | ", actual);
+      assertContains(COMMANDLINE_INSTALLER + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
+
 }

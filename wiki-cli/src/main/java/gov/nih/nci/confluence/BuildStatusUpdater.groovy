@@ -141,24 +141,28 @@ class BuildStatusUpdater {
     doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + certificationTemplateFile + "_temp.txt ${findReplaceVersion}")
   }
 
+  public static final String WIKI_TABLE_BEGIN_ROW = "|" ;
+  public static final String WIKI_TABLE_END_ROW = "|" ;
+  public static final String WIKI_TABLE_CELL_TERMINATOR = "|" ;
+
   String getWikiMarkupForRow(String product, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller) {
 
-    String returnValue = "|| " ;
+    String returnValue = WIKI_TABLE_BEGIN_ROW ;
 
-    returnValue += product + " | " ;
-    returnValue += certification + " | " ;
-    returnValue += bdaEnabled + " | " ;
-    returnValue += singleCommandBuild + " | " ;
-    returnValue += singleCommandDeploy + " | " ;
-    returnValue += remoteUpgrade + " | " ;
-    returnValue += databaseIntegration + " | " ;
-    returnValue += privateProperties + " | " ;
-    returnValue += ciBuild + " | " ;
-    returnValue += deploymentShakeout + " | " ;
-    returnValue += commandLineInstaller + " | " ;
+    returnValue += product + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += certification + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += bdaEnabled + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += singleCommandBuild + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += singleCommandDeploy + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += remoteUpgrade + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += databaseIntegration + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += privateProperties + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += ciBuild + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += deploymentShakeout + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR ;
 
 
-    returnValue += " ||" ;
+    returnValue += WIKI_TABLE_END_ROW ;
     
     return returnValue;
   }
