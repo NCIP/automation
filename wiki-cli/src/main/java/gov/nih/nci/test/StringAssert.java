@@ -1,4 +1,4 @@
-package test.gov.nih.nci.confluence;
+package gov.nih.nci.test;
 
 import junit.framework.Assert;
 

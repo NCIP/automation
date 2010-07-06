@@ -1,13 +1,10 @@
 package test.gov.nih.nci.confluence
 
-import groovy.util.GroovyTestCase
-import org.junit.Test
 import gov.nih.nci.confluence.BuildStatusUpdater
-import groovy.mock.interceptor.StubFor
-import groovy.sql.Sql
-import static test.gov.nih.nci.confluence.StringAssert.assertStartsWith
-import static test.gov.nih.nci.confluence.StringAssert.assertEndsWith
-import static test.gov.nih.nci.confluence.StringAssert.assertContains
+
+import static gov.nih.nci.test.StringAssert.assertStartsWith
+import static gov.nih.nci.test.StringAssert.assertEndsWith
+import static gov.nih.nci.test.StringAssert.assertContains
 
 /**
  * Created by IntelliJ IDEA.
