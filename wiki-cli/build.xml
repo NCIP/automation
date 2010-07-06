@@ -75,7 +75,7 @@
 	</target>
 
     <target name="test"
-            depends="package">
+            depends="package,package-assert">
         <mkdir dir="${test-classes.dir}" />
         <!--<property name="source.dir" value="${software.dir}/src/main/java/gov/nih/nci/confluence" />-->
         <!--                                                  /src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy-->
