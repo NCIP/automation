@@ -16,6 +16,25 @@ import static gov.nih.nci.test.StringAssert.assertContains
  */
 class BuildStatusUpdaterTest extends GroovyTestCase {
 
+  final static String PRODUCT = "[caEHR-ESD|http://caehrorg.jira.com/svn/ESD/trunk]";
+
+  final static String CERTIFICATION_STATUS = '(/)'
+  final static String SINGLE_COMMAND_BUILD = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]'
+  final static String SINGLE_COMMAND_DEPLOYMENT = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]'
+  final static String REMOTE_UPGRADE = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]'
+  final static String DATABASE_INTEGRATION = "[(+)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature is Optional]";
+
+  final static String TEMPLATE_VALIDATION = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]";
+
+  final static String PRIVATE_PROPERTIES = "[(+)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature is Optional]";
+
+  final static String CI_BUILD = "[(/)|http://ci.caehr.net:48080/hudson/job/ESD_Full_Deploy/241/|Build #241(Jun 30, 2010 5:59:20 PM)Jun 30, 2010 8:56:11 PM</span><a href=\"http://hudson-ci.org/\">Hudson ver. 1.362</a></td></tr></table></body></html>]";
+  final static String DEPLOYMENT_SHAKEOUT = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]" ;
+
+  final static String BDA_ENABLED = "[(/)|http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/1.6.3|1.6.3]";
+
+  final static String COMMANDLINE_INSTALLER = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]";
+
   void testCtor() {
     BuildStatusUpdater target = new BuildStatusUpdater();
     assertNotNull (target);
@@ -25,24 +44,6 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     BuildStatusUpdater target = new BuildStatusUpdater();
 
 
-    String PRODUCT = "[caEHR-ESD|http://caehrorg.jira.com/svn/ESD/trunk]";
-
-    String CERTIFICATION_STATUS = '(/)'
-    String SINGLE_COMMAND_BUILD = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]'
-    String SINGLE_COMMAND_DEPLOYMENT = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]'
-    String REMOTE_UPGRADE = '[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]'
-    String DATABASE_INTEGRATION = "[(+)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature is Optional]";
-
-    String TEMPLATE_VALIDATION = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]";
-
-    String PRIVATE_PROPERTIES = "[(+)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature is Optional]";
-
-    String CI_BUILD = "[(/)|http://ci.caehr.net:48080/hudson/job/ESD_Full_Deploy/241/|Build #241(Jun 30, 2010 5:59:20 PM)Jun 30, 2010 8:56:11 PM</span><a href=\"http://hudson-ci.org/\">Hudson ver. 1.362</a></td></tr></table></body></html>]";
-    String DEPLOYMENT_SHAKEOUT = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]" ;
-
-    String BDA_ENABLED = "[(/)|http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/ncicb/bda-utils/1.6.3|1.6.3]";
-
-    String COMMANDLINE_INSTALLER = "[(/)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-caEHR-ESD/lastBuild/console|Feature implementation is successful]";
 
     String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
