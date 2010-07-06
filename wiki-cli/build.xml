@@ -85,7 +85,9 @@
             </classpath>
             <javac source="1.5" target="1.5" debug="on" />
         </groovyc>
-        <jar destfile="${dist.dir}/tests.jar" basedir="${test-classes.dir}" update="true" />
+        <jar destfile="${dist.dir}/tests.jar" basedir="${software.dir}" update="true">
+            <include name="**/test*" />
+        </jar>
 
         <mkdir dir="${basedir}/testresult" />
         <echo>jar=${dist.dir}/${wiki_cli_jar}</echo>
