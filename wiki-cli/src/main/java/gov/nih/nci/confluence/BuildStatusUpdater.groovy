@@ -155,6 +155,7 @@ class BuildStatusUpdater {
     returnValue += privateProperties + " | " ;
     returnValue += ciBuild + " | " ;
     returnValue += deploymentShakeout + " | " ;
+    returnValue += commandLineInstaller + " | " ;
 
 
     returnValue += " ||" ;
