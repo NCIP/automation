@@ -63,7 +63,7 @@
 	
 	
 	<target name="build"
-            depends="clean,init"
+            depends="init,clean"
             description="build the class to update Wiki">
 		<groovyc srcdir="${source.dir}" destdir="${classes.dir}">
 			<classpath>
