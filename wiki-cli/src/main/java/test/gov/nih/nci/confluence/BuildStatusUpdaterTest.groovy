@@ -84,4 +84,45 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     assertEndsWith(" ||", actual);
 
   }
+
+
+void testGetWikiMarkupForRowContainsProduct() {
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
+
+//    make sure it contains the Product
+    assertContains(PRODUCT + " | ", actual);
+
+
+  }
+
+void testGetWikiMarkupForRowContainsCertificationStatus() {
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
+
+//    make sure it contains the Certification status
+    assertContains(CERTIFICATION_STATUS + " | ", actual);
+  }
+
+  void testGetWikiMarkupForRowContainsBDAEnabled() {
+      BuildStatusUpdater target = new BuildStatusUpdater();
+
+      String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
+
+//    make sure it contains the BDA Enabled status
+      assertContains(BDA_ENABLED + " | ", actual);
+    }
+
+  void testGetWikiMarkupForRowContainsSingleCommandBuild() {
+      BuildStatusUpdater target = new BuildStatusUpdater();
+
+      String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
+
+//    make sure it contains Single Command Build
+      assertContains(SINGLE_COMMAND_BUILD + " | ", actual);
+    }
+
+
 }
