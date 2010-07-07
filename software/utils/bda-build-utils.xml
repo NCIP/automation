@@ -211,6 +211,19 @@ $HeadURL$
 			publicId="-//W3C//DTD/XMLSCHEMA 200102//EN"
 			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/XMLSchema.dtd"
 			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Service Reference 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/service-ref_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Service Reference 4.2//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/service-ref_4_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Service Reference 5.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/service-ref_5_0.dtd"
+			/>
+
 
 		<!--
 		<dtd
@@ -6006,22 +6019,22 @@ $HeadURL$
 		<attribute name="resultproperty" default="maven.result" />
 		<attribute name="maven.mem" default="-Xmx1024m"/>
 		<element name="args" implicit="true" optional="true" />
-		<sequential>              
+		<sequential>
 			<java classname="org.codehaus.classworlds.Launcher" fork="true"
 				dir="@{maven.dir}" resultproperty="@{resultproperty}">
-				<jvmarg value="-Xmx1024m"/>       
-				<classpath>                               
+				<jvmarg value="-Xmx1024m"/>
+				<classpath>
 					<fileset dir="@{maven.home}/boot">
-						<include name="*.jar" />          
-					</fileset>                                
-					<fileset dir="@{maven.home}/lib"> 
-						<include name="*.jar" />  
-					</fileset>                
+						<include name="*.jar" />
+					</fileset>
+					<fileset dir="@{maven.home}/lib">
+						<include name="*.jar" />
+					</fileset>
 				</classpath>
 				<sysproperty key="classworlds.conf" value="@{maven.home}/bin/m2.conf" />
 				<sysproperty key="maven.home" value="@{maven.home}" />
 				<arg line="--batch-mode @{maven.profile.list} @{maven.goal.list}" />
-			</java>           
+			</java>
 		</sequential>
 	</macrodef>
 
