@@ -28,6 +28,7 @@
     <property environment="env" />
     <echo>wiki.user=${env.WIKI.USER}</echo>
     <echo>JAVA_HOME=${env.JAVA_HOME}</echo>
+    <property  name="wiki.user" value="${env.WIKI.USER}" />
 
 	<!-- PATHS -->
 	<path id="project.classpath">
@@ -151,6 +152,7 @@
 
 
 	<target name="configure" description="Run the class to update Wiki" depends="configure:revision-number">
+
         <echo>configure.wiki.user=${wiki.user}</echo>
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.name)=.*" replace="\1=${database.name}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.url)=.*" replace="\1=${database.url}" />
