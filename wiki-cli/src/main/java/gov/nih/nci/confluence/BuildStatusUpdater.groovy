@@ -191,35 +191,30 @@ class BuildStatusUpdater {
 
     String replacementText = dashboardTableText();
 
+    FileWriter writer = new FileWriter("x." + dashboardTemplateFile);
+    File file = new File(dashboardTemplateFile);
+    BufferedReader reader = new BufferedReader(new FileReader(file));
+
+
     try {
-      File file = new File(dashboardTemplateFile);
-      BufferedReader reader = new BufferedReader(new FileReader(file));
-      String line = "";
-      String oldtext = "";
+      String oldline = "";
+      String newline = "";
 
-      while ((line = reader.readLine()) != null) {
-        oldtext += line + "\r\n";
+      while ((oldline = reader.readLine()) != null) {
+        newline = oldline.replace("|| XXX ||", replacementText) + "\r\n";
+        writer.write(newline);
       }
-      reader.close();
-      reader.finalize();
 
-      println "oldtext=" + oldtext;
-      // replace a word in a file
-      //String newtext = oldtext.replaceAll("drink", "Love");
-
-      //To replace a line in a file
-      String newtext = oldtext.replaceAll("|| XXX ||", replacementText);
-
-      println "newtext=" + newtext;
-
-      FileWriter writer = new FileWriter("x." + dashboardTemplateFile);
-      writer.write(newtext);
-      writer.close();
-      writer.finalize();
-      
     }
     catch (IOException ioe) {
       ioe.printStackTrace();
+    }
+    finally
+    {
+      reader.close();
+      reader.finalize();
+      writer.close();
+      writer.finalize();
     }
 
     println "Updating page..."
