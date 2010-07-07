@@ -435,6 +435,8 @@ class BuildStatusUpdater {
     returnValue += deploymentShakeout + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += WIKI_TABLE_END_ROW + "\r\n";
+
+    returnValue = returnValue.replace("\"", "'");
     
     return returnValue;
   }
