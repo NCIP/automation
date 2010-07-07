@@ -2,6 +2,8 @@
 <project name="wikimod" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
 
 	<target name="run" description="Run the class to update Wiki">
+        <property environment="env" />
+        <echo>wikiuser=${env.wikiuser}</echo>
 		<java classname="gov.nih.nci.confluence.BuildStatusUpdater">	
 			<classpath>
 				<pathelement location="./wiki_cli_nci.jar"/>
