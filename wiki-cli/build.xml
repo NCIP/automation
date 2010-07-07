@@ -26,7 +26,7 @@
 	
 	<echo message="${lib.dir}"/>
     <property environment="env" />
-    <echo>wikiuser=${env.WIKIUSER}</echo>
+    <echo>wiki.user=${env.WIKI.USER}</echo>
     <echo>JAVA_HOME=${env.JAVA_HOME}</echo>
 
 	<!-- PATHS -->
