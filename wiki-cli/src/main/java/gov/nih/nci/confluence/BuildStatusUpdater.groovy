@@ -180,34 +180,8 @@ class BuildStatusUpdater {
 
     String returnValue = "";
 
-    String certificationTemplateFile = properties.getProperty("certification.template.file");//"Deployment_Status_Template"
-    String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
-    String certificationPageFile = properties.getProperty("certification.page.file");//"page1"
-    String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
-
-
-    String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
-    String dashboardRevision = properties.getProperty("dashboard.revision.number");//"100"
-
-    String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
-
-    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt" ;
-
-    // get most recent tempates
-//    doCmd("${confluence} -a getPageSource --space \""
-//            + certificationTemplateSpace
-//            + "\" --title \""
-//            + certificationTemplateFile
-//            + "\" --file "
-//            + dashboardTemplateFile )
 
     String statement = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)' ORDER BY CERTIFICATION_STATUS desc"
-
-    List projectRows = connection.rows(statement)
-
-    int count = projectRows.size()
-
-    println "Updating status for BDA projects"
 
     connection.eachRow(statement) { row ->
 
@@ -264,42 +238,9 @@ class BuildStatusUpdater {
               , deploymentShakeout
               , commandLineInstaller);
 
-      println "getWikiMarkupForRow=" + thisRowText;
-
       returnValue += thisRowText;
 
-
-      String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Remote-Upgrade${count}:${remoteUpgrade}, Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
-
-      println "Replace String -->" + findReplace
-      // update bdafied page
-
-//      doCmd(  "${confluence} -a storePage --space \""
-//              + certificationPageSpace
-//              + "\" --title \""
-//              + certificationPageFile
-//              + "\"   --file "
-//              + dashboardTemplateFile
-//              + " ${findReplace}")
-//
-//      doCmd(  "${confluence} -a getPageSource --space \""
-//              + certificationPageSpace
-//              + "\" --title \""
-//              + certificationPageFile
-//              + "\"    --file "
-//              + dashboardTemplateFile)
-      count--
     }
-
-    // Update the release version
-//    String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardRelease}\""
-//    doCmd(  "${confluence} -a storePage --space \""
-//            + certificationPageSpace
-//            + "\" --title \""
-//            + certificationPageFile
-//            + "\"   --file "
-//            + dashboardTemplateFile
-//            + " ${findReplaceVersion}")
 
     return returnValue;
   }
