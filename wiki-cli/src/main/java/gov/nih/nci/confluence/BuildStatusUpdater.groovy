@@ -202,7 +202,7 @@ class BuildStatusUpdater {
 
     String replacementText = dashboardTableText();
 
-    String findReplace = "--findReplace \"XXX\""
+    String findReplace = "--findReplace \"|| XXX ||\""
 
     println "Replace String -->" + findReplace
       // update bdafied page
