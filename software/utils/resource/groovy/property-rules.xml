@@ -30,23 +30,6 @@
 			</rule>
 		</rules>
 	</property>
-	<!--
-	<property name="ant.minimum.version" name-pattern="ant.minimum.version" default="1.7.0" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks ant.minimum.version is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>ant.minimum.version ==~ //</condition>
-						<condition>ant.minimum.version != null</condition>
-					</and>
-				</conditions>
-				<fail-message>ant.minimum.version did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
 	<property name="application.base.path.linux" name-pattern="application.base.path.linux" default="" description="" skip-property="">
 		<rules>
 			<rule>
@@ -57,9 +40,9 @@
 						<!-- property value begins with "/" includes only \w \d - _ . / -->
 						<condition>application.base.path.linux ==~ /^\/\S+$/</condition>
 						<!-- can't contain spaces -->
-						<condition>application.base.path.linux !=~ /\s/</condition>
-						<!-- can't contain \ -->
-						<condition>application.base.path.linux !=~ /\x5c/</condition>
+						<condition negate="true">application.base.path.linux ==~ /.*\s.*/</condition>
+						<!-- can't contain \ need to use hex to get match -->
+						<condition negate="true">application.base.path.linux ==~ /.*\x5c.*/</condition>
 						<!-- can't be null -->
 						<condition>application.base.path.linux != null</condition>
 					</and>
@@ -75,7 +58,7 @@ For unix systems the path needs to look like /dir1/dir2/dir3.  There can be no s
 					<and>
 						<condition>application.base.path.linux != "/"</condition>
 						<condition>application.base.path.linux != "/usr"</condition>
-						<condition>application.base.path.linux !=~ "/opt"</condition>
+						<condition>application.base.path.linux != "/opt"</condition>
 					</and>
 				</conditions>
 				<fail-message>
@@ -97,8 +80,8 @@ application.base.path.linux failed value check.
 				<conditions>
 					<and>
 						<condition>application.base.path.windows ==~ /^\w:\S+$/</condition>
-						<condition>application.base.path.windows !=~ /\s/</condition>
-						<condition>application.base.path.windows !=~ /\x5c/</condition>
+						<condition negate="true">application.base.path.windows ==~ /.*\s.*/</condition>
+						<condition negate="true">application.base.path.windows ==~ /.*\x5c.*/</condition>
 						<condition>application.base.path.windows != null</condition>
 					</and>
 				</conditions>
@@ -125,207 +108,72 @@ Windows
 		</rules>
 	</property>
 
-	-->
-	<!--
-	<property name="application.context.name" name-pattern="application.context.name" default="bda" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks application.context.name is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>application.context.name ==~ //</condition>
-						<condition>application.context.name != null</condition>
-					</and>
-				</conditions>
-				<fail-message>application.context.name did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
 	<property name="authentication.type" name-pattern="authentication.type" default="db" description="" skip-property="">
 		<rules>
 			<rule>
-				<name>syntax</name>
+				<name>value</name>
 				<description>Checks authentication.type is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>authentication.type ==~ //</condition>
-						<condition>authentication.type != null</condition>
-					</and>
+					<or>
+						<condition>authentication.type == "db"</condition>
+						<condition>authentication.type == "ldap"</condition>
+					</or>
 				</conditions>
-				<fail-message>authentication.type did not pass validation.</fail-message>
+				<fail-message>authentication.type did not pass validation. Must be set to db or ldap.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="bda-blueprints-webapp.install.name" name-pattern="bda-blueprints-webapp.install.name" default="bda-blueprints_install" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks bda-blueprints-webapp.install.name is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>bda-blueprints-webapp.install.name ==~ //</condition>
-						<condition>bda-blueprints-webapp.install.name != null</condition>
-					</and>
-				</conditions>
-				<fail-message>bda-blueprints-webapp.install.name did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="bda-blueprints-webapp.install.zip.file" name-pattern="bda-blueprints-webapp.install.zip.file" default="${bda-blueprints-webapp.install.name}_${bda-blueprints-webapp.version}.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks bda-blueprints-webapp.install.zip.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>bda-blueprints-webapp.install.zip.file ==~ //</condition>
-						<condition>bda-blueprints-webapp.install.zip.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>bda-blueprints-webapp.install.zip.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="bda-blueprints-webapp.upgrade.name" name-pattern="bda-blueprints-webapp.upgrade.name" default="bda-blueprints_upgrade" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks bda-blueprints-webapp.upgrade.name is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>bda-blueprints-webapp.upgrade.name ==~ //</condition>
-						<condition>bda-blueprints-webapp.upgrade.name != null</condition>
-					</and>
-				</conditions>
-				<fail-message>bda-blueprints-webapp.upgrade.name did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="bda-blueprints-webapp.upgrade.zip.file" name-pattern="bda-blueprints-webapp.upgrade.zip.file" default="${bda-blueprints-webapp.upgrade.name}_${bda-blueprints-webapp.version}.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks bda-blueprints-webapp.upgrade.zip.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>bda-blueprints-webapp.upgrade.zip.file ==~ //</condition>
-						<condition>bda-blueprints-webapp.upgrade.zip.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>bda-blueprints-webapp.upgrade.zip.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="bda-blueprints-webapp.version" name-pattern="bda-blueprints-webapp.version" default="0.1.0" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks bda-blueprints-webapp.version is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>bda-blueprints-webapp.version ==~ //</condition>
-						<condition>bda-blueprints-webapp.version != null</condition>
-					</and>
-				</conditions>
-				<fail-message>bda-blueprints-webapp.version did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="bda.version" name-pattern="bda.version" default="1.7.0-beta" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks bda.version is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>bda.version ==~ //</condition>
-						<condition>bda.version != null</condition>
-					</and>
-				</conditions>
-				<fail-message>bda.version did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="build.bda.src.url" name-pattern="build.bda.src.url" default="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks build.bda.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>build.bda.src.url ==~ //</condition>
-						<condition>build.bda.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>build.bda.src.url did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
 	<property name="cacore-sdk.binaries.file" name-pattern="cacore-sdk.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cacore-sdk.binaries.file is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cacore-sdk.binaries.file ==~ //</condition>
-						<condition>cacore-sdk.binaries.file != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cacore-sdk.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">cacore-sdk.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">cacore-sdk.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>cacore-sdk.binaries.file == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cacore-sdk.binaries.file did not pass validation.</fail-message>
+				<fail-message>cacore-sdk.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
 	<property name="cacore-sdk.binaries.relative.dir" name-pattern="cacore-sdk.binaries.relative.dir" default="codegen" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cacore-sdk.binaries.relative.dir is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cacore-sdk.binaries.relative.dir ==~ //</condition>
-						<condition>cacore-sdk.binaries.relative.dir != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cacore-sdk.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">cacore-sdk.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+							<condition negate="true">cacore-sdk.binaries.relative.dir ==~ /.*\/.*/</condition>
+						</and>
+						<condition>cacore-sdk.binaries.relative.dir == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cacore-sdk.binaries.relative.dir did not pass validation.</fail-message>
+				<fail-message>cacore-sdk.binaries.relative.dir did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
 	<property name="cacore-sdk.required" name-pattern="cacore-sdk.required" default="true" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cacore-sdk.required is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cacore-sdk.required ==~ //</condition>
-						<condition>cacore-sdk.required != null</condition>
-					</and>
+					<or>
+						<condition>cacore-sdk.required == "true"</condition>
+						<condition>cacore-sdk.required == "false"</condition>
+						<condition>cacore-sdk.required == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cacore-sdk.required did not pass validation.</fail-message>
+				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null.</fail-message>
 			</rule>
 		</rules>
 	</property>

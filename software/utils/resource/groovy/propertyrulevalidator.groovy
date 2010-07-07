@@ -115,11 +115,9 @@ class propertyRuleValidator
 				// println "${childCount}\t${cnt}"
 
 				def condConv=antStripDot(c.text())
-				if(debug) println "negate value - " + c.@negate
 				if (c.@negate =="true")
 				{
 					condConv = "! ("+condConv+")"
-					if(debug) println "negate conv - " + condConv
 				}
 
 				if (cnt < childCount)
@@ -144,8 +142,14 @@ class propertyRuleValidator
 	{
 		Binding binding = new Binding();
 		GroovyShell shell = new GroovyShell(binding);
-		def propertyNameConv = antStripDot(propertyName)
-		binding.setVariable(propertyNameConv, antProps[propertyName]);
+		antProps.each
+		{ key, value ->
+			//if(debug) println "binding - " + key
+			def keyNameConv = antStripDot(key)
+			binding.setVariable(keyNameConv, antProps[key]);
+		}
+		def propNameConv = antStripDot(propertyName)
+		binding.setVariable(propNameConv, antProps[propertyName]);
 		
 		if (shell.evaluate(ruleCondition))
 		{
@@ -161,10 +165,12 @@ class propertyRuleValidator
 		if (splitArray[0].equals("!"))
 		{
 			splitArray[1]=splitArray[1].replaceAll("\\.", "")
+			splitArray[1]=splitArray[1].replaceAll("-", "")
 		}
 		else
 		{
 			splitArray[0]=splitArray[0].replaceAll("\\.", "")
+			splitArray[0]=splitArray[0].replaceAll("-", "")
 		}
 		return splitArray.join(" ");
 	}
