@@ -220,23 +220,14 @@ class BuildStatusUpdater {
       writer.finalize();
     }
 
-    println "Updating page..."
+    println "Updating page..." ;
 
     // update bdafied page
-    println "${confluence} -a storePage --space \""
-            + certificationPageSpace
-            + "\" --title \""
-            + certificationPageFile
-            + "\"   --file "
-            + "x." + dashboardTemplateFile
+    println "${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile ;
 
-    doCmd("${confluence} -a storePage --space \""
-            + certificationPageSpace
-            + "\" --title \""
-            + certificationPageFile
-            + "\"   --file "
-            + "x." + dashboardTemplateFile)
+    doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile) ;
 
+    println "Page updated..." ;
   }
 
   String dashboardTableText() {
@@ -443,6 +434,9 @@ class BuildStatusUpdater {
   }
 
   private String removeEndDinks(String product) {
+
+    println "removeEndDinks:" + product;
+
     if (product.startsWith("'")) {
       product = product.substring(1);
     }

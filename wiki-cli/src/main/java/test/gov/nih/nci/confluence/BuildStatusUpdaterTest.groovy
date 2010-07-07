@@ -176,5 +176,17 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       println actual;
     }
 
+  void testRemoveEndDinks() {
+      BuildStatusUpdater target = new BuildStatusUpdater();
+
+      String actual = target.removeEndDinks("'asdkjkasjldfhshadkjf'");
+
+      actual = target.removeEndDinks("'xxxx'");
+
+      assertEquals("xxxx",actual);
+
+    }
+
+
 
 }
