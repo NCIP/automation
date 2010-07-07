@@ -50,7 +50,7 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
 
 //    make sure it ends with a row marker
-    assertEndsWith( BuildStatusUpdater.WIKI_TABLE_END_ROW , actual);
+    assertEndsWith( BuildStatusUpdater.WIKI_TABLE_END_ROW + "\r\n", actual);
 
   }
 
