@@ -19,8 +19,8 @@ class BuildStatusUpdater {
     //buildStatus.updateBuildStatus();
     buildStatus.updateCertificationStatusForBDAProjects2();
     buildStatus.updateCertificationStatusForNonBDAProjects2();
-    buildStatus.updateCertificationStatusForBDAProjects();
-    buildStatus.updateCertificationStatusForNonBDAProjects();
+//    buildStatus.updateCertificationStatusForBDAProjects();
+//    buildStatus.updateCertificationStatusForNonBDAProjects();
     buildStatus.closeDBConnection();
   }
 
@@ -47,7 +47,7 @@ class BuildStatusUpdater {
 
       String findReplace = "--findReplace \"Product${count}:${productName},dev-status${count}:${devStatus},qa-status${count}:${qaStatus},stage-status${count}:${stageStatus},prod-status${count}:${prodStatus}\""
 
-      println findReplace
+//      println findReplace
       // update page
       doCmd("${confluence} -a storePage --space \"" + deploymentStatusPageSpace + "\" --title \"" + deploymentStatusPageFile + "\"   --file _temp.txt ${findReplace}")
       doCmd("${confluence} -a getPageSource --space \"" + deploymentStatusPageSpace + "\" --title \"" + deploymentStatusPageFile + "\"    --file _temp.txt")
@@ -128,12 +128,12 @@ class BuildStatusUpdater {
       String test = getWikiMarkupForRow(
               replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
 
-      println "getWikiMarkupForRow=" + test;
+//      println "getWikiMarkupForRow=" + test;
 
 
       String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Remote-Upgrade${count}:${remoteUpgrade}, Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
 
-      println "Replace String -->" + findReplace
+//      println "Replace String -->" + findReplace
       // update bdafied page
 
       doCmd("${confluence} -a storePage --space \""
@@ -199,9 +199,9 @@ class BuildStatusUpdater {
       String newline = "";
 
       while ((oldline = reader.readLine()) != null) {
-        println "oldline=" + oldline;
+//        println "oldline=" + oldline;
         newline = oldline.replace("|| XXX ||", replacementText) + "\r\n";
-        println "newline=" + newline;
+//        println "newline=" + newline;
 
         writer.write(newline);
       }
@@ -263,9 +263,9 @@ class BuildStatusUpdater {
       String newline = "";
 
       while ((oldline = reader.readLine()) != null) {
-        println "oldline=" + oldline;
+//        println "oldline=" + oldline;
         newline = oldline.replace("|| XXX ||", replacementText) + "\r\n";
-        println "newline=" + newline;
+//        println "newline=" + newline;
 
         writer.write(newline);
       }
@@ -424,7 +424,7 @@ class BuildStatusUpdater {
       String test = getWikiMarkupForRow(
               productString, bdaEnabled, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
 
-      println "line=" + test;
+//      println "line=" + test;
 
 
       String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Remote-Upgrade${count}:${remoteUpgrade}, Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
@@ -495,7 +495,7 @@ class BuildStatusUpdater {
 
   private String removeEndDinks(String product) {
 
-    println "removeEndDinks:" + product;
+//    println "removeEndDinks:" + product;
 
     if (product.startsWith("'")) {
       product = product.substring(1);
