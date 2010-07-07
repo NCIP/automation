@@ -31,4 +31,11 @@ public class StringAssert extends Assert {
             fail("String '" + value + "' did not contain '" + expectedToContain + "' as expected.");
         }
     }
+
+    public static void assertDoesNotContain(String expectedToNotContain, String value) {
+        if (value.contains(expectedToNotContain))
+        {
+            fail("String \"" + value + "\" contained \"" + expectedToNotContain + "\" as NOT expected.");
+        }
+    }
 }

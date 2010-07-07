@@ -223,6 +223,12 @@ class BuildStatusUpdater {
     println "Updating page..."
 
     // update bdafied page
+    println "${confluence} -a storePage --space \""
+            + certificationPageSpace
+            + "\" --title \""
+            + certificationPageFile
+            + "\"   --file "
+            + "x." + dashboardTemplateFile
 
     doCmd("${confluence} -a storePage --space \""
             + certificationPageSpace
@@ -417,6 +423,15 @@ class BuildStatusUpdater {
   String getWikiMarkupForRow(String product, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller) {
 
     String returnValue = WIKI_TABLE_BEGIN_ROW;
+//    if (product.startsWith("'"))
+//    {
+//      product = product.substring(1);
+//    }
+//
+//    if (product.endsWith("'"))
+//    {
+//      product = product.substring(0,product.length()-1);
+//    }
     returnValue += product + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += certification + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += bdaEnabled + WIKI_TABLE_CELL_TERMINATOR;
@@ -431,6 +446,7 @@ class BuildStatusUpdater {
     returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += WIKI_TABLE_END_ROW;
 
+    returnValue = returnValue.replace("'","");
     returnValue = returnValue.replace("\"", "'");
 
     return returnValue;
