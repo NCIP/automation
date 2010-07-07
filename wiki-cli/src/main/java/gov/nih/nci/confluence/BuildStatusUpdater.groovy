@@ -201,19 +201,23 @@ class BuildStatusUpdater {
         oldtext += line + "\r\n";
       }
       reader.close();
+
+      println "oldtext=" + oldtext;
       // replace a word in a file
       //String newtext = oldtext.replaceAll("drink", "Love");
 
       //To replace a line in a file
       String newtext = oldtext.replaceAll("|| XXX ||", replacementText);
 
-      FileWriter writer = new FileWriter(dashboardTemplateFile);
+      FileWriter writer = new FileWriter("x." + dashboardTemplateFile);
       writer.write(newtext);
       writer.close();
     }
     catch (IOException ioe) {
       ioe.printStackTrace();
     }
+
+    println "Updating page..."
 
     // update bdafied page
 
@@ -222,7 +226,7 @@ class BuildStatusUpdater {
             + "\" --title \""
             + certificationPageFile
             + "\"   --file "
-            + dashboardTemplateFile)
+            + "x." + dashboardTemplateFile)
 
   }
 
