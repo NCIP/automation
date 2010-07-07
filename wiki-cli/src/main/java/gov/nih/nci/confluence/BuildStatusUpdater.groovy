@@ -20,6 +20,7 @@ class BuildStatusUpdater {
     println "***************************getDashboardTable************************"
     println buildStatus.dashboardTableText();
     println "***************************getDashboardTable************************"
+    buildStatus.updateCertificationStatusForBDAProjects2();
     buildStatus.updateCertificationStatusForBDAProjects();
     buildStatus.updateCertificationStatusForNonBDAProjects();
     buildStatus.closeDBConnection();
@@ -174,6 +175,46 @@ class BuildStatusUpdater {
             + "\"   --file "
             + dashboardTemplateFile
             + " ${findReplaceVersion}")
+  }
+
+  public void updateCertificationStatusForBDAProjects2() {
+
+    String certificationTemplateFile = properties.getProperty("certification.template2.file");//"Deployment_Status_Template"
+    String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
+    String certificationPageFile = properties.getProperty("certification.page2.file");//"page1"
+    String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
+
+
+    String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
+    String dashboardRevision = properties.getProperty("dashboard.revision.number");//"100"
+
+    String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
+
+    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt" ;
+
+    // get most recent tempates
+    doCmd("${confluence} -a getPageSource --space \""
+            + certificationTemplateSpace
+            + "\" --title \""
+            + certificationTemplateFile
+            + "\" --file "
+            + dashboardTemplateFile )
+
+    String replacementText = dashboardTableText();
+
+    String findReplace = "--findReplace \"XXX\""
+
+    println "Replace String -->" + findReplace
+      // update bdafied page
+
+    doCmd(  "${confluence} -a storePage --space \""
+            + certificationPageSpace
+            + "\" --title \""
+            + certificationPageFile
+            + "\"   --file "
+            + dashboardTemplateFile
+            + " ${findReplace}")
+
   }
 
   String dashboardTableText() {
