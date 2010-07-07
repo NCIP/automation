@@ -6,9 +6,9 @@ class BuildStatusUpdater {
   def properties = null
   Sql connection = null
   String confluence = null
-  public static final String WIKI_TABLE_BEGIN_ROW = "||" ;
-  public static final String WIKI_TABLE_END_ROW = "|| \n" ;
-  public static final String WIKI_TABLE_CELL_TERMINATOR = "|" ;
+  public static final String WIKI_TABLE_BEGIN_ROW = "||";
+  public static final String WIKI_TABLE_END_ROW = "|| \n";
+  public static final String WIKI_TABLE_CELL_TERMINATOR = "|";
 
 
   static void main(String[] args) {
@@ -68,7 +68,7 @@ class BuildStatusUpdater {
 
     String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
 
-    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt" ;
+    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt";
 
     // get most recent tempates
     doCmd("${confluence} -a getPageSource --space \""
@@ -76,7 +76,7 @@ class BuildStatusUpdater {
             + "\" --title \""
             + certificationTemplateFile
             + "\" --file "
-            + dashboardTemplateFile )
+            + dashboardTemplateFile)
 
     String statement = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)' ORDER BY CERTIFICATION_STATUS desc"
 
@@ -128,18 +128,7 @@ class BuildStatusUpdater {
       }
 
       String test = getWikiMarkupForRow(
-              replaceProductString
-              , replaceBdaEnabledString
-              , certificationStatus
-              , singleCommandBuild
-              , singleCommandDeployment
-              , databaseIntegration
-              , remoteUpgrade
-              , templateValidation
-              , privateProperties
-              , ciBuild
-              , deploymentShakeout
-              , commandLineInstaller);
+              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
 
       println "getWikiMarkupForRow=" + test;
 
@@ -149,7 +138,7 @@ class BuildStatusUpdater {
       println "Replace String -->" + findReplace
       // update bdafied page
 
-      doCmd(  "${confluence} -a storePage --space \""
+      doCmd("${confluence} -a storePage --space \""
               + certificationPageSpace
               + "\" --title \""
               + certificationPageFile
@@ -157,7 +146,7 @@ class BuildStatusUpdater {
               + dashboardTemplateFile
               + " ${findReplace}")
 
-      doCmd(  "${confluence} -a getPageSource --space \""
+      doCmd("${confluence} -a getPageSource --space \""
               + certificationPageSpace
               + "\" --title \""
               + certificationPageFile
@@ -168,8 +157,8 @@ class BuildStatusUpdater {
 
     // Update the release version
     String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardRelease}\""
-    doCmd(  "${confluence} -a storePage --space \""
-            + certificationPageSpace 
+    doCmd("${confluence} -a storePage --space \""
+            + certificationPageSpace
             + "\" --title \""
             + certificationPageFile
             + "\"   --file "
@@ -190,7 +179,7 @@ class BuildStatusUpdater {
 
     String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
 
-    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt" ;
+    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt";
 
     // get most recent tempates
     doCmd("${confluence} -a getPageSource --space \""
@@ -198,22 +187,42 @@ class BuildStatusUpdater {
             + "\" --title \""
             + certificationTemplateFile
             + "\" --file "
-            + dashboardTemplateFile )
+            + dashboardTemplateFile)
 
     String replacementText = dashboardTableText();
 
-    String findReplace = "--findReplace \"|| XXX ||:${replacementText}\""
+    try {
+      File file = new File(dashboardTemplateFile);
+      BufferedReader reader = new BufferedReader(new FileReader(file));
+      String line = "";
+      String oldtext = "";
 
-    println "Replace String -->" + findReplace
-      // update bdafied page
+      while ((line = reader.readLine()) != null) {
+        oldtext += line + "\r\n";
+      }
+      reader.close();
+      // replace a word in a file
+      //String newtext = oldtext.replaceAll("drink", "Love");
 
-    doCmd(  "${confluence} -a storePage --space \""
+      //To replace a line in a file
+      String newtext = oldtext.replaceAll("|| XXX ||", replacementText);
+
+      FileWriter writer = new FileWriter(dashboardTemplateFile);
+      writer.write(newtext);
+      writer.close();
+    }
+    catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
+
+    // update bdafied page
+
+    doCmd("${confluence} -a storePage --space \""
             + certificationPageSpace
             + "\" --title \""
             + certificationPageFile
             + "\"   --file "
-            + dashboardTemplateFile
-            + " ${findReplace}")
+            + dashboardTemplateFile)
 
   }
 
@@ -266,18 +275,7 @@ class BuildStatusUpdater {
       }
 
       String thisRowText = getWikiMarkupForRow(
-              replaceProductString
-              , replaceBdaEnabledString
-              , certificationStatus
-              , singleCommandBuild
-              , singleCommandDeployment
-              , databaseIntegration
-              , remoteUpgrade
-              , templateValidation
-              , privateProperties
-              , ciBuild
-              , deploymentShakeout
-              , commandLineInstaller);
+              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
 
       returnValue += thisRowText;
 
@@ -299,18 +297,18 @@ class BuildStatusUpdater {
 
     String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
 
-    String certifiedPageTemporaryFile = "certified_temp.txt" ;
+    String certifiedPageTemporaryFile = "certified_temp.txt";
 
     // get most recent templates
-    retrieveTemplate(certificationTemplateSpace, certificationTemplateFile, certifiedPageTemporaryFile )
+    retrieveTemplate(certificationTemplateSpace, certificationTemplateFile, certifiedPageTemporaryFile)
 
-    String statement =  "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD"
-                        + ",SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION"
-                        + ",TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED"
-                        + ",DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER"
-                        + " from PROJECT_CERTIFICATION_STATUS"
-                        + " WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)'"
-                        + "ORDER BY CERTIFICATION_STATUS desc"
+    String statement = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD"
+    +",SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION"
+    +",TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED"
+    +",DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER"
+    +" from PROJECT_CERTIFICATION_STATUS"
+    +" WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)'"
+    +"ORDER BY CERTIFICATION_STATUS desc"
 
     List projectRows = connection.rows(statement)
 
@@ -360,18 +358,7 @@ class BuildStatusUpdater {
       }
 
       String test = getWikiMarkupForRow(
-              productString
-              , bdaEnabled
-              , certificationStatus
-              , singleCommandBuild
-              , singleCommandDeployment
-              , databaseIntegration
-              , remoteUpgrade
-              , templateValidation
-              , privateProperties
-              , ciBuild
-              , deploymentShakeout
-              , commandLineInstaller);
+              productString, bdaEnabled, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
 
       println "line=" + test;
 
@@ -381,7 +368,7 @@ class BuildStatusUpdater {
       println "Replace String -->" + findReplace
       // update bdafied page
 
-      doCmd(  "${confluence} -a storePage --space \""
+      doCmd("${confluence} -a storePage --space \""
               + certificationPageSpace
               + "\" --title \""
               + certificationPageFile
@@ -389,7 +376,7 @@ class BuildStatusUpdater {
               + certifiedPageTemporaryFile
               + " ${findReplace}")
 
-      doCmd(  "${confluence} -a getPageSource --space \""
+      doCmd("${confluence} -a getPageSource --space \""
               + certificationPageSpace
               + "\" --title \""
               + certificationPageFile
@@ -401,7 +388,7 @@ class BuildStatusUpdater {
 
     // Update the release version
     String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardRelease}\""
-    doCmd(  "${confluence} -a storePage --space \""
+    doCmd("${confluence} -a storePage --space \""
             + certificationPageSpace
             + "\" --title \""
             + certificationPageFile
@@ -422,23 +409,23 @@ class BuildStatusUpdater {
 
   String getWikiMarkupForRow(String product, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller) {
 
-    String returnValue = WIKI_TABLE_BEGIN_ROW ;
-    returnValue += product + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += certification + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += bdaEnabled + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += singleCommandBuild + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += singleCommandDeploy + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += remoteUpgrade + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += databaseIntegration + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += privateProperties + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += deploymentShakeout + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += templateValidation + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += ciBuild + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += WIKI_TABLE_END_ROW ;
+    String returnValue = WIKI_TABLE_BEGIN_ROW;
+    returnValue += product + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += certification + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += bdaEnabled + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += singleCommandBuild + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += singleCommandDeploy + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += remoteUpgrade + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += databaseIntegration + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += privateProperties + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += deploymentShakeout + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += templateValidation + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += ciBuild + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += WIKI_TABLE_END_ROW;
 
     returnValue = returnValue.replace("\"", "'");
-    
+
     return returnValue;
   }
 
@@ -499,7 +486,7 @@ class BuildStatusUpdater {
       println "Replace String -->" + findReplace
 
 
-      doCmd(  "${confluence} -a storePage --space \""
+      doCmd("${confluence} -a storePage --space \""
               + certificationPageSpace
               + "\" --title \""
               + certificationPageFile
