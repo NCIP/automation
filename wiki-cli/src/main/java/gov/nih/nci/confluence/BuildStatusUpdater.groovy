@@ -17,10 +17,8 @@ class BuildStatusUpdater {
     buildStatus.setDBConnection();
     buildStatus.setDefaultConfluenceString();
     //buildStatus.updateBuildStatus();
-    println "***************************getDashboardTable************************"
-    println buildStatus.dashboardTableText();
-    println "***************************getDashboardTable************************"
     buildStatus.updateCertificationStatusForBDAProjects2();
+    buildStatus.updateCertificationStatusForNonBDAProjects2();
     buildStatus.updateCertificationStatusForBDAProjects();
     buildStatus.updateCertificationStatusForNonBDAProjects();
     buildStatus.closeDBConnection();
@@ -189,7 +187,7 @@ class BuildStatusUpdater {
             + "\" --file "
             + dashboardTemplateFile)
 
-    String replacementText = dashboardTableText();
+    String replacementText = dashboardTableText("select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)' ORDER BY CERTIFICATION_STATUS");
 
     FileWriter writer = new FileWriter("x." + dashboardTemplateFile);
     File file = new File(dashboardTemplateFile);
@@ -230,12 +228,74 @@ class BuildStatusUpdater {
     println "Page updated..." ;
   }
 
-  String dashboardTableText() {
+  public void updateCertificationStatusForNonBDAProjects2() {
+
+    String certificationTemplateFile = properties.getProperty("non-bda.template2.file");//"Deployment_Status_Template"
+    String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
+    String certificationPageFile = properties.getProperty("non-bda.page2.file");//"page1"
+    String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
+
+
+    String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
+    String dashboardRevision = properties.getProperty("dashboard.revision.number");//"100"
+
+    String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
+
+    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt";
+
+    // get most recent tempates
+    doCmd("${confluence} -a getPageSource --space \""
+            + certificationTemplateSpace
+            + "\" --title \""
+            + certificationTemplateFile
+            + "\" --file "
+            + dashboardTemplateFile)
+
+    String replacementText = dashboardTableText("select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(x)' order by product desc");
+
+    FileWriter writer = new FileWriter("x." + dashboardTemplateFile);
+    File file = new File(dashboardTemplateFile);
+    BufferedReader reader = new BufferedReader(new FileReader(file));
+
+
+    try {
+      String oldline = "";
+      String newline = "";
+
+      while ((oldline = reader.readLine()) != null) {
+        println "oldline=" + oldline;
+        newline = oldline.replace("|| XXX ||", replacementText) + "\r\n";
+        println "newline=" + newline;
+
+        writer.write(newline);
+      }
+
+    }
+    catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
+    finally
+    {
+      reader.close();
+      reader.finalize();
+      writer.close();
+      writer.finalize();
+    }
+
+    println "Updating page..." ;
+
+    // update bdafied page
+    println "${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile ;
+
+    doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile) ;
+
+    println "Page updated..." ;
+  }
+
+
+  String dashboardTableText(String statement) {
 
     String returnValue = "";
-
-
-    String statement = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)' ORDER BY CERTIFICATION_STATUS"
 
     connection.eachRow(statement) { row ->
 
