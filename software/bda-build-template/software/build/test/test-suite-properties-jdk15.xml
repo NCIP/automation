@@ -29,6 +29,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=invalidpath
 			evaluate.property.name=application.base.path.linux
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -44,6 +45,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/valid/path-syntax
 			evaluate.property.name=application.base.path.linux
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -59,6 +61,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/valid/path-syntax
 			evaluate.property.name=application.base.path.windows
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -75,6 +78,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=invalidpath
 			evaluate.property.name=application.base.path.windows
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -90,6 +94,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/valid/path-value
 			evaluate.property.name=application.base.path.linux
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -105,6 +110,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/valid/path-value
 			evaluate.property.name=application.base.path.windows
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -121,6 +127,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/usr
 			evaluate.property.name=application.base.path.linux
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -137,6 +144,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/
 			evaluate.property.name=application.base.path.windows
+			groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -146,6 +154,39 @@
 		<execute-property-test-fail
 			/>
 		<echo message="**** Exiting test:property:fail:abp-value-win"/>
+	</target>
+	<target name="test:property:pass:authtype">
+		<echo message="**** Entering test:property:pass:authtype"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			authentication.type=db
+			evaluate.property.name=authentication.type
+			groovy.debug=true
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:authtype"/>
+	</target>
+	<target name="test:property:fail:authtype">
+		<echo message="**** Entering test:property:fail:authtype"/>
+		<echo message="dist.exploded.dir-${dist.exploded.dir}"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			authentication.type=fail
+			evaluate.property.name=authentication.type
+			groovy.debug=true
+		</echo>
+		<!-- cleanup leading spaces because of append above -->
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:authtype"/>
 	</target>
 	<target name="suiteSetUp">
 		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
