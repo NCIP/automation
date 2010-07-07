@@ -7,7 +7,7 @@ class BuildStatusUpdater {
   Sql connection = null
   String confluence = null
   public static final String WIKI_TABLE_BEGIN_ROW = "||" ;
-  public static final String WIKI_TABLE_END_ROW = "||" ;
+  public static final String WIKI_TABLE_END_ROW = "||\r\n" ;
   public static final String WIKI_TABLE_CELL_TERMINATOR = "|" ;
 
 
