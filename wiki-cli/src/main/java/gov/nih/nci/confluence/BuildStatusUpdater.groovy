@@ -201,6 +201,7 @@ class BuildStatusUpdater {
         oldtext += line + "\r\n";
       }
       reader.close();
+      reader.finalize();
 
       println "oldtext=" + oldtext;
       // replace a word in a file
@@ -209,9 +210,13 @@ class BuildStatusUpdater {
       //To replace a line in a file
       String newtext = oldtext.replaceAll("|| XXX ||", replacementText);
 
+      println "newtext=" + newtext;
+
       FileWriter writer = new FileWriter("x." + dashboardTemplateFile);
       writer.write(newtext);
       writer.close();
+      writer.finalize();
+      
     }
     catch (IOException ioe) {
       ioe.printStackTrace();
