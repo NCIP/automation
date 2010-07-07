@@ -431,8 +431,9 @@ class BuildStatusUpdater {
     returnValue += remoteUpgrade + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += databaseIntegration + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += privateProperties + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += ciBuild + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += deploymentShakeout + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += templateValidation + WIKI_TABLE_CELL_TERMINATOR ;
+    returnValue += ciBuild + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += WIKI_TABLE_END_ROW ;
 

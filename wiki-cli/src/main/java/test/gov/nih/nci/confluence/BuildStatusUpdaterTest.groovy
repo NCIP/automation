@@ -155,4 +155,15 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
       assertContains(COMMANDLINE_INSTALLER + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
     }
 
+  void testGetWikiMarkupForRowContainsTemplateValidation() {
+      BuildStatusUpdater target = new BuildStatusUpdater();
+
+      String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
+
+//    make sure it contains Single Command Build
+      assertContains(TEMPLATE_VALIDATION + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR, actual);
+    }
+
+
+
 }
