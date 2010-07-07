@@ -423,33 +423,34 @@ class BuildStatusUpdater {
   String getWikiMarkupForRow(String product, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller) {
 
     String returnValue = WIKI_TABLE_BEGIN_ROW;
-//    if (product.startsWith("'"))
-//    {
-//      product = product.substring(1);
-//    }
-//
-//    if (product.endsWith("'"))
-//    {
-//      product = product.substring(0,product.length()-1);
-//    }
-    returnValue += product + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += certification + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += bdaEnabled + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += singleCommandBuild + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += singleCommandDeploy + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += remoteUpgrade + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += databaseIntegration + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += privateProperties + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += deploymentShakeout + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += templateValidation + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += ciBuild + WIKI_TABLE_CELL_TERMINATOR;
-    returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(product) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(certification) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(bdaEnabled) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(singleCommandBuild) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(singleCommandDeploy) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(remoteUpgrade) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(databaseIntegration) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(privateProperties) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(deploymentShakeout) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(templateValidation) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(ciBuild) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(commandLineInstaller) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += WIKI_TABLE_END_ROW;
 
-    returnValue = returnValue.replace("'","");
     returnValue = returnValue.replace("\"", "'");
 
     return returnValue;
+  }
+
+  private String removeEndDinks(String product) {
+    if (product.startsWith("'")) {
+      product = product.substring(1);
+    }
+
+    if (product.endsWith("'")) {
+      product = product.substring(0, product.length() - 1);
+    }
+    return product
   }
 
 
