@@ -25,6 +25,8 @@
     <property name="assert.target.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
 	
 	<echo message="${lib.dir}"/>
+    <property environment="env" />
+    <echo>wikiuser=${env.wikiuser}</echo>
 
 	<!-- PATHS -->
 	<path id="project.classpath">
