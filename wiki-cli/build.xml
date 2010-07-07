@@ -30,6 +30,7 @@
     <echo>JAVA_HOME=${env.JAVA_HOME}</echo>
     <property name="wiki.user" value="${env.WIKI.USER}" />
     <property name="wiki.password" value="${env.WIKI.PASSWORD}" />
+    <property name="database.user" value="${env.DATABASE.USER}" />
 
 
 
