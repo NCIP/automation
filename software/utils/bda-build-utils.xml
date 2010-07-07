@@ -211,6 +211,19 @@ $HeadURL$
 			publicId="-//W3C//DTD/XMLSCHEMA 200102//EN"
 			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/XMLSchema.dtd"
 			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Service Reference 4.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/service-ref_4_0.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Service Reference 4.2//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/service-ref_4_2.dtd"
+			/>
+		<dtd
+			publicId="-//JBoss//DTD Web Service Reference 5.0//EN"
+			location="${bda-utils.resource.dir}/jboss-5.1.0.GA/dtd/service-ref_5_0.dtd"
+			/>
+
 
 		<!--
 		<dtd
