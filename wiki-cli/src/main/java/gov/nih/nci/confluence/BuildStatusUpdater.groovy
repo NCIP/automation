@@ -201,7 +201,10 @@ class BuildStatusUpdater {
       String newline = "";
 
       while ((oldline = reader.readLine()) != null) {
+        println "oldline=" + oldline;
         newline = oldline.replace("|| XXX ||", replacementText) + "\r\n";
+        println "newline=" + newline;
+
         writer.write(newline);
       }
 
