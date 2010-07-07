@@ -17,11 +17,11 @@ class BuildStatusUpdater {
     buildStatus.setDBConnection();
     buildStatus.setDefaultConfluenceString();
     //buildStatus.updateBuildStatus();
+    println "***************************getDashboardTable************************"
+    println buildStatus.dashboardTableText();
+    println "***************************getDashboardTable************************"
     buildStatus.updateCertificationStatusForBDAProjects();
     buildStatus.updateCertificationStatusForNonBDAProjects();
-    println "***************************getDashboardTable************************"
-    println getDashboardTable();
-    println "***************************getDashboardTable************************"
     buildStatus.closeDBConnection();
   }
 
@@ -176,7 +176,7 @@ class BuildStatusUpdater {
             + " ${findReplaceVersion}")
   }
 
-  public String getDashboardTable() {
+  String dashboardTableText() {
 
     String returnValue = "";
 
