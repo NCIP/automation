@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="wikimod" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
 
+    <property environment="env" />
+    <property name="wiki.user" value="${env.WIKI.USER}" />
+    <property name="wiki.password" value="${env.WIKI.PASSWORD}" />
+
 	<!-- PROPERTIES -->
 	<property file="${properties.file}"/>
 	<property name="software.dir" value="${basedir}" />
@@ -25,13 +29,6 @@
     <property name="assert.target.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
 	
 	<echo message="${lib.dir}"/>
-    <property environment="env" />
-    <echo>wiki.user=${env.WIKI.USER}</echo>
-    <echo>JAVA_HOME=${env.JAVA_HOME}</echo>
-    <property name="wiki.user" value="${env.WIKI.USER}" />
-    <property name="wiki.password" value="${env.WIKI.PASSWORD}" />
-    <property name="database.user" value="${env.DATABASE.USER}" />
-    <property name="database.password" value="${env.DATABASE.PASSWORD}" />
 
 
 
