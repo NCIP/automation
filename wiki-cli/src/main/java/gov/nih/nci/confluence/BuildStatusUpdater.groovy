@@ -6,8 +6,8 @@ class BuildStatusUpdater {
   def properties = null
   Sql connection = null
   String confluence = null
-  public static final String WIKI_TABLE_BEGIN_ROW = "|" ;
-  public static final String WIKI_TABLE_END_ROW = "|" ;
+  public static final String WIKI_TABLE_BEGIN_ROW = "||" ;
+  public static final String WIKI_TABLE_END_ROW = "||" ;
   public static final String WIKI_TABLE_CELL_TERMINATOR = "|" ;
 
 
@@ -434,7 +434,7 @@ class BuildStatusUpdater {
     returnValue += ciBuild + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += deploymentShakeout + WIKI_TABLE_CELL_TERMINATOR ;
     returnValue += commandLineInstaller + WIKI_TABLE_CELL_TERMINATOR ;
-    returnValue += WIKI_TABLE_END_ROW + "\r\n";
+    returnValue += WIKI_TABLE_END_ROW ;
 
     returnValue = returnValue.replace("\"", "'");
     
