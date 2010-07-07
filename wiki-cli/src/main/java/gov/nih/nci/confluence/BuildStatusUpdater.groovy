@@ -124,8 +124,8 @@ class BuildStatusUpdater {
       }
 
       String test = getWikiMarkupForRow(
-              productString
-              , bdaEnabled
+              replaceProductString
+              , replaceBdaEnabledString
               , certificationStatus
               , singleCommandBuild
               , singleCommandDeployment
