@@ -4,9 +4,11 @@
     <property environment="env" />
     <property name="wiki.user" value="${env.WIKI.USER}" />
     <property name="wiki.password" value="${env.WIKI.PASSWORD}" />
+    <echo>wiki.password=${wiki.password}</echo>
 
 	<!-- PROPERTIES -->
 	<property file="${properties.file}"/>
+    <echo>wiki.password=${wiki.password}</echo>
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="sql.dir" value="${software.dir}/sql" />
