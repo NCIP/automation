@@ -610,8 +610,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			<copy tofile="@{bda-utils.dir}/bda-build-utils.xml" file="@{local-repo.dir}/bda-build-utils-@{bda.version}.xml"/>
 			<copy tofile="@{bda-utils.dir}/ivy.xml" file="@{local-repo.dir}/ivy.xml"/>
 			<zip destfile="${target.dir}/local-repo-old.zip" basedir="@{local-repo.base.dir}"/>
-			<echo message="cleaning @{local-repo.base.dir}/ncicb"/>
-			<delete dir="@{local-repo.base.dir}/ncicb"/>
+			<echo message="cleaning @{local-repo.dir}"/>
+			<delete dir="@{local-repo.dir}"/>
 		</sequential>
 	</macrodef>
 	<target name="patch:release" description="Releasese the patch - commits working code in target, creates a tag,  checks out cbiit and legacy repos and creates new version of bda-utils in each repo (based on version)"
@@ -729,15 +729,22 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				<zipfileset dir="@{bda-templates.dir}/software/build" excludes="**/.svn/*" prefix="build"/>
 				<zipfileset dir="@{bda-templates.dir}/software/common" excludes="**/.svn/*" prefix="common"/>
 			</zip>
+			<var name="svn.status" unset="true"/>
+			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+				<status textStatusProperty="svn.status" path="@{svn.ivy.bda-utils.dir}/@{bda.version}"/>
+			</svn>
+			<echo message="svn status = ${svn.status}"/>
 			<if>
-				<not>
-					<available file="@{svn.ivy.bda-utils.dir}/@{bda.version}"/>
-				</not>
+				<equals arg1="${svn.status}" arg2="unversioned"/>
 				<then>
+					<echo message="Adding @{svn.ivy.bda-utils.dir}/@{bda.version} to ivy-repo"/>
 					<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
 						<add dir="@{svn.ivy.bda-utils.dir}/@{bda.version}"/>
 					</svn>
 				</then>
+				<else>
+					<echo message="@{svn.ivy.bda-utils.dir}/@{bda.version} already in ivy-repo"/>
+				</else>
 			</if>
 			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
 				<commit dir="@{svn.ivy.bda-utils.dir}" message="Created by bda-release-manager utility as part of patch process"/>
