@@ -1790,6 +1790,7 @@ $HeadURL$
 		install:jboss:init
 		">
 		<echo message="**** Begin Property Rule Validation"/>
+		<xmlvalidate faileonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
 			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		</groovy>
