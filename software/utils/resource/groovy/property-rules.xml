@@ -175,9 +175,26 @@ Windows
 				</conditions>
 				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null.</fail-message>
 			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks cacore-sdk.required is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>cacore-sdk.required == "false"</condition>
+						<condition>cacore-sdk.required == null</condition>
+						<and>
+						
+							<condition>cacore-sdk.required == "true"</condition>
+							<condition negate="true">cacore-sdk.binaries.file == null</condition>
+							<condition negate="true">cacore-sdk.src.url == null</condition>
+							<condition negate="true">cacore-sdk.binaries.relative.dir == null</condition>
+						</and>
+					</or>
+				</conditions>
+				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null.</fail-message>
+			</rule>
 		</rules>
 	</property>
-	-->
 	<!--
 	<property name="cacore-sdk.src.url" name-pattern="cacore-sdk.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
 		<rules>
