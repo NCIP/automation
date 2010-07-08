@@ -90,7 +90,7 @@ For windows systems the path needs to look like c:/dir1/dir2/dir3.  Which means 
 				</fail-message>
 			</rule>
 			<rule>
-				<name>value-checker</name>
+				<name>value-validation</name>
 				<description></description>
 				<conditions>
 					<and>
@@ -111,7 +111,7 @@ Windows
 	<property name="authentication.type" name-pattern="authentication.type" default="db" description="" skip-property="">
 		<rules>
 			<rule>
-				<name>value</name>
+				<name>syntax</name>
 				<description>Checks authentication.type is the valid syntax.</description>
 				<conditions>
 					<or>
@@ -152,12 +152,11 @@ Windows
 						<and>
 							<condition negate="true">cacore-sdk.binaries.relative.dir ==~ /.*\s.*/</condition>
 							<condition negate="true">cacore-sdk.binaries.relative.dir ==~ /.*\x5c.*/</condition>
-							<condition negate="true">cacore-sdk.binaries.relative.dir ==~ /.*\/.*/</condition>
 						</and>
 						<condition>cacore-sdk.binaries.relative.dir == null</condition>
 					</or>
 				</conditions>
-				<fail-message>cacore-sdk.binaries.relative.dir did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+				<fail-message>cacore-sdk.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -176,7 +175,7 @@ Windows
 				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null.</fail-message>
 			</rule>
 			<rule>
-				<name>value</name>
+				<name>relationship-validation</name>
 				<description>Checks cacore-sdk.required is the valid syntax.</description>
 				<conditions>
 					<or>
@@ -191,28 +190,39 @@ Windows
 						</and>
 					</or>
 				</conditions>
-				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null.</fail-message>
+				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null. Also cacore-sdk.binaries.file, cacore-sdk.src.url and cacore-sdk.binaries.relative.dir must have values.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	<!--
 	<property name="cacore-sdk.src.url" name-pattern="cacore-sdk.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cacore-sdk.src.url is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cacore-sdk.src.url ==~ //</condition>
-						<condition>cacore-sdk.src.url != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cacore-sdk.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">cacore-sdk.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>cacore-sdk.src.url == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cacore-sdk.src.url did not pass validation.</fail-message>
+				<fail-message>cacore-sdk.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks cacore-sdk.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition negate="true">cacore-sdk.src.url ==~ /http.*:\/\/.*/</condition>
+						<condition>cacore-sdk.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cacore-sdk.src.url did not pass validation. Must be a url or null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
 	<property name="cagrid-base-war.binaries.file" name-pattern="cagrid-base-war.binaries.file" default="cagrid-wscore-4.0.3-appserver-base-war.zip" description="" skip-property="">
 		<rules>
 			<rule>
@@ -228,7 +238,6 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	-->
 	<!--
 	<property name="cagrid-base-war.binaries.relative.dir" name-pattern="cagrid-base-war.binaries.relative.dir" default="." description="" skip-property="">
 		<rules>
