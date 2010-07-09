@@ -123,6 +123,40 @@ Windows
 			</rule>
 		</rules>
 	</property>
+	<property name="cacore-sdk.required" name-pattern="cacore-sdk.required" default="true" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks cacore-sdk.required is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>cacore-sdk.required == "true"</condition>
+						<condition>cacore-sdk.required == "false"</condition>
+						<condition>cacore-sdk.required == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null.</fail-message>
+			</rule>
+			<rule>
+				<name>relationship-validation</name>
+				<description>Checks cacore-sdk.required is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>cacore-sdk.required == "false"</condition>
+						<condition>cacore-sdk.required == null</condition>
+						<and>
+						
+							<condition>cacore-sdk.required == "true"</condition>
+							<condition negate="true">cacore-sdk.binaries.file == null</condition>
+							<condition negate="true">cacore-sdk.src.url == null</condition>
+							<condition negate="true">cacore-sdk.binaries.relative.dir == null</condition>
+						</and>
+					</or>
+				</conditions>
+				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null. Also cacore-sdk.binaries.file, cacore-sdk.src.url and cacore-sdk.binaries.relative.dir must have values.</fail-message>
+			</rule>
+		</rules>
+	</property>
 	<property name="cacore-sdk.binaries.file" name-pattern="cacore-sdk.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
 		<rules>
 			<rule>
@@ -160,40 +194,6 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<property name="cacore-sdk.required" name-pattern="cacore-sdk.required" default="true" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks cacore-sdk.required is the valid syntax.</description>
-				<conditions>
-					<or>
-						<condition>cacore-sdk.required == "true"</condition>
-						<condition>cacore-sdk.required == "false"</condition>
-						<condition>cacore-sdk.required == null</condition>
-					</or>
-				</conditions>
-				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null.</fail-message>
-			</rule>
-			<rule>
-				<name>relationship-validation</name>
-				<description>Checks cacore-sdk.required is the valid syntax.</description>
-				<conditions>
-					<or>
-						<condition>cacore-sdk.required == "false"</condition>
-						<condition>cacore-sdk.required == null</condition>
-						<and>
-						
-							<condition>cacore-sdk.required == "true"</condition>
-							<condition negate="true">cacore-sdk.binaries.file == null</condition>
-							<condition negate="true">cacore-sdk.src.url == null</condition>
-							<condition negate="true">cacore-sdk.binaries.relative.dir == null</condition>
-						</and>
-					</or>
-				</conditions>
-				<fail-message>cacore-sdk.required did not pass validation. Can be true, false or null. Also cacore-sdk.binaries.file, cacore-sdk.src.url and cacore-sdk.binaries.relative.dir must have values.</fail-message>
-			</rule>
-		</rules>
-	</property>
 	<property name="cacore-sdk.src.url" name-pattern="cacore-sdk.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
 		<rules>
 			<rule>
@@ -215,7 +215,7 @@ Windows
 				<description>Checks cacore-sdk.src.url is the valid syntax.</description>
 				<conditions>
 					<or>
-						<condition negate="true">cacore-sdk.src.url ==~ /http.*:\/\/.*/</condition>
+						<condition>cacore-sdk.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
 						<condition>cacore-sdk.src.url == null</condition>
 					</or>
 				</conditions>
@@ -223,327 +223,746 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-base-war.binaries.file" name-pattern="cagrid-base-war.binaries.file" default="cagrid-wscore-4.0.3-appserver-base-war.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks cagrid-base-war.binaries.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>cagrid-base-war.binaries.file ==~ //</condition>
-						<condition>cagrid-base-war.binaries.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>cagrid-base-war.binaries.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	<!--
-	<property name="cagrid-base-war.binaries.relative.dir" name-pattern="cagrid-base-war.binaries.relative.dir" default="." description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks cagrid-base-war.binaries.relative.dir is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>cagrid-base-war.binaries.relative.dir ==~ //</condition>
-						<condition>cagrid-base-war.binaries.relative.dir != null</condition>
-					</and>
-				</conditions>
-				<fail-message>cagrid-base-war.binaries.relative.dir did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="cagrid-base-war.src.url" name-pattern="cagrid-base-war.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${cagrid-base-war.binaries.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks cagrid-base-war.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>cagrid-base-war.src.url ==~ //</condition>
-						<condition>cagrid-base-war.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>cagrid-base-war.src.url did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="cagrid-console.binaries.file" name-pattern="cagrid-console.binaries.file" default="caGrid-console_sources.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks cagrid-console.binaries.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>cagrid-console.binaries.file ==~ //</condition>
-						<condition>cagrid-console.binaries.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>cagrid-console.binaries.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="cagrid-console.binaries.relative.dir" name-pattern="cagrid-console.binaries.relative.dir" default="caGrid-console" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks cagrid-console.binaries.relative.dir is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>cagrid-console.binaries.relative.dir ==~ //</condition>
-						<condition>cagrid-console.binaries.relative.dir != null</condition>
-					</and>
-				</conditions>
-				<fail-message>cagrid-console.binaries.relative.dir did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="cagrid-console.src.url" name-pattern="cagrid-console.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/${cagrid-console.binaries.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks cagrid-console.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>cagrid-console.src.url ==~ //</condition>
-						<condition>cagrid-console.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>cagrid-console.src.url did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="cagrid-libs.binaries.file" name-pattern="cagrid-libs.binaries.file" default="cagrid-wscore-4.0.3-appserver-libs.zip" description="" skip-property="">
+	<property name="cagrid-libs.binaries.file" name-pattern="cagrid-libs.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cagrid-libs.binaries.file is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cagrid-libs.binaries.file ==~ //</condition>
-						<condition>cagrid-libs.binaries.file != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cagrid-libs.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-libs.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">cagrid-libs.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>cagrid-libs.binaries.file == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cagrid-libs.binaries.file did not pass validation.</fail-message>
+				<fail-message>cagrid-libs.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="cagrid-libs.binaries.relative.dir" name-pattern="cagrid-libs.binaries.relative.dir" default="." description="" skip-property="">
+	<property name="cagrid-libs.binaries.relative.dir" name-pattern="cagrid-libs.binaries.relative.dir" default="codegen" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cagrid-libs.binaries.relative.dir is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cagrid-libs.binaries.relative.dir ==~ //</condition>
-						<condition>cagrid-libs.binaries.relative.dir != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cagrid-libs.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-libs.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>cagrid-libs.binaries.relative.dir == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cagrid-libs.binaries.relative.dir did not pass validation.</fail-message>
+				<fail-message>cagrid-libs.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="cagrid-libs.src.url" name-pattern="cagrid-libs.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${cagrid-libs.binaries.file}" description="" skip-property="">
+	<property name="cagrid-libs.src.url" name-pattern="cagrid-libs.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cagrid-libs.src.url is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cagrid-libs.src.url ==~ //</condition>
-						<condition>cagrid-libs.src.url != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cagrid-libs.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-libs.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>cagrid-libs.src.url == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cagrid-libs.src.url did not pass validation.</fail-message>
+				<fail-message>cagrid-libs.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks cagrid-libs.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>cagrid-libs.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>cagrid-libs.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-libs.src.url did not pass validation. Must be a url or null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="cagrid-target.src.url" name-pattern="cagrid-target.src.url" default="https://ncisvn.nci.nih.gov/svn/cagrid/branches/caGrid-1_3_release/cagrid-1-0/caGrid/repository/caGrid/target_grid" description="" skip-property="">
+	<property name="cagrid-base-war.binaries.file" name-pattern="cagrid-base-war.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
-				<description>Checks cagrid-target.src.url is the valid syntax.</description>
+				<description>Checks cagrid-base-war.binaries.file is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cagrid-target.src.url ==~ //</condition>
-						<condition>cagrid-target.src.url != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cagrid-base-war.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-base-war.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">cagrid-base-war.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>cagrid-base-war.binaries.file == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cagrid-target.src.url did not pass validation.</fail-message>
+				<fail-message>cagrid-base-war.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
+	<property name="cagrid-base-war.binaries.relative.dir" name-pattern="cagrid-base-war.binaries.relative.dir" default="codegen" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks cagrid-base-war.binaries.relative.dir is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">cagrid-base-war.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-base-war.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>cagrid-base-war.binaries.relative.dir == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-base-war.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="cagrid-base-war.src.url" name-pattern="cagrid-base-war.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks cagrid-base-war.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">cagrid-base-war.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-base-war.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>cagrid-base-war.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-base-war.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks cagrid-base-war.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>cagrid-base-war.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>cagrid-base-war.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-base-war.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="cagrid-console.binaries.file" name-pattern="cagrid-console.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks cagrid-console.binaries.file is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">cagrid-console.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-console.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">cagrid-console.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>cagrid-console.binaries.file == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-console.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="cagrid-console.binaries.relative.dir" name-pattern="cagrid-console.binaries.relative.dir" default="codegen" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks cagrid-console.binaries.relative.dir is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">cagrid-console.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-console.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>cagrid-console.binaries.relative.dir == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-console.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="cagrid-console.src.url" name-pattern="cagrid-console.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks cagrid-console.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">cagrid-console.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">cagrid-console.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>cagrid-console.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-console.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks cagrid-console.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>cagrid-console.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>cagrid-console.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>cagrid-console.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="sync-gts.binaries.file" name-pattern="sync-gts.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks sync-gts.binaries.file is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">sync-gts.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">sync-gts.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">sync-gts.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>sync-gts.binaries.file == null</condition>
+					</or>
+				</conditions>
+				<fail-message>sync-gts.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="sync-gts.binaries.relative.dir" name-pattern="sync-gts.binaries.relative.dir" default="codegen" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks sync-gts.binaries.relative.dir is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">sync-gts.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">sync-gts.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>sync-gts.binaries.relative.dir == null</condition>
+					</or>
+				</conditions>
+				<fail-message>sync-gts.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="sync-gts.src.url" name-pattern="sync-gts.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks sync-gts.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">sync-gts.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">sync-gts.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>sync-gts.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>sync-gts.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks sync-gts.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>sync-gts.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>sync-gts.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>sync-gts.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="jboss.binaries.file" name-pattern="jboss.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks jboss.binaries.file is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">jboss.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">jboss.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">jboss.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>jboss.binaries.file == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="jboss.binaries.relative.dir" name-pattern="jboss.binaries.relative.dir" default="codegen" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks jboss.binaries.relative.dir is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">jboss.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">jboss.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>jboss.binaries.relative.dir == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="jboss.src.url" name-pattern="jboss.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/jboss/4.1.1/${jboss.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks jboss.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">jboss.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">jboss.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>jboss.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks jboss.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>jboss.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>jboss.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="jbosscp.binaries.file" name-pattern="jbosscp.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks jbosscp.binaries.file is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">jbosscp.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">jbosscp.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">jbosscp.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>jbosscp.binaries.file == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jbosscp.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="jbosscp.src.url" name-pattern="jbosscp.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks jbosscp.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">jbosscp.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">jbosscp.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>jbosscp.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jbosscp.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks jbosscp.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>jbosscp.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>jbosscp.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jbosscp.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="tomcat.binaries.file" name-pattern="tomcat.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks tomcat.binaries.file is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">tomcat.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">tomcat.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">tomcat.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>tomcat.binaries.file == null</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="tomcat.binaries.relative.dir" name-pattern="tomcat.binaries.relative.dir" default="codegen" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks tomcat.binaries.relative.dir is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">tomcat.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">tomcat.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>tomcat.binaries.relative.dir == null</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="tomcat.src.url" name-pattern="tomcat.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks tomcat.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">tomcat.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">tomcat.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>tomcat.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks tomcat.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>tomcat.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>tomcat.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="jboss-bindings.binaries.file" name-pattern="jboss-bindings.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks jboss-bindings.binaries.file is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">jboss-bindings.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">jboss-bindings.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">jboss-bindings.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>jboss-bindings.binaries.file == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss-bindings.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="jboss-bindings.src.url" name-pattern="jboss-bindings.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks jboss-bindings.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">jboss-bindings.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">jboss-bindings.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>jboss-bindings.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss-bindings.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks jboss-bindings.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>jboss-bindings.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>jboss-bindings.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss-bindings.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="findbugs.binaries.file" name-pattern="findbugs.binaries.file" default="caCORE_SDK_411-src.zip" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks findbugs.binaries.file is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">findbugs.binaries.file ==~ /.*\s.*/</condition>
+							<condition negate="true">findbugs.binaries.file ==~ /.*\x5c.*/</condition>
+							<condition negate="true">findbugs.binaries.file ==~ /.*\/.*/</condition>
+						</and>
+						<condition>findbugs.binaries.file == null</condition>
+					</or>
+				</conditions>
+				<fail-message>findbugs.binaries.file did not pass validation. Cannot contain spaces, \ or / or must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="findbugs.binaries.relative.dir" name-pattern="findbugs.binaries.relative.dir" default="codegen" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks findbugs.binaries.relative.dir is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">findbugs.binaries.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">findbugs.binaries.relative.dir ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>findbugs.binaries.relative.dir == null</condition>
+					</or>
+				</conditions>
+				<fail-message>findbugs.binaries.relative.dir did not pass validation. Cannot contain spaces or \ or  must be null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="findbugs.src.url" name-pattern="findbugs.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks findbugs.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition negate="true">findbugs.src.url ==~ /.*\s.*/</condition>
+							<condition negate="true">findbugs.src.url ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>findbugs.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>findbugs.src.url did not pass validation. Cannot contain spaces or \ or must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>value</name>
+				<description>Checks findbugs.src.url is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>findbugs.src.url ==~ /http.*:\/\/.*nci.nih.gov\/.*/</condition>
+						<condition>findbugs.src.url == null</condition>
+					</or>
+				</conditions>
+				<fail-message>findbugs.src.url did not pass validation. Must be a url or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<!-- last ant-unit test -->
 	<property name="cgmm.application.context" name-pattern="cgmm.application.context" default="bda" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cgmm.application.context is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cgmm.application.context ==~ //</condition>
-						<condition>cgmm.application.context != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cgmm.application.context ==~ /.*\s.*/</condition>
+							<condition negate="true">cgmm.application.context ==~ /.*\x5c.*/</condition>
+							<condition negate="true">cgmm.application.context ==~ /.*\/.*/</condition>
+						</and>
+						<condition>cgmm.application.context == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cgmm.application.context did not pass validation.</fail-message>
+				<fail-message>cgmm.application.context did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
 	<property name="cgmm.application.name" name-pattern="cgmm.application.name" default="bda" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks cgmm.application.name is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>cgmm.application.name ==~ //</condition>
-						<condition>cgmm.application.name != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">cgmm.application.name ==~ /.*\s.*/</condition>
+							<condition negate="true">cgmm.application.name ==~ /.*\x5c.*/</condition>
+							<condition negate="true">cgmm.application.name ==~ /.*\/.*/</condition>
+						</and>
+						<condition>cgmm.application.name == null</condition>
+					</or>
 				</conditions>
-				<fail-message>cgmm.application.name did not pass validation.</fail-message>
+				<fail-message>cgmm.application.name did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="database.context.path" name-pattern="database.context.path" default="bda-blueprints-webapp" description="" skip-property="">
+	<property name="database.context.path" name-pattern="database.context.path" default="bda" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks database.context.path is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>database.context.path ==~ //</condition>
-						<condition>database.context.path != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">database.context.path ==~ /.*\s.*/</condition>
+							<condition negate="true">database.context.path ==~ /.*\x5c.*/</condition>
+							<condition negate="true">database.context.path ==~ /.*\/.*/</condition>
+						</and>
+						<condition>database.context.path == null</condition>
+					</or>
 				</conditions>
-				<fail-message>database.context.path did not pass validation.</fail-message>
+				<fail-message>database.context.path did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="database.dialect" name-pattern="database.dialect" default="" description="" skip-property="">
+	<property name="database.dialect" name-pattern="database.dialect" default="bda" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks database.dialect is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>database.dialect ==~ //</condition>
-						<condition>database.dialect != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">database.dialect ==~ /.*\s.*/</condition>
+							<condition negate="true">database.dialect ==~ /.*\x5c.*/</condition>
+							<condition negate="true">database.dialect ==~ /.*\/.*/</condition>
+						</and>
+						<condition>database.dialect == null</condition>
+					</or>
 				</conditions>
-				<fail-message>database.dialect did not pass validation.</fail-message>
+				<fail-message>database.dialect did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="database.driver" name-pattern="database.driver" default="" description="" skip-property="">
+	<property name="database.driver" name-pattern="database.driver" default="bda" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks database.driver is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>database.driver ==~ //</condition>
-						<condition>database.driver != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">database.driver ==~ /.*\s.*/</condition>
+							<condition negate="true">database.driver ==~ /.*\x5c.*/</condition>
+							<condition negate="true">database.driver ==~ /.*\/.*/</condition>
+						</and>
+						<condition>database.driver == null</condition>
+					</or>
 				</conditions>
-				<fail-message>database.driver did not pass validation.</fail-message>
+				<fail-message>database.driver did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="database.driver.file" name-pattern="database.driver.file" default="" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks database.driver.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>database.driver.file ==~ //</condition>
-						<condition>database.driver.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>database.driver.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
 	<property name="database.drop-schema" name-pattern="database.drop-schema" default="true" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks database.drop-schema is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>database.drop-schema ==~ //</condition>
-						<condition>database.drop-schema != null</condition>
-					</and>
+					<or>
+						<condition>database.drop-schema == "true"</condition>
+						<condition>database.drop-schema == "false"</condition>
+						<condition>database.drop-schema == null</condition>
+					</or>
 				</conditions>
-				<fail-message>database.drop-schema did not pass validation.</fail-message>
+				<fail-message>database.drop-schema did not pass validation. Must be true false or null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
-	<property name="database.jndi.datasource.name" name-pattern="database.jndi.datasource.name" default="jdbc/bdaDS" description="" skip-property="">
+	<property name="database.re-create" name-pattern="database.re-create" default="true" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>syntax</name>
+				<description>Checks database.re-create is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>database.re-create == "true"</condition>
+						<condition>database.re-create == "false"</condition>
+						<condition>database.re-create == null</condition>
+					</or>
+				</conditions>
+				<fail-message>database.re-create did not pass validation. Must be true false or null.</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="database.jndi.datasource.name" name-pattern="database.jndi.datasource.name" default="bda" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks database.jndi.datasource.name is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>database.jndi.datasource.name ==~ //</condition>
-						<condition>database.jndi.datasource.name != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">database.jndi.datasource.name ==~ /.*\s.*/</condition>
+							<condition negate="true">database.jndi.datasource.name ==~ /.*\x5c.*/</condition>
+							<condition negate="true">database.jndi.datasource.name ==~ /.*\/.*/</condition>
+						</and>
+						<condition>database.jndi.datasource.name == null</condition>
+					</or>
 				</conditions>
-				<fail-message>database.jndi.datasource.name did not pass validation.</fail-message>
+				<fail-message>database.jndi.datasource.name did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
-	<!--
 	<property name="database.name" name-pattern="database.name" default="bda" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>syntax</name>
 				<description>Checks database.name is the valid syntax.</description>
 				<conditions>
-					<and>
-						<condition>database.name ==~ //</condition>
-						<condition>database.name != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">database.name ==~ /.*\s.*/</condition>
+							<condition negate="true">database.name ==~ /.*\x5c.*/</condition>
+							<condition negate="true">database.name ==~ /.*\/.*/</condition>
+						</and>
+						<condition>database.name == null</condition>
+					</or>
 				</conditions>
-				<fail-message>database.name did not pass validation.</fail-message>
+				<fail-message>database.name did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
+			</rule>
+			<rule>
+				<name>mysql-valid-value</name>
+				<description>Checks database.name is has valid value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "mysql"</condition>
+							<condition negate="true">database.name == "mysql"</condition>
+							<condition negate="true">database.name == "information_schema"</condition>
+							<condition negate="true">database.name == "test"</condition>
+						</and>
+						<condition>database.type != "mysql"</condition>
+					</or>
+				</conditions>
+				<fail-message>database.name did not pass validation. When database.type=mysql, database.name cannot be mysql, information_schema or test.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
 	<!--
 	<property name="database.password" name-pattern="database.password" default="bdauser" description="" skip-property="">
 		<rules>
@@ -1016,57 +1435,6 @@ Windows
 					</and>
 				</conditions>
 				<fail-message>exclude.tomcat.grid did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="findbugs.binaries.file" name-pattern="findbugs.binaries.file" default="findbugs-1.3.4.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks findbugs.binaries.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>findbugs.binaries.file ==~ //</condition>
-						<condition>findbugs.binaries.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>findbugs.binaries.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="findbugs.binaries.relative.dir" name-pattern="findbugs.binaries.relative.dir" default="findbugs-1.3.4" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks findbugs.binaries.relative.dir is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>findbugs.binaries.relative.dir ==~ //</condition>
-						<condition>findbugs.binaries.relative.dir != null</condition>
-					</and>
-				</conditions>
-				<fail-message>findbugs.binaries.relative.dir did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="findbugs.src.url" name-pattern="findbugs.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/other/os-independent/${findbugs.binaries.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks findbugs.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>findbugs.src.url ==~ //</condition>
-						<condition>findbugs.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>findbugs.src.url did not pass validation.</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1684,74 +2052,6 @@ Windows
 	</property>
 	-->
 	<!--
-	<property name="jboss.binaries.file" name-pattern="jboss.binaries.file" default="jboss-4.0.5.GA.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks jboss.binaries.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>jboss.binaries.file ==~ //</condition>
-						<condition>jboss.binaries.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>jboss.binaries.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="jboss.binaries.relative.dir" name-pattern="jboss.binaries.relative.dir" default="jboss-4.0.5.GA" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks jboss.binaries.relative.dir is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>jboss.binaries.relative.dir ==~ //</condition>
-						<condition>jboss.binaries.relative.dir != null</condition>
-					</and>
-				</conditions>
-				<fail-message>jboss.binaries.relative.dir did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="jboss-bindings.file" name-pattern="jboss-bindings.file" default="ncicb-bindings-dac-jboss-4.0.x.xml" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks jboss-bindings.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>jboss-bindings.file ==~ //</condition>
-						<condition>jboss-bindings.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>jboss-bindings.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="jboss-bindings.src.url" name-pattern="jboss-bindings.src.url" default="http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/${jboss-bindings.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks jboss-bindings.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>jboss-bindings.src.url ==~ //</condition>
-						<condition>jboss-bindings.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>jboss-bindings.src.url did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
 	<property name="jboss.cgmm.enable" name-pattern="jboss.cgmm.enable" default="true" description="" skip-property="">
 		<rules>
 			<rule>
@@ -1781,40 +2081,6 @@ Windows
 					</and>
 				</conditions>
 				<fail-message>jboss.cobraorb.port did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="jbosscp.binaries.file" name-pattern="jbosscp.binaries.file" default="jboss-4.0.5.GA_CP15.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks jbosscp.binaries.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>jbosscp.binaries.file ==~ //</condition>
-						<condition>jbosscp.binaries.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>jbosscp.binaries.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="jbosscp.src.url" name-pattern="jbosscp.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${jbosscp.binaries.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks jbosscp.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>jbosscp.src.url ==~ //</condition>
-						<condition>jbosscp.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>jbosscp.src.url did not pass validation.</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2415,23 +2681,6 @@ Windows
 	</property>
 	-->
 	<!--
-	<property name="jboss.src.url" name-pattern="jboss.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${jboss.binaries.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks jboss.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>jboss.src.url ==~ //</condition>
-						<condition>jboss.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>jboss.src.url did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
 	<property name="jboss.ssl.enable" name-pattern="jboss.ssl.enable" default="true" description="" skip-property="">
 		<rules>
 			<rule>
@@ -2840,91 +3089,6 @@ Windows
 	</property>
 	-->
 	<!--
-	<property name="sync-gts.binaries.file" name-pattern="sync-gts.binaries.file" default="gaards-syncgts-1.3.0.1-bin.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks sync-gts.binaries.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>sync-gts.binaries.file ==~ //</condition>
-						<condition>sync-gts.binaries.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>sync-gts.binaries.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="sync-gts.binaries.relative.dir" name-pattern="sync-gts.binaries.relative.dir" default="." description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks sync-gts.binaries.relative.dir is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>sync-gts.binaries.relative.dir ==~ //</condition>
-						<condition>sync-gts.binaries.relative.dir != null</condition>
-					</and>
-				</conditions>
-				<fail-message>sync-gts.binaries.relative.dir did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="sync-gts.src.url" name-pattern="sync-gts.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/${sync-gts.binaries.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks sync-gts.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>sync-gts.src.url ==~ //</condition>
-						<condition>sync-gts.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>sync-gts.src.url did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="tomcat.binaries.file" name-pattern="tomcat.binaries.file" default="apache-tomcat-6.0.20.zip" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks tomcat.binaries.file is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>tomcat.binaries.file ==~ //</condition>
-						<condition>tomcat.binaries.file != null</condition>
-					</and>
-				</conditions>
-				<fail-message>tomcat.binaries.file did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="tomcat.binaries.relative.dir" name-pattern="tomcat.binaries.relative.dir" default="apache-tomcat-6.0.20" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks tomcat.binaries.relative.dir is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>tomcat.binaries.relative.dir ==~ //</condition>
-						<condition>tomcat.binaries.relative.dir != null</condition>
-					</and>
-				</conditions>
-				<fail-message>tomcat.binaries.relative.dir did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
 	<property name="tomcat.external.grid.secure.host" name-pattern="tomcat.external.grid.secure.host" default="" description="" skip-property="">
 		<rules>
 			<rule>
@@ -3209,23 +3373,6 @@ Windows
 					</and>
 				</conditions>
 				<fail-message>tomcat.port.ssl did not pass validation.</fail-message>
-			</rule>
-		</rules>
-	</property>
-	-->
-	<!--
-	<property name="tomcat.src.url" name-pattern="tomcat.src.url" default="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/${tomcat.binaries.file}" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>syntax</name>
-				<description>Checks tomcat.src.url is the valid syntax.</description>
-				<conditions>
-					<and>
-						<condition>tomcat.src.url ==~ //</condition>
-						<condition>tomcat.src.url != null</condition>
-					</and>
-				</conditions>
-				<fail-message>tomcat.src.url did not pass validation.</fail-message>
 			</rule>
 		</rules>
 	</property>
