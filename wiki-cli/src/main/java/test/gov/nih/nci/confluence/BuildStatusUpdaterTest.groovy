@@ -18,7 +18,7 @@ import static gov.nih.nci.test.StringAssert.assertDoesNotContain
 class BuildStatusUpdaterTest extends GroovyTestCase {
 
   final static String PRODUCT = "'PR'";
-  final static String CERTIFICATION_STATUS = "'CS'"
+  final static String CERTIFICATION_STATUS = "'(/)'"
   final static String SINGLE_COMMAND_BUILD = "'SCB'"
   final static String SINGLE_COMMAND_DEPLOYMENT = "'SCD'"
   final static String REMOTE_UPGRADE = "'RU'"
@@ -187,6 +187,258 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
 
     }
 
+  void testGetWikiMarkupForRowContainsGreenCertification() {
 
+    BuildStatusUpdater target = new BuildStatusUpdater();
 
+    String actual = target.getWikiMarkupForRow(PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, CI_BUILD, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER) ;
+
+    String productNoDinks = PRODUCT.replace("'","");
+
+    assertStartsWith( BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW
+                      + productNoDinks
+                      + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR
+                      + BuildStatusUpdater.WIKI_CERTIFICATION_GREEN
+                      , actual );
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForBDAEnabled() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForSingleCommandDeployment() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForSingleCommandBuild() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForDatabaseIntegration() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForRemoteUpgrade() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForTemplateValidation() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForPrivateProperties() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForDeploymentShakeout() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForCIBuild() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED
+            , DEPLOYMENT_SHAKEOUT
+            , COMMANDLINE_INSTALLER) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
+
+  void testGetWikiMarkupForRowContainsRedCertificationForCommandLineInstaller() {
+
+    BuildStatusUpdater target = new BuildStatusUpdater();
+
+    String actual = target.getWikiMarkupForRow(
+            PRODUCT
+            , BDA_ENABLED
+            , CERTIFICATION_STATUS
+            , SINGLE_COMMAND_BUILD
+            , SINGLE_COMMAND_DEPLOYMENT
+            , DATABASE_INTEGRATION
+            , REMOTE_UPGRADE
+            , TEMPLATE_VALIDATION
+            , PRIVATE_PROPERTIES
+            , CI_BUILD
+            , DEPLOYMENT_SHAKEOUT
+            , BuildStatusUpdater.WIKI_CERTIFICATION_RED) ;
+
+    String startsWithExpected = BuildStatusUpdater.WIKI_TABLE_BEGIN_ROW + PRODUCT.replace("'","") + BuildStatusUpdater.WIKI_TABLE_CELL_TERMINATOR + BuildStatusUpdater.WIKI_CERTIFICATION_RED ;
+
+    assertStartsWith( startsWithExpected, actual );
+
+    }
 }

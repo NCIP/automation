@@ -9,6 +9,8 @@ class BuildStatusUpdater {
   public static final String WIKI_TABLE_BEGIN_ROW = "||";
   public static final String WIKI_TABLE_END_ROW = "|| \n";
   public static final String WIKI_TABLE_CELL_TERMINATOR = "|";
+  public static final String WIKI_CERTIFICATION_GREEN = "(/)" ;
+  public static final String WIKI_CERTIFICATION_RED = "(x)" ;
 
 
   static void main(String[] args) {
@@ -19,8 +21,6 @@ class BuildStatusUpdater {
     //buildStatus.updateBuildStatus();
     buildStatus.updateCertificationStatusForBDAProjects2();
     buildStatus.updateCertificationStatusForNonBDAProjects2();
-//    buildStatus.updateCertificationStatusForBDAProjects();
-//    buildStatus.updateCertificationStatusForNonBDAProjects();
     buildStatus.closeDBConnection();
   }
 
@@ -52,116 +52,6 @@ class BuildStatusUpdater {
       doCmd("${confluence} -a storePage --space \"" + deploymentStatusPageSpace + "\" --title \"" + deploymentStatusPageFile + "\"   --file _temp.txt ${findReplace}")
       doCmd("${confluence} -a getPageSource --space \"" + deploymentStatusPageSpace + "\" --title \"" + deploymentStatusPageFile + "\"    --file _temp.txt")
     }
-  }
-
-  public void updateCertificationStatusForBDAProjects() {
-    String certificationTemplateFile = properties.getProperty("certification.template.file");//"Deployment_Status_Template"
-    String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
-    String certificationPageFile = properties.getProperty("certification.page.file");//"page1"
-    String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
-
-
-    String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
-    String dashboardRevision = properties.getProperty("dashboard.revision.number");//"100"
-
-    String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
-
-    String dashboardTemplateFile = certificationTemplateFile + "_temp.txt";
-
-    // get most recent tempates
-    doCmd("${confluence} -a getPageSource --space \""
-            + certificationTemplateSpace
-            + "\" --title \""
-            + certificationTemplateFile
-            + "\" --file "
-            + dashboardTemplateFile)
-
-    String statement = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)' ORDER BY CERTIFICATION_STATUS desc"
-
-    List projectRows = connection.rows(statement)
-
-    int count = projectRows.size()
-
-    println "Updating status for BDA projects"
-
-    connection.eachRow(statement) { row ->
-
-      String productString = row.PRODUCT;
-      String certificationStatus = row.CERTIFICATION_STATUS;
-      String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
-      String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
-      String databaseIntegration = row.DATABASE_INTEGRATION;
-      String remoteUpgrade = row.REMOTE_UPGRADE
-      String templateValidation = row.TEMPLATE_VALIDATION;
-      String privateProperties = row.PRIVATE_PROPERTIES;
-      String ciBuild = row.CI_BUILD;
-      String bdaEnabled = row.BDA_ENABLED;
-      String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
-      String commandLineInstaller = row.COMMANDLINE_INSTALLER;
-
-      String productUrl = productString.substring(productString.indexOf("|") + 1, productString.indexOf("]"));
-      String productName = productString.substring(productString.indexOf("[") + 1, productString.indexOf("|"));
-      String replaceProductString = null
-      String replaceBdaEnabledString = null
-
-      boolean isReachable = isReachble(productUrl)
-
-      if (isReachable) {
-        replaceProductString = "'[" + productName + "|" + productUrl + "]'";
-      }
-      else {
-        replaceProductString = "'[{color:red}" + productName + "{color}|" + productUrl + "]'";
-      }
-
-      if (!checkValiedBdaRevision(bdaEnabled)) {
-        if (bdaEnabled != null && bdaEnabled.length() != 0 && !bdaEnabled.substring(bdaEnabled.indexOf("[") + 1, bdaEnabled.indexOf("|")).equals("(x)")) {
-          replaceBdaEnabledString = bdaEnabled.replace(bdaEnabled.substring(bdaEnabled.indexOf("[") + 1, bdaEnabled.indexOf("|")), "(!)");
-        }
-        else {
-          replaceBdaEnabledString = bdaEnabled;
-        }
-      }
-      else {
-        replaceBdaEnabledString = bdaEnabled;
-      }
-
-      String test = getWikiMarkupForRow(
-              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
-
-//      println "getWikiMarkupForRow=" + test;
-
-
-      String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Remote-Upgrade${count}:${remoteUpgrade}, Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${replaceBdaEnabledString},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
-
-//      println "Replace String -->" + findReplace
-      // update bdafied page
-
-      doCmd("${confluence} -a storePage --space \""
-              + certificationPageSpace
-              + "\" --title \""
-              + certificationPageFile
-              + "\"   --file "
-              + dashboardTemplateFile
-              + " ${findReplace}")
-
-      doCmd("${confluence} -a getPageSource --space \""
-              + certificationPageSpace
-              + "\" --title \""
-              + certificationPageFile
-              + "\"    --file "
-              + dashboardTemplateFile)
-      count--
-    }
-
-    // Update the release version
-    String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardRelease}\""
-    doCmd("${confluence} -a storePage --space \""
-            + certificationPageSpace
-            + "\" --title \""
-            + certificationPageFile
-            + "\"   --file "
-            + dashboardTemplateFile
-            + " ${findReplaceVersion}")
   }
 
   public void updateCertificationStatusForBDAProjects2() {
@@ -293,7 +183,7 @@ class BuildStatusUpdater {
   }
 
 
-  String dashboardTableText(String statement) {
+  private String dashboardTableText(String statement) {
 
     String returnValue = "";
 
@@ -471,9 +361,27 @@ class BuildStatusUpdater {
   }
 
 
-  String getWikiMarkupForRow(String product, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller) {
+  private String getWikiMarkupForRow(String product, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller) {
 
     String returnValue = WIKI_TABLE_BEGIN_ROW;
+
+    certification = WIKI_CERTIFICATION_GREEN ;
+
+    if (bdaEnabled.contains(WIKI_CERTIFICATION_RED)
+        || singleCommandBuild.contains(WIKI_CERTIFICATION_RED)
+        || singleCommandDeploy.contains(WIKI_CERTIFICATION_RED)
+        || remoteUpgrade.contains(WIKI_CERTIFICATION_RED)
+        || databaseIntegration.contains(WIKI_CERTIFICATION_RED)
+        || privateProperties.contains(WIKI_CERTIFICATION_RED)
+        || deploymentShakeout.contains(WIKI_CERTIFICATION_RED)
+        || templateValidation.contains(WIKI_CERTIFICATION_RED)
+        || ciBuild.contains(WIKI_CERTIFICATION_RED)
+        || commandLineInstaller.contains(WIKI_CERTIFICATION_RED)
+    ) {
+
+      certification = WIKI_CERTIFICATION_RED ;
+    }
+
     returnValue += removeEndDinks(product) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += removeEndDinks(certification) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += removeEndDinks(bdaEnabled) + WIKI_TABLE_CELL_TERMINATOR;
@@ -495,8 +403,6 @@ class BuildStatusUpdater {
 
   private String removeEndDinks(String product) {
 
-//    println "removeEndDinks:" + product;
-
     if (product.startsWith("'")) {
       product = product.substring(1);
     }
@@ -505,79 +411,6 @@ class BuildStatusUpdater {
       product = product.substring(0, product.length() - 1);
     }
     return product
-  }
-
-
-  public void updateCertificationStatusForNonBDAProjects() {
-    String certificationTemplateFile = properties.getProperty("non-bda.template.file");//"Deployment_Status_Template"
-    String certificationTemplateSpace = properties.getProperty("non-bda.template.space");//"test"
-    String certificationPageFile = properties.getProperty("non-bda.page.file");//"page1"
-    String certificationPageSpace = properties.getProperty("non-bda.page.space");//"confluence-cli-1.3.0.jar"
-
-    String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
-    String dashboardRevision = properties.getProperty("dashboard.revision.number");//"100"
-
-    String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
-
-    // get most recent tempates
-    doCmd("${confluence} -a getPageSource --space \"" + certificationTemplateSpace + "\" --title \"" + certificationTemplateFile + "\" --file " + certificationTemplateFile + "_temp.txt")
-    String statement = "select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(x)' order by product desc"
-
-    List projectRows = connection.rows(statement)
-
-
-    int count = projectRows.size()
-
-    println "Updating status for NON-BDA projects"
-    connection.eachRow(statement) { row ->
-
-      String productString = row.PRODUCT;
-      String certificationStatus = row.CERTIFICATION_STATUS;
-      String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
-      String singleCommandDeployment = row.SINGLE_COMMAND_DEPLOYMENT;
-      String databaseIntegration = row.DATABASE_INTEGRATION;
-      String remoteUpgrade = row.REMOTE_UPGRADE
-      String templateValidation = row.TEMPLATE_VALIDATION;
-      String privateProperties = row.PRIVATE_PROPERTIES;
-      String ciBuild = row.CI_BUILD;
-      String bdaEnabled = row.BDA_ENABLED;
-      String deploymentShakeout = row.DEPLOYMENT_SHAKEOUT;
-      String commandLineInstaller = row.COMMANDLINE_INSTALLER;
-
-      String productUrl = productString.substring(productString.indexOf("|") + 1, productString.indexOf("]"));
-      String productName = productString.substring(productString.indexOf("[") + 1, productString.indexOf("|"));
-      String replaceProductString = null
-      String replaceBdaEnabledString = null
-
-
-      boolean isReachable = isReachble(productUrl)
-      if (isReachable) {
-        replaceProductString = "'[" + productName + "|" + productUrl + "]'";
-      }
-      else {
-        replaceProductString = "'[{color:red}" + productName + "{color}|" + productUrl + "]'";
-      }
-
-
-      String findReplace = "--findReplace \"Product${count}:${replaceProductString},Certification-Status${count}:${certificationStatus},Single-Command-Build${count}:${singleCommandBuild},Single-Command-Deployment${count}:${singleCommandDeployment},Database-Integration${count}:${databaseIntegration},Remote-Upgrade${count}:${remoteUpgrade}, Template-Validation${count}:${templateValidation},Private-Properties${count}:${privateProperties},CI-Build${count}:${ciBuild},BDA-Enabled${count}:${bdaEnabled},Deployment-Shakeout${count}:${deploymentShakeout},CommandLine-Installer${count}:${commandLineInstaller}\""
-
-      println "Replace String -->" + findReplace
-
-
-      doCmd("${confluence} -a storePage --space \""
-              + certificationPageSpace
-              + "\" --title \""
-              + certificationPageFile
-              + "\"   --file "
-              + certificationTemplateFile
-              + "_temp.txt ${findReplace}")
-      doCmd("${confluence} -a getPageSource --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"    --file " + certificationTemplateFile + "_temp.txt")
-
-      count--
-    }
-    // Update the release version
-    String findReplaceVersion = "--findReplace \"DashboardReleaseVersion:${dashboardRelease}\""
-    doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + certificationTemplateFile + "_temp.txt ${findReplaceVersion}")
   }
 
   private boolean isReachble(String projectRepoUrl) {
@@ -681,8 +514,4 @@ class BuildStatusUpdater {
 
   }
 
-  static String makeWikiRow() {
-
-
-  }
 }
