@@ -85,8 +85,13 @@
     </changeSet>
 
 
-    
-
-
+    <changeSet id="2010.07.12.1427" author="bassetttj">
+        <addColumn tableName="PROJECT_CERTIFICATION_STATUS">
+            <column name="CERT_DATE" type="TIMESTAMP" />
+        </addColumn>
+        <update tableName="PROJECT_CERTIFICATION_STATUS">
+            <column name="CERT_DATE" value="CURRENT_TIMESTAMP" />
+        </update>
+        <addNotNullConstraint tableName="PROJECT_CERTIFICATION_STATUS" columnName="CERT_DATE" columnDataType="TIMESTAMP" />
+    </changeSet>
 </databaseChangeLog>
-

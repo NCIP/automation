@@ -12,7 +12,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet id="2010.06.23.1543" author="bassetttj">
+    <changeSet id="2010.06.23.1543" author="bassetttj" runOnChange="true">
         <rollback changeSetAuthor="bassetttj" changeSetId="2010.06.14.22.33.01"/>
         <delete tableName="project_poc" />
     </changeSet>
