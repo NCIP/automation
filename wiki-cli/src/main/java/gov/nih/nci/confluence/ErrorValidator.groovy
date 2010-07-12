@@ -49,6 +49,7 @@ class ErrorValidator {
 			{
 				
 				println "bda enabled string:: " + bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|"))
+
 				if(bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
 				{				
 					if (singleCommandBuild != null && !singleCommandBuild.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
@@ -109,72 +110,72 @@ class ErrorValidator {
 					mailString = mailString + properties.getProperty("mail.post.template")
 					sendEmailToProjectTeam(productName,mailString.replaceAll("INSERT_SVN_URL",productUrl))
 				}
-				else
-				{
-				     println (" Beta Message :: " +bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")))
-				     
-					if (bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
-					{
-						mailString = mailString + properties.getProperty("mail.beta.version")
-						if (singleCommandBuild != null && !singleCommandBuild.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.single.command.build")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandBuild.substring(singleCommandBuild.lastIndexOf("|")+1, singleCommandBuild.indexOf("]")))
-						}
-						if (singleCommandDeployment != null && !singleCommandDeployment.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.single.command.deployment")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandDeployment.substring(singleCommandDeployment.lastIndexOf("|")+1, singleCommandDeployment.indexOf("]")))
-						}					
-						if (databaseIntegration != null && !databaseIntegration.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.database.integration")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
-						}
-						if (remoteUpgrade != null && !remoteUpgrade.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.remote.upgrade")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
-						}						
-						if (templateValidation != null && !templateValidation.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.template.validation")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",templateValidation.substring(templateValidation.lastIndexOf("|")+1, templateValidation.indexOf("]")))
-						}
-						if (privateProperties != null && !privateProperties.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.private.properties")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",privateProperties.substring(privateProperties.lastIndexOf("|")+1, privateProperties.indexOf("]")))
-						}
-						println "ciBuild :: " + ciBuild
-						if (ciBuild != null && !ciBuild.trim().equals("")) 
-						{
-							if (!ciBuild.substring(ciBuild.indexOf("[")+1, ciBuild.indexOf("|")).equals("(/)"))
-							{
-								mailString = mailString + properties.getProperty("mail.ci.build")
-								mailString = mailString.replaceAll("ERROR_MESSAGE",ciBuild.substring(ciBuild.lastIndexOf("|")+1, ciBuild.indexOf("]")))
-							}
-						}
-						else
-						{
-								mailString = mailString + properties.getProperty("mail.ci.build")
-								mailString = mailString.replaceAll("ERROR_MESSAGE","")
-						}
-
-						if (deploymentShakeout != null && !deploymentShakeout.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.deployment.shakeout")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",deploymentShakeout.substring(deploymentShakeout.lastIndexOf("|")+1, deploymentShakeout.indexOf("]")))
-						}
-						if (commandLineInstaller != null && !commandLineInstaller.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
-						{
-							mailString = mailString + properties.getProperty("mail.commandLine.installer")
-							mailString = mailString.replaceAll("ERROR_MESSAGE",commandLineInstaller.substring(commandLineInstaller.lastIndexOf("|")+1, commandLineInstaller.indexOf("]")))
-						}
-						mailString = mailString + properties.getProperty("mail.post.template")
-						sendEmailToProjectTeam(productName,mailString.replaceAll("INSERT_SVN_URL",productUrl))
-					}					
-				}
+//				else
+//				{
+//				     println (" Beta Message :: " +bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")))
+//
+//					if (bdaEnabled != null && bdaEnabled.length() != 0 && bdaEnabled.substring(bdaEnabled.lastIndexOf("|")+1, bdaEnabled.indexOf("]")).contains("-beta"))
+//					{
+//						mailString = mailString + properties.getProperty("mail.beta.version")
+//						if (singleCommandBuild != null && !singleCommandBuild.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.single.command.build")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandBuild.substring(singleCommandBuild.lastIndexOf("|")+1, singleCommandBuild.indexOf("]")))
+//						}
+//						if (singleCommandDeployment != null && !singleCommandDeployment.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.single.command.deployment")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",singleCommandDeployment.substring(singleCommandDeployment.lastIndexOf("|")+1, singleCommandDeployment.indexOf("]")))
+//						}
+//						if (databaseIntegration != null && !databaseIntegration.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.database.integration")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",databaseIntegration.substring(databaseIntegration.lastIndexOf("|")+1, databaseIntegration.indexOf("]")))
+//						}
+//						if (remoteUpgrade != null && !remoteUpgrade.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.remote.upgrade")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",remoteUpgrade.substring(remoteUpgrade.lastIndexOf("|")+1, remoteUpgrade.indexOf("]")))
+//						}
+//						if (templateValidation != null && !templateValidation.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.template.validation")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",templateValidation.substring(templateValidation.lastIndexOf("|")+1, templateValidation.indexOf("]")))
+//						}
+//						if (privateProperties != null && !privateProperties.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.private.properties")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",privateProperties.substring(privateProperties.lastIndexOf("|")+1, privateProperties.indexOf("]")))
+//						}
+//						println "ciBuild :: " + ciBuild
+//						if (ciBuild != null && !ciBuild.trim().equals(""))
+//						{
+//							if (!ciBuild.substring(ciBuild.indexOf("[")+1, ciBuild.indexOf("|")).equals("(/)"))
+//							{
+//								mailString = mailString + properties.getProperty("mail.ci.build")
+//								mailString = mailString.replaceAll("ERROR_MESSAGE",ciBuild.substring(ciBuild.lastIndexOf("|")+1, ciBuild.indexOf("]")))
+//							}
+//						}
+//						else
+//						{
+//								mailString = mailString + properties.getProperty("mail.ci.build")
+//								mailString = mailString.replaceAll("ERROR_MESSAGE","")
+//						}
+//
+//						if (deploymentShakeout != null && !deploymentShakeout.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.deployment.shakeout")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",deploymentShakeout.substring(deploymentShakeout.lastIndexOf("|")+1, deploymentShakeout.indexOf("]")))
+//						}
+//						if (commandLineInstaller != null && !commandLineInstaller.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|")).equals("(/)"))
+//						{
+//							mailString = mailString + properties.getProperty("mail.commandLine.installer")
+//							mailString = mailString.replaceAll("ERROR_MESSAGE",commandLineInstaller.substring(commandLineInstaller.lastIndexOf("|")+1, commandLineInstaller.indexOf("]")))
+//						}
+//						mailString = mailString + properties.getProperty("mail.post.template")
+//						sendEmailToProjectTeam(productName,mailString.replaceAll("INSERT_SVN_URL",productUrl))
+//					}
+//				}
 			}
 			
 		}
@@ -209,6 +210,7 @@ class ErrorValidator {
 		// Get the POCs for the projectName
 		String devPocEmail,govPocEmail,devPoc= null
         String cotrEmail = null;
+        println "Sending Email To:" + projectName ;
 		try
 		{		
 			message = message.replaceAll("INSERT_PROJECT_NAME",projectName)
@@ -235,6 +237,9 @@ class ErrorValidator {
 			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message)
 		}
 		catch(Exception ex){
+          println "Exception sending email for project:" + projectName;  
+          println ex.toString();
+
 			ex.printStackTrace()
 		}
 	}
