@@ -175,3 +175,4 @@ wiki-cli/target/examples/examples.txt -text
 wiki-cli/target/examples/input.txt -text
 wiki-cli/target/examples/source.txt -text
 wiki-cli/target/release.xml -text
+wiki-cli/wiki-cli.iml -text
