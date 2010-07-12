@@ -210,7 +210,7 @@ class ErrorValidator {
 		// Get the POCs for the projectName
 		String devPocEmail,govPocEmail,devPoc= null
         String cotrEmail = null;
-        println "Sending Email To:" + projectName ;
+        println "Attempting to Sending Email To:" + projectName ;
 		try
 		{		
 			message = message.replaceAll("INSERT_PROJECT_NAME",projectName)
@@ -235,6 +235,7 @@ class ErrorValidator {
 				recipientList.add(processToken)
 			}
 			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message)
+            println "Success Sending Email To:" + projectName ;
 		}
 		catch(Exception ex){
           println "Exception sending email for project:" + projectName;  
