@@ -65,6 +65,24 @@
             <column name="PROJECT_FRIENDLY" type="varchar(500)"/>
         </addColumn>
     </changeSet>
+    
+    <changeSet id="2010.07.12.1426" author="bassetttj">
+        <createTable tableName="PROJECT_CERTIFICATION_STATUS">
+            <column name="ID" type="INT(11)" />
+            <column name="PRODUCT" type="VARCHAR(500)" />
+            <column name="CERTIFICATION_STATUS" type="VARCHAR(500)" />
+            <column name="SINGLE_COMMAND_BUILD" type="VARCHAR(500)" />
+            <column name="SINGLE_COMMAND_DEPLOYMENT" type="VARCHAR(500)" />
+            <column name="REMOTE_UPGRADE" type="VARCHAR(500)" />
+            <column name="DATABASE_INTEGRATION" type="VARCHAR(500)" />
+            <column name="TEMPLATE_VALIDATION" type="VARCHAR(500)" />
+            <column name="PRIVATE_PROPERTIES" type="VARCHAR(500)" />
+            <column name="CI_BUILD" type="VARCHAR(500)" />
+            <column name="DEPLOYMENT_SHAKEOUT" type="VARCHAR(500)" />
+            <column name="BDA_ENABLED" type="VARCHAR(500)" />
+            <column name="COMMANDLINE_INSTALLER" type="VARCHAR(500)" />
+        </createTable>
+    </changeSet>
 
 
     
