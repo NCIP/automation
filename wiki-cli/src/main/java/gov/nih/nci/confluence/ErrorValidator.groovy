@@ -208,6 +208,7 @@ class ErrorValidator {
 	{
 		// Get the POCs for the projectName
 		String devPocEmail,govPocEmail,devPoc= null
+        String cotrEmail = null;
 		try
 		{		
 			message = message.replaceAll("INSERT_PROJECT_NAME",projectName)
@@ -217,15 +218,17 @@ class ErrorValidator {
 			connection.eachRow(pocStatement) { row ->
 				devPoc    = row.DEV_POC;
 				devPocEmail    = row.DEV_POC_EMAIL;
-				govPocEmail = row.GOV_POC_EMAIL;	 
+				govPocEmail = row.GOV_POC_EMAIL;
+                cotrEmail = row.COTR_EMAIL;
 			}
 			println ("Dev POC: " + devPoc)
 			message = message.replaceAll("DEV_POC_NAME",devPoc)
-			MailSender ms = new MailSender()
+			gov.nih.nci.confluence.MailSender ms = new gov.nih.nci.confluence.MailSender()
 			ArrayList recipientList = new ArrayList()
 			println("Sending email to Dev Poc " +devPocEmail + " And GOV Poc " + govPocEmail)
 			recipientList.add(devPocEmail)
 			recipientList.add(govPocEmail)
+            recipientList.add(cotrEmail);
 			properties.getProperty("mail.additional.recipients").split(',').eachWithIndex {processToken, i -> 
 				recipientList.add(processToken)
 			}
