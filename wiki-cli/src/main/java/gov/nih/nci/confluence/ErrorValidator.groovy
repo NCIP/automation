@@ -47,7 +47,10 @@ class ErrorValidator {
 
             println productName + ":certificationStatus:" + certificationStatus;
 
-			if(!certificationStatus.equals("(/)"))
+            String wholeCertification = singleCommandBuild + singleCommandDeployment + databaseIntegration + remoteUpgrade + templateValidation + privateProperties + ciBuild + deploymentShakeout + commandLineInstaller ;
+
+
+			if(wholeCertification.contains(gov.nih.nci.confluence.BuildStatusUpdater.WIKI_CERTIFICATION_RED))
 			{
 				
 				println "bda enabled string:: " + bdaEnabled.substring(bdaEnabled.indexOf("[")+1, bdaEnabled.indexOf("|"))
