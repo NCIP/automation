@@ -40,10 +40,12 @@ class ErrorValidator {
 	    
 			String productUrl  = productString.substring(productString.indexOf("|")+1, productString.indexOf("]"));
 			String productName  = productString.substring(productString.indexOf("[")+1, productString.indexOf("|"));
- 			println "productName:: " +productName
+ 			println "productName:: " + productName
  			
  		
  			String mailString = properties.getProperty("mail.pre.template")
+
+            println productName + ":certificationStatus:" + certificationStatus;
 
 			if(!certificationStatus.equals("(/)"))
 			{
