@@ -94,4 +94,8 @@
         </update>
         <addNotNullConstraint tableName="PROJECT_CERTIFICATION_STATUS" columnName="CERT_DATE" columnDataType="TIMESTAMP" />
     </changeSet>
+
+    <changeSet id="2010.07.13.1036" author="bassetttj">
+        <addNotNullConstraint tableName="PROJECT_CERTIFICATION_STATUS" columnName="CERT_DATE" columnDataType="TIMESTAMP" />
+    </changeSet>
 </databaseChangeLog>

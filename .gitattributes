@@ -86,17 +86,10 @@ certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/Hibernate
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/PropertyLoader.java -text
 certification-monitor/src/main/resources/build.xml -text
 certification-monitor/src/main/resources/hibernate.cfg.xml -text
-certification-monitor/src/main/sql/create_schema_buildmonitordb.sql -text
-certification-monitor/src/main/sql/create_table_dashboard_properties.sql -text
-certification-monitor/src/main/sql/create_table_project_poc.sql -text
-certification-monitor/src/main/sql/create_table_target_lookup.sql -text
 certification-monitor/src/main/sql/dashboard_properties.csv -text
 certification-monitor/src/main/sql/dashboard_properties_changelog.xml -text
 certification-monitor/src/main/sql/dbchangelog-1.9.xsd -text
 certification-monitor/src/main/sql/example.csv -text
-certification-monitor/src/main/sql/insert_dashboard_properties.sql -text
-certification-monitor/src/main/sql/insert_project_poc.sql -text
-certification-monitor/src/main/sql/insert_target_lookup.sql -text
 certification-monitor/src/main/sql/project-poc-for-import.csv -text
 certification-monitor/src/main/sql/project-poc-working-with-legacy.ods -text
 certification-monitor/src/main/sql/project_poc.csv -text
