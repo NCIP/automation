@@ -44,12 +44,18 @@ class propertyRuleValidator
 			if(debug) println "property[${o}] -> " + prop.@name
 			def propertyName=prop.@name
 			def i=0
+			def skipProp=prop.@'skip-property'
+			println "skip-prop - ${skipProp} ant - ${antProps[skipProp]}"
+			if (skipProp.length() > 0 && antProps[skipProp] == "true")
+			{
+				println "skip-prop (${skipProp}) set for property (${propertyName}) skipping rules"
+				next
+			}
 			prop.rules.rule.each
 			{ r ->
 				def ruleName=r.name.text()
 				def ruleDesc=r.description.text()
 				def ruleFailMsg=r.'fail-message'.text()
-
 				if(debug) println "\trule[${i}] -> " + r.name.text()
 				i++
 				// println "class-> " + r.conditions.getClass()
@@ -196,7 +202,9 @@ if (properties["evaluate.property.name"] != null)
 	}
 } else
 {
-	if (failMsgs ==~ /^.*\S+.*$/)
+	println "evaluate.property.name not set so evaluating all properties."
+	
+	if (failMsgs.length() > 0)
 	{
 		println "Some properties had property validation failures."
 		properties["property.rule.validator.failed"]="true"

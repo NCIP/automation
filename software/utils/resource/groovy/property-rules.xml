@@ -1,4 +1,5 @@
 <properties>
+	<!--
 	<property name="test.property" name-pattern="test.property" default="" description="" skip-property="">
 		<rules>
 			<rule>
@@ -30,6 +31,7 @@
 			</rule>
 		</rules>
 	</property>
+	-->
 	<property name="application.base.path.linux" name-pattern="application.base.path.linux" default="" description="" skip-property="">
 		<rules>
 			<rule>
@@ -919,19 +921,18 @@ Windows
 						<and>
 							<condition negate="true">database.jndi.datasource.name ==~ /.*\s.*/</condition>
 							<condition negate="true">database.jndi.datasource.name ==~ /.*\x5c.*/</condition>
-							<condition negate="true">database.jndi.datasource.name ==~ /.*\/.*/</condition>
 						</and>
 						<condition>database.jndi.datasource.name == null</condition>
 					</or>
 				</conditions>
-				<fail-message>database.jndi.datasource.name did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
+				<fail-message>database.jndi.datasource.name did not pass validation. Cannot contain spaces, \ or  must be null.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	<property name="database.name" name-pattern="database.name" default="bda" description="" skip-property="">
+	<property name="database.name" name-pattern="database.name" default="bda" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
-				<name>syntax</name>
+				<name>database-name-syntax</name>
 				<description>Checks database.name is the valid syntax.</description>
 				<conditions>
 					<or>
@@ -946,7 +947,7 @@ Windows
 				<fail-message>database.name did not pass validation. Cannot contain spaces, \, / or  must be null.</fail-message>
 			</rule>
 			<rule>
-				<name>mysql-valid-value</name>
+				<name>database-name-mysql-valid-value</name>
 				<description>Checks database.name is has valid value.</description>
 				<conditions>
 					<or>
@@ -963,23 +964,31 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<!--
 	<property name="database.password" name-pattern="database.password" default="bdauser" description="" skip-property="">
 		<rules>
 			<rule>
-				<name>syntax</name>
-				<description>Checks database.password is the valid syntax.</description>
+				<name>database-password-value</name>
+				<description>Checks database.password is the valid syntax. </description>
 				<conditions>
-					<and>
-						<condition>database.password ==~ //</condition>
-						<condition>database.password != null</condition>
-					</and>
+					<or>
+						<and>
+							<condition negate="true">database.password ==~ /.*\s.*/</condition>
+							<condition negate="true">database.password ==~ /.*\x5c.*/</condition>
+							<condition negate="true">database.password ==~ /.*\/.*/</condition>
+							<condition negate="true">database.password ==~ /.*\$.*/</condition>
+							<condition negate="true">database.password ==~ /.*&amp;.*/</condition>
+							<condition negate="true">database.password ==~ /.*&lt;.*/</condition>
+							<condition negate="true">database.password ==~ /.*&gt;.*/</condition>
+							<condition negate="true">database.password ==~ /.*&quot;.*/</condition>
+							<condition negate="true">database.password ==~ /.*&apos;.*/</condition>
+						</and>
+						<condition>exclude.database == "true"</condition>
+					</or>
 				</conditions>
-				<fail-message>database.password did not pass validation.</fail-message>
+				<fail-message>database.password did not pass validation. It cannot contain xml special characters, check this list for link http://www.hdfgroup.org/HDF5/XML/xml_escape_chars.htm, including /, \ and space.</fail-message>
 			</rule>
 		</rules>
 	</property>
-	-->
 	<!--
 	<property name="database.port" name-pattern="database.port" default="3306" description="" skip-property="">
 		<rules>
