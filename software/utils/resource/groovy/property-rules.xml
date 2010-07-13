@@ -822,7 +822,7 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<property name="database.context.path" name-pattern="database.context.path" default="bda" description="" skip-property="">
+	<property name="database.context.path" name-pattern="database.context.path" default="bda" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>syntax</name>
@@ -841,7 +841,7 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<property name="database.dialect" name-pattern="database.dialect" default="bda" description="" skip-property="">
+	<property name="database.dialect" name-pattern="database.dialect" default="bda" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>syntax</name>
@@ -860,7 +860,7 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<property name="database.driver" name-pattern="database.driver" default="bda" description="" skip-property="">
+	<property name="database.driver" name-pattern="database.driver" default="bda" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>syntax</name>
@@ -879,7 +879,7 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<property name="database.drop-schema" name-pattern="database.drop-schema" default="true" description="" skip-property="">
+	<property name="database.drop-schema" name-pattern="database.drop-schema" default="true" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>syntax</name>
@@ -895,7 +895,7 @@ Windows
 			</rule>
 		</rules>
 	</property>
-	<property name="database.re-create" name-pattern="database.re-create" default="true" description="" skip-property="">
+	<property name="database.re-create" name-pattern="database.re-create" default="true" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>syntax</name>
@@ -970,20 +970,17 @@ Windows
 				<name>database-password-value</name>
 				<description>Checks database.password is the valid syntax. </description>
 				<conditions>
-					<or>
-						<and>
-							<condition negate="true">database.password ==~ /.*\s.*/</condition>
-							<condition negate="true">database.password ==~ /.*\x5c.*/</condition>
-							<condition negate="true">database.password ==~ /.*\/.*/</condition>
-							<condition negate="true">database.password ==~ /.*\$.*/</condition>
-							<condition negate="true">database.password ==~ /.*&amp;.*/</condition>
-							<condition negate="true">database.password ==~ /.*&lt;.*/</condition>
-							<condition negate="true">database.password ==~ /.*&gt;.*/</condition>
-							<condition negate="true">database.password ==~ /.*&quot;.*/</condition>
-							<condition negate="true">database.password ==~ /.*&apos;.*/</condition>
-						</and>
-						<condition>exclude.database == "true"</condition>
-					</or>
+					<and>
+						<condition negate="true">database.password ==~ /.*\s.*/</condition>
+						<condition negate="true">database.password ==~ /.*\x5c.*/</condition>
+						<condition negate="true">database.password ==~ /.*\/.*/</condition>
+						<condition negate="true">database.password ==~ /.*\$.*/</condition>
+						<condition negate="true">database.password ==~ /.*&amp;.*/</condition>
+						<condition negate="true">database.password ==~ /.*&lt;.*/</condition>
+						<condition negate="true">database.password ==~ /.*&gt;.*/</condition>
+						<condition negate="true">database.password ==~ /.*&quot;.*/</condition>
+						<condition negate="true">database.password ==~ /.*&apos;.*/</condition>
+					</and>
 				</conditions>
 				<fail-message>database.password did not pass validation. It cannot contain xml special characters, check this list for link http://www.hdfgroup.org/HDF5/XML/xml_escape_chars.htm, including /, \ and space.</fail-message>
 			</rule>

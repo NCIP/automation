@@ -45,12 +45,13 @@ class propertyRuleValidator
 			def propertyName=prop.@name
 			def i=0
 			def skipProp=prop.@'skip-property'
-			println "skip-prop - (${skipProp}) ant - (${antProps[skipProp]})"
+			if (debug) println "skip-prop - (${skipProp}) ant - (${antProps[skipProp]})"
 			if (skipProp.length() > 0 && antProps[skipProp] == "true")
 			{
-				println "skip-prop (${skipProp}) set for property (${propertyName}) skipping rules"
-				next
+				println "Skipping property [${propertyName}] skip-prop (${skipProp}) set"
 			}
+			else
+			{
 			prop.rules.rule.each
 			{ r ->
 				def ruleName=r.name.text()
@@ -84,10 +85,11 @@ class propertyRuleValidator
 				{
 					if(debug) println "Property - ${propertyName}\tRule - ${ruleName} FAILED."
 					if(debug) println "\t" + ruleFailMsg
-					failureMessages = failureMessages + "== Property [${propertyName}]  Rule [${ruleName}] failed.\n" + ruleFailMsg + "\n"
+					failureMessages = failureMessages + "== Property [${propertyName}]  Rule [${ruleName}] Value [${antProps[propertyName]}] failed.\n" + ruleFailMsg + "\n"
 				}
 			}
 			o++
+			} // else
 		}
 		return failureMessages
 	}
@@ -157,11 +159,19 @@ class propertyRuleValidator
 		def propNameConv = antStripDot(propertyName)
 		binding.setVariable(propNameConv, antProps[propertyName]);
 		
-		if (shell.evaluate(ruleCondition))
+		try
 		{
-			return true
-		} else
+			if (shell.evaluate(ruleCondition))
+			{
+				return true
+			} else
+			{
+				return false
+			}
+		}
+		catch (MissingPropertyException)
 		{
+			println "rule - (${ruleCondition}) failed with Missing Property Exception, one of the properties does not exist. You may want to contact the BDA team for assistance with resolving this issue."
 			return false
 		}
 	}
