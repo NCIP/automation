@@ -98,4 +98,14 @@
     <changeSet id="2010.07.13.1036" author="bassetttj">
         <addNotNullConstraint tableName="PROJECT_CERTIFICATION_STATUS" columnName="CERT_DATE" columnDataType="TIMESTAMP" />
     </changeSet>
+
+    <changeSet id="2010.07.13.1430" author="bassetttj">
+        <delete tableName="PROJECT_CERTIFICATION_STATUS">
+            <where>
+                product like '%cadsr-semanticTools%'
+            </where>
+        </delete>
+    </changeSet>
+
+
 </databaseChangeLog>
