@@ -1115,6 +1115,7 @@
 "caEHR-ESD.java.minor.version","1.6.0_14"
 "objectcart.database.type","mysql"
 "objectcart.svn.project.url","https://ncisvn.nci.nih.gov/svn/mdr/trunk/objectCart/objectCart"
+"objectcart.svn.local.checkout","working/bda_certification"
 "objectcart.master.build.location","${objectcart.svn.local.checkout}/software/build"
 "objectcart.master.install.location","${objectcart.svn.local.checkout}/software/build"
 "objectcart.single-command.build.target","build:all"
