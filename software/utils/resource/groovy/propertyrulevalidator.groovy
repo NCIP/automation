@@ -45,7 +45,7 @@ class propertyRuleValidator
 			def propertyName=prop.@name
 			def i=0
 			def skipProp=prop.@'skip-property'
-			println "skip-prop - ${skipProp} ant - ${antProps[skipProp]}"
+			println "skip-prop - (${skipProp}) ant - (${antProps[skipProp]})"
 			if (skipProp.length() > 0 && antProps[skipProp] == "true")
 			{
 				println "skip-prop (${skipProp}) set for property (${propertyName}) skipping rules"
