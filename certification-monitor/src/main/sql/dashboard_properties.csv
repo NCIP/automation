@@ -1109,4 +1109,4 @@
 "objectcart.database.user","object_cart"
 "objectcart.database.password","o3jC#490"
 "objectcart.database.url","jdbc:mysql://${database.server}:${database.port}/${database.name}"
-"objectcart.exploded.dir.location","${objectcart.svn.local.checkout}/trunk/software/target/dist/exploded"
+"objectcart.exploded.dir.location","${objectcart.svn.local.checkout}/software/target/dist/exploded"
