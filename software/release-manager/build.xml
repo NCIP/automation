@@ -969,7 +969,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
 			bda-templates.dir="${svn.bda-template.trunk.dir}"
 			bda.version="${current.version}-beta"
-			legacy="true"
+			legacy="false"
 			/>
 	</target>
 </project>
