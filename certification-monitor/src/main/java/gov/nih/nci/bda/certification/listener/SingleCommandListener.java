@@ -16,6 +16,9 @@ import org.apache.tools.ant.BuildListener;
  *
  */
 public class SingleCommandListener implements BuildListener {
+
+    public static final String WIKI_FAILED = "(x)";
+
 	private Log certLogger = LogFactory.getLog(SingleCommandListener.class);
 
 	ArrayList taskList = new ArrayList();
@@ -30,18 +33,6 @@ public class SingleCommandListener implements BuildListener {
 
 	}
 
-	private void nullifyBuildCertificationBean(BuildCertificationBean bmb) {
-		if (bmb != null) {
-			bmb.setProjectName(null);
-			bmb.setBuildSuccessful(false);
-			bmb.setTargetName(null);
-			bmb.setMapName(null);
-			bmb.setValue(false);
-			bmb.setPropertyValue(null);
-			bmb.setProjectRepoUrl(null);
-		}
-	}
-
 	private BuildCertificationBean populateBuildCertificationBean(
 			BuildEvent event) {
 		certLogger.info(" Populate the BuildCertificationBean ");
@@ -49,6 +40,8 @@ public class SingleCommandListener implements BuildListener {
 		String projectName = event.getProject().getProperty("project.name");
 		String projectUrl = event.getProject().getProperty("svn.project.url");
 		String macroList = event.getProject().getProperty( event.getTarget().getName() + ".macro.list");
+
+        certLogger.info("map.name=" + event.getProject().getProperty("map.name"));
 
 		certLogger.info(" Populating  projectName :" + projectName);
 		certLogger.info(" Populating ProjectUrl " + projectUrl);
@@ -99,11 +92,22 @@ public class SingleCommandListener implements BuildListener {
 			certLogger.info(" macro list value TURE " + checkMacroList(macroList,event));
 			certLogger.info(" Check and populate the status of the feature and the certification ");
 			certLogger.info(" Update the projectCertificationStatus to true only when the status is not false" + CertificationManager.projectCertificationStatus);
+            String certificationPropertyValue = event.getProject().getProperty("certification.property.value");
+
+            certLogger.info(" certificationPropertyValue=" + certificationPropertyValue );
+
+            if (certificationPropertyValue.contains( WIKI_FAILED ))
+            {
+                certLogger.info(" contains (X)... failing...=" );
+                bmb.setCertificationStatus(false);
+                CertificationManager.projectCertificationStatus = false;
+            }
+
 			if (CertificationManager.projectCertificationStatus) {
 				bmb.setCertificationStatus(true);
 				CertificationManager.projectCertificationStatus = true;
 			}
-			certLogger.info(" Check and Set certification.property.value only when the feature build is successful :" +event.getProject().getProperty("certification.property.value"));
+			certLogger.info(" Check and Set certification.property.value only when the feature build is successful :" + event.getProject().getProperty("certification.property.value"));
 
 		}
 		if (event.getProject().getProperty("is.value") != null
