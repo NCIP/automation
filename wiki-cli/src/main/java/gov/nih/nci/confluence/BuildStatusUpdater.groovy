@@ -370,7 +370,7 @@ class BuildStatusUpdater {
 
     String returnValue = WIKI_TABLE_BEGIN_ROW;
 
-//    certification = getCertificationStatus(bdaEnabled, singleCommandBuild, singleCommandDeploy, remoteUpgrade, databaseIntegration, privateProperties, deploymentShakeout, templateValidation, ciBuild, commandLineInstaller)
+    certification = getCertificationStatus(bdaEnabled, singleCommandBuild, singleCommandDeploy, remoteUpgrade, databaseIntegration, privateProperties, deploymentShakeout, templateValidation, ciBuild, commandLineInstaller)
 
     returnValue += removeEndDinks(product) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += removeEndDinks(certification) + WIKI_TABLE_CELL_TERMINATOR;
@@ -391,28 +391,28 @@ class BuildStatusUpdater {
     return returnValue;
   }
 
-//  private String getCertificationStatus(String bdaEnabled, String singleCommandBuild, String singleCommandDeploy, String remoteUpgrade, String databaseIntegration, String privateProperties, String deploymentShakeout, String templateValidation, String ciBuild, String commandLineInstaller) {
-//
-//    String certification
-//
-//    certification = WIKI_CERTIFICATION_GREEN;
-//
-//    if (bdaEnabled.contains(WIKI_CERTIFICATION_RED)
-//            || singleCommandBuild.contains(WIKI_CERTIFICATION_RED)
-//            || singleCommandDeploy.contains(WIKI_CERTIFICATION_RED)
-//            || remoteUpgrade.contains(WIKI_CERTIFICATION_RED)
-//            || databaseIntegration.contains(WIKI_CERTIFICATION_RED)
-//            || privateProperties.contains(WIKI_CERTIFICATION_RED)
-//            || deploymentShakeout.contains(WIKI_CERTIFICATION_RED)
-//            || templateValidation.contains(WIKI_CERTIFICATION_RED)
-//            || ciBuild.contains(WIKI_CERTIFICATION_RED)
-//            || commandLineInstaller.contains(WIKI_CERTIFICATION_RED)
-//    ) {
-//
-//      certification = WIKI_CERTIFICATION_RED;
-//    }
-//    return certification
-//  }
+  private String getCertificationStatus(String bdaEnabled, String singleCommandBuild, String singleCommandDeploy, String remoteUpgrade, String databaseIntegration, String privateProperties, String deploymentShakeout, String templateValidation, String ciBuild, String commandLineInstaller) {
+
+    String certification
+
+    certification = WIKI_CERTIFICATION_GREEN;
+
+    if (bdaEnabled.contains(WIKI_CERTIFICATION_RED)
+            || singleCommandBuild.contains(WIKI_CERTIFICATION_RED)
+            || singleCommandDeploy.contains(WIKI_CERTIFICATION_RED)
+            || remoteUpgrade.contains(WIKI_CERTIFICATION_RED)
+            || databaseIntegration.contains(WIKI_CERTIFICATION_RED)
+            || privateProperties.contains(WIKI_CERTIFICATION_RED)
+            || deploymentShakeout.contains(WIKI_CERTIFICATION_RED)
+            || templateValidation.contains(WIKI_CERTIFICATION_RED)
+            || ciBuild.contains(WIKI_CERTIFICATION_RED)
+            || commandLineInstaller.contains(WIKI_CERTIFICATION_RED)
+    ) {
+
+      certification = WIKI_CERTIFICATION_RED;
+    }
+    return certification
+  }
 
   private String removeEndDinks(String product) {
 
