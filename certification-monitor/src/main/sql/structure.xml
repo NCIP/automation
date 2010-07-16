@@ -106,6 +106,4 @@
             </where>
         </delete>
     </changeSet>
-
-
 </databaseChangeLog>
