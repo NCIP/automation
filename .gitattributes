@@ -154,7 +154,6 @@ wiki-cli/license/NOTICES.txt -text
 wiki-cli/pom.xml -text
 wiki-cli/prod-build.properties -text
 wiki-cli/source.txt -text
-wiki-cli/sql/populate_wikiDB.sql -text
 wiki-cli/src/assembly/release.xml -text
 wiki-cli/src/main/Main.iml -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
