@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="gov.nih.nci.wiki.ProjectCertificationStatus" table="certification_history">
+         <id name="id" column="id">
+         	<generator class="increment"/>           
+         </id>
+
+         <property name="product" column="PRODUCT"/>
+         <property name="certificationStatus" column="CERTIFICATION_STATUS"/>
+         <property name="singleCommandBuild" column="SINGLE_COMMAND_BUILD"/>
+         <property name="singleCommandDeployment" column="SINGLE_COMMAND_DEPLOYMENT"/>
+         <property name="remoteUpgrade" column="REMOTE_UPGRADE"/>
+         <property name="databaseIntegration" column="DATABASE_INTEGRATION"/>
+         <property name="bdaEnabled" column="BDA_ENABLED"/>
+         <property name="templateValidation" column="TEMPLATE_VALIDATION"/>
+         <property name="privateRepositoryProperties" column="PRIVATE_PROPERTIES"/>
+         <property name="latestCIBuild" column="CI_BUILD"/>
+         <property name="deploymentShakeout" column="DEPLOYMENT_SHAKEOUT"/>
+        <property name="commandLineInstaller" column="COMMANDLINE_INSTALLER"/>
+        <property name="certificationDate" column="cert_date"/>                  
+     </class>
+</hibernate-mapping>

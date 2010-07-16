@@ -103,6 +103,16 @@ certification-monitor/src/tests/unit/groovy/BDACertificationTest.groovy -text
 docs/BDA_Certification_Stories.doc -text
 docs/BDA_Certification_design.doc -text
 wiki-cli/.classpath -text
+wiki-cli/.idea/ant.xml -text
+wiki-cli/.idea/compiler.xml -text
+wiki-cli/.idea/copyright/profiles_settings.xml -text
+wiki-cli/.idea/encodings.xml -text
+wiki-cli/.idea/libraries/lib.xml -text
+wiki-cli/.idea/misc.xml -text
+wiki-cli/.idea/modules.xml -text
+wiki-cli/.idea/uiDesigner.xml -text
+wiki-cli/.idea/vcs.xml -text
+wiki-cli/.idea/workspace.xml -text
 wiki-cli/.project -text
 wiki-cli/README.txt -text
 wiki-cli/build.properties -text
@@ -124,6 +134,7 @@ wiki-cli/lib/confluence-cli-1.3.0.jar -text
 wiki-cli/lib/confluence-soap-model-0.2.jar -text
 wiki-cli/lib/derby.jar -text
 wiki-cli/lib/groovy-all-1.6-beta-1.jar -text
+wiki-cli/lib/hibernate3.jar -text
 wiki-cli/lib/jsap-2.1.jar -text
 wiki-cli/lib/junit-4.8.2.jar -text
 wiki-cli/lib/log4j-1.2.12.jar -text
@@ -150,7 +161,12 @@ wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/MailSender.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/test/StringAssert.java -text
+wiki-cli/src/main/java/gov/nih/nci/util/HibernateUtil.java -text
+wiki-cli/src/main/java/gov/nih/nci/wiki/History.java -text
+wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml -text
+wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy -text
+wiki-cli/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java -text
 wiki-cli/src/main/resources/build.xml -text
 wiki-cli/src/main/resources/confluence.bat -text
 wiki-cli/src/main/resources/examples/addUserToGroupWithFile.csv -text
@@ -158,6 +174,7 @@ wiki-cli/src/main/resources/examples/addUserWithFile.csv -text
 wiki-cli/src/main/resources/examples/examples.txt -text
 wiki-cli/src/main/resources/examples/input.txt -text
 wiki-cli/src/main/resources/examples/source.txt -text
+wiki-cli/src/main/resources/hibernate.cfg.xml -text
 wiki-cli/src/main/resources/log4j.properties -text
 wiki-cli/src/main/resources/wiki.properties -text
 wiki-cli/target/README.txt -text
