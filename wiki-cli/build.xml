@@ -98,6 +98,25 @@
             </classpath>
             <javac source="1.5" target="1.5" debug="on" />
         </groovyc>
+        <!--<javac srcdir="${software.assert.dir}"-->
+               <!--destdir="${assert.target.dir}"-->
+               <!--classpathref = "project.classpath"-->
+               <!--debug = "on" />-->
+        <!--<jar basedir="${assert.target.dir}" destfile="${dist.dir}/assert.jar" />-->
+        <javac srcdir="${software.dir}/src/main/java/test"
+               destdir="${test-classes.dir}"
+               classpathref="project.classpath"
+               classpath=";${dist.dir}/assert.jar">
+            <classpath refid="project.classpath"/>
+            <classpath>
+                <pathelement location="${dist.dir}/${wiki_cli_jar}"/>
+            </classpath>
+            <classpath>
+                <pathelement location="${dist.dir}/assert.jar"/>
+            </classpath>
+        </javac>
+
+
         <jar destfile="${dist.dir}/tests.jar" basedir="${test-classes.dir}" update="true" />
 
         <mkdir dir="${basedir}/testresult" />
@@ -109,9 +128,6 @@
             <fileset dir="${dist.dir}">
                 <include name="**/*.jar" />
             </fileset>
-            <!--<fileset dir="${source.dir}/../../../../test/gov/nih/nci/confluence">-->
-                <!--<include name="**/*.groovy" />-->
-            <!--</fileset>-->
         </path>
         <property name="xxx" refid="test.classpath"/>
         <echo>classpath=${xxx}</echo>
