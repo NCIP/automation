@@ -1,0 +1,61 @@
+<component name="libraryTable">
+  <library name="bda-utils">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/svnjavahl-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/svnClientAdapter-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/xml-apis-1.3.04.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/commons-codec-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/nekohtml-1.9.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/propertyvalidator-0.1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/commons-io-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/bsf-2.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/clm-3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/svnant-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/htmlunit-core-js-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/hsqldb-1.8.0.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/umlgraph-5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/bda-build-utils-1.5.17.zip!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/xml-commons-resolver-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/ant-launcher-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/mysql-connector-java-5.0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/dbconfig-0.1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/hibernate-3.1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/serializer-2.7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/commons-httpclient-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/htmlunit-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/jsch-0.1.41.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/antutility-r19.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/sac-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/cssparser-0.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/ant-nodeps-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/svnkit-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/xmltask-1.15.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/ojdbc14-10.2.0.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/schemaspy-4.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/liquibase-1.9.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/xercesImpl-2.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/commons-collections-3.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/commons-lang-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/postgresql-jdbc3-8.3-603.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/ant-contrib-1.0nci.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/ivy-2.0.0-beta2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/log4j-1.2.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/bcel-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/mail-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/fusemetrics-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/ganymed-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/spring-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/grand-1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/activation-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/xalan-2.7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/antunit-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/ant-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/groovy-all-1.6.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/commons-dbcp-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/bda-utils/uptconfigurator-0.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

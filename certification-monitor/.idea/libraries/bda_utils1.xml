@@ -1,0 +1,56 @@
+<component name="libraryTable">
+  <library name="bda-utils1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/nekohtml-1.9.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/commons-collections-3.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ant-launcher-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/commons-httpclient-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/svnClientAdapter-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/bda-build-utils-1.5.9.zip!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/propertyvalidator-0.1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/commons-lang-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/antutility-r19.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/serializer-2.7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/xml-apis-1.3.04.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/svnjavahl-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/sac-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/bcel-5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ivy-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/mail-1.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/svnant-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/umlgraph-5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/mysql-connector-java-5.0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/schemaspy-4.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/commons-io-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ojdbc14-10.2.0.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/clm-3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/dbconfig-0.1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/htmlunit-core-js-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ant-contrib-1.0nci.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ganymed-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/fusemetrics-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/xml-commons-resolver-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/hsqldb-1.8.0.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/jsch-0.1.41.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/xmltask-1.15.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ant-nodeps-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/commons-codec-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/cssparser-0.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/htmlunit-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/svnkit-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/uptconfigurator-0.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/xalan-2.7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/xercesImpl-2.9.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/liquibase-core-1.9.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ant-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/ant-antunit-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/grand-1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/bsf-2.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/postgresql-8.3-603.jdbc3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/bda-utils/groovy-all-1.6.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

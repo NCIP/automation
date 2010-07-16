@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="tools">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/tools/jboss-4.0.4.GA.zip!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/tools/jems-installer-1.2.0.GA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="caarray.ear">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/working/temp/caarray.ear/caarray-common.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/working/temp/caarray.ear/caarray-ejb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,58 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/hibernate-annotations-3.2.0.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jbossall-client-4.0.5.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/log4j-1.2.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/castor-1.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/javacsv-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/caGrid-data-common-1.2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/nci-commons-core-1.2.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/mysql-connector-java-5.0.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/javaee-5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/guice-multibindings-2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/guice-assistedinject-2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/commons-configuration-1.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/caGrid-data-stubs-1.2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/guice-2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/clm-4.2.beta.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-ejb3-client-noversion.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/xerces-J-1.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/hibernate-3.2.0.ga.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/commons-collections-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-jmx-4.0.5.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/dozer-4.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/rmiio-2.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/xercesImpl-2.7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/spring-1.2.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-aop-client-1.5.2.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/caGrid-CQL-cql.1.0-1.2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/cglib-2.1_3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/javassist-3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/caGrid-core-1.2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/woodstox-core-asl-4.0.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/commons-logging-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/commons-lang-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/caGrid-sdkQuery32-core-1.2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/stax2-api-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/dom4j-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/commons-io-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/commons-beanutils-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-annotations-ejb3-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-cache-1.4.0.SP1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-aspect-client-1.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/csmapi-4.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-common-1.0.0.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/axis-1.4.2_10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/google-collections-1.0-rc1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/ejb3-persistence-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/liquibase-1.9.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/xercesImpl-1.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/AffxFusion-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/jboss-system-4.0.5.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/ear/lib/commons-compress-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="grid">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/grid/jboss-globus-serverinstance-config.zip!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/grid/cagrid_CaArraySvc_v1_0.zip!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/grid/caarray-grid-common.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/grid/cagrid_CaArraySvc.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

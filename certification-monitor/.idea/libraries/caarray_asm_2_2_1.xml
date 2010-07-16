@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="caarray-asm_2.2.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/lib/caarray-asm_2.2.1/asm-2.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/working/installer/caarray_install_2_4_0/lib/caarray-asm_2.2.1/asm-tree-2.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
