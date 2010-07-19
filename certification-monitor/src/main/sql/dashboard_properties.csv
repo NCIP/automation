@@ -829,7 +829,7 @@
 "ccts-c3pr.override.remote.properties","ssh.server.username=hudsonuser,ssh.server.hostname=cbvapp-c1006.nci.nih.gov,ssh.port=22,ssh.key.file=/usr/local/hudsonuser/ssh-pub-key/id_dsa_bda,ssh.dir.temp=/usr/local/hudsonuser/buildcertification/build/working/remote-deploy"
 "ccts-c3pr.single-command.package.upgrader.target","dist:upgrader"
 "ccts-c3pr.override.properties",""
-"ccts-caaers.database.type","mysql"
+"ccts-caaers.database.type","postgres"
 "ccts-caaers.svn.username","narram"
 "ccts-caaers.svn.project.url","https://ncisvn.nci.nih.gov/svn/caaersappdev/trunk/caAERS"
 "ccts-caaers.svn.local.checkout","working/bda_certification"
