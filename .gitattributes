@@ -74,6 +74,7 @@ certification-monitor/lib/hibernate3.jar -text
 certification-monitor/lib/javassist-3.4.GA.jar -text
 certification-monitor/lib/jsch-0.1.39.jar -text
 certification-monitor/lib/jta-1.1.jar -text
+certification-monitor/lib/junit.jar -text
 certification-monitor/lib/liquibase-core-1.9.3.jar -text
 certification-monitor/lib/mysql-connector-java-5.0.5.jar -text
 certification-monitor/lib/selenium-java-client-driver-sources.jar -text
