@@ -210,6 +210,24 @@
 	</target>
 
     <target name="test" depends="compile,package">
+        <path id="test.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+        </path>
+
+        <junit printsummary="yes">
+            <classpath refid="test.classpath"/>
+            <batchtest todir="${basedir}/testresult">
+                <fileset dir="${classes.dir}">
+                  <include name="**/*.class"/>
+                </fileset>
+            </batchtest>
+            <formatter type="xml" usefile="true" />
+        </junit>
     </target>
 
 	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
