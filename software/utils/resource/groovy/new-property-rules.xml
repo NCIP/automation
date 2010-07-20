@@ -20,23 +20,43 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="application.base.path" name-pattern="application.base.path" description="" skip-property="">
+	<property name="application.base.path.linux" name-pattern="application.base.path.linux" description="" skip-property="">
 		<rules>
 			<rule>
-				<name>application.base.path-syntax</name>
-				<description>Checks application.base.path is the valid syntax.</description>
+				<name>application.base.path.linux-syntax</name>
+				<description>Checks application.base.path.linux is the valid syntax.</description>
 				<conditions>
 					<or>
 						<and>
-							<condition>application.base.path ==~ /.*\S+.*/</condition>
-							<condition negate="true">application.base.path ==~ /.*\s.*/</condition>
-							<condition negate="true">application.base.path ==~ /.*\x5c.*/</condition>
+							<condition>application.base.path.linux ==~ /.*\S+.*/</condition>
+							<condition negate="true">application.base.path.linux ==~ /.*\s.*/</condition>
+							<condition negate="true">application.base.path.linux ==~ /.*\x5c.*/</condition>
 						</and>
-						<condition>application.base.path == null </condition>
-						<condition>application.base.path == "" </condition>
+						<condition>application.base.path.linux == null </condition>
+						<condition>application.base.path.linux == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>application.base.path did not pass validation. application.base.path must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>application.base.path.linux did not pass validation. application.base.path.linux must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/home/user/apps/appname".</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="application.base.path.windows" name-pattern="application.base.path.windows" description="" skip-property="">
+		<rules>
+			<rule>
+				<name>application.base.path.windows-syntax</name>
+				<description>Checks application.base.path.windows is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>application.base.path.windows ==~ /.*\S+.*/</condition>
+							<condition negate="true">application.base.path.windows ==~ /.*\s.*/</condition>
+							<condition negate="true">application.base.path.windows ==~ /.*\x5c.*/</condition>
+						</and>
+						<condition>application.base.path.windows == null </condition>
+						<condition>application.base.path.windows == "" </condition>
+					</or>
+				</conditions>
+				<fail-message>application.base.path.windows did not pass validation. application.base.path.windows must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "c:/apps/appname".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -56,7 +76,7 @@
 						<condition>appliation.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>appliation.url did not pass validation. appliation.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>appliation.url did not pass validation. appliation.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://localhost.nci.nih.gov:port".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -139,7 +159,7 @@
 						<condition>bda-blueprints-webapp.install.zip.file == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>bda-blueprints-webapp.install.zip.file did not pass validation. bda-blueprints-webapp.install.zip.file must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${bda-blueprints-webapp.install.name}_${bda-blueprints-webapp.version}.zip".</fail-message>
+				<fail-message>bda-blueprints-webapp.install.zip.file did not pass validation. bda-blueprints-webapp.install.zip.file must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "bda-blueprints_install-1.7.0.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -180,7 +200,7 @@
 						<condition>bda-blueprints-webapp.upgrade.zip.file == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>bda-blueprints-webapp.upgrade.zip.file did not pass validation. bda-blueprints-webapp.upgrade.zip.file must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${bda-blueprints-webapp.upgrade.name}_${bda-blueprints-webapp.version}.zip".</fail-message>
+				<fail-message>bda-blueprints-webapp.upgrade.zip.file did not pass validation. bda-blueprints-webapp.upgrade.zip.file must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "bda-blueprints_upgrade-1.7.0.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -201,7 +221,7 @@
 						<condition>bda-blueprints-webapp.version == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>bda-blueprints-webapp.version did not pass validation. bda-blueprints-webapp.version must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "0.1.0".</fail-message>
+				<fail-message>bda-blueprints-webapp.version did not pass validation. bda-blueprints-webapp.version must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "1.7.0".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -222,7 +242,7 @@
 						<condition>bda.version == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>bda.version did not pass validation. bda.version must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "1.7.0-beta".</fail-message>
+				<fail-message>bda.version did not pass validation. bda.version must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "1.7.0".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -383,7 +403,7 @@
 						<condition>cagrid-base-war.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>cagrid-base-war.src.url did not pass validation. cagrid-base-war.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${cagrid-base-war.binaries.file}".</fail-message>
+				<fail-message>cagrid-base-war.src.url did not pass validation. cagrid-base-war.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-base-war.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -443,7 +463,7 @@
 						<condition>cagrid-console.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>cagrid-console.src.url did not pass validation. cagrid-console.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/${cagrid-console.binaries.file}".</fail-message>
+				<fail-message>cagrid-console.src.url did not pass validation. cagrid-console.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/caGrid-console_sources.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -503,7 +523,7 @@
 						<condition>cagrid-libs.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>cagrid-libs.src.url did not pass validation. cagrid-libs.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${cagrid-libs.binaries.file}".</fail-message>
+				<fail-message>cagrid-libs.src.url did not pass validation. cagrid-libs.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-libs.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -589,27 +609,6 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.dialect" name-pattern="database.dialect" description="" skip-property="exclude.validate.database">
-		<rules>
-			<rule>
-				<name>database.dialect-syntax</name>
-				<description>Checks database.dialect is the valid syntax.</description>
-				<conditions>
-					<or>
-						<and>
-							<condition>database.dialect ==~ /.*\S+.*/</condition>
-							<condition negate="true">database.dialect ==~ /.*\s.*/</condition>
-							<condition negate="true">database.dialect ==~ /.*\x5c.*/</condition>
-							<condition negate="true">database.dialect ==~ /.*\/.*/</condition>
-						</and>
-						<condition>database.dialect == null </condition>
-						<condition>database.dialect == "" </condition>
-					</or>
-				</conditions>
-				<fail-message>database.dialect did not pass validation. database.dialect must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
-			</rule>
-		</rules>
-	</property>
 	<property name="database.driver" name-pattern="database.driver" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
@@ -627,7 +626,7 @@
 						<condition>database.driver == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>database.driver did not pass validation. database.driver must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>database.driver did not pass validation. database.driver must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "com.mysql.jdbc.Driver".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -647,7 +646,7 @@
 						<condition>database.driver.file == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>database.driver.file did not pass validation. database.driver.file must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>database.driver.file did not pass validation. database.driver.file must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/path/mysql-connector-java-5.0.8.jar".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -669,6 +668,27 @@
 					</or>
 				</conditions>
 				<fail-message>database.drop-schema did not pass validation. database.drop-schema must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+		</rules>
+	</property>
+	<property name="database.re-create" name-pattern="database.re-create" description="" skip-property="exclude.validate.database">
+		<rules>
+			<rule>
+				<name>database.re-create-syntax</name>
+				<description>Checks database.re-create is the valid syntax.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.re-create ==~ /.*\S+.*/</condition>
+							<condition negate="true">database.re-create ==~ /.*\s.*/</condition>
+							<condition negate="true">database.re-create ==~ /.*\x5c.*/</condition>
+							<condition negate="true">database.re-create ==~ /.*\/.*/</condition>
+						</and>
+						<condition>database.re-create == null </condition>
+						<condition>database.re-create == "" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.re-create did not pass validation. database.re-create must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -788,7 +808,7 @@
 						<condition>database.schema == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>database.schema did not pass validation. database.schema must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>database.schema did not pass validation. database.schema must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "schemaname".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -850,7 +870,7 @@
 						<condition>database.system.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>database.system.url did not pass validation. database.system.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "jdbc:mysql://${database.server}:${database.port}/".</fail-message>
+				<fail-message>database.system.url did not pass validation. database.system.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "jdbc:mysql://localhost:3306/".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -912,7 +932,7 @@
 						<condition>database.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>database.url did not pass validation. database.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "jdbc:mysql://${database.server}:${database.port}/${database.name}".</fail-message>
+				<fail-message>database.url did not pass validation. database.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "jdbc:mysql://localhost:3306/bda".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1035,7 +1055,20 @@
 						<condition>exclude.access-logs == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.access-logs did not pass validation. exclude.access-logs must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.access-logs did not pass validation. exclude.access-logs must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.access-logs-tf</name>
+				<description>Checks exclude.access-logs has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.access-logs == "true"</condition>
+						<condition>exclude.access-logs == "false"</condition>
+						<condition>exclude.access-logs == ""</condition>
+						<condition>exclude.access-logs == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.access-logs did not pass validation. exclude.access-logs must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1056,7 +1089,20 @@
 						<condition>exclude.check.database == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.check.database did not pass validation. exclude.check.database must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.check.database did not pass validation. exclude.check.database must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.check.database-tf</name>
+				<description>Checks exclude.check.database has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.check.database == "true"</condition>
+						<condition>exclude.check.database == "false"</condition>
+						<condition>exclude.check.database == ""</condition>
+						<condition>exclude.check.database == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.check.database did not pass validation. exclude.check.database must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1077,7 +1123,20 @@
 						<condition>exclude.database == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.database did not pass validation. exclude.database must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.database did not pass validation. exclude.database must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.database-tf</name>
+				<description>Checks exclude.database has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.database == "true"</condition>
+						<condition>exclude.database == "false"</condition>
+						<condition>exclude.database == ""</condition>
+						<condition>exclude.database == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.database did not pass validation. exclude.database must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1098,7 +1157,20 @@
 						<condition>exclude.jboss == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.jboss did not pass validation. exclude.jboss must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.jboss did not pass validation. exclude.jboss must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.jboss-tf</name>
+				<description>Checks exclude.jboss has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.jboss == "true"</condition>
+						<condition>exclude.jboss == "false"</condition>
+						<condition>exclude.jboss == ""</condition>
+						<condition>exclude.jboss == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.jboss did not pass validation. exclude.jboss must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1119,7 +1191,20 @@
 						<condition>exclude.jboss.backup == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.jboss.backup did not pass validation. exclude.jboss.backup must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.jboss.backup did not pass validation. exclude.jboss.backup must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.jboss.backup-tf</name>
+				<description>Checks exclude.jboss.backup has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.jboss.backup == "true"</condition>
+						<condition>exclude.jboss.backup == "false"</condition>
+						<condition>exclude.jboss.backup == ""</condition>
+						<condition>exclude.jboss.backup == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.jboss.backup did not pass validation. exclude.jboss.backup must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1140,7 +1225,20 @@
 						<condition>exclude.jboss-bindings == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.jboss-bindings did not pass validation. exclude.jboss-bindings must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.jboss-bindings did not pass validation. exclude.jboss-bindings must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.jboss-bindings-tf</name>
+				<description>Checks exclude.jboss-bindings has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.jboss-bindings == "true"</condition>
+						<condition>exclude.jboss-bindings == "false"</condition>
+						<condition>exclude.jboss-bindings == ""</condition>
+						<condition>exclude.jboss-bindings == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.jboss-bindings did not pass validation. exclude.jboss-bindings must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1161,7 +1259,20 @@
 						<condition>exclude.jboss-config == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.jboss-config did not pass validation. exclude.jboss-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.jboss-config did not pass validation. exclude.jboss-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.jboss-config-tf</name>
+				<description>Checks exclude.jboss-config has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.jboss-config == "true"</condition>
+						<condition>exclude.jboss-config == "false"</condition>
+						<condition>exclude.jboss-config == ""</condition>
+						<condition>exclude.jboss-config == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.jboss-config did not pass validation. exclude.jboss-config must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1182,7 +1293,20 @@
 						<condition>exclude.jboss.grid == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.jboss.grid did not pass validation. exclude.jboss.grid must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.jboss.grid did not pass validation. exclude.jboss.grid must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.jboss.grid-tf</name>
+				<description>Checks exclude.jboss.grid has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.jboss.grid == "true"</condition>
+						<condition>exclude.jboss.grid == "false"</condition>
+						<condition>exclude.jboss.grid == ""</condition>
+						<condition>exclude.jboss.grid == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.jboss.grid did not pass validation. exclude.jboss.grid must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1203,7 +1327,20 @@
 						<condition>exclude.jboss-login-config == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.jboss-login-config did not pass validation. exclude.jboss-login-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.jboss-login-config did not pass validation. exclude.jboss-login-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.jboss-login-config-tf</name>
+				<description>Checks exclude.jboss-login-config has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.jboss-login-config == "true"</condition>
+						<condition>exclude.jboss-login-config == "false"</condition>
+						<condition>exclude.jboss-login-config == ""</condition>
+						<condition>exclude.jboss-login-config == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.jboss-login-config did not pass validation. exclude.jboss-login-config must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1224,7 +1361,20 @@
 						<condition>exclude.start.servers == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.start.servers did not pass validation. exclude.start.servers must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.start.servers did not pass validation. exclude.start.servers must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.start.servers-tf</name>
+				<description>Checks exclude.start.servers has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.start.servers == "true"</condition>
+						<condition>exclude.start.servers == "false"</condition>
+						<condition>exclude.start.servers == ""</condition>
+						<condition>exclude.start.servers == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.start.servers did not pass validation. exclude.start.servers must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1245,7 +1395,20 @@
 						<condition>exclude.tomcat == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.tomcat did not pass validation. exclude.tomcat must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.tomcat did not pass validation. exclude.tomcat must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.tomcat-tf</name>
+				<description>Checks exclude.tomcat has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.tomcat == "true"</condition>
+						<condition>exclude.tomcat == "false"</condition>
+						<condition>exclude.tomcat == ""</condition>
+						<condition>exclude.tomcat == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.tomcat did not pass validation. exclude.tomcat must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1266,7 +1429,20 @@
 						<condition>exclude.tomcat.backup == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.tomcat.backup did not pass validation. exclude.tomcat.backup must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.tomcat.backup did not pass validation. exclude.tomcat.backup must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.tomcat.backup-tf</name>
+				<description>Checks exclude.tomcat.backup has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.tomcat.backup == "true"</condition>
+						<condition>exclude.tomcat.backup == "false"</condition>
+						<condition>exclude.tomcat.backup == ""</condition>
+						<condition>exclude.tomcat.backup == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.tomcat.backup did not pass validation. exclude.tomcat.backup must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1287,7 +1463,20 @@
 						<condition>exclude.tomcat-config == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.tomcat-config did not pass validation. exclude.tomcat-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.tomcat-config did not pass validation. exclude.tomcat-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.tomcat-config-tf</name>
+				<description>Checks exclude.tomcat-config has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.tomcat-config == "true"</condition>
+						<condition>exclude.tomcat-config == "false"</condition>
+						<condition>exclude.tomcat-config == ""</condition>
+						<condition>exclude.tomcat-config == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.tomcat-config did not pass validation. exclude.tomcat-config must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1308,7 +1497,20 @@
 						<condition>exclude.tomcat.grid == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>exclude.tomcat.grid did not pass validation. exclude.tomcat.grid must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>exclude.tomcat.grid did not pass validation. exclude.tomcat.grid must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>exclude.tomcat.grid-tf</name>
+				<description>Checks exclude.tomcat.grid has proper value.</description>
+				<conditions>
+					<or>
+						<condition>exclude.tomcat.grid == "true"</condition>
+						<condition>exclude.tomcat.grid == "false"</condition>
+						<condition>exclude.tomcat.grid == ""</condition>
+						<condition>exclude.tomcat.grid == null</condition>
+					</or>
+				</conditions>
+				<fail-message>exclude.tomcat.grid did not pass validation. exclude.tomcat.grid must be true, false or empty. Sample valid value - "true".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1368,7 +1570,7 @@
 						<condition>findbugs.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>findbugs.src.url did not pass validation. findbugs.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/other/os-independent/${findbugs.binaries.file}".</fail-message>
+				<fail-message>findbugs.src.url did not pass validation. findbugs.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/other/os-independent/findbugs-1.3.4.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1388,7 +1590,7 @@
 						<condition>fs-data.base.dir == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>fs-data.base.dir did not pass validation. fs-data.base.dir must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>fs-data.base.dir did not pass validation. fs-data.base.dir must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/local/content/files".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2176,7 +2378,7 @@
 						<condition>jboss-bindings.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/${jboss-bindings.file}".</fail-message>
+				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2273,7 +2475,7 @@
 						<condition>jbosscp.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jbosscp.src.url did not pass validation. jbosscp.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${jbosscp.binaries.file}".</fail-message>
+				<fail-message>jbosscp.src.url did not pass validation. jbosscp.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/jboss-4.0.5.GA_CP15.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2503,7 +2705,7 @@
 						<condition>jboss.grid.secure.cert.location == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.grid.secure.cert.location did not pass validation. jboss.grid.secure.cert.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${security.dist.relative.dir}/165.112.132.171-cert.pem".</fail-message>
+				<fail-message>jboss.grid.secure.cert.location did not pass validation. jboss.grid.secure.cert.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/path/165.112.132.171-cert.pem".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2544,7 +2746,7 @@
 						<condition>jboss.grid.secure.key.location == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.grid.secure.key.location did not pass validation. jboss.grid.secure.key.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${security.dist.relative.dir}/165.112.132.171-key.pem".</fail-message>
+				<fail-message>jboss.grid.secure.key.location did not pass validation. jboss.grid.secure.key.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/path/165.112.132.171-key.pem".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2692,23 +2894,23 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.home" name-pattern="jboss.home" description="" skip-property="exclude.validate.jboss">
+	<property name="jboss.relative.path" name-pattern="jboss.relative.path" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
-				<name>jboss.home-syntax</name>
-				<description>Checks jboss.home is the valid syntax.</description>
+				<name>jboss.relative.path-syntax</name>
+				<description>Checks jboss.relative.path is the valid syntax.</description>
 				<conditions>
 					<or>
 						<and>
-							<condition>jboss.home ==~ /.*\S+.*/</condition>
-							<condition negate="true">jboss.home ==~ /.*\s.*/</condition>
-							<condition negate="true">jboss.home ==~ /.*\x5c.*/</condition>
+							<condition>jboss.relative.path ==~ /.*\S+.*/</condition>
+							<condition negate="true">jboss.relative.path ==~ /.*\s.*/</condition>
+							<condition negate="true">jboss.relative.path ==~ /.*\x5c.*/</condition>
 						</and>
-						<condition>jboss.home == null </condition>
-						<condition>jboss.home == "" </condition>
+						<condition>jboss.relative.path == null </condition>
+						<condition>jboss.relative.path == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.home did not pass validation. jboss.home must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>jboss.relative.path did not pass validation. jboss.relative.path must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "jboss-4.0.5.GA".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3338,7 +3540,7 @@
 						<condition>jboss.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.src.url did not pass validation. jboss.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/${jboss.binaries.file}".</fail-message>
+				<fail-message>jboss.src.url did not pass validation. jboss.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/jboss-4.0.5.GA.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3421,7 +3623,7 @@
 						<condition>jboss.ssl.keystore.location == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.ssl.keystore.location did not pass validation. jboss.ssl.keystore.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${security.dist.relative.dir}/ncicb-test-ssl.keystore".</fail-message>
+				<fail-message>jboss.ssl.keystore.location did not pass validation. jboss.ssl.keystore.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/path/ncicb-test-ssl.keystore".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3892,26 +4094,6 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="properties.file" name-pattern="properties.file" description="" skip-property="">
-		<rules>
-			<rule>
-				<name>properties.file-syntax</name>
-				<description>Checks properties.file is the valid syntax.</description>
-				<conditions>
-					<or>
-						<and>
-							<condition>properties.file ==~ /.*\S+.*/</condition>
-							<condition negate="true">properties.file ==~ /.*\s.*/</condition>
-							<condition negate="true">properties.file ==~ /.*\x5c.*/</condition>
-						</and>
-						<condition>properties.file == null </condition>
-						<condition>properties.file == "" </condition>
-					</or>
-				</conditions>
-				<fail-message>properties.file did not pass validation. properties.file must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
-			</rule>
-		</rules>
-	</property>
 	<property name="require.build.wscore" name-pattern="require.build.wscore" description="" skip-property="">
 		<rules>
 			<rule>
@@ -3989,7 +4171,7 @@
 						<condition>sync-gts.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>sync-gts.src.url did not pass validation. sync-gts.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/${sync-gts.binaries.file}".</fail-message>
+				<fail-message>sync-gts.src.url did not pass validation. sync-gts.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/gaards-syncgts-1.3.0.1-bin.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4223,7 +4405,7 @@
 						<condition>tomcat.grid.secure.cert.location == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.grid.secure.cert.location did not pass validation. tomcat.grid.secure.cert.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${security.dist.relative.dir}/165.112.132.171-cert.pem".</fail-message>
+				<fail-message>tomcat.grid.secure.cert.location did not pass validation. tomcat.grid.secure.cert.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/path/165.112.132.171-cert.pem".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4264,7 +4446,7 @@
 						<condition>tomcat.grid.secure.key.location == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.grid.secure.key.location did not pass validation. tomcat.grid.secure.key.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${security.dist.relative.dir}/165.112.132.171-key.pem".</fail-message>
+				<fail-message>tomcat.grid.secure.key.location did not pass validation. tomcat.grid.secure.key.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/path/165.112.132.171-key.pem".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4304,23 +4486,23 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.home" name-pattern="tomcat.home" description="" skip-property="exclude.validate.tomcat">
+	<property name="tomcat.relative.dir" name-pattern="tomcat.relative.dir" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
-				<name>tomcat.home-syntax</name>
-				<description>Checks tomcat.home is the valid syntax.</description>
+				<name>tomcat.relative.dir-syntax</name>
+				<description>Checks tomcat.relative.dir is the valid syntax.</description>
 				<conditions>
 					<or>
 						<and>
-							<condition>tomcat.home ==~ /.*\S+.*/</condition>
-							<condition negate="true">tomcat.home ==~ /.*\s.*/</condition>
-							<condition negate="true">tomcat.home ==~ /.*\x5c.*/</condition>
+							<condition>tomcat.relative.dir ==~ /.*\S+.*/</condition>
+							<condition negate="true">tomcat.relative.dir ==~ /.*\s.*/</condition>
+							<condition negate="true">tomcat.relative.dir ==~ /.*\x5c.*/</condition>
 						</and>
-						<condition>tomcat.home == null </condition>
-						<condition>tomcat.home == "" </condition>
+						<condition>tomcat.relative.dir == null </condition>
+						<condition>tomcat.relative.dir == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.home did not pass validation. tomcat.home must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
+				<fail-message>tomcat.relative.dir did not pass validation. tomcat.relative.dir must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "apache-tomcat-6.0.20".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4526,7 +4708,7 @@
 						<condition>tomcat.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.src.url did not pass validation. tomcat.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/${tomcat.binaries.file}".</fail-message>
+				<fail-message>tomcat.src.url did not pass validation. tomcat.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/apache-tomcat-6.0.20.zip".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4609,7 +4791,7 @@
 						<condition>tomcat.ssl.keystore.location == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.ssl.keystore.location did not pass validation. tomcat.ssl.keystore.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "${security.dist.relative.dir}/ncicb-test-ssl.keystore".</fail-message>
+				<fail-message>tomcat.ssl.keystore.location did not pass validation. tomcat.ssl.keystore.location must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "/path/ncicb-test-ssl.keystore".</fail-message>
 			</rule>
 		</rules>
 	</property>
