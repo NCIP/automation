@@ -2367,7 +2367,7 @@
 						<condition>jboss.external.grid.secure.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.external.grid.secure.port did not pass validation. jboss.external.grid.secure.port must be empty or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>jboss.external.grid.secure.port did not pass validation. jboss.external.grid.secure.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2425,7 +2425,7 @@
 						<condition>jboss.external.http.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.external.http.port did not pass validation. jboss.external.http.port must be empty or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>jboss.external.http.port did not pass validation. jboss.external.http.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2483,7 +2483,7 @@
 						<condition>jboss.external.ssl.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.external.ssl.port did not pass validation. jboss.external.ssl.port must be empty or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>jboss.external.ssl.port did not pass validation. jboss.external.ssl.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4087,7 +4087,7 @@
 						<condition>tomcat.external.grid.secure.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.external.grid.secure.port did not pass validation. tomcat.external.grid.secure.port must be empty or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>tomcat.external.grid.secure.port did not pass validation. tomcat.external.grid.secure.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4145,7 +4145,7 @@
 						<condition>tomcat.external.http.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.external.http.port did not pass validation. tomcat.external.http.port must be empty or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>tomcat.external.http.port did not pass validation. tomcat.external.http.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4203,7 +4203,7 @@
 						<condition>tomcat.external.ssl.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.external.ssl.port did not pass validation. tomcat.external.ssl.port must be empty or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>tomcat.external.ssl.port did not pass validation. tomcat.external.ssl.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
