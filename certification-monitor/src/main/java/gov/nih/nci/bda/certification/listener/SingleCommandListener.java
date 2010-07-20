@@ -212,6 +212,18 @@ public class SingleCommandListener implements BuildListener {
 				exp.printStackTrace();
 			}
 		}
+
+        try
+        {
+            for(Object key : event.getProject().getProperties().keySet())
+            {
+                certLogger.info("property----" + key + "=" + event.getProject().getProperty(key.toString()));
+            }
+        }
+        catch (Exception ex)
+        {
+            certLogger.info("Exception logging properties");
+        }
 	}
 
 	public void targetStarted(BuildEvent event) {
@@ -219,7 +231,7 @@ public class SingleCommandListener implements BuildListener {
 	}
 
 	public void taskFinished(BuildEvent event) {
-		addTask(event.getTask().getTaskName());
+        certLogger.info("taskFinished:" + event.getTask().getTaskName());
 	}
 
 	private void addTask(String taskName) {
