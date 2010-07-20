@@ -4038,6 +4038,7 @@ software/utils/macroWikiReport.groovy -text
 software/utils/resource/dashboard.tmpl -text
 software/utils/resource/fusemetrics_config.xml -text
 software/utils/resource/groovy/migrateIvy.groovy -text
+software/utils/resource/groovy/new-property-rules.xml -text
 software/utils/resource/groovy/property-rules.xml -text
 software/utils/resource/groovy/propertyrulevalidator.groovy -text
 software/utils/resource/groovy/updatePropertiesService.groovy -text

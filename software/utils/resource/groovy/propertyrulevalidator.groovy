@@ -188,7 +188,12 @@ class propertyRuleValidator
 			splitArray[0]=splitArray[0].replaceAll("\\.", "")
 			splitArray[0]=splitArray[0].replaceAll("-", "")
 		}
-		return splitArray.join(" ");
+		if (splitArray.size() == 3 && splitArray[2] ==~ /\d+/)
+		{
+			splitArray[0]=splitArray[0] + ".toInteger()"
+			if (debug) println "Compare 2 is  numeric - " + splitArray.join(" ")	
+		}
+		return splitArray.join(" ")
 	}
 }
 def rulesFileLocation=new File(args[0]).getAbsoluteFile()
