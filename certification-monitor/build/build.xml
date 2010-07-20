@@ -317,8 +317,6 @@
 	</target>
 
 	<target name="build:remote-upgrade" depends="init">
-        <echo>chmod on dir="/tmp/caehr-esd-war-webapp"</echo>
-        <chmod dir="/tmp/caehr-esd-war-webapp" perm="777" failonerror="false" />
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="killProcessOnCertificationDir"/>
 		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="application.base.path"/>
 		<antfetch inheritall="false" dir="${exploded.dir.location}" target="${install.init.target}" return="jboss.binaries.relative.dir"/>
@@ -557,6 +555,8 @@
 	</target>
 
 	<target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
+
+        <fail message="this is optional for all projects at the moment." />
 	
 		<taskdef resource="selenium-ant.properties">
 		    <classpath>
@@ -574,6 +574,19 @@
 		
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkDeploymentShakeout"/>
 	</target>
+
+    <target name="xyz">
+        <waitfor timeoutproperty="timeout" maxwait="10" maxwaitunit="second">
+            <http url="${url}" /> 
+        </waitfor>
+        <echo>timeout=${timeout}</echo>
+        <if>
+            <equals arg1="${timeout}" arg2="true"/>
+            <then>
+                <fail message="${url} did not respond." />
+            </then>
+        </if>
+    </target>
 
 	<target name="test:seleniumrc:stop">
 		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="${user.home}\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
