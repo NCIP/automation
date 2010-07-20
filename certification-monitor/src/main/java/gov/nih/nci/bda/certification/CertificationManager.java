@@ -98,6 +98,12 @@ public class CertificationManager {
 
 			try {
 				project.executeTarget(targetLookup.getTargetName());
+
+                for(Object o:project.getProperties().keySet())
+                {
+                    certLogger.info("After target " + targetLookup.getTargetName() + " " + o.toString() + "=" + project.getProperty(o.toString()));
+                }
+
 			} catch (Exception e) {
 				certLogger.error("Exception occured while executing the target " + targetLookup.getTargetName()+ " ::::" + e.getMessage());
 			}

@@ -554,7 +554,7 @@
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkBdaEnabled"/>
 	</target>
 
-	<target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
+        <target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
 
         <fail message="this is optional for all projects at the moment." />
 	
