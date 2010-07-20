@@ -125,4 +125,12 @@
             <column name="CERT_DATE" type="TIMESTAMP" />
         </createTable>
     </changeSet>
+
+
+    <changeSet id="2010.07.20.17.18" author="bassetttj">
+        <addColumn tableName="target_lookup">
+            <column name="SAVE_PROPERTIES" type="VARCHAR(500)" />
+            <column name="USE_PROPERTIES" type="VARCHAR(500)" />
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
