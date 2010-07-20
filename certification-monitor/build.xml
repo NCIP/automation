@@ -127,11 +127,11 @@
 	</target>
 
 
-	<target name="run" depends="init,compile,package,deploy" description="Run the class to update Wiki">
+	<target name="run" depends="test,deploy" description="Run the class to update Wiki">
 
 	</target>
 	
-	<target name="compile"  description="Compile the build monitor source">
+	<target name="compile" depends="init"  description="Compile the build monitor source">
 		<javac srcdir="${source.dir}" destdir="${classes.dir}" classpathref="project.classpath"/>		
 	</target>
 
@@ -208,6 +208,9 @@
 			<replace path="/hibernate-configuration/session-factory/property[@name='connection.password']/text()" withtext="${database.password}"/>
 		</xmltask>
 	</target>
+
+    <target name="test" depends="compile,package">
+    </target>
 
 	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
 
