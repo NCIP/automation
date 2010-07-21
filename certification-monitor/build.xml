@@ -10,7 +10,7 @@
 	<property name="resource.dir" value="${software.dir}/src/main/resources" />
 	<property name="classes.dir" value="${software.dir}/classes" />
     <property name="test.source.dir" value="${source.dir}/test" />
-    <property name="test.classes.dir" value="${classes.dir}/test" />
+    <property name="test.classes.dir" value="${software.dir}/test-classes" />
 
     <property name="testoutput.dir" value="${basedir}/testresult" />
 
