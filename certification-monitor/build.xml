@@ -222,6 +222,8 @@
                 <include name="**/*.jar" />
             </fileset>
         </path>
+        <property name="xxx" refid="test.classpath"/>
+        <echo>classpath=${xxx}</echo>
 
         <junit printsummary="yes">
             <classpath refid="test.classpath"/>
