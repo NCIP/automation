@@ -184,4 +184,11 @@ public class CertificationManager {
 
 	}
 
+    public void addPropertyValue(String name, String value) {
+
+        if (name == null || name.trim().length() == 0)
+        {
+            throw new NullPointerException();
+        }
+    }
 }
