@@ -5,6 +5,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
 
+import java.util.Map;
+
 /**
  * CertificationManager Tester.
  *
@@ -88,4 +90,45 @@ public class CertificationManagerTest extends TestCase {
         assertNotNull(caught);
 
     }
+
+    public void testAddPropertyValueAddsAndRetrievesCorrectly() throws Exception {
+
+        CertificationManager target = new CertificationManager();
+        String key = "mykey";
+        String value = "myvalue";
+        target.addPropertyValue(key, value);
+        assertEquals(1, target.getPropertyValues().size());
+        String actual = target.getPropertyValues().get(key);
+        assertEquals(value, actual);
+
+    }
+
+    public void testPropertyValuesNotNull() {
+
+//        proves that propertyValues is not null, even though nothing has been added
+
+        CertificationManager target = new CertificationManager();
+        assertNotNull(target.getPropertyValues());
+
+    }
+
+    public void testSameKeyTwice() throws Exception {
+
+        Exception caught = null;
+        CertificationManager target = new CertificationManager();
+        String key = "mykey";
+        String value = "myvalue";
+        target.addPropertyValue(key, value);
+        try {
+            target.addPropertyValue(key, value);
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+
+    }
+
 }

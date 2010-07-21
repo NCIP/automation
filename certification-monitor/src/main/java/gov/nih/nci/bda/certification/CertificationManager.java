@@ -6,8 +6,7 @@ import gov.nih.nci.bda.certification.util.HibernateUtil;
 import gov.nih.nci.bda.certification.util.PropertyLoader;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -184,7 +183,7 @@ public class CertificationManager {
 
 	}
 
-    public void addPropertyValue(String name, String value) {
+    public void addPropertyValue(String name, String value) throws Exception {
 
         if (name == null || name.trim().length() == 0)
         {
@@ -195,5 +194,24 @@ public class CertificationManager {
         {
             throw new NullPointerException();
         }
+
+        if (this.getPropertyValues().containsKey(name))
+        {
+            throw new Exception("Duplicate key '" + name + "'");
+        }
+
+        this.getPropertyValues().put(name,value);
+    }
+
+    private Map<String,String> propertyValues ;
+
+    public Map<String,String> getPropertyValues() {
+
+        if (propertyValues == null)
+        {
+            propertyValues = new HashMap<String,String>();
+        }
+
+        return propertyValues;
     }
 }
