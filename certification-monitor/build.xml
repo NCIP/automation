@@ -226,7 +226,7 @@
         <junit printsummary="yes">
             <classpath refid="test.classpath"/>
             <batchtest todir="${testoutput.dir}">
-                <fileset dir="${classes.dir}">
+                <fileset dir="${classes.dir}/test">
                   <include name="**/*.class"/>
                 </fileset>
             </batchtest>
