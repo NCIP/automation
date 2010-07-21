@@ -38,14 +38,6 @@ public class TargetLookupTest extends TestCase {
         assertEquals(value,target.getSaveProperties());
     }
 
-    public void testUseProperties() {
-        String value = "xyz";
-        TargetLookup target = new TargetLookup();
-        target.setUseProperties(value);
-        assertEquals(value,target.getUseProperties());
-
-    }
-
     public void testSaveExpressionsReturnsSomething() {
         TargetLookup target = new TargetLookup();
         target.setSaveProperties("x,y");
@@ -68,4 +60,35 @@ public class TargetLookupTest extends TestCase {
         TargetLookup target = new TargetLookup();
         assertNotNull(target.getSaveProperties());
     }
+
+    public void testUseProperties() {
+            String value = "xyz";
+            TargetLookup target = new TargetLookup();
+            target.setUseProperties(value);
+            assertEquals(value,target.getUseProperties());
+        }
+
+
+        public void testUseExpressionsReturnsSomething() {
+            TargetLookup target = new TargetLookup();
+            target.setUseProperties("x,y");
+            String[] o = target.UseExpressions();
+            assertNotNull(o);
+        }
+
+        public void testUseExpressionsCountCorrect() {
+            TargetLookup target = new TargetLookup();
+            target.setUseProperties("x,y");
+            String[] o = target.UseExpressions();
+            assertEquals(2,o.length);
+        }
+        public void testUseExpressionsNullUsePropertiesNoException() {
+            TargetLookup target = new TargetLookup();
+            String[] o = target.UseExpressions();
+        }
+
+        public void testUsePropertiesDoesNotReturnNull() {
+            TargetLookup target = new TargetLookup();
+            assertNotNull(target.getUseProperties());
+        }
 }

@@ -12,6 +12,10 @@ private String isOptional;
     private String useProperties;
 
     public String getUseProperties() {
+        if (useProperties == null)
+        {
+            useProperties = "" ;
+        }
         return useProperties;
     }
 
@@ -66,4 +70,7 @@ public void setIsOptional(String isOptional) {
 	this.isOptional = isOptional;
 }
 
+    public String[] UseExpressions() {
+        return this.getUseProperties().split(",");
+    }
 }
