@@ -9,6 +9,9 @@
 	<property name="source.dir" value="${software.dir}/src/main/java" />
 	<property name="resource.dir" value="${software.dir}/src/main/resources" />
 	<property name="classes.dir" value="${software.dir}/classes" />
+    <property name="test.source.dir" value="${source.dir}/test" />
+    <property name="test.classes.dir" value="${classes.dir}/test" />
+
     <property name="testoutput.dir" value="${basedir}/testresult" />
 
 	<property name="build.dir" value="${software.dir}/build" />
@@ -214,6 +217,25 @@
 	</target>
 
     <target name="test" depends="compile,package">
+
+        <path id="project.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+        </path>
+
+        <javac srcdir="${test.source.dir}"
+               destdir="${test.classes.dir}"
+               classpathref="project.classpath">
+        </javac>
+
+
+        <jar destfile="${dist.dir}/tests.jar" basedir="${test.classes.dir}" update="true" />
+
+
         <path id="test.classpath">
             <fileset dir="${lib.dir}">
                 <include name="**/*.jar" />
@@ -222,7 +244,9 @@
                 <include name="**/*.jar" />
             </fileset>
         </path>
+
         <property name="xxx" refid="test.classpath"/>
+
         <echo>classpath=${xxx}</echo>
 
         <junit printsummary="yes">
