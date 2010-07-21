@@ -1,5 +1,7 @@
 package gov.nih.nci.bda.certification.domain;
 
+import java.util.ArrayList;
+
 public class TargetLookup {
 private int id;
 private String targetName;
@@ -18,7 +20,15 @@ private String isOptional;
     }
 
     public String getSaveProperties() {
+        if ( saveProperties == null )
+        {
+            saveProperties = "";
+        }
         return saveProperties;
+    }
+
+    public String[] SaveExpressions() {
+        return this.getSaveProperties().split(",");
     }
 
     public void setSaveProperties(String saveProperties) {

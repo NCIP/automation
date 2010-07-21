@@ -5,6 +5,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+
 /**
  * TargetLookup Tester.
  *
@@ -44,4 +46,26 @@ public class TargetLookupTest extends TestCase {
 
     }
 
+    public void testSaveExpressionsReturnsSomething() {
+        TargetLookup target = new TargetLookup();
+        target.setSaveProperties("x,y");
+        String[] o = target.SaveExpressions();
+        assertNotNull(o);
+    }
+
+    public void testSaveExpressionsCountCorrect() {
+        TargetLookup target = new TargetLookup();
+        target.setSaveProperties("x,y");
+        String[] o = target.SaveExpressions();
+        assertEquals(2,o.length);
+    }
+    public void testSaveExpressionsNullSavePropertiesNoException() {
+        TargetLookup target = new TargetLookup();
+        String[] o = target.SaveExpressions();
+    }
+
+    public void testSavePropertiesDoesNotReturnNull() {
+        TargetLookup target = new TargetLookup();
+        assertNotNull(target.getSaveProperties());
+    }
 }
