@@ -88,7 +88,7 @@
                         <!--driver="${database.driver}"-->
                         <!--classpathref="project.classpath" />-->
 
-        <echo>structure.xml</echo>
+        <echo>database.url=${database.url}</echo>
 
         <updateDatabase changelogfile="${sql.dist.dir}/structure.xml"
                         url="${database.url}"
@@ -96,8 +96,6 @@
                         password="${database.password}"
                         driver="${database.driver}"
                         classpathref="project.classpath" />
-
-        <echo>structure.xml</echo>
 
         <updateDatabase changelogfile="${sql.dist.dir}/dashboard_properties_changelog.xml"
                         url="${database.url}"
