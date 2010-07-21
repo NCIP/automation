@@ -7,6 +7,15 @@ private String mapName;
 private String isValue;
 private String isOptional;
     private String saveProperties;
+    private String useProperties;
+
+    public String getUseProperties() {
+        return useProperties;
+    }
+
+    public void setUseProperties(String useProperties) {
+        this.useProperties = useProperties;
+    }
 
     public String getSaveProperties() {
         return saveProperties;
