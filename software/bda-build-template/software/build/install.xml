@@ -1792,7 +1792,7 @@ $HeadURL$
 		<echo message="**** Begin Property Rule Validation"/>
 		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
-			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
+			<arg line="${bda-utils.dir}/resource/groovy/new-property-rules.xml"/>
 		</groovy>
 		<if>
 			<equals arg1="${property.rule.validator.failed}" arg2="true"/>
