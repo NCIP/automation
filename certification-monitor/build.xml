@@ -233,7 +233,7 @@
         </javac>
 
 
-        <jar destfile="${dist.dir}/tests.jar" basedir="${test.classes.dir}" update="true" />
+        <jar destfile="${dist.dir}/tests.jar" basedir="${classes.dir}" update="true" />
 
 
         <path id="test.classpath">
