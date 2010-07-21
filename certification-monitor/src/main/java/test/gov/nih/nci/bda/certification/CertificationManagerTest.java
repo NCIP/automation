@@ -58,4 +58,34 @@ public class CertificationManagerTest extends TestCase {
         assertNotNull(caught);
 
     }
+
+    public void testAddPropertyValueThrowExceptionOnNullValue() {
+        CertificationManager target = new CertificationManager();
+        Exception caught = null;
+
+        try {
+            target.addPropertyValue("propertyname", null);
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+    }
+
+    public void testAddPropertyValueThrowExceptionOnStringEmptyValue() {
+        CertificationManager target = new CertificationManager();
+        Exception caught = null;
+
+        try {
+            target.addPropertyValue("propertyname", null);
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+    }
 }

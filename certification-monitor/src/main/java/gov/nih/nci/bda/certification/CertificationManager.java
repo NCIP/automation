@@ -190,5 +190,10 @@ public class CertificationManager {
         {
             throw new NullPointerException();
         }
+
+        if (value == null || value.trim().length() == 0)
+        {
+            throw new NullPointerException();
+        }
     }
 }
