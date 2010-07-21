@@ -5,6 +5,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="resources:hibernate.cfg.xml" />
+          <unit-entry name="src:main:resources:hibernate.cfg.xml" />
         </datasource-map>
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/resources/hibernate.cfg.xml" />
       </configuration>
@@ -12,9 +13,10 @@
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../build" />
-    <content url="file://$MODULE_DIR$">
+    <content url="file://$MODULE_DIR$/../..">
       <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/../../target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

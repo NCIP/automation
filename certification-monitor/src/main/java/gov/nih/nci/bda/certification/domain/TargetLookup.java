@@ -6,8 +6,17 @@ private String targetName;
 private String mapName;
 private String isValue;
 private String isOptional;
+    private String saveProperties;
 
-public int getId() {
+    public String getSaveProperties() {
+        return saveProperties;
+    }
+
+    public void setSaveProperties(String saveProperties) {
+        this.saveProperties = saveProperties;
+    }
+
+    public int getId() {
 	return id;
 }
 public void setId(int id) {

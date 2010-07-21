@@ -10,5 +10,6 @@
          <property name="mapName" column="MAP_NAME"/>
          <property name="isValue" column="IS_VALUE"/>
          <property name="isOptional" column="IS_OPTIONAL"/>
+        <property name="saveProperties" column="SAVE_PROPERTIES" />
      </class>	
 </hibernate-mapping>
