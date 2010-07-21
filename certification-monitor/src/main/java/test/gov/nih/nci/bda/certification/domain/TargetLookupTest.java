@@ -32,8 +32,12 @@ public class TargetLookupTest extends TestCase {
     public void testSaveProperties() {
         String value = "xyz";
         TargetLookup target = new TargetLookup();
-        target.setSaveProperties(value);
-        assertEquals(value,target.getSaveProperties());
+        ClassLoader loader = TargetLookup.class.getClassLoader();
+        System.out.println(loader.getResource("gov/nih/nci/bda/certification/domain/TargetLookup.class"));
+        assertEquals("x", loader.getResource("gov/nih/nci/bda/certification/domain/TargetLookup.class").toString());
+//        target.setSaveProperties(value);
+//        TargetLookup.class.getCanonicalName()
+//        assertEquals(value,target.getSaveProperties());
     }
 
     
