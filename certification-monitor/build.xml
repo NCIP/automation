@@ -58,6 +58,7 @@
 		<mkdir dir="${dist.dir}" />
 		<mkdir dir="${tests.unit.classes.dir}" />
         <mkdir dir="${testoutput.dir}" />
+        <mkdir dir="${test.classes.dir}" />
 	</target>
 
 	<target name="clean" description="create table and populate data">
@@ -65,6 +66,7 @@
 		<delete dir="${target.dir}" />
 		<delete dir="${dist.dir}" />
         <delete dir="${testoutput.dir}" />
+        <delete dir="${test.classes.dir}" />
 	</target>
 
 	<target name="deploy:init" depends="deploy:clean" description="create table and populate data">
