@@ -80,13 +80,14 @@ while (my $line = <>)
 			print "\t\t\t</rule>\n";
 		}
 
-		if($prop =~ /\.url$/ && $prop !~ /database/ && $prop != "application.url")
+		if($prop =~ /\.url$/ && $prop !~ /database/ && $prop ne "application.url" && $prop ne "ldap.url")
 		{
+			#warn "$prop -> url rule added\n";
 			print "\t\t\t<rule>\n";
 			print "\t\t\t\t<name>${prop}-value</name>\n";
 			print "\t\t\t\t<description>Checks ${prop} has proper value.</description>\n";
 			print "\t\t\t\t<conditions>\n";
-			print "\t\t\t\t\t<condition>$prop =~ /^http.*://.*\.nci\.nih\.gov.*/</condition>\n";
+			print "\t\t\t\t\t<condition>$prop ==~ /^http.*:\/\/.*\.nci\.nih\.gov.*/</condition>\n";
 			print "\t\t\t\t</conditions>\n";
 			print "\t\t\t\t<fail-message>${prop} did not pass validation. ${prop} must be http(s)://*.nci.nih.gov/*. Sample valid value - \"${default}\".</fail-message>\n";
 			print "\t\t\t</rule>\n";

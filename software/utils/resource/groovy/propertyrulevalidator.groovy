@@ -9,6 +9,8 @@ class propertyRuleValidator
 	def failureMessages=""
 	def debug=false
 	def rulesFileLocation
+	def ruleRefererncedPropList =[]
+	def processingProperty
 	//def log4jPattern="%d{ABSOLUTE} %-5p [%c{1}] %m%n"
 
 	//Logger log
@@ -43,6 +45,7 @@ class propertyRuleValidator
 		{ prop->
 			if(debug) println "property[${o}] -> " + prop.@name
 			def propertyName=prop.@name
+			this.processingProperty=propertyName
 			def i=0
 			def skipProp=prop.@'skip-property'
 			if (debug) println "skip-prop - (${skipProp}) ant - (${antProps[skipProp]})"
@@ -156,6 +159,14 @@ class propertyRuleValidator
 			def keyNameConv = antStripDot(key)
 			binding.setVariable(keyNameConv, antProps[key]);
 		}
+		ruleRefererncedPropList.each
+		{ key ->
+			//if(debug) println "binding ref prop - " + key
+			def keyNameConv = antStripDot(key)
+			binding.setVariable(keyNameConv, "");
+		}
+			
+
 		def propNameConv = antStripDot(propertyName)
 		binding.setVariable(propNameConv, antProps[propertyName]);
 		
@@ -178,20 +189,28 @@ class propertyRuleValidator
 	private antStripDot(String convStr)
 	{
 		def splitArray=convStr.split("\\s+")
-		if (splitArray[0].equals("!"))
+		// This conditional captures all the properties that are referenced but not defined in antProps, must be done before dots and such are stripped from splitArray[0]
+		if (splitArray[0] != processingProperty && ! ruleRefererncedPropList.contains(splitArray[0]) && ! antProps[splitArray[0]])
 		{
-			splitArray[1]=splitArray[1].replaceAll("\\.", "")
-			splitArray[1]=splitArray[1].replaceAll("-", "")
+			ruleRefererncedPropList.add(splitArray[0]);
 		}
-		else
-		{
-			splitArray[0]=splitArray[0].replaceAll("\\.", "")
-			splitArray[0]=splitArray[0].replaceAll("-", "")
-		}
+
+		// Strip dots and dashs from left hand side of equation
+		splitArray[0]=splitArray[0].replaceAll("\\.", "")
+		splitArray[0]=splitArray[0].replaceAll("-", "")
 		if (splitArray.size() == 3 && splitArray[2] ==~ /\d+/)
 		{
 			splitArray[0]=splitArray[0] + ".toInteger()"
 			if (debug) println "Compare 2 is  numeric - " + splitArray.join(" ")	
+		}
+
+		// If there is a property on the right hand side of the equation strip dots and dashes
+		if (splitArray.size() == 3 && antProps[splitArray[2]] != null)
+		{
+			if (debug) println "Referenced prop on right (before)-> " + splitArray[2] + " " + antProps[splitArray[2]]
+			splitArray[2]=splitArray[2].replaceAll("\\.", "")
+			splitArray[2]=splitArray[2].replaceAll("-", "")
+			if (debug) println "Referenced prop on right (after)-> " + splitArray[2]  + " " + antProps[splitArray[2]]
 		}
 		return splitArray.join(" ")
 	}
