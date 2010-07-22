@@ -1160,6 +1160,34 @@
 				</conditions>
 				<fail-message>database.schema did not pass validation. With database.type of mysql database.schema must be same as database.name".</fail-message>
 			</rule>
+			<rule>
+				<name>database.schema-value-oracle</name>
+				<description>Checks database.schema has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "oracle" </condition>
+							<condition>database.schema == database.user </condition>
+						</and>
+						<condition>database.type != "oracle" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.schema did not pass validation. With database.type of oracle database.schema must be same as database.user".</fail-message>
+			</rule>
+			<rule>
+				<name>database.schema-value-postgres</name>
+				<description>Checks database.schema has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "postgres" </condition>
+							<condition>database.schema == "public" </condition>
+						</and>
+						<condition>database.type != "postgres" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.schema did not pass validation. With database.type of postgres database.schema must be same as database.name".</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<property name="database.server" name-pattern="database.server" description="" skip-property="exclude.validate.database">
@@ -1202,6 +1230,21 @@
 				</conditions>
 				<fail-message>database.system.password did not pass validation. database.system.password must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "mysql".</fail-message>
 			</rule>
+			<rule>
+				<name>database.system.password-value</name>
+				<description>Checks database.system.password is the valid syntax. </description>
+				<conditions>
+					<and>
+						<condition negate="true">database.system.password ==~ /.*\$.*/</condition>
+						<condition negate="true">database.system.password ==~ /.*&amp;.*/</condition>
+						<condition negate="true">database.system.password ==~ /.*&lt;.*/</condition>
+						<condition negate="true">database.system.password ==~ /.*&gt;.*/</condition>
+						<condition negate="true">database.system.password ==~ /.*&quot;.*/</condition>
+						<condition negate="true">database.system.password ==~ /.*&apos;.*/</condition>
+					</and>
+				</conditions>
+				<fail-message>database.system.password did not pass validation. It cannot contain xml special characters, check this list for link http://www.hdfgroup.org/HDF5/XML/xml_escape_chars.htm.</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<property name="database.system.url" name-pattern="database.system.url" description="" skip-property="exclude.validate.database">
@@ -1221,6 +1264,48 @@
 					</or>
 				</conditions>
 				<fail-message>database.system.url did not pass validation. database.system.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "jdbc:mysql://localhost:3306/".</fail-message>
+			</rule>
+			<rule>
+				<name>database.system.url-value-mysql</name>
+				<description>Checks database.system.url has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "mysql" </condition>
+							<condition>database.system.url ==~ /jdbc:mysql.*/ </condition>
+						</and>
+						<condition>database.type != "mysql" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.system.url did not pass validation. With database.type of mysql database.system.url must begin with "jdbc:mysql".</fail-message>
+			</rule>
+			<rule>
+				<name>database.system.url-value-oracle</name>
+				<description>Checks database.system.url has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "oracle" </condition>
+							<condition>database.system.url ==~ /jdbc:oracle.*/ </condition>
+						</and>
+						<condition>database.type != "oracle" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.system.url did not pass validation. With database.type of oracle database.system.url must begin with "jdbc:oracle".</fail-message>
+			</rule>
+			<rule>
+				<name>database.system.url-value-postgres</name>
+				<description>Checks database.system.url has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "postgres" </condition>
+							<condition>database.system.url ==~ /jdbc:postgres.*/ </condition>
+						</and>
+						<condition>database.type != "postgres" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.system.url did not pass validation. With database.type of postgres database.system.url must begin with "jdbc:postgres".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1243,6 +1328,19 @@
 				</conditions>
 				<fail-message>database.system.user did not pass validation. database.system.user must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "mysql".</fail-message>
 			</rule>
+			<rule>
+				<name>database.system.user-relationship</name>
+				<description>Checks database.system.user has proper value.</description>
+				<conditions>
+					<or>
+						<condition>database.system.user != database.user</condition>
+						<condition>database.system.user == "" </condition>
+						<condition>database.system.user == null </condition>
+					</or>
+				</conditions>
+				<fail-message>database.system.user did not pass validation. If database.system.user must not be the same as database.user. </fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="database.type" name-pattern="database.type" description="" skip-property="exclude.validate.database">
