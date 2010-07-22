@@ -38,13 +38,21 @@
 	</target>
 	<target name="test:jdk15" depends="test:init" if="using.jdk15">
 		<mkdir dir="${antunit.xml.report.dir}"/>
-		<antunit failOnError="false" errorproperty="antunit-failure">
-			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
-			<plainlistener logLevel="${screen.log.level}"/>
-			<fileset dir="${basedir}">
-				<include name="test-suite*-jdk15.xml"/>
-			</fileset>
-		</antunit>
+		<for param="file">
+			<path>
+				<fileset dir="${basedir}">
+					<include name="test-suite*-jdk15.xml"/>
+				</fileset>
+			</path>
+			<sequential>
+				<echo message="Running @{file}"/>
+				<antunit failOnError="false" errorproperty="antunit-failure">
+					<file file="@{file}"/>
+					<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
+					<plainlistener logLevel="${screen.log.level}"/>
+				</antunit>
+			</sequential>
+		</for>
 	</target>
 	<target name="test:jdk16" depends="test:init" if="using.jdk16">
 		<mkdir dir="${antunit.xml.report.dir}"/>
