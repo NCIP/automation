@@ -69,21 +69,14 @@ while (my $line = <>)
 			print "\t\t\t\t\t<or>\n";
 			print "\t\t\t\t\t\t<and>\n";
 			print "\t\t\t\t\t\t\t<condition>$prop ==~ /\\d+/</condition>\n";
-			print "\t\t\t\t\t\t\t<condition>$prop &gt; 0</condition>\n";
-			print "\t\t\t\t\t\t\t<condition>$prop &lt; 65535</condition>\n";
+			print "\t\t\t\t\t\t\t<condition>$prop &gt;= 0</condition>\n";
+			print "\t\t\t\t\t\t\t<condition>$prop &lt;= 65535</condition>\n";
 			print "\t\t\t\t\t\t</and>\n";
-			if ($prop =~ /external/)
-			{
-				print "\t\t\t\t\t\t<condition>$prop == null </condition>\n";
-				print "\t\t\t\t\t\t<condition>$prop == \"\" </condition>\n";
-			}
-			else
-			{
-				print "\t\t\t\t\t\t<condition>$prop == 0 </condition>\n";
-			}
+			print "\t\t\t\t\t\t<condition>$prop == null </condition>\n";
+			print "\t\t\t\t\t\t<condition>$prop == \"\" </condition>\n";
 			print "\t\t\t\t\t</or>\n";
 			print "\t\t\t\t</conditions>\n";
-			print "\t\t\t\t<fail-message>${prop} did not pass validation. ${prop} must be 0 or between 1 and 65535. Sample valid value - \"${default}\".</fail-message>\n";
+			print "\t\t\t\t<fail-message>${prop} did not pass validation. ${prop} must be empty or between 0 and 65535. Sample valid value - \"${default}\".</fail-message>\n";
 			print "\t\t\t</rule>\n";
 		}
 

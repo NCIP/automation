@@ -781,13 +781,14 @@
 					<or>
 						<and>
 							<condition>database.port ==~ /\d+/</condition>
-							<condition>database.port &gt; 0</condition>
-							<condition>database.port &lt; 65535</condition>
+							<condition>database.port &gt;= 0</condition>
+							<condition>database.port &lt;= 65535</condition>
 						</and>
-						<condition>database.port == 0 </condition>
+						<condition>database.port == null </condition>
+						<condition>database.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>database.port did not pass validation. database.port must be 0 or between 1 and 65535. Sample valid value - "3306".</fail-message>
+				<fail-message>database.port did not pass validation. database.port must be empty or between 0 and 65535. Sample valid value - "3306".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2429,13 +2430,14 @@
 					<or>
 						<and>
 							<condition>jboss.cobraorb.port ==~ /\d+/</condition>
-							<condition>jboss.cobraorb.port &gt; 0</condition>
-							<condition>jboss.cobraorb.port &lt; 65535</condition>
+							<condition>jboss.cobraorb.port &gt;= 0</condition>
+							<condition>jboss.cobraorb.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.cobraorb.port == 0 </condition>
+						<condition>jboss.cobraorb.port == null </condition>
+						<condition>jboss.cobraorb.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.cobraorb.port did not pass validation. jboss.cobraorb.port must be 0 or between 1 and 65535. Sample valid value - "30350".</fail-message>
+				<fail-message>jboss.cobraorb.port did not pass validation. jboss.cobraorb.port must be empty or between 0 and 65535. Sample valid value - "30350".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2505,13 +2507,14 @@
 					<or>
 						<and>
 							<condition>jboss.ejbinvoker.port ==~ /\d+/</condition>
-							<condition>jboss.ejbinvoker.port &gt; 0</condition>
-							<condition>jboss.ejbinvoker.port &lt; 65535</condition>
+							<condition>jboss.ejbinvoker.port &gt;= 0</condition>
+							<condition>jboss.ejbinvoker.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.ejbinvoker.port == 0 </condition>
+						<condition>jboss.ejbinvoker.port == null </condition>
+						<condition>jboss.ejbinvoker.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.ejbinvoker.port did not pass validation. jboss.ejbinvoker.port must be 0 or between 1 and 65535. Sample valid value - "30150".</fail-message>
+				<fail-message>jboss.ejbinvoker.port did not pass validation. jboss.ejbinvoker.port must be empty or between 0 and 65535. Sample valid value - "30150".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2562,14 +2565,14 @@
 					<or>
 						<and>
 							<condition>jboss.external.grid.secure.port ==~ /\d+/</condition>
-							<condition>jboss.external.grid.secure.port &gt; 0</condition>
-							<condition>jboss.external.grid.secure.port &lt; 65535</condition>
+							<condition>jboss.external.grid.secure.port &gt;= 0</condition>
+							<condition>jboss.external.grid.secure.port &lt;= 65535</condition>
 						</and>
 						<condition>jboss.external.grid.secure.port == null </condition>
 						<condition>jboss.external.grid.secure.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.external.grid.secure.port did not pass validation. jboss.external.grid.secure.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>jboss.external.grid.secure.port did not pass validation. jboss.external.grid.secure.port must be empty or between 0 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2620,14 +2623,14 @@
 					<or>
 						<and>
 							<condition>jboss.external.http.port ==~ /\d+/</condition>
-							<condition>jboss.external.http.port &gt; 0</condition>
-							<condition>jboss.external.http.port &lt; 65535</condition>
+							<condition>jboss.external.http.port &gt;= 0</condition>
+							<condition>jboss.external.http.port &lt;= 65535</condition>
 						</and>
 						<condition>jboss.external.http.port == null </condition>
 						<condition>jboss.external.http.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.external.http.port did not pass validation. jboss.external.http.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>jboss.external.http.port did not pass validation. jboss.external.http.port must be empty or between 0 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2678,14 +2681,14 @@
 					<or>
 						<and>
 							<condition>jboss.external.ssl.port ==~ /\d+/</condition>
-							<condition>jboss.external.ssl.port &gt; 0</condition>
-							<condition>jboss.external.ssl.port &lt; 65535</condition>
+							<condition>jboss.external.ssl.port &gt;= 0</condition>
+							<condition>jboss.external.ssl.port &lt;= 65535</condition>
 						</and>
 						<condition>jboss.external.ssl.port == null </condition>
 						<condition>jboss.external.ssl.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.external.ssl.port did not pass validation. jboss.external.ssl.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>jboss.external.ssl.port did not pass validation. jboss.external.ssl.port must be empty or between 0 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2776,13 +2779,14 @@
 					<or>
 						<and>
 							<condition>jboss.grid.secure.port ==~ /\d+/</condition>
-							<condition>jboss.grid.secure.port &gt; 0</condition>
-							<condition>jboss.grid.secure.port &lt; 65535</condition>
+							<condition>jboss.grid.secure.port &gt;= 0</condition>
+							<condition>jboss.grid.secure.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.grid.secure.port == 0 </condition>
+						<condition>jboss.grid.secure.port == null </condition>
+						<condition>jboss.grid.secure.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.grid.secure.port did not pass validation. jboss.grid.secure.port must be 0 or between 1 and 65535. Sample valid value - "30500".</fail-message>
+				<fail-message>jboss.grid.secure.port did not pass validation. jboss.grid.secure.port must be empty or between 0 and 65535. Sample valid value - "30500".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2812,13 +2816,14 @@
 					<or>
 						<and>
 							<condition>jboss.hajndi.auto.port ==~ /\d+/</condition>
-							<condition>jboss.hajndi.auto.port &gt; 0</condition>
-							<condition>jboss.hajndi.auto.port &lt; 65535</condition>
+							<condition>jboss.hajndi.auto.port &gt;= 0</condition>
+							<condition>jboss.hajndi.auto.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.hajndi.auto.port == 0 </condition>
+						<condition>jboss.hajndi.auto.port == null </condition>
+						<condition>jboss.hajndi.auto.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.hajndi.auto.port did not pass validation. jboss.hajndi.auto.port must be 0 or between 1 and 65535. Sample valid value - "30370".</fail-message>
+				<fail-message>jboss.hajndi.auto.port did not pass validation. jboss.hajndi.auto.port must be empty or between 0 and 65535. Sample valid value - "30370".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2848,13 +2853,14 @@
 					<or>
 						<and>
 							<condition>jboss.hajndi.port ==~ /\d+/</condition>
-							<condition>jboss.hajndi.port &gt; 0</condition>
-							<condition>jboss.hajndi.port &lt; 65535</condition>
+							<condition>jboss.hajndi.port &gt;= 0</condition>
+							<condition>jboss.hajndi.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.hajndi.port == 0 </condition>
+						<condition>jboss.hajndi.port == null </condition>
+						<condition>jboss.hajndi.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.hajndi.port did not pass validation. jboss.hajndi.port must be 0 or between 1 and 65535. Sample valid value - "30160".</fail-message>
+				<fail-message>jboss.hajndi.port did not pass validation. jboss.hajndi.port must be empty or between 0 and 65535. Sample valid value - "30160".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2884,13 +2890,14 @@
 					<or>
 						<and>
 							<condition>jboss.hajrmi.port ==~ /\d+/</condition>
-							<condition>jboss.hajrmi.port &gt; 0</condition>
-							<condition>jboss.hajrmi.port &lt; 65535</condition>
+							<condition>jboss.hajrmi.port &gt;= 0</condition>
+							<condition>jboss.hajrmi.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.hajrmi.port == 0 </condition>
+						<condition>jboss.hajrmi.port == null </condition>
+						<condition>jboss.hajrmi.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.hajrmi.port did not pass validation. jboss.hajrmi.port must be 0 or between 1 and 65535. Sample valid value - "30260".</fail-message>
+				<fail-message>jboss.hajrmi.port did not pass validation. jboss.hajrmi.port must be empty or between 0 and 65535. Sample valid value - "30260".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2962,13 +2969,14 @@
 					<or>
 						<and>
 							<condition>jboss.jms2.netty.port ==~ /\d+/</condition>
-							<condition>jboss.jms2.netty.port &gt; 0</condition>
-							<condition>jboss.jms2.netty.port &lt; 65535</condition>
+							<condition>jboss.jms2.netty.port &gt;= 0</condition>
+							<condition>jboss.jms2.netty.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.jms2.netty.port == 0 </condition>
+						<condition>jboss.jms2.netty.port == null </condition>
+						<condition>jboss.jms2.netty.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.jms2.netty.port did not pass validation. jboss.jms2.netty.port must be 0 or between 1 and 65535. Sample valid value - "30390".</fail-message>
+				<fail-message>jboss.jms2.netty.port did not pass validation. jboss.jms2.netty.port must be empty or between 0 and 65535. Sample valid value - "30390".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2998,13 +3006,14 @@
 					<or>
 						<and>
 							<condition>jboss.jms2.netty-ssl.port ==~ /\d+/</condition>
-							<condition>jboss.jms2.netty-ssl.port &gt; 0</condition>
-							<condition>jboss.jms2.netty-ssl.port &lt; 65535</condition>
+							<condition>jboss.jms2.netty-ssl.port &gt;= 0</condition>
+							<condition>jboss.jms2.netty-ssl.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.jms2.netty-ssl.port == 0 </condition>
+						<condition>jboss.jms2.netty-ssl.port == null </condition>
+						<condition>jboss.jms2.netty-ssl.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.jms2.netty-ssl.port did not pass validation. jboss.jms2.netty-ssl.port must be 0 or between 1 and 65535. Sample valid value - "30400".</fail-message>
+				<fail-message>jboss.jms2.netty-ssl.port did not pass validation. jboss.jms2.netty-ssl.port must be empty or between 0 and 65535. Sample valid value - "30400".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3034,13 +3043,14 @@
 					<or>
 						<and>
 							<condition>jboss.jms.port ==~ /\d+/</condition>
-							<condition>jboss.jms.port &gt; 0</condition>
-							<condition>jboss.jms.port &lt; 65535</condition>
+							<condition>jboss.jms.port &gt;= 0</condition>
+							<condition>jboss.jms.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.jms.port == 0 </condition>
+						<condition>jboss.jms.port == null </condition>
+						<condition>jboss.jms.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.jms.port did not pass validation. jboss.jms.port must be 0 or between 1 and 65535. Sample valid value - "30170".</fail-message>
+				<fail-message>jboss.jms.port did not pass validation. jboss.jms.port must be empty or between 0 and 65535. Sample valid value - "30170".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3070,13 +3080,14 @@
 					<or>
 						<and>
 							<condition>jboss.jmx-rmi.port ==~ /\d+/</condition>
-							<condition>jboss.jmx-rmi.port &gt; 0</condition>
-							<condition>jboss.jmx-rmi.port &lt; 65535</condition>
+							<condition>jboss.jmx-rmi.port &gt;= 0</condition>
+							<condition>jboss.jmx-rmi.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.jmx-rmi.port == 0 </condition>
+						<condition>jboss.jmx-rmi.port == null </condition>
+						<condition>jboss.jmx-rmi.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.jmx-rmi.port did not pass validation. jboss.jmx-rmi.port must be 0 or between 1 and 65535. Sample valid value - "30290".</fail-message>
+				<fail-message>jboss.jmx-rmi.port did not pass validation. jboss.jmx-rmi.port must be empty or between 0 and 65535. Sample valid value - "30290".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3106,13 +3117,14 @@
 					<or>
 						<and>
 							<condition>jboss.messaging.port ==~ /\d+/</condition>
-							<condition>jboss.messaging.port &gt; 0</condition>
-							<condition>jboss.messaging.port &lt; 65535</condition>
+							<condition>jboss.messaging.port &gt;= 0</condition>
+							<condition>jboss.messaging.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.messaging.port == 0 </condition>
+						<condition>jboss.messaging.port == null </condition>
+						<condition>jboss.messaging.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.messaging.port did not pass validation. jboss.messaging.port must be 0 or between 1 and 65535. Sample valid value - "30330".</fail-message>
+				<fail-message>jboss.messaging.port did not pass validation. jboss.messaging.port must be empty or between 0 and 65535. Sample valid value - "30330".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3163,13 +3175,14 @@
 					<or>
 						<and>
 							<condition>jboss.pooledha.port ==~ /\d+/</condition>
-							<condition>jboss.pooledha.port &gt; 0</condition>
-							<condition>jboss.pooledha.port &lt; 65535</condition>
+							<condition>jboss.pooledha.port &gt;= 0</condition>
+							<condition>jboss.pooledha.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.pooledha.port == 0 </condition>
+						<condition>jboss.pooledha.port == null </condition>
+						<condition>jboss.pooledha.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.pooledha.port did not pass validation. jboss.pooledha.port must be 0 or between 1 and 65535. Sample valid value - "30270".</fail-message>
+				<fail-message>jboss.pooledha.port did not pass validation. jboss.pooledha.port must be empty or between 0 and 65535. Sample valid value - "30270".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3199,13 +3212,14 @@
 					<or>
 						<and>
 							<condition>jboss.remoting.port ==~ /\d+/</condition>
-							<condition>jboss.remoting.port &gt; 0</condition>
-							<condition>jboss.remoting.port &lt; 65535</condition>
+							<condition>jboss.remoting.port &gt;= 0</condition>
+							<condition>jboss.remoting.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.remoting.port == 0 </condition>
+						<condition>jboss.remoting.port == null </condition>
+						<condition>jboss.remoting.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.remoting.port did not pass validation. jboss.remoting.port must be 0 or between 1 and 65535. Sample valid value - "30320".</fail-message>
+				<fail-message>jboss.remoting.port did not pass validation. jboss.remoting.port must be empty or between 0 and 65535. Sample valid value - "30320".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3235,13 +3249,14 @@
 					<or>
 						<and>
 							<condition>jboss.server.bind.port ==~ /\d+/</condition>
-							<condition>jboss.server.bind.port &gt; 0</condition>
-							<condition>jboss.server.bind.port &lt; 65535</condition>
+							<condition>jboss.server.bind.port &gt;= 0</condition>
+							<condition>jboss.server.bind.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.server.bind.port == 0 </condition>
+						<condition>jboss.server.bind.port == null </condition>
+						<condition>jboss.server.bind.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.server.bind.port did not pass validation. jboss.server.bind.port must be 0 or between 1 and 65535. Sample valid value - "0".</fail-message>
+				<fail-message>jboss.server.bind.port did not pass validation. jboss.server.bind.port must be empty or between 0 and 65535. Sample valid value - "0".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3292,13 +3307,14 @@
 					<or>
 						<and>
 							<condition>jboss.server.jndi.port ==~ /\d+/</condition>
-							<condition>jboss.server.jndi.port &gt; 0</condition>
-							<condition>jboss.server.jndi.port &lt; 65535</condition>
+							<condition>jboss.server.jndi.port &gt;= 0</condition>
+							<condition>jboss.server.jndi.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.server.jndi.port == 0 </condition>
+						<condition>jboss.server.jndi.port == null </condition>
+						<condition>jboss.server.jndi.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.server.jndi.port did not pass validation. jboss.server.jndi.port must be 0 or between 1 and 65535. Sample valid value - "30200".</fail-message>
+				<fail-message>jboss.server.jndi.port did not pass validation. jboss.server.jndi.port must be empty or between 0 and 65535. Sample valid value - "30200".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3349,13 +3365,14 @@
 					<or>
 						<and>
 							<condition>jboss.server.port ==~ /\d+/</condition>
-							<condition>jboss.server.port &gt; 0</condition>
-							<condition>jboss.server.port &lt; 65535</condition>
+							<condition>jboss.server.port &gt;= 0</condition>
+							<condition>jboss.server.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.server.port == 0 </condition>
+						<condition>jboss.server.port == null </condition>
+						<condition>jboss.server.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.server.port did not pass validation. jboss.server.port must be 0 or between 1 and 65535. Sample valid value - "30210".</fail-message>
+				<fail-message>jboss.server.port did not pass validation. jboss.server.port must be empty or between 0 and 65535. Sample valid value - "30210".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3406,13 +3423,14 @@
 					<or>
 						<and>
 							<condition>jboss.server.rmi.port ==~ /\d+/</condition>
-							<condition>jboss.server.rmi.port &gt; 0</condition>
-							<condition>jboss.server.rmi.port &lt; 65535</condition>
+							<condition>jboss.server.rmi.port &gt;= 0</condition>
+							<condition>jboss.server.rmi.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.server.rmi.port == 0 </condition>
+						<condition>jboss.server.rmi.port == null </condition>
+						<condition>jboss.server.rmi.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.server.rmi.port did not pass validation. jboss.server.rmi.port must be 0 or between 1 and 65535. Sample valid value - "30230".</fail-message>
+				<fail-message>jboss.server.rmi.port did not pass validation. jboss.server.rmi.port must be empty or between 0 and 65535. Sample valid value - "30230".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3442,13 +3460,14 @@
 					<or>
 						<and>
 							<condition>jboss.service.rmiobject.port ==~ /\d+/</condition>
-							<condition>jboss.service.rmiobject.port &gt; 0</condition>
-							<condition>jboss.service.rmiobject.port &lt; 65535</condition>
+							<condition>jboss.service.rmiobject.port &gt;= 0</condition>
+							<condition>jboss.service.rmiobject.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.service.rmiobject.port == 0 </condition>
+						<condition>jboss.service.rmiobject.port == null </condition>
+						<condition>jboss.service.rmiobject.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.service.rmiobject.port did not pass validation. jboss.service.rmiobject.port must be 0 or between 1 and 65535. Sample valid value - "30240".</fail-message>
+				<fail-message>jboss.service.rmiobject.port did not pass validation. jboss.service.rmiobject.port must be empty or between 0 and 65535. Sample valid value - "30240".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3478,13 +3497,14 @@
 					<or>
 						<and>
 							<condition>jboss.snmp.port ==~ /\d+/</condition>
-							<condition>jboss.snmp.port &gt; 0</condition>
-							<condition>jboss.snmp.port &lt; 65535</condition>
+							<condition>jboss.snmp.port &gt;= 0</condition>
+							<condition>jboss.snmp.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.snmp.port == 0 </condition>
+						<condition>jboss.snmp.port == null </condition>
+						<condition>jboss.snmp.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.snmp.port did not pass validation. jboss.snmp.port must be 0 or between 1 and 65535. Sample valid value - "30310".</fail-message>
+				<fail-message>jboss.snmp.port did not pass validation. jboss.snmp.port must be empty or between 0 and 65535. Sample valid value - "30310".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3514,13 +3534,14 @@
 					<or>
 						<and>
 							<condition>jboss.snmp-trapd.port ==~ /\d+/</condition>
-							<condition>jboss.snmp-trapd.port &gt; 0</condition>
-							<condition>jboss.snmp-trapd.port &lt; 65535</condition>
+							<condition>jboss.snmp-trapd.port &gt;= 0</condition>
+							<condition>jboss.snmp-trapd.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.snmp-trapd.port == 0 </condition>
+						<condition>jboss.snmp-trapd.port == null </condition>
+						<condition>jboss.snmp-trapd.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.snmp-trapd.port did not pass validation. jboss.snmp-trapd.port must be 0 or between 1 and 65535. Sample valid value - "30300".</fail-message>
+				<fail-message>jboss.snmp-trapd.port did not pass validation. jboss.snmp-trapd.port must be empty or between 0 and 65535. Sample valid value - "30300".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3674,13 +3695,14 @@
 					<or>
 						<and>
 							<condition>jboss.ssl.port ==~ /\d+/</condition>
-							<condition>jboss.ssl.port &gt; 0</condition>
-							<condition>jboss.ssl.port &lt; 65535</condition>
+							<condition>jboss.ssl.port &gt;= 0</condition>
+							<condition>jboss.ssl.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.ssl.port == 0 </condition>
+						<condition>jboss.ssl.port == null </condition>
+						<condition>jboss.ssl.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.ssl.port did not pass validation. jboss.ssl.port must be 0 or between 1 and 65535. Sample valid value - "30380".</fail-message>
+				<fail-message>jboss.ssl.port did not pass validation. jboss.ssl.port must be empty or between 0 and 65535. Sample valid value - "30380".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3710,13 +3732,14 @@
 					<or>
 						<and>
 							<condition>jboss.transaction.processid.port ==~ /\d+/</condition>
-							<condition>jboss.transaction.processid.port &gt; 0</condition>
-							<condition>jboss.transaction.processid.port &lt; 65535</condition>
+							<condition>jboss.transaction.processid.port &gt;= 0</condition>
+							<condition>jboss.transaction.processid.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.transaction.processid.port == 0 </condition>
+						<condition>jboss.transaction.processid.port == null </condition>
+						<condition>jboss.transaction.processid.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.transaction.processid.port did not pass validation. jboss.transaction.processid.port must be 0 or between 1 and 65535. Sample valid value - "30430".</fail-message>
+				<fail-message>jboss.transaction.processid.port did not pass validation. jboss.transaction.processid.port must be empty or between 0 and 65535. Sample valid value - "30430".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3746,13 +3769,14 @@
 					<or>
 						<and>
 							<condition>jboss.transaction.recovery.port ==~ /\d+/</condition>
-							<condition>jboss.transaction.recovery.port &gt; 0</condition>
-							<condition>jboss.transaction.recovery.port &lt; 65535</condition>
+							<condition>jboss.transaction.recovery.port &gt;= 0</condition>
+							<condition>jboss.transaction.recovery.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.transaction.recovery.port == 0 </condition>
+						<condition>jboss.transaction.recovery.port == null </condition>
+						<condition>jboss.transaction.recovery.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.transaction.recovery.port did not pass validation. jboss.transaction.recovery.port must be 0 or between 1 and 65535. Sample valid value - "30410".</fail-message>
+				<fail-message>jboss.transaction.recovery.port did not pass validation. jboss.transaction.recovery.port must be empty or between 0 and 65535. Sample valid value - "30410".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3782,13 +3806,14 @@
 					<or>
 						<and>
 							<condition>jboss.transaction.status.port ==~ /\d+/</condition>
-							<condition>jboss.transaction.status.port &gt; 0</condition>
-							<condition>jboss.transaction.status.port &lt; 65535</condition>
+							<condition>jboss.transaction.status.port &gt;= 0</condition>
+							<condition>jboss.transaction.status.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.transaction.status.port == 0 </condition>
+						<condition>jboss.transaction.status.port == null </condition>
+						<condition>jboss.transaction.status.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.transaction.status.port did not pass validation. jboss.transaction.status.port must be 0 or between 1 and 65535. Sample valid value - "30420".</fail-message>
+				<fail-message>jboss.transaction.status.port did not pass validation. jboss.transaction.status.port must be empty or between 0 and 65535. Sample valid value - "30420".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3818,13 +3843,14 @@
 					<or>
 						<and>
 							<condition>jboss.unifiedinvoker.port ==~ /\d+/</condition>
-							<condition>jboss.unifiedinvoker.port &gt; 0</condition>
-							<condition>jboss.unifiedinvoker.port &lt; 65535</condition>
+							<condition>jboss.unifiedinvoker.port &gt;= 0</condition>
+							<condition>jboss.unifiedinvoker.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.unifiedinvoker.port == 0 </condition>
+						<condition>jboss.unifiedinvoker.port == null </condition>
+						<condition>jboss.unifiedinvoker.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.unifiedinvoker.port did not pass validation. jboss.unifiedinvoker.port must be 0 or between 1 and 65535. Sample valid value - "30360".</fail-message>
+				<fail-message>jboss.unifiedinvoker.port did not pass validation. jboss.unifiedinvoker.port must be empty or between 0 and 65535. Sample valid value - "30360".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3875,13 +3901,14 @@
 					<or>
 						<and>
 							<condition>jboss.web.service.port ==~ /\d+/</condition>
-							<condition>jboss.web.service.port &gt; 0</condition>
-							<condition>jboss.web.service.port &lt; 65535</condition>
+							<condition>jboss.web.service.port &gt;= 0</condition>
+							<condition>jboss.web.service.port &lt;= 65535</condition>
 						</and>
-						<condition>jboss.web.service.port == 0 </condition>
+						<condition>jboss.web.service.port == null </condition>
+						<condition>jboss.web.service.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.web.service.port did not pass validation. jboss.web.service.port must be 0 or between 1 and 65535. Sample valid value - "30250".</fail-message>
+				<fail-message>jboss.web.service.port did not pass validation. jboss.web.service.port must be empty or between 0 and 65535. Sample valid value - "30250".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4262,14 +4289,14 @@
 					<or>
 						<and>
 							<condition>tomcat.external.grid.secure.port ==~ /\d+/</condition>
-							<condition>tomcat.external.grid.secure.port &gt; 0</condition>
-							<condition>tomcat.external.grid.secure.port &lt; 65535</condition>
+							<condition>tomcat.external.grid.secure.port &gt;= 0</condition>
+							<condition>tomcat.external.grid.secure.port &lt;= 65535</condition>
 						</and>
 						<condition>tomcat.external.grid.secure.port == null </condition>
 						<condition>tomcat.external.grid.secure.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.external.grid.secure.port did not pass validation. tomcat.external.grid.secure.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>tomcat.external.grid.secure.port did not pass validation. tomcat.external.grid.secure.port must be empty or between 0 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4320,14 +4347,14 @@
 					<or>
 						<and>
 							<condition>tomcat.external.http.port ==~ /\d+/</condition>
-							<condition>tomcat.external.http.port &gt; 0</condition>
-							<condition>tomcat.external.http.port &lt; 65535</condition>
+							<condition>tomcat.external.http.port &gt;= 0</condition>
+							<condition>tomcat.external.http.port &lt;= 65535</condition>
 						</and>
 						<condition>tomcat.external.http.port == null </condition>
 						<condition>tomcat.external.http.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.external.http.port did not pass validation. tomcat.external.http.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>tomcat.external.http.port did not pass validation. tomcat.external.http.port must be empty or between 0 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4378,14 +4405,14 @@
 					<or>
 						<and>
 							<condition>tomcat.external.ssl.port ==~ /\d+/</condition>
-							<condition>tomcat.external.ssl.port &gt; 0</condition>
-							<condition>tomcat.external.ssl.port &lt; 65535</condition>
+							<condition>tomcat.external.ssl.port &gt;= 0</condition>
+							<condition>tomcat.external.ssl.port &lt;= 65535</condition>
 						</and>
 						<condition>tomcat.external.ssl.port == null </condition>
 						<condition>tomcat.external.ssl.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.external.ssl.port did not pass validation. tomcat.external.ssl.port must be 0 or between 1 and 65535. Sample valid value - "".</fail-message>
+				<fail-message>tomcat.external.ssl.port did not pass validation. tomcat.external.ssl.port must be empty or between 0 and 65535. Sample valid value - "".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4476,13 +4503,14 @@
 					<or>
 						<and>
 							<condition>tomcat.grid.secure.port ==~ /\d+/</condition>
-							<condition>tomcat.grid.secure.port &gt; 0</condition>
-							<condition>tomcat.grid.secure.port &lt; 65535</condition>
+							<condition>tomcat.grid.secure.port &gt;= 0</condition>
+							<condition>tomcat.grid.secure.port &lt;= 65535</condition>
 						</and>
-						<condition>tomcat.grid.secure.port == 0 </condition>
+						<condition>tomcat.grid.secure.port == null </condition>
+						<condition>tomcat.grid.secure.port == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.grid.secure.port did not pass validation. tomcat.grid.secure.port must be 0 or between 1 and 65535. Sample valid value - "21444".</fail-message>
+				<fail-message>tomcat.grid.secure.port did not pass validation. tomcat.grid.secure.port must be empty or between 0 and 65535. Sample valid value - "21444".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4574,13 +4602,14 @@
 					<or>
 						<and>
 							<condition>tomcat.port.ajp ==~ /\d+/</condition>
-							<condition>tomcat.port.ajp &gt; 0</condition>
-							<condition>tomcat.port.ajp &lt; 65535</condition>
+							<condition>tomcat.port.ajp &gt;= 0</condition>
+							<condition>tomcat.port.ajp &lt;= 65535</condition>
 						</and>
-						<condition>tomcat.port.ajp == 0 </condition>
+						<condition>tomcat.port.ajp == null </condition>
+						<condition>tomcat.port.ajp == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.port.ajp did not pass validation. tomcat.port.ajp must be 0 or between 1 and 65535. Sample valid value - "21009".</fail-message>
+				<fail-message>tomcat.port.ajp did not pass validation. tomcat.port.ajp must be empty or between 0 and 65535. Sample valid value - "21009".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4610,13 +4639,14 @@
 					<or>
 						<and>
 							<condition>tomcat.port.http ==~ /\d+/</condition>
-							<condition>tomcat.port.http &gt; 0</condition>
-							<condition>tomcat.port.http &lt; 65535</condition>
+							<condition>tomcat.port.http &gt;= 0</condition>
+							<condition>tomcat.port.http &lt;= 65535</condition>
 						</and>
-						<condition>tomcat.port.http == 0 </condition>
+						<condition>tomcat.port.http == null </condition>
+						<condition>tomcat.port.http == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.port.http did not pass validation. tomcat.port.http must be 0 or between 1 and 65535. Sample valid value - "21080".</fail-message>
+				<fail-message>tomcat.port.http did not pass validation. tomcat.port.http must be empty or between 0 and 65535. Sample valid value - "21080".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4646,13 +4676,14 @@
 					<or>
 						<and>
 							<condition>tomcat.port.shutdown ==~ /\d+/</condition>
-							<condition>tomcat.port.shutdown &gt; 0</condition>
-							<condition>tomcat.port.shutdown &lt; 65535</condition>
+							<condition>tomcat.port.shutdown &gt;= 0</condition>
+							<condition>tomcat.port.shutdown &lt;= 65535</condition>
 						</and>
-						<condition>tomcat.port.shutdown == 0 </condition>
+						<condition>tomcat.port.shutdown == null </condition>
+						<condition>tomcat.port.shutdown == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.port.shutdown did not pass validation. tomcat.port.shutdown must be 0 or between 1 and 65535. Sample valid value - "21005".</fail-message>
+				<fail-message>tomcat.port.shutdown did not pass validation. tomcat.port.shutdown must be empty or between 0 and 65535. Sample valid value - "21005".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -4682,13 +4713,14 @@
 					<or>
 						<and>
 							<condition>tomcat.port.ssl ==~ /\d+/</condition>
-							<condition>tomcat.port.ssl &gt; 0</condition>
-							<condition>tomcat.port.ssl &lt; 65535</condition>
+							<condition>tomcat.port.ssl &gt;= 0</condition>
+							<condition>tomcat.port.ssl &lt;= 65535</condition>
 						</and>
-						<condition>tomcat.port.ssl == 0 </condition>
+						<condition>tomcat.port.ssl == null </condition>
+						<condition>tomcat.port.ssl == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>tomcat.port.ssl did not pass validation. tomcat.port.ssl must be 0 or between 1 and 65535. Sample valid value - "21443".</fail-message>
+				<fail-message>tomcat.port.ssl did not pass validation. tomcat.port.ssl must be empty or between 0 and 65535. Sample valid value - "21443".</fail-message>
 			</rule>
 		</rules>
 	</property>
