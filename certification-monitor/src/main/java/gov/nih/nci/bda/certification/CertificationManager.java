@@ -91,6 +91,7 @@ public class CertificationManager {
 					+ " :: ProjectName::" + projectName
 					+ " :: IsValue : "	+ targetLookup.getIsValue()
 					+ " :: IsOptional : "	+ targetLookup.getIsOptional()
+                    + " :: SaveProperties: " + targetLookup.SaveExpressions()
 					);
 
 			populateAditionalAntProperties(targetLookup, project,
