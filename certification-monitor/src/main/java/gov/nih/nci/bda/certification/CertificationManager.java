@@ -126,6 +126,7 @@ public class CertificationManager {
         {
             if(this.ShouldSave(targetLookup,checkToSave.toString()))
             {
+                certLogger.info("Saving property:" + checkToSave.toString() + "=" + project.getProperties().get(checkToSave.toString()).toString());
                 this.addPropertyValue(  checkToSave.toString()
                                         , project.getProperties().get(checkToSave.toString()).toString());
             }
