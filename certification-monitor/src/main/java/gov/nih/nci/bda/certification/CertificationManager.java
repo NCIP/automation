@@ -91,8 +91,12 @@ public class CertificationManager {
 					+ " :: ProjectName::" + projectName
 					+ " :: IsValue : "	+ targetLookup.getIsValue()
 					+ " :: IsOptional : "	+ targetLookup.getIsOptional()
-                    + " :: SaveProperties: " + targetLookup.SaveExpressions()
-					);
+                    );
+
+            for(String thisProperty : targetLookup.SaveExpressions())
+            {
+                certLogger.info("SaveExpressions:" + thisProperty);
+            }
 
 			populateAditionalAntProperties(targetLookup, project,
 					optionalFeaturesList,systemWaiversList);
