@@ -114,7 +114,7 @@
 				<fail-message>jboss.application.url did not pass validation. jboss.application.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://localhost.nci.nih.gov:port".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.application.url-value</name>
+				<name>jboss.application.url-url</name>
 				<description>Checks jboss.application.url has proper value.</description>
 				<conditions>
 					<condition>jboss.application.url ==~ /^http.*:\/\/.*/</condition>
@@ -142,7 +142,7 @@
 				<fail-message>tomcat.application.url did not pass validation. tomcat.application.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://localhost.nci.nih.gov:port".</fail-message>
 			</rule>
 			<rule>
-				<name>tomcat.application.url-value</name>
+				<name>tomcat.application.url-url</name>
 				<description>Checks tomcat.application.url has proper value.</description>
 				<conditions>
 					<condition>tomcat.application.url ==~ /^http.*:\/\/.*/</condition>
@@ -349,7 +349,7 @@
 				<fail-message>build.bda.src.url did not pass validation. build.bda.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
 			</rule>
 			<rule>
-				<name>build.bda.src.url-value</name>
+				<name>build.bda.src.url-url</name>
 				<description>Checks build.bda.src.url has proper value.</description>
 				<conditions>
 					<condition>build.bda.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -418,7 +418,7 @@
 				<fail-message>cacore-sdk.required did not pass validation. cacore-sdk.required must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
 			<rule>
-				<name>cacore-sdk.required-value</name>
+				<name>cacore-sdk.required-tf</name>
 				<description>Checks cacore-sdk.required has proper value.</description>
 				<conditions>
 					<or>
@@ -469,7 +469,7 @@
 				<fail-message>cacore-sdk.src.url did not pass validation. cacore-sdk.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}".</fail-message>
 			</rule>
 			<rule>
-				<name>cacore-sdk.src.url-value</name>
+				<name>cacore-sdk.src.url-url</name>
 				<description>Checks cacore-sdk.src.url has proper value.</description>
 				<conditions>
 					<condition>cacore-sdk.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -537,7 +537,7 @@
 				<fail-message>cagrid-base-war.src.url did not pass validation. cagrid-base-war.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-base-war.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>cagrid-base-war.src.url-value</name>
+				<name>cagrid-base-war.src.url-url</name>
 				<description>Checks cagrid-base-war.src.url has proper value.</description>
 				<conditions>
 					<condition>cagrid-base-war.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -605,7 +605,7 @@
 				<fail-message>cagrid-console.src.url did not pass validation. cagrid-console.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/caGrid-console_sources.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>cagrid-console.src.url-value</name>
+				<name>cagrid-console.src.url-url</name>
 				<description>Checks cagrid-console.src.url has proper value.</description>
 				<conditions>
 					<condition>cagrid-console.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -673,7 +673,7 @@
 				<fail-message>cagrid-libs.src.url did not pass validation. cagrid-libs.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-libs.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>cagrid-libs.src.url-value</name>
+				<name>cagrid-libs.src.url-url</name>
 				<description>Checks cagrid-libs.src.url has proper value.</description>
 				<conditions>
 					<condition>cagrid-libs.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -701,7 +701,7 @@
 				<fail-message>cagrid-target.src.url did not pass validation. cagrid-target.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "https://ncisvn.nci.nih.gov/svn/cagrid/branches/caGrid-1_3_release/cagrid-1-0/caGrid/repository/caGrid/target_grid".</fail-message>
 			</rule>
 			<rule>
-				<name>cagrid-target.src.url-value</name>
+				<name>cagrid-target.src.url-url</name>
 				<description>Checks cagrid-target.src.url has proper value.</description>
 				<conditions>
 					<condition>cagrid-target.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -920,7 +920,7 @@
 				<fail-message>database.drop-schema did not pass validation. database.drop-schema must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
 			<rule>
-				<name>database.drop-schema-value</name>
+				<name>database.drop-schema-tf</name>
 				<description>Checks database.drop-schema has proper value.</description>
 				<conditions>
 					<or>
@@ -968,7 +968,7 @@
 				<fail-message>database.re-create did not pass validation. database.re-create must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
 			<rule>
-				<name>database.re-create-value</name>
+				<name>database.re-create-tf</name>
 				<description>Checks database.re-create has proper value.</description>
 				<conditions>
 					<or>
@@ -1110,7 +1110,7 @@
 				<fail-message>database.port did not pass validation. database.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "3306".</fail-message>
 			</rule>
 			<rule>
-				<name>database.port-value</name>
+				<name>database.port-port</name>
 				<description>Checks database.port has proper value.</description>
 				<conditions>
 					<or>
@@ -1382,6 +1382,48 @@
 				</conditions>
 				<fail-message>database.url did not pass validation. database.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "jdbc:mysql://localhost:3306/bda".</fail-message>
 			</rule>
+			<rule>
+				<name>database.url-value-mysql</name>
+				<description>Checks database.url has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "mysql" </condition>
+							<condition>database.url ==~ /jdbc:mysql.*/ </condition>
+						</and>
+						<condition>database.type != "mysql" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.url did not pass validation. With database.type of mysql database.url must begin with "jdbc:mysql".</fail-message>
+			</rule>
+			<rule>
+				<name>database.url-value-oracle</name>
+				<description>Checks database.url has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "oracle" </condition>
+							<condition>database.url ==~ /jdbc:oracle.*/ </condition>
+						</and>
+						<condition>database.type != "oracle" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.url did not pass validation. With database.type of oracle database.url must begin with "jdbc:oracle".</fail-message>
+			</rule>
+			<rule>
+				<name>database.url-value-postgres</name>
+				<description>Checks database.url has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "postgres" </condition>
+							<condition>database.url ==~ /jdbc:postgres.*/ </condition>
+						</and>
+						<condition>database.type != "postgres" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.url did not pass validation. With database.type of postgres database.url must begin with "jdbc:postgres".</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<property name="database.user" name-pattern="database.user" description="" skip-property="exclude.validate.database">
@@ -1403,6 +1445,49 @@
 				</conditions>
 				<fail-message>database.user did not pass validation. database.user must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "bdauser".</fail-message>
 			</rule>
+			<rule>
+				<name>database.user-value-mysql</name>
+				<description>Checks database.user has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "mysql" </condition>
+							<condition>database.user != "root" </condition>
+						</and>
+						<condition>database.type != "mysql" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.user did not pass validation. With database.type of mysql database.user can't be root.</fail-message>
+			</rule>
+			<rule>
+				<name>database.user-value-oracle</name>
+				<description>Checks database.user has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "oracle" </condition>
+							<condition>database.user != "system" </condition>
+							<condition>database.user != "sys" </condition>
+						</and>
+						<condition>database.type != "oracle" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.user did not pass validation. With database.type of oracle database.user can't be sys or system.</fail-message>
+			</rule>
+			<rule>
+				<name>database.user-value-postgres</name>
+				<description>Checks database.user has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition>database.type == "postgres" </condition>
+							<condition>database.user != "postgres" </condition>
+						</and>
+						<condition>database.type != "postgres" </condition>
+					</or>
+				</conditions>
+				<fail-message>database.user did not pass validation. With database.type of postgres database.user can't be postgres.</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<property name="db.install.create.mysql.file.list" name-pattern="db.install.create.mysql.file.list" description="" skip-property="">
@@ -1423,6 +1508,18 @@
 				</conditions>
 				<fail-message>db.install.create.mysql.file.list did not pass validation. db.install.create.mysql.file.list must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "create-tables.sql,insert-data.sql".</fail-message>
 			</rule>
+			<rule>
+				<name>db.install.create.mysql.file.list-list</name>
+				<description>Checks db.install.create.mysql.file.list has proper value.</description>
+				<conditions>
+					<or>
+						<condition negate="true">db.install.create.mysql.file.list ==~ /^,.*/</condition>
+						<condition negate="true">db.install.create.mysql.file.list ==~ /.*,$/</condition>
+					</or>
+				</conditions>
+				<fail-message>db.install.create.mysql.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="db.install.create.oracle.file.list" name-pattern="db.install.create.oracle.file.list" description="" skip-property="">
@@ -1443,6 +1540,18 @@
 				</conditions>
 				<fail-message>db.install.create.oracle.file.list did not pass validation. db.install.create.oracle.file.list must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "".</fail-message>
 			</rule>
+			<rule>
+				<name>db.install.create.oracle.file.list-list</name>
+				<description>Checks db.install.create.oracle.file.list has proper value.</description>
+				<conditions>
+					<or>
+						<condition negate="true">db.install.create.oracle.file.list ==~ /^,.*/</condition>
+						<condition negate="true">db.install.create.oracle.file.list ==~ /.*,$/</condition>
+					</or>
+				</conditions>
+				<fail-message>db.install.create.oracle.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="db.install.create.postgresql.file.list" name-pattern="db.install.create.postgresql.file.list" description="" skip-property="">
@@ -1462,6 +1571,17 @@
 					</or>
 				</conditions>
 				<fail-message>db.install.create.postgresql.file.list did not pass validation. db.install.create.postgresql.file.list must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "create-tables.sql,insert-data.sql".</fail-message>
+			</rule>
+			<rule>
+				<name>db.install.create.postgres.file.list-list</name>
+				<description>Checks db.install.create.postgres.file.list has proper value.</description>
+				<conditions>
+					<or>
+						<condition negate="true">db.install.create.postgres.file.list ==~ /^,.*/</condition>
+						<condition negate="true">db.install.create.postgres.file.list ==~ /.*,$/</condition>
+					</or>
+				</conditions>
+				<fail-message>db.install.create.postgres.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -1484,6 +1604,26 @@
 				</conditions>
 				<fail-message>env.name did not pass validation. env.name must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "local".</fail-message>
 			</rule>
+			<rule>
+				<name>env.name-value</name>
+				<description>Checks env.name has proper value.</description>
+				<conditions>
+					<or>
+						<condition> env.name == "local"</condition>
+						<condition> env.name == "dev"</condition>
+						<condition> env.name == "qa"</condition>
+						<condition> env.name == "stage"</condition>
+						<condition> env.name == "prod"</condition>
+						<condition> env.name == "train"</condition>
+						<condition> env.name == "data-refresh"</condition>
+						<condition> env.name == "data-validation"</condition>
+						<condition> env.name == "external"</condition>
+						<condition> env.name == "infrastructure"</condition>
+					</or>
+				</conditions>
+				<fail-message>env.name did not pass validation. Must be one of the following ("local", "dev", "qa", "stage", "prod", "train", "data-refresh", "data-validation", "external", "infrastructure").</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="exclude.access-logs" name-pattern="exclude.access-logs" description="" skip-property="">
@@ -2021,7 +2161,7 @@
 				<fail-message>findbugs.src.url did not pass validation. findbugs.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/other/os-independent/findbugs-1.3.4.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>findbugs.src.url-value</name>
+				<name>findbugs.src.url-url</name>
 				<description>Checks findbugs.src.url has proper value.</description>
 				<conditions>
 					<condition>findbugs.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -2469,6 +2609,19 @@
 				</conditions>
 				<fail-message>grid.target did not pass validation. grid.target must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "nci_stage-1.3".</fail-message>
 			</rule>
+			<rule>
+				<name>grid.target-value</name>
+				<description>Checks grid.target has proper value.</description>
+				<conditions>
+					<or>
+						<condition> grid.target == "nci_prod-1.3"</condition>
+						<condition> grid.target == "nci_stage-1.3"</condition>
+						<condition> grid.target == "nci_qa-1.3"</condition>
+						<condition> grid.target == "training-1.3"</condition>
+					</or>
+				</conditions>
+				<fail-message>grid.target did not pass validation. Must be one of the following (nci_prod-1.3, nci_stage-1.3, nci_qa-1.3, training-1.3).</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<property name="ivy.bda.settings.src.url" name-pattern="ivy.bda.settings.src.url" description="" skip-property="">
@@ -2490,7 +2643,7 @@
 				<fail-message>ivy.bda.settings.src.url did not pass validation. ivy.bda.settings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda-settings.xml".</fail-message>
 			</rule>
 			<rule>
-				<name>ivy.bda.settings.src.url-value</name>
+				<name>ivy.bda.settings.src.url-url</name>
 				<description>Checks ivy.bda.settings.src.url has proper value.</description>
 				<conditions>
 					<condition>ivy.bda.settings.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -2518,7 +2671,7 @@
 				<fail-message>ivy.bda.src.url did not pass validation. ivy.bda.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda.xml".</fail-message>
 			</rule>
 			<rule>
-				<name>ivy.bda.src.url-value</name>
+				<name>ivy.bda.src.url-url</name>
 				<description>Checks ivy.bda.src.url has proper value.</description>
 				<conditions>
 					<condition>ivy.bda.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -2546,6 +2699,21 @@
 				</conditions>
 				<fail-message>jar-signing.execution.time did not pass validation. jar-signing.execution.time must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "false".</fail-message>
 			</rule>
+			<rule>
+				<name>jar-signing.execution.time-value</name>
+				<description>Checks jar-signing.execution.time has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jar-signing.execution.time == "install"</condition>
+						<condition> jar-signing.execution.time == "build"</condition>
+						<condition> jar-signing.execution.time == "false"</condition>
+						<condition> jar-signing.execution.time == ""</condition>
+						<condition> jar-signing.execution.time == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jar-signing.execution.time did not pass validation. Must be empty or install or build.</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="jar-signing.generate-selfsigned" name-pattern="jar-signing.generate-selfsigned" description="" skip-property="">
@@ -2566,6 +2734,19 @@
 					</or>
 				</conditions>
 				<fail-message>jar-signing.generate-selfsigned did not pass validation. jar-signing.generate-selfsigned must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "false".</fail-message>
+			</rule>
+			<rule>
+				<name>jar-signing.generate-selfsigned-value</name>
+				<description>Checks jar-signing.generate-selfsigned has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jar-signing.generate-selfsigned == "true"</condition>
+						<condition> jar-signing.generate-selfsigned == "false"</condition>
+						<condition> jar-signing.generate-selfsigned == ""</condition>
+						<condition> jar-signing.generate-selfsigned == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jar-signing.generate-selfsigned did not pass validation. Must be empty or install or build.</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2588,6 +2769,18 @@
 				</conditions>
 				<fail-message>jar-signing.jar.list did not pass validation. jar-signing.jar.list must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "test-signing.jar".</fail-message>
 			</rule>
+			<rule>
+				<name>jar-signing.jar.list-list</name>
+				<description>Checks jar-signing.jar.list has proper value.</description>
+				<conditions>
+					<or>
+						<condition negate="true">jar-signing.jar.list ==~ /^,.*/</condition>
+						<condition negate="true">jar-signing.jar.list ==~ /.*,$/</condition>
+					</or>
+				</conditions>
+				<fail-message>jar-signing.jar.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="jar-signing.keystore.alias" name-pattern="jar-signing.keystore.alias" description="" skip-property="">
@@ -2853,7 +3046,7 @@
 				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss-bindings.src.url-value</name>
+				<name>jboss-bindings.src.url-url</name>
 				<description>Checks jboss-bindings.src.url has proper value.</description>
 				<conditions>
 					<condition>jboss-bindings.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -2880,6 +3073,20 @@
 					</or>
 				</conditions>
 				<fail-message>jboss.cgmm.enable did not pass validation. jboss.cgmm.enable must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>jboss.cgmm.enable-relationship</name>
+				<description>Checks jboss.cgmm.enable has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition> jboss.cgmm.enable == "true"</condition>
+							<condition> jboss.major.version == 4</condition>
+						</and>
+						<condition> jboss.cgmm.enable != "true" </condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.cgmm.enable did not pass validation. Must be empty or true with jboss.major.version=4.</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3218,6 +3425,36 @@
 				</conditions>
 				<fail-message>jboss.grid.secure.enable did not pass validation. jboss.grid.secure.enable must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
+			<rule>
+				<name>jboss.grid.secure.enable-tf</name>
+				<description>Checks jboss.grid.secure.enable has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.grid.secure.enable == "true"</condition>
+						<condition> jboss.grid.secure.enable == "false"</condition>
+						<condition> jboss.grid.secure.enable == ""</condition>
+						<condition> jboss.grid.secure.enable == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.grid.secure.enable did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+			<rule>
+				<name>jboss.grid.secure.enable-relationship</name>
+				<description>Checks jboss.grid.secure.enable has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition> jboss.grid.secure.enable == "true"</condition>
+							<condition> jboss.grid.secure.cert.location ==~ /.*\S+.*/</condition>
+							<condition> jboss.grid.secure.key.location ==~ /.*\S+.*/</condition>
+							<condition> jboss.grid.secure.port ==~ /.*\S+.*/</condition>
+						</and>
+						<condition> jboss.grid.secure.enable != "true"</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.grid.secure.enable did not pass validation. If true then jboss.grid.secure.cert.location, jboss.grid.secure.enable, jboss.grid.secure.key.location, jboss.grid.secure.port must have values.</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="jboss.grid.secure.key.location" name-pattern="jboss.grid.secure.key.location" description="" skip-property="exclude.validate.jboss">
@@ -3427,6 +3664,33 @@
 				</conditions>
 				<fail-message>jboss.http-connector.remove did not pass validation. jboss.http-connector.remove must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
+			<rule>
+				<name>jboss.http-connector.remove-tf</name>
+				<description>Checks jboss.http-connector.remove has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.http-connector.remove == "true"</condition>
+						<condition> jboss.http-connector.remove == "false"</condition>
+						<condition> jboss.http-connector.remove == ""</condition>
+						<condition> jboss.http-connector.remove == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.http-connector.remove did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+			<rule>
+				<name>jboss.http-connector.remove-relationship</name>
+				<description>Checks jboss.http-connector.remove has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition> jboss.http-connector.remove == "true"</condition>
+							<condition> jboss.grid.secure.enable == "true"</condition>
+						</and>
+						<condition> jboss.http-connector.remove != "true"</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.http-connector.remove did not pass validation. If true then jboss.grid.secure.enable must also be true.</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<!-- java.opts is to complex for rules -->
@@ -3633,6 +3897,19 @@
 					</or>
 				</conditions>
 				<fail-message>jboss.ncicb-standard.port-config did not pass validation. jboss.ncicb-standard.port-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>jboss.ncicb-standard.port-config-value</name>
+				<description>Checks jboss.ncicb-standard.port-config has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.ncicb-standard.port-config == "true"</condition>
+						<condition> jboss.ncicb-standard.port-config == "false"</condition>
+						<condition> jboss.ncicb-standard.port-config == ""</condition>
+						<condition> jboss.ncicb-standard.port-config == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.ncicb-standard.port-config did not pass validation. Must be empty or true or false.</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3882,6 +4159,79 @@
 				</conditions>
 				<fail-message>jboss.server.ports.name did not pass validation. jboss.server.ports.name must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "config39080".</fail-message>
 			</rule>
+			<rule>
+				<name>jboss.server.ports.name-value-jboss4</name>
+				<description>Checks jboss.server.ports.name has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.ncicb-standard.port-config != "true"</condition>
+						<condition> jboss.major.version == "5"</condition>
+						<and>
+							<condition> jboss.ncicb-standard.port-config == "true"</condition>
+							<condition> jboss.major.version == "4"</condition>
+							<or>
+								<condition>jboss.server.ports.name == "config19080"</condition>
+								<condition>jboss.server.ports.name == "config19180"</condition>
+								<condition>jboss.server.ports.name == "config19280"</condition>
+								<condition>jboss.server.ports.name == "config19380"</condition>
+								<condition>jboss.server.ports.name == "config19480"</condition>
+								<condition>jboss.server.ports.name == "config19580"</condition>
+								<condition>jboss.server.ports.name == "config19680"</condition>
+								<condition>jboss.server.ports.name == "config29080"</condition>
+								<condition>jboss.server.ports.name == "config29180"</condition>
+								<condition>jboss.server.ports.name == "config39080"</condition>
+								<condition>jboss.server.ports.name == "config39080"</condition>
+								<condition>jboss.server.ports.name == "config39180"</condition>
+								<condition>jboss.server.ports.name == "config39180"</condition>
+								<condition>jboss.server.ports.name == "config39280"</condition>
+								<condition>jboss.server.ports.name == "config39380"</condition>
+								<condition>jboss.server.ports.name == "config39480"</condition>
+								<condition>jboss.server.ports.name == "config39580"</condition>
+								<condition>jboss.server.ports.name == "config39680"</condition>
+								<condition>jboss.server.ports.name == "config39780"</condition>
+								<condition>jboss.server.ports.name == "config39880"</condition>
+								<condition>jboss.server.ports.name == "config39980"</condition>
+								<condition>jboss.server.ports.name == "config49080"</condition>
+								<condition>jboss.server.ports.name == "config49180"</condition>
+								<condition>jboss.server.ports.name == "config59080"</condition>
+								<condition>jboss.server.ports.name == "config59180"</condition>
+								<condition>jboss.server.ports.name == "config59280"</condition>
+								<condition>jboss.server.ports.name == "config59380"</condition>
+								<condition>jboss.server.ports.name == "config59480"</condition>
+								<condition>jboss.server.ports.name == "config59580"</condition>
+							</or>
+						</and>
+					</or>
+				</conditions>
+				<fail-message>jboss.server.ports.name did not pass validation. If jboss.ncicb-standard.port-config is true and jboss.major.version is 4 then jboss.server.ports must be one of the following config19080, config19180, config19280, config19380, config19480, config19580, config19680, config29080, config29180, config39080, config39080, config39180, config39180, config39280, config39380, config39480, config39580, config39680, config39780, config39880, config39980, config49080, config49180, config59080, config59180, config59280, config59380, config59480, config59580.</fail-message>
+				</rule>
+			<rule>
+				<name>jboss.server.ports.name-value-jboss5</name>
+				<description>Checks jboss.server.ports.name has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.ncicb-standard.port-config != "true"</condition>
+						<condition> jboss.major.version == "4"</condition>
+						<and>
+							<condition> jboss.ncicb-standard.port-config == "true"</condition>
+							<condition> jboss.major.version == "5"</condition>
+							<or>
+								<condition>jboss.server.ports.name == "ports-29080"</condition>
+								<condition>jboss.server.ports.name == "ports-29180"</condition>
+								<condition>jboss.server.ports.name == "ports-29280"</condition>
+								<condition>jboss.server.ports.name == "ports-29380"</condition>
+								<condition>jboss.server.ports.name == "ports-29480"</condition>
+								<condition>jboss.server.ports.name == "ports-29580"</condition>
+								<condition>jboss.server.ports.name == "ports-29680"</condition>
+								<condition>jboss.server.ports.name == "ports-29780"</condition>
+								<condition>jboss.server.ports.name == "ports-29880"</condition>
+								<condition>jboss.server.ports.name == "ports-29980"</condition>
+							</or>
+						</and>
+					</or>
+				</conditions>
+				<fail-message>If jboss.ncicb-standard.port-config is true and jboss.major.version is 5 then jboss.server.ports.name must be one of the following ports-29080, ports-29180, ports-29280, ports-29380, ports-29480, ports-29580, ports-29680, ports-29780, ports-29880, ports-29980.</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<property name="jboss.server.rmi.port" name-pattern="jboss.server.rmi.port" description="" skip-property="exclude.validate.jboss">
@@ -4079,6 +4429,36 @@
 				</conditions>
 				<fail-message>jboss.ssl.enable did not pass validation. jboss.ssl.enable must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
+			<rule>
+				<name>jboss.ssl.enable-tf</name>
+				<description>Checks jboss.ssl.enable has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.ssl.enable == "true"</condition>
+						<condition> jboss.ssl.enable == "false"</condition>
+						<condition> jboss.ssl.enable == ""</condition>
+						<condition> jboss.ssl.enable == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.ssl.enable did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+			<rule>
+				<name>jboss.ssl.enable-relationship</name>
+				<description>Checks jboss.ssl.enable has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition> jboss.ssl.enable == "true"</condition>
+							<condition> jboss.ssl.keystore.location ==~ /.*\S+.*/</condition>
+							<condition> jboss.ssl.keystore.pass ==~ /.*\S+.*/</condition>
+							<condition> jboss.ssl.keystore.alias ==~ /.*\S+.*/</condition>
+							<condition> jboss.ssl.fullyqualified.hostname ==~ /.*\S+.*/</condition>
+						</and>
+						<condition> jboss.ssl.enable != "true"</condition>
+					</or>
+				</conditions>                                                                               <fail-message>jboss.ssl.enable did not pass validation. If true then jboss.ssl.keystore.location, jboss.ssl.keystore.pass, jboss.ssl.keystore.alias, jboss.ssl.fullyqualified.hostname.</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="jboss.ssl.fullyqualified.hostname" name-pattern="jboss.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.jboss">
@@ -4580,6 +4960,20 @@
 				</conditions>
 				<fail-message>mysql.lowercasetablenames did not pass validation. mysql.lowercasetablenames must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
+			<rule>
+				<name>mysql.lowercasetablenames</name>
+				<description>Checks jboss.ssl.enable has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.ssl.enable == "true"</condition>
+						<condition> jboss.ssl.enable == "false"</condition>
+						<condition> jboss.ssl.enable == ""</condition>
+						<condition> jboss.ssl.enable == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.ssl.enable did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="mysql.minimum.version" name-pattern="mysql.minimum.version" description="" skip-property="">
@@ -4643,6 +5037,20 @@
 				</conditions>
 				<fail-message>require.build.wscore did not pass validation. require.build.wscore must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
+			<rule>
+				<name>require.build.wscore-tf</name>
+				<description>Checks jboss.ssl.enable has proper value.</description>
+				<conditions>
+					<or>
+						<condition> jboss.ssl.enable == "true"</condition>
+						<condition> jboss.ssl.enable == "false"</condition>
+						<condition> jboss.ssl.enable == ""</condition>
+						<condition> jboss.ssl.enable == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.ssl.enable did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+
 		</rules>
 	</property>
 	<property name="sync-gts.binaries.file" name-pattern="sync-gts.binaries.file" description="" skip-property="">
@@ -4966,6 +5374,35 @@
 				</conditions>
 				<fail-message>tomcat.grid.secure.enable did not pass validation. tomcat.grid.secure.enable must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "false".</fail-message>
 			</rule>
+			<rule>
+				<name>tomcat.grid.secure.enable-tf</name>
+				<description>Checks tomcat.grid.secure.enable has proper value.</description>
+				<conditions>
+					<or>
+						<condition> tomcat.grid.secure.enable == "true"</condition>
+						<condition> tomcat.grid.secure.enable == "false"</condition>
+						<condition> tomcat.grid.secure.enable == ""</condition>
+						<condition> tomcat.grid.secure.enable == null</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.grid.secure.enable did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+			<rule>
+				<name>tomcat.grid.secure.enable-relationship</name>
+				<description>Checks tomcat.grid.secure.enable has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition> tomcat.grid.secure.enable == "true"</condition>
+							<condition> tomcat.grid.secure.cert.location ==~ /.*\S+.*/</condition>
+							<condition> tomcat.grid.secure.key.location ==~ /.*\S+.*/</condition>
+							<condition> tomcat.grid.secure.port ==~ /.*\S+.*/</condition>
+						</and>
+						<condition> tomcat.grid.secure.enable != "true"</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.grid.secure.enable did not pass validation. If true then jboss.grid.secure.cert.location, jboss.grid.secure.enable, jboss.grid.secure.key.location, jboss.grid.secure.port must have values.</fail-message>
+			</rule>
 		</rules>
 	</property>
 	<property name="tomcat.grid.secure.key.location" name-pattern="tomcat.grid.secure.key.location" description="" skip-property="exclude.validate.tomcat">
@@ -5084,6 +5521,33 @@
 					</or>
 				</conditions>
 				<fail-message>tomcat.http-connector.remove did not pass validation. tomcat.http-connector.remove must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
+				<name>tomcat.http-connector.remove-tf</name>
+				<description>Checks tomcat.http-connector.remove has proper value.</description>
+				<conditions>
+					<or>
+						<condition> tomcat.http-connector.remove == "true"</condition>
+						<condition> tomcat.http-connector.remove == "false"</condition>
+						<condition> tomcat.http-connector.remove == ""</condition>
+						<condition> tomcat.http-connector.remove == null</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.http-connector.remove did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+			<rule>
+				<name>tomcat.http-connector.remove-relationship</name>
+				<description>Checks tomcat.http-connector.remove has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition> tomcat.http-connector.remove == "true"</condition>
+							<condition> tomcat.grid.secure.enable == "true"</condition>
+						</and>
+						<condition> tomcat.http-connector.remove != "true"</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.http-connector.remove did not pass validation. If true then tomcat.grid.secure.enable must also be true.</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -5281,6 +5745,36 @@
 					</or>
 				</conditions>
 				<fail-message>tomcat.ssl.enable did not pass validation. tomcat.ssl.enable must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "false".</fail-message>
+			</rule>
+			<rule>
+				<name>tomcat.ssl.enable-tf</name>
+				<description>Checks tomcat.ssl.enable has proper value.</description>
+				<conditions>
+					<or>
+						<condition> tomcat.ssl.enable == "true"</condition>
+						<condition> tomcat.ssl.enable == "false"</condition>
+						<condition> tomcat.ssl.enable == ""</condition>
+						<condition> tomcat.ssl.enable == null</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.ssl.enable did not pass validation. Must be empty or true or false.</fail-message>
+			</rule>
+			<rule>
+				<name>tomcat.ssl.enable-relationship</name>
+				<description>Checks tomcat.ssl.enable has proper value.</description>
+				<conditions>
+					<or>
+						<and>
+							<condition> tomcat.ssl.enable == "true"</condition>
+							<condition> tomcat.ssl.keystore.location ==~ /.*\S+.*/</condition>
+							<condition> tomcat.ssl.keystore.pass ==~ /.*\S+.*/</condition>
+							<condition> tomcat.ssl.keystore.alias ==~ /.*\S+.*/</condition>
+							<condition> tomcat.ssl.fullyqualified.hostname ==~ /.*\S+.*/</condition>
+						</and>
+						<condition> tomcat.ssl.enable != "true"</condition>
+					</or>
+				</conditions>
+				<fail-message>tomcat.ssl.enable did not pass validation. If true then tomcat.ssl.keystore.location, tomcat.ssl.keystore.pass, tomcat.ssl.keystore.alias, tomcat.ssl.fullyqualified.hostname.</fail-message>
 			</rule>
 		</rules>
 	</property>

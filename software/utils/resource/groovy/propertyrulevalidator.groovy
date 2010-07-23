@@ -245,3 +245,4 @@ if (properties["evaluate.property.name"] != null)
 		properties["property.rule.validator.msg"]=failMsgs
 	}
 }
+//println "jboss.major.version " + properties["jboss.major.version"].class + " " + properties["jboss.major.version"]
