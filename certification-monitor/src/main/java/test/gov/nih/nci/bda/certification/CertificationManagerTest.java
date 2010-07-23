@@ -152,6 +152,7 @@ public class CertificationManagerTest extends TestCase {
 
         CertificationManager target = new CertificationManager();
         TargetLookup lookup = new TargetLookup();
+        lookup.setSaveProperties("x");
         assertTrue(target.ShouldSave(lookup, "x"));
 
     }
@@ -164,7 +165,7 @@ public class CertificationManagerTest extends TestCase {
         CertificationManager target = new CertificationManager();
         TargetLookup lookup = new TargetLookup();
         lookup.setSaveProperties("y,x");
-        assertFalse(target.ShouldSave(lookup, "x"));
+        assertTrue(target.ShouldSave(lookup, "x"));
 
     }
 
