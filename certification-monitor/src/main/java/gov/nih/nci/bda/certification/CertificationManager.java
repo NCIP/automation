@@ -214,4 +214,20 @@ public class CertificationManager {
 
         return propertyValues;
     }
+
+    public boolean ShouldSave(TargetLookup target, String propertyNameExpression) {
+
+        boolean returnValue = false ;
+        String[] expressions = target.SaveExpressions();
+
+        for(String targetPropertyName:expressions)
+        {
+            if(targetPropertyName.equals(propertyNameExpression))
+            {
+                returnValue = true ;
+                break;
+            }
+        }
+        return returnValue;
+    }
 }

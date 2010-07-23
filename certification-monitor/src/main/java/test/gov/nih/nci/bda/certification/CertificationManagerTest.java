@@ -1,6 +1,7 @@
 package test.gov.nih.nci.bda.certification;
 
 import gov.nih.nci.bda.certification.CertificationManager;
+import gov.nih.nci.bda.certification.domain.TargetLookup;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
@@ -131,4 +132,51 @@ public class CertificationManagerTest extends TestCase {
 
     }
 
+
+    // this test tests the shouldSave method to check if it
+    // both returns false and does not throw an exception if
+    // there are no saveProperties
+    public void testShouldSaveEmptyFalse() {
+
+        CertificationManager target = new CertificationManager();
+        TargetLookup lookup = new TargetLookup();
+        assertFalse(target.ShouldSave(lookup, "x"));
+
+    }
+
+    // this test tests the shouldSave method to check if it
+    // returns true for a simple property name match when
+    // there is only one in the collection of saveproperties
+    public void testShouldSaveSimpleTrue() {
+
+        CertificationManager target = new CertificationManager();
+        TargetLookup lookup = new TargetLookup();
+        lookup.setSaveProperties("x");
+        assertTrue(target.ShouldSave(lookup, "x"));
+
+    }
+
+    // this test tests the shouldSave method to check if it
+    // returns true for a property name match
+    // if there are more than one properties
+    public void testShouldSaveMultiTrue() {
+
+        CertificationManager target = new CertificationManager();
+        TargetLookup lookup = new TargetLookup();
+        lookup.setSaveProperties("y,x");
+        assertTrue(target.ShouldSave(lookup, "x"));
+
+    }
+
+//    // this test tests the shouldSave method to check if it
+//    // returns true for a simple property name match when
+//    // there is only one in the collection of saveproperties
+//    public void testShouldSaveReqexTrue() {
+//
+//        CertificationManager target = new CertificationManager();
+//        TargetLookup lookup = new TargetLookup();
+//        lookup.setSaveProperties(".+application\\.url");
+//        assertTrue(target.ShouldSave(lookup, "application.url"));
+//
+//    }
 }
