@@ -280,6 +280,8 @@
                 <arg value="-Ddatabase.system.url=${database.system.url}" />
                 <arg line="${override.properties.string}"/>
                 <arg value="${single-command.deployment.target}" />
+                <arg value="-listener" />
+                <arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
             </exec>
         </echoxml>
 
@@ -297,6 +299,8 @@
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
+            <arg value="-listener" />
+            <arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
 		</exec>
 		<exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">			
 			<arg value="-Dproperties.file=install.properties" />			
@@ -312,6 +316,8 @@
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
 			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />			
+            <arg value="-listener" />
+            <arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
 		</exec>
 
 	</target>
