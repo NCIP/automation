@@ -168,15 +168,15 @@ public class CertificationManagerTest extends TestCase {
 
     }
 
-//    // this test tests the shouldSave method to check if it
-//    // returns true for a simple property name match when
-//    // there is only one in the collection of saveproperties
-//    public void testShouldSaveReqexTrue() {
-//
-//        CertificationManager target = new CertificationManager();
-//        TargetLookup lookup = new TargetLookup();
-//        lookup.setSaveProperties(".+application\\.url");
-//        assertTrue(target.ShouldSave(lookup, "application.url"));
-//
-//    }
+    // this test tests the shouldSave method to check if it
+    // returns true for a simple property name match when
+    // there is only one in the collection of saveproperties
+    public void testShouldSaveReqexTrue() {
+
+        CertificationManager target = new CertificationManager();
+        TargetLookup lookup = new TargetLookup();
+        lookup.setSaveProperties(".*application\\.url");
+        assertTrue(target.ShouldSave(lookup, "application.url"));
+
+    }
 }

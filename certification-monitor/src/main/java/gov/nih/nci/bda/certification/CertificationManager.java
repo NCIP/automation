@@ -7,6 +7,7 @@ import gov.nih.nci.bda.certification.util.PropertyLoader;
 
 import java.io.File;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -220,9 +221,12 @@ public class CertificationManager {
         boolean returnValue = false ;
         String[] expressions = target.SaveExpressions();
 
+        Pattern p ;
+
         for(String targetPropertyName:expressions)
         {
-            if(targetPropertyName.equals(propertyNameExpression))
+            p = Pattern.compile(targetPropertyName);
+            if (p.matcher(propertyNameExpression).matches())
             {
                 returnValue = true ;
                 break;
