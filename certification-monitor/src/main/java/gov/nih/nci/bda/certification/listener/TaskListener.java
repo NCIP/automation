@@ -45,6 +45,7 @@ public class TaskListener implements BuildListener {
 
     public void taskFinished(BuildEvent event) {
         addTask(event.getTask().getTaskName());
+        System.out.println("taskFinished:" + event.getTask().getTaskName());
 
     }
 
