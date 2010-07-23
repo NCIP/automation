@@ -122,6 +122,8 @@ public class CertificationManager {
 
     public void saveProperties(TargetLookup targetLookup, Project project) throws Exception {
 
+        certLogger.info("saveProperties()");
+
         for(Object checkToSave:project.getProperties().keySet())
         {
             if(this.ShouldSave(targetLookup,checkToSave.toString()))
@@ -243,15 +245,21 @@ public class CertificationManager {
 
         Pattern p ;
 
+
         for(String targetPropertyName:expressions)
         {
             p = Pattern.compile(targetPropertyName);
+
             if (p.matcher(propertyNameExpression).matches())
             {
                 returnValue = true ;
+                certLogger.info("ShouldSave:" + targetPropertyName + propertyNameExpression + "=true");
                 break;
             }
+            certLogger.info("ShouldSave:" + targetPropertyName + propertyNameExpression + "=false");
+
         }
+
         return returnValue;
     }
 }

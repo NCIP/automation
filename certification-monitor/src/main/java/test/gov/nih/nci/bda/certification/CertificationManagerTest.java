@@ -208,4 +208,20 @@ public class CertificationManagerTest extends TestCase {
         assertEquals(propertyValue,target.getPropertyValues().get(propertyName));
 
     }
+
+    // proves that if the property 'x' is requested to be
+    // saved that calling saveProperties saves it
+    public void testSavePropertiesSaveWildcard() throws Exception {
+
+        CertificationManager target = new CertificationManager();
+        assertEquals(0, target.getPropertyValues().size());
+        TargetLookup lookup = new TargetLookup();
+        String propertyName = ".*application.url" ;
+        String propertyValue = "http://microsoft.com" ;
+        Project p = new Project();
+        lookup.setSaveProperties(propertyName);
+        p.setProperty("jboss." + propertyName,propertyValue);
+        assertTrue(target.ShouldSave(lookup,propertyName));
+
+    }
 }
