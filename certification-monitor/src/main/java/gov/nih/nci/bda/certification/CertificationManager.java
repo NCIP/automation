@@ -104,6 +104,8 @@ public class CertificationManager {
 			try {
 				project.executeTarget(targetLookup.getTargetName());
 
+                saveProperties(targetLookup,project);
+
                 for(Object o:project.getProperties().keySet())
                 {
                     certLogger.info("After target " + targetLookup.getTargetName() + " " + o.toString() + "=" + project.getProperty(o.toString()));
@@ -118,7 +120,19 @@ public class CertificationManager {
 		certLogger.info("Certification Complete");
 	}
 
-	private ArrayList<String> getListOfOptionalFeaturesForProject(Project project) {
+    public void saveProperties(TargetLookup targetLookup, Project project) throws Exception {
+
+        for(Object checkToSave:project.getProperties().keySet())
+        {
+            if(this.ShouldSave(targetLookup,checkToSave.toString()))
+            {
+                this.addPropertyValue(  checkToSave.toString()
+                                        , project.getProperties().get(checkToSave.toString()).toString());
+            }
+        }
+    }
+
+    private ArrayList<String> getListOfOptionalFeaturesForProject(Project project) {
 		ArrayList<String> optionalList = new ArrayList<String>();
 		String optionalStr = project.getProperty("optional.features");
 		certLogger.info("Features that are optional : " +  optionalStr);

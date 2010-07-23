@@ -5,6 +5,7 @@ import gov.nih.nci.bda.certification.domain.TargetLookup;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
+import org.apache.tools.ant.Project;
 
 import java.util.Map;
 
@@ -151,7 +152,6 @@ public class CertificationManagerTest extends TestCase {
 
         CertificationManager target = new CertificationManager();
         TargetLookup lookup = new TargetLookup();
-        lookup.setSaveProperties("x");
         assertTrue(target.ShouldSave(lookup, "x"));
 
     }
@@ -164,7 +164,7 @@ public class CertificationManagerTest extends TestCase {
         CertificationManager target = new CertificationManager();
         TargetLookup lookup = new TargetLookup();
         lookup.setSaveProperties("y,x");
-        assertTrue(target.ShouldSave(lookup, "x"));
+        assertFalse(target.ShouldSave(lookup, "x"));
 
     }
 
@@ -177,6 +177,34 @@ public class CertificationManagerTest extends TestCase {
         TargetLookup lookup = new TargetLookup();
         lookup.setSaveProperties(".*application\\.url");
         assertTrue(target.ShouldSave(lookup, "application.url"));
+
+    }
+
+    public void testSavePropertiesNoException() throws Exception {
+        CertificationManager target = new CertificationManager();
+        TargetLookup lookup = new TargetLookup();
+        Project p = new Project();
+        target.saveProperties(lookup,p);
+
+    }
+
+
+    // proves that if the property 'x' is requested to be
+    // saved that calling saveProperties saves it
+    public void testSavePropertiesSaveSimple() throws Exception {
+
+        CertificationManager target = new CertificationManager();
+        assertEquals(0, target.getPropertyValues().size());
+        TargetLookup lookup = new TargetLookup();
+        String propertyName = "x" ;
+        String propertyValue = "xyzxyzxyz" ;
+        Project p = new Project();
+        lookup.setSaveProperties(propertyName);
+        p.setProperty(propertyName,propertyValue);
+        target.saveProperties(lookup,p);
+        assertEquals(1, target.getPropertyValues().size());
+        assertTrue(target.getPropertyValues().containsKey(propertyName));
+        assertEquals(propertyValue,target.getPropertyValues().get(propertyName));
 
     }
 }
