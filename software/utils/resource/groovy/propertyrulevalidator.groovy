@@ -6,7 +6,7 @@ import org.apache.log4j.*
 class propertyRuleValidator
 {
 	def antProps
-	def failureMessages="<html>\n\t<body>\n\t\t<h1>BDA Properies Validation Report</h1>\n\t\t<table border=\"1\">\n\t\t\t<tr bgcolor=\"99CCFF\">\n\t\t\t\t<td>Property</td>\n\t\t\t\t<td>Rule</td>\n\t\t\t\t<td>Value</td>\n\t\t\t\t<td>Failure Mesage</td>\n"
+	def failureMessages="<html>\n\t<body>\n\t\t<h1>BDA Properties Validation Report</h1>\n\t\t<table border=\"1\">\n\t\t\t<tr bgcolor=\"99CCFF\">\n\t\t\t\t<td>Property</td>\n\t\t\t\t<td>Rule</td>\n\t\t\t\t<td>Value</td>\n\t\t\t\t<td>Failure Mesage</td>\n"
 	def failureFound = false
 	def debug=false
 	def rulesFileLocation
@@ -232,6 +232,7 @@ def prv = new propertyRuleValidator(properties, rulesFileLocation)
 def failMsgs=prv.antEvaluateAntProperties()
 
 def failureProperty = args[1]
+println "Failure Property - " + failureProperty
 def outFileName = properties['log.dir'] + "/" + (rulesFileLocation.name=~ /xml/).replaceFirst('html')
 println "html report file name - " +outFileName
 def outFile= new File(outFileName)
@@ -258,7 +259,8 @@ if (properties["evaluate.property.name"] != null)
 		outFile.write(failMsgs)
 		println "Some properties had property validation failures. Check ${outFile} for details."
 	
-		properties["failureProperty"]="true"
+		properties[failureProperty]="true"
+		println failureProperty + " " + properties[failureProperty] + properties[failureProperty].class
 	}
 }
 //println "jboss.major.version " + properties["jboss.major.version"].class + " " + properties["jboss.major.version"]

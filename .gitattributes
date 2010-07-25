@@ -4045,7 +4045,6 @@ software/utils/resource/groovy/genxml.pl -text
 software/utils/resource/groovy/grid-property-rules.xml -text
 software/utils/resource/groovy/jboss-property-rules.xml -text
 software/utils/resource/groovy/migrateIvy.groovy -text
-software/utils/resource/groovy/property-rules.xml -text
 software/utils/resource/groovy/propertyrulevalidator.groovy -text
 software/utils/resource/groovy/tomcat-property-rules.xml -text
 software/utils/resource/groovy/updatePropertiesService.groovy -text
