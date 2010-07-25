@@ -3110,7 +3110,7 @@
 				<fail-message>jboss.cobraorb.port did not pass validation. jboss.cobraorb.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30350".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.cobraorb.port-value</name>
+				<name>jboss.cobraorb.port-port</name>
 				<description>Checks jboss.cobraorb.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3166,7 +3166,7 @@
 				<fail-message>jbosscp.src.url did not pass validation. jbosscp.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/jboss-4.0.5.GA_CP15.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>jbosscp.src.url-value</name>
+				<name>jbosscp.src.url-url</name>
 				<description>Checks jbosscp.src.url has proper value.</description>
 				<conditions>
 					<condition>jbosscp.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -3195,7 +3195,7 @@
 				<fail-message>jboss.ejbinvoker.port did not pass validation. jboss.ejbinvoker.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30150".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.ejbinvoker.port-value</name>
+				<name>jboss.ejbinvoker.port-port</name>
 				<description>Checks jboss.ejbinvoker.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3253,7 +3253,7 @@
 				<fail-message>jboss.external.grid.secure.port did not pass validation. jboss.external.grid.secure.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.external.grid.secure.port-value</name>
+				<name>jboss.external.grid.secure.port-port</name>
 				<description>Checks jboss.external.grid.secure.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3311,7 +3311,7 @@
 				<fail-message>jboss.external.http.port did not pass validation. jboss.external.http.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.external.http.port-value</name>
+				<name>jboss.external.http.port-port</name>
 				<description>Checks jboss.external.http.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3369,7 +3369,7 @@
 				<fail-message>jboss.external.ssl.port did not pass validation. jboss.external.ssl.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.external.ssl.port-value</name>
+				<name>jboss.external.ssl.port-port</name>
 				<description>Checks jboss.external.ssl.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3497,7 +3497,7 @@
 				<fail-message>jboss.grid.secure.port did not pass validation. jboss.grid.secure.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30500".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.grid.secure.port-value</name>
+				<name>jboss.grid.secure.port-port</name>
 				<description>Checks jboss.grid.secure.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3534,7 +3534,7 @@
 				<fail-message>jboss.hajndi.auto.port did not pass validation. jboss.hajndi.auto.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30370".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.hajndi.auto.port-value</name>
+				<name>jboss.hajndi.auto.port-port</name>
 				<description>Checks jboss.hajndi.auto.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3571,7 +3571,7 @@
 				<fail-message>jboss.hajndi.port did not pass validation. jboss.hajndi.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30160".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.hajndi.port-value</name>
+				<name>jboss.hajndi.port-port</name>
 				<description>Checks jboss.hajndi.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3608,7 +3608,7 @@
 				<fail-message>jboss.hajrmi.port did not pass validation. jboss.hajrmi.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30260".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.hajrmi.port-value</name>
+				<name>jboss.hajrmi.port-port</name>
 				<description>Checks jboss.hajrmi.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3714,7 +3714,7 @@
 				<fail-message>jboss.jms2.netty.port did not pass validation. jboss.jms2.netty.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30390".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.jms2.netty.port-value</name>
+				<name>jboss.jms2.netty.port-port</name>
 				<description>Checks jboss.jms2.netty.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3751,7 +3751,7 @@
 				<fail-message>jboss.jms2.netty-ssl.port did not pass validation. jboss.jms2.netty-ssl.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30400".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.jms2.netty-ssl.port-value</name>
+				<name>jboss.jms2.netty-ssl.port-port</name>
 				<description>Checks jboss.jms2.netty-ssl.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3788,7 +3788,7 @@
 				<fail-message>jboss.jms.port did not pass validation. jboss.jms.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30170".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.jms.port-value</name>
+				<name>jboss.jms.port-port</name>
 				<description>Checks jboss.jms.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3825,7 +3825,7 @@
 				<fail-message>jboss.jmx-rmi.port did not pass validation. jboss.jmx-rmi.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30290".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.jmx-rmi.port-value</name>
+				<name>jboss.jmx-rmi.port-port</name>
 				<description>Checks jboss.jmx-rmi.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3862,7 +3862,7 @@
 				<fail-message>jboss.messaging.port did not pass validation. jboss.messaging.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30330".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.messaging.port-value</name>
+				<name>jboss.messaging.port-port</name>
 				<description>Checks jboss.messaging.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3899,7 +3899,7 @@
 				<fail-message>jboss.ncicb-standard.port-config did not pass validation. jboss.ncicb-standard.port-config must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.ncicb-standard.port-config-value</name>
+				<name>jboss.ncicb-standard.port-config-tf</name>
 				<description>Checks jboss.ncicb-standard.port-config has proper value.</description>
 				<conditions>
 					<or>
@@ -3933,7 +3933,7 @@
 				<fail-message>jboss.pooledha.port did not pass validation. jboss.pooledha.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30270".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.pooledha.port-value</name>
+				<name>jboss.pooledha.port-port</name>
 				<description>Checks jboss.pooledha.port has proper value.</description>
 				<conditions>
 					<or>
@@ -3970,7 +3970,7 @@
 				<fail-message>jboss.remoting.port did not pass validation. jboss.remoting.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30320".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.remoting.port-value</name>
+				<name>jboss.remoting.port-port</name>
 				<description>Checks jboss.remoting.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4007,7 +4007,7 @@
 				<fail-message>jboss.server.bind.port did not pass validation. jboss.server.bind.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "0".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.server.bind.port-value</name>
+				<name>jboss.server.bind.port-port</name>
 				<description>Checks jboss.server.bind.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4065,7 +4065,7 @@
 				<fail-message>jboss.server.jndi.port did not pass validation. jboss.server.jndi.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30200".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.server.jndi.port-value</name>
+				<name>jboss.server.jndi.port-port</name>
 				<description>Checks jboss.server.jndi.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4123,7 +4123,7 @@
 				<fail-message>jboss.server.port did not pass validation. jboss.server.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30210".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.server.port-value</name>
+				<name>jboss.server.port-port</name>
 				<description>Checks jboss.server.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4254,7 +4254,7 @@
 				<fail-message>jboss.server.rmi.port did not pass validation. jboss.server.rmi.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30230".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.server.rmi.port-value</name>
+				<name>jboss.server.rmi.port-port</name>
 				<description>Checks jboss.server.rmi.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4291,7 +4291,7 @@
 				<fail-message>jboss.service.rmiobject.port did not pass validation. jboss.service.rmiobject.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30240".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.service.rmiobject.port-value</name>
+				<name>jboss.service.rmiobject.port-port</name>
 				<description>Checks jboss.service.rmiobject.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4328,7 +4328,7 @@
 				<fail-message>jboss.snmp.port did not pass validation. jboss.snmp.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30310".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.snmp.port-value</name>
+				<name>jboss.snmp.port-port</name>
 				<description>Checks jboss.snmp.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4365,7 +4365,7 @@
 				<fail-message>jboss.snmp-trapd.port did not pass validation. jboss.snmp-trapd.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30300".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.snmp-trapd.port-value</name>
+				<name>jboss.snmp-trapd.port-port</name>
 				<description>Checks jboss.snmp-trapd.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4401,7 +4401,7 @@
 				<fail-message>jboss.src.url did not pass validation. jboss.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/jboss-4.0.5.GA.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.src.url-value</name>
+				<name>jboss.src.url-url</name>
 				<description>Checks jboss.src.url has proper value.</description>
 				<conditions>
 					<condition>jboss.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -4564,7 +4564,7 @@
 				<fail-message>jboss.ssl.port did not pass validation. jboss.ssl.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30380".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.ssl.port-value</name>
+				<name>jboss.ssl.port-port</name>
 				<description>Checks jboss.ssl.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4601,7 +4601,7 @@
 				<fail-message>jboss.transaction.processid.port did not pass validation. jboss.transaction.processid.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30430".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.transaction.processid.port-value</name>
+				<name>jboss.transaction.processid.port-port</name>
 				<description>Checks jboss.transaction.processid.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4638,7 +4638,7 @@
 				<fail-message>jboss.transaction.recovery.port did not pass validation. jboss.transaction.recovery.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30410".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.transaction.recovery.port-value</name>
+				<name>jboss.transaction.recovery.port-port</name>
 				<description>Checks jboss.transaction.recovery.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4675,7 +4675,7 @@
 				<fail-message>jboss.transaction.status.port did not pass validation. jboss.transaction.status.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30420".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.transaction.status.port-value</name>
+				<name>jboss.transaction.status.port-port</name>
 				<description>Checks jboss.transaction.status.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4712,7 +4712,7 @@
 				<fail-message>jboss.unifiedinvoker.port did not pass validation. jboss.unifiedinvoker.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30360".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.unifiedinvoker.port-value</name>
+				<name>jboss.unifiedinvoker.port-port</name>
 				<description>Checks jboss.unifiedinvoker.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4770,7 +4770,7 @@
 				<fail-message>jboss.web.service.port did not pass validation. jboss.web.service.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "30250".</fail-message>
 			</rule>
 			<rule>
-				<name>jboss.web.service.port-value</name>
+				<name>jboss.web.service.port-port</name>
 				<description>Checks jboss.web.service.port has proper value.</description>
 				<conditions>
 					<or>
@@ -4848,7 +4848,7 @@
 				<fail-message>ldap.url did not pass validation. ldap.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "ldaps://ncids4a.nci.nih.gov:636".</fail-message>
 			</rule>
 			<rule>
-				<name>ldap.url-value</name>
+				<name>ldap.url-ldapurl</name>
 				<description>Checks ldap.url has proper value.</description>
 				<conditions>
 					<condition>ldap.url ==~ /^ldap.*:\/\/.*/</condition>
@@ -4961,7 +4961,7 @@
 				<fail-message>mysql.lowercasetablenames did not pass validation. mysql.lowercasetablenames must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
 			<rule>
-				<name>mysql.lowercasetablenames</name>
+				<name>mysql.lowercasetablenames-tf</name>
 				<description>Checks jboss.ssl.enable has proper value.</description>
 				<conditions>
 					<or>
@@ -5112,7 +5112,7 @@
 				<fail-message>sync-gts.src.url did not pass validation. sync-gts.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/gaards-syncgts-1.3.0.1-bin.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>sync-gts.src.url-value</name>
+				<name>sync-gts.src.url-url</name>
 				<description>Checks sync-gts.src.url has proper value.</description>
 				<conditions>
 					<condition>sync-gts.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
@@ -5202,7 +5202,7 @@
 				<fail-message>tomcat.external.grid.secure.port did not pass validation. tomcat.external.grid.secure.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
 			</rule>
 			<rule>
-				<name>tomcat.external.grid.secure.port-value</name>
+				<name>tomcat.external.grid.secure.port-port</name>
 				<description>Checks tomcat.external.grid.secure.port has proper value.</description>
 				<conditions>
 					<or>
@@ -5260,7 +5260,7 @@
 				<fail-message>tomcat.external.http.port did not pass validation. tomcat.external.http.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
 			</rule>
 			<rule>
-				<name>tomcat.external.http.port-value</name>
+				<name>tomcat.external.http.port-port</name>
 				<description>Checks tomcat.external.http.port has proper value.</description>
 				<conditions>
 					<or>
@@ -5318,7 +5318,7 @@
 				<fail-message>tomcat.external.ssl.port did not pass validation. tomcat.external.ssl.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "".</fail-message>
 			</rule>
 			<rule>
-				<name>tomcat.external.ssl.port-value</name>
+				<name>tomcat.external.ssl.port-port</name>
 				<description>Checks tomcat.external.ssl.port has proper value.</description>
 				<conditions>
 					<or>
@@ -5445,7 +5445,7 @@
 				<fail-message>tomcat.grid.secure.port did not pass validation. tomcat.grid.secure.port must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "21444".</fail-message>
 			</rule>
 			<rule>
-				<name>tomcat.grid.secure.port-value</name>
+				<name>tomcat.grid.secure.port-port</name>
 				<description>Checks tomcat.grid.secure.port has proper value.</description>
 				<conditions>
 					<or>
@@ -5718,7 +5718,7 @@
 				<fail-message>tomcat.src.url did not pass validation. tomcat.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/apache-tomcat-6.0.20.zip".</fail-message>
 			</rule>
 			<rule>
-				<name>tomcat.src.url-value</name>
+				<name>tomcat.src.url-url</name>
 				<description>Checks tomcat.src.url has proper value.</description>
 				<conditions>
 					<condition>tomcat.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
