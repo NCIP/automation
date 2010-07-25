@@ -232,9 +232,9 @@ def prv = new propertyRuleValidator(properties, rulesFileLocation)
 def failMsgs=prv.antEvaluateAntProperties()
 
 def failureProperty = args[1]
-println "Failure Property - " + failureProperty
+//println "Failure Property - " + failureProperty
 def outFileName = properties['log.dir'] + "/" + (rulesFileLocation.name=~ /xml/).replaceFirst('html')
-println "html report file name - " +outFileName
+//println "html report file name - " +outFileName
 def outFile= new File(outFileName)
 
 if (properties["evaluate.property.name"] != null)
