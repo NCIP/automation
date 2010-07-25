@@ -6,7 +6,8 @@ import org.apache.log4j.*
 class propertyRuleValidator
 {
 	def antProps
-	def failureMessages=""
+	def failureMessages="<html>\n\t<body>\n\t\t<h1>BDA Properies Validation Report</h1>\n\t\t<table border=\"1\">\n\t\t\t<tr bgcolor=\"99CCFF\">\n\t\t\t\t<td>Property</td>\n\t\t\t\t<td>Rule</td>\n\t\t\t\t<td>Value</td>\n\t\t\t\t<td>Failure Mesage</td>\n"
+	def failureFound = false
 	def debug=false
 	def rulesFileLocation
 	def ruleRefererncedPropList =[]
@@ -86,15 +87,24 @@ class propertyRuleValidator
 					if(debug) println "Rule ${ruleName} for property ${propertyName} passed."
 				} else
 				{
+					failureFound = true
 					if(debug) println "Property - ${propertyName}\tRule - ${ruleName} FAILED."
 					if(debug) println "\t" + ruleFailMsg
-					failureMessages = failureMessages + "== Property [${propertyName}]  Rule [${ruleName}] Value [${antProps[propertyName]}] failed.\n" + ruleFailMsg + "\n"
+					failureMessages = failureMessages + "\t\t\t<tr>\n\t\t\t\t<td>${propertyName}</td>\n\t\t\t\t<td>${ruleName}</td>\n\t\t\t\t<td>${antProps[propertyName]}</td>\n\t\t\t\t<td>" + ruleFailMsg + "</td>\n\t\t\t</tr>\n"
 				}
 			}
 			o++
 			} // else
 		}
-		return failureMessages
+		if (failureFound)
+		{
+			failureMessages = failureMessages + "\t\t</table>\n\t</body>\n</html>"
+			return failureMessages
+		}
+		else
+		{
+			return ""
+		}
 	}
 	private  antRecurseConditions(groovy.util.NodeList curNode, String cond)
 	{
@@ -218,18 +228,23 @@ class propertyRuleValidator
 def rulesFileLocation=new File(args[0]).getAbsoluteFile()
 def prv = new propertyRuleValidator(properties, rulesFileLocation)
 
+// Run property evalution
 def failMsgs=prv.antEvaluateAntProperties()
+
+def failureProperty = args[1]
+def outFileName = properties['log.dir'] + "/" + (rulesFileLocation.name=~ /xml/).replaceFirst('html')
+println "html report file name - " +outFileName
+def outFile= new File(outFileName)
+
 if (properties["evaluate.property.name"] != null)
 {
 	def failProp=properties["evaluate.property.name"]
 	println "evaluate.property.name - " + properties["evaluate.property.name"] + " (" + properties[failProp] + ") so only setting failure flag based on pass/fail results of this property."
-	//println "failMsgs -\n" + failMsgs
-	//println "failProp - " + failProp
-	if( failMsgs.contains("[" + failProp + "]"))
+	if( failMsgs.contains("<td>" + failProp + "<td>"))
 	{
-		println "Property ${failProp} failed validation."
-		properties["property.rule.validator.failed"]="true"
-		properties["property.rule.validator.msg"]=failMsgs
+		outFile.write(failMsgs)
+		println "Property ${failProp} failed validation. Check ${outFile} for details."
+		properties[failureProperty]="true"
 	} else
 	{
 		println "Property ${failProp} passed all validation rules."
@@ -240,9 +255,10 @@ if (properties["evaluate.property.name"] != null)
 	
 	if (failMsgs.length() > 0)
 	{
-		println "Some properties had property validation failures."
-		properties["property.rule.validator.failed"]="true"
-		properties["property.rule.validator.msg"]=failMsgs
+		outFile.write(failMsgs)
+		println "Some properties had property validation failures. Check ${outFile} for details."
+	
+		properties["failureProperty"]="true"
 	}
 }
 //println "jboss.major.version " + properties["jboss.major.version"].class + " " + properties["jboss.major.version"]
