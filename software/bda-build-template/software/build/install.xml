@@ -1782,7 +1782,7 @@ $HeadURL$
 	<target name="test:fail">
 		<fail message="This target is supposed to cause a build failure.  This target can be used to verfiy that &lt;exec/&gt; calls are catching failures."/>
 	</target>
-	<target name="install:common:property-validate" description=""
+	<target name="install:common:property-validate:all" description=""
 		depends="
 		common:jboss:init,
 		common:tomcat:init,
@@ -1790,44 +1790,116 @@ $HeadURL$
 		install:jboss:init
 		">
 		<echo message="**** Begin Property Rule Validation"/>
-		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
+		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/all-property-rules.xml"/>
+		<var name="all.property.rule.validator.failed" unset="true"/>
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
-			<arg line="${bda-utils.dir}/resource/groovy/new-property-rules.xml"/>
+			<arg line="${bda-utils.dir}/resource/groovy/all-property-rules.xml all.property.rule.validator.failed"/>
 		</groovy>
 		<if>
-			<equals arg1="${property.rule.validator.failed}" arg2="true"/>
+			<equals arg1="${all.property.rule.validator.failed}" arg2="true"/>
 			<then>
-				<echo message="====== Property Validation Errors ======"/>
-				<echo message="${property.rule.validator.msg}"/>
-				<fail message="Failed build, see property errors above"/>
+				<fail message="Property Validation Failed"/>
 			</then>
-			<else>
-				<echo message="All property validation rules pased, hoorahhh."/>
-			</else>
 		</if>
-
 	</target>
-	<target name="upgrade:common:property-validate" description=""
+	<target name="install:common:property-validate:common" description=""
 		depends="
-		upgrade:common:init,
-		common:init,
 		common:jboss:init,
-		common:tomcat:init
+		common:tomcat:init,
+		common:init,
+		install:jboss:init
 		">
 		<echo message="**** Begin Property Rule Validation"/>
+		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/common-property-rules.xml"/>
+		<var name="common.property.rule.validator.failed" unset="true"/>
 		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
-			<arg line="${bda-utils.dir}/resource/groovy/property-rules.xml"/>
+			<arg line="${bda-utils.dir}/resource/groovy/common-property-rules.xml common.property.rule.validator.failed"/>
 		</groovy>
 		<if>
-			<equals arg1="${property.rule.validator.failed}" arg2="true"/>
+			<equals arg1="${common.property.rule.validator.failed}" arg2="true"/>
 			<then>
-				<echo message="====== Property Validation Errors ======"/>
-				<echo message="${property.rule.validator.msg}"/>
-				<fail message="Failed build, see property errors above"/>
+				<fail message="Property Validation Failed"/>
 			</then>
-			<else>
-				<echo message="All property validation rules pased, hoorahhh."/>
-			</else>
+		</if>
+	</target>
+	<target name="install:common:property-validate:database" description=""
+		depends="
+		common:jboss:init,
+		common:tomcat:init,
+		common:init,
+		install:jboss:init
+		">
+		<echo message="**** Begin Property Rule Validation"/>
+		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/database-property-rules.xml"/>
+		<var name="database.property.rule.validator.failed" unset="true"/>
+		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
+			<arg line="${bda-utils.dir}/resource/groovy/database-property-rules.xml database.property.rule.validator.failed"/>
+		</groovy>
+		<if>
+			<equals arg1="${database.property.rule.validator.failed}" arg2="true"/>
+			<then>
+				<fail message="Property Validation Failed"/>
+			</then>
+		</if>
+	</target>
+	<target name="install:common:property-validate:grid" description=""
+		depends="
+		common:jboss:init,
+		common:tomcat:init,
+		common:init,
+		install:jboss:init
+		">
+		<echo message="**** Begin Property Rule Validation"/>
+		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/grid-property-rules.xml"/>
+		<var name="grid.property.rule.validator.failed" unset="true"/>
+		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
+			<arg line="${bda-utils.dir}/resource/groovy/grid-property-rules.xml grid.property.rule.validator.failed"/>
+		</groovy>
+		<if>
+			<equals arg1="${grid.property.rule.validator.failed}" arg2="true"/>
+			<then>
+				<fail message="Property Validation Failed"/>
+			</then>
+		</if>
+	</target>
+	<target name="install:common:property-validate:jboss" description=""
+		depends="
+		common:jboss:init,
+		common:tomcat:init,
+		common:init,
+		install:jboss:init
+		">
+		<echo message="**** Begin Property Rule Validation"/>
+		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/jboss-property-rules.xml"/>
+		<var name="jboss.property.rule.validator.failed" unset="true"/>
+		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
+			<arg line="${bda-utils.dir}/resource/groovy/jboss-property-rules.xml jboss.property.rule.validator.failed"/>
+		</groovy>
+		<if>
+			<equals arg1="${jboss.property.rule.validator.failed}" arg2="true"/>
+			<then>
+				<fail message="Property Validation Failed"/>
+			</then>
+		</if>
+	</target>
+	<target name="install:common:property-validate:tomcat" description=""
+		depends="
+		common:jboss:init,
+		common:tomcat:init,
+		common:init,
+		install:jboss:init
+		">
+		<echo message="**** Begin Property Rule Validation"/>
+		<xmlvalidate failonerror="yes" lenient="yes" file="${bda-utils.dir}/resource/groovy/tomcat-property-rules.xml"/>
+		<var name="tomcat.property.rule.validator.failed" unset="true"/>
+		<groovy src="${bda-utils.dir}/resource/groovy/propertyrulevalidator.groovy">
+			<arg line="${bda-utils.dir}/resource/groovy/tomcat-property-rules.xml tomcat.property.rule.validator.failed"/>
+		</groovy>
+		<if>
+			<equals arg1="${tomcat.property.rule.validator.failed}" arg2="true"/>
+			<then>
+				<fail message="Property Validation Failed"/>
+			</then>
 		</if>
 	</target>
 </project>
