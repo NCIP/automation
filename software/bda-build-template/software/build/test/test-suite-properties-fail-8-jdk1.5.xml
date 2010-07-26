@@ -24,7 +24,7 @@
 			</else>                 
 		</if>           
 	</target>
-	<target name="test:property:fail:grid.target-syntax">
+	<target name="test:property:fail:grid.target-value">
 		<echo message="**** Entering test:property:fail:grid.target"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.target=fail
@@ -54,7 +54,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:ivy.bda.settings.src.url"/>
 	</target>
-	<target name="test:property:fail:ivy.bda.settings.src.url-syntax">
+	<target name="test:property:fail:ivy.bda.settings.src.url-url">
 		<echo message="**** Entering test:property:fail:ivy.bda.settings.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ivy.bda.settings.src.url=http://www.microsoft.com
@@ -84,7 +84,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:ivy.bda.src.url"/>
 	</target>
-	<target name="test:property:fail:ivy.bda.src.url-syntax">
+	<target name="test:property:fail:ivy.bda.src.url-url">
 		<echo message="**** Entering test:property:fail:ivy.bda.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ivy.bda.src.url=http://www.microsoft.com

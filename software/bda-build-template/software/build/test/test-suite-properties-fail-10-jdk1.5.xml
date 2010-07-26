@@ -114,7 +114,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.grid.secure.enable"/>
 	</target>
-	<target name="test:property:fail:jboss.grid.secure.enable-syntax">
+	<target name="test:property:fail:jboss.grid.secure.enable-tf">
 		<echo message="**** Entering test:property:fail:jboss.grid.secure.enable"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.grid.secure.enable=fail

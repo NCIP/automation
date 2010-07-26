@@ -54,7 +54,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:database.system.password"/>
 	</target>
-	<target name="test:property:fail:database.system.password-syntax">
+	<target name="test:property:fail:database.system.password-value">
 		<echo message="**** Entering test:property:fail:database.system.password"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.system.password=fail&gt;condition
@@ -114,7 +114,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:database.system.user"/>
 	</target>
-	<target name="test:property:fail:database.system.user-syntax">
+	<target name="test:property:fail:database.system.user-value">
 		<echo message="**** Entering test:property:fail:database.system.user"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.system.user=bdauser
