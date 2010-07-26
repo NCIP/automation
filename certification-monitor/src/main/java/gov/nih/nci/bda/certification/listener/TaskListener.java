@@ -1,6 +1,7 @@
 package gov.nih.nci.bda.certification.listener;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -84,7 +85,10 @@ public class TaskListener implements BuildListener {
         if (out == null) {
             try {
                 // Create file
-                FileWriter fstream = new FileWriter(this.getPropertyFilename(project));
+                File theFile = new File(this.getPropertyFilename(project));
+                theFile.createNewFile();
+                System.out.println("TaskListener:getWrite theFile = " + theFile.getAbsolutePath());
+                FileWriter fstream = new FileWriter(theFile);
                 out = new BufferedWriter(fstream);
             } catch (Exception e) {//Catch exception if any
                 System.err.println("Error: " + e.getMessage());
