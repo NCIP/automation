@@ -62,7 +62,7 @@
 		</sequential>
 	</macrodef>
 	<macrodef name="execute-property-test-pass">
-		<attribute name="build.target" default="install:common:property-validate"/>
+		<attribute name="build.target" default="install:common:property-validate:all"/>
 		<sequential>
 			<ant inheritAll="false" inheritrefs="false"
 				antfile="build.xml"
@@ -73,7 +73,7 @@
 		</sequential>
 	</macrodef>
 	<macrodef name="execute-property-test-fail">
-		<attribute name="build.target" default="install:common:property-validate"/>
+		<attribute name="build.target" default="install:common:property-validate:all"/>
 		<sequential>
 			<trycatch property="try.property">
 				<try>        

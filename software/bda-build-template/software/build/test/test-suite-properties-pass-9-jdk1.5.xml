@@ -1,0 +1,306 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+		<osfamily property="os.family"/>
+		<if>                    
+			<or>                            
+				<equals arg1="${os.family}" arg2="mac"/>
+				<equals arg1="${os.family}" arg2="unix"/>
+			</or>                   
+			<then>                          
+				<exec executable="egrep">               
+					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
+				</exec>                         
+			</then>                 
+			<else>                  
+				<echo mesage="Grep not supported on windows"/>
+			</else>                 
+		</if>           
+	</target>	<target name="test:property:pass:ldap.basedn">
+		<echo message="**** Entering test:property:pass:ldap.basedn"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			ldap.basedn=ou=nci
+			evaluate.property.name=ldap.basedn
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:ldap.basedn"/>
+	</target>	<target name="test:property:pass:ldap.url">
+		<echo message="**** Entering test:property:pass:ldap.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			ldap.url=ldaps://ncids4a.nci.nih.gov:636
+			evaluate.property.name=ldap.url
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:ldap.url"/>
+	</target>	<target name="test:property:pass:log4j.level">
+		<echo message="**** Entering test:property:pass:log4j.level"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			log4j.level=WARN
+			evaluate.property.name=log4j.level
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:log4j.level"/>
+	</target>	<target name="test:property:pass:log4j.maxDays">
+		<echo message="**** Entering test:property:pass:log4j.maxDays"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			log4j.maxDays=7
+			evaluate.property.name=log4j.maxDays
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:log4j.maxDays"/>
+	</target>	<target name="test:property:pass:log4j.maxFileSize">
+		<echo message="**** Entering test:property:pass:log4j.maxFileSize"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			log4j.maxFileSize=100MB
+			evaluate.property.name=log4j.maxFileSize
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:log4j.maxFileSize"/>
+	</target>	<target name="test:property:pass:mail.smtp.server">
+		<echo message="**** Entering test:property:pass:mail.smtp.server"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			mail.smtp.server=mailfwd.nih.gov
+			evaluate.property.name=mail.smtp.server
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:mail.smtp.server"/>
+	</target>	<target name="test:property:pass:mysql.lowercasetablenames">
+		<echo message="**** Entering test:property:pass:mysql.lowercasetablenames"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			mysql.lowercasetablenames=true
+			evaluate.property.name=mysql.lowercasetablenames
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:mysql.lowercasetablenames"/>
+	</target>	<target name="test:property:pass:mysql.minimum.version">
+		<echo message="**** Entering test:property:pass:mysql.minimum.version"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			mysql.minimum.version=5.0.27
+			evaluate.property.name=mysql.minimum.version
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:mysql.minimum.version"/>
+	</target>	<target name="test:property:pass:project.name">
+		<echo message="**** Entering test:property:pass:project.name"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			project.name=bda-blueprints
+			evaluate.property.name=project.name
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:project.name"/>
+	</target>	<target name="test:property:pass:require.build.wscore">
+		<echo message="**** Entering test:property:pass:require.build.wscore"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			require.build.wscore=true
+			evaluate.property.name=require.build.wscore
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:require.build.wscore"/>
+	</target>	<target name="test:property:pass:sync-gts.binaries.file">
+		<echo message="**** Entering test:property:pass:sync-gts.binaries.file"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			sync-gts.binaries.file=gaards-syncgts-1.3.0.1-bin.zip
+			evaluate.property.name=sync-gts.binaries.file
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:sync-gts.binaries.file"/>
+	</target>	<target name="test:property:pass:sync-gts.binaries.relative.dir">
+		<echo message="**** Entering test:property:pass:sync-gts.binaries.relative.dir"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			sync-gts.binaries.relative.dir=.
+			evaluate.property.name=sync-gts.binaries.relative.dir
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:sync-gts.binaries.relative.dir"/>
+	</target>	<target name="test:property:pass:sync-gts.src.url">
+		<echo message="**** Entering test:property:pass:sync-gts.src.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			sync-gts.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/gaards-syncgts-1.3.0.1-bin.zip
+			evaluate.property.name=sync-gts.src.url
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:sync-gts.src.url"/>
+	</target>	<target name="test:property:pass:tomcat.binaries.file">
+		<echo message="**** Entering test:property:pass:tomcat.binaries.file"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.binaries.file=apache-tomcat-6.0.20.zip
+			evaluate.property.name=tomcat.binaries.file
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:tomcat.binaries.file"/>
+	</target>	<target name="test:property:pass:tomcat.binaries.relative.dir">
+		<echo message="**** Entering test:property:pass:tomcat.binaries.relative.dir"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.binaries.relative.dir=apache-tomcat-6.0.20
+			evaluate.property.name=tomcat.binaries.relative.dir
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:tomcat.binaries.relative.dir"/>
+	</target>	<target name="test:property:pass:tomcat.external.grid.secure.host">
+		<echo message="**** Entering test:property:pass:tomcat.external.grid.secure.host"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.grid.secure.host=
+			evaluate.property.name=tomcat.external.grid.secure.host
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.grid.secure.host"/>
+	</target>	<target name="test:property:pass:tomcat.external.grid.secure.port">
+		<echo message="**** Entering test:property:pass:tomcat.external.grid.secure.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.grid.secure.port=
+			evaluate.property.name=tomcat.external.grid.secure.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.grid.secure.port"/>
+	</target>	<target name="test:property:pass:tomcat.external.http.host">
+		<echo message="**** Entering test:property:pass:tomcat.external.http.host"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.http.host=
+			evaluate.property.name=tomcat.external.http.host
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.http.host"/>
+	</target>	<target name="test:property:pass:tomcat.external.http.port">
+		<echo message="**** Entering test:property:pass:tomcat.external.http.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.http.port=
+			evaluate.property.name=tomcat.external.http.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.http.port"/>
+	</target>	<target name="test:property:pass:tomcat.external.ssl.host">
+		<echo message="**** Entering test:property:pass:tomcat.external.ssl.host"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.ssl.host=
+			evaluate.property.name=tomcat.external.ssl.host
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.ssl.host"/>
+	</target></project>

@@ -1,0 +1,306 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+		<osfamily property="os.family"/>
+		<if>                    
+			<or>                            
+				<equals arg1="${os.family}" arg2="mac"/>
+				<equals arg1="${os.family}" arg2="unix"/>
+			</or>                   
+			<then>                          
+				<exec executable="egrep">               
+					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
+				</exec>                         
+			</then>                 
+			<else>                  
+				<echo mesage="Grep not supported on windows"/>
+			</else>                 
+		</if>           
+	</target>	<target name="test:property:pass:ant.minimum.version">
+		<echo message="**** Entering test:property:pass:ant.minimum.version"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			ant.minimum.version=1.7.0
+			evaluate.property.name=ant.minimum.version
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:ant.minimum.version"/>
+	</target>	<target name="test:property:pass:application.base.path.linux">
+		<echo message="**** Entering test:property:pass:application.base.path.linux"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.linux=/home/user/apps/appname
+			evaluate.property.name=application.base.path.linux
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:application.base.path.linux"/>
+	</target>	<target name="test:property:pass:application.base.path.windows">
+		<echo message="**** Entering test:property:pass:application.base.path.windows"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.base.path.windows=c:/apps/appname
+			evaluate.property.name=application.base.path.windows
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:application.base.path.windows"/>
+	</target>	<target name="test:property:pass:application.url">
+		<echo message="**** Entering test:property:pass:application.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.url=http://localhost.nci.nih.gov:port
+			evaluate.property.name=application.url
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:application.url"/>
+	</target>	<target name="test:property:pass:application.context.name">
+		<echo message="**** Entering test:property:pass:application.context.name"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			application.context.name=bda
+			evaluate.property.name=application.context.name
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:application.context.name"/>
+	</target>	<target name="test:property:pass:authentication.type">
+		<echo message="**** Entering test:property:pass:authentication.type"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			authentication.type=db
+			evaluate.property.name=authentication.type
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:authentication.type"/>
+	</target>	<target name="test:property:pass:bda-blueprints-webapp.install.name">
+		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.install.name"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			bda-blueprints-webapp.install.name=bda-blueprints_install
+			evaluate.property.name=bda-blueprints-webapp.install.name
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.install.name"/>
+	</target>	<target name="test:property:pass:bda-blueprints-webapp.install.zip.file">
+		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.install.zip.file"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			bda-blueprints-webapp.install.zip.file=bda-blueprints_install-1.7.0.zip
+			evaluate.property.name=bda-blueprints-webapp.install.zip.file
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.install.zip.file"/>
+	</target>	<target name="test:property:pass:bda-blueprints-webapp.upgrade.name">
+		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.upgrade.name"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			bda-blueprints-webapp.upgrade.name=bda-blueprints_upgrade
+			evaluate.property.name=bda-blueprints-webapp.upgrade.name
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.upgrade.name"/>
+	</target>	<target name="test:property:pass:bda-blueprints-webapp.upgrade.zip.file">
+		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.upgrade.zip.file"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			bda-blueprints-webapp.upgrade.zip.file=bda-blueprints_upgrade-1.7.0.zip
+			evaluate.property.name=bda-blueprints-webapp.upgrade.zip.file
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.upgrade.zip.file"/>
+	</target>	<target name="test:property:pass:bda-blueprints-webapp.version">
+		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.version"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			bda-blueprints-webapp.version=1.7.0
+			evaluate.property.name=bda-blueprints-webapp.version
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.version"/>
+	</target>	<target name="test:property:pass:bda.version">
+		<echo message="**** Entering test:property:pass:bda.version"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			bda.version=1.7.0
+			evaluate.property.name=bda.version
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:bda.version"/>
+	</target>	<target name="test:property:pass:build.bda.src.url">
+		<echo message="**** Entering test:property:pass:build.bda.src.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			build.bda.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml
+			evaluate.property.name=build.bda.src.url
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:build.bda.src.url"/>
+	</target>	<target name="test:property:pass:cacore-sdk.binaries.file">
+		<echo message="**** Entering test:property:pass:cacore-sdk.binaries.file"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			cacore-sdk.binaries.file=caCORE_SDK_411-src.zip
+			evaluate.property.name=cacore-sdk.binaries.file
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:cacore-sdk.binaries.file"/>
+	</target>	<target name="test:property:pass:cacore-sdk.binaries.relative.dir">
+		<echo message="**** Entering test:property:pass:cacore-sdk.binaries.relative.dir"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			cacore-sdk.binaries.relative.dir=codegen
+			evaluate.property.name=cacore-sdk.binaries.relative.dir
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:cacore-sdk.binaries.relative.dir"/>
+	</target>	<target name="test:property:pass:cacore-sdk.required">
+		<echo message="**** Entering test:property:pass:cacore-sdk.required"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			cacore-sdk.required=true
+			evaluate.property.name=cacore-sdk.required
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:cacore-sdk.required"/>
+	</target>	<target name="test:property:pass:cacore-sdk.src.url">
+		<echo message="**** Entering test:property:pass:cacore-sdk.src.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			cacore-sdk.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}
+			evaluate.property.name=cacore-sdk.src.url
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:cacore-sdk.src.url"/>
+	</target>	<target name="test:property:pass:cagrid-base-war.binaries.file">
+		<echo message="**** Entering test:property:pass:cagrid-base-war.binaries.file"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			cagrid-base-war.binaries.file=cagrid-wscore-4.0.3-appserver-base-war.zip
+			evaluate.property.name=cagrid-base-war.binaries.file
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:cagrid-base-war.binaries.file"/>
+	</target>	<target name="test:property:pass:cagrid-base-war.binaries.relative.dir">
+		<echo message="**** Entering test:property:pass:cagrid-base-war.binaries.relative.dir"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			cagrid-base-war.binaries.relative.dir=.
+			evaluate.property.name=cagrid-base-war.binaries.relative.dir
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:cagrid-base-war.binaries.relative.dir"/>
+	</target>	<target name="test:property:pass:cagrid-base-war.src.url">
+		<echo message="**** Entering test:property:pass:cagrid-base-war.src.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			cagrid-base-war.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-base-war.zip
+			evaluate.property.name=cagrid-base-war.src.url
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:cagrid-base-war.src.url"/>
+	</target></project>
