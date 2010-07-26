@@ -26,6 +26,7 @@
 
 
     <property name="gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save" value="" />
+    <property name="gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile" value="" />
 	<property name="build.dir" location="${basedir}" />
 	<property name="bda-download.dir" location="${build.dir}/bda-download" />
 	<property name="lib.dir" location="${build.dir}/lib" />
@@ -279,7 +280,7 @@
                 <arg value="-Ddatabase.password=${database.password}" />
                 <arg value="-Ddatabase.url=${database.url}" />
                 <arg value="-Ddatabase.system.url=${database.system.url}" />
-                <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.propertysavefile=single.command.deployment.saved" />
+                <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.propertysavefile=${gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile}" />
                 <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.properties.to.save=${gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save}" />
                 <arg line="${override.properties.string}"/>
                 <arg value="${single-command.deployment.target}" />
@@ -300,7 +301,7 @@
 			<arg value="-Ddatabase.password=${database.password}" />
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
-            <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.propertysavefile=single.command.deployment.saved" />
+            <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.propertysavefile=${gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile}" />
             <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.properties.to.save=${gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save}" />
 			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />

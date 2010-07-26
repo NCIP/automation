@@ -104,8 +104,15 @@ public class CertificationManager {
 
 
             if (targetLookup.getSaveProperties() != null && targetLookup.getSaveProperties().trim() != "") {
+
+                String userHome = project.getProperty("user.home") ;
+                certLogger.info("certifyProjects: user.home=" + userHome);
+                String filePath = userHome + "/" + projectName + "." + targetLookup.getMapName() + ".saved";
+
+
                 certLogger.info("project.setProperty(\"gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save\"=" + targetLookup.getSaveProperties());
                 project.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save",targetLookup.getSaveProperties());
+                project.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile",filePath);
             }
 
 			try {
