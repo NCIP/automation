@@ -245,7 +245,7 @@ public class TaskListenerTest extends TestCase {
 
         TaskListener target = new TaskListener();
         TargetLookup lookup = new TargetLookup();
-        assertFalse(target.ShouldSave(lookup, "x"));
+        assertFalse(target.ShouldSave("x"));
 
     }
 
@@ -255,9 +255,8 @@ public class TaskListenerTest extends TestCase {
     public void testShouldSaveSimpleTrue() {
 
         TaskListener target = new TaskListener();
-        TargetLookup lookup = new TargetLookup();
-        lookup.setSaveProperties("x");
-        assertTrue(target.ShouldSave(lookup, "x"));
+        target.setPropertiesToSaveExpression("x");
+        assertTrue(target.ShouldSave("x"));
 
     }
 
@@ -267,10 +266,8 @@ public class TaskListenerTest extends TestCase {
     public void testShouldSaveMultiTrue() {
 
         TaskListener target = new TaskListener();
-        TargetLookup lookup = new TargetLookup();
-        lookup.setSaveProperties("y,x");
-        assertTrue(target.ShouldSave(lookup, "x"));
-
+        target.setPropertiesToSaveExpression("y,x");
+        assertTrue(target.ShouldSave("x"));
     }
 
     // this test tests the shouldSave method to check if it
@@ -279,17 +276,15 @@ public class TaskListenerTest extends TestCase {
     public void testShouldSaveReqexTrue() {
 
         TaskListener target = new TaskListener();
-        TargetLookup lookup = new TargetLookup();
-        lookup.setSaveProperties(".*application\\.url");
-        assertTrue(target.ShouldSave(lookup, "application.url"));
+        target.setPropertiesToSaveExpression(".*application\\.url");
+        assertTrue(target.ShouldSave("application.url"));
 
     }
 
     public void testSavePropertiesNoException() throws Exception {
         TaskListener target = new TaskListener();
-        TargetLookup lookup = new TargetLookup();
         Project p = new Project();
-        target.saveProperties(lookup,p);
+        target.saveProperties(p);
 
     }
 
@@ -300,13 +295,12 @@ public class TaskListenerTest extends TestCase {
 
         TaskListener target = new TaskListener();
         assertEquals(0, target.getPropertyValues().size());
-        TargetLookup lookup = new TargetLookup();
         String propertyName = "x" ;
         String propertyValue = "xyzxyzxyz" ;
         Project p = new Project();
-        lookup.setSaveProperties(propertyName);
         p.setProperty(propertyName,propertyValue);
-        target.saveProperties(lookup,p);
+        target.setPropertiesToSaveExpression(propertyName);
+        target.saveProperties(p);
         assertEquals(1, target.getPropertyValues().size());
         assertTrue(target.getPropertyValues().containsKey(propertyName));
         assertEquals(propertyValue,target.getPropertyValues().get(propertyName));
@@ -319,13 +313,12 @@ public class TaskListenerTest extends TestCase {
 
         TaskListener target = new TaskListener();
         assertEquals(0, target.getPropertyValues().size());
-        TargetLookup lookup = new TargetLookup();
         String propertyName = ".*application.url" ;
         String propertyValue = "http://microsoft.com" ;
         Project p = new Project();
-        lookup.setSaveProperties(propertyName);
+        target.setPropertiesToSaveExpression(propertyName);
         p.setProperty("jboss." + propertyName,propertyValue);
-        assertTrue(target.ShouldSave(lookup,propertyName));
+        assertTrue(target.ShouldSave(propertyName));
 
     }
 

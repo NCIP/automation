@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import gov.nih.nci.bda.certification.domain.TargetLookup;
+import org.apache.commons.lang.time.StopWatch;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
@@ -22,6 +23,7 @@ public class TaskListener implements BuildListener {
     StringBuffer taskList = new StringBuffer();
     Project project = null;
     private String filename;
+    private String propertiesToSaveExpression;
 
     public void buildFinished(BuildEvent event) {
         System.out.println("START FROM THE TASKLISTENER");
@@ -123,13 +125,13 @@ public class TaskListener implements BuildListener {
         
     }
 
-    public void saveProperties(TargetLookup targetLookup, Project project) throws Exception {
+    public void saveProperties(Project project) throws Exception {
 
         System.out.println("saveProperties()");
 
         for(Object checkToSave:project.getProperties().keySet())
         {
-            if(this.ShouldSave(targetLookup,checkToSave.toString()))
+            if(this.ShouldSave(checkToSave.toString()))
             {
                 System.out.println("Saving property:" + checkToSave.toString() + "=" + project.getProperties().get(checkToSave.toString()).toString());
                 this.addPropertyValue(  checkToSave.toString()
@@ -170,10 +172,11 @@ public class TaskListener implements BuildListener {
         return propertyValues;
     }
 
-    public boolean ShouldSave(TargetLookup target, String propertyNameExpression) {
+    public boolean ShouldSave(String propertyNameExpression) {
 
         boolean returnValue = false ;
-        String[] expressions = target.SaveExpressions();
+
+        String[] expressions = this.getPropertiesToSaveExpression().split(",");
 
         Pattern p ;
 
@@ -196,4 +199,14 @@ public class TaskListener implements BuildListener {
     }
 
 
+    public String getPropertiesToSaveExpression() {
+        if (this.propertiesToSaveExpression == null){
+            this.propertiesToSaveExpression = "";
+        }
+        return this.propertiesToSaveExpression;
+    }
+
+    public void setPropertiesToSaveExpression(String value) {
+        this.propertiesToSaveExpression = value ;
+    }
 }
