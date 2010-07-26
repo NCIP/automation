@@ -1,0 +1,327 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+		<osfamily property="os.family"/>
+		<if>                    
+			<or>                            
+				<equals arg1="${os.family}" arg2="mac"/>
+				<equals arg1="${os.family}" arg2="unix"/>
+			</or>                   
+			<then>                          
+				<exec executable="egrep">               
+					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
+				</exec>                         
+			</then>                 
+			<else>                  
+				<echo mesage="Grep not supported on windows"/>
+			</else>                 
+		</if>           
+	</target>
+	<target name="test:property:fail:tomcat.external.http.port-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.external.http.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.http.port=fa il
+			evaluate.property.name=tomcat.external.http.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.external.http.port"/>
+	</target>
+	<target name="test:property:fail:tomcat.external.http.port-port">
+		<echo message="**** Entering test:property:fail:tomcat.external.http.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.http.port=70000
+			evaluate.property.name=tomcat.external.http.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.external.http.port"/>
+	</target>
+	<target name="test:property:fail:tomcat.external.ssl.host-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.external.ssl.host"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.ssl.host=fa il
+			evaluate.property.name=tomcat.external.ssl.host
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.external.ssl.host"/>
+	</target>
+	<target name="test:property:fail:tomcat.external.ssl.port-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.external.ssl.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.ssl.port=fa il
+			evaluate.property.name=tomcat.external.ssl.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.external.ssl.port"/>
+	</target>
+	<target name="test:property:fail:tomcat.external.ssl.port-port">
+		<echo message="**** Entering test:property:fail:tomcat.external.ssl.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.external.ssl.port=70000
+			evaluate.property.name=tomcat.external.ssl.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.external.ssl.port"/>
+	</target>
+	<target name="test:property:fail:tomcat.grid.secure.cert.location-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.grid.secure.cert.location"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.grid.secure.cert.location=fa il
+			evaluate.property.name=tomcat.grid.secure.cert.location
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.grid.secure.cert.location"/>
+	</target>
+	<target name="test:property:fail:tomcat.grid.secure.enable-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.grid.secure.enable"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.grid.secure.enable=fa il
+			evaluate.property.name=tomcat.grid.secure.enable
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.grid.secure.enable"/>
+	</target>
+	<target name="test:property:fail:tomcat.grid.secure.enable-tf">
+		<echo message="**** Entering test:property:fail:tomcat.grid.secure.enable"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.grid.secure.enable=fail
+			evaluate.property.name=tomcat.grid.secure.enable
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.grid.secure.enable"/>
+	</target>
+	<target name="test:property:fail:tomcat.grid.secure.key.location-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.grid.secure.key.location"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.grid.secure.key.location=fa il
+			evaluate.property.name=tomcat.grid.secure.key.location
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.grid.secure.key.location"/>
+	</target>
+	<target name="test:property:fail:tomcat.grid.secure.port-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.grid.secure.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.grid.secure.port=fa il
+			evaluate.property.name=tomcat.grid.secure.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.grid.secure.port"/>
+	</target>
+	<target name="test:property:fail:tomcat.grid.secure.port-port">
+		<echo message="**** Entering test:property:fail:tomcat.grid.secure.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.grid.secure.port=70000
+			evaluate.property.name=tomcat.grid.secure.port
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.grid.secure.port"/>
+	</target>
+	<target name="test:property:fail:tomcat.relative.dir-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.relative.dir"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.relative.dir=fa il
+			evaluate.property.name=tomcat.relative.dir
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.relative.dir"/>
+	</target>
+	<target name="test:property:fail:tomcat.hostname-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.hostname"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.hostname=fa il
+			evaluate.property.name=tomcat.hostname
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.hostname"/>
+	</target>
+	<target name="test:property:fail:tomcat.http-connector.remove-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.http-connector.remove"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.http-connector.remove=fa il
+			evaluate.property.name=tomcat.http-connector.remove
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.http-connector.remove"/>
+	</target>
+	<target name="test:property:fail:tomcat.http-connector.remove-tf">
+		<echo message="**** Entering test:property:fail:tomcat.http-connector.remove"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.http-connector.remove=fail
+			evaluate.property.name=tomcat.http-connector.remove
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.http-connector.remove"/>
+	</target>
+	<target name="test:property:fail:tomcat.port.ajp-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.port.ajp"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.port.ajp=fa il
+			evaluate.property.name=tomcat.port.ajp
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.port.ajp"/>
+	</target>
+	<target name="test:property:fail:tomcat.port.ajp-port">
+		<echo message="**** Entering test:property:fail:tomcat.port.ajp"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.port.ajp=70000
+			evaluate.property.name=tomcat.port.ajp
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.port.ajp"/>
+	</target>
+	<target name="test:property:fail:tomcat.port.http-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.port.http"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.port.http=fa il
+			evaluate.property.name=tomcat.port.http
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.port.http"/>
+	</target>
+	<target name="test:property:fail:tomcat.port.http-port">
+		<echo message="**** Entering test:property:fail:tomcat.port.http"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.port.http=70000
+			evaluate.property.name=tomcat.port.http
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.port.http"/>
+	</target>
+	<target name="test:property:fail:tomcat.port.shutdown-syntax">
+		<echo message="**** Entering test:property:fail:tomcat.port.shutdown"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			tomcat.port.shutdown=fa il
+			evaluate.property.name=tomcat.port.shutdown
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:tomcat.port.shutdown"/>
+	</target>
+</project>

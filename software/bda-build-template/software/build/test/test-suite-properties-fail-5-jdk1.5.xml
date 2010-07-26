@@ -1,0 +1,327 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+		<osfamily property="os.family"/>
+		<if>                    
+			<or>                            
+				<equals arg1="${os.family}" arg2="mac"/>
+				<equals arg1="${os.family}" arg2="unix"/>
+			</or>                   
+			<then>                          
+				<exec executable="egrep">               
+					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
+				</exec>                         
+			</then>                 
+			<else>                  
+				<echo mesage="Grep not supported on windows"/>
+			</else>                 
+		</if>           
+	</target>
+	<target name="test:property:fail:db.install.create.postgresql.file.list-syntax">
+		<echo message="**** Entering test:property:fail:db.install.create.postgresql.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.postgresql.file.list=fail condtion
+			evaluate.property.name=db.install.create.postgresql.file.list
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.postgresql.file.list"/>
+	</target>
+	<target name="test:property:fail:db.install.create.postgresql.file.list-list-beg">
+		<echo message="**** Entering test:property:fail:db.install.create.postgresql.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.postgresql.file.list=,fail,fail
+			evaluate.property.name=db.install.create.postgresql.file.list
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.postgresql.file.list"/>
+	</target>
+	<target name="test:property:fail:db.install.create.postgresql.file.list-list-end">
+		<echo message="**** Entering test:property:fail:db.install.create.postgresql.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.postgresql.file.list=fail,fail,
+			evaluate.property.name=db.install.create.postgresql.file.list
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.postgresql.file.list"/>
+	</target>
+	<target name="test:property:fail:env.name-syntax">
+		<echo message="**** Entering test:property:fail:env.name"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			env.name=fa il
+			evaluate.property.name=env.name
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:env.name"/>
+	</target>
+	<target name="test:property:fail:env.name-value">
+		<echo message="**** Entering test:property:fail:env.name"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			env.name=fail
+			evaluate.property.name=env.name
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:env.name"/>
+	</target>
+	<target name="test:property:fail:exclude.access-logs-syntax">
+		<echo message="**** Entering test:property:fail:exclude.access-logs"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.access-logs=fa il
+			evaluate.property.name=exclude.access-logs
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.access-logs"/>
+	</target>
+	<target name="test:property:fail:exclude.access-logs-tf">
+		<echo message="**** Entering test:property:fail:exclude.access-logs"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.access-logs=fail
+			evaluate.property.name=exclude.access-logs
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.access-logs"/>
+	</target>
+	<target name="test:property:fail:exclude.check.database-syntax">
+		<echo message="**** Entering test:property:fail:exclude.check.database"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.check.database=fail conditoin
+			evaluate.property.name=exclude.check.database
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.check.database"/>
+	</target>
+	<target name="test:property:fail:exclude.check.database-tf">
+		<echo message="**** Entering test:property:fail:exclude.check.database"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.check.database=fail
+			evaluate.property.name=exclude.check.database
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.check.database"/>
+	</target>
+	<target name="test:property:fail:exclude.database-syntax">
+		<echo message="**** Entering test:property:fail:exclude.database"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.database=fa il
+			evaluate.property.name=exclude.database
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.database"/>
+	</target>
+	<target name="test:property:fail:exclude.database-tf">
+		<echo message="**** Entering test:property:fail:exclude.database"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.database=fail
+			evaluate.property.name=exclude.database
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.database"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss-syntax">
+		<echo message="**** Entering test:property:fail:exclude.jboss"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss=fa il
+			evaluate.property.name=exclude.jboss
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss-tf">
+		<echo message="**** Entering test:property:fail:exclude.jboss"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss=fail
+			evaluate.property.name=exclude.jboss
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss.backup-syntax">
+		<echo message="**** Entering test:property:fail:exclude.jboss.backup"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss.backup=fa il
+			evaluate.property.name=exclude.jboss.backup
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss.backup"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss.backup-tf">
+		<echo message="**** Entering test:property:fail:exclude.jboss.backup"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss.backup=fail
+			evaluate.property.name=exclude.jboss.backup
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss.backup"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss-bindings-syntax">
+		<echo message="**** Entering test:property:fail:exclude.jboss-bindings"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss-bindings=fa il
+			evaluate.property.name=exclude.jboss-bindings
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss-bindings"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss-bindings-tf">
+		<echo message="**** Entering test:property:fail:exclude.jboss-bindings"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss-bindings=fail
+			evaluate.property.name=exclude.jboss-bindings
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss-bindings"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss-config-syntax">
+		<echo message="**** Entering test:property:fail:exclude.jboss-config"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss-config=fa il
+			evaluate.property.name=exclude.jboss-config
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss-config"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss-config-tf">
+		<echo message="**** Entering test:property:fail:exclude.jboss-config"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss-config=fail
+			evaluate.property.name=exclude.jboss-config
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss-config"/>
+	</target>
+	<target name="test:property:fail:exclude.jboss.grid-syntax">
+		<echo message="**** Entering test:property:fail:exclude.jboss.grid"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.jboss.grid=fa il
+			evaluate.property.name=exclude.jboss.grid
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:exclude.jboss.grid"/>
+	</target>
+</project>

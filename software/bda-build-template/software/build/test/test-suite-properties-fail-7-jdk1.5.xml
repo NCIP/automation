@@ -1,0 +1,327 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+		<osfamily property="os.family"/>
+		<if>                    
+			<or>                            
+				<equals arg1="${os.family}" arg2="mac"/>
+				<equals arg1="${os.family}" arg2="unix"/>
+			</or>                   
+			<then>                          
+				<exec executable="egrep">               
+					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
+				</exec>                         
+			</then>                 
+			<else>                  
+				<echo mesage="Grep not supported on windows"/>
+			</else>                 
+		</if>           
+	</target>
+	<target name="test:property:fail:grid.poc.science.email-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.science.email"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.science.email=fa/il
+			evaluate.property.name=grid.poc.science.email
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.science.email"/>
+	</target>
+	<target name="test:property:fail:grid.poc.science.name.first-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.science.name.first"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.science.name.first=fa/il
+			evaluate.property.name=grid.poc.science.name.first
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.science.name.first"/>
+	</target>
+	<target name="test:property:fail:grid.poc.science.name.last-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.science.name.last"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.science.name.last=fa/il
+			evaluate.property.name=grid.poc.science.name.last
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.science.name.last"/>
+	</target>
+	<target name="test:property:fail:grid.poc.science.phone-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.science.phone"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.science.phone=fa/il
+			evaluate.property.name=grid.poc.science.phone
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.science.phone"/>
+	</target>
+	<target name="test:property:fail:grid.poc.science.role-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.science.role"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.science.role=fa/il
+			evaluate.property.name=grid.poc.science.role
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.science.role"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.addr.country-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.addr.country"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.country=fa/il
+			evaluate.property.name=grid.poc.tech.addr.country
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.addr.country"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.addr.locality-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.addr.locality"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.locality=fa/il
+			evaluate.property.name=grid.poc.tech.addr.locality
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.addr.locality"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.addr.postalCode-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.addr.postalCode"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.postalCode=fa/il
+			evaluate.property.name=grid.poc.tech.addr.postalCode
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.addr.postalCode"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.addr.stateProvince-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.addr.stateProvince"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.stateProvince=fa/il
+			evaluate.property.name=grid.poc.tech.addr.stateProvince
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.addr.stateProvince"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.addr.street1-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.addr.street1"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.street1=fa/il
+			evaluate.property.name=grid.poc.tech.addr.street1
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.addr.street1"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.addr.street2-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.addr.street2"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.street2=fa/il
+			evaluate.property.name=grid.poc.tech.addr.street2
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.addr.street2"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.affiliation-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.affiliation"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.affiliation=fa/il
+			evaluate.property.name=grid.poc.tech.affiliation
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.affiliation"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.email-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.email"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.email=fa/il
+			evaluate.property.name=grid.poc.tech.email
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.email"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.name.first-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.name.first"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.name.first=fa/il
+			evaluate.property.name=grid.poc.tech.name.first
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.name.first"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.name.last-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.name.last"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.name.last=fa/il
+			evaluate.property.name=grid.poc.tech.name.last
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.name.last"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.phone-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.phone"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.phone=fa/il
+			evaluate.property.name=grid.poc.tech.phone
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.phone"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.researchCenter.displayname-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.researchCenter.displayname"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.researchCenter.displayname=
+			evaluate.property.name=grid.poc.tech.researchCenter.displayname
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.researchCenter.displayname"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.researchCenter.shortname-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.researchCenter.shortname"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.researchCenter.shortname=bda
+			evaluate.property.name=grid.poc.tech.researchCenter.shortname
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.researchCenter.shortname"/>
+	</target>
+	<target name="test:property:fail:grid.poc.tech.role-syntax">
+		<echo message="**** Entering test:property:fail:grid.poc.tech.role"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.role=fa/il
+			evaluate.property.name=grid.poc.tech.role
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.poc.tech.role"/>
+	</target>
+	<target name="test:property:fail:grid.target-syntax">
+		<echo message="**** Entering test:property:fail:grid.target"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.target=fa il
+			evaluate.property.name=grid.target
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-fail
+			/>
+		<echo message="**** Exiting test:property:fail:grid.target"/>
+	</target>
+</project>
