@@ -286,6 +286,8 @@
             </exec>
         </echoxml>
 
+        <property name="gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save" value="" />
+
 		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
 			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
@@ -299,7 +301,7 @@
 			<arg value="-Ddatabase.url=${database.url}" />
 			<arg value="-Ddatabase.system.url=${database.system.url}" />
             <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.propertysavefile=single.command.deployment.saved" />
-            <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.properties.to.save=*.application.url" />
+            <arg value="-Dgov.nih.nci.bda.certification.listener.TaskListener.properties.to.save=${gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save}" />
 			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
             <arg value="-listener" />

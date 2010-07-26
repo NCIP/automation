@@ -101,6 +101,14 @@ public class CertificationManager {
 			populateAditionalAntProperties(targetLookup, project,
 					optionalFeaturesList,systemWaiversList);
 
+
+
+            if (targetLookup.getSaveProperties() != null && targetLookup.getSaveProperties().trim() != "") {
+                certLogger.info("project.getProperties().put(\"gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save\",targetLookup.getSaveProperties())");
+                project.getProperties().put("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save",targetLookup.getSaveProperties());
+            }
+
+
 			try {
 				project.executeTarget(targetLookup.getTargetName());
 
