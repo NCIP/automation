@@ -10,7 +10,7 @@
 	</target>
 	<target name="test:jboss:upgrade:dac:pass">
 		<echo message="**** Entering test:jboss:upgrade:dac:pass"/>
-		<echo file="${build.dir}/local.properties" message="" append="false"/>
+		<echo file="${build.dir}/local.properties" message="env.name=dev" append="false"/>
 		<xmltask preservetype="true" source="${build.dir}/install.xml"
 			dest="${build.dir}/install.xml"
 			failWithoutMatch="true" >       
