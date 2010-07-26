@@ -1,5 +1,5 @@
 <properties>
-	<property  name-pattern="jboss.application.url" description="" skip-property="">
+	<property  name="jboss.application.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jboss.application.url-syntax</name>
@@ -27,7 +27,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="application.context.name" description="" skip-property="">
+	<property  name="application.context.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>application.context.name-syntax</name>
@@ -48,7 +48,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="authentication.type" description="" skip-property="">
+	<property  name="authentication.type" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>authentication.type-syntax</name>
@@ -82,7 +82,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cgmm.application.context" description="" skip-property="">
+	<property  name="cgmm.application.context" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cgmm.application.context-syntax</name>
@@ -103,7 +103,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cgmm.application.name" description="" skip-property="">
+	<property  name="cgmm.application.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cgmm.application.name-syntax</name>
@@ -124,7 +124,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="database.context.path" description="" skip-property="exclude.validate.database">
+	<property  name="database.context.path" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.context.path-syntax</name>
@@ -144,7 +144,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="exclude.access-logs" description="" skip-property="">
+	<property  name="exclude.access-logs" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>exclude.access-logs-syntax</name>
@@ -178,7 +178,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="exclude.jboss" description="" skip-property="exclude.validate.jboss">
+	<property  name="exclude.jboss" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-syntax</name>
@@ -212,7 +212,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="exclude.jboss.backup" description="" skip-property="exclude.validate.jboss">
+	<property  name="exclude.jboss.backup" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss.backup-syntax</name>
@@ -246,7 +246,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="exclude.jboss-bindings" description="" skip-property="exclude.validate.jboss">
+	<property  name="exclude.jboss-bindings" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-bindings-syntax</name>
@@ -280,7 +280,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="exclude.jboss-config" description="" skip-property="exclude.validate.jboss">
+	<property  name="exclude.jboss-config" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-config-syntax</name>
@@ -314,7 +314,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="exclude.jboss.grid" description="" skip-property="exclude.validate.jboss">
+	<property  name="exclude.jboss.grid" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss.grid-syntax</name>
@@ -348,7 +348,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="exclude.jboss-login-config" description="" skip-property="exclude.validate.jboss">
+	<property  name="exclude.jboss-login-config" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-login-config-syntax</name>
@@ -382,7 +382,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.binaries.file" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.binaries.file" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.binaries.file-syntax</name>
@@ -402,7 +402,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.binaries.relative.dir" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.binaries.relative.dir" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.binaries.relative.dir-syntax</name>
@@ -422,7 +422,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss-bindings.file" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss-bindings.file" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss-bindings.file-syntax</name>
@@ -442,7 +442,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss-bindings.src.url" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss-bindings.src.url" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss-bindings.src.url-syntax</name>
@@ -470,7 +470,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.cgmm.enable" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.cgmm.enable" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.cgmm.enable-syntax</name>
@@ -505,7 +505,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.cobraorb.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.cobraorb.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.cobraorb.port-syntax</name>
@@ -542,7 +542,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jbosscp.binaries.file" description="" skip-property="exclude.validate.jboss">
+	<property  name="jbosscp.binaries.file" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jbosscp.binaries.file-syntax</name>
@@ -562,7 +562,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jbosscp.src.url" description="" skip-property="exclude.validate.jboss">
+	<property  name="jbosscp.src.url" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jbosscp.src.url-syntax</name>
@@ -590,7 +590,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ejbinvoker.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ejbinvoker.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ejbinvoker.port-syntax</name>
@@ -627,7 +627,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.external.grid.secure.host" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.external.grid.secure.host" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.grid.secure.host-syntax</name>
@@ -648,7 +648,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.external.grid.secure.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.external.grid.secure.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.grid.secure.port-syntax</name>
@@ -685,7 +685,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.external.http.host" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.external.http.host" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.http.host-syntax</name>
@@ -706,7 +706,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.external.http.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.external.http.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.http.port-syntax</name>
@@ -743,7 +743,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.external.ssl.host" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.external.ssl.host" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.ssl.host-syntax</name>
@@ -764,7 +764,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.external.ssl.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.external.ssl.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.ssl.port-syntax</name>
@@ -801,7 +801,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.grid.secure.cert.location" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.grid.secure.cert.location" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.cert.location-syntax</name>
@@ -821,7 +821,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.grid.secure.enable" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.grid.secure.enable" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.enable-syntax</name>
@@ -872,7 +872,7 @@
 
 		</rules>
 	</property>
-	<property  name-pattern="jboss.grid.secure.key.location" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.grid.secure.key.location" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.key.location-syntax</name>
@@ -892,7 +892,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.grid.secure.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.grid.secure.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.port-syntax</name>
@@ -929,7 +929,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.hajndi.auto.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.hajndi.auto.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.hajndi.auto.port-syntax</name>
@@ -966,7 +966,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.hajndi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.hajndi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.hajndi.port-syntax</name>
@@ -1003,7 +1003,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.hajrmi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.hajrmi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.hajrmi.port-syntax</name>
@@ -1040,7 +1040,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.relative.path" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.relative.path" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.relative.path-syntax</name>
@@ -1060,7 +1060,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.http-connector.remove" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.http-connector.remove" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.http-connector.remove-syntax</name>
@@ -1109,7 +1109,7 @@
 		</rules>
 	</property>
 	<!-- java.opts is to complex for rules -->
-	<property  name-pattern="jboss.jms2.netty.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.jms2.netty.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jms2.netty.port-syntax</name>
@@ -1146,7 +1146,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.jms2.netty-ssl.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.jms2.netty-ssl.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jms2.netty-ssl.port-syntax</name>
@@ -1183,7 +1183,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.jms.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.jms.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jms.port-syntax</name>
@@ -1220,7 +1220,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.jmx-rmi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.jmx-rmi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jmx-rmi.port-syntax</name>
@@ -1257,7 +1257,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.messaging.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.messaging.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.messaging.port-syntax</name>
@@ -1294,7 +1294,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ncicb-standard.port-config" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ncicb-standard.port-config" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ncicb-standard.port-config-syntax</name>
@@ -1328,7 +1328,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.pooledha.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.pooledha.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.pooledha.port-syntax</name>
@@ -1365,7 +1365,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.remoting.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.remoting.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.remoting.port-syntax</name>
@@ -1402,7 +1402,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.server.bind.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.server.bind.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.bind.port-syntax</name>
@@ -1439,7 +1439,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.server.hostname" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.server.hostname" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.hostname-syntax</name>
@@ -1460,7 +1460,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.server.jndi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.server.jndi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.jndi.port-syntax</name>
@@ -1497,7 +1497,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.server.name" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.server.name" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.name-syntax</name>
@@ -1518,7 +1518,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.server.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.server.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.port-syntax</name>
@@ -1555,7 +1555,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.server.ports.name" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.server.ports.name" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.ports.name-syntax</name>
@@ -1649,7 +1649,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.server.rmi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.server.rmi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.rmi.port-syntax</name>
@@ -1686,7 +1686,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.service.rmiobject.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.service.rmiobject.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.service.rmiobject.port-syntax</name>
@@ -1723,7 +1723,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.snmp.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.snmp.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.snmp.port-syntax</name>
@@ -1760,7 +1760,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.snmp-trapd.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.snmp-trapd.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.snmp-trapd.port-syntax</name>
@@ -1797,7 +1797,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.src.url" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.src.url" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.src.url-syntax</name>
@@ -1825,7 +1825,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ssl.enable" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ssl.enable" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.enable-syntax</name>
@@ -1876,7 +1876,7 @@
 
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.fullyqualified.hostname-syntax</name>
@@ -1897,7 +1897,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ssl.keystore.alias" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ssl.keystore.alias" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.keystore.alias-syntax</name>
@@ -1918,7 +1918,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ssl.keystore.location" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ssl.keystore.location" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.keystore.location-syntax</name>
@@ -1938,7 +1938,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ssl.keystore.pass" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ssl.keystore.pass" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.keystore.pass-syntax</name>
@@ -1959,7 +1959,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.ssl.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.ssl.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.port-syntax</name>
@@ -1996,7 +1996,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.transaction.processid.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.transaction.processid.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.transaction.processid.port-syntax</name>
@@ -2033,7 +2033,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.transaction.recovery.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.transaction.recovery.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.transaction.recovery.port-syntax</name>
@@ -2070,7 +2070,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.transaction.status.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.transaction.status.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.transaction.status.port-syntax</name>
@@ -2107,7 +2107,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.unifiedinvoker.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.unifiedinvoker.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.unifiedinvoker.port-syntax</name>
@@ -2144,7 +2144,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.web.password" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.web.password" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.web.password-syntax</name>
@@ -2165,7 +2165,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.web.service.port" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.web.service.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.web.service.port-syntax</name>
@@ -2202,7 +2202,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="jboss.web.user" description="" skip-property="exclude.validate.jboss">
+	<property  name="jboss.web.user" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.web.user-syntax</name>
@@ -2223,7 +2223,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="log4j.level" description="" skip-property="">
+	<property  name="log4j.level" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>log4j.level-syntax</name>
@@ -2244,7 +2244,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="log4j.maxDays" description="" skip-property="">
+	<property  name="log4j.maxDays" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>log4j.maxDays-syntax</name>
@@ -2265,7 +2265,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="log4j.maxFileSize" description="" skip-property="">
+	<property  name="log4j.maxFileSize" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>log4j.maxFileSize-syntax</name>

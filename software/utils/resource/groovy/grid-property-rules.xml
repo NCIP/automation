@@ -1,5 +1,5 @@
 <properties>
-	<property  name-pattern="cagrid-base-war.binaries.file" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-base-war.binaries.file" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-base-war.binaries.file-syntax</name>
@@ -19,7 +19,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-base-war.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-base-war.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-base-war.binaries.relative.dir-syntax</name>
@@ -39,7 +39,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-base-war.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-base-war.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-base-war.src.url-syntax</name>
@@ -67,7 +67,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-console.binaries.file" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-console.binaries.file" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-console.binaries.file-syntax</name>
@@ -87,7 +87,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-console.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-console.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-console.binaries.relative.dir-syntax</name>
@@ -107,7 +107,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-console.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-console.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-console.src.url-syntax</name>
@@ -135,7 +135,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-libs.binaries.file" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-libs.binaries.file" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-libs.binaries.file-syntax</name>
@@ -155,7 +155,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-libs.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-libs.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-libs.binaries.relative.dir-syntax</name>
@@ -175,7 +175,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-libs.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-libs.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-libs.src.url-syntax</name>
@@ -203,7 +203,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="cagrid-target.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name="cagrid-target.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-target.src.url-syntax</name>
@@ -231,7 +231,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.science.affiliation" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.science.affiliation" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.affiliation-syntax</name>
@@ -251,7 +251,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.science.email" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.science.email" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.email-syntax</name>
@@ -271,7 +271,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.science.name.first" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.science.name.first" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.name.first-syntax</name>
@@ -291,7 +291,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.science.name.last" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.science.name.last" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.name.last-syntax</name>
@@ -311,7 +311,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.science.phone" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.science.phone" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.phone-syntax</name>
@@ -331,7 +331,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.science.role" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.science.role" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.role-syntax</name>
@@ -351,7 +351,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.addr.country" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.addr.country" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.country-syntax</name>
@@ -371,7 +371,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.addr.locality" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.addr.locality" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.locality-syntax</name>
@@ -391,7 +391,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.addr.postalCode" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.addr.postalCode" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.postalCode-syntax</name>
@@ -411,7 +411,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.addr.stateProvince" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.addr.stateProvince" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.stateProvince-syntax</name>
@@ -431,7 +431,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.addr.street1" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.addr.street1" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.street1-syntax</name>
@@ -451,7 +451,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.addr.street2" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.addr.street2" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.street2-syntax</name>
@@ -471,7 +471,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.affiliation" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.affiliation" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.affiliation-syntax</name>
@@ -491,7 +491,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.email" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.email" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.email-syntax</name>
@@ -511,7 +511,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.name.first" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.name.first" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.name.first-syntax</name>
@@ -531,7 +531,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.name.last" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.name.last" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.name.last-syntax</name>
@@ -551,7 +551,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.phone" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.phone" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.phone-syntax</name>
@@ -571,7 +571,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.researchCenter.displayname" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.researchCenter.displayname" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.researchCenter.displayname-syntax</name>
@@ -591,7 +591,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.researchCenter.shortname" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.researchCenter.shortname" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.researchCenter.shortname-syntax</name>
@@ -611,7 +611,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.poc.tech.role" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.poc.tech.role" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.role-syntax</name>
@@ -631,7 +631,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property  name-pattern="grid.target" description="" skip-property="exclude.validate.grid">
+	<property  name="grid.target" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.target-syntax</name>
