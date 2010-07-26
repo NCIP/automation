@@ -104,8 +104,8 @@ public class CertificationManager {
 
 
             if (targetLookup.getSaveProperties() != null && targetLookup.getSaveProperties().trim() != "") {
-                certLogger.info("project.getProperties().put(\"gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save\"=" + targetLookup.getSaveProperties());
-                project.getProperties().put("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save",targetLookup.getSaveProperties());
+                certLogger.info("project.setProperty(\"gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save\"=" + targetLookup.getSaveProperties());
+                project.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save",targetLookup.getSaveProperties());
             }
 
 			try {
