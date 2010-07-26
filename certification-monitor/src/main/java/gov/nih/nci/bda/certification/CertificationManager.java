@@ -104,36 +104,14 @@ public class CertificationManager {
 			try {
 				project.executeTarget(targetLookup.getTargetName());
 
-                saveProperties(targetLookup,project);
-
-                for(Object o:project.getProperties().keySet())
-                {
-                    certLogger.info("After target " + targetLookup.getTargetName() + " " + o.toString() + "=" + project.getProperty(o.toString()));
-                }
-
 			} catch (Exception e) {
-				certLogger.error("Exception occured while executing the target " + targetLookup.getTargetName()+ " ::::" + e.getMessage());
+				certLogger.error("Exception occurred while executing the target " + targetLookup.getTargetName()+ " ::::" + e.getMessage());
 			}
 		}
 
 		session.close();
 		certLogger.info("Certification Complete");
 	}
-
-    public void saveProperties(TargetLookup targetLookup, Project project) throws Exception {
-
-        certLogger.info("saveProperties()");
-
-        for(Object checkToSave:project.getProperties().keySet())
-        {
-            if(this.ShouldSave(targetLookup,checkToSave.toString()))
-            {
-                certLogger.info("Saving property:" + checkToSave.toString() + "=" + project.getProperties().get(checkToSave.toString()).toString());
-                this.addPropertyValue(  checkToSave.toString()
-                                        , project.getProperties().get(checkToSave.toString()).toString());
-            }
-        }
-    }
 
     private ArrayList<String> getListOfOptionalFeaturesForProject(Project project) {
 		ArrayList<String> optionalList = new ArrayList<String>();
@@ -164,7 +142,6 @@ public class CertificationManager {
 		}
 		return optionalList;
 	}
-
 
 	private void populateAditionalAntProperties(TargetLookup targetLookup,
 			Project project, ArrayList<String> optionalFeaturesList,ArrayList<String> systemWaiversList) {
@@ -206,60 +183,4 @@ public class CertificationManager {
 
 	}
 
-    public void addPropertyValue(String name, String value) throws Exception {
-
-        if (name == null || name.trim().length() == 0)
-        {
-            throw new NullPointerException();
-        }
-
-        if (value == null || value.trim().length() == 0)
-        {
-            throw new NullPointerException();
-        }
-
-        if (this.getPropertyValues().containsKey(name))
-        {
-            throw new Exception("Duplicate key '" + name + "'");
-        }
-
-        this.getPropertyValues().put(name,value);
-    }
-
-    private Map<String,String> propertyValues ;
-
-    public Map<String,String> getPropertyValues() {
-
-        if (propertyValues == null)
-        {
-            propertyValues = new HashMap<String,String>();
-        }
-
-        return propertyValues;
-    }
-
-    public boolean ShouldSave(TargetLookup target, String propertyNameExpression) {
-
-        boolean returnValue = false ;
-        String[] expressions = target.SaveExpressions();
-
-        Pattern p ;
-
-
-        for(String targetPropertyName:expressions)
-        {
-            p = Pattern.compile(targetPropertyName);
-
-            if (p.matcher(propertyNameExpression).matches())
-            {
-                returnValue = true ;
-                certLogger.info("ShouldSave:" + targetPropertyName + propertyNameExpression + "=true");
-                break;
-            }
-            certLogger.info("ShouldSave:" + targetPropertyName + propertyNameExpression + "=false");
-
-        }
-
-        return returnValue;
-    }
 }

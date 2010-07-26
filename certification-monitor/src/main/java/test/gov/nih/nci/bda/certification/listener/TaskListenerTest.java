@@ -1,5 +1,7 @@
 package test.gov.nih.nci.bda.certification.listener;
 
+import gov.nih.nci.bda.certification.CertificationManager;
+import gov.nih.nci.bda.certification.domain.TargetLookup;
 import gov.nih.nci.bda.certification.listener.TaskListener;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -133,6 +135,198 @@ public class TaskListenerTest extends TestCase {
         target.setProject (p);
 
         assertNull(target.getPropertyFilename());
+    }
+
+    public void testAddPropertyValueThrowExceptionOnNullPropertyName() {
+        TaskListener target = new TaskListener();
+        Exception caught = null;
+
+        try {
+            target.addPropertyValue(null, "propertyvalue");
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+    }
+
+    public void testAddPropertyValueThrowExceptionOnStringEmptyPropertyName() {
+        TaskListener target = new TaskListener();
+        Exception caught = null;
+
+        try {
+            target.addPropertyValue("", "propertyvalue");
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+    }
+
+    public void testAddPropertyValueThrowExceptionOnNullValue() {
+        TaskListener target = new TaskListener();
+        Exception caught = null;
+
+        try {
+            target.addPropertyValue("propertyname", null);
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+    }
+
+    public void testAddPropertyValueThrowExceptionOnStringEmptyValue() {
+        TaskListener target = new TaskListener();
+        Exception caught = null;
+
+        try {
+            target.addPropertyValue("propertyname", null);
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+    }
+
+    public void testAddPropertyValueAddsAndRetrievesCorrectly() throws Exception {
+
+        TaskListener target = new TaskListener();
+        String key = "mykey";
+        String value = "myvalue";
+        target.addPropertyValue(key, value);
+        assertEquals(1, target.getPropertyValues().size());
+        String actual = target.getPropertyValues().get(key);
+        assertEquals(value, actual);
+
+    }
+
+    public void testPropertyValuesNotNull() {
+
+//        proves that propertyValues is not null, even though nothing has been added
+
+        TaskListener target = new TaskListener();
+        assertNotNull(target.getPropertyValues());
+
+    }
+
+    public void testSameKeyTwice() throws Exception {
+
+        Exception caught = null;
+        TaskListener target = new TaskListener();
+        String key = "mykey";
+        String value = "myvalue";
+        target.addPropertyValue(key, value);
+        try {
+            target.addPropertyValue(key, value);
+        }
+        catch (Exception ex) {
+            caught = ex;
+        }
+
+        assertNotNull(caught);
+
+
+    }
+
+
+    // this test tests the shouldSave method to check if it
+    // both returns false and does not throw an exception if
+    // there are no saveProperties
+    public void testShouldSaveEmptyFalse() {
+
+        TaskListener target = new TaskListener();
+        TargetLookup lookup = new TargetLookup();
+        assertFalse(target.ShouldSave(lookup, "x"));
+
+    }
+
+    // this test tests the shouldSave method to check if it
+    // returns true for a simple property name match when
+    // there is only one in the collection of saveproperties
+    public void testShouldSaveSimpleTrue() {
+
+        TaskListener target = new TaskListener();
+        TargetLookup lookup = new TargetLookup();
+        lookup.setSaveProperties("x");
+        assertTrue(target.ShouldSave(lookup, "x"));
+
+    }
+
+    // this test tests the shouldSave method to check if it
+    // returns true for a property name match
+    // if there are more than one properties
+    public void testShouldSaveMultiTrue() {
+
+        TaskListener target = new TaskListener();
+        TargetLookup lookup = new TargetLookup();
+        lookup.setSaveProperties("y,x");
+        assertTrue(target.ShouldSave(lookup, "x"));
+
+    }
+
+    // this test tests the shouldSave method to check if it
+    // returns true for a simple property name match when
+    // there is only one in the collection of saveproperties
+    public void testShouldSaveReqexTrue() {
+
+        TaskListener target = new TaskListener();
+        TargetLookup lookup = new TargetLookup();
+        lookup.setSaveProperties(".*application\\.url");
+        assertTrue(target.ShouldSave(lookup, "application.url"));
+
+    }
+
+    public void testSavePropertiesNoException() throws Exception {
+        TaskListener target = new TaskListener();
+        TargetLookup lookup = new TargetLookup();
+        Project p = new Project();
+        target.saveProperties(lookup,p);
+
+    }
+
+
+    // proves that if the property 'x' is requested to be
+    // saved that calling saveProperties saves it
+    public void testSavePropertiesSaveSimple() throws Exception {
+
+        TaskListener target = new TaskListener();
+        assertEquals(0, target.getPropertyValues().size());
+        TargetLookup lookup = new TargetLookup();
+        String propertyName = "x" ;
+        String propertyValue = "xyzxyzxyz" ;
+        Project p = new Project();
+        lookup.setSaveProperties(propertyName);
+        p.setProperty(propertyName,propertyValue);
+        target.saveProperties(lookup,p);
+        assertEquals(1, target.getPropertyValues().size());
+        assertTrue(target.getPropertyValues().containsKey(propertyName));
+        assertEquals(propertyValue,target.getPropertyValues().get(propertyName));
+
+    }
+
+    // proves that if the property 'x' is requested to be
+    // saved that calling saveProperties saves it
+    public void testSavePropertiesSaveWildcard() throws Exception {
+
+        TaskListener target = new TaskListener();
+        assertEquals(0, target.getPropertyValues().size());
+        TargetLookup lookup = new TargetLookup();
+        String propertyName = ".*application.url" ;
+        String propertyValue = "http://microsoft.com" ;
+        Project p = new Project();
+        lookup.setSaveProperties(propertyName);
+        p.setProperty("jboss." + propertyName,propertyValue);
+        assertTrue(target.ShouldSave(lookup,propertyName));
+
     }
 
 

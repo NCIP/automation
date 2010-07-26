@@ -5,7 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
+import gov.nih.nci.bda.certification.domain.TargetLookup;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
@@ -44,9 +48,9 @@ public class TaskListener implements BuildListener {
     }
 
     public void taskFinished(BuildEvent event) {
-        addTask(event.getTask().getTaskName());
-        System.out.println("taskFinished:" + event.getTask().getTaskName());
-
+        String taskName = event.getTask().getTaskName() ;
+        addTask(taskName);
+        System.out.println("taskFinished:" + taskName);
     }
 
     private void addTask(String taskName) {
@@ -105,4 +109,82 @@ public class TaskListener implements BuildListener {
             System.out.println("TaskListener:" + k.toString() + "=" + project.getProperty(k.toString()));
         }
     }
+
+    public void writeFile() {
+        
+    }
+
+    public void saveProperties(TargetLookup targetLookup, Project project) throws Exception {
+
+        System.out.println("saveProperties()");
+
+        for(Object checkToSave:project.getProperties().keySet())
+        {
+            if(this.ShouldSave(targetLookup,checkToSave.toString()))
+            {
+                System.out.println("Saving property:" + checkToSave.toString() + "=" + project.getProperties().get(checkToSave.toString()).toString());
+                this.addPropertyValue(  checkToSave.toString()
+                                        , project.getProperties().get(checkToSave.toString()).toString());
+            }
+        }
+    }
+
+    public void addPropertyValue(String name, String value) throws Exception {
+
+        if (name == null || name.trim().length() == 0)
+        {
+            throw new NullPointerException();
+        }
+
+        if (value == null || value.trim().length() == 0)
+        {
+            throw new NullPointerException();
+        }
+
+        if (this.getPropertyValues().containsKey(name))
+        {
+            throw new Exception("Duplicate key '" + name + "'");
+        }
+
+        this.getPropertyValues().put(name,value);
+    }
+
+    private Map<String,String> propertyValues ;
+
+    public Map<String,String> getPropertyValues() {
+
+        if (propertyValues == null)
+        {
+            propertyValues = new HashMap<String,String>();
+        }
+
+        return propertyValues;
+    }
+
+    public boolean ShouldSave(TargetLookup target, String propertyNameExpression) {
+
+        boolean returnValue = false ;
+        String[] expressions = target.SaveExpressions();
+
+        Pattern p ;
+
+
+        for(String targetPropertyName:expressions)
+        {
+            p = Pattern.compile(targetPropertyName);
+
+            if (p.matcher(propertyNameExpression).matches())
+            {
+                returnValue = true ;
+                System.out.println("ShouldSave:" + targetPropertyName + propertyNameExpression + "=true");
+                break;
+            }
+            System.out.println("ShouldSave:" + targetPropertyName + propertyNameExpression + "=false");
+
+        }
+
+        return returnValue;
+    }
+
+
 }
