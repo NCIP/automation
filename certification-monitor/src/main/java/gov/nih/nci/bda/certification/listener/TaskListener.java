@@ -96,7 +96,9 @@ public class TaskListener implements BuildListener {
     }
 
     public void setProject(Project project) {
+        System.out.println("TaskListener:setProject");
         this.project = project;
         this.filename = project.getProperty("gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile");
+        System.out.println("TaskListener:filename=" + filename );
     }
 }
