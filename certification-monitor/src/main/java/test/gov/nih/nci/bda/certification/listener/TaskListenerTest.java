@@ -1,6 +1,5 @@
 package test.gov.nih.nci.bda.certification.listener;
 
-import gov.nih.nci.bda.certification.CertificationManager;
 import gov.nih.nci.bda.certification.domain.TargetLookup;
 import gov.nih.nci.bda.certification.listener.TaskListener;
 import junit.framework.Test;
@@ -52,7 +51,8 @@ public class TaskListenerTest extends TestCase {
         TaskListener target = new TaskListener();
         String name = "myproperty";
         String value = "myvalue" ;
-        target.buildStarted(getMockBuildEvent());
+        BuildEvent mock =   getMockBuildEvent();
+        target.buildStarted(mock);
 
         target.writeProperty("x","y");
         target.writeProperty(name,value);
@@ -61,9 +61,13 @@ public class TaskListenerTest extends TestCase {
         boolean found = false ;
 
         FileReader r = null ;
+        String fileName = target.getPropertyFilename(mock.getProject());
+
+
         try
         {
-            r = new FileReader(target.getPropertyFilename());
+            target.getWriter(mock.getProject()).flush();
+            r = new FileReader(fileName);
             BufferedReader br = new BufferedReader(r);
             String line = br.readLine();
 
@@ -96,7 +100,7 @@ public class TaskListenerTest extends TestCase {
         TaskListener target = new TaskListener();
         Project p = getMockBuildEvent().getProject() ;
         target.setProject (p);
-        BufferedWriter w = target.getWriter();
+        BufferedWriter w = target.getWriter(p);
         assertNotNull(w);
     }
 
@@ -105,16 +109,17 @@ public class TaskListenerTest extends TestCase {
         TaskListener target = new TaskListener();
         Project p = getMockBuildEvent().getProject() ;
         target.setProject (p);
-        String fileName = target.getPropertyFilename();
+        String fileName = target.getPropertyFilename(p);
         assertNotNull(fileName);
 
     }
 
     public void testBuildStartedSetsFilename() {
         TaskListener target = new TaskListener();
+        BuildEvent mock =   getMockBuildEvent();
 
-        target.buildStarted(getMockBuildEvent());
-        String actual = target.getPropertyFilename();
+        target.buildStarted(mock);
+        String actual = target.getPropertyFilename(mock.getProject());
         assertEquals(expected,actual);
     }
 
@@ -124,7 +129,7 @@ public class TaskListenerTest extends TestCase {
         Project p = getMockBuildEvent().getProject() ;
         target.setProject (p);
 
-        String actual = target.getPropertyFilename();
+        String actual = target.getPropertyFilename(p);
         assertEquals(expected,actual);
     }
 
@@ -134,7 +139,7 @@ public class TaskListenerTest extends TestCase {
         Project p = new Project();
         target.setProject (p);
 
-        assertNull(target.getPropertyFilename());
+        assertNull(target.getPropertyFilename(p));
     }
 
     public void testAddPropertyValueThrowExceptionOnNullPropertyName() {
@@ -299,6 +304,7 @@ public class TaskListenerTest extends TestCase {
         String propertyValue = "xyzxyzxyz" ;
         Project p = new Project();
         p.setProperty(propertyName,propertyValue);
+        p.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile","x");
         target.setPropertiesToSaveExpression(propertyName);
         target.saveProperties(p);
         assertEquals(1, target.getPropertyValues().size());

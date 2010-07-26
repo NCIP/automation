@@ -3,14 +3,10 @@ package gov.nih.nci.bda.certification.listener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import gov.nih.nci.bda.certification.domain.TargetLookup;
-import org.apache.commons.lang.time.StopWatch;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
@@ -29,16 +25,14 @@ public class TaskListener implements BuildListener {
         System.out.println("START FROM THE TASKLISTENER");
         System.out.println(taskList);
         System.out.println("END FROM THE TASKLISTENER");
-        this.saveProperties();
+        this.setPropertiesToSaveExpression(project.getProperties().get("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save").toString());
+        try {
+            this.saveProperties(event.getProject());
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
-    private void saveProperties() {
-        //To change body of created methods use File | Settings | File Templates.
-        String propertiesToSave = this.getProject().getProperties().get("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save").toString() ;
-        System.out.println("TaskListener:propertiesToSave=" + propertiesToSave);
-
-
-    }
 
     public void buildStarted(BuildEvent arg0) {
 
@@ -59,7 +53,7 @@ public class TaskListener implements BuildListener {
     }
 
     public void taskFinished(BuildEvent event) {
-        String taskName = event.getTask().getTaskName() ;
+        String taskName = event.getTask().getTaskName();
         addTask(taskName);
         System.out.println("taskFinished:" + taskName);
     }
@@ -73,9 +67,7 @@ public class TaskListener implements BuildListener {
 
     public void writeProperty(String propertyName, String propertyValue) throws IOException {
 
-        this.getWriter().write(propertyName + "=" + propertyValue +"\r\n");
-        this.getWriter().flush();
-
+        this.getWriter(project).write(propertyName + "=" + propertyValue + "\r\n");
     }
 
 
@@ -88,11 +80,11 @@ public class TaskListener implements BuildListener {
         out.close();
     }
 
-    public BufferedWriter getWriter() {
+    public BufferedWriter getWriter(Project project) {
         if (out == null) {
             try {
                 // Create file
-                FileWriter fstream = new FileWriter(this.getPropertyFilename());
+                FileWriter fstream = new FileWriter(this.getPropertyFilename(project));
                 out = new BufferedWriter(fstream);
             } catch (Exception e) {//Catch exception if any
                 System.err.println("Error: " + e.getMessage());
@@ -102,7 +94,8 @@ public class TaskListener implements BuildListener {
         return out;  //To change body of created methods use File | Settings | File Templates.
     }
 
-    public String getPropertyFilename() {
+    public String getPropertyFilename(Project project) {
+        this.setProject(project);
         return this.filename;  //To change body of created methods use File | Settings | File Templates.
     }
 
@@ -114,59 +107,61 @@ public class TaskListener implements BuildListener {
         System.out.println("TaskListener:setProject");
         this.project = project;
         this.filename = project.getProperty("gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile");
-        System.out.println("TaskListener:filename=" + this.filename );
-        for(Object k:project.getProperties().keySet())
-        {
+        System.out.println("TaskListener:filename=" + this.filename);
+        for (Object k : project.getProperties().keySet()) {
             System.out.println("TaskListener:" + k.toString() + "=" + project.getProperty(k.toString()));
         }
     }
 
-    public void writeFile() {
-        
-    }
-
     public void saveProperties(Project project) throws Exception {
+
 
         System.out.println("saveProperties()");
 
-        for(Object checkToSave:project.getProperties().keySet())
-        {
-            if(this.ShouldSave(checkToSave.toString()))
-            {
-                System.out.println("Saving property:" + checkToSave.toString() + "=" + project.getProperties().get(checkToSave.toString()).toString());
-                this.addPropertyValue(  checkToSave.toString()
-                                        , project.getProperties().get(checkToSave.toString()).toString());
+        if (this.getWriter(project) != null) {
+
+            for (Object checkToSave : project.getProperties().keySet()) {
+                if (this.ShouldSave(checkToSave.toString())) {
+                    System.out.println("Saving property:" + checkToSave.toString() + "=" + project.getProperties().get(checkToSave.toString()).toString());
+
+                    this.addPropertyValue(checkToSave.toString()
+                            , project.getProperties().get(checkToSave.toString()).toString());
+                }
             }
+
+            for (String key : this.getPropertyValues().keySet()) {
+                this.writeProperty(key, this.getPropertyValues().get(key));
+            }
+
+            this.getWriter(project).flush();
+            this.getWriter(project).close();
         }
+
     }
 
     public void addPropertyValue(String name, String value) throws Exception {
 
-        if (name == null || name.trim().length() == 0)
-        {
+        if (name == null || name.trim().length() == 0) {
             throw new NullPointerException();
         }
 
-        if (value == null || value.trim().length() == 0)
-        {
+        if (value == null || value.trim().length() == 0) {
             throw new NullPointerException();
         }
 
-        if (this.getPropertyValues().containsKey(name))
-        {
+        if (this.getPropertyValues().containsKey(name)) {
             throw new Exception("Duplicate key '" + name + "'");
         }
 
-        this.getPropertyValues().put(name,value);
+        this.getPropertyValues().put(name, value);
     }
 
-    private Map<String,String> propertyValues ;
+    private Map<String, String> propertyValues;
 
-    public Map<String,String> getPropertyValues() {
+    public Map<String, String> getPropertyValues() {
 
-        if (propertyValues == null)
-        {
-            propertyValues = new HashMap<String,String>();
+        if (propertyValues == null) {
+            propertyValues = new HashMap<String, String>();
         }
 
         return propertyValues;
@@ -174,20 +169,18 @@ public class TaskListener implements BuildListener {
 
     public boolean ShouldSave(String propertyNameExpression) {
 
-        boolean returnValue = false ;
+        boolean returnValue = false;
 
         String[] expressions = this.getPropertiesToSaveExpression().split(",");
 
-        Pattern p ;
+        Pattern p;
 
 
-        for(String targetPropertyName:expressions)
-        {
+        for (String targetPropertyName : expressions) {
             p = Pattern.compile(targetPropertyName);
 
-            if (p.matcher(propertyNameExpression).matches())
-            {
-                returnValue = true ;
+            if (p.matcher(propertyNameExpression).matches()) {
+                returnValue = true;
                 System.out.println("ShouldSave:" + targetPropertyName + propertyNameExpression + "=true");
                 break;
             }
@@ -200,13 +193,13 @@ public class TaskListener implements BuildListener {
 
 
     public String getPropertiesToSaveExpression() {
-        if (this.propertiesToSaveExpression == null){
+        if (this.propertiesToSaveExpression == null) {
             this.propertiesToSaveExpression = "";
         }
         return this.propertiesToSaveExpression;
     }
 
     public void setPropertiesToSaveExpression(String value) {
-        this.propertiesToSaveExpression = value ;
+        this.propertiesToSaveExpression = value;
     }
 }
