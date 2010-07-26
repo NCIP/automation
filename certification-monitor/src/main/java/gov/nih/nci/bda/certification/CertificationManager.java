@@ -141,13 +141,15 @@ public class CertificationManager {
             PropertiesConfiguration config = new PropertiesConfiguration(filePath);
             certLogger.info("loadSavedProperties:config.load()");
             config.load();
-            certLogger.info("loadSavedProperties:config.getKeys().hasNext()=" + config.getKeys().hasNext());
+
+            java.util.Iterator keys =  config.getKeys();
+            certLogger.info("loadSavedProperties:config.getKeys().hasNext()=" + keys.hasNext());
 
 
-            while(config.getKeys().hasNext())
+            while(keys.hasNext())
             {
 
-                String key = config.getKeys().next().toString();
+                String key = keys.next().toString();
                 certLogger.info("loadSavedProperties:key=" + key);
                 String value = config.getString(key);
                 certLogger.info("loadSavedProperties:value=" + value);
