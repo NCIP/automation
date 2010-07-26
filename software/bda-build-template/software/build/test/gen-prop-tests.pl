@@ -25,7 +25,7 @@ my $fileHeader="
 				<echo mesage=\"Grep not supported on windows\"/>
 			</else>                 
 		</if>           
-	</target>";
+	</target>\n";
 
 my $passContents,$failContents,$passFileName,$failFileName;
 my $passCount=0;
@@ -45,7 +45,7 @@ while (my $line = <>)
 	if ($type =~ /fail-(.*)/)
 	{
 		$rule=$1;
-		$testType="pass";
+		$testType="fail";
 	}
 
 	# used ## for commas in source file
@@ -68,28 +68,28 @@ while (my $line = <>)
 		<execute-property-test-${testType}
 			/>
 		<echo message=\"**** Exiting test:property:${testType}:${prop}\"/>
-	</target>";
+	</target>\n";
 	}	
 	if ($testType eq "fail")
 	{
 		$failCount++;
 		$failContents.="	<target name=\"test:property:${testType}:${prop}-${rule}\">
 		<echo message=\"**** Entering test:property:${testType}:${prop}\"/>
-		<echo file=\"${dist.exploded.dir}/local.properties\" append=\"false\">
+		<echo file=\"\${dist.exploded.dir}/local.properties\" append=\"false\">
 			${prop}=${value}
 			evaluate.property.name=${prop}
 			groovy.debug=true
 		</echo>
-		<replaceregexp file=\"${dist.exploded.dir}/local.properties\" byline=\"true\"
+		<replaceregexp file=\"\${dist.exploded.dir}/local.properties\" byline=\"true\"
 			match=\"^\\s+(.*)\\s*\$\"
 			replace=\"\\1\"
 			/>
 		<execute-property-test-${testType}
 			/>
 		<echo message=\"**** Exiting test:property:${testType}:${prop}\"/>
-	</target>";
+	</target>\n";
 	}	
-	if ($passCount == 20)
+	if ($passCount == 20 && $testType eq "pass")
 	{
 		$passFileCount++;
 		$passFileName="test-suite-properties-pass-${passFileCount}-jdk1.5.xml";
@@ -101,7 +101,7 @@ while (my $line = <>)
 		$passContents="";
 		close(PASS);
 	}
-	if ($failCount == 20)
+	if ($failCount == 20 && $testType eq "fail")
 	{
 		$failFileCount++;
 		$failFileName="test-suite-properties-fail-${failFileCount}-jdk1.5.xml";

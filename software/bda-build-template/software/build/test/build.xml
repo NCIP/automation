@@ -86,10 +86,11 @@
 		<for param="file">
 			<path>
 				<fileset dir="${basedir}">
-					<include name="test-suite-properties-*-jdk15.xml"/>
+					<include name="test-suite-properties-*-jdk1.5.xml"/>
 				</fileset>
 			</path>
 			<sequential>
+				<echo message="Running @{file}.."/>
 				<antunit failOnError="true">
 					<file file="@{file}"/>
 					<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
