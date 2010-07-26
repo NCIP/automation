@@ -9,6 +9,9 @@ import java.io.File;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.tools.ant.DefaultLogger;
@@ -83,6 +86,10 @@ public class CertificationManager {
 		Query query = session.createQuery(" from TargetLookup ");
 		Iterator<Object> targets = query.iterate();
 
+        String userHome = project.getProperty("user.home") ;
+        certLogger.info("certifyProjects: user.home=" + userHome);
+        String filePath = userHome + "/" + projectName + ".saved";
+
 		while (targets.hasNext()) {
 			TargetLookup targetLookup = (TargetLookup) targets.next();
 
@@ -101,18 +108,18 @@ public class CertificationManager {
 			populateAditionalAntProperties(targetLookup, project,
 					optionalFeaturesList,systemWaiversList);
 
-
-
             if (targetLookup.getSaveProperties() != null && targetLookup.getSaveProperties().trim() != "") {
 
-                String userHome = project.getProperty("user.home") ;
-                certLogger.info("certifyProjects: user.home=" + userHome);
-                String filePath = userHome + "/" + projectName + "." + targetLookup.getMapName() + ".saved";
 
 
                 certLogger.info("project.setProperty(\"gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save\"=" + targetLookup.getSaveProperties());
                 project.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save",targetLookup.getSaveProperties());
                 project.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile",filePath);
+            }
+            else if(targetLookup.getUseProperties() != null && targetLookup.getUseProperties().trim() != "") {
+
+                this.loadSavedProperties(filePath,project,targetLookup.getUseProperties());
+
             }
 
 			try {
@@ -126,6 +133,32 @@ public class CertificationManager {
 		session.close();
 		certLogger.info("Certification Complete");
 	}
+
+    private void loadSavedProperties(String filePath, Project project, String useProperties) {
+
+        try {
+
+            PropertiesConfiguration config = new PropertiesConfiguration(filePath);
+            certLogger.info("loadSavedProperties:config.load()");
+            config.load();
+            certLogger.info("loadSavedProperties:config.getKeys().hasNext()=" + config.getKeys().hasNext());
+
+
+            while(config.getKeys().hasNext())
+            {
+
+                String key = config.getKeys().next().toString();
+                certLogger.info("loadSavedProperties:key=" + key);
+                String value = config.getString(key);
+                certLogger.info("loadSavedProperties:value=" + value);
+            }
+
+        } catch (ConfigurationException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            certLogger.info("loadSavedProperties:" + e.toString());
+        }
+
+    }
 
     private ArrayList<String> getListOfOptionalFeaturesForProject(Project project) {
 		ArrayList<String> optionalList = new ArrayList<String>();
@@ -159,11 +192,12 @@ public class CertificationManager {
 
 	private void populateAditionalAntProperties(TargetLookup targetLookup,
 			Project project, ArrayList<String> optionalFeaturesList,ArrayList<String> systemWaiversList) {
-		project.setProperty("map.name", targetLookup.getMapName());
-		project.setProperty("executed.target.name", targetLookup
-				.getTargetName());
+
+        project.setProperty("map.name", targetLookup.getMapName());
+		project.setProperty("executed.target.name", targetLookup.getTargetName());
 
 		certLogger.info("Check if the feature has status to update or has a value ");
+
 		if (targetLookup.getIsValue() != null
 				&& targetLookup.getIsValue().equals("true")) {
 			project.setProperty("is.value", "true");
@@ -173,7 +207,8 @@ public class CertificationManager {
 		}
 
 		certLogger.info("Check if the current feature for this project is optional ");
-		if (optionalFeaturesList.contains(targetLookup.getTargetName())) {
+
+        if (optionalFeaturesList.contains(targetLookup.getTargetName())) {
 			certLogger.info("Set is.optional to true");
 			project.setProperty("is.optional", "true");
 		} else {
@@ -190,7 +225,8 @@ public class CertificationManager {
 			project.setProperty("is.systems.waiver", "false");
 		}
 		certLogger.info("Check if the feature is optional for all projects");
-		if (targetLookup.getIsOptional() != null
+
+        if (targetLookup.getIsOptional() != null
 				&& targetLookup.getIsOptional().equals("true")) {
 			project.setProperty("is.optional", "true");
 		}
