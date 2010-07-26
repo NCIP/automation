@@ -107,7 +107,7 @@ while (my $line = <>)
 		$passFileName="test-suite-properties-pass-${passFileCount}-jdk1.5.xml";
 		open(PASS,"> ${passFileName}") || die "Could not open ${passFileName}\n";
 		my $myHeader=$fileHeader;
-		$myHeader=~ s/TEST-test-suite-properties-jdk15_xml.xml/TEST-test-suite-properties-pass-${passFileCount}-jdk15_xml.xml/;
+		$myHeader=~ s/TEST-test-suite-properties-jdk15_xml.xml/TEST-test-suite-properties-pass-${passFileCount}-jdk1_5_xml.xml/;
 		print PASS $myHeader;
 		print PASS $passContents;
 		print PASS "</project>\n";
@@ -121,7 +121,7 @@ while (my $line = <>)
 		$failFileName="test-suite-properties-fail-${failFileCount}-jdk1.5.xml";
 		open(FAIL,"> ${failFileName}") || die "Could not open ${failFileName}\n";
 		my $myHeader=$fileHeader;
-		$myHeader=~ s/TEST-test-suite-properties-jdk15_xml.xml/TEST-test-suite-properties-fail-${failFileCount}-jdk15_xml.xml/;
+		$myHeader=~ s/TEST-test-suite-properties-jdk15_xml.xml/TEST-test-suite-properties-fail-${failFileCount}-jdk1_5_xml.xml/;
 		print FAIL $myHeader;
 		print FAIL $failContents;
 		print FAIL "</project>\n";

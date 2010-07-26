@@ -16,7 +16,7 @@
 			</or>
 			<then>
 				<exec executable="egrep">
-					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-7-jdk15_xml.xml"/>
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-7-jdk1_5_xml.xml"/>
 				</exec>
 			</then>
 			<else>
