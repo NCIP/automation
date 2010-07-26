@@ -286,6 +286,17 @@ public class TaskListenerTest extends TestCase {
 
     }
 
+    // this test tests the shouldSave method to check if it
+    // returns true for a simple property name match when
+    // there is only one in the collection of saveproperties
+    public void testShouldSaveReqexTrue2() {
+
+        TaskListener target = new TaskListener();
+        target.setPropertiesToSaveExpression(".*application\\.url");
+        assertTrue(target.ShouldSave("jboss.application.url"));
+
+    }
+
     public void testSavePropertiesNoException() throws Exception {
         TaskListener target = new TaskListener();
         Project p = new Project();

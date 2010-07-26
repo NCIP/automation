@@ -200,6 +200,7 @@ public class TaskListener implements BuildListener {
     }
 
     public void setPropertiesToSaveExpression(String value) {
+        System.out.println("TaskListener.setPropertiesToSaveExpression()=" + value);
         this.propertiesToSaveExpression = value;
     }
 }
