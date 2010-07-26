@@ -241,7 +241,7 @@ if (properties["evaluate.property.name"] != null)
 {
 	def failProp=properties["evaluate.property.name"]
 	println "evaluate.property.name - " + properties["evaluate.property.name"] + " (" + properties[failProp] + ") so only setting failure flag based on pass/fail results of this property."
-	if( failMsgs.contains("<td>" + failProp + "<td>"))
+	if( failMsgs.contains("<td>" + failProp + "</td>"))
 	{
 		outFile.write(failMsgs)
 		println "Property ${failProp} failed validation. Check ${outFile} for details."
