@@ -167,6 +167,7 @@
 		</copy>
 
 		<copy file="${dist.dir}/${build.certification.jar}" todir="${deploy.dir}" />
+        <copy file="${dist.dir}/${build.certification.jar}" todir="${user.home}/.ant/lib" />
 		<copy file="${resource.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
 		<copy file="${resource.dir}/build.xml" todir="${deploy.dir}" />
 		
