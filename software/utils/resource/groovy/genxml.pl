@@ -27,7 +27,7 @@ while (my $line = <>)
 
 
 		#print "\t<!--\n";
-		print "\t<property name=\"${prop}\" name-pattern=\"${prop}\" description=\"\" skip-property=\"${skipProp}\">\n";
+		print "\t<property name=\"${prop}\" description=\"\" skip-property=\"${skipProp}\">\n";
 		print "\t\t<rules>\n";
 		print "\t\t\t<rule>\n";
 		print "\t\t\t\t<name>${prop}-syntax</name>\n";

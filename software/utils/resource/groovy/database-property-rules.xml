@@ -1,5 +1,5 @@
 <properties>
-	<property name="database.driver" name-pattern="database.driver" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.driver" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.driver-syntax</name>
@@ -65,7 +65,7 @@
 
 		</rules>
 	</property>
-	<property name="database.driver.file" name-pattern="database.driver.file" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.driver.file" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.driver.file-syntax</name>
@@ -127,7 +127,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.drop-schema" name-pattern="database.drop-schema" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.drop-schema" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.drop-schema-syntax</name>
@@ -175,7 +175,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.re-create" name-pattern="database.re-create" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.re-create" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.re-create-syntax</name>
@@ -224,7 +224,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.jndi.datasource.name" name-pattern="database.jndi.datasource.name" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.jndi.datasource.name" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.jndi.datasource.name-syntax</name>
@@ -244,7 +244,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.name" name-pattern="database.name" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.name" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.name-syntax</name>
@@ -281,7 +281,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.password" name-pattern="database.password" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.password" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.password-syntax</name>
@@ -317,7 +317,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.port" name-pattern="database.port" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.port" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.port-syntax</name>
@@ -354,7 +354,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.schema" name-pattern="database.schema" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.schema" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.schema-syntax</name>
@@ -417,7 +417,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.server" name-pattern="database.server" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.server" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.server-syntax</name>
@@ -438,7 +438,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.system.password" name-pattern="database.system.password" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.system.password" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.system.password-syntax</name>
@@ -474,7 +474,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.system.url" name-pattern="database.system.url" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.system.url" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.system.url-syntax</name>
@@ -536,7 +536,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.system.user" name-pattern="database.system.user" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.system.user" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.system.user-syntax</name>
@@ -570,7 +570,7 @@
 
 		</rules>
 	</property>
-	<property name="database.type" name-pattern="database.type" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.type" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.type-syntax</name>
@@ -591,7 +591,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.url" name-pattern="database.url" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.url" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.url-syntax</name>
@@ -653,7 +653,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.user" name-pattern="database.user" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.user" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.user-syntax</name>
@@ -717,7 +717,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="db.install.create.mysql.file.list" name-pattern="db.install.create.mysql.file.list" description="" skip-property="">
+	<property  name-pattern="db.install.create.mysql.file.list" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>db.install.create.mysql.file.list-syntax</name>
@@ -749,7 +749,7 @@
 
 		</rules>
 	</property>
-	<property name="db.install.create.oracle.file.list" name-pattern="db.install.create.oracle.file.list" description="" skip-property="">
+	<property  name-pattern="db.install.create.oracle.file.list" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>db.install.create.oracle.file.list-syntax</name>
@@ -781,7 +781,7 @@
 
 		</rules>
 	</property>
-	<property name="db.install.create.postgresql.file.list" name-pattern="db.install.create.postgresql.file.list" description="" skip-property="">
+	<property  name-pattern="db.install.create.postgresql.file.list" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>db.install.create.postgresql.file.list-syntax</name>
@@ -811,7 +811,7 @@
 				<fail-message>db.install.create.postgres.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
 			</rule>
 		</rules>
-		<property name="exclude.check.database" name-pattern="exclude.check.database" description="" skip-property="exclude.validate.database">
+		<property  name-pattern="exclude.check.database" description="" skip-property="exclude.validate.database">
 			<rules>
 				<rule>
 					<name>exclude.check.database-syntax</name>
@@ -845,7 +845,7 @@
 				</rule>
 			</rules>
 		</property>
-		<property name="exclude.database" name-pattern="exclude.database" description="" skip-property="exclude.validate.database">
+		<property  name-pattern="exclude.database" description="" skip-property="exclude.validate.database">
 			<rules>
 				<rule>
 					<name>exclude.database-syntax</name>
@@ -880,7 +880,7 @@
 			</rules>
 		</property>
 	</property>
-	<property name="mysql.lowercasetablenames" name-pattern="mysql.lowercasetablenames" description="" skip-property="">
+	<property  name-pattern="mysql.lowercasetablenames" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>mysql.lowercasetablenames-syntax</name>
@@ -915,7 +915,7 @@
 
 		</rules>
 	</property>
-	<property name="mysql.minimum.version" name-pattern="mysql.minimum.version" description="" skip-property="">
+	<property  name-pattern="mysql.minimum.version" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>mysql.minimum.version-syntax</name>

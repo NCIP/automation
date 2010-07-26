@@ -1,5 +1,5 @@
 <properties>
-	<property name="tomcat.application.url" name-pattern="tomcat.application.url" description="" skip-property="">
+	<property  name-pattern="tomcat.application.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>tomcat.application.url-syntax</name>
@@ -27,7 +27,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat" name-pattern="exclude.tomcat" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat-syntax</name>
@@ -61,7 +61,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat.backup" name-pattern="exclude.tomcat.backup" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat.backup" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat.backup-syntax</name>
@@ -95,7 +95,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat-config" name-pattern="exclude.tomcat-config" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat-config" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat-config-syntax</name>
@@ -129,7 +129,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat.grid" name-pattern="exclude.tomcat.grid" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat.grid" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat.grid-syntax</name>
@@ -163,7 +163,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.binaries.file" name-pattern="tomcat.binaries.file" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.binaries.file" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.binaries.file-syntax</name>
@@ -183,7 +183,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.binaries.relative.dir" name-pattern="tomcat.binaries.relative.dir" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.binaries.relative.dir" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.binaries.relative.dir-syntax</name>
@@ -203,7 +203,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.grid.secure.host" name-pattern="tomcat.external.grid.secure.host" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.grid.secure.host" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.grid.secure.host-syntax</name>
@@ -224,7 +224,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.grid.secure.port" name-pattern="tomcat.external.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.grid.secure.port-syntax</name>
@@ -261,7 +261,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.http.host" name-pattern="tomcat.external.http.host" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.http.host" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.http.host-syntax</name>
@@ -282,7 +282,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.http.port" name-pattern="tomcat.external.http.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.http.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.http.port-syntax</name>
@@ -319,7 +319,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.ssl.host" name-pattern="tomcat.external.ssl.host" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.ssl.host" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.ssl.host-syntax</name>
@@ -340,7 +340,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.ssl.port" name-pattern="tomcat.external.ssl.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.ssl.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.ssl.port-syntax</name>
@@ -377,7 +377,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.cert.location" name-pattern="tomcat.grid.secure.cert.location" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.cert.location" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.cert.location-syntax</name>
@@ -397,7 +397,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.enable" name-pattern="tomcat.grid.secure.enable" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.enable" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.enable-syntax</name>
@@ -447,7 +447,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.key.location" name-pattern="tomcat.grid.secure.key.location" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.key.location" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.key.location-syntax</name>
@@ -467,7 +467,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.port" name-pattern="tomcat.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.port-syntax</name>
@@ -504,7 +504,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.relative.dir" name-pattern="tomcat.relative.dir" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.relative.dir" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.relative.dir-syntax</name>
@@ -524,7 +524,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.hostname" name-pattern="tomcat.hostname" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.hostname" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.hostname-syntax</name>
@@ -545,7 +545,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.http-connector.remove" name-pattern="tomcat.http-connector.remove" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.http-connector.remove" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.http-connector.remove-syntax</name>
@@ -593,7 +593,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.ajp" name-pattern="tomcat.port.ajp" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.ajp" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.ajp-syntax</name>
@@ -630,7 +630,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.http" name-pattern="tomcat.port.http" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.http" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.http-syntax</name>
@@ -667,7 +667,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.shutdown" name-pattern="tomcat.port.shutdown" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.shutdown" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.shutdown-syntax</name>
@@ -704,7 +704,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.ssl" name-pattern="tomcat.port.ssl" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.ssl" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.ssl-syntax</name>
@@ -741,7 +741,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.src.url" name-pattern="tomcat.src.url" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.src.url" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.src.url-syntax</name>
@@ -769,7 +769,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.enable" name-pattern="tomcat.ssl.enable" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.enable" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.enable-syntax</name>
@@ -820,7 +820,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.fullyqualified.hostname" name-pattern="tomcat.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.fullyqualified.hostname-syntax</name>
@@ -841,7 +841,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.keystore.alias" name-pattern="tomcat.ssl.keystore.alias" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.keystore.alias" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.keystore.alias-syntax</name>
@@ -862,7 +862,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.keystore.location" name-pattern="tomcat.ssl.keystore.location" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.keystore.location" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.keystore.location-syntax</name>
@@ -882,7 +882,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.keystore.pass" name-pattern="tomcat.ssl.keystore.pass" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.keystore.pass" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.keystore.pass-syntax</name>

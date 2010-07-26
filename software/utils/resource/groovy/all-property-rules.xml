@@ -1,5 +1,5 @@
 <properties>
-	<property name="ant.minimum.version" name-pattern="ant.minimum.version" description="" skip-property="">
+	<property  name-pattern="ant.minimum.version" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>ant.minimum.version-syntax</name>
@@ -20,7 +20,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="application.base.path.linux" name-pattern="application.base.path.linux" description="" skip-property="">
+	<property  name-pattern="application.base.path.linux" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>application.base.path.linux-syntax</name>
@@ -59,7 +59,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="application.base.path.windows" name-pattern="application.base.path.windows" description="" skip-property="">
+	<property  name-pattern="application.base.path.windows" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>application.base.path.windows-syntax</name>
@@ -95,7 +95,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.application.url" name-pattern="jboss.application.url" description="" skip-property="">
+	<property  name-pattern="jboss.application.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jboss.application.url-syntax</name>
@@ -123,7 +123,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.application.url" name-pattern="tomcat.application.url" description="" skip-property="">
+	<property  name-pattern="tomcat.application.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>tomcat.application.url-syntax</name>
@@ -151,7 +151,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="application.context.name" name-pattern="application.context.name" description="" skip-property="">
+	<property  name-pattern="application.context.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>application.context.name-syntax</name>
@@ -172,7 +172,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="authentication.type" name-pattern="authentication.type" description="" skip-property="">
+	<property  name-pattern="authentication.type" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>authentication.type-syntax</name>
@@ -206,7 +206,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="bda-blueprints-webapp.install.name" name-pattern="bda-blueprints-webapp.install.name" description="" skip-property="">
+	<property  name-pattern="bda-blueprints-webapp.install.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>bda-blueprints-webapp.install.name-syntax</name>
@@ -227,7 +227,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="bda-blueprints-webapp.install.zip.file" name-pattern="bda-blueprints-webapp.install.zip.file" description="" skip-property="">
+	<property  name-pattern="bda-blueprints-webapp.install.zip.file" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>bda-blueprints-webapp.install.zip.file-syntax</name>
@@ -247,7 +247,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="bda-blueprints-webapp.upgrade.name" name-pattern="bda-blueprints-webapp.upgrade.name" description="" skip-property="">
+	<property  name-pattern="bda-blueprints-webapp.upgrade.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>bda-blueprints-webapp.upgrade.name-syntax</name>
@@ -268,7 +268,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="bda-blueprints-webapp.upgrade.zip.file" name-pattern="bda-blueprints-webapp.upgrade.zip.file" description="" skip-property="">
+	<property  name-pattern="bda-blueprints-webapp.upgrade.zip.file" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>bda-blueprints-webapp.upgrade.zip.file-syntax</name>
@@ -288,7 +288,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="bda-blueprints-webapp.version" name-pattern="bda-blueprints-webapp.version" description="" skip-property="">
+	<property  name-pattern="bda-blueprints-webapp.version" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>bda-blueprints-webapp.version-syntax</name>
@@ -309,7 +309,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="bda.version" name-pattern="bda.version" description="" skip-property="">
+	<property  name-pattern="bda.version" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>bda.version-syntax</name>
@@ -342,7 +342,7 @@
 			-->
 		</rules>
 	</property>
-	<property name="build.bda.src.url" name-pattern="build.bda.src.url" description="" skip-property="">
+	<property  name-pattern="build.bda.src.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>build.bda.src.url-syntax</name>
@@ -370,7 +370,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cacore-sdk.binaries.file" name-pattern="cacore-sdk.binaries.file" description="" skip-property="">
+	<property  name-pattern="cacore-sdk.binaries.file" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cacore-sdk.binaries.file-syntax</name>
@@ -390,7 +390,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cacore-sdk.binaries.relative.dir" name-pattern="cacore-sdk.binaries.relative.dir" description="" skip-property="">
+	<property  name-pattern="cacore-sdk.binaries.relative.dir" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cacore-sdk.binaries.relative.dir-syntax</name>
@@ -410,7 +410,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cacore-sdk.required" name-pattern="cacore-sdk.required" description="" skip-property="">
+	<property  name-pattern="cacore-sdk.required" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cacore-sdk.required-syntax</name>
@@ -462,7 +462,7 @@
 
 		</rules>
 	</property>
-	<property name="cacore-sdk.src.url" name-pattern="cacore-sdk.src.url" description="" skip-property="">
+	<property  name-pattern="cacore-sdk.src.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cacore-sdk.src.url-syntax</name>
@@ -490,7 +490,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-base-war.binaries.file" name-pattern="cagrid-base-war.binaries.file" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-base-war.binaries.file" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-base-war.binaries.file-syntax</name>
@@ -510,7 +510,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-base-war.binaries.relative.dir" name-pattern="cagrid-base-war.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-base-war.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-base-war.binaries.relative.dir-syntax</name>
@@ -530,7 +530,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-base-war.src.url" name-pattern="cagrid-base-war.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-base-war.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-base-war.src.url-syntax</name>
@@ -558,7 +558,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-console.binaries.file" name-pattern="cagrid-console.binaries.file" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-console.binaries.file" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-console.binaries.file-syntax</name>
@@ -578,7 +578,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-console.binaries.relative.dir" name-pattern="cagrid-console.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-console.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-console.binaries.relative.dir-syntax</name>
@@ -598,7 +598,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-console.src.url" name-pattern="cagrid-console.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-console.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-console.src.url-syntax</name>
@@ -626,7 +626,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-libs.binaries.file" name-pattern="cagrid-libs.binaries.file" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-libs.binaries.file" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-libs.binaries.file-syntax</name>
@@ -646,7 +646,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-libs.binaries.relative.dir" name-pattern="cagrid-libs.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-libs.binaries.relative.dir" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-libs.binaries.relative.dir-syntax</name>
@@ -666,7 +666,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-libs.src.url" name-pattern="cagrid-libs.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-libs.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-libs.src.url-syntax</name>
@@ -694,7 +694,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cagrid-target.src.url" name-pattern="cagrid-target.src.url" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="cagrid-target.src.url" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>cagrid-target.src.url-syntax</name>
@@ -722,7 +722,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cgmm.application.context" name-pattern="cgmm.application.context" description="" skip-property="">
+	<property  name-pattern="cgmm.application.context" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cgmm.application.context-syntax</name>
@@ -743,7 +743,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="cgmm.application.name" name-pattern="cgmm.application.name" description="" skip-property="">
+	<property  name-pattern="cgmm.application.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>cgmm.application.name-syntax</name>
@@ -764,7 +764,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.context.path" name-pattern="database.context.path" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.context.path" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.context.path-syntax</name>
@@ -784,7 +784,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.driver" name-pattern="database.driver" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.driver" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.driver-syntax</name>
@@ -850,7 +850,7 @@
 
 		</rules>
 	</property>
-	<property name="database.driver.file" name-pattern="database.driver.file" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.driver.file" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.driver.file-syntax</name>
@@ -912,7 +912,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.drop-schema" name-pattern="database.drop-schema" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.drop-schema" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.drop-schema-syntax</name>
@@ -960,7 +960,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.re-create" name-pattern="database.re-create" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.re-create" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.re-create-syntax</name>
@@ -1009,7 +1009,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.jndi.datasource.name" name-pattern="database.jndi.datasource.name" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.jndi.datasource.name" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.jndi.datasource.name-syntax</name>
@@ -1029,7 +1029,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.name" name-pattern="database.name" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.name" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.name-syntax</name>
@@ -1066,7 +1066,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.password" name-pattern="database.password" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.password" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.password-syntax</name>
@@ -1102,7 +1102,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.port" name-pattern="database.port" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.port" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.port-syntax</name>
@@ -1139,7 +1139,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.schema" name-pattern="database.schema" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.schema" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.schema-syntax</name>
@@ -1202,7 +1202,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.server" name-pattern="database.server" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.server" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.server-syntax</name>
@@ -1223,7 +1223,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.system.password" name-pattern="database.system.password" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.system.password" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.system.password-syntax</name>
@@ -1259,7 +1259,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.system.url" name-pattern="database.system.url" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.system.url" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.system.url-syntax</name>
@@ -1321,7 +1321,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.system.user" name-pattern="database.system.user" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.system.user" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.system.user-syntax</name>
@@ -1355,7 +1355,7 @@
 
 		</rules>
 	</property>
-	<property name="database.type" name-pattern="database.type" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.type" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.type-syntax</name>
@@ -1376,7 +1376,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.url" name-pattern="database.url" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.url" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.url-syntax</name>
@@ -1438,7 +1438,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="database.user" name-pattern="database.user" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="database.user" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>database.user-syntax</name>
@@ -1502,7 +1502,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="db.install.create.mysql.file.list" name-pattern="db.install.create.mysql.file.list" description="" skip-property="">
+	<property  name-pattern="db.install.create.mysql.file.list" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>db.install.create.mysql.file.list-syntax</name>
@@ -1534,7 +1534,7 @@
 
 		</rules>
 	</property>
-	<property name="db.install.create.oracle.file.list" name-pattern="db.install.create.oracle.file.list" description="" skip-property="">
+	<property  name-pattern="db.install.create.oracle.file.list" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>db.install.create.oracle.file.list-syntax</name>
@@ -1566,7 +1566,7 @@
 
 		</rules>
 	</property>
-	<property name="db.install.create.postgresql.file.list" name-pattern="db.install.create.postgresql.file.list" description="" skip-property="">
+	<property  name-pattern="db.install.create.postgresql.file.list" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>db.install.create.postgresql.file.list-syntax</name>
@@ -1597,7 +1597,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="env.name" name-pattern="env.name" description="" skip-property="">
+	<property  name-pattern="env.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>env.name-syntax</name>
@@ -1638,7 +1638,7 @@
 
 		</rules>
 	</property>
-	<property name="exclude.access-logs" name-pattern="exclude.access-logs" description="" skip-property="">
+	<property  name-pattern="exclude.access-logs" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>exclude.access-logs-syntax</name>
@@ -1672,7 +1672,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.check.database" name-pattern="exclude.check.database" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="exclude.check.database" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>exclude.check.database-syntax</name>
@@ -1706,7 +1706,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.database" name-pattern="exclude.database" description="" skip-property="exclude.validate.database">
+	<property  name-pattern="exclude.database" description="" skip-property="exclude.validate.database">
 		<rules>
 			<rule>
 				<name>exclude.database-syntax</name>
@@ -1740,7 +1740,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.jboss" name-pattern="exclude.jboss" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="exclude.jboss" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-syntax</name>
@@ -1774,7 +1774,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.jboss.backup" name-pattern="exclude.jboss.backup" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="exclude.jboss.backup" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss.backup-syntax</name>
@@ -1808,7 +1808,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.jboss-bindings" name-pattern="exclude.jboss-bindings" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="exclude.jboss-bindings" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-bindings-syntax</name>
@@ -1842,7 +1842,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.jboss-config" name-pattern="exclude.jboss-config" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="exclude.jboss-config" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-config-syntax</name>
@@ -1876,7 +1876,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.jboss.grid" name-pattern="exclude.jboss.grid" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="exclude.jboss.grid" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss.grid-syntax</name>
@@ -1910,7 +1910,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.jboss-login-config" name-pattern="exclude.jboss-login-config" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="exclude.jboss-login-config" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>exclude.jboss-login-config-syntax</name>
@@ -1944,7 +1944,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.start.servers" name-pattern="exclude.start.servers" description="" skip-property="">
+	<property  name-pattern="exclude.start.servers" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>exclude.start.servers-syntax</name>
@@ -1978,7 +1978,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat" name-pattern="exclude.tomcat" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat-syntax</name>
@@ -2012,7 +2012,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat.backup" name-pattern="exclude.tomcat.backup" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat.backup" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat.backup-syntax</name>
@@ -2046,7 +2046,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat-config" name-pattern="exclude.tomcat-config" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat-config" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat-config-syntax</name>
@@ -2080,7 +2080,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="exclude.tomcat.grid" name-pattern="exclude.tomcat.grid" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="exclude.tomcat.grid" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>exclude.tomcat.grid-syntax</name>
@@ -2114,7 +2114,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="findbugs.binaries.file" name-pattern="findbugs.binaries.file" description="" skip-property="">
+	<property  name-pattern="findbugs.binaries.file" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>findbugs.binaries.file-syntax</name>
@@ -2134,7 +2134,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="findbugs.binaries.relative.dir" name-pattern="findbugs.binaries.relative.dir" description="" skip-property="">
+	<property  name-pattern="findbugs.binaries.relative.dir" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>findbugs.binaries.relative.dir-syntax</name>
@@ -2154,7 +2154,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="findbugs.src.url" name-pattern="findbugs.src.url" description="" skip-property="">
+	<property  name-pattern="findbugs.src.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>findbugs.src.url-syntax</name>
@@ -2182,7 +2182,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="fs-data.base.dir" name-pattern="fs-data.base.dir" description="" skip-property="">
+	<property  name-pattern="fs-data.base.dir" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>fs-data.base.dir-syntax</name>
@@ -2202,7 +2202,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.science.affiliation" name-pattern="grid.poc.science.affiliation" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.science.affiliation" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.affiliation-syntax</name>
@@ -2222,7 +2222,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.science.email" name-pattern="grid.poc.science.email" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.science.email" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.email-syntax</name>
@@ -2242,7 +2242,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.science.name.first" name-pattern="grid.poc.science.name.first" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.science.name.first" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.name.first-syntax</name>
@@ -2262,7 +2262,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.science.name.last" name-pattern="grid.poc.science.name.last" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.science.name.last" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.name.last-syntax</name>
@@ -2282,7 +2282,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.science.phone" name-pattern="grid.poc.science.phone" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.science.phone" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.phone-syntax</name>
@@ -2302,7 +2302,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.science.role" name-pattern="grid.poc.science.role" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.science.role" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.science.role-syntax</name>
@@ -2322,7 +2322,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.addr.country" name-pattern="grid.poc.tech.addr.country" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.addr.country" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.country-syntax</name>
@@ -2342,7 +2342,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.addr.locality" name-pattern="grid.poc.tech.addr.locality" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.addr.locality" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.locality-syntax</name>
@@ -2362,7 +2362,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.addr.postalCode" name-pattern="grid.poc.tech.addr.postalCode" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.addr.postalCode" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.postalCode-syntax</name>
@@ -2382,7 +2382,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.addr.stateProvince" name-pattern="grid.poc.tech.addr.stateProvince" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.addr.stateProvince" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.stateProvince-syntax</name>
@@ -2402,7 +2402,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.addr.street1" name-pattern="grid.poc.tech.addr.street1" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.addr.street1" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.street1-syntax</name>
@@ -2422,7 +2422,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.addr.street2" name-pattern="grid.poc.tech.addr.street2" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.addr.street2" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.addr.street2-syntax</name>
@@ -2442,7 +2442,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.affiliation" name-pattern="grid.poc.tech.affiliation" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.affiliation" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.affiliation-syntax</name>
@@ -2462,7 +2462,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.email" name-pattern="grid.poc.tech.email" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.email" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.email-syntax</name>
@@ -2482,7 +2482,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.name.first" name-pattern="grid.poc.tech.name.first" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.name.first" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.name.first-syntax</name>
@@ -2502,7 +2502,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.name.last" name-pattern="grid.poc.tech.name.last" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.name.last" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.name.last-syntax</name>
@@ -2522,7 +2522,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.phone" name-pattern="grid.poc.tech.phone" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.phone" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.phone-syntax</name>
@@ -2542,7 +2542,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.researchCenter.displayname" name-pattern="grid.poc.tech.researchCenter.displayname" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.researchCenter.displayname" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.researchCenter.displayname-syntax</name>
@@ -2562,7 +2562,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.researchCenter.shortname" name-pattern="grid.poc.tech.researchCenter.shortname" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.researchCenter.shortname" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.researchCenter.shortname-syntax</name>
@@ -2582,7 +2582,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.poc.tech.role" name-pattern="grid.poc.tech.role" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.poc.tech.role" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.poc.tech.role-syntax</name>
@@ -2602,7 +2602,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="grid.target" name-pattern="grid.target" description="" skip-property="exclude.validate.grid">
+	<property  name-pattern="grid.target" description="" skip-property="exclude.validate.grid">
 		<rules>
 			<rule>
 				<name>grid.target-syntax</name>
@@ -2636,7 +2636,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="ivy.bda.settings.src.url" name-pattern="ivy.bda.settings.src.url" description="" skip-property="">
+	<property  name-pattern="ivy.bda.settings.src.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>ivy.bda.settings.src.url-syntax</name>
@@ -2664,7 +2664,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="ivy.bda.src.url" name-pattern="ivy.bda.src.url" description="" skip-property="">
+	<property  name-pattern="ivy.bda.src.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>ivy.bda.src.url-syntax</name>
@@ -2692,7 +2692,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.execution.time" name-pattern="jar-signing.execution.time" description="" skip-property="">
+	<property  name-pattern="jar-signing.execution.time" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.execution.time-syntax</name>
@@ -2728,7 +2728,7 @@
 
 		</rules>
 	</property>
-	<property name="jar-signing.generate-selfsigned" name-pattern="jar-signing.generate-selfsigned" description="" skip-property="">
+	<property  name-pattern="jar-signing.generate-selfsigned" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.generate-selfsigned-syntax</name>
@@ -2762,7 +2762,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.jar.list" name-pattern="jar-signing.jar.list" description="" skip-property="">
+	<property  name-pattern="jar-signing.jar.list" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.jar.list-syntax</name>
@@ -2795,7 +2795,7 @@
 
 		</rules>
 	</property>
-	<property name="jar-signing.keystore.alias" name-pattern="jar-signing.keystore.alias" description="" skip-property="">
+	<property  name-pattern="jar-signing.keystore.alias" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.keystore.alias-syntax</name>
@@ -2816,7 +2816,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.keystore.cert.cn" name-pattern="jar-signing.keystore.cert.cn" description="" skip-property="">
+	<property  name-pattern="jar-signing.keystore.cert.cn" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.keystore.cert.cn-syntax</name>
@@ -2836,7 +2836,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.keystore.cert.c" name-pattern="jar-signing.keystore.cert.c" description="" skip-property="">
+	<property  name-pattern="jar-signing.keystore.cert.c" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.keystore.cert.c-syntax</name>
@@ -2856,7 +2856,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.keystore.cert.o" name-pattern="jar-signing.keystore.cert.o" description="" skip-property="">
+	<property  name-pattern="jar-signing.keystore.cert.o" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.keystore.cert.o-syntax</name>
@@ -2876,7 +2876,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.keystore.cert.ou" name-pattern="jar-signing.keystore.cert.ou" description="" skip-property="">
+	<property  name-pattern="jar-signing.keystore.cert.ou" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.keystore.cert.ou-syntax</name>
@@ -2896,7 +2896,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.keystore.location" name-pattern="jar-signing.keystore.location" description="" skip-property="">
+	<property  name-pattern="jar-signing.keystore.location" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.keystore.location-syntax</name>
@@ -2916,7 +2916,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jar-signing.keystore.password" name-pattern="jar-signing.keystore.password" description="" skip-property="">
+	<property  name-pattern="jar-signing.keystore.password" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>jar-signing.keystore.password-syntax</name>
@@ -2937,7 +2937,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="java.major.version" name-pattern="java.major.version" description="" skip-property="">
+	<property  name-pattern="java.major.version" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>java.major.version-syntax</name>
@@ -2958,7 +2958,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="java.minor.version" name-pattern="java.minor.version" description="" skip-property="">
+	<property  name-pattern="java.minor.version" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>java.minor.version-syntax</name>
@@ -2979,7 +2979,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.binaries.file" name-pattern="jboss.binaries.file" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.binaries.file" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.binaries.file-syntax</name>
@@ -2999,7 +2999,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.binaries.relative.dir" name-pattern="jboss.binaries.relative.dir" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.binaries.relative.dir" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.binaries.relative.dir-syntax</name>
@@ -3019,7 +3019,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss-bindings.file" name-pattern="jboss-bindings.file" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss-bindings.file" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss-bindings.file-syntax</name>
@@ -3039,7 +3039,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss-bindings.src.url" name-pattern="jboss-bindings.src.url" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss-bindings.src.url" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss-bindings.src.url-syntax</name>
@@ -3067,7 +3067,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.cgmm.enable" name-pattern="jboss.cgmm.enable" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.cgmm.enable" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.cgmm.enable-syntax</name>
@@ -3102,7 +3102,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.cobraorb.port" name-pattern="jboss.cobraorb.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.cobraorb.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.cobraorb.port-syntax</name>
@@ -3139,7 +3139,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jbosscp.binaries.file" name-pattern="jbosscp.binaries.file" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jbosscp.binaries.file" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jbosscp.binaries.file-syntax</name>
@@ -3159,7 +3159,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jbosscp.src.url" name-pattern="jbosscp.src.url" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jbosscp.src.url" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jbosscp.src.url-syntax</name>
@@ -3187,7 +3187,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.ejbinvoker.port" name-pattern="jboss.ejbinvoker.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ejbinvoker.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ejbinvoker.port-syntax</name>
@@ -3224,7 +3224,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.external.grid.secure.host" name-pattern="jboss.external.grid.secure.host" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.external.grid.secure.host" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.grid.secure.host-syntax</name>
@@ -3245,7 +3245,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.external.grid.secure.port" name-pattern="jboss.external.grid.secure.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.external.grid.secure.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.grid.secure.port-syntax</name>
@@ -3282,7 +3282,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.external.http.host" name-pattern="jboss.external.http.host" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.external.http.host" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.http.host-syntax</name>
@@ -3303,7 +3303,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.external.http.port" name-pattern="jboss.external.http.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.external.http.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.http.port-syntax</name>
@@ -3340,7 +3340,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.external.ssl.host" name-pattern="jboss.external.ssl.host" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.external.ssl.host" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.ssl.host-syntax</name>
@@ -3361,7 +3361,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.external.ssl.port" name-pattern="jboss.external.ssl.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.external.ssl.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.external.ssl.port-syntax</name>
@@ -3398,7 +3398,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.grid.secure.cert.location" name-pattern="jboss.grid.secure.cert.location" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.grid.secure.cert.location" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.cert.location-syntax</name>
@@ -3418,7 +3418,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.grid.secure.enable" name-pattern="jboss.grid.secure.enable" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.grid.secure.enable" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.enable-syntax</name>
@@ -3469,7 +3469,7 @@
 
 		</rules>
 	</property>
-	<property name="jboss.grid.secure.key.location" name-pattern="jboss.grid.secure.key.location" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.grid.secure.key.location" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.key.location-syntax</name>
@@ -3489,7 +3489,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.grid.secure.port" name-pattern="jboss.grid.secure.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.grid.secure.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.grid.secure.port-syntax</name>
@@ -3526,7 +3526,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.hajndi.auto.port" name-pattern="jboss.hajndi.auto.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.hajndi.auto.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.hajndi.auto.port-syntax</name>
@@ -3563,7 +3563,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.hajndi.port" name-pattern="jboss.hajndi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.hajndi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.hajndi.port-syntax</name>
@@ -3600,7 +3600,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.hajrmi.port" name-pattern="jboss.hajrmi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.hajrmi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.hajrmi.port-syntax</name>
@@ -3637,7 +3637,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.relative.path" name-pattern="jboss.relative.path" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.relative.path" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.relative.path-syntax</name>
@@ -3657,7 +3657,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.http-connector.remove" name-pattern="jboss.http-connector.remove" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.http-connector.remove" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.http-connector.remove-syntax</name>
@@ -3706,7 +3706,7 @@
 		</rules>
 	</property>
 	<!-- java.opts is to complex for rules -->
-	<property name="jboss.jms2.netty.port" name-pattern="jboss.jms2.netty.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.jms2.netty.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jms2.netty.port-syntax</name>
@@ -3743,7 +3743,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.jms2.netty-ssl.port" name-pattern="jboss.jms2.netty-ssl.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.jms2.netty-ssl.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jms2.netty-ssl.port-syntax</name>
@@ -3780,7 +3780,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.jms.port" name-pattern="jboss.jms.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.jms.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jms.port-syntax</name>
@@ -3817,7 +3817,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.jmx-rmi.port" name-pattern="jboss.jmx-rmi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.jmx-rmi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.jmx-rmi.port-syntax</name>
@@ -3854,7 +3854,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.messaging.port" name-pattern="jboss.messaging.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.messaging.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.messaging.port-syntax</name>
@@ -3891,7 +3891,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.ncicb-standard.port-config" name-pattern="jboss.ncicb-standard.port-config" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ncicb-standard.port-config" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ncicb-standard.port-config-syntax</name>
@@ -3925,7 +3925,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.pooledha.port" name-pattern="jboss.pooledha.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.pooledha.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.pooledha.port-syntax</name>
@@ -3962,7 +3962,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.remoting.port" name-pattern="jboss.remoting.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.remoting.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.remoting.port-syntax</name>
@@ -3999,7 +3999,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.server.bind.port" name-pattern="jboss.server.bind.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.server.bind.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.bind.port-syntax</name>
@@ -4036,7 +4036,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.server.hostname" name-pattern="jboss.server.hostname" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.server.hostname" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.hostname-syntax</name>
@@ -4057,7 +4057,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.server.jndi.port" name-pattern="jboss.server.jndi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.server.jndi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.jndi.port-syntax</name>
@@ -4094,7 +4094,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.server.name" name-pattern="jboss.server.name" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.server.name" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.name-syntax</name>
@@ -4115,7 +4115,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.server.port" name-pattern="jboss.server.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.server.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.port-syntax</name>
@@ -4152,7 +4152,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.server.ports.name" name-pattern="jboss.server.ports.name" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.server.ports.name" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.ports.name-syntax</name>
@@ -4246,7 +4246,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.server.rmi.port" name-pattern="jboss.server.rmi.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.server.rmi.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.server.rmi.port-syntax</name>
@@ -4283,7 +4283,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.service.rmiobject.port" name-pattern="jboss.service.rmiobject.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.service.rmiobject.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.service.rmiobject.port-syntax</name>
@@ -4320,7 +4320,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.snmp.port" name-pattern="jboss.snmp.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.snmp.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.snmp.port-syntax</name>
@@ -4357,7 +4357,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.snmp-trapd.port" name-pattern="jboss.snmp-trapd.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.snmp-trapd.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.snmp-trapd.port-syntax</name>
@@ -4394,7 +4394,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.src.url" name-pattern="jboss.src.url" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.src.url" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.src.url-syntax</name>
@@ -4422,7 +4422,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.ssl.enable" name-pattern="jboss.ssl.enable" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ssl.enable" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.enable-syntax</name>
@@ -4473,7 +4473,7 @@
 
 		</rules>
 	</property>
-	<property name="jboss.ssl.fullyqualified.hostname" name-pattern="jboss.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.fullyqualified.hostname-syntax</name>
@@ -4494,7 +4494,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.ssl.keystore.alias" name-pattern="jboss.ssl.keystore.alias" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ssl.keystore.alias" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.keystore.alias-syntax</name>
@@ -4515,7 +4515,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.ssl.keystore.location" name-pattern="jboss.ssl.keystore.location" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ssl.keystore.location" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.keystore.location-syntax</name>
@@ -4535,7 +4535,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.ssl.keystore.pass" name-pattern="jboss.ssl.keystore.pass" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ssl.keystore.pass" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.keystore.pass-syntax</name>
@@ -4556,7 +4556,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.ssl.port" name-pattern="jboss.ssl.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.ssl.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.ssl.port-syntax</name>
@@ -4593,7 +4593,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.transaction.processid.port" name-pattern="jboss.transaction.processid.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.transaction.processid.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.transaction.processid.port-syntax</name>
@@ -4630,7 +4630,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.transaction.recovery.port" name-pattern="jboss.transaction.recovery.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.transaction.recovery.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.transaction.recovery.port-syntax</name>
@@ -4667,7 +4667,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.transaction.status.port" name-pattern="jboss.transaction.status.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.transaction.status.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.transaction.status.port-syntax</name>
@@ -4704,7 +4704,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.unifiedinvoker.port" name-pattern="jboss.unifiedinvoker.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.unifiedinvoker.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.unifiedinvoker.port-syntax</name>
@@ -4741,7 +4741,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.web.password" name-pattern="jboss.web.password" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.web.password" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.web.password-syntax</name>
@@ -4762,7 +4762,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.web.service.port" name-pattern="jboss.web.service.port" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.web.service.port" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.web.service.port-syntax</name>
@@ -4799,7 +4799,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="jboss.web.user" name-pattern="jboss.web.user" description="" skip-property="exclude.validate.jboss">
+	<property  name-pattern="jboss.web.user" description="" skip-property="exclude.validate.jboss">
 		<rules>
 			<rule>
 				<name>jboss.web.user-syntax</name>
@@ -4820,7 +4820,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="ldap.basedn" name-pattern="ldap.basedn" description="" skip-property="">
+	<property  name-pattern="ldap.basedn" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>ldap.basedn-syntax</name>
@@ -4841,7 +4841,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="ldap.url" name-pattern="ldap.url" description="" skip-property="">
+	<property  name-pattern="ldap.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>ldap.url-syntax</name>
@@ -4869,7 +4869,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="log4j.level" name-pattern="log4j.level" description="" skip-property="">
+	<property  name-pattern="log4j.level" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>log4j.level-syntax</name>
@@ -4890,7 +4890,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="log4j.maxDays" name-pattern="log4j.maxDays" description="" skip-property="">
+	<property  name-pattern="log4j.maxDays" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>log4j.maxDays-syntax</name>
@@ -4911,7 +4911,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="log4j.maxFileSize" name-pattern="log4j.maxFileSize" description="" skip-property="">
+	<property  name-pattern="log4j.maxFileSize" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>log4j.maxFileSize-syntax</name>
@@ -4932,7 +4932,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="mail.smtp.server" name-pattern="mail.smtp.server" description="" skip-property="">
+	<property  name-pattern="mail.smtp.server" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>mail.smtp.server-syntax</name>
@@ -4953,7 +4953,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="mysql.lowercasetablenames" name-pattern="mysql.lowercasetablenames" description="" skip-property="">
+	<property  name-pattern="mysql.lowercasetablenames" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>mysql.lowercasetablenames-syntax</name>
@@ -4988,7 +4988,7 @@
 
 		</rules>
 	</property>
-	<property name="mysql.minimum.version" name-pattern="mysql.minimum.version" description="" skip-property="">
+	<property  name-pattern="mysql.minimum.version" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>mysql.minimum.version-syntax</name>
@@ -5009,7 +5009,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="project.name" name-pattern="project.name" description="" skip-property="">
+	<property  name-pattern="project.name" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>project.name-syntax</name>
@@ -5030,7 +5030,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="require.build.wscore" name-pattern="require.build.wscore" description="" skip-property="">
+	<property  name-pattern="require.build.wscore" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>require.build.wscore-syntax</name>
@@ -5065,7 +5065,7 @@
 
 		</rules>
 	</property>
-	<property name="sync-gts.binaries.file" name-pattern="sync-gts.binaries.file" description="" skip-property="">
+	<property  name-pattern="sync-gts.binaries.file" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>sync-gts.binaries.file-syntax</name>
@@ -5085,7 +5085,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="sync-gts.binaries.relative.dir" name-pattern="sync-gts.binaries.relative.dir" description="" skip-property="">
+	<property  name-pattern="sync-gts.binaries.relative.dir" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>sync-gts.binaries.relative.dir-syntax</name>
@@ -5105,7 +5105,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="sync-gts.src.url" name-pattern="sync-gts.src.url" description="" skip-property="">
+	<property  name-pattern="sync-gts.src.url" description="" skip-property="">
 		<rules>
 			<rule>
 				<name>sync-gts.src.url-syntax</name>
@@ -5133,7 +5133,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.binaries.file" name-pattern="tomcat.binaries.file" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.binaries.file" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.binaries.file-syntax</name>
@@ -5153,7 +5153,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.binaries.relative.dir" name-pattern="tomcat.binaries.relative.dir" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.binaries.relative.dir" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.binaries.relative.dir-syntax</name>
@@ -5173,7 +5173,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.grid.secure.host" name-pattern="tomcat.external.grid.secure.host" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.grid.secure.host" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.grid.secure.host-syntax</name>
@@ -5194,7 +5194,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.grid.secure.port" name-pattern="tomcat.external.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.grid.secure.port-syntax</name>
@@ -5231,7 +5231,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.http.host" name-pattern="tomcat.external.http.host" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.http.host" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.http.host-syntax</name>
@@ -5252,7 +5252,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.http.port" name-pattern="tomcat.external.http.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.http.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.http.port-syntax</name>
@@ -5289,7 +5289,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.ssl.host" name-pattern="tomcat.external.ssl.host" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.ssl.host" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.ssl.host-syntax</name>
@@ -5310,7 +5310,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.external.ssl.port" name-pattern="tomcat.external.ssl.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.external.ssl.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.external.ssl.port-syntax</name>
@@ -5347,7 +5347,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.cert.location" name-pattern="tomcat.grid.secure.cert.location" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.cert.location" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.cert.location-syntax</name>
@@ -5367,7 +5367,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.enable" name-pattern="tomcat.grid.secure.enable" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.enable" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.enable-syntax</name>
@@ -5417,7 +5417,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.key.location" name-pattern="tomcat.grid.secure.key.location" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.key.location" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.key.location-syntax</name>
@@ -5437,7 +5437,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.grid.secure.port" name-pattern="tomcat.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.grid.secure.port" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.grid.secure.port-syntax</name>
@@ -5474,7 +5474,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.relative.dir" name-pattern="tomcat.relative.dir" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.relative.dir" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.relative.dir-syntax</name>
@@ -5494,7 +5494,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.hostname" name-pattern="tomcat.hostname" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.hostname" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.hostname-syntax</name>
@@ -5515,7 +5515,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.http-connector.remove" name-pattern="tomcat.http-connector.remove" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.http-connector.remove" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.http-connector.remove-syntax</name>
@@ -5563,7 +5563,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.ajp" name-pattern="tomcat.port.ajp" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.ajp" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.ajp-syntax</name>
@@ -5600,7 +5600,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.http" name-pattern="tomcat.port.http" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.http" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.http-syntax</name>
@@ -5637,7 +5637,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.shutdown" name-pattern="tomcat.port.shutdown" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.shutdown" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.shutdown-syntax</name>
@@ -5674,7 +5674,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.port.ssl" name-pattern="tomcat.port.ssl" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.port.ssl" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.port.ssl-syntax</name>
@@ -5711,7 +5711,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.src.url" name-pattern="tomcat.src.url" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.src.url" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.src.url-syntax</name>
@@ -5739,7 +5739,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.enable" name-pattern="tomcat.ssl.enable" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.enable" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.enable-syntax</name>
@@ -5790,7 +5790,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.fullyqualified.hostname" name-pattern="tomcat.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.fullyqualified.hostname" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.fullyqualified.hostname-syntax</name>
@@ -5811,7 +5811,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.keystore.alias" name-pattern="tomcat.ssl.keystore.alias" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.keystore.alias" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.keystore.alias-syntax</name>
@@ -5832,7 +5832,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.keystore.location" name-pattern="tomcat.ssl.keystore.location" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.keystore.location" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.keystore.location-syntax</name>
@@ -5852,7 +5852,7 @@
 			</rule>
 		</rules>
 	</property>
-	<property name="tomcat.ssl.keystore.pass" name-pattern="tomcat.ssl.keystore.pass" description="" skip-property="exclude.validate.tomcat">
+	<property  name-pattern="tomcat.ssl.keystore.pass" description="" skip-property="exclude.validate.tomcat">
 		<rules>
 			<rule>
 				<name>tomcat.ssl.keystore.pass-syntax</name>
