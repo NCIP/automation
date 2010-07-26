@@ -10,21 +10,6 @@ my $fileHeader="
 			<xmllistener toDir=\"\${antunit.xml.report.dir}\" logLevel=\"verbose\" />
 			<plainlistener logLevel=\"info\"/>
 		</antunit>      
-		<osfamily property=\"os.family\"/>
-		<if>                    
-			<or>                            
-				<equals arg1=\"\${os.family}\" arg2=\"mac\"/>
-				<equals arg1=\"\${os.family}\" arg2=\"unix\"/>
-			</or>                   
-			<then>                          
-				<exec executable=\"egrep\">               
-					<arg line=\"'**** Entering|passed all validation rules.|failed validation.' \${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml\"/>
-				</exec>                         
-			</then>                 
-			<else>                  
-				<echo mesage=\"Grep not supported on windows\"/>
-			</else>                 
-		</if>           
 	</target>\n";
 
 my $passContents,$failContents,$passFileName,$failFileName;
