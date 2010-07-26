@@ -328,6 +328,18 @@
 				</conditions>
 				<fail-message>bda.version did not pass validation. bda.version must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "1.7.0".</fail-message>
 			</rule>
+			<!-- commented out for now
+			<rule>
+				<name>bda.version-value</name>
+				<description>Checks bda.version is the valid syntax.</description>
+				<conditions>
+					<or>
+						<condition>bda.version ==~ /\d\.\d\.\d/ </condition>
+					</or>
+				</conditions>
+				<fail-message>bda.version did not pass validation. bda.version must be three digits long separated by dots (&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;). cannot be a beta version. Sample valid value - "1.7.0".</fail-message>
+			</rule>
+			-->
 		</rules>
 	</property>
 	<property name="build.bda.src.url" name-pattern="build.bda.src.url" description="" skip-property="">
