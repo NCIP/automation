@@ -8,5 +8,5 @@ ID,TARGET_NAME,MAP_NAME,IS_VALUE,SAVE_PROPERTIES,USE_PROPERTIES
 8,build:template-properties,templateValidation,NULL,NULL,NULL
 9,build:private-repository-properties,privateRepositoryProperties,NULL,NULL,NULL
 10,build:ci-server,latestCIBuild,true,NULL,NULL
-11,build:validate-app-servers,deploymentShakeout,NULL,NULL,NULL
+11,build:validate-app-servers,deploymentShakeout,NULL,NULL,.*application\.url
 12,build:check-commandline-installer,commandLineInstaller,NULL,NULL,NULL
