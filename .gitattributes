@@ -327,6 +327,7 @@ samples/ivy-dep-report/ncicb-bda-download-test-selenium.pdf -text
 samples/ivy-dep-report/ncicb-bda-download-test.dot -text
 samples/ivy-dep-report/ncicb-bda-download-test.html -text
 samples/ivy-dep-report/ncicb-bda-download-test.pdf -text
+samples/property-rules/all-property-rules.html -text
 samples/schema-spy/anomalies.html -text
 samples/schema-spy/columns.byAuto.html -text
 samples/schema-spy/columns.byChildren.html -text

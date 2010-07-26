@@ -1,0 +1,30 @@
+<html>
+	<body>
+		<h1>BDA Properties Validation Report</h1>
+		<table border="1">
+			<tr bgcolor="99CCFF">
+				<td>Property</td>
+				<td>Rule</td>
+				<td>Value</td>
+				<td>Failure Mesage</td>
+			<tr>
+				<td>jboss.server.jndi.port</td>
+				<td>jboss.server.jndi.port-port</td>
+				<td>fail</td>
+				<td>jboss.server.jndi.port did not pass validation. jboss.server.jndi.port must be empty or between 0 and 65535. Sample valid value - "30200".</td>
+			</tr>
+			<tr>
+				<td>jboss.server.name</td>
+				<td>jboss.server.name-syntax</td>
+				<td>fa il</td>
+				<td>jboss.server.name did not pass validation. jboss.server.name must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "default".</td>
+			</tr>
+			<tr>
+				<td>jboss.server.port</td>
+				<td>jboss.server.port-port</td>
+				<td>70000</td>
+				<td>jboss.server.port did not pass validation. jboss.server.port must be empty or between 0 and 65535. Sample valid value - "30210".</td>
+			</tr>
+		</table>
+	</body>
+</html>
