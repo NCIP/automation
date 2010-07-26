@@ -10,7 +10,34 @@ my $fileHeader="
 			<xmllistener toDir=\"\${antunit.xml.report.dir}\" logLevel=\"verbose\" />
 			<plainlistener logLevel=\"info\"/>
 		</antunit>      
+		<osfamily property=\"os.family\"/>
+		<if>
+			<or>
+				<equals arg1=\"\${os.family}\" arg2=\"mac\"/>
+				<equals arg1=\"\${os.family}\" arg2=\"unix\"/>
+			</or>
+			<then>
+				<exec executable=\"egrep\">
+					<arg line=\"'**** Entering|**** Exiting|passed all validation rules.|failed validation.' \${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml\"/>
+				</exec>
+			</then>
+			<else>
+				<echo mesage=\"Grep not supported on windows\"/>
+			</else>
+		</if>
+	</target>
+	<target name=\"suiteSetUp\">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message=\"**** Entering Properties suiteSetUp\"/>
+		<ant inheritAll=\"false\" inheritrefs=\"false\"
+			antfile=\"build.xml\"             
+			dir=\"\${build.dir}\"              
+			target=\"dist:installer:prep\"        
+			>                               
+		</ant>                  
+		<echo message=\"**** Exiting Properties suiteSetUp\"/>
 	</target>\n";
+
 
 my $passContents,$failContents,$passFileName,$failFileName;
 my $passCount=0;
@@ -79,7 +106,9 @@ while (my $line = <>)
 		$passFileCount++;
 		$passFileName="test-suite-properties-pass-${passFileCount}-jdk1.5.xml";
 		open(PASS,"> ${passFileName}") || die "Could not open ${passFileName}\n";
-		print PASS $fileHeader;
+		my $myHeader=$fileHeader;
+		$myHeader=~ s/TEST-test-suite-properties-jdk15_xml.xml/TEST-test-suite-properties-pass-${passFileCount}-jdk15_xml.xml/;
+		print PASS $myHeader;
 		print PASS $passContents;
 		print PASS "</project>\n";
 		$passCount=0;
@@ -91,7 +120,9 @@ while (my $line = <>)
 		$failFileCount++;
 		$failFileName="test-suite-properties-fail-${failFileCount}-jdk1.5.xml";
 		open(FAIL,"> ${failFileName}") || die "Could not open ${failFileName}\n";
-		print FAIL $fileHeader;
+		my $myHeader=$fileHeader;
+		$myHeader=~ s/TEST-test-suite-properties-jdk15_xml.xml/TEST-test-suite-properties-fail-${failFileCount}-jdk15_xml.xml/;
+		print FAIL $myHeader;
 		print FAIL $failContents;
 		print FAIL "</project>\n";
 		$failCount=0;

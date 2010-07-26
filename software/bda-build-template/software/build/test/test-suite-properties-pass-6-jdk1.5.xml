@@ -9,21 +9,63 @@
 			<plainlistener logLevel="info"/>
 		</antunit>      
 		<osfamily property="os.family"/>
-		<if>                    
-			<or>                            
+		<if>
+			<or>
 				<equals arg1="${os.family}" arg2="mac"/>
 				<equals arg1="${os.family}" arg2="unix"/>
-			</or>                   
-			<then>                          
-				<exec executable="egrep">               
-					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
-				</exec>                         
-			</then>                 
-			<else>                  
+			</or>
+			<then>
+				<exec executable="egrep">
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-6-jdk15_xml.xml"/>
+				</exec>
+			</then>
+			<else>
 				<echo mesage="Grep not supported on windows"/>
-			</else>                 
-		</if>           
-	</target>	<target name="test:property:pass:jar-signing.keystore.password">
+			</else>
+		</if>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:pass:jar-signing.keystore.cert.ou">
+		<echo message="**** Entering test:property:pass:jar-signing.keystore.cert.ou"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.keystore.cert.ou=NCICB
+			evaluate.property.name=jar-signing.keystore.cert.ou
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.keystore.cert.ou"/>
+	</target>
+	<target name="test:property:pass:jar-signing.keystore.location">
+		<echo message="**** Entering test:property:pass:jar-signing.keystore.location"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.keystore.location=nci-dev-signing.keystore
+			evaluate.property.name=jar-signing.keystore.location
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.keystore.location"/>
+	</target>
+	<target name="test:property:pass:jar-signing.keystore.password">
 		<echo message="**** Entering test:property:pass:jar-signing.keystore.password"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.password=nci123!
@@ -37,7 +79,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jar-signing.keystore.password"/>
-	</target>	<target name="test:property:pass:java.major.version">
+	</target>
+	<target name="test:property:pass:java.major.version">
 		<echo message="**** Entering test:property:pass:java.major.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			java.major.version=1.5
@@ -51,7 +94,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:java.major.version"/>
-	</target>	<target name="test:property:pass:java.minor.version">
+	</target>
+	<target name="test:property:pass:java.minor.version">
 		<echo message="**** Entering test:property:pass:java.minor.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			java.minor.version=1.5.0_10
@@ -65,7 +109,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:java.minor.version"/>
-	</target>	<target name="test:property:pass:jboss.binaries.file">
+	</target>
+	<target name="test:property:pass:jboss.binaries.file">
 		<echo message="**** Entering test:property:pass:jboss.binaries.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.file=jboss-4.0.5.GA.zip
@@ -79,7 +124,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.binaries.file"/>
-	</target>	<target name="test:property:pass:jboss.binaries.relative.dir">
+	</target>
+	<target name="test:property:pass:jboss.binaries.relative.dir">
 		<echo message="**** Entering test:property:pass:jboss.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.relative.dir=jboss-4.0.5.GA
@@ -93,7 +139,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.binaries.relative.dir"/>
-	</target>	<target name="test:property:pass:jboss-bindings.file">
+	</target>
+	<target name="test:property:pass:jboss-bindings.file">
 		<echo message="**** Entering test:property:pass:jboss-bindings.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.file=ncicb-bindings-dac-jboss-4.0.x.xml
@@ -107,7 +154,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss-bindings.file"/>
-	</target>	<target name="test:property:pass:jboss-bindings.src.url">
+	</target>
+	<target name="test:property:pass:jboss-bindings.src.url">
 		<echo message="**** Entering test:property:pass:jboss-bindings.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml
@@ -121,7 +169,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss-bindings.src.url"/>
-	</target>	<target name="test:property:pass:jboss.cgmm.enable">
+	</target>
+	<target name="test:property:pass:jboss.cgmm.enable">
 		<echo message="**** Entering test:property:pass:jboss.cgmm.enable"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cgmm.enable=true
@@ -135,7 +184,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.cgmm.enable"/>
-	</target>	<target name="test:property:pass:jboss.cobraorb.port">
+	</target>
+	<target name="test:property:pass:jboss.cobraorb.port">
 		<echo message="**** Entering test:property:pass:jboss.cobraorb.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cobraorb.port=30350
@@ -149,7 +199,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.cobraorb.port"/>
-	</target>	<target name="test:property:pass:jbosscp.binaries.file">
+	</target>
+	<target name="test:property:pass:jbosscp.binaries.file">
 		<echo message="**** Entering test:property:pass:jbosscp.binaries.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.binaries.file=jboss-4.0.5.GA_CP15.zip
@@ -163,7 +214,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jbosscp.binaries.file"/>
-	</target>	<target name="test:property:pass:jbosscp.src.url">
+	</target>
+	<target name="test:property:pass:jbosscp.src.url">
 		<echo message="**** Entering test:property:pass:jbosscp.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/jboss-4.0.5.GA_CP15.zip
@@ -177,7 +229,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jbosscp.src.url"/>
-	</target>	<target name="test:property:pass:jboss.ejbinvoker.port">
+	</target>
+	<target name="test:property:pass:jboss.ejbinvoker.port">
 		<echo message="**** Entering test:property:pass:jboss.ejbinvoker.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ejbinvoker.port=30150
@@ -191,7 +244,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.ejbinvoker.port"/>
-	</target>	<target name="test:property:pass:jboss.external.grid.secure.host">
+	</target>
+	<target name="test:property:pass:jboss.external.grid.secure.host">
 		<echo message="**** Entering test:property:pass:jboss.external.grid.secure.host"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.grid.secure.host=
@@ -205,7 +259,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.external.grid.secure.host"/>
-	</target>	<target name="test:property:pass:jboss.external.grid.secure.port">
+	</target>
+	<target name="test:property:pass:jboss.external.grid.secure.port">
 		<echo message="**** Entering test:property:pass:jboss.external.grid.secure.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.grid.secure.port=
@@ -219,7 +274,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.external.grid.secure.port"/>
-	</target>	<target name="test:property:pass:jboss.external.http.host">
+	</target>
+	<target name="test:property:pass:jboss.external.http.host">
 		<echo message="**** Entering test:property:pass:jboss.external.http.host"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.http.host=
@@ -233,7 +289,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.external.http.host"/>
-	</target>	<target name="test:property:pass:jboss.external.http.port">
+	</target>
+	<target name="test:property:pass:jboss.external.http.port">
 		<echo message="**** Entering test:property:pass:jboss.external.http.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.http.port=
@@ -247,7 +304,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.external.http.port"/>
-	</target>	<target name="test:property:pass:jboss.external.ssl.host">
+	</target>
+	<target name="test:property:pass:jboss.external.ssl.host">
 		<echo message="**** Entering test:property:pass:jboss.external.ssl.host"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.ssl.host=
@@ -261,7 +319,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.external.ssl.host"/>
-	</target>	<target name="test:property:pass:jboss.external.ssl.port">
+	</target>
+	<target name="test:property:pass:jboss.external.ssl.port">
 		<echo message="**** Entering test:property:pass:jboss.external.ssl.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.ssl.port=
@@ -275,32 +334,5 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.external.ssl.port"/>
-	</target>	<target name="test:property:pass:jboss.grid.secure.cert.location">
-		<echo message="**** Entering test:property:pass:jboss.grid.secure.cert.location"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			jboss.grid.secure.cert.location=/path/165.112.132.171-cert.pem
-			evaluate.property.name=jboss.grid.secure.cert.location
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:jboss.grid.secure.cert.location"/>
-	</target>	<target name="test:property:pass:jboss.grid.secure.enable">
-		<echo message="**** Entering test:property:pass:jboss.grid.secure.enable"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			jboss.grid.secure.enable=true
-			evaluate.property.name=jboss.grid.secure.enable
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:jboss.grid.secure.enable"/>
-	</target></project>
+	</target>
+</project>

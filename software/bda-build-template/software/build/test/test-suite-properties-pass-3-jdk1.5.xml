@@ -9,21 +9,48 @@
 			<plainlistener logLevel="info"/>
 		</antunit>      
 		<osfamily property="os.family"/>
-		<if>                    
-			<or>                            
+		<if>
+			<or>
 				<equals arg1="${os.family}" arg2="mac"/>
 				<equals arg1="${os.family}" arg2="unix"/>
-			</or>                   
-			<then>                          
-				<exec executable="egrep">               
-					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
-				</exec>                         
-			</then>                 
-			<else>                  
+			</or>
+			<then>
+				<exec executable="egrep">
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-3-jdk15_xml.xml"/>
+				</exec>
+			</then>
+			<else>
 				<echo mesage="Grep not supported on windows"/>
-			</else>                 
-		</if>           
-	</target>	<target name="test:property:pass:database.system.password">
+			</else>
+		</if>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:pass:database.server">
+		<echo message="**** Entering test:property:pass:database.server"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.server=localhost
+			evaluate.property.name=database.server
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:database.server"/>
+	</target>
+	<target name="test:property:pass:database.system.password">
 		<echo message="**** Entering test:property:pass:database.system.password"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.system.password=mysql
@@ -37,7 +64,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.system.password"/>
-	</target>	<target name="test:property:pass:database.system.url">
+	</target>
+	<target name="test:property:pass:database.system.url">
 		<echo message="**** Entering test:property:pass:database.system.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.system.url=jdbc:mysql://localhost:3306/
@@ -51,7 +79,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.system.url"/>
-	</target>	<target name="test:property:pass:database.system.user">
+	</target>
+	<target name="test:property:pass:database.system.user">
 		<echo message="**** Entering test:property:pass:database.system.user"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.system.user=mysql
@@ -65,7 +94,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.system.user"/>
-	</target>	<target name="test:property:pass:database.type">
+	</target>
+	<target name="test:property:pass:database.type">
 		<echo message="**** Entering test:property:pass:database.type"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.type=mysql
@@ -79,7 +109,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.type"/>
-	</target>	<target name="test:property:pass:database.url">
+	</target>
+	<target name="test:property:pass:database.url">
 		<echo message="**** Entering test:property:pass:database.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.url=jdbc:mysql://localhost:3306/bda
@@ -93,7 +124,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.url"/>
-	</target>	<target name="test:property:pass:database.user">
+	</target>
+	<target name="test:property:pass:database.user">
 		<echo message="**** Entering test:property:pass:database.user"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.user=bdauser
@@ -107,7 +139,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.user"/>
-	</target>	<target name="test:property:pass:db.install.create.mysql.file.list">
+	</target>
+	<target name="test:property:pass:db.install.create.mysql.file.list">
 		<echo message="**** Entering test:property:pass:db.install.create.mysql.file.list"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			db.install.create.mysql.file.list=create-tables.sql
@@ -121,7 +154,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:db.install.create.mysql.file.list"/>
-	</target>	<target name="test:property:pass:db.install.create.oracle.file.list">
+	</target>
+	<target name="test:property:pass:db.install.create.oracle.file.list">
 		<echo message="**** Entering test:property:pass:db.install.create.oracle.file.list"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			db.install.create.oracle.file.list=
@@ -135,7 +169,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:db.install.create.oracle.file.list"/>
-	</target>	<target name="test:property:pass:db.install.create.postgresql.file.list">
+	</target>
+	<target name="test:property:pass:db.install.create.postgresql.file.list">
 		<echo message="**** Entering test:property:pass:db.install.create.postgresql.file.list"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			db.install.create.postgresql.file.list=create-tables.sql
@@ -149,7 +184,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:db.install.create.postgresql.file.list"/>
-	</target>	<target name="test:property:pass:env.name">
+	</target>
+	<target name="test:property:pass:env.name">
 		<echo message="**** Entering test:property:pass:env.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			env.name=local
@@ -163,7 +199,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:env.name"/>
-	</target>	<target name="test:property:pass:exclude.access-logs">
+	</target>
+	<target name="test:property:pass:exclude.access-logs">
 		<echo message="**** Entering test:property:pass:exclude.access-logs"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.access-logs=true
@@ -177,7 +214,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.access-logs"/>
-	</target>	<target name="test:property:pass:exclude.check.database">
+	</target>
+	<target name="test:property:pass:exclude.check.database">
 		<echo message="**** Entering test:property:pass:exclude.check.database"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.check.database=true
@@ -191,7 +229,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.check.database"/>
-	</target>	<target name="test:property:pass:exclude.database">
+	</target>
+	<target name="test:property:pass:exclude.database">
 		<echo message="**** Entering test:property:pass:exclude.database"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.database=true
@@ -205,7 +244,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.database"/>
-	</target>	<target name="test:property:pass:exclude.jboss">
+	</target>
+	<target name="test:property:pass:exclude.jboss">
 		<echo message="**** Entering test:property:pass:exclude.jboss"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.jboss=true
@@ -219,7 +259,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.jboss"/>
-	</target>	<target name="test:property:pass:exclude.jboss.backup">
+	</target>
+	<target name="test:property:pass:exclude.jboss.backup">
 		<echo message="**** Entering test:property:pass:exclude.jboss.backup"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.jboss.backup=true
@@ -233,7 +274,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.jboss.backup"/>
-	</target>	<target name="test:property:pass:exclude.jboss-bindings">
+	</target>
+	<target name="test:property:pass:exclude.jboss-bindings">
 		<echo message="**** Entering test:property:pass:exclude.jboss-bindings"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.jboss-bindings=true
@@ -247,7 +289,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.jboss-bindings"/>
-	</target>	<target name="test:property:pass:exclude.jboss-config">
+	</target>
+	<target name="test:property:pass:exclude.jboss-config">
 		<echo message="**** Entering test:property:pass:exclude.jboss-config"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.jboss-config=true
@@ -261,7 +304,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.jboss-config"/>
-	</target>	<target name="test:property:pass:exclude.jboss.grid">
+	</target>
+	<target name="test:property:pass:exclude.jboss.grid">
 		<echo message="**** Entering test:property:pass:exclude.jboss.grid"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.jboss.grid=true
@@ -275,7 +319,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.jboss.grid"/>
-	</target>	<target name="test:property:pass:exclude.jboss-login-config">
+	</target>
+	<target name="test:property:pass:exclude.jboss-login-config">
 		<echo message="**** Entering test:property:pass:exclude.jboss-login-config"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.jboss-login-config=true
@@ -289,18 +334,5 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.jboss-login-config"/>
-	</target>	<target name="test:property:pass:exclude.start.servers">
-		<echo message="**** Entering test:property:pass:exclude.start.servers"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			exclude.start.servers=true
-			evaluate.property.name=exclude.start.servers
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:exclude.start.servers"/>
-	</target></project>
+	</target>
+</project>

@@ -9,21 +9,63 @@
 			<plainlistener logLevel="info"/>
 		</antunit>      
 		<osfamily property="os.family"/>
-		<if>                    
-			<or>                            
+		<if>
+			<or>
 				<equals arg1="${os.family}" arg2="mac"/>
 				<equals arg1="${os.family}" arg2="unix"/>
-			</or>                   
-			<then>                          
-				<exec executable="egrep">               
-					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
-				</exec>                         
-			</then>                 
-			<else>                  
+			</or>
+			<then>
+				<exec executable="egrep">
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-7-jdk15_xml.xml"/>
+				</exec>
+			</then>
+			<else>
 				<echo mesage="Grep not supported on windows"/>
-			</else>                 
-		</if>           
-	</target>	<target name="test:property:pass:jboss.grid.secure.key.location">
+			</else>
+		</if>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:pass:jboss.grid.secure.cert.location">
+		<echo message="**** Entering test:property:pass:jboss.grid.secure.cert.location"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.grid.secure.cert.location=/path/165.112.132.171-cert.pem
+			evaluate.property.name=jboss.grid.secure.cert.location
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jboss.grid.secure.cert.location"/>
+	</target>
+	<target name="test:property:pass:jboss.grid.secure.enable">
+		<echo message="**** Entering test:property:pass:jboss.grid.secure.enable"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.grid.secure.enable=true
+			evaluate.property.name=jboss.grid.secure.enable
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jboss.grid.secure.enable"/>
+	</target>
+	<target name="test:property:pass:jboss.grid.secure.key.location">
 		<echo message="**** Entering test:property:pass:jboss.grid.secure.key.location"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.grid.secure.key.location=/path/165.112.132.171-key.pem
@@ -37,7 +79,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.grid.secure.key.location"/>
-	</target>	<target name="test:property:pass:jboss.grid.secure.port">
+	</target>
+	<target name="test:property:pass:jboss.grid.secure.port">
 		<echo message="**** Entering test:property:pass:jboss.grid.secure.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.grid.secure.port=30500
@@ -51,7 +94,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.grid.secure.port"/>
-	</target>	<target name="test:property:pass:jboss.hajndi.auto.port">
+	</target>
+	<target name="test:property:pass:jboss.hajndi.auto.port">
 		<echo message="**** Entering test:property:pass:jboss.hajndi.auto.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.hajndi.auto.port=30370
@@ -65,7 +109,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.hajndi.auto.port"/>
-	</target>	<target name="test:property:pass:jboss.hajndi.port">
+	</target>
+	<target name="test:property:pass:jboss.hajndi.port">
 		<echo message="**** Entering test:property:pass:jboss.hajndi.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.hajndi.port=30160
@@ -79,7 +124,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.hajndi.port"/>
-	</target>	<target name="test:property:pass:jboss.hajrmi.port">
+	</target>
+	<target name="test:property:pass:jboss.hajrmi.port">
 		<echo message="**** Entering test:property:pass:jboss.hajrmi.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.hajrmi.port=30260
@@ -93,7 +139,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.hajrmi.port"/>
-	</target>	<target name="test:property:pass:jboss.relative.path">
+	</target>
+	<target name="test:property:pass:jboss.relative.path">
 		<echo message="**** Entering test:property:pass:jboss.relative.path"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.relative.path=jboss-4.0.5.GA
@@ -107,7 +154,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.relative.path"/>
-	</target>	<target name="test:property:pass:jboss.http-connector.remove">
+	</target>
+	<target name="test:property:pass:jboss.http-connector.remove">
 		<echo message="**** Entering test:property:pass:jboss.http-connector.remove"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.http-connector.remove=true
@@ -121,7 +169,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.http-connector.remove"/>
-	</target>	<target name="test:property:pass:jboss.java.opts">
+	</target>
+	<target name="test:property:pass:jboss.java.opts">
 		<echo message="**** Entering test:property:pass:jboss.java.opts"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.java.opts=-server -Xms256m -Xmx512m -XX:ThreadStackSize=128 -XX:SurvivorRatio=10 -XX:PermSize=128m -XX:MaxPermSize=128m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.awt.headless=true
@@ -135,7 +184,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.java.opts"/>
-	</target>	<target name="test:property:pass:jboss.jms2.netty.port">
+	</target>
+	<target name="test:property:pass:jboss.jms2.netty.port">
 		<echo message="**** Entering test:property:pass:jboss.jms2.netty.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.jms2.netty.port=30390
@@ -149,7 +199,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.jms2.netty.port"/>
-	</target>	<target name="test:property:pass:jboss.jms2.netty-ssl.port">
+	</target>
+	<target name="test:property:pass:jboss.jms2.netty-ssl.port">
 		<echo message="**** Entering test:property:pass:jboss.jms2.netty-ssl.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.jms2.netty-ssl.port=30400
@@ -163,7 +214,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.jms2.netty-ssl.port"/>
-	</target>	<target name="test:property:pass:jboss.jms.port">
+	</target>
+	<target name="test:property:pass:jboss.jms.port">
 		<echo message="**** Entering test:property:pass:jboss.jms.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.jms.port=30170
@@ -177,7 +229,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.jms.port"/>
-	</target>	<target name="test:property:pass:jboss.jmx-rmi.port">
+	</target>
+	<target name="test:property:pass:jboss.jmx-rmi.port">
 		<echo message="**** Entering test:property:pass:jboss.jmx-rmi.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.jmx-rmi.port=30290
@@ -191,7 +244,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.jmx-rmi.port"/>
-	</target>	<target name="test:property:pass:jboss.messaging.port">
+	</target>
+	<target name="test:property:pass:jboss.messaging.port">
 		<echo message="**** Entering test:property:pass:jboss.messaging.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.messaging.port=30330
@@ -205,7 +259,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.messaging.port"/>
-	</target>	<target name="test:property:pass:jboss.ncicb-standard.port-config">
+	</target>
+	<target name="test:property:pass:jboss.ncicb-standard.port-config">
 		<echo message="**** Entering test:property:pass:jboss.ncicb-standard.port-config"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ncicb-standard.port-config=true
@@ -219,7 +274,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.ncicb-standard.port-config"/>
-	</target>	<target name="test:property:pass:jboss.pooledha.port">
+	</target>
+	<target name="test:property:pass:jboss.pooledha.port">
 		<echo message="**** Entering test:property:pass:jboss.pooledha.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.pooledha.port=30270
@@ -233,7 +289,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.pooledha.port"/>
-	</target>	<target name="test:property:pass:jboss.remoting.port">
+	</target>
+	<target name="test:property:pass:jboss.remoting.port">
 		<echo message="**** Entering test:property:pass:jboss.remoting.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.remoting.port=30320
@@ -247,7 +304,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.remoting.port"/>
-	</target>	<target name="test:property:pass:jboss.server.bind.port">
+	</target>
+	<target name="test:property:pass:jboss.server.bind.port">
 		<echo message="**** Entering test:property:pass:jboss.server.bind.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.server.bind.port=0
@@ -261,7 +319,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.server.bind.port"/>
-	</target>	<target name="test:property:pass:jboss.server.hostname">
+	</target>
+	<target name="test:property:pass:jboss.server.hostname">
 		<echo message="**** Entering test:property:pass:jboss.server.hostname"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.server.hostname=localhost
@@ -275,32 +334,5 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.server.hostname"/>
-	</target>	<target name="test:property:pass:jboss.server.jndi.port">
-		<echo message="**** Entering test:property:pass:jboss.server.jndi.port"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			jboss.server.jndi.port=30200
-			evaluate.property.name=jboss.server.jndi.port
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:jboss.server.jndi.port"/>
-	</target>	<target name="test:property:pass:jboss.server.name">
-		<echo message="**** Entering test:property:pass:jboss.server.name"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			jboss.server.name=default
-			evaluate.property.name=jboss.server.name
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:jboss.server.name"/>
-	</target></project>
+	</target>
+</project>

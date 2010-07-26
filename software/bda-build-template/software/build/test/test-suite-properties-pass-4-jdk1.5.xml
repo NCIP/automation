@@ -9,21 +9,48 @@
 			<plainlistener logLevel="info"/>
 		</antunit>      
 		<osfamily property="os.family"/>
-		<if>                    
-			<or>                            
+		<if>
+			<or>
 				<equals arg1="${os.family}" arg2="mac"/>
 				<equals arg1="${os.family}" arg2="unix"/>
-			</or>                   
-			<then>                          
-				<exec executable="egrep">               
-					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
-				</exec>                         
-			</then>                 
-			<else>                  
+			</or>
+			<then>
+				<exec executable="egrep">
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-4-jdk15_xml.xml"/>
+				</exec>
+			</then>
+			<else>
 				<echo mesage="Grep not supported on windows"/>
-			</else>                 
-		</if>           
-	</target>	<target name="test:property:pass:exclude.tomcat">
+			</else>
+		</if>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:pass:exclude.start.servers">
+		<echo message="**** Entering test:property:pass:exclude.start.servers"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			exclude.start.servers=true
+			evaluate.property.name=exclude.start.servers
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:exclude.start.servers"/>
+	</target>
+	<target name="test:property:pass:exclude.tomcat">
 		<echo message="**** Entering test:property:pass:exclude.tomcat"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.tomcat=true
@@ -37,7 +64,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.tomcat"/>
-	</target>	<target name="test:property:pass:exclude.tomcat.backup">
+	</target>
+	<target name="test:property:pass:exclude.tomcat.backup">
 		<echo message="**** Entering test:property:pass:exclude.tomcat.backup"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.tomcat.backup=true
@@ -51,7 +79,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.tomcat.backup"/>
-	</target>	<target name="test:property:pass:exclude.tomcat-config">
+	</target>
+	<target name="test:property:pass:exclude.tomcat-config">
 		<echo message="**** Entering test:property:pass:exclude.tomcat-config"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.tomcat-config=true
@@ -65,7 +94,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.tomcat-config"/>
-	</target>	<target name="test:property:pass:exclude.tomcat.grid">
+	</target>
+	<target name="test:property:pass:exclude.tomcat.grid">
 		<echo message="**** Entering test:property:pass:exclude.tomcat.grid"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			exclude.tomcat.grid=true
@@ -79,7 +109,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:exclude.tomcat.grid"/>
-	</target>	<target name="test:property:pass:findbugs.binaries.file">
+	</target>
+	<target name="test:property:pass:findbugs.binaries.file">
 		<echo message="**** Entering test:property:pass:findbugs.binaries.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.binaries.file=findbugs-1.3.4.zip
@@ -93,7 +124,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:findbugs.binaries.file"/>
-	</target>	<target name="test:property:pass:findbugs.binaries.relative.dir">
+	</target>
+	<target name="test:property:pass:findbugs.binaries.relative.dir">
 		<echo message="**** Entering test:property:pass:findbugs.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.binaries.relative.dir=findbugs-1.3.4
@@ -107,7 +139,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:findbugs.binaries.relative.dir"/>
-	</target>	<target name="test:property:pass:findbugs.src.url">
+	</target>
+	<target name="test:property:pass:findbugs.src.url">
 		<echo message="**** Entering test:property:pass:findbugs.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/other/os-independent/findbugs-1.3.4.zip
@@ -121,7 +154,23 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:findbugs.src.url"/>
-	</target>	<target name="test:property:pass:fs-data.base.dir">
+	</target>
+	<target name="test:property:pass:# For jar-signning self signed cert">
+		<echo message="**** Entering test:property:pass:# For jar-signning self signed cert"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			# For jar-signning self signed cert=
+			evaluate.property.name=# For jar-signning self signed cert
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:# For jar-signning self signed cert"/>
+	</target>
+	<target name="test:property:pass:fs-data.base.dir">
 		<echo message="**** Entering test:property:pass:fs-data.base.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			fs-data.base.dir=/local/content/files
@@ -135,7 +184,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:fs-data.base.dir"/>
-	</target>	<target name="test:property:pass:grid.poc.science.affiliation">
+	</target>
+	<target name="test:property:pass:grid.poc.science.affiliation">
 		<echo message="**** Entering test:property:pass:grid.poc.science.affiliation"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.science.affiliation=Test
@@ -149,7 +199,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.science.affiliation"/>
-	</target>	<target name="test:property:pass:grid.poc.science.email">
+	</target>
+	<target name="test:property:pass:grid.poc.science.email">
 		<echo message="**** Entering test:property:pass:grid.poc.science.email"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.science.email=john.smith@mail.com
@@ -163,7 +214,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.science.email"/>
-	</target>	<target name="test:property:pass:grid.poc.science.name.first">
+	</target>
+	<target name="test:property:pass:grid.poc.science.name.first">
 		<echo message="**** Entering test:property:pass:grid.poc.science.name.first"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.science.name.first=John
@@ -177,7 +229,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.science.name.first"/>
-	</target>	<target name="test:property:pass:grid.poc.science.name.last">
+	</target>
+	<target name="test:property:pass:grid.poc.science.name.last">
 		<echo message="**** Entering test:property:pass:grid.poc.science.name.last"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.science.name.last=Smith
@@ -191,7 +244,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.science.name.last"/>
-	</target>	<target name="test:property:pass:grid.poc.science.phone">
+	</target>
+	<target name="test:property:pass:grid.poc.science.phone">
 		<echo message="**** Entering test:property:pass:grid.poc.science.phone"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.science.phone=0124567890
@@ -205,7 +259,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.science.phone"/>
-	</target>	<target name="test:property:pass:grid.poc.science.role">
+	</target>
+	<target name="test:property:pass:grid.poc.science.role">
 		<echo message="**** Entering test:property:pass:grid.poc.science.role"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.science.role=sysadmin
@@ -219,7 +274,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.science.role"/>
-	</target>	<target name="test:property:pass:grid.poc.tech.addr.country">
+	</target>
+	<target name="test:property:pass:grid.poc.tech.addr.country">
 		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.country"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.addr.country=USA
@@ -233,7 +289,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.country"/>
-	</target>	<target name="test:property:pass:grid.poc.tech.addr.locality">
+	</target>
+	<target name="test:property:pass:grid.poc.tech.addr.locality">
 		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.locality"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.addr.locality=Vienna
@@ -247,7 +304,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.locality"/>
-	</target>	<target name="test:property:pass:grid.poc.tech.addr.postalCode">
+	</target>
+	<target name="test:property:pass:grid.poc.tech.addr.postalCode">
 		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.postalCode"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.addr.postalCode=22180
@@ -261,7 +319,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.postalCode"/>
-	</target>	<target name="test:property:pass:grid.poc.tech.addr.stateProvince">
+	</target>
+	<target name="test:property:pass:grid.poc.tech.addr.stateProvince">
 		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.stateProvince"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.addr.stateProvince=VA
@@ -275,32 +334,5 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.stateProvince"/>
-	</target>	<target name="test:property:pass:grid.poc.tech.addr.street1">
-		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.street1"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.addr.street1=1234 Somplace lane
-			evaluate.property.name=grid.poc.tech.addr.street1
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.street1"/>
-	</target>	<target name="test:property:pass:grid.poc.tech.addr.street2">
-		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.street2"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.addr.street2=
-			evaluate.property.name=grid.poc.tech.addr.street2
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.street2"/>
-	</target></project>
+	</target>
+</project>

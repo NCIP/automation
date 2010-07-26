@@ -9,21 +9,33 @@
 			<plainlistener logLevel="info"/>
 		</antunit>      
 		<osfamily property="os.family"/>
-		<if>                    
-			<or>                            
+		<if>
+			<or>
 				<equals arg1="${os.family}" arg2="mac"/>
 				<equals arg1="${os.family}" arg2="unix"/>
-			</or>                   
-			<then>                          
-				<exec executable="egrep">               
-					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
-				</exec>                         
-			</then>                 
-			<else>                  
+			</or>
+			<then>
+				<exec executable="egrep">
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-1-jdk15_xml.xml"/>
+				</exec>
+			</then>
+			<else>
 				<echo mesage="Grep not supported on windows"/>
-			</else>                 
-		</if>           
-	</target>	<target name="test:property:pass:ant.minimum.version">
+			</else>
+		</if>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:pass:ant.minimum.version">
 		<echo message="**** Entering test:property:pass:ant.minimum.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ant.minimum.version=1.7.0
@@ -37,7 +49,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:ant.minimum.version"/>
-	</target>	<target name="test:property:pass:application.base.path.linux">
+	</target>
+	<target name="test:property:pass:application.base.path.linux">
 		<echo message="**** Entering test:property:pass:application.base.path.linux"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/home/user/apps/appname
@@ -51,7 +64,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:application.base.path.linux"/>
-	</target>	<target name="test:property:pass:application.base.path.windows">
+	</target>
+	<target name="test:property:pass:application.base.path.windows">
 		<echo message="**** Entering test:property:pass:application.base.path.windows"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/apps/appname
@@ -65,7 +79,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:application.base.path.windows"/>
-	</target>	<target name="test:property:pass:application.url">
+	</target>
+	<target name="test:property:pass:application.url">
 		<echo message="**** Entering test:property:pass:application.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.url=http://localhost.nci.nih.gov:port
@@ -79,7 +94,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:application.url"/>
-	</target>	<target name="test:property:pass:application.context.name">
+	</target>
+	<target name="test:property:pass:application.context.name">
 		<echo message="**** Entering test:property:pass:application.context.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.context.name=bda
@@ -93,7 +109,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:application.context.name"/>
-	</target>	<target name="test:property:pass:authentication.type">
+	</target>
+	<target name="test:property:pass:authentication.type">
 		<echo message="**** Entering test:property:pass:authentication.type"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			authentication.type=db
@@ -107,7 +124,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:authentication.type"/>
-	</target>	<target name="test:property:pass:bda-blueprints-webapp.install.name">
+	</target>
+	<target name="test:property:pass:bda-blueprints-webapp.install.name">
 		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.install.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.install.name=bda-blueprints_install
@@ -121,7 +139,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.install.name"/>
-	</target>	<target name="test:property:pass:bda-blueprints-webapp.install.zip.file">
+	</target>
+	<target name="test:property:pass:bda-blueprints-webapp.install.zip.file">
 		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.install.zip.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.install.zip.file=bda-blueprints_install-1.7.0.zip
@@ -135,7 +154,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.install.zip.file"/>
-	</target>	<target name="test:property:pass:bda-blueprints-webapp.upgrade.name">
+	</target>
+	<target name="test:property:pass:bda-blueprints-webapp.upgrade.name">
 		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.upgrade.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.upgrade.name=bda-blueprints_upgrade
@@ -149,7 +169,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.upgrade.name"/>
-	</target>	<target name="test:property:pass:bda-blueprints-webapp.upgrade.zip.file">
+	</target>
+	<target name="test:property:pass:bda-blueprints-webapp.upgrade.zip.file">
 		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.upgrade.zip.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.upgrade.zip.file=bda-blueprints_upgrade-1.7.0.zip
@@ -163,7 +184,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.upgrade.zip.file"/>
-	</target>	<target name="test:property:pass:bda-blueprints-webapp.version">
+	</target>
+	<target name="test:property:pass:bda-blueprints-webapp.version">
 		<echo message="**** Entering test:property:pass:bda-blueprints-webapp.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.version=1.7.0
@@ -177,10 +199,11 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.version"/>
-	</target>	<target name="test:property:pass:bda.version">
+	</target>
+	<target name="test:property:pass:bda.version">
 		<echo message="**** Entering test:property:pass:bda.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			bda.version=1.7.0
+			bda.version=1.7.0-beta
 			evaluate.property.name=bda.version
 			groovy.debug=true
 		</echo>
@@ -191,7 +214,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:bda.version"/>
-	</target>	<target name="test:property:pass:build.bda.src.url">
+	</target>
+	<target name="test:property:pass:build.bda.src.url">
 		<echo message="**** Entering test:property:pass:build.bda.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			build.bda.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml
@@ -205,7 +229,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:build.bda.src.url"/>
-	</target>	<target name="test:property:pass:cacore-sdk.binaries.file">
+	</target>
+	<target name="test:property:pass:cacore-sdk.binaries.file">
 		<echo message="**** Entering test:property:pass:cacore-sdk.binaries.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.file=caCORE_SDK_411-src.zip
@@ -219,7 +244,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cacore-sdk.binaries.file"/>
-	</target>	<target name="test:property:pass:cacore-sdk.binaries.relative.dir">
+	</target>
+	<target name="test:property:pass:cacore-sdk.binaries.relative.dir">
 		<echo message="**** Entering test:property:pass:cacore-sdk.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.relative.dir=codegen
@@ -233,7 +259,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cacore-sdk.binaries.relative.dir"/>
-	</target>	<target name="test:property:pass:cacore-sdk.required">
+	</target>
+	<target name="test:property:pass:cacore-sdk.required">
 		<echo message="**** Entering test:property:pass:cacore-sdk.required"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.required=true
@@ -247,7 +274,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cacore-sdk.required"/>
-	</target>	<target name="test:property:pass:cacore-sdk.src.url">
+	</target>
+	<target name="test:property:pass:cacore-sdk.src.url">
 		<echo message="**** Entering test:property:pass:cacore-sdk.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}
@@ -261,7 +289,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cacore-sdk.src.url"/>
-	</target>	<target name="test:property:pass:cagrid-base-war.binaries.file">
+	</target>
+	<target name="test:property:pass:cagrid-base-war.binaries.file">
 		<echo message="**** Entering test:property:pass:cagrid-base-war.binaries.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.file=cagrid-wscore-4.0.3-appserver-base-war.zip
@@ -275,7 +304,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-base-war.binaries.file"/>
-	</target>	<target name="test:property:pass:cagrid-base-war.binaries.relative.dir">
+	</target>
+	<target name="test:property:pass:cagrid-base-war.binaries.relative.dir">
 		<echo message="**** Entering test:property:pass:cagrid-base-war.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.relative.dir=.
@@ -289,7 +319,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-base-war.binaries.relative.dir"/>
-	</target>	<target name="test:property:pass:cagrid-base-war.src.url">
+	</target>
+	<target name="test:property:pass:cagrid-base-war.src.url">
 		<echo message="**** Entering test:property:pass:cagrid-base-war.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-base-war.zip
@@ -303,4 +334,5 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-base-war.src.url"/>
-	</target></project>
+	</target>
+</project>

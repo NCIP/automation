@@ -9,21 +9,33 @@
 			<plainlistener logLevel="info"/>
 		</antunit>      
 		<osfamily property="os.family"/>
-		<if>                    
-			<or>                            
+		<if>
+			<or>
 				<equals arg1="${os.family}" arg2="mac"/>
 				<equals arg1="${os.family}" arg2="unix"/>
-			</or>                   
-			<then>                          
-				<exec executable="egrep">               
-					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
-				</exec>                         
-			</then>                 
-			<else>                  
+			</or>
+			<then>
+				<exec executable="egrep">
+					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-pass-2-jdk15_xml.xml"/>
+				</exec>
+			</then>
+			<else>
 				<echo mesage="Grep not supported on windows"/>
-			</else>                 
-		</if>           
-	</target>	<target name="test:property:pass:cagrid-console.binaries.file">
+			</else>
+		</if>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:pass:cagrid-console.binaries.file">
 		<echo message="**** Entering test:property:pass:cagrid-console.binaries.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.file=caGrid-console_sources.zip
@@ -37,7 +49,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-console.binaries.file"/>
-	</target>	<target name="test:property:pass:cagrid-console.binaries.relative.dir">
+	</target>
+	<target name="test:property:pass:cagrid-console.binaries.relative.dir">
 		<echo message="**** Entering test:property:pass:cagrid-console.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.relative.dir=caGrid-console
@@ -51,7 +64,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-console.binaries.relative.dir"/>
-	</target>	<target name="test:property:pass:cagrid-console.src.url">
+	</target>
+	<target name="test:property:pass:cagrid-console.src.url">
 		<echo message="**** Entering test:property:pass:cagrid-console.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/caGrid-console_sources.zip
@@ -65,7 +79,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-console.src.url"/>
-	</target>	<target name="test:property:pass:cagrid-libs.binaries.file">
+	</target>
+	<target name="test:property:pass:cagrid-libs.binaries.file">
 		<echo message="**** Entering test:property:pass:cagrid-libs.binaries.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.file=cagrid-wscore-4.0.3-appserver-libs.zip
@@ -79,7 +94,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-libs.binaries.file"/>
-	</target>	<target name="test:property:pass:cagrid-libs.binaries.relative.dir">
+	</target>
+	<target name="test:property:pass:cagrid-libs.binaries.relative.dir">
 		<echo message="**** Entering test:property:pass:cagrid-libs.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.relative.dir=.
@@ -93,7 +109,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-libs.binaries.relative.dir"/>
-	</target>	<target name="test:property:pass:cagrid-libs.src.url">
+	</target>
+	<target name="test:property:pass:cagrid-libs.src.url">
 		<echo message="**** Entering test:property:pass:cagrid-libs.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-libs.zip
@@ -107,7 +124,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-libs.src.url"/>
-	</target>	<target name="test:property:pass:cagrid-target.src.url">
+	</target>
+	<target name="test:property:pass:cagrid-target.src.url">
 		<echo message="**** Entering test:property:pass:cagrid-target.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-target.src.url=https://ncisvn.nci.nih.gov/svn/cagrid/branches/caGrid-1_3_release/cagrid-1-0/caGrid/repository/caGrid/target_grid
@@ -121,7 +139,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cagrid-target.src.url"/>
-	</target>	<target name="test:property:pass:cgmm.application.context">
+	</target>
+	<target name="test:property:pass:cgmm.application.context">
 		<echo message="**** Entering test:property:pass:cgmm.application.context"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cgmm.application.context=bda
@@ -135,7 +154,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cgmm.application.context"/>
-	</target>	<target name="test:property:pass:cgmm.application.name">
+	</target>
+	<target name="test:property:pass:cgmm.application.name">
 		<echo message="**** Entering test:property:pass:cgmm.application.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cgmm.application.name=bda
@@ -149,7 +169,23 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:cgmm.application.name"/>
-	</target>	<target name="test:property:pass:database.context.path">
+	</target>
+	<target name="test:property:pass:#cgmm-properties.xml">
+		<echo message="**** Entering test:property:pass:#cgmm-properties.xml"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			#cgmm-properties.xml=
+			evaluate.property.name=#cgmm-properties.xml
+			groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:#cgmm-properties.xml"/>
+	</target>
+	<target name="test:property:pass:database.context.path">
 		<echo message="**** Entering test:property:pass:database.context.path"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.context.path=bda-blueprints-webapp
@@ -163,7 +199,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.context.path"/>
-	</target>	<target name="test:property:pass:database.driver">
+	</target>
+	<target name="test:property:pass:database.driver">
 		<echo message="**** Entering test:property:pass:database.driver"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.driver=com.mysql.jdbc.Driver
@@ -177,7 +214,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.driver"/>
-	</target>	<target name="test:property:pass:database.driver.file">
+	</target>
+	<target name="test:property:pass:database.driver.file">
 		<echo message="**** Entering test:property:pass:database.driver.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.driver.file=/path/mysql-connector-java-5.0.8.jar
@@ -191,7 +229,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.driver.file"/>
-	</target>	<target name="test:property:pass:database.drop-schema">
+	</target>
+	<target name="test:property:pass:database.drop-schema">
 		<echo message="**** Entering test:property:pass:database.drop-schema"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.drop-schema=true
@@ -205,7 +244,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.drop-schema"/>
-	</target>	<target name="test:property:pass:database.re-create">
+	</target>
+	<target name="test:property:pass:database.re-create">
 		<echo message="**** Entering test:property:pass:database.re-create"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.re-create=true
@@ -219,7 +259,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.re-create"/>
-	</target>	<target name="test:property:pass:database.jndi.datasource.name">
+	</target>
+	<target name="test:property:pass:database.jndi.datasource.name">
 		<echo message="**** Entering test:property:pass:database.jndi.datasource.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.jndi.datasource.name=jdbc/bdaDS
@@ -233,7 +274,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.jndi.datasource.name"/>
-	</target>	<target name="test:property:pass:database.name">
+	</target>
+	<target name="test:property:pass:database.name">
 		<echo message="**** Entering test:property:pass:database.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.name=bda
@@ -247,7 +289,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.name"/>
-	</target>	<target name="test:property:pass:database.password">
+	</target>
+	<target name="test:property:pass:database.password">
 		<echo message="**** Entering test:property:pass:database.password"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.password=bdauser
@@ -261,7 +304,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.password"/>
-	</target>	<target name="test:property:pass:database.port">
+	</target>
+	<target name="test:property:pass:database.port">
 		<echo message="**** Entering test:property:pass:database.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.port=3306
@@ -275,7 +319,8 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.port"/>
-	</target>	<target name="test:property:pass:database.schema">
+	</target>
+	<target name="test:property:pass:database.schema">
 		<echo message="**** Entering test:property:pass:database.schema"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.schema=schemaname
@@ -289,18 +334,5 @@
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.schema"/>
-	</target>	<target name="test:property:pass:database.server">
-		<echo message="**** Entering test:property:pass:database.server"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			database.server=localhost
-			evaluate.property.name=database.server
-			groovy.debug=true
-		</echo>
-		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
-			match="^\s+(.*)\s*$"
-			replace="\1"
-			/>
-		<execute-property-test-pass
-			/>
-		<echo message="**** Exiting test:property:pass:database.server"/>
-	</target></project>
+	</target>
+</project>
