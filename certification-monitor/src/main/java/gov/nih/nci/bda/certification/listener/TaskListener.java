@@ -27,6 +27,15 @@ public class TaskListener implements BuildListener {
         System.out.println("START FROM THE TASKLISTENER");
         System.out.println(taskList);
         System.out.println("END FROM THE TASKLISTENER");
+        this.saveProperties();
+    }
+
+    private void saveProperties() {
+        //To change body of created methods use File | Settings | File Templates.
+        String propertiesToSave = this.getProject().getProperties().get("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save").toString() ;
+        System.out.println("TaskListener:propertiesToSave=" + propertiesToSave);
+
+
     }
 
     public void buildStarted(BuildEvent arg0) {
