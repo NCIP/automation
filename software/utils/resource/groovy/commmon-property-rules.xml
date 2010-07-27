@@ -679,10 +679,10 @@
 				<name>jar-signing.jar.list-list</name>
 				<description>Checks jar-signing.jar.list has proper value.</description>
 				<conditions>
-					<or>
+					<and>
 						<condition negate="true">jar-signing.jar.list ==~ /^,.*/</condition>
 						<condition negate="true">jar-signing.jar.list ==~ /.*,$/</condition>
-					</or>
+					</and>
 				</conditions>
 				<fail-message>jar-signing.jar.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
 			</rule>

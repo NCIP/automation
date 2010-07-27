@@ -739,10 +739,10 @@
 				<name>db.install.create.mysql.file.list-list</name>
 				<description>Checks db.install.create.mysql.file.list has proper value.</description>
 				<conditions>
-					<or>
+					<and>
 						<condition negate="true">db.install.create.mysql.file.list ==~ /^,.*/</condition>
 						<condition negate="true">db.install.create.mysql.file.list ==~ /.*,$/</condition>
-					</or>
+					</and>
 				</conditions>
 				<fail-message>db.install.create.mysql.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
 			</rule>
@@ -771,10 +771,10 @@
 				<name>db.install.create.oracle.file.list-list</name>
 				<description>Checks db.install.create.oracle.file.list has proper value.</description>
 				<conditions>
-					<or>
+					<and>
 						<condition negate="true">db.install.create.oracle.file.list ==~ /^,.*/</condition>
 						<condition negate="true">db.install.create.oracle.file.list ==~ /.*,$/</condition>
-					</or>
+					</and>
 				</conditions>
 				<fail-message>db.install.create.oracle.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
 			</rule>
@@ -803,10 +803,10 @@
 				<name>db.install.create.postgres.file.list-list</name>
 				<description>Checks db.install.create.postgres.file.list has proper value.</description>
 				<conditions>
-					<or>
+					<and>
 						<condition negate="true">db.install.create.postgres.file.list ==~ /^,.*/</condition>
 						<condition negate="true">db.install.create.postgres.file.list ==~ /.*,$/</condition>
-					</or>
+					</and>
 				</conditions>
 				<fail-message>db.install.create.postgres.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
 			</rule>
