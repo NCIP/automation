@@ -109,17 +109,12 @@ public class CertificationManager {
 					optionalFeaturesList,systemWaiversList);
 
             if (targetLookup.getSaveProperties() != null && targetLookup.getSaveProperties().trim() != "") {
-
-
-
                 certLogger.info("project.setProperty(\"gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save\"=" + targetLookup.getSaveProperties());
                 project.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save",targetLookup.getSaveProperties());
                 project.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile",filePath);
             }
             else if(targetLookup.getUseProperties() != null && targetLookup.getUseProperties().trim() != "") {
-
                 this.loadSavedProperties(filePath,project,targetLookup.getUseProperties());
-
             }
 
 			try {
@@ -155,6 +150,8 @@ public class CertificationManager {
                 certLogger.info("loadSavedProperties:value=" + value);
                 project.setProperty(key,value);
             }
+
+            project.setProperty("gov.nih.nci.bda.certification.CertificationManager.useproperties", useProperties);
 
         } catch (ConfigurationException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

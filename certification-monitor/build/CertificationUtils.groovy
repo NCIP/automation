@@ -87,7 +87,9 @@ class CertificationUtils
 
 		def buildFileLocation=project.properties['master.build.location']
 		def basedir=project.properties['basedir']
-		println basedir
+        def useProperties = project.properties['gov.nih.nci.bda.certification.CertificationManager.useproperties']
+        println "checkDeploymentShakeout:useProperties=" + useProperties
+		println "checkDeploymentShakeout:basedir=" + basedir
 
 		String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install.properties").getAbsoluteFile();
 
