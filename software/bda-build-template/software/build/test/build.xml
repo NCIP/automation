@@ -32,7 +32,9 @@
 			<isset property="svn.changed"/>
 			<then>
 				<echo message="WARNING ${build.dir} has changed files, commit them or changes may be lost because this process changes and reverts files."/>
+				<!-- disabled because svn command line client cannot run against hudson checkout
 				<fail message="${build.dir} has changed files, commit them or changes may be lost because this process changes and reverts files."/>
+				-->
 			</then>
 		</if>
 			
