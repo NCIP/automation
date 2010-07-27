@@ -91,6 +91,19 @@ class CertificationUtils
         println "checkDeploymentShakeout:useProperties=" + useProperties
 		println "checkDeploymentShakeout:basedir=" + basedir
 
+
+        project.properties.each
+        { sysprop ->
+
+          println "checkDeploymentShakeout:sysprop.key=${sysprop.key}"
+          //println "Checking ${sysprop.key}"
+          if( sysprop.key ==~useProperties)
+          {
+                  println "checkDeploymentShakeout:${sysprop.key} matches"
+          }
+        }
+
+
 		String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install.properties").getAbsoluteFile();
 
 		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
