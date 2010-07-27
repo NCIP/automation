@@ -10,21 +10,6 @@ my $fileHeader="
 			<xmllistener toDir=\"\${antunit.xml.report.dir}\" logLevel=\"verbose\" />
 			<plainlistener logLevel=\"info\"/>
 		</antunit>      
-		<osfamily property=\"os.family\"/>
-		<if>
-			<or>
-				<equals arg1=\"\${os.family}\" arg2=\"mac\"/>
-				<equals arg1=\"\${os.family}\" arg2=\"unix\"/>
-			</or>
-			<then>
-				<exec executable=\"egrep\">
-					<arg line=\"'**** Entering|**** Exiting|passed all validation rules.|failed validation.' \${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml\"/>
-				</exec>
-			</then>
-			<else>
-				<echo mesage=\"Grep not supported on windows\"/>
-			</else>
-		</if>
 	</target>
 	<target name=\"suiteSetUp\">
 		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
@@ -90,13 +75,14 @@ while (my $line = <>)
 		<echo file=\"\${dist.exploded.dir}/local.properties\" append=\"false\">
 			${prop}=${value}
 			evaluate.property.name=${prop}
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file=\"\${dist.exploded.dir}/local.properties\" byline=\"true\"
 			match=\"^\\s+(.*)\\s*\$\"
 			replace=\"\\1\"
 			/>
-		<execute-property-test-${testType}
+		<execute-property-test-pass
 			/>
 		<echo message=\"**** Exiting test:property:${testType}:${prop}\"/>
 	</target>\n";

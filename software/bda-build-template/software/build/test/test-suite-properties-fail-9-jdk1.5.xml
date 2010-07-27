@@ -8,21 +8,6 @@
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
 			<plainlistener logLevel="info"/>
 		</antunit>      
-		<osfamily property="os.family"/>
-		<if>
-			<or>
-				<equals arg1="${os.family}" arg2="mac"/>
-				<equals arg1="${os.family}" arg2="unix"/>
-			</or>
-			<then>
-				<exec executable="egrep">
-					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-fail-9-jdk1_5_xml.xml"/>
-				</exec>
-			</then>
-			<else>
-				<echo mesage="Grep not supported on windows"/>
-			</else>
-		</if>
 	</target>
 	<target name="suiteSetUp">
 		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
@@ -40,13 +25,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			java.minor.version=fa il
 			evaluate.property.name=java.minor.version
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:java.minor.version"/>
 	</target>
@@ -55,13 +41,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.file=fa\\il
 			evaluate.property.name=jboss.binaries.file
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.binaries.file"/>
 	</target>
@@ -70,13 +57,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.relative.dir=fail\\condtion
 			evaluate.property.name=jboss.binaries.relative.dir
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.binaries.relative.dir"/>
 	</target>
@@ -85,13 +73,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.file=fa il
 			evaluate.property.name=jboss-bindings.file
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss-bindings.file"/>
 	</target>
@@ -100,13 +89,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=jboss-bindings.src.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss-bindings.src.url"/>
 	</target>
@@ -115,13 +105,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.src.url=http://www.microsoft.com
 			evaluate.property.name=jboss-bindings.src.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss-bindings.src.url"/>
 	</target>
@@ -130,13 +121,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cgmm.enable=fa il
 			evaluate.property.name=jboss.cgmm.enable
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.cgmm.enable"/>
 	</target>
@@ -145,13 +137,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cgmm.enable=fail
 			evaluate.property.name=jboss.cgmm.enable
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.cgmm.enable"/>
 	</target>
@@ -160,13 +153,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cobraorb.port=fa il
 			evaluate.property.name=jboss.cobraorb.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.cobraorb.port"/>
 	</target>
@@ -175,13 +169,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cobraorb.port=70000
 			evaluate.property.name=jboss.cobraorb.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.cobraorb.port"/>
 	</target>
@@ -190,13 +185,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.binaries.file=jboss-4.0.5.GA_CP15.zip
 			evaluate.property.name=jbosscp.binaries.file
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jbosscp.binaries.file"/>
 	</target>
@@ -205,13 +201,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=jbosscp.src.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jbosscp.src.url"/>
 	</target>
@@ -220,13 +217,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.src.url=http://www.microsoft.com
 			evaluate.property.name=jbosscp.src.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jbosscp.src.url"/>
 	</target>
@@ -235,13 +233,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ejbinvoker.port=fa il
 			evaluate.property.name=jboss.ejbinvoker.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.ejbinvoker.port"/>
 	</target>
@@ -250,13 +249,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ejbinvoker.port=70000
 			evaluate.property.name=jboss.ejbinvoker.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.ejbinvoker.port"/>
 	</target>
@@ -265,13 +265,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.grid.secure.host=fa il
 			evaluate.property.name=jboss.external.grid.secure.host
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.external.grid.secure.host"/>
 	</target>
@@ -280,13 +281,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.grid.secure.port=fa il
 			evaluate.property.name=jboss.external.grid.secure.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.external.grid.secure.port"/>
 	</target>
@@ -295,13 +297,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.grid.secure.port=70000
 			evaluate.property.name=jboss.external.grid.secure.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.external.grid.secure.port"/>
 	</target>
@@ -310,13 +313,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.http.host=fa il
 			evaluate.property.name=jboss.external.http.host
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.external.http.host"/>
 	</target>
@@ -325,13 +329,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.http.port=fa il
 			evaluate.property.name=jboss.external.http.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.external.http.port"/>
 	</target>

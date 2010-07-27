@@ -91,11 +91,19 @@
 			</path>
 			<sequential>
 				<echo message="Running @{file}.."/>
+				<!-- Cant use because of memory leaks must use <exec/>
 				<antunit failOnError="true">
 					<file file="@{file}"/>
 					<xmllistener toDir="${antunit.xml.report.dir}" logLevel="info" />
 					<plainlistener logLevel="${screen.log.level}"/>
 				</antunit>
+				-->
+				<exec osfamily="windows" executable="ant.bat" dir="${basedir}" failonerror="true">
+					<arg line="-f @{file}"/>
+				</exec>
+				<exec osfamily="unix" executable="ant" dir="${basedir}" failonerror="true">
+					<arg line="-f @{file}"/>
+				</exec>
 			</sequential>
 		</for>
 		<osfamily property="os.family"/>

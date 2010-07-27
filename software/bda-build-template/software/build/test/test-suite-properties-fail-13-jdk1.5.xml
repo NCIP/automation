@@ -8,21 +8,6 @@
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
 			<plainlistener logLevel="info"/>
 		</antunit>      
-		<osfamily property="os.family"/>
-		<if>
-			<or>
-				<equals arg1="${os.family}" arg2="mac"/>
-				<equals arg1="${os.family}" arg2="unix"/>
-			</or>
-			<then>
-				<exec executable="egrep">
-					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-fail-13-jdk1_5_xml.xml"/>
-				</exec>
-			</then>
-			<else>
-				<echo mesage="Grep not supported on windows"/>
-			</else>
-		</if>
 	</target>
 	<target name="suiteSetUp">
 		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
@@ -40,13 +25,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ssl.keystore.alias=fa il
 			evaluate.property.name=jboss.ssl.keystore.alias
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.ssl.keystore.alias"/>
 	</target>
@@ -55,13 +41,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ssl.keystore.location=fa il
 			evaluate.property.name=jboss.ssl.keystore.location
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.ssl.keystore.location"/>
 	</target>
@@ -70,13 +57,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ssl.keystore.pass=fa il
 			evaluate.property.name=jboss.ssl.keystore.pass
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.ssl.keystore.pass"/>
 	</target>
@@ -85,13 +73,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ssl.port=fa il
 			evaluate.property.name=jboss.ssl.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.ssl.port"/>
 	</target>
@@ -100,13 +89,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ssl.port=70000
 			evaluate.property.name=jboss.ssl.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.ssl.port"/>
 	</target>
@@ -115,13 +105,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.transaction.processid.port=fa il
 			evaluate.property.name=jboss.transaction.processid.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.transaction.processid.port"/>
 	</target>
@@ -130,13 +121,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.transaction.processid.port=70000
 			evaluate.property.name=jboss.transaction.processid.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.transaction.processid.port"/>
 	</target>
@@ -145,13 +137,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.transaction.recovery.port=fa il
 			evaluate.property.name=jboss.transaction.recovery.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.transaction.recovery.port"/>
 	</target>
@@ -160,13 +153,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.transaction.recovery.port=70000
 			evaluate.property.name=jboss.transaction.recovery.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.transaction.recovery.port"/>
 	</target>
@@ -175,13 +169,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.transaction.status.port=fa il
 			evaluate.property.name=jboss.transaction.status.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.transaction.status.port"/>
 	</target>
@@ -190,13 +185,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.transaction.status.port=70000
 			evaluate.property.name=jboss.transaction.status.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.transaction.status.port"/>
 	</target>
@@ -205,13 +201,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.unifiedinvoker.port=fa il
 			evaluate.property.name=jboss.unifiedinvoker.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.unifiedinvoker.port"/>
 	</target>
@@ -220,13 +217,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.unifiedinvoker.port=70000
 			evaluate.property.name=jboss.unifiedinvoker.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.unifiedinvoker.port"/>
 	</target>
@@ -235,13 +233,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.web.password=fa il
 			evaluate.property.name=jboss.web.password
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.web.password"/>
 	</target>
@@ -250,13 +249,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.web.service.port=fa il
 			evaluate.property.name=jboss.web.service.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.web.service.port"/>
 	</target>
@@ -265,13 +265,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.web.service.port=70000
 			evaluate.property.name=jboss.web.service.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.web.service.port"/>
 	</target>
@@ -280,13 +281,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.web.user=fa il
 			evaluate.property.name=jboss.web.user
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.web.user"/>
 	</target>
@@ -295,13 +297,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ldap.basedn=fa il
 			evaluate.property.name=ldap.basedn
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:ldap.basedn"/>
 	</target>
@@ -310,13 +313,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ldap.url=fa il
 			evaluate.property.name=ldap.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:ldap.url"/>
 	</target>
@@ -325,13 +329,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ldap.url=fail
 			evaluate.property.name=ldap.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:ldap.url"/>
 	</target>

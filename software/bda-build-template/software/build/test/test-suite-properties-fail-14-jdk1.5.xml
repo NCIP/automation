@@ -8,21 +8,6 @@
 			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
 			<plainlistener logLevel="info"/>
 		</antunit>      
-		<osfamily property="os.family"/>
-		<if>
-			<or>
-				<equals arg1="${os.family}" arg2="mac"/>
-				<equals arg1="${os.family}" arg2="unix"/>
-			</or>
-			<then>
-				<exec executable="egrep">
-					<arg line="'**** Entering|**** Exiting|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-fail-14-jdk1_5_xml.xml"/>
-				</exec>
-			</then>
-			<else>
-				<echo mesage="Grep not supported on windows"/>
-			</else>
-		</if>
 	</target>
 	<target name="suiteSetUp">
 		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
@@ -40,13 +25,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			log4j.level=fa il
 			evaluate.property.name=log4j.level
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:log4j.level"/>
 	</target>
@@ -55,13 +41,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			log4j.maxDays=fa il
 			evaluate.property.name=log4j.maxDays
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:log4j.maxDays"/>
 	</target>
@@ -70,13 +57,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			log4j.maxFileSize= fail
 			evaluate.property.name=log4j.maxFileSize
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:log4j.maxFileSize"/>
 	</target>
@@ -85,13 +73,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			mail.smtp.server=fa il
 			evaluate.property.name=mail.smtp.server
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:mail.smtp.server"/>
 	</target>
@@ -100,13 +89,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			mysql.lowercasetablenames=fa il
 			evaluate.property.name=mysql.lowercasetablenames
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:mysql.lowercasetablenames"/>
 	</target>
@@ -115,13 +105,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			mysql.lowercasetablenames=fail
 			evaluate.property.name=mysql.lowercasetablenames
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:mysql.lowercasetablenames"/>
 	</target>
@@ -130,13 +121,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			mysql.minimum.version=fa il
 			evaluate.property.name=mysql.minimum.version
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:mysql.minimum.version"/>
 	</target>
@@ -145,13 +137,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			project.name=fa il
 			evaluate.property.name=project.name
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:project.name"/>
 	</target>
@@ -160,13 +153,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			require.build.wscore=fa il
 			evaluate.property.name=require.build.wscore
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:require.build.wscore"/>
 	</target>
@@ -175,13 +169,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			require.build.wscore=fail
 			evaluate.property.name=require.build.wscore
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:require.build.wscore"/>
 	</target>
@@ -190,13 +185,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.binaries.file=fa il
 			evaluate.property.name=sync-gts.binaries.file
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:sync-gts.binaries.file"/>
 	</target>
@@ -205,13 +201,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.binaries.relative.dir=fa il
 			evaluate.property.name=sync-gts.binaries.relative.dir
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:sync-gts.binaries.relative.dir"/>
 	</target>
@@ -220,13 +217,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=sync-gts.src.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:sync-gts.src.url"/>
 	</target>
@@ -235,13 +233,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.src.url=http://www.microsoft.com
 			evaluate.property.name=sync-gts.src.url
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:sync-gts.src.url"/>
 	</target>
@@ -250,13 +249,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.binaries.file=fa il
 			evaluate.property.name=tomcat.binaries.file
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:tomcat.binaries.file"/>
 	</target>
@@ -265,13 +265,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.binaries.relative.dir=fa il
 			evaluate.property.name=tomcat.binaries.relative.dir
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:tomcat.binaries.relative.dir"/>
 	</target>
@@ -280,13 +281,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.external.grid.secure.host=fa il
 			evaluate.property.name=tomcat.external.grid.secure.host
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:tomcat.external.grid.secure.host"/>
 	</target>
@@ -295,13 +297,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.external.grid.secure.port=fa il
 			evaluate.property.name=tomcat.external.grid.secure.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:tomcat.external.grid.secure.port"/>
 	</target>
@@ -310,13 +313,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.external.grid.secure.port=70000
 			evaluate.property.name=tomcat.external.grid.secure.port
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:tomcat.external.grid.secure.port"/>
 	</target>
@@ -325,13 +329,14 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.external.http.host=fa il
 			evaluate.property.name=tomcat.external.http.host
+			evaluate.result=fail
 			groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<execute-property-test-fail
+		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:fail:tomcat.external.http.host"/>
 	</target>
