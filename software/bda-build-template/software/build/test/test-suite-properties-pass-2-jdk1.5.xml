@@ -248,6 +248,7 @@
 		<replaceregexp file="${dist.exploded.dir}/install.properties" byline="true"
 			match="^database.drop-schema.*"
 			replace=""
+			/>
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.re-create"/>

@@ -29,9 +29,7 @@
 			<isset property="svn.changed"/>
 			<then>
 				<echo message="WARNING ${build.dir} has changed files, commit them or changes may be lost because this process changes and reverts files."/>
-				<!--
 				<fail message="${build.dir} has changed files, commit them or changes may be lost because this process changes and reverts files."/>
-				-->
 			</then>
 		</if>
 			
@@ -106,21 +104,44 @@
 				</exec>
 			</sequential>
 		</for>
-		<osfamily property="os.family"/>
-		<if>                    
-			<or>                            
-				<equals arg1="${os.family}" arg2="mac"/>
-				<equals arg1="${os.family}" arg2="unix"/>
-			</or>                   
-			<then>                          
-				<exec executable="egrep">               
-					<arg line="'**** Entering|passed all validation rules.|failed validation.' ${antunit.xml.report.dir}/TEST-test-suite-properties-jdk15_xml.xml"/>
-				</exec>                         
-			</then>                 
-			<else>                  
-				<echo mesage="Grep not supported on windows"/>
-			</else>                 
-		</if>           
+	</target>
+	<target name="test:suite:properties:pass" depends="test:init" if="using.jdk15">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<for param="file">
+			<path>
+				<fileset dir="${basedir}">
+					<include name="test-suite-properties-pass-*-jdk1.5.xml"/>
+				</fileset>
+			</path>
+			<sequential>
+				<echo message="Running @{file}.."/>
+				<exec osfamily="windows" executable="ant.bat" dir="${basedir}" failonerror="true">
+					<arg line="-f @{file}"/>
+				</exec>
+				<exec osfamily="unix" executable="ant" dir="${basedir}" failonerror="true">
+					<arg line="-f @{file}"/>
+				</exec>
+			</sequential>
+		</for>
+	</target>
+	<target name="test:suite:properties:fail" depends="test:init" if="using.jdk15">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<for param="file">
+			<path>
+				<fileset dir="${basedir}">
+					<include name="test-suite-properties-fail-*-jdk1.5.xml"/>
+				</fileset>
+			</path>
+			<sequential>
+				<echo message="Running @{file}.."/>
+				<exec osfamily="windows" executable="ant.bat" dir="${basedir}" failonerror="true">
+					<arg line="-f @{file}"/>
+				</exec>
+				<exec osfamily="unix" executable="ant" dir="${basedir}" failonerror="true">
+					<arg line="-f @{file}"/>
+				</exec>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="report-tests">
