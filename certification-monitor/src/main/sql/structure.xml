@@ -120,4 +120,11 @@
             <column name="priority" type="int" defaultValue="9999999" />
         </addColumn>
     </changeSet>
+
+    <changeSet id="2010.07.27.14.39" author="bassetttj">
+        <dropColumn tableName="certification_history" columnName="CERT_DATE"/>
+        <addColumn tableName="certification_history">
+            <column name="CERT_DATE" type="DATETIME" />
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
