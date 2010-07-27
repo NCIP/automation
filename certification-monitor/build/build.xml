@@ -567,9 +567,6 @@
 	</target>
 
     <target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
-
-        <fail message="this is optional for all projects at the moment." />
-	
 		<taskdef resource="selenium-ant.properties">
 		    <classpath>
 			<pathelement location="../selenium-server.jar"/>
