@@ -155,5 +155,3 @@ This tool is meant to be used within the target folder of the relase-manager pro
 		</ant>
 	</target>
 </project>
-
-
