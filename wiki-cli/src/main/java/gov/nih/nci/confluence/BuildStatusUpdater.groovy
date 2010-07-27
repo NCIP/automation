@@ -246,14 +246,16 @@ class BuildStatusUpdater {
       String thisRowText = getWikiMarkupForRow(
               replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
 
+
+      s.beginTransaction();
+
       ProjectCertificationStatus newHistory = new ProjectCertificationStatus();
 
       newHistory.setBdaEnabled(replaceBdaEnabledString);
       newHistory.setCertificationDate = new Date();
       newHistory.setCertificationStatus = certificationStatus ;
 
-      
-      s.beginTransaction();
+      System.out.println("Saving history for " + productName)
       s.save(newHistory);
       s.getTransaction().commit();
 

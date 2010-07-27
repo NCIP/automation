@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="fb2df1a2-1acd-4ddd-bf11-43ea05a79898" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$USER_HOME_GRAILS$/" />
     <ignored path="classes/" />
@@ -127,7 +126,7 @@
       <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="254" column="50" selection-start="10890" selection-end="10890" vertical-scroll-proportion="0.52755904">
+            <state line="268" column="15" selection-start="11109" selection-end="11109" vertical-scroll-proportion="0.3503937">
               <folding />
             </state>
           </provider>
@@ -765,7 +764,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="move debugging messages" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit results to history table" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -799,6 +798,7 @@
     <MESSAGE value="change dir for packaging xml" />
     <MESSAGE value="change db" />
     <MESSAGE value="move debugging messages" />
+    <MESSAGE value="commit results to history table" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -933,7 +933,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="254" column="50" selection-start="10890" selection-end="10890" vertical-scroll-proportion="0.52755904">
+        <state line="268" column="15" selection-start="11109" selection-end="11109" vertical-scroll-proportion="0.3503937">
           <folding />
         </state>
       </provider>
