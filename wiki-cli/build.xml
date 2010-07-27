@@ -164,6 +164,12 @@
 	<target name="package"
             depends="build"
             description="package the jar to update Wiki">
+        <copy todir="${classes.dir}" overwrite="true">
+            <fileset dir="${resources.dir}">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+
 		<jar destfile="${dist.dir}/${wiki_cli_jar}" basedir="${classes.dir}" update="true" />
 	</target>
 
