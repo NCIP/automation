@@ -567,6 +567,7 @@
 	</target>
 
     <target name="build:validate-app-servers" depends="init,test:seleniumrc:stop">
+        <echo>gov.nih.nci.bda.certification.CertificationManager.useproperties=${gov.nih.nci.bda.certification.CertificationManager.useproperties}</echo>
 		<taskdef resource="selenium-ant.properties">
 		    <classpath>
 			<pathelement location="../selenium-server.jar"/>
