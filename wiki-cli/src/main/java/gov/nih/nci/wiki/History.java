@@ -1,5 +1,6 @@
 package gov.nih.nci.wiki;
 
+import gov.nih.nci.confluence.BuildStatusUpdater;
 import gov.nih.nci.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -28,7 +29,8 @@ public class History {
         DetachedCriteria d = DetachedCriteria
                 .forClass(ProjectCertificationStatus.class,"pcs2")
                 .setProjection(Property.forName("pcs2.certificationDate").max())
-                .add(Property.forName("pcs2.product").eqProperty("pcs.product"));
+                .add(Property.forName("pcs2.product").eqProperty("pcs.product"))
+                .add(Property.forName("pcs2.certificationStatus").eq(BuildStatusUpdater.WIKI_CERTIFICATION_GREEN));
 
         Criteria c = s.createCriteria(ProjectCertificationStatus.class,"pcs")
                 .add(Property.forName("product").eq(projectName))

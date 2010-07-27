@@ -1,5 +1,6 @@
 package test.gov.nih.nci.wiki;
 
+import gov.nih.nci.confluence.BuildStatusUpdater;
 import gov.nih.nci.util.HibernateUtil;
 import gov.nih.nci.wiki.History;
 import gov.nih.nci.wiki.ProjectCertificationStatus;
@@ -44,7 +45,7 @@ public class HistoryTest extends TestCase {
         s.beginTransaction();
         ProjectCertificationStatus testStatus = new ProjectCertificationStatus();
         testStatus.setProduct(projectName);
-        testStatus.setCertificationStatus("(X)");
+        testStatus.setCertificationStatus( BuildStatusUpdater.WIKI_CERTIFICATION_GREEN );
         Date d = new Date();
         testStatus.setCertificationDate(d);
         s.save(testStatus);
