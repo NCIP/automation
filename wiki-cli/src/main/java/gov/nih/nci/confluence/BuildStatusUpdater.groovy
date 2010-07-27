@@ -242,8 +242,7 @@ class BuildStatusUpdater {
 
       // repair the cerification - database is unreliable if
       // the build is stopped midway
-      String certification = getCertificationStatus( replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller)
-      certification = removeEndDinks(certification) ;
+      String certification = getCertificationStatus(bdaEnabled,singleCommandBuild,singleCommandDeployment,remoteUpgrade,databaseIntegration,privateProperties,deploymentShakeout,templateValidation,ciBuild,commandLineInstaller) ;
 
       newHistory.setCertificationStatus(certification) ;
 
