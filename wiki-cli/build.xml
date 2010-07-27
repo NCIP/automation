@@ -13,6 +13,7 @@
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="sql.dir" value="${software.dir}/sql" />
 	<property name="resources.dir" value="${software.dir}/src/main/resources" />
+    <property name="hibernate.config.file" value="hibernate.cfg.xml" />
 	<property name="source.dir" value="${software.dir}/src/main/java/gov/nih/nci/confluence" />
     <property name="classes.dir" value="${software.dir}/classes" />
     <property name="test-classes.dir" value="${software.dir}/test-classes" />
@@ -168,6 +169,7 @@
 		<copy file="${dist.dir}/${wiki_cli_jar}" todir="${deploy.dir}" />
 		<copy file="${resources.dir}/${wiki.properties.file}" todir="${deploy.dir}" />
 		<copy file="${resources.dir}/build.xml" todir="${deploy.dir}" />
+        <copy file="${resources.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
 	</target>
 
 

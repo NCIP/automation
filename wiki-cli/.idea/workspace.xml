@@ -3,8 +3,50 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="fb2df1a2-1acd-4ddd-bf11-43ea05a79898" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-launcher.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver-tests.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.properties" afterPath="$PROJECT_DIR$/build.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver-sources.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/javassist-3.4.GA.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/jta-1.1.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/tools.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/dom4j-1.6.1.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/xercesImpl.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/xmltask-1.15.1.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-nodeps.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-collections.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/hibernate3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/slf4j-simple-1.5.2.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java" afterPath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/junit.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/antlr.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/hibernate-annotations.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/cglib.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-configuration-1.6.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-test-sources.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-coreless.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/antlr-2.7.6.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/asm.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-tests.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-jsch.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/slf4j-api-1.5.2.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki-cli.iml" afterPath="$PROJECT_DIR$/wiki-cli.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-collections-3.1.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/jsch-0.1.39.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/liquibase-core-1.9.3.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-logging-1.1.1.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver-test-sources.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-sources.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-contrib.jar" />
     </list>
     <ignored path="$USER_HOME_GRAILS$/" />
     <ignored path="$USER_HOME_GRIFFON$/" />
@@ -23,6 +65,21 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java" line="26" class="gov.nih.nci.wiki.ProjectCertificationStatus" package="gov.nih.nci.wiki">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -64,11 +121,13 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProjectCertificationStatus.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml">
+      <file leaf-file-name="HistoryTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="41" selection-start="1280" selection-end="1297" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="80" column="13" selection-start="1944" selection-end="1944" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="method#testGetMostRecent#0;class#HistoryTest#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,81 +135,52 @@
       <file leaf-file-name="ProjectCertificationStatus.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="17" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0">
+            <state line="20" column="47" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="History.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java">
+      <file leaf-file-name="ProjectCertificationStatus.hbm.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="18" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HistoryTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="10" selection-start="277" selection-end="664" vertical-scroll-proportion="0.0">
+            <state line="24" column="0" selection-start="1373" selection-end="1373" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="release.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/target/release.xml">
+      <file leaf-file-name="HibernateUtil.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="28" column="26" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/target/README.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="63" selection-start="4361" selection-end="4361" vertical-scroll-proportion="-3.4782608">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StringAssert.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/test/StringAssert.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="412" selection-end="412" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BuildStatusUpdaterTest.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="208" column="41" selection-start="10740" selection-end="10740" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="415" column="0" selection-start="17499" selection-end="18596" vertical-scroll-proportion="0.8943662">
+            <state line="194" column="0" selection-start="8183" selection-end="8183" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractPropertyMapping.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/lib/hibernate3.jar!/org/hibernate/persister/entity/AbstractPropertyMapping.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="0" selection-start="2611" selection-end="2611" vertical-scroll-proportion="-8.666667">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="173" column="39" selection-start="7135" selection-end="7135" vertical-scroll-proportion="0.8684211">
               <folding />
             </state>
           </provider>
@@ -166,8 +196,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/TestSuite.groovy" />
-        <option value="$PROJECT_DIR$/dev-build.properties" />
         <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/StringAssert.java" />
         <option value="$PROJECT_DIR$/src/main/resources/build.xml" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/test/StringAssert.java" />
@@ -175,13 +203,15 @@
         <option value="$PROJECT_DIR$/prod-build.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/wiki.properties" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy" />
-        <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java" />
+        <option value="$PROJECT_DIR$/build.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java" />
-        <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
+        <option value="$PROJECT_DIR$/build.xml" />
       </list>
     </option>
   </component>
@@ -209,7 +239,7 @@
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
-      <flattenPackages ProjectPane="false" />
+      <flattenPackages ProjectPane="true" />
       <showMembers ProjectPane="true" />
       <showModules />
       <showLibraryContents />
@@ -252,75 +282,10 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nci" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Favorites" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -385,113 +350,28 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Modules" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="gov.nih.nci.test" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.test.gov.nih.nci in wiki-cli">
-    <configuration default="false" name="main.java.gov.nih.nci.test in wiki-cli" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false">
-        <pattern>
-          <option name="PATTERN" value="main.java.gov.nih.nci.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="snapshooter" />
-      <module name="wiki-cli" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="main.java.gov.nih.nci.test" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="BuildStatusUpdaterTest.testGetWikiMarkupForRowStartsWithRowMarker" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false">
-        <pattern>
-          <option name="PATTERN" value="test.gov.nih.nci.confluence.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="snapshooter" />
-      <module name="wiki-cli" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="main.java.test.gov.nih.nci.confluence" />
-      <option name="MAIN_CLASS_NAME" value="test.gov.nih.nci.confluence.BuildStatusUpdaterTest" />
-      <option name="METHOD_NAME" value="testGetWikiMarkupForRowStartsWithRowMarker" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="BuildStatusUpdaterTest.testGetWikiMarkupForRowEndsWithRowMarker" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false">
-        <pattern>
-          <option name="PATTERN" value="test.gov.nih.nci.confluence.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="snapshooter" />
-      <module name="wiki-cli" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="main.java.test.gov.nih.nci.confluence" />
-      <option name="MAIN_CLASS_NAME" value="test.gov.nih.nci.confluence.BuildStatusUpdaterTest" />
-      <option name="METHOD_NAME" value="testGetWikiMarkupForRowEndsWithRowMarker" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.HistoryTest">
     <configuration default="false" name="HistoryTest.testGetMostRecent" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false">
         <pattern>
@@ -516,7 +396,13 @@
         <value defaultName="moduleWithDependencies" />
       </option>
       <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="53895" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -535,6 +421,90 @@
       <option name="MAIN_CLASS_NAME" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="BuildStatusUpdaterTest" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false">
+        <pattern>
+          <option name="PATTERN" value="test.gov.nih.nci.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="snapshooter" />
+      <module name="wiki-cli" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="test.gov.nih.nci.confluence" />
+      <option name="MAIN_CLASS_NAME" value="test.gov.nih.nci.confluence.BuildStatusUpdaterTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="HistoryTest.testGetsNothing" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false">
+        <pattern>
+          <option name="PATTERN" value="test.gov.nih.nci.wiki.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="snapshooter" />
+      <module name="wiki-cli" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="test.gov.nih.nci.wiki" />
+      <option name="MAIN_CLASS_NAME" value="test.gov.nih.nci.wiki.HistoryTest" />
+      <option name="METHOD_NAME" value="testGetsNothing" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="HistoryTest" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false">
+        <pattern>
+          <option name="PATTERN" value="test.gov.nih.nci.wiki.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="snapshooter" />
+      <module name="wiki-cli" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="test.gov.nih.nci.wiki" />
+      <option name="MAIN_CLASS_NAME" value="test.gov.nih.nci.wiki.HistoryTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -668,11 +638,11 @@
       </method>
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.main.java.gov.nih.nci.test in wiki-cli" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.BuildStatusUpdaterTest.testGetWikiMarkupForRowStartsWithRowMarker" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.BuildStatusUpdaterTest.testGetWikiMarkupForRowEndsWithRowMarker" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.HistoryTest.testGetMostRecent" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.test.gov.nih.nci in wiki-cli" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.HistoryTest.testGetMostRecent" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.test.gov.nih.nci in wiki-cli" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.BuildStatusUpdaterTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.HistoryTest.testGetsNothing" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.HistoryTest" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -703,6 +673,10 @@
           <option name="myVcsRoot" value="$PROJECT_DIR$" />
           <option name="myCopyRoot" value="$PROJECT_DIR$" />
         </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$/.idea" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/.idea" />
+        </SvnCopyRootSimple>
       </list>
     </option>
     <option name="myMoreRealMappingRoots">
@@ -727,8 +701,9 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28947368" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48947367" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24938676" sideWeight="0.6403509" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -739,12 +714,11 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2992641" sideWeight="0.6403509" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.299509" sideWeight="0.5491228" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34736842" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4385965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4904014" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dynamic properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951757" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -764,7 +738,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="include new tests in build" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix tests" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -790,6 +764,7 @@
     <MESSAGE value="changed the check for failed certification to looking thru all the properties for an (x)" />
     <MESSAGE value="start history" />
     <MESSAGE value="include new tests in build" />
+    <MESSAGE value="fix tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -815,59 +790,93 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/MailSender.groovy">
+    <entry file="jar://$PROJECT_DIR$/lib/hibernate3.jar!/org/hibernate/Session.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="24" selection-start="169" selection-end="180" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="43" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/wiki.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="93" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prod-build.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="51" selection-start="664" selection-end="664" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="23" selection-start="988" selection-end="988" vertical-scroll-proportion="0.0">
+        <state line="96" column="18" selection-start="4180" selection-end="4188" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java">
+    <entry file="jar://$PROJECT_DIR$/lib/hibernate3.jar!/org/hibernate/Criteria.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="283" selection-end="283" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="11" column="64" selection-start="419" selection-end="428" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/jdk1.5.0_22/src.zip!/java/beans/Expression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/wiki.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="35" selection-start="4439" selection-end="4439" vertical-scroll-proportion="0.83828384">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.3115727">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="26" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.7204969">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/jdk1.5.0_22/src.zip!/java/util/List.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="16" selection-start="5570" selection-end="5570" vertical-scroll-proportion="0.3323442">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/hibernate3.jar!/org/hibernate/persister/entity/AbstractPropertyMapping.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="0" selection-start="2611" selection-end="2611" vertical-scroll-proportion="-8.666667">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/hibernate3.jar!/org/hibernate/criterion/Property.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="51" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.33221477">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="41" selection-start="1280" selection-end="1297" vertical-scroll-proportion="0.0">
+        <state line="24" column="0" selection-start="1373" selection-end="1373" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="17" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0">
+        <state line="20" column="47" selection-start="568" selection-end="568" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="26" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="18" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0">
+        <state line="20" column="11" selection-start="427" selection-end="453" vertical-scroll-proportion="0.3306773">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -876,49 +885,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="10" selection-start="277" selection-end="664" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="80" column="13" selection-start="1944" selection-end="1944" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="method#testGetMostRecent#0;class#HistoryTest#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/target/release.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/README.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="194" column="0" selection-start="8183" selection-end="8183" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="63" selection-start="4361" selection-end="4361" vertical-scroll-proportion="-3.4782608">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/test/StringAssert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="412" selection-end="412" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="208" column="41" selection-start="10740" selection-end="10740" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="415" column="0" selection-start="17499" selection-end="18596" vertical-scroll-proportion="0.8943662">
+        <state line="173" column="39" selection-start="7135" selection-end="7135" vertical-scroll-proportion="0.8684211">
           <folding />
         </state>
       </provider>

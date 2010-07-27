@@ -1,7 +1,12 @@
 package gov.nih.nci.wiki;
 
 import gov.nih.nci.util.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.*;
+
+import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,8 +17,25 @@ import org.hibernate.Session;
  */
 public class History {
 
-    public ProjectCertificationStatus getMostRecent() {
 
-        return null;
+    public ProjectCertificationStatus getMostRecentSuccess(String projectName) {
+        ProjectCertificationStatus returnValue = null ;
+
+        Session s = HibernateUtil.getSession();
+
+//        org.hibernate.Query q = s.createQuery("from ProjectCertificationStatus pcs where pcs.certificationDate = (select max(certificationDate) from ProjectCertificationStatus where product = '" + projectName +"' and certificationStatus = '(X)')");
+
+        DetachedCriteria d = DetachedCriteria
+                .forClass(ProjectCertificationStatus.class,"pcs2")
+                .setProjection(Property.forName("pcs2.certificationDate").max())
+                .add(Property.forName("pcs2.product").eqProperty("pcs.product"));
+
+        Criteria c = s.createCriteria(ProjectCertificationStatus.class,"pcs")
+                .add(Property.forName("product").eq(projectName))
+                .add(Property.forName("certificationDate").eq(d));
+
+        returnValue = (ProjectCertificationStatus) c.uniqueResult();
+
+        return returnValue;
     }
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="gov.nih.nci.wiki.ProjectCertificationStatus" table="certification_history">
+    <class name="gov.nih.nci.wiki.ProjectCertificationStatus" table="CERTIFICATION_HISTORY">
          <id name="id" column="id">
          	<generator class="increment"/>           
          </id>
@@ -19,6 +19,6 @@
          <property name="latestCIBuild" column="CI_BUILD"/>
          <property name="deploymentShakeout" column="DEPLOYMENT_SHAKEOUT"/>
         <property name="commandLineInstaller" column="COMMANDLINE_INSTALLER"/>
-        <property name="certificationDate" column="cert_date"/>                  
+        <property name="certificationDate" column="CERT_DATE"/>                  
      </class>
 </hibernate-mapping>

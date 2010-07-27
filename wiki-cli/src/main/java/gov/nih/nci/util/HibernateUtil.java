@@ -17,12 +17,24 @@ public class HibernateUtil {
 
 	static {
 		try {
+            File x = new File(".");
+            System.out.println(x.getAbsolutePath());
 			certLogger.info("Create the SessionFactory from hibernate.cfg.xml");
-			File f = new File("hibernate.cfg.xml");
+
+			File f = new File("src/main/resources/hibernate.cfg.xml");
+            if (!f.exists())
+            {
+                f = new File("hibernate.cfg.xml");
+            }
+            if (!f.exists())
+            {
+                throw new ExceptionInInitializerError("Cannot find hibernate.cfg.xml");
+            }
 			configuration = new Configuration().configure(f);
 			sessionFactory = configuration.buildSessionFactory();
 		} catch (Throwable ex) {
-			certLogger.error("Initial SessionFactory creation failed." + ex);
+            System.out.print(ex.toString());
+//			certLogger.error("Initial SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
 	}

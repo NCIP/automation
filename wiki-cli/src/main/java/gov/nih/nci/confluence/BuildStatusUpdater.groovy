@@ -1,6 +1,8 @@
 package gov.nih.nci.confluence
 
 import groovy.sql.Sql
+import gov.nih.nci.wiki.History
+import gov.nih.nci.wiki.ProjectCertificationStatus
 
 class BuildStatusUpdater {
   def properties = null
@@ -185,6 +187,16 @@ class BuildStatusUpdater {
     String returnValue = "";
 
     connection.eachRow(statement) { row ->
+
+      try {
+        History h = new History();
+        ProjectCertificationStatus p = h.getMostRecentSuccess(row.PRODUCT);
+        System.out.println("ProjectCertificationStatus no exception!");
+      }
+      catch(Exception ex)
+      {
+        System.out.print(ex.toString());
+      }
 
       String productString = row.PRODUCT;
       String certificationStatus = row.CERTIFICATION_STATUS;
