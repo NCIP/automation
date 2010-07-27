@@ -241,14 +241,30 @@ if (properties["evaluate.property.name"] != null)
 {
 	def failProp=properties["evaluate.property.name"]
 	println "evaluate.property.name - " + properties["evaluate.property.name"] + " (" + properties[failProp] + ") so only setting failure flag based on pass/fail results of this property."
-	if( failMsgs.contains("<td>" + failProp + "</td>"))
+	if (properties["evaluate.result"] == "fail")
 	{
-		outFile.write(failMsgs)
-		println "Property ${failProp} failed validation. Check ${outFile} for details."
-		properties[failureProperty]="true"
-	} else
+		println "evaluate.result=fail, this test should fail, build will not fail if validation fails."
+		if( failMsgs.contains("<td>" + failProp + "</td>"))
+		{
+			outFile.write(failMsgs)
+			println "Property ${failProp} failed validation. Check ${outFile} for details, BUILD SUCCESSFUL."
+		} else
+		{
+			println "Property ${failProp} passed all validation rules, BUILD FAILED."
+			properties[failureProperty]="true"
+		}
+	}
+	else
 	{
-		println "Property ${failProp} passed all validation rules."
+		if( failMsgs.contains("<td>" + failProp + "</td>"))
+		{
+			outFile.write(failMsgs)
+			println "Property ${failProp} failed validation. Check ${outFile} for details."
+			properties[failureProperty]="true"
+		} else
+		{
+			println "Property ${failProp} passed all validation rules."
+		}
 	}
 } else
 {
