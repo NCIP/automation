@@ -15,6 +15,7 @@ class BuildStatusUpdater {
   public static final String WIKI_TABLE_CELL_TERMINATOR = "|";
   public static final String WIKI_CERTIFICATION_GREEN = "(/)" ;
   public static final String WIKI_CERTIFICATION_RED = "(x)" ;
+  public static final String WIKI_LINE_BREAK = "\\\\" ;
 
 
   static void main(String[] args) {
@@ -238,7 +239,13 @@ class BuildStatusUpdater {
       newHistory.setProduct(productString);
       newHistory.setBdaEnabled(replaceBdaEnabledString);
       newHistory.setCertificationDate(new Date());
-      newHistory.setCertificationStatus(certificationStatus) ;
+
+      // repair the cerification - database is unreliable if
+      // the build is stopped midway
+      String certification = getCertificationStatus( replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller)
+      certification = removeEndDinks(certification) ;
+
+      newHistory.setCertificationStatus(certification) ;
 
       System.out.println("Saving history for " + productName)
       s.save(newHistory);
@@ -249,7 +256,7 @@ class BuildStatusUpdater {
       System.out.println("dashboardTableText(" + productString + ":lastCertifiedDate=" + lastCertifiedDate.toString());
 
       String thisRowText = getWikiMarkupForRow(
-              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
+              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller, lastCertifiedDate);
 
       returnValue += thisRowText;
 
@@ -399,11 +406,37 @@ class BuildStatusUpdater {
   }
 
 
-  private String getWikiMarkupForRow(String product, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller) {
+  private String getWikiMarkupForRow( String product
+                                      , String bdaEnabled
+                                      , String certification
+                                      , String singleCommandBuild
+                                      , String singleCommandDeploy
+                                      , String databaseIntegration
+                                      , String remoteUpgrade
+                                      , String templateValidation
+                                      , String privateProperties
+                                      , String ciBuild
+                                      , String deploymentShakeout
+                                      , String commandLineInstaller
+                                      , Date lastCertified ) {
 
     String returnValue = WIKI_TABLE_BEGIN_ROW;
 
     certification = getCertificationStatus(bdaEnabled, singleCommandBuild, singleCommandDeploy, remoteUpgrade, databaseIntegration, privateProperties, deploymentShakeout, templateValidation, ciBuild, commandLineInstaller)
+    certification = removeEndDinks(certification) ;
+
+    if ( certification != WIKI_CERTIFICATION_GREEN )
+    {
+      certification += WIKI_LINE_BREAK + "Last certified: " ;
+      if (lastCertified != null)
+      {
+        certification += lastCertified.toString();
+      }
+      else
+      {
+        certification += "n/a" ;
+      }
+    }
 
     returnValue += removeEndDinks(product) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += removeEndDinks(certification) + WIKI_TABLE_CELL_TERMINATOR;
