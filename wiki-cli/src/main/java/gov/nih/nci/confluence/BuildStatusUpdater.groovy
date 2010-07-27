@@ -237,8 +237,8 @@ class BuildStatusUpdater {
 
       ProjectCertificationStatus newHistory = new ProjectCertificationStatus();
 
-      newHistory.setProduct(productString);
-      newHistory.setBdaEnabled(replaceBdaEnabledString);
+      newHistory.setProduct(productName);
+      newHistory.setBdaEnabled(bdaEnabled);
       newHistory.setCertificationDate(new Date());
 
       // repair the cerification - database is unreliable if
@@ -251,7 +251,7 @@ class BuildStatusUpdater {
       s.save(newHistory);
       s.getTransaction().commit();
 
-      Date lastCertifiedDate = getLastCertifiedDate(productString) ;
+      Date lastCertifiedDate = getLastCertifiedDate(productName) ;
 
       System.out.println("dashboardTableText(" + productString + ":lastCertifiedDate=" + lastCertifiedDate.toString());
 
