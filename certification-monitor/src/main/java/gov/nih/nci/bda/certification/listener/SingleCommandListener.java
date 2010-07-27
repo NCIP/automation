@@ -219,7 +219,7 @@ public class SingleCommandListener implements BuildListener {
 	}
 
 	public void taskFinished(BuildEvent event) {
-        certLogger.info("taskFinished:" + event.getTask().getTaskName());
+//        certLogger.info("taskFinished:" + event.getTask().getTaskName());
 	}
 
 	private void addTask(String taskName) {

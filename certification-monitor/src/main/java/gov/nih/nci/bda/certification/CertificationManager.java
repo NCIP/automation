@@ -153,6 +153,7 @@ public class CertificationManager {
                 certLogger.info("loadSavedProperties:key=" + key);
                 String value = config.getString(key);
                 certLogger.info("loadSavedProperties:value=" + value);
+                project.setProperty(key,value);
             }
 
         } catch (ConfigurationException e) {
