@@ -26,7 +26,7 @@
 			cgmm.application.context=fa il
 			evaluate.property.name=cgmm.application.context
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -42,7 +42,7 @@
 			cgmm.application.name=fa/il
 			evaluate.property.name=cgmm.application.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			database.context.path=fa il
 			evaluate.property.name=database.context.path
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			database.driver=com.m ysql.jdbc.Driver
 			evaluate.property.name=database.driver
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			database.driver=jdbc.joe://fail
 			evaluate.property.name=database.driver
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			database.driver.file=c:\\mysql-connector-java-5.0.8.jar
 			evaluate.property.name=database.driver.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			database.driver.file=joe.jar
 			evaluate.property.name=database.driver.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			database.drop-schema=fa il
 			evaluate.property.name=database.drop-schema
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			database.drop-schema=joe
 			evaluate.property.name=database.drop-schema
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			database.re-create=fa/il
 			evaluate.property.name=database.re-create
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			database.re-create=joe
 			evaluate.property.name=database.re-create
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			database.jndi.datasource.name=fa\\il
 			evaluate.property.name=database.jndi.datasource.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			database.name=fa il
 			evaluate.property.name=database.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -234,7 +234,7 @@
 			database.name=mysql
 			evaluate.property.name=database.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 			database.password=fa/il
 			evaluate.property.name=database.password
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			database.password=fail&lt;condition
 			evaluate.property.name=database.password
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -282,7 +282,7 @@
 			database.port=fa il
 			evaluate.property.name=database.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -298,7 +298,7 @@
 			database.port=70000
 			evaluate.property.name=database.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -314,7 +314,7 @@
 			database.schema=fa il
 			evaluate.property.name=database.schema
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -330,7 +330,7 @@
 			database.schema=fail
 			evaluate.property.name=database.schema
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

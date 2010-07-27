@@ -29,7 +29,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=invalidpath
 			evaluate.property.name=application.base.path.linux
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -45,7 +45,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/valid/path-syntax
 			evaluate.property.name=application.base.path.linux
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -61,7 +61,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/valid/path-syntax
 			evaluate.property.name=application.base.path.windows
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -78,7 +78,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=invalidpath
 			evaluate.property.name=application.base.path.windows
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -94,7 +94,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/valid/path-value
 			evaluate.property.name=application.base.path.linux
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -110,7 +110,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/valid/path-value
 			evaluate.property.name=application.base.path.windows
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -127,7 +127,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/usr
 			evaluate.property.name=application.base.path.linux
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -144,7 +144,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/
 			evaluate.property.name=application.base.path.windows
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -160,7 +160,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			authentication.type=db
 			evaluate.property.name=authentication.type
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -177,7 +177,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			authentication.type=fail
 			evaluate.property.name=authentication.type
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -196,7 +196,7 @@
 			cacore-sdk.src.url=http://pass/condition
 			cacore-sdk.required=true
 			evaluate.property.name=cacore-sdk.required
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -216,7 +216,7 @@
 			cacore-sdk.src.url=fail contition
 			cacore-sdk.required=true
 			evaluate.property.name=cacore-sdk.required
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -232,7 +232,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.file=passcondition
 			evaluate.property.name=cacore-sdk.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -249,7 +249,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.file=fail condition
 			evaluate.property.name=cacore-sdk.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -265,7 +265,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.relative.dir=pass/condition
 			evaluate.property.name=cacore-sdk.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -282,7 +282,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.relative.dir=fail condition
 			evaluate.property.name=cacore-sdk.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -298,7 +298,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=cacore-sdk.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -315,7 +315,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.src.url=fail
 			evaluate.property.name=cacore-sdk.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -331,7 +331,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.file=passcondition
 			evaluate.property.name=cagrid-libs.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -348,7 +348,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.file=fail condition
 			evaluate.property.name=cagrid-libs.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -364,7 +364,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.relative.dir=pass/condition
 			evaluate.property.name=cagrid-libs.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -381,7 +381,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.relative.dir=fail condition
 			evaluate.property.name=cagrid-libs.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -397,7 +397,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=cagrid-libs.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -414,7 +414,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.src.url=fail
 			evaluate.property.name=cagrid-libs.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -430,7 +430,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.file=passcondition
 			evaluate.property.name=cagrid-base-war.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -447,7 +447,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.file=fail condition
 			evaluate.property.name=cagrid-base-war.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -463,7 +463,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.relative.dir=pass/condition
 			evaluate.property.name=cagrid-base-war.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -480,7 +480,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.relative.dir=fail condition
 			evaluate.property.name=cagrid-base-war.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -496,7 +496,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=cagrid-base-war.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -513,7 +513,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.src.url=fail
 			evaluate.property.name=cagrid-base-war.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -529,7 +529,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.file=passcondition
 			evaluate.property.name=cagrid-console.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -546,7 +546,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.file=fail condition
 			evaluate.property.name=cagrid-console.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -562,7 +562,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.relative.dir=pass/condition
 			evaluate.property.name=cagrid-console.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -579,7 +579,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.relative.dir=fail condition
 			evaluate.property.name=cagrid-console.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -595,7 +595,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=cagrid-console.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -612,7 +612,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.src.url=fail
 			evaluate.property.name=cagrid-console.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -628,7 +628,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.binaries.file=passcondition
 			evaluate.property.name=sync-gts.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -645,7 +645,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.binaries.file=fail condition
 			evaluate.property.name=sync-gts.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -661,7 +661,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.binaries.relative.dir=pass/condition
 			evaluate.property.name=sync-gts.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -678,7 +678,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.binaries.relative.dir=fail condition
 			evaluate.property.name=sync-gts.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -694,7 +694,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=sync-gts.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -711,7 +711,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			sync-gts.src.url=fail
 			evaluate.property.name=sync-gts.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -727,7 +727,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.file=passcondition
 			evaluate.property.name=jboss.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -744,7 +744,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.file=fail condition
 			evaluate.property.name=jboss.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -760,7 +760,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.relative.dir=pass/condition
 			evaluate.property.name=jboss.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -777,7 +777,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.relative.dir=fail condition
 			evaluate.property.name=jboss.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -793,7 +793,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=jboss.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -810,7 +810,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.src.url=fail
 			evaluate.property.name=jboss.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -826,7 +826,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.binaries.file=passcondition
 			evaluate.property.name=jbosscp.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -843,7 +843,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.binaries.file=fail condition
 			evaluate.property.name=jbosscp.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -859,7 +859,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=jbosscp.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -876,7 +876,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.src.url=fail
 			evaluate.property.name=jbosscp.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -892,7 +892,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.binaries.file=passcondition
 			evaluate.property.name=tomcat.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -909,7 +909,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.binaries.file=fail condition
 			evaluate.property.name=tomcat.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -925,7 +925,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.binaries.relative.dir=pass/condition
 			evaluate.property.name=tomcat.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -942,7 +942,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.binaries.relative.dir=fail condition
 			evaluate.property.name=tomcat.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -958,7 +958,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=tomcat.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -975,7 +975,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			tomcat.src.url=fail
 			evaluate.property.name=tomcat.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -991,7 +991,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.binaries.file=passcondition
 			evaluate.property.name=jboss-bindings.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1008,7 +1008,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.binaries.file=fail condition
 			evaluate.property.name=jboss-bindings.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1024,7 +1024,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=jboss-bindings.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1041,7 +1041,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.src.url=fail
 			evaluate.property.name=jboss-bindings.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1057,7 +1057,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.binaries.file=passcondition
 			evaluate.property.name=findbugs.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1074,7 +1074,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.binaries.file=fail condition
 			evaluate.property.name=findbugs.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1090,7 +1090,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.binaries.relative.dir=pass/condition
 			evaluate.property.name=findbugs.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1107,7 +1107,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.binaries.relative.dir=fail condition
 			evaluate.property.name=findbugs.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1123,7 +1123,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.src.url=http://pass.nci.nih.gov/pass
 			evaluate.property.name=findbugs.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -1140,7 +1140,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			findbugs.src.url=fail
 			evaluate.property.name=findbugs.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<!-- cleanup leading spaces because of append above -->
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"

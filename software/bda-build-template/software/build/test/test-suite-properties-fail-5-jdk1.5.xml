@@ -26,7 +26,7 @@
 			db.install.create.postgresql.file.list=fail condtion
 			evaluate.property.name=db.install.create.postgresql.file.list
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -42,7 +42,7 @@
 			db.install.create.postgresql.file.list=,fail,fail
 			evaluate.property.name=db.install.create.postgresql.file.list
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			db.install.create.postgresql.file.list=fail,fail,
 			evaluate.property.name=db.install.create.postgresql.file.list
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			env.name=fa il
 			evaluate.property.name=env.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			env.name=fail
 			evaluate.property.name=env.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			exclude.access-logs=fa il
 			evaluate.property.name=exclude.access-logs
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			exclude.access-logs=fail
 			evaluate.property.name=exclude.access-logs
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			exclude.check.database=fail conditoin
 			evaluate.property.name=exclude.check.database
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			exclude.check.database=fail
 			evaluate.property.name=exclude.check.database
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			exclude.database=fa il
 			evaluate.property.name=exclude.database
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			exclude.database=fail
 			evaluate.property.name=exclude.database
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			exclude.jboss=fa il
 			evaluate.property.name=exclude.jboss
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			exclude.jboss=fail
 			evaluate.property.name=exclude.jboss
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -234,7 +234,7 @@
 			exclude.jboss.backup=fa il
 			evaluate.property.name=exclude.jboss.backup
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 			exclude.jboss.backup=fail
 			evaluate.property.name=exclude.jboss.backup
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			exclude.jboss-bindings=fa il
 			evaluate.property.name=exclude.jboss-bindings
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -282,7 +282,7 @@
 			exclude.jboss-bindings=fail
 			evaluate.property.name=exclude.jboss-bindings
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -298,7 +298,7 @@
 			exclude.jboss-config=fa il
 			evaluate.property.name=exclude.jboss-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -314,7 +314,7 @@
 			exclude.jboss-config=fail
 			evaluate.property.name=exclude.jboss-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -330,7 +330,7 @@
 			exclude.jboss.grid=fa il
 			evaluate.property.name=exclude.jboss.grid
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

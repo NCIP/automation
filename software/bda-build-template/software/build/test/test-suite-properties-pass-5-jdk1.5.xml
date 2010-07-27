@@ -25,7 +25,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.addr.street1=1234 Somplace lane
 			evaluate.property.name=grid.poc.tech.addr.street1
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -40,7 +40,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.addr.street2=
 			evaluate.property.name=grid.poc.tech.addr.street2
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -55,7 +55,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.affiliation=BDA
 			evaluate.property.name=grid.poc.tech.affiliation
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -70,7 +70,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.email=buildanddeployment@mail.nih.gov
 			evaluate.property.name=grid.poc.tech.email
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -85,7 +85,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.name.first=DeploymentAutomation
 			evaluate.property.name=grid.poc.tech.name.first
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -100,7 +100,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.name.last=Buildand
 			evaluate.property.name=grid.poc.tech.name.last
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -115,7 +115,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.phone=0124567890
 			evaluate.property.name=grid.poc.tech.phone
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -130,7 +130,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.researchCenter.displayname=bdarc
 			evaluate.property.name=grid.poc.tech.researchCenter.displayname
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -145,7 +145,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.researchCenter.shortname=bda
 			evaluate.property.name=grid.poc.tech.researchCenter.shortname
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -160,7 +160,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.poc.tech.role=sysadmin
 			evaluate.property.name=grid.poc.tech.role
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -175,7 +175,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			grid.target=nci_stage-1.3
 			evaluate.property.name=grid.target
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -190,7 +190,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ivy.bda.settings.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda-settings.xml
 			evaluate.property.name=ivy.bda.settings.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -205,7 +205,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ivy.bda.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda.xml
 			evaluate.property.name=ivy.bda.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -220,7 +220,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.execution.time=false
 			evaluate.property.name=jar-signing.execution.time
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -235,7 +235,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.generate-selfsigned=false
 			evaluate.property.name=jar-signing.generate-selfsigned
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.jar.list=test-signing.jar
 			evaluate.property.name=jar-signing.jar.list
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -265,7 +265,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.alias=nci-dev-signing
 			evaluate.property.name=jar-signing.keystore.alias
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -280,7 +280,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.cert.cn=BDA
 			evaluate.property.name=jar-signing.keystore.cert.cn
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -295,7 +295,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.cert.c=US
 			evaluate.property.name=jar-signing.keystore.cert.c
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -310,7 +310,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.cert.o=National Cancer Institute
 			evaluate.property.name=jar-signing.keystore.cert.o
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

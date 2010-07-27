@@ -25,7 +25,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.file=caGrid-console_sources.zip
 			evaluate.property.name=cagrid-console.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -40,7 +40,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.binaries.relative.dir=caGrid-console
 			evaluate.property.name=cagrid-console.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -55,7 +55,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-console.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/caGrid-console_sources.zip
 			evaluate.property.name=cagrid-console.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -70,7 +70,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.file=cagrid-wscore-4.0.3-appserver-libs.zip
 			evaluate.property.name=cagrid-libs.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -85,7 +85,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.binaries.relative.dir=.
 			evaluate.property.name=cagrid-libs.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -100,7 +100,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-libs.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-libs.zip
 			evaluate.property.name=cagrid-libs.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -115,7 +115,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-target.src.url=https://ncisvn.nci.nih.gov/svn/cagrid/branches/caGrid-1_3_release/cagrid-1-0/caGrid/repository/caGrid/target_grid
 			evaluate.property.name=cagrid-target.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -130,7 +130,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cgmm.application.context=bda
 			evaluate.property.name=cgmm.application.context
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -145,7 +145,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cgmm.application.name=bda
 			evaluate.property.name=cgmm.application.name
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -160,7 +160,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			#cgmm-properties.xml=
 			evaluate.property.name=#cgmm-properties.xml
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -175,7 +175,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.context.path=bda-blueprints-webapp
 			evaluate.property.name=database.context.path
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -190,7 +190,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.driver=com.mysql.jdbc.Driver
 			evaluate.property.name=database.driver
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -205,7 +205,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.driver.file=/path/mysql-connector-java-5.0.8.jar
 			evaluate.property.name=database.driver.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -220,11 +220,15 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.drop-schema=true
 			evaluate.property.name=database.drop-schema
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
+			/>
+		<replaceregexp file="${dist.exploded.dir}/install.properties" byline="true"
+			match="^database.re-create.*"
+			replace=""
 			/>
 		<execute-property-test-pass
 			/>
@@ -235,12 +239,15 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.re-create=true
 			evaluate.property.name=database.re-create
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
+		<replaceregexp file="${dist.exploded.dir}/install.properties" byline="true"
+			match="^database.drop-schema.*"
+			replace=""
 		<execute-property-test-pass
 			/>
 		<echo message="**** Exiting test:property:pass:database.re-create"/>
@@ -250,7 +257,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.jndi.datasource.name=jdbc/bdaDS
 			evaluate.property.name=database.jndi.datasource.name
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -265,7 +272,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.name=bda
 			evaluate.property.name=database.name
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -280,7 +287,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.password=bdauser
 			evaluate.property.name=database.password
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -295,7 +302,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			database.port=3306
 			evaluate.property.name=database.port
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -308,9 +315,11 @@
 	<target name="test:property:pass:database.schema">
 		<echo message="**** Entering test:property:pass:database.schema"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			database.schema=schemaname
+			database.type=mysql
+			database.schema=schema
+			database.name=schema
 			evaluate.property.name=database.schema
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

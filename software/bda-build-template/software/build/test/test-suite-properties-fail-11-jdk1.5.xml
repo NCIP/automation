@@ -26,7 +26,7 @@
 			jboss.jms2.netty.port=fa il
 			evaluate.property.name=jboss.jms2.netty.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -42,7 +42,7 @@
 			jboss.jms2.netty.port=70000
 			evaluate.property.name=jboss.jms2.netty.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			jboss.jms2.netty-ssl.port=fa il
 			evaluate.property.name=jboss.jms2.netty-ssl.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			jboss.jms2.netty-ssl.port=70000
 			evaluate.property.name=jboss.jms2.netty-ssl.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			jboss.jms.port=fa il
 			evaluate.property.name=jboss.jms.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			jboss.jms.port=70000
 			evaluate.property.name=jboss.jms.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			jboss.jmx-rmi.port=fa il
 			evaluate.property.name=jboss.jmx-rmi.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			jboss.jmx-rmi.port=70000
 			evaluate.property.name=jboss.jmx-rmi.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			jboss.messaging.port=fa il
 			evaluate.property.name=jboss.messaging.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			jboss.messaging.port=70000
 			evaluate.property.name=jboss.messaging.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			jboss.ncicb-standard.port-config=fa il
 			evaluate.property.name=jboss.ncicb-standard.port-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			jboss.ncicb-standard.port-config=fail
 			evaluate.property.name=jboss.ncicb-standard.port-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			jboss.pooledha.port=fa il
 			evaluate.property.name=jboss.pooledha.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -234,7 +234,7 @@
 			jboss.pooledha.port=70000
 			evaluate.property.name=jboss.pooledha.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 			jboss.remoting.port=fa il
 			evaluate.property.name=jboss.remoting.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			jboss.remoting.port=70000
 			evaluate.property.name=jboss.remoting.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -282,7 +282,7 @@
 			jboss.server.bind.port=fa il
 			evaluate.property.name=jboss.server.bind.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -298,7 +298,7 @@
 			jboss.server.bind.port=70000
 			evaluate.property.name=jboss.server.bind.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -314,7 +314,7 @@
 			jboss.server.hostname=fa il
 			evaluate.property.name=jboss.server.hostname
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -330,7 +330,7 @@
 			jboss.server.jndi.port=fa il
 			evaluate.property.name=jboss.server.jndi.port
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

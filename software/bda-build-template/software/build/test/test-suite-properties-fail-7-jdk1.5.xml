@@ -26,7 +26,7 @@
 			grid.poc.science.email=fa/il
 			evaluate.property.name=grid.poc.science.email
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -42,7 +42,7 @@
 			grid.poc.science.name.first=fa/il
 			evaluate.property.name=grid.poc.science.name.first
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			grid.poc.science.name.last=fa/il
 			evaluate.property.name=grid.poc.science.name.last
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			grid.poc.science.phone=fa/il
 			evaluate.property.name=grid.poc.science.phone
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			grid.poc.science.role=fa/il
 			evaluate.property.name=grid.poc.science.role
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			grid.poc.tech.addr.country=fa/il
 			evaluate.property.name=grid.poc.tech.addr.country
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			grid.poc.tech.addr.locality=fa/il
 			evaluate.property.name=grid.poc.tech.addr.locality
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			grid.poc.tech.addr.postalCode=fa/il
 			evaluate.property.name=grid.poc.tech.addr.postalCode
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			grid.poc.tech.addr.stateProvince=fa/il
 			evaluate.property.name=grid.poc.tech.addr.stateProvince
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			grid.poc.tech.addr.street1=fa/il
 			evaluate.property.name=grid.poc.tech.addr.street1
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			grid.poc.tech.addr.street2=fa/il
 			evaluate.property.name=grid.poc.tech.addr.street2
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			grid.poc.tech.affiliation=fa/il
 			evaluate.property.name=grid.poc.tech.affiliation
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			grid.poc.tech.email=fa/il
 			evaluate.property.name=grid.poc.tech.email
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -234,7 +234,7 @@
 			grid.poc.tech.name.first=fa/il
 			evaluate.property.name=grid.poc.tech.name.first
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 			grid.poc.tech.name.last=fa/il
 			evaluate.property.name=grid.poc.tech.name.last
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			grid.poc.tech.phone=fa/il
 			evaluate.property.name=grid.poc.tech.phone
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -279,10 +279,10 @@
 	<target name="test:property:fail:grid.poc.tech.researchCenter.displayname-syntax">
 		<echo message="**** Entering test:property:fail:grid.poc.tech.researchCenter.displayname"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.researchCenter.displayname=
+			grid.poc.tech.researchCenter.displayname=fa/il
 			evaluate.property.name=grid.poc.tech.researchCenter.displayname
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -295,10 +295,10 @@
 	<target name="test:property:fail:grid.poc.tech.researchCenter.shortname-syntax">
 		<echo message="**** Entering test:property:fail:grid.poc.tech.researchCenter.shortname"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.researchCenter.shortname=bda
+			grid.poc.tech.researchCenter.shortname=fa/il
 			evaluate.property.name=grid.poc.tech.researchCenter.shortname
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -314,7 +314,7 @@
 			grid.poc.tech.role=fa/il
 			evaluate.property.name=grid.poc.tech.role
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -327,10 +327,10 @@
 	<target name="test:property:fail:grid.target-syntax">
 		<echo message="**** Entering test:property:fail:grid.target"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.target=fa il
+			grid.target=fa/il
 			evaluate.property.name=grid.target
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

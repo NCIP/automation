@@ -2888,6 +2888,7 @@ software/bda-build-template/software/build/properties.template -text
 software/bda-build-template/software/build/test/all-fail.properties -text
 software/bda-build-template/software/build/test/all-pass.properties -text
 software/bda-build-template/software/build/test/build.xml -text
+software/bda-build-template/software/build/test/ci-install.properties -text
 software/bda-build-template/software/build/test/gen-prop-tests.pl -text
 software/bda-build-template/software/build/test/test-common.xml -text
 software/bda-build-template/software/build/test/test-suite-db-jdk15.xml -text
@@ -2909,6 +2910,7 @@ software/bda-build-template/software/build/test/test-suite-properties-fail-8-jdk
 software/bda-build-template/software/build/test/test-suite-properties-fail-9-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-jdk15.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-1-jdk1.5.xml -text
+software/bda-build-template/software/build/test/test-suite-properties-pass-10-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-2-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-3-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-4-jdk1.5.xml -text

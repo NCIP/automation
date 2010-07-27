@@ -26,7 +26,7 @@
 			grid.target=fail
 			evaluate.property.name=grid.target
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -42,7 +42,7 @@
 			ivy.bda.settings.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=ivy.bda.settings.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			ivy.bda.settings.src.url=http://www.microsoft.com
 			evaluate.property.name=ivy.bda.settings.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			ivy.bda.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=ivy.bda.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			ivy.bda.src.url=http://www.microsoft.com
 			evaluate.property.name=ivy.bda.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			jar-signing.execution.time=fa il
 			evaluate.property.name=jar-signing.execution.time
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			jar-signing.execution.time=fail
 			evaluate.property.name=jar-signing.execution.time
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			jar-signing.generate-selfsigned=fa il
 			evaluate.property.name=jar-signing.generate-selfsigned
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			jar-signing.generate-selfsigned=fail
 			evaluate.property.name=jar-signing.generate-selfsigned
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			jar-signing.jar.list=fa il
 			evaluate.property.name=jar-signing.jar.list
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			jar-signing.jar.list=,fail,fail
 			evaluate.property.name=jar-signing.jar.list
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			jar-signing.jar.list=fail,fail,
 			evaluate.property.name=jar-signing.jar.list
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			jar-signing.keystore.alias=fa/il
 			evaluate.property.name=jar-signing.keystore.alias
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -234,7 +234,7 @@
 			jar-signing.keystore.cert.cn=fa/il
 			evaluate.property.name=jar-signing.keystore.cert.cn
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 			jar-signing.keystore.cert.c=fa/il
 			evaluate.property.name=jar-signing.keystore.cert.c
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			jar-signing.keystore.cert.o=fa/il Cancer Institute
 			evaluate.property.name=jar-signing.keystore.cert.o
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -282,7 +282,7 @@
 			jar-signing.keystore.cert.ou=fa/il
 			evaluate.property.name=jar-signing.keystore.cert.ou
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -295,10 +295,10 @@
 	<target name="test:property:fail:jar-signing.keystore.location-syntax">
 		<echo message="**** Entering test:property:fail:jar-signing.keystore.location"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			jar-signing.keystore.location=fa/il-dev-signing.keystore
+			jar-signing.keystore.location=fa il
 			evaluate.property.name=jar-signing.keystore.location
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -314,7 +314,7 @@
 			jar-signing.keystore.password=fa/il!
 			evaluate.property.name=jar-signing.keystore.password
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -330,7 +330,7 @@
 			java.major.version=fa il
 			evaluate.property.name=java.major.version
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

@@ -25,7 +25,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.cert.ou=NCICB
 			evaluate.property.name=jar-signing.keystore.cert.ou
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -40,7 +40,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.location=nci-dev-signing.keystore
 			evaluate.property.name=jar-signing.keystore.location
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -55,7 +55,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jar-signing.keystore.password=nci123!
 			evaluate.property.name=jar-signing.keystore.password
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -70,7 +70,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			java.major.version=1.5
 			evaluate.property.name=java.major.version
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -85,7 +85,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			java.minor.version=1.5.0_10
 			evaluate.property.name=java.minor.version
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -100,7 +100,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.file=jboss-4.0.5.GA.zip
 			evaluate.property.name=jboss.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -115,7 +115,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.binaries.relative.dir=jboss-4.0.5.GA
 			evaluate.property.name=jboss.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -130,7 +130,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.file=ncicb-bindings-dac-jboss-4.0.x.xml
 			evaluate.property.name=jboss-bindings.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -145,7 +145,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss-bindings.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml
 			evaluate.property.name=jboss-bindings.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -160,7 +160,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cgmm.enable=true
 			evaluate.property.name=jboss.cgmm.enable
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -175,7 +175,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.cobraorb.port=30350
 			evaluate.property.name=jboss.cobraorb.port
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -190,7 +190,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.binaries.file=jboss-4.0.5.GA_CP15.zip
 			evaluate.property.name=jbosscp.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -205,7 +205,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jbosscp.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/jboss-4.0.5.GA_CP15.zip
 			evaluate.property.name=jbosscp.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -220,7 +220,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.ejbinvoker.port=30150
 			evaluate.property.name=jboss.ejbinvoker.port
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -235,7 +235,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.grid.secure.host=
 			evaluate.property.name=jboss.external.grid.secure.host
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.grid.secure.port=
 			evaluate.property.name=jboss.external.grid.secure.port
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -265,7 +265,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.http.host=
 			evaluate.property.name=jboss.external.http.host
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -280,7 +280,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.http.port=
 			evaluate.property.name=jboss.external.http.port
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -295,7 +295,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.ssl.host=
 			evaluate.property.name=jboss.external.ssl.host
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -310,7 +310,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			jboss.external.ssl.port=
 			evaluate.property.name=jboss.external.ssl.port
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

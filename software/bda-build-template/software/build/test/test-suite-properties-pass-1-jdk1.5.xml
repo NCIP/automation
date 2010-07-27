@@ -25,7 +25,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			ant.minimum.version=1.7.0
 			evaluate.property.name=ant.minimum.version
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -40,7 +40,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.linux=/home/user/apps/appname
 			evaluate.property.name=application.base.path.linux
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -55,7 +55,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.base.path.windows=c:/apps/appname
 			evaluate.property.name=application.base.path.windows
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -70,7 +70,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.url=http://localhost.nci.nih.gov:port
 			evaluate.property.name=application.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -85,7 +85,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			application.context.name=bda
 			evaluate.property.name=application.context.name
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -100,7 +100,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			authentication.type=db
 			evaluate.property.name=authentication.type
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -115,7 +115,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.install.name=bda-blueprints_install
 			evaluate.property.name=bda-blueprints-webapp.install.name
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -130,7 +130,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.install.zip.file=bda-blueprints_install-1.7.0.zip
 			evaluate.property.name=bda-blueprints-webapp.install.zip.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -145,7 +145,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.upgrade.name=bda-blueprints_upgrade
 			evaluate.property.name=bda-blueprints-webapp.upgrade.name
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -160,7 +160,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.upgrade.zip.file=bda-blueprints_upgrade-1.7.0.zip
 			evaluate.property.name=bda-blueprints-webapp.upgrade.zip.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -175,7 +175,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda-blueprints-webapp.version=1.7.0
 			evaluate.property.name=bda-blueprints-webapp.version
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -190,7 +190,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda.version=1.7.0-beta
 			evaluate.property.name=bda.version
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -205,7 +205,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			build.bda.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml
 			evaluate.property.name=build.bda.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -220,7 +220,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.file=caCORE_SDK_411-src.zip
 			evaluate.property.name=cacore-sdk.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -235,7 +235,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.binaries.relative.dir=codegen
 			evaluate.property.name=cacore-sdk.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.required=true
 			evaluate.property.name=cacore-sdk.required
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -265,7 +265,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cacore-sdk.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/cacore-sdk/4.1.1/${cacore-sdk.binaries.file}
 			evaluate.property.name=cacore-sdk.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -280,7 +280,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.file=cagrid-wscore-4.0.3-appserver-base-war.zip
 			evaluate.property.name=cagrid-base-war.binaries.file
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -295,7 +295,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.binaries.relative.dir=.
 			evaluate.property.name=cagrid-base-war.binaries.relative.dir
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -310,7 +310,7 @@
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			cagrid-base-war.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2007/os-independent/cagrid-wscore-4.0.3-appserver-base-war.zip
 			evaluate.property.name=cagrid-base-war.src.url
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

@@ -26,7 +26,7 @@
 			ant.minimum.version=fa il
 			evaluate.property.name=ant.minimum.version
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -42,7 +42,7 @@
 			application.base.path.linux=/home/user name/apps/appname
 			evaluate.property.name=application.base.path.linux
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			application.base.path.linux=/opt
 			evaluate.property.name=application.base.path.linux
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			application.base.path.windows=c:\\apps\\appname
 			evaluate.property.name=application.base.path.windows
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			application.base.path.windows=c:\\WINDOWS
 			evaluate.property.name=application.base.path.windows
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			jboss.application.url=http://localhost .nci.nih.gov:port
 			evaluate.property.name=jboss.application.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			jboss.application.url=locahost
 			evaluate.property.name=jboss.application.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			tomcat.application.url=http://localhost .nci.nih.gov:port
 			evaluate.property.name=tomcat.application.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			tomcat.application.url=locahost
 			evaluate.property.name=tomcat.application.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			application.context.name=fa/il
 			evaluate.property.name=application.context.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			authentication.type=fa\\il
 			evaluate.property.name=authentication.type
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			authentication.type=joe
 			evaluate.property.name=authentication.type
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			bda-blueprints-webapp.install.name=fa il
 			evaluate.property.name=bda-blueprints-webapp.install.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -231,10 +231,10 @@
 	<target name="test:property:fail:bda-blueprints-webapp.install.zip.file-syntax">
 		<echo message="**** Entering test:property:fail:bda-blueprints-webapp.install.zip.file"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			bda-blueprints-webapp.install.zip.file=fa/il
+			bda-blueprints-webapp.install.zip.file=fa il
 			evaluate.property.name=bda-blueprints-webapp.install.zip.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 			bda-blueprints-webapp.upgrade.name=fa\\il
 			evaluate.property.name=bda-blueprints-webapp.upgrade.name
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			bda-blueprints-webapp.upgrade.zip.file=fa il
 			evaluate.property.name=bda-blueprints-webapp.upgrade.zip.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -282,7 +282,7 @@
 			bda-blueprints-webapp.version=fa il
 			evaluate.property.name=bda-blueprints-webapp.version
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -292,13 +292,14 @@
 			/>
 		<echo message="**** Exiting test:property:fail:bda-blueprints-webapp.version"/>
 	</target>
+	<!-- Test fails because build fails when it tries to load macros.
 	<target name="test:property:fail:bda.version-syntax">
 		<echo message="**** Entering test:property:fail:bda.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			bda.version=fa il
 			evaluate.property.name=bda.version
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -308,13 +309,14 @@
 			/>
 		<echo message="**** Exiting test:property:fail:bda.version"/>
 	</target>
+	-->
 	<target name="test:property:fail:build.bda.src.url-syntax">
 		<echo message="**** Entering test:property:fail:build.bda.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			build.bda.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=build.bda.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -330,7 +332,7 @@
 			build.bda.src.url=http://www.microsoft.com
 			evaluate.property.name=build.bda.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

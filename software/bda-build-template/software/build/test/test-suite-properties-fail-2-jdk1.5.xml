@@ -26,7 +26,7 @@
 			cacore-sdk.binaries.file=fail\\conditoin
 			evaluate.property.name=cacore-sdk.binaries.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -39,10 +39,10 @@
 	<target name="test:property:fail:cacore-sdk.binaries.relative.dir-syntax">
 		<echo message="**** Entering test:property:fail:cacore-sdk.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			cacore-sdk.binaries.relative.dir=
+			cacore-sdk.binaries.relative.dir=fa il
 			evaluate.property.name=cacore-sdk.binaries.relative.dir
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			cacore-sdk.required=fail/conditoin
 			evaluate.property.name=cacore-sdk.required
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			cacore-sdk.required=joe
 			evaluate.property.name=cacore-sdk.required
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			cacore-sdk.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=cacore-sdk.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			cacore-sdk.src.url=http://www.microsoft.com
 			evaluate.property.name=cacore-sdk.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			cagrid-base-war.binaries.file=fa il
 			evaluate.property.name=cagrid-base-war.binaries.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			cagrid-base-war.binaries.relative.dir=fa\\il
 			evaluate.property.name=cagrid-base-war.binaries.relative.dir
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			cagrid-base-war.src.url=http://gforge .nci.nih.gov
 			evaluate.property.name=cagrid-base-war.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			cagrid-base-war.src.url=http://www.microsoft.com
 			evaluate.property.name=cagrid-base-war.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			cagrid-console.binaries.file=fa il
 			evaluate.property.name=cagrid-console.binaries.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			cagrid-console.binaries.relative.dir=fa\\il
 			evaluate.property.name=cagrid-console.binaries.relative.dir
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			cagrid-console.src.url=http://gf orge.nci.nih.gov/svnroot/
 			evaluate.property.name=cagrid-console.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -234,7 +234,7 @@
 			cagrid-console.src.url=http://www.microsoft.com
 			evaluate.property.name=cagrid-console.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -250,7 +250,7 @@
 			cagrid-libs.binaries.file=fa il
 			evaluate.property.name=cagrid-libs.binaries.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			cagrid-libs.binaries.relative.dir=fa\\il
 			evaluate.property.name=cagrid-libs.binaries.relative.dir
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -282,7 +282,7 @@
 			cagrid-libs.src.url=http://gforge. nci.nih.gov
 			evaluate.property.name=cagrid-libs.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -298,7 +298,7 @@
 			cagrid-libs.src.url=http://www.microsoft.com
 			evaluate.property.name=cagrid-libs.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -314,7 +314,7 @@
 			cagrid-target.src.url=https://nci svn.nci.nih.gov
 			evaluate.property.name=cagrid-target.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -330,7 +330,7 @@
 			cagrid-target.src.url=https://www.microsoft.com
 			evaluate.property.name=cagrid-target.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

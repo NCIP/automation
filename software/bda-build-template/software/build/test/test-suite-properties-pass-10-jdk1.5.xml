@@ -20,11 +20,11 @@
 		</ant>                  
 		<echo message="**** Exiting Properties suiteSetUp"/>
 	</target>
-	<target name="test:property:pass:exclude.start.servers">
-		<echo message="**** Entering test:property:pass:exclude.start.servers"/>
+	<target name="test:property:pass:tomcat.external.http.port">
+		<echo message="**** Entering test:property:pass:tomcat.external.http.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			exclude.start.servers=true
-			evaluate.property.name=exclude.start.servers
+			tomcat.external.http.port=
+			evaluate.property.name=tomcat.external.http.port
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -33,13 +33,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:exclude.start.servers"/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.http.port"/>
 	</target>
-	<target name="test:property:pass:exclude.tomcat">
-		<echo message="**** Entering test:property:pass:exclude.tomcat"/>
+	<target name="test:property:pass:tomcat.external.ssl.host">
+		<echo message="**** Entering test:property:pass:tomcat.external.ssl.host"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			exclude.tomcat=true
-			evaluate.property.name=exclude.tomcat
+			tomcat.external.ssl.host=
+			evaluate.property.name=tomcat.external.ssl.host
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -48,13 +48,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:exclude.tomcat"/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.ssl.host"/>
 	</target>
-	<target name="test:property:pass:exclude.tomcat.backup">
-		<echo message="**** Entering test:property:pass:exclude.tomcat.backup"/>
+	<target name="test:property:pass:tomcat.external.ssl.port">
+		<echo message="**** Entering test:property:pass:tomcat.external.ssl.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			exclude.tomcat.backup=true
-			evaluate.property.name=exclude.tomcat.backup
+			tomcat.external.ssl.port=
+			evaluate.property.name=tomcat.external.ssl.port
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -63,13 +63,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:exclude.tomcat.backup"/>
+		<echo message="**** Exiting test:property:pass:tomcat.external.ssl.port"/>
 	</target>
-	<target name="test:property:pass:exclude.tomcat-config">
-		<echo message="**** Entering test:property:pass:exclude.tomcat-config"/>
+	<target name="test:property:pass:tomcat.grid.secure.cert.location">
+		<echo message="**** Entering test:property:pass:tomcat.grid.secure.cert.location"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			exclude.tomcat-config=true
-			evaluate.property.name=exclude.tomcat-config
+			tomcat.grid.secure.cert.location=/path/165.112.132.171-cert.pem
+			evaluate.property.name=tomcat.grid.secure.cert.location
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -78,13 +78,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:exclude.tomcat-config"/>
+		<echo message="**** Exiting test:property:pass:tomcat.grid.secure.cert.location"/>
 	</target>
-	<target name="test:property:pass:exclude.tomcat.grid">
-		<echo message="**** Entering test:property:pass:exclude.tomcat.grid"/>
+	<target name="test:property:pass:tomcat.grid.secure.enable">
+		<echo message="**** Entering test:property:pass:tomcat.grid.secure.enable"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			exclude.tomcat.grid=true
-			evaluate.property.name=exclude.tomcat.grid
+			tomcat.grid.secure.enable=false
+			evaluate.property.name=tomcat.grid.secure.enable
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -93,13 +93,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:exclude.tomcat.grid"/>
+		<echo message="**** Exiting test:property:pass:tomcat.grid.secure.enable"/>
 	</target>
-	<target name="test:property:pass:findbugs.binaries.file">
-		<echo message="**** Entering test:property:pass:findbugs.binaries.file"/>
+	<target name="test:property:pass:tomcat.grid.secure.key.location">
+		<echo message="**** Entering test:property:pass:tomcat.grid.secure.key.location"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			findbugs.binaries.file=findbugs-1.3.4.zip
-			evaluate.property.name=findbugs.binaries.file
+			tomcat.grid.secure.key.location=/path/165.112.132.171-key.pem
+			evaluate.property.name=tomcat.grid.secure.key.location
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -108,13 +108,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:findbugs.binaries.file"/>
+		<echo message="**** Exiting test:property:pass:tomcat.grid.secure.key.location"/>
 	</target>
-	<target name="test:property:pass:findbugs.binaries.relative.dir">
-		<echo message="**** Entering test:property:pass:findbugs.binaries.relative.dir"/>
+	<target name="test:property:pass:tomcat.grid.secure.port">
+		<echo message="**** Entering test:property:pass:tomcat.grid.secure.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			findbugs.binaries.relative.dir=findbugs-1.3.4
-			evaluate.property.name=findbugs.binaries.relative.dir
+			tomcat.grid.secure.port=21444
+			evaluate.property.name=tomcat.grid.secure.port
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -123,13 +123,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:findbugs.binaries.relative.dir"/>
+		<echo message="**** Exiting test:property:pass:tomcat.grid.secure.port"/>
 	</target>
-	<target name="test:property:pass:findbugs.src.url">
-		<echo message="**** Entering test:property:pass:findbugs.src.url"/>
+	<target name="test:property:pass:tomcat.relative.dir">
+		<echo message="**** Entering test:property:pass:tomcat.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			findbugs.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/other/os-independent/findbugs-1.3.4.zip
-			evaluate.property.name=findbugs.src.url
+			tomcat.relative.dir=apache-tomcat-6.0.20
+			evaluate.property.name=tomcat.relative.dir
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -138,13 +138,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:findbugs.src.url"/>
+		<echo message="**** Exiting test:property:pass:tomcat.relative.dir"/>
 	</target>
-	<target name="test:property:pass:# For jar-signning self signed cert">
-		<echo message="**** Entering test:property:pass:# For jar-signning self signed cert"/>
+	<target name="test:property:pass:tomcat.hostname">
+		<echo message="**** Entering test:property:pass:tomcat.hostname"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			# For jar-signning self signed cert=
-			evaluate.property.name=# For jar-signning self signed cert
+			tomcat.hostname=localhost
+			evaluate.property.name=tomcat.hostname
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -153,13 +153,14 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:# For jar-signning self signed cert"/>
+		<echo message="**** Exiting test:property:pass:tomcat.hostname"/>
 	</target>
-	<target name="test:property:pass:fs-data.base.dir">
-		<echo message="**** Entering test:property:pass:fs-data.base.dir"/>
+	<target name="test:property:pass:tomcat.http-connector.remove">
+		<echo message="**** Entering test:property:pass:tomcat.http-connector.remove"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			fs-data.base.dir=/local/content/files
-			evaluate.property.name=fs-data.base.dir
+			tomcat.http-connector.remove=true
+			tomcat.grid.secure.enable=true
+			evaluate.property.name=tomcat.http-connector.remove
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -168,13 +169,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:fs-data.base.dir"/>
+		<echo message="**** Exiting test:property:pass:tomcat.http-connector.remove"/>
 	</target>
-	<target name="test:property:pass:grid.poc.science.affiliation">
-		<echo message="**** Entering test:property:pass:grid.poc.science.affiliation"/>
+	<target name="test:property:pass:tomcat.port.ajp">
+		<echo message="**** Entering test:property:pass:tomcat.port.ajp"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.science.affiliation=Test
-			evaluate.property.name=grid.poc.science.affiliation
+			tomcat.port.ajp=21009
+			evaluate.property.name=tomcat.port.ajp
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -183,13 +184,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.science.affiliation"/>
+		<echo message="**** Exiting test:property:pass:tomcat.port.ajp"/>
 	</target>
-	<target name="test:property:pass:grid.poc.science.email">
-		<echo message="**** Entering test:property:pass:grid.poc.science.email"/>
+	<target name="test:property:pass:tomcat.port.http">
+		<echo message="**** Entering test:property:pass:tomcat.port.http"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.science.email=john.smith@mail.com
-			evaluate.property.name=grid.poc.science.email
+			tomcat.port.http=21080
+			evaluate.property.name=tomcat.port.http
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -198,13 +199,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.science.email"/>
+		<echo message="**** Exiting test:property:pass:tomcat.port.http"/>
 	</target>
-	<target name="test:property:pass:grid.poc.science.name.first">
-		<echo message="**** Entering test:property:pass:grid.poc.science.name.first"/>
+	<target name="test:property:pass:tomcat.port.shutdown">
+		<echo message="**** Entering test:property:pass:tomcat.port.shutdown"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.science.name.first=John
-			evaluate.property.name=grid.poc.science.name.first
+			tomcat.port.shutdown=21005
+			evaluate.property.name=tomcat.port.shutdown
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -213,13 +214,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.science.name.first"/>
+		<echo message="**** Exiting test:property:pass:tomcat.port.shutdown"/>
 	</target>
-	<target name="test:property:pass:grid.poc.science.name.last">
-		<echo message="**** Entering test:property:pass:grid.poc.science.name.last"/>
+	<target name="test:property:pass:tomcat.port.ssl">
+		<echo message="**** Entering test:property:pass:tomcat.port.ssl"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.science.name.last=Smith
-			evaluate.property.name=grid.poc.science.name.last
+			tomcat.port.ssl=21443
+			evaluate.property.name=tomcat.port.ssl
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -228,13 +229,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.science.name.last"/>
+		<echo message="**** Exiting test:property:pass:tomcat.port.ssl"/>
 	</target>
-	<target name="test:property:pass:grid.poc.science.phone">
-		<echo message="**** Entering test:property:pass:grid.poc.science.phone"/>
+	<target name="test:property:pass:tomcat.src.url">
+		<echo message="**** Entering test:property:pass:tomcat.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.science.phone=0124567890
-			evaluate.property.name=grid.poc.science.phone
+			tomcat.src.url=http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2009/os-independent/apache-tomcat-6.0.20.zip
+			evaluate.property.name=tomcat.src.url
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -243,13 +244,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.science.phone"/>
+		<echo message="**** Exiting test:property:pass:tomcat.src.url"/>
 	</target>
-	<target name="test:property:pass:grid.poc.science.role">
-		<echo message="**** Entering test:property:pass:grid.poc.science.role"/>
+	<target name="test:property:pass:tomcat.ssl.enable">
+		<echo message="**** Entering test:property:pass:tomcat.ssl.enable"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.science.role=sysadmin
-			evaluate.property.name=grid.poc.science.role
+			tomcat.ssl.enable=false
+			evaluate.property.name=tomcat.ssl.enable
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -258,13 +259,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.science.role"/>
+		<echo message="**** Exiting test:property:pass:tomcat.ssl.enable"/>
 	</target>
-	<target name="test:property:pass:grid.poc.tech.addr.country">
-		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.country"/>
+	<target name="test:property:pass:tomcat.ssl.fullyqualified.hostname">
+		<echo message="**** Entering test:property:pass:tomcat.ssl.fullyqualified.hostname"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.addr.country=USA
-			evaluate.property.name=grid.poc.tech.addr.country
+			tomcat.ssl.fullyqualified.hostname=localhost.nci.nih.gov
+			evaluate.property.name=tomcat.ssl.fullyqualified.hostname
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -273,13 +274,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.country"/>
+		<echo message="**** Exiting test:property:pass:tomcat.ssl.fullyqualified.hostname"/>
 	</target>
-	<target name="test:property:pass:grid.poc.tech.addr.locality">
-		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.locality"/>
+	<target name="test:property:pass:tomcat.ssl.keystore.alias">
+		<echo message="**** Entering test:property:pass:tomcat.ssl.keystore.alias"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.addr.locality=Vienna
-			evaluate.property.name=grid.poc.tech.addr.locality
+			tomcat.ssl.keystore.alias=ncicb-test-ssl-key
+			evaluate.property.name=tomcat.ssl.keystore.alias
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -288,13 +289,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.locality"/>
+		<echo message="**** Exiting test:property:pass:tomcat.ssl.keystore.alias"/>
 	</target>
-	<target name="test:property:pass:grid.poc.tech.addr.postalCode">
-		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.postalCode"/>
+	<target name="test:property:pass:tomcat.ssl.keystore.location">
+		<echo message="**** Entering test:property:pass:tomcat.ssl.keystore.location"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.addr.postalCode=22180
-			evaluate.property.name=grid.poc.tech.addr.postalCode
+			tomcat.ssl.keystore.location=/path/ncicb-test-ssl.keystore
+			evaluate.property.name=tomcat.ssl.keystore.location
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -303,13 +304,13 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.postalCode"/>
+		<echo message="**** Exiting test:property:pass:tomcat.ssl.keystore.location"/>
 	</target>
-	<target name="test:property:pass:grid.poc.tech.addr.stateProvince">
-		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.stateProvince"/>
+	<target name="test:property:pass:tomcat.ssl.keystore.pass">
+		<echo message="**** Entering test:property:pass:tomcat.ssl.keystore.pass"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			grid.poc.tech.addr.stateProvince=VA
-			evaluate.property.name=grid.poc.tech.addr.stateProvince
+			tomcat.ssl.keystore.pass=ncicb1!
+			evaluate.property.name=tomcat.ssl.keystore.pass
 			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
@@ -318,6 +319,6 @@
 			/>
 		<execute-property-test-pass
 			/>
-		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.stateProvince"/>
+		<echo message="**** Exiting test:property:pass:tomcat.ssl.keystore.pass"/>
 	</target>
 </project>

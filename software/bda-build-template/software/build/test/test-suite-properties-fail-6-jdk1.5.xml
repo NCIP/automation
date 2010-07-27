@@ -26,7 +26,7 @@
 			exclude.jboss.grid=fail
 			evaluate.property.name=exclude.jboss.grid
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -42,7 +42,7 @@
 			exclude.jboss-login-config=fa il
 			evaluate.property.name=exclude.jboss-login-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -58,7 +58,7 @@
 			exclude.jboss-login-config=fail
 			evaluate.property.name=exclude.jboss-login-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -74,7 +74,7 @@
 			exclude.start.servers=fa il
 			evaluate.property.name=exclude.start.servers
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -90,7 +90,7 @@
 			exclude.start.servers=fail
 			evaluate.property.name=exclude.start.servers
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -106,7 +106,7 @@
 			exclude.tomcat=fa il
 			evaluate.property.name=exclude.tomcat
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -122,7 +122,7 @@
 			exclude.tomcat=fail
 			evaluate.property.name=exclude.tomcat
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -138,7 +138,7 @@
 			exclude.tomcat.backup=fa il
 			evaluate.property.name=exclude.tomcat.backup
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -154,7 +154,7 @@
 			exclude.tomcat.backup=fail
 			evaluate.property.name=exclude.tomcat.backup
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -170,7 +170,7 @@
 			exclude.tomcat-config=fa il
 			evaluate.property.name=exclude.tomcat-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -186,7 +186,7 @@
 			exclude.tomcat-config=fail
 			evaluate.property.name=exclude.tomcat-config
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -202,7 +202,7 @@
 			exclude.tomcat.grid=fa il
 			evaluate.property.name=exclude.tomcat.grid
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -218,7 +218,7 @@
 			exclude.tomcat.grid=fail
 			evaluate.property.name=exclude.tomcat.grid
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -234,7 +234,7 @@
 			findbugs.binaries.file=fail conditoin
 			evaluate.property.name=findbugs.binaries.file
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -247,10 +247,10 @@
 	<target name="test:property:fail:findbugs.binaries.relative.dir-syntax">
 		<echo message="**** Entering test:property:fail:findbugs.binaries.relative.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			findbugs.binaries.relative.dir=
+			findbugs.binaries.relative.dir=fa il
 			evaluate.property.name=findbugs.binaries.relative.dir
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -266,7 +266,7 @@
 			findbugs.src.url=http://gforge .nci.nih.gov
 			evaluate.property.name=findbugs.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -282,7 +282,7 @@
 			findbugs.src.url=http://www.microsoft.com
 			evaluate.property.name=findbugs.src.url
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -292,13 +292,14 @@
 			/>
 		<echo message="**** Exiting test:property:fail:findbugs.src.url"/>
 	</target>
+	<!-- bad rule gnerated
 	<target name="test:property:fail:# For jar-signning self signed cert-url">
 		<echo message="**** Entering test:property:fail:# For jar-signning self signed cert"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			# For jar-signning self signed cert=
 			evaluate.property.name=# For jar-signning self signed cert
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -308,13 +309,14 @@
 			/>
 		<echo message="**** Exiting test:property:fail:# For jar-signning self signed cert"/>
 	</target>
+	-->
 	<target name="test:property:fail:fs-data.base.dir-syntax">
 		<echo message="**** Entering test:property:fail:fs-data.base.dir"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
 			fs-data.base.dir=c:\\junk
 			evaluate.property.name=fs-data.base.dir
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"
@@ -330,7 +332,7 @@
 			grid.poc.science.affiliation=fa/il
 			evaluate.property.name=grid.poc.science.affiliation
 			evaluate.result=fail
-			groovy.debug=true
+			#groovy.debug=true
 		</echo>
 		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
 			match="^\s+(.*)\s*$"

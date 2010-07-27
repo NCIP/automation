@@ -13,6 +13,7 @@
 	<property name="antunit.xml.report.dir" location="${report.dir}/ant-unit-xml"/>
 	<property name="antunit.html.report.dir" location="${report.dir}/ant-unit-html"/>
 	<property name="screen.log.level" value="error"/>
+	<property name="properties.file" location="${build.dir}/install.properties"/>
 	<!-- to get bda.version -->
 	<property file="${build.dir}/project.properties"/>
 	<!-- Rely on running build once befor tests -->
@@ -34,17 +35,20 @@
 
 	<macrodef name="buildExpectPass">
 		<attribute name="build.target" default="deploy:local:install"/>
+		<attribute name="properties.file" default="${properties.file}"/>
 		<sequential>
 			<ant inheritAll="false" inheritrefs="false"
 				antfile="build.xml"
 				dir="${build.dir}"
 				target="@{build.target}"
 				>
+				<property name="properties.file" value="@{properties.file}"/>
 			</ant>
 		</sequential>
 	</macrodef>
 	<macrodef name="buildExpectFail" >
 		<attribute name="build.target" default="deploy:local:install"/>
+		<attribute name="properties.file" default="${properties.file}"/>
 		<sequential>
 			<trycatch property="try.property">
 				<try>        
@@ -53,6 +57,7 @@
 						dir="${build.dir}"
 						target="@{build.target}"
 						>
+						<property name="properties.file" value="@{properties.file}"/>
 					</ant>
 				</try>
 				<catch>                 
@@ -63,17 +68,20 @@
 	</macrodef>
 	<macrodef name="execute-property-test-pass">
 		<attribute name="build.target" default="install:common:property-validate:all"/>
+		<attribute name="properties.file" default="${properties.file}"/>
 		<sequential>
 			<ant inheritAll="false" inheritrefs="false"
 				antfile="build.xml"
 				dir="${dist.exploded.dir}"
 				target="@{build.target}"
 				>
+				<property name="properties.file" value="@{properties.file}"/>
 			</ant>
 		</sequential>
 	</macrodef>
 	<macrodef name="execute-property-test-fail">
 		<attribute name="build.target" default="install:common:property-validate:all"/>
+		<attribute name="properties.file" default="${properties.file}"/>
 		<sequential>
 			<trycatch property="try.property">
 				<try>        
@@ -82,6 +90,7 @@
 						dir="${dist.exploded.dir}"
 						target="@{build.target}"
 						>
+						<property name="properties.file" value="@{properties.file}"/>
 					</ant>
 					<echo message="Build should have failed"/>
 				</try>
