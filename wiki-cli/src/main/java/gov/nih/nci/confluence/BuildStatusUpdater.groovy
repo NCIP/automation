@@ -191,11 +191,11 @@ class BuildStatusUpdater {
       try {
         History h = new History();
         ProjectCertificationStatus p = h.getMostRecentSuccess(row.PRODUCT);
-        System.out.println("ProjectCertificationStatus no exception!");
+        System.out.println("dashboardTableText: ProjectCertificationStatus no exception!");
       }
       catch(Exception ex)
       {
-        System.out.print(ex.toString());
+        System.out.print("dashboardTableText:" +ex.toString());
       }
 
       String productString = row.PRODUCT;
