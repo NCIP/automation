@@ -83,6 +83,7 @@
         </javac>
 
 		<groovyc srcdir="${source.dir}" destdir="${classes.dir}">
+            <classpath refid="project.classpath" />
 			<classpath>
 				<pathelement location="${lib.dir}/groovy-all-1.6-beta-1.jar"/>
 				<pathelement location="${lib.dir}/commons-net-2.0.jar"/>
