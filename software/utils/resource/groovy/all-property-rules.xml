@@ -3087,6 +3087,19 @@
 				<fail-message>jboss.cgmm.enable did not pass validation. jboss.cgmm.enable must be null or have a value and not contain spaces, forward slashes (/) or back slashes (\). Sample valid value - "true".</fail-message>
 			</rule>
 			<rule>
+				<name>jboss.cgmm.enable-tf</name>
+				<description>Checks jboss.cgmm.enable has proper value.</description>
+				<conditions>
+					<or>
+						<condition>jboss.cgmm.enable == "true"</condition>
+						<condition>jboss.cgmm.enable == "false"</condition>
+						<condition>jboss.cgmm.enable == ""</condition>
+						<condition>jboss.cgmm.enable == null</condition>
+					</or>
+				</conditions>
+				<fail-message>jboss.cgmm.enable did not pass validation. jboss.cgmm.enable must be true, false or empty. Sample valid value - "true".</fail-message>
+			</rule>
+			<rule>
 				<name>jboss.cgmm.enable-relationship</name>
 				<description>Checks jboss.cgmm.enable has proper value.</description>
 				<conditions>
