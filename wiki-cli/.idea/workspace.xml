@@ -2,51 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="fb2df1a2-1acd-4ddd-bf11-43ea05a79898" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-launcher.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver-tests.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.properties" afterPath="$PROJECT_DIR$/build.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/javassist-3.4.GA.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/jta-1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/tools.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/dom4j-1.6.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/xercesImpl.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/xmltask-1.15.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-nodeps.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-collections.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/hibernate3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/slf4j-simple-1.5.2.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java" afterPath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/junit.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/antlr.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/hibernate-annotations.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/cglib.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-configuration-1.6.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-test-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-coreless.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/antlr-2.7.6.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/asm.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-tests.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-jsch.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/slf4j-api-1.5.2.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki-cli.iml" afterPath="$PROJECT_DIR$/wiki-cli.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-collections-3.1.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/jsch-0.1.39.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/liquibase-core-1.9.3.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/commons-logging-1.1.1.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-java-client-driver-test-sources.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/selenium-server-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/ant-contrib.jar" />
     </list>
     <ignored path="$USER_HOME_GRAILS$/" />
     <ignored path="$USER_HOME_GRIFFON$/" />
@@ -162,7 +119,7 @@
       <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="194" column="0" selection-start="8183" selection-end="8183" vertical-scroll-proportion="0.0">
+            <state line="293" column="19" selection-start="12200" selection-end="12200" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -180,7 +137,16 @@
       <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="173" column="39" selection-start="7135" selection-end="7135" vertical-scroll-proportion="0.8684211">
+            <state line="88" column="53" selection-start="3759" selection-end="3759" vertical-scroll-proportion="0.70309275">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -266,6 +232,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="wiki-cli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wiki-cli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wiki-cli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wiki-cli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wiki-cli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -700,7 +706,7 @@
     <frame x="0" y="25" width="1280" height="718" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28947368" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10877193" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48947367" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -714,9 +720,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.299509" sideWeight="0.5491228" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.299509" sideWeight="0.8789474" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4385965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4385965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -738,7 +744,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="added History" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -765,6 +771,7 @@
     <MESSAGE value="start history" />
     <MESSAGE value="include new tests in build" />
     <MESSAGE value="fix tests" />
+    <MESSAGE value="added History" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -818,13 +825,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.3115727">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="26" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.7204969">
@@ -874,15 +874,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="11" selection-start="427" selection-end="453" vertical-scroll-proportion="0.3306773">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="80" column="13" selection-start="1944" selection-end="1944" vertical-scroll-proportion="0.0">
@@ -892,16 +883,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/build.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="13" selection-start="404" selection-end="404" vertical-scroll-proportion="0.33267716">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="194" column="0" selection-start="8183" selection-end="8183" vertical-scroll-proportion="0.0">
+        <state line="293" column="19" selection-start="12200" selection-end="12200" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="39" selection-start="7135" selection-end="7135" vertical-scroll-proportion="0.8684211">
+        <state line="88" column="53" selection-start="3759" selection-end="3759" vertical-scroll-proportion="0.70309275">
           <folding />
         </state>
       </provider>
