@@ -20,9 +20,12 @@
 			String cmd= "svn status -N .."
 			println cmd                              
 			process=cmd.execute()                    
-			if (process.toString().length() > 0)
+			process.text.eachLine
+			{
+			if(it ==~ /^M.*/)
 			{
 			properties["svn.changed"]="true"
+			}
 			}
 		</groovy>                       
 		<if>
