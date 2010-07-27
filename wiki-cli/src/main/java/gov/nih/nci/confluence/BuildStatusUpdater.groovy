@@ -192,16 +192,6 @@ class BuildStatusUpdater {
 
     connection.eachRow(statement) { row ->
 
-      try {
-        History h = new History();
-        ProjectCertificationStatus p = h.getMostRecentSuccess(row.PRODUCT);
-        System.out.println("dashboardTableText: ProjectCertificationStatus no exception!");
-      }
-      catch(Exception ex)
-      {
-        System.out.print("dashboardTableText:" +ex.toString());
-      }
-
       String productString = row.PRODUCT;
       String certificationStatus = row.CERTIFICATION_STATUS;
       String singleCommandBuild = row.SINGLE_COMMAND_BUILD;
@@ -241,16 +231,11 @@ class BuildStatusUpdater {
         replaceBdaEnabledString = bdaEnabled;
       }
 
-      Date lastCertifiedDate = getLastCertifiedDate(productString) ;
-
-      String thisRowText = getWikiMarkupForRow(
-              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
-
-
       s.beginTransaction();
 
       ProjectCertificationStatus newHistory = new ProjectCertificationStatus();
 
+      newHistory.setProduct(productString);
       newHistory.setBdaEnabled(replaceBdaEnabledString);
       newHistory.setCertificationDate(new Date());
       newHistory.setCertificationStatus(certificationStatus) ;
@@ -258,6 +243,13 @@ class BuildStatusUpdater {
       System.out.println("Saving history for " + productName)
       s.save(newHistory);
       s.getTransaction().commit();
+
+      Date lastCertifiedDate = getLastCertifiedDate(productString) ;
+
+      System.out.println("dashboardTableText(" + productString + ":lastCertifiedDate=" + lastCertifiedDate.toString());
+
+      String thisRowText = getWikiMarkupForRow(
+              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
 
       returnValue += thisRowText;
 
@@ -269,6 +261,18 @@ class BuildStatusUpdater {
   }
 
   java.util.Date getLastCertifiedDate(String productString) {
+
+    Date returnValue = null ;
+
+    History history = new History();
+    ProjectCertificationStatus result = history.getMostRecentSuccess(productString);
+
+    if (result != null && result.getCertificationDate() != null)
+    {
+      returnValue = result.getCertificationDate();
+    }
+
+    return returnValue;
     
   }
 
