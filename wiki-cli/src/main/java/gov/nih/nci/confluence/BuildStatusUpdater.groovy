@@ -5,6 +5,7 @@ import gov.nih.nci.wiki.History
 import gov.nih.nci.wiki.ProjectCertificationStatus
 import org.hibernate.Session
 import gov.nih.nci.util.HibernateUtil
+import java.text.DateFormat
 
 class BuildStatusUpdater {
   def properties = null
@@ -429,7 +430,7 @@ class BuildStatusUpdater {
       certification += WIKI_LINE_BREAK + "Last certified: " ;
       if (lastCertified != null)
       {
-        certification += lastCertified.toString();
+        certification += DateFormat.getInstance().format(lastCertified);
       }
       else
       {
