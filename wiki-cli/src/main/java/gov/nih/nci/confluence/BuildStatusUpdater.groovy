@@ -3,6 +3,8 @@ package gov.nih.nci.confluence
 import groovy.sql.Sql
 import gov.nih.nci.wiki.History
 import gov.nih.nci.wiki.ProjectCertificationStatus
+import org.hibernate.Session
+import gov.nih.nci.util.HibernateUtil
 
 class BuildStatusUpdater {
   def properties = null
@@ -181,6 +183,8 @@ class BuildStatusUpdater {
     println "Page updated..." ;
   }
 
+  Session s = HibernateUtil.getSession();
+  org.hibernate.Query q = s.createQuery(" from ProjectCertificationStatus ");
 
   private String dashboardTableText(String statement) {
 
@@ -241,6 +245,17 @@ class BuildStatusUpdater {
 
       String thisRowText = getWikiMarkupForRow(
               replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller);
+
+      ProjectCertificationStatus newHistory = new ProjectCertificationStatus();
+
+      newHistory.setBdaEnabled(replaceBdaEnabledString);
+      newHistory.setCertificationDate = new Date();
+      newHistory.setCertificationStatus = certificationStatus ;
+
+      
+      s.beginTransaction();
+      s.save(newHistory);
+      s.getTransaction().commit();
 
       returnValue += thisRowText;
 

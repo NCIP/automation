@@ -82,10 +82,8 @@
       <file leaf-file-name="HistoryTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="13" selection-start="1944" selection-end="1944" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="method#testGetMostRecent#0;class#HistoryTest#0" expanded="false" />
-              </folding>
+            <state line="51" column="0" selection-start="1231" selection-end="1296" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -129,7 +127,7 @@
       <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="193" column="48" selection-start="8159" selection-end="8159" vertical-scroll-proportion="0.79330707">
+            <state line="254" column="50" selection-start="10890" selection-end="10890" vertical-scroll-proportion="0.52755904">
               <folding />
             </state>
           </provider>
@@ -767,7 +765,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="change db" />
+    <option name="LAST_COMMIT_MESSAGE" value="move debugging messages" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -800,6 +798,7 @@
     <MESSAGE value="add resources to jar" />
     <MESSAGE value="change dir for packaging xml" />
     <MESSAGE value="change db" />
+    <MESSAGE value="move debugging messages" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -918,15 +917,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="13" selection-start="1944" selection-end="1944" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="method#testGetMostRecent#0;class#HistoryTest#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="26" selection-start="707" selection-end="707" vertical-scroll-proportion="0.0">
@@ -934,9 +924,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="0" selection-start="1231" selection-end="1296" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="193" column="48" selection-start="8159" selection-end="8159" vertical-scroll-proportion="0.79330707">
+        <state line="254" column="50" selection-start="10890" selection-end="10890" vertical-scroll-proportion="0.52755904">
           <folding />
         </state>
       </provider>
