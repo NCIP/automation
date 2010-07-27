@@ -97,35 +97,36 @@ class CertificationUtils
 
           println "checkDeploymentShakeout:sysprop.key=${sysprop.key}"
           //println "Checking ${sysprop.key}"
-          if( sysprop.key ==~useProperties)
+          if( sysprop.key ==~/.*application\.url/)
           {
                   println "checkDeploymentShakeout:${sysprop.key} matches"
+              ant.runseliniumtest(hostname:sysprop.value)
           }
         }
 
 
-		String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install.properties").getAbsoluteFile();
-
-		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
-		def installProject = new XmlParser().parse(installFile)
-
-		ant.property(file: projectPropertiesFile)		
-		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:jboss'))
-		{
-			println "Run the selenium test for the jboss server"
-			def jbossServerPort = project.properties['jboss.server.port']
-			def jbossServerHostName = project.properties['jboss.server.hostname']
-			println 'HOSTNAME ::: http://'+jbossServerHostName+':'+jbossServerPort;
-			ant.runseliniumtest(hostname:'http://'+jbossServerHostName+':'+jbossServerPort)
-		}
-		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:tomcat'))
-		{
-			println "Run the selenium test for the tomcat server"
-			String tomcatServerPort = project.properties['tomcat.port.http']
-			String tomcatServerHostName = project.properties['tomcat.hostname']
-			println 'HOSTNAME ::: http://'+tomcatServerHostName+':'+tomcatServerPort;
-			ant.runseliniumtest(hostname:'http://'+tomcatServerHostName+':'+tomcatServerPort)				
-		}
+//		String projectPropertiesFile=new File(basedir +"/"+buildFileLocation+"/install.properties").getAbsoluteFile();
+//
+//		String installFile = new File(basedir +"/"+buildFileLocation+"/install.xml").getAbsoluteFile()
+//		def installProject = new XmlParser().parse(installFile)
+//
+//		ant.property(file: projectPropertiesFile)
+//		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:jboss'))
+//		{
+//			println "Run the selenium test for the jboss server"
+//			def jbossServerPort = project.properties['jboss.server.port']
+//			def jbossServerHostName = project.properties['jboss.server.hostname']
+//			println 'HOSTNAME ::: http://'+jbossServerHostName+':'+jbossServerPort;
+//			ant.runseliniumtest(hostname:'http://'+jbossServerHostName+':'+jbossServerPort)
+//		}
+//		if(installProject.target.find{it.'@name'=='install'}.'@depends'.contains('install:tomcat'))
+//		{
+//			println "Run the selenium test for the tomcat server"
+//			String tomcatServerPort = project.properties['tomcat.port.http']
+//			String tomcatServerHostName = project.properties['tomcat.hostname']
+//			println 'HOSTNAME ::: http://'+tomcatServerHostName+':'+tomcatServerPort;
+//			ant.runseliniumtest(hostname:'http://'+tomcatServerHostName+':'+tomcatServerPort)
+//		}
 	}
 
 
