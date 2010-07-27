@@ -800,15 +800,15 @@
 				<fail-message>db.install.create.postgresql.file.list did not pass validation. db.install.create.postgresql.file.list must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "create-tables.sql,insert-data.sql".</fail-message>
 			</rule>
 			<rule>
-				<name>db.install.create.postgres.file.list-list</name>
-				<description>Checks db.install.create.postgres.file.list has proper value.</description>
+				<name>db.install.create.postgresql.file.list-list</name>
+				<description>Checks db.install.create.postgresql.file.list has proper value.</description>
 				<conditions>
 					<and>
-						<condition negate="true">db.install.create.postgres.file.list ==~ /^,.*/</condition>
-						<condition negate="true">db.install.create.postgres.file.list ==~ /.*,$/</condition>
+						<condition negate="true">db.install.create.postgresql.file.list ==~ /^,.*/</condition>
+						<condition negate="true">db.install.create.postgresql.file.list ==~ /.*,$/</condition>
 					</and>
 				</conditions>
-				<fail-message>db.install.create.postgres.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
+				<fail-message>db.install.create.postgresql.file.list did not pass validation. Lists cannot begin or end with a ",".</fail-message>
 			</rule>
 		</rules>
 		<property  name="exclude.check.database" description="" skip-property="exclude.validate.database">
