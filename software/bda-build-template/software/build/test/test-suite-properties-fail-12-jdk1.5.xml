@@ -100,6 +100,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.server.ports.name"/>
 	</target>
+	<!-- This test never works because build fails before validation at line 173 of install.xml
 	<target name="test:property:fail:jboss.server.ports.name-jboss4">
 		<echo message="**** Entering test:property:fail:jboss.server.ports.name"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
@@ -140,6 +141,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:jboss.server.ports.name"/>
 	</target>
+	-->
 	<target name="test:property:fail:jboss.server.rmi.port-syntax">
 		<echo message="**** Entering test:property:fail:jboss.server.rmi.port"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">

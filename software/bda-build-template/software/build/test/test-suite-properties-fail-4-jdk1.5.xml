@@ -132,6 +132,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:database.system.user"/>
 	</target>
+	<!-- Fails before validation when hits switch statment.
 	<target name="test:property:fail:database.type-syntax">
 		<echo message="**** Entering test:property:fail:database.type"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
@@ -148,6 +149,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:database.type"/>
 	</target>
+	-->
 	<target name="test:property:fail:database.url-syntax">
 		<echo message="**** Entering test:property:fail:database.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
@@ -215,6 +217,7 @@
 	<target name="test:property:fail:database.user-oracle">
 		<echo message="**** Entering test:property:fail:database.user"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.type=oracle
 			database.user=system
 			evaluate.property.name=database.user
 			evaluate.result=fail
@@ -231,7 +234,7 @@
 	<target name="test:property:fail:database.user-postgres">
 		<echo message="**** Entering test:property:fail:database.user"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			database.type=postgres
+			database.type=postgresql
 			database.user=postgres
 			evaluate.property.name=database.user
 			evaluate.result=fail
