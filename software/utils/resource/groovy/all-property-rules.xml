@@ -4459,7 +4459,7 @@
 				<description>Checks jboss.ssl.enable has proper value.</description>
 				<conditions>
 					<or>
-						<condition> require.build.wscore-tf == "true"</condition>
+						<condition> jboss.ssl.enable == "true"</condition>
 						<condition> jboss.ssl.enable == "false"</condition>
 						<condition> jboss.ssl.enable == ""</condition>
 						<condition> jboss.ssl.enable == null</condition>
