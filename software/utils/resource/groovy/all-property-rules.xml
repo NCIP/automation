@@ -4446,7 +4446,7 @@
 				<description>Checks jboss.ssl.enable has proper value.</description>
 				<conditions>
 					<or>
-						<condition> jboss.ssl.enable == "true"</condition>
+						<condition> require.build.wscore-tf == "true"</condition>
 						<condition> jboss.ssl.enable == "false"</condition>
 						<condition> jboss.ssl.enable == ""</condition>
 						<condition> jboss.ssl.enable == null</condition>
@@ -4974,16 +4974,16 @@
 			</rule>
 			<rule>
 				<name>mysql.lowercasetablenames-tf</name>
-				<description>Checks jboss.ssl.enable has proper value.</description>
+				<description>Checks mysql.lowercasetablenames has proper value.</description>
 				<conditions>
 					<or>
-						<condition> jboss.ssl.enable == "true"</condition>
-						<condition> jboss.ssl.enable == "false"</condition>
-						<condition> jboss.ssl.enable == ""</condition>
-						<condition> jboss.ssl.enable == null</condition>
+						<condition> mysql.lowercasetablenames == "true"</condition>
+						<condition> mysql.lowercasetablenames == "false"</condition>
+						<condition> mysql.lowercasetablenames == ""</condition>
+						<condition> mysql.lowercasetablenames == null</condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.ssl.enable did not pass validation. Must be empty or true or false.</fail-message>
+				<fail-message>mysql.lowercasetablenames did not pass validation. Must be empty or true or false.</fail-message>
 			</rule>
 
 		</rules>
@@ -5051,16 +5051,16 @@
 			</rule>
 			<rule>
 				<name>require.build.wscore-tf</name>
-				<description>Checks jboss.ssl.enable has proper value.</description>
+				<description>Checks require.build.wscore has proper value.</description>
 				<conditions>
 					<or>
-						<condition> jboss.ssl.enable == "true"</condition>
-						<condition> jboss.ssl.enable == "false"</condition>
-						<condition> jboss.ssl.enable == ""</condition>
-						<condition> jboss.ssl.enable == null</condition>
+						<condition> require.build.wscore == "true"</condition>
+						<condition> require.build.wscore == "false"</condition>
+						<condition> require.build.wscore == ""</condition>
+						<condition> require.build.wscore == null</condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.ssl.enable did not pass validation. Must be empty or true or false.</fail-message>
+				<fail-message>require.build.wscore did not pass validation. Must be empty or true or false.</fail-message>
 			</rule>
 
 		</rules>

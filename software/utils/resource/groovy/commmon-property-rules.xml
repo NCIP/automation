@@ -985,16 +985,16 @@
 			</rule>
 			<rule>
 				<name>require.build.wscore-tf</name>
-				<description>Checks jboss.ssl.enable has proper value.</description>
+				<description>Checks require.build.wscore has proper value.</description>
 				<conditions>
 					<or>
-						<condition> jboss.ssl.enable == "true"</condition>
-						<condition> jboss.ssl.enable == "false"</condition>
-						<condition> jboss.ssl.enable == ""</condition>
-						<condition> jboss.ssl.enable == null</condition>
+						<condition> require.build.wscore == "true"</condition>
+						<condition> require.build.wscore == "false"</condition>
+						<condition> require.build.wscore == ""</condition>
+						<condition> require.build.wscore == null</condition>
 					</or>
 				</conditions>
-				<fail-message>jboss.ssl.enable did not pass validation. Must be empty or true or false.</fail-message>
+				<fail-message>require.build.wscore did not pass validation. Must be empty or true or false.</fail-message>
 			</rule>
 
 		</rules>
