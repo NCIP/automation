@@ -2890,6 +2890,7 @@ software/bda-build-template/software/build/test/all-pass.properties -text
 software/bda-build-template/software/build/test/build.xml -text
 software/bda-build-template/software/build/test/ci-install.properties -text
 software/bda-build-template/software/build/test/gen-prop-tests.pl -text
+software/bda-build-template/software/build/test/template-suite.xml -text
 software/bda-build-template/software/build/test/test-common.xml -text
 software/bda-build-template/software/build/test/test-suite-db-jdk15.xml -text
 software/bda-build-template/software/build/test/test-suite-jboss-upgrade-jdk15.xml -text
@@ -2908,7 +2909,6 @@ software/bda-build-template/software/build/test/test-suite-properties-fail-6-jdk
 software/bda-build-template/software/build/test/test-suite-properties-fail-7-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-fail-8-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-fail-9-jdk1.5.xml -text
-software/bda-build-template/software/build/test/test-suite-properties-jdk15.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-1-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-10-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-2-jdk1.5.xml -text
@@ -2919,7 +2919,6 @@ software/bda-build-template/software/build/test/test-suite-properties-pass-6-jdk
 software/bda-build-template/software/build/test/test-suite-properties-pass-7-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-8-jdk1.5.xml -text
 software/bda-build-template/software/build/test/test-suite-properties-pass-9-jdk1.5.xml -text
-software/bda-build-template/software/build/test/test-suite.template -text
 software/bda-build-template/software/build/test/tmp/bkp-test.sh -text
 software/bda-build-template/software/build/test/tmp/install-40-dac.properties -text
 software/bda-build-template/software/build/test/tmp/install-40-nondac.properties -text
