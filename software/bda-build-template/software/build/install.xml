@@ -140,7 +140,7 @@ $HeadURL$
 		<if>
 			<or>
 				<equals arg1="${exclude.jboss}" arg2="true"/>
-				<equals arg1="${java.specification.version}" arg2="1.6"/>
+				<equals arg1="${jboss.major.version}" arg2="5"/>
 			</or>
 			<then>
 				<property name="exclude.jboss.grid" value="true"/>
@@ -149,7 +149,7 @@ $HeadURL$
 		<if>
 			<or>
 				<equals arg1="${exclude.tomcat}" arg2="true"/>
-				<equals arg1="${java.specification.version}" arg2="1.6"/>
+				<equals arg1="${tomcat.major.version}" arg2="6"/>
 			</or>
 			<then>
 				<property name="exclude.tomcat.grid" value="true"/>
