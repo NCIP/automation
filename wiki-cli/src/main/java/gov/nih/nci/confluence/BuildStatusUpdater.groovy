@@ -252,8 +252,8 @@ class BuildStatusUpdater {
       ProjectCertificationStatus newHistory = new ProjectCertificationStatus();
 
       newHistory.setBdaEnabled(replaceBdaEnabledString);
-      newHistory.setCertificationDate = new Date();
-      newHistory.setCertificationStatus = certificationStatus ;
+      newHistory.setCertificationDate(new Date());
+      newHistory.setCertificationStatus(certificationStatus) ;
 
       System.out.println("Saving history for " + productName)
       s.save(newHistory);
