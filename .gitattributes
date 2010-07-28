@@ -71,6 +71,7 @@ certification-monitor/lib/commons-logging-1.1.1.jar -text
 certification-monitor/lib/dom4j-1.6.1.jar -text
 certification-monitor/lib/groovy-all-1.6-beta-1.jar -text
 certification-monitor/lib/hibernate3.jar -text
+certification-monitor/lib/htmlunit-2.7.zip -text
 certification-monitor/lib/javassist-3.4.GA.jar -text
 certification-monitor/lib/jsch-0.1.39.jar -text
 certification-monitor/lib/jta-1.1.jar -text
