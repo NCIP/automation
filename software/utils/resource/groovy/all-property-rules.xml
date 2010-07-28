@@ -1492,7 +1492,7 @@
 				<conditions>
 					<or>
 						<and>
-							<condition>database.type == "postgres" </condition>
+							<condition>database.type == "postgresql" </condition>
 							<condition>database.user != "postgres" </condition>
 						</and>
 						<condition>database.type != "postgres" </condition>
