@@ -31,6 +31,7 @@ This tool is meant to be used within the target folder of the relase-manager pro
 
 	<target name="bda2local" depends="bda2local:usage">
 		<mkdir dir="${bda.local.version.dir}"/>
+		<delete file="${bda.local.version.dir}/${bda-utils.zip.file}"/>
 		<zip destfile="${bda.local.version.dir}/${bda-utils.zip.file}">
 			<zipfileset dir="resource" prefix="resource" />
 		</zip>
