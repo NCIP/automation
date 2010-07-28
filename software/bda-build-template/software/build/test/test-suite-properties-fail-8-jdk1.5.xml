@@ -20,6 +20,7 @@
 		</ant>                  
 		<echo message="**** Exiting Properties suiteSetUp"/>
 	</target>
+	<!-- fails before validation
 	<target name="test:property:fail:grid.target-value">
 		<echo message="**** Entering test:property:fail:grid.target"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
@@ -36,6 +37,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:grid.target"/>
 	</target>
+	-->
 	<target name="test:property:fail:ivy.bda.settings.src.url-syntax">
 		<echo message="**** Entering test:property:fail:ivy.bda.settings.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">

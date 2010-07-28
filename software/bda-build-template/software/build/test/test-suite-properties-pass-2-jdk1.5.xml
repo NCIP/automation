@@ -226,7 +226,7 @@
 			match="^\s+(.*)\s*$"
 			replace="\1"
 			/>
-		<replaceregexp file="${dist.exploded.dir}/install.properties" byline="true"
+		<replaceregexp file="${build.dir}/install.properties" byline="true"
 			match="^database.re-create.*"
 			replace=""
 			/>
@@ -236,7 +236,7 @@
 	</target>
 	<target name="test:property:pass:database.re-create">
 		<echo message="**** Entering test:property:pass:database.re-create"/>
-		<echo file="${dist.exploded.dir}/local.properties" append="false">
+		<echo file="${build.dir}/local.properties" append="false">
 			database.re-create=true
 			evaluate.property.name=database.re-create
 			#groovy.debug=true

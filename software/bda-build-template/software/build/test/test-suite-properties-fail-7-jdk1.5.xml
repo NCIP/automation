@@ -324,6 +324,7 @@
 			/>
 		<echo message="**** Exiting test:property:fail:grid.poc.tech.role"/>
 	</target>
+	<!-- fails before validation
 	<target name="test:property:fail:grid.target-syntax">
 		<echo message="**** Entering test:property:fail:grid.target"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
@@ -340,4 +341,5 @@
 			/>
 		<echo message="**** Exiting test:property:fail:grid.target"/>
 	</target>
+	-->
 </project>
