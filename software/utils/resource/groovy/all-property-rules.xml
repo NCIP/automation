@@ -837,7 +837,7 @@
 				<conditions>
 					<or>
 						<and>
-							<condition>database.type == "postgres" </condition>
+							<condition>database.type == "postgresql" </condition>
 							<condition>database.driver ==~ /.*(?i)postgres.*/ </condition>
 						</and>
 						<condition>database.type != "postgres" </condition>
@@ -902,7 +902,7 @@
 				<conditions>
 					<or>
 						<and>
-							<condition>database.type == "postgres" </condition>
+							<condition>database.type == "postgresql" </condition>
 							<condition>database.driver.file ==~ /.*(?i)postgres.*/ </condition>
 						</and>
 						<condition>database.type != "postgres" </condition>
@@ -1192,7 +1192,7 @@
 				<conditions>
 					<or>
 						<and>
-							<condition>database.type == "postgres" </condition>
+							<condition>database.type == "postgresql" </condition>
 							<condition>database.schema == "public" </condition>
 						</and>
 						<condition>database.type != "postgres" </condition>
@@ -1311,7 +1311,7 @@
 				<conditions>
 					<or>
 						<and>
-							<condition>database.type == "postgres" </condition>
+							<condition>database.type == "postgresql" </condition>
 							<condition>database.system.url ==~ /jdbc:postgres.*/ </condition>
 						</and>
 						<condition>database.type != "postgres" </condition>
@@ -1428,7 +1428,7 @@
 				<conditions>
 					<or>
 						<and>
-							<condition>database.type == "postgres" </condition>
+							<condition>database.type == "postgresql" </condition>
 							<condition>database.url ==~ /jdbc:postgres.*/ </condition>
 						</and>
 						<condition>database.type != "postgres" </condition>
