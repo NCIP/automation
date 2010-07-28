@@ -1,3 +1,0 @@
-|check|getSelectedLabel|sel1|Mr|
-|select|sel1|Mrs|
-|check|getSelectedLabel|sel1|Mrs|

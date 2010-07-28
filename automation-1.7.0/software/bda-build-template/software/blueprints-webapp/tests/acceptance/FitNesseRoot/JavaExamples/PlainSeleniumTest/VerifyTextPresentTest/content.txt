@@ -1,3 +1,0 @@
-|verifyTextPresent|This page is used by web test pages|True|
-
-|verifyTextPresent|This page is not used by web test pages|False|

@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" href="./DataAccessException.html" title="&lt;TABLE&gt;" alt="" coords="16,42,171,66"/>
-<area shape="rect" href="./DuplicateQueryException.html" title="&lt;TABLE&gt;" alt="" coords="216,10,408,98"/>
-<area shape="rect" href="./NciaException.html" title="&lt;TABLE&gt;" alt="" coords="453,42,560,66"/>
-<area shape="rect" href="./PatientNotFoundException.html" title="&lt;TABLE&gt;" alt="" coords="605,18,797,90"/>
-<area shape="rect" href="./QueryResultNotFoundException.html" title="&lt;TABLE&gt;" alt="" coords="843,18,1056,90"/>
-</map>

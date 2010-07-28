@@ -1,4 +1,0 @@
-|'''Date: '''|!-12:04:10 PM (EDT) on Thursday, August 14, 2008-!|
-|'''Command: '''|!-java -cp C:\tools\webtest-complete-20080213\java\fitlibrary.jar;C:\tools\webtest-complete-20080213\java\fitnesse.jar;C:\tools\webtest-complete-20080213\java\selenium-java-client-driver.jar;C:\tools\webtest-complete-20080213\java\selenium-server.jar;C:\tools\webtest-complete-20080213\java\webfixture.jar;impl/java/bin;impl/java/lib/*.jar;../bin fit.FitServer lenovo 8085 20-!|
-|'''Exit code: '''|!-0-!|
-|'''Time elapsed: '''|!-8.907 seconds-!|
