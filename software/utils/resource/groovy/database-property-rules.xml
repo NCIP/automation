@@ -55,7 +55,7 @@
 							<condition>database.type == "postgresql" </condition>
 							<condition>database.driver ==~ /.*(?i)postgres.*/ </condition>
 						</and>
-						<condition>database.type != "postgres" </condition>
+						<condition>database.type != "postgresql" </condition>
 					</or>
 				</conditions>
 				<fail-message>database.driver did not pass validation. With database type of postgres this variable must include "postgres".</fail-message>
@@ -120,7 +120,7 @@
 							<condition>database.type == "postgresql" </condition>
 							<condition>database.driver.file ==~ /.*(?i)postgres.*/ </condition>
 						</and>
-						<condition>database.type != "postgres" </condition>
+						<condition>database.type != "postgresql" </condition>
 					</or>
 				</conditions>
 				<fail-message>database.driver.file did not pass validation. With database type of postgres this variable must include "postgres".</fail-message>
@@ -410,7 +410,7 @@
 							<condition>database.type == "postgresql" </condition>
 							<condition>database.schema == "public" </condition>
 						</and>
-						<condition>database.type != "postgres" </condition>
+						<condition>database.type != "postgresql" </condition>
 					</or>
 				</conditions>
 				<fail-message>database.schema did not pass validation. With database.type of postgres database.schema must be same as database.name".</fail-message>
@@ -529,7 +529,7 @@
 							<condition>database.type == "postgresql" </condition>
 							<condition>database.system.url ==~ /jdbc:postgres.*/ </condition>
 						</and>
-						<condition>database.type != "postgres" </condition>
+						<condition>database.type != "postgresql" </condition>
 					</or>
 				</conditions>
 				<fail-message>database.system.url did not pass validation. With database.type of postgres database.system.url must begin with "jdbc:postgres".</fail-message>
@@ -646,7 +646,7 @@
 							<condition>database.type == "postgresql" </condition>
 							<condition>database.url ==~ /jdbc:postgres.*/ </condition>
 						</and>
-						<condition>database.type != "postgres" </condition>
+						<condition>database.type != "postgresql" </condition>
 					</or>
 				</conditions>
 				<fail-message>database.url did not pass validation. With database.type of postgres database.url must begin with "jdbc:postgres".</fail-message>
@@ -710,7 +710,7 @@
 							<condition>database.type == "postgresql" </condition>
 							<condition>database.user != "postgres" </condition>
 						</and>
-						<condition>database.type != "postgres" </condition>
+						<condition>database.type != "postgresql" </condition>
 					</or>
 				</conditions>
 				<fail-message>database.user did not pass validation. With database.type of postgres database.user can't be postgres.</fail-message>
