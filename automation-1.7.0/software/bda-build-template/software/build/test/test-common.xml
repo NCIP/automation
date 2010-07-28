@@ -1,0 +1,119 @@
+<project name="bda-test-common" basedir=".">
+	<property name="test.dir" location="."/>
+	<dirname property="build.dir" file="${test.dir}"/>
+	<dirname property="software.dir" file="${build.dir}"/>
+	<property name="target.dir" location="${software.dir}/target"/>
+	<property name="report.dir" location="${target.dir}/reports"/>
+	<property name="bda-utils.dir" location="${target.dir}/bda-utils"/>
+	<property name="log.dir" location="${target.dir}/logs"/>
+	<property name="common.dir" location="${software.dir}/common"/>
+	<property name="dist.dir" location="${target.dir}/dist"/>
+	<property name="dist.exploded.dir" location="${dist.dir}/exploded"/>
+	<property name="antunit-style.dir" location="${common.dir}/antunit"/>
+	<property name="antunit.xml.report.dir" location="${report.dir}/ant-unit-xml"/>
+	<property name="antunit.html.report.dir" location="${report.dir}/ant-unit-html"/>
+	<property name="screen.log.level" value="error"/>
+	<property name="properties.file" location="${build.dir}/install.properties"/>
+	<!-- to get bda.version -->
+	<property file="${build.dir}/project.properties"/>
+	<!-- Rely on running build once befor tests -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+	<!-- -->
+	<mkdir dir="${antunit.xml.report.dir}"/>
+	<mkdir dir="${antunit.html.report.dir}"/>
+	<tstamp>
+		<format property="run.time" pattern="yyyy-MM-dd-HH-mm-ss" />
+	</tstamp>
+	<!-- -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="org/apache/ant/antunit/antlib.xml" classpathref="bda-utils.classpath" />
+
+	<macrodef name="buildExpectPass">
+		<attribute name="build.target" default="deploy:local:install"/>
+		<attribute name="properties.file" default="${properties.file}"/>
+		<sequential>
+			<ant inheritAll="false" inheritrefs="false"
+				antfile="build.xml"
+				dir="${build.dir}"
+				target="@{build.target}"
+				>
+				<property name="properties.file" value="@{properties.file}"/>
+			</ant>
+		</sequential>
+	</macrodef>
+	<macrodef name="buildExpectFail" >
+		<attribute name="build.target" default="deploy:local:install"/>
+		<attribute name="properties.file" default="${properties.file}"/>
+		<sequential>
+			<trycatch property="try.property">
+				<try>        
+					<ant inheritAll="false" inheritrefs="false"
+						antfile="build.xml"
+						dir="${build.dir}"
+						target="@{build.target}"
+						>
+						<property name="properties.file" value="@{properties.file}"/>
+					</ant>
+				</try>
+				<catch>                 
+					<echo message="Build failed as anticipated"/>
+				</catch>    
+			</trycatch>
+		</sequential>
+	</macrodef>
+	<macrodef name="execute-property-test-pass">
+		<attribute name="build.target" default="install:common:property-validate:all"/>
+		<attribute name="properties.file" default="${properties.file}"/>
+		<sequential>
+			<ant inheritAll="false" inheritrefs="false"
+				antfile="build.xml"
+				dir="${dist.exploded.dir}"
+				target="@{build.target}"
+				>
+				<property name="properties.file" value="@{properties.file}"/>
+			</ant>
+		</sequential>
+	</macrodef>
+	<macrodef name="execute-property-test-fail">
+		<attribute name="build.target" default="install:common:property-validate:all"/>
+		<attribute name="properties.file" default="${properties.file}"/>
+		<sequential>
+			<trycatch property="try.property">
+				<try>        
+					<ant inheritAll="false" inheritrefs="false"
+						antfile="build.xml"
+						dir="${dist.exploded.dir}"
+						target="@{build.target}"
+						>
+						<property name="properties.file" value="@{properties.file}"/>
+					</ant>
+					<echo message="Build should have failed"/>
+				</try>
+				<catch>                 
+					<echo message="Build failed as anticipated"/>
+				</catch>    
+			</trycatch>
+		</sequential>
+	</macrodef>
+	<target name="setUp">
+		<echo message="**** Entering Setup"/>
+		<!-- svn revert some files to ensure that you are testing  -->
+		<svn javahl="false" svnkit="true">
+			<revert>
+				<fileset dir="${build.dir}">
+					<include name="install.xml"/>
+					<include name="install.properties"/>
+					<include name="upgrade.properties"/>
+					<include name="project.properties"/>
+				</fileset>
+			</revert>
+		</svn>
+		<delete file="${build.dir}/local.properties"/>
+		<echo message="**** Exiting Setup"/>
+	</target>
+</project>

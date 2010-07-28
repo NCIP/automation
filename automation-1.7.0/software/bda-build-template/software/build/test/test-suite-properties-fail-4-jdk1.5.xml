@@ -1,0 +1,347 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:fail:database.server-syntax">
+		<echo message="**** Entering test:property:fail:database.server"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.server=fail\\conditon
+			evaluate.property.name=database.server
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.server"/>
+	</target>
+	<target name="test:property:fail:database.system.password-syntax">
+		<echo message="**** Entering test:property:fail:database.system.password"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.system.password=fa il
+			evaluate.property.name=database.system.password
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.system.password"/>
+	</target>
+	<target name="test:property:fail:database.system.password-value">
+		<echo message="**** Entering test:property:fail:database.system.password"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.system.password=fail&gt;condition
+			evaluate.property.name=database.system.password
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.system.password"/>
+	</target>
+	<target name="test:property:fail:database.system.url-syntax">
+		<echo message="**** Entering test:property:fail:database.system.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.system.url=fa\\il
+			evaluate.property.name=database.system.url
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.system.url"/>
+	</target>
+	<target name="test:property:fail:database.system.url-jdbc">
+		<echo message="**** Entering test:property:fail:database.system.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.system.url=jdbc:fail://localhost:3306/
+			evaluate.property.name=database.system.url
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.system.url"/>
+	</target>
+	<target name="test:property:fail:database.system.user-syntax">
+		<echo message="**** Entering test:property:fail:database.system.user"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.system.user=fa il
+			evaluate.property.name=database.system.user
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.system.user"/>
+	</target>
+	<target name="test:property:fail:database.system.user-value">
+		<echo message="**** Entering test:property:fail:database.system.user"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.system.user=bdauser
+			evaluate.property.name=database.system.user
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.system.user"/>
+	</target>
+	<!-- Fails before validation when hits switch statment.
+	<target name="test:property:fail:database.type-syntax">
+		<echo message="**** Entering test:property:fail:database.type"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.type=fa il
+			evaluate.property.name=database.type
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.type"/>
+	</target>
+	-->
+	<target name="test:property:fail:database.url-syntax">
+		<echo message="**** Entering test:property:fail:database.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.url=fa il
+			evaluate.property.name=database.url
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.url"/>
+	</target>
+	<target name="test:property:fail:database.url-jdbc">
+		<echo message="**** Entering test:property:fail:database.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.url=jdbc:joe://localhost:3306/bda
+			evaluate.property.name=database.url
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.url"/>
+	</target>
+	<target name="test:property:fail:database.user-syntax">
+		<echo message="**** Entering test:property:fail:database.user"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.user=fa il
+			evaluate.property.name=database.user
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.user"/>
+	</target>
+	<target name="test:property:fail:database.user-mysql">
+		<echo message="**** Entering test:property:fail:database.user"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.user=root
+			evaluate.property.name=database.user
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.user"/>
+	</target>
+	<target name="test:property:fail:database.user-oracle">
+		<echo message="**** Entering test:property:fail:database.user"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.type=oracle
+			database.user=system
+			evaluate.property.name=database.user
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.user"/>
+	</target>
+	<target name="test:property:fail:database.user-postgres">
+		<echo message="**** Entering test:property:fail:database.user"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			database.type=postgresql
+			database.user=postgres
+			evaluate.property.name=database.user
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:database.user"/>
+	</target>
+	<target name="test:property:fail:db.install.create.mysql.file.list-syntax">
+		<echo message="**** Entering test:property:fail:db.install.create.mysql.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.mysql.file.list=fa il
+			evaluate.property.name=db.install.create.mysql.file.list
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.mysql.file.list"/>
+	</target>
+	<target name="test:property:fail:db.install.create.mysql.file.list-list-beg">
+		<echo message="**** Entering test:property:fail:db.install.create.mysql.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.mysql.file.list=,fail,fail
+			evaluate.property.name=db.install.create.mysql.file.list
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.mysql.file.list"/>
+	</target>
+	<target name="test:property:fail:db.install.create.mysql.file.list-list-end">
+		<echo message="**** Entering test:property:fail:db.install.create.mysql.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.mysql.file.list=fail,fail,
+			evaluate.property.name=db.install.create.mysql.file.list
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.mysql.file.list"/>
+	</target>
+	<target name="test:property:fail:db.install.create.oracle.file.list-syntax">
+		<echo message="**** Entering test:property:fail:db.install.create.oracle.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.oracle.file.list=fa il
+			evaluate.property.name=db.install.create.oracle.file.list
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.oracle.file.list"/>
+	</target>
+	<target name="test:property:fail:db.install.create.oracle.file.list-list-beg">
+		<echo message="**** Entering test:property:fail:db.install.create.oracle.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.oracle.file.list=,fail,fail
+			evaluate.property.name=db.install.create.oracle.file.list
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.oracle.file.list"/>
+	</target>
+	<target name="test:property:fail:db.install.create.oracle.file.list-list-end">
+		<echo message="**** Entering test:property:fail:db.install.create.oracle.file.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			db.install.create.oracle.file.list=fail,fail,
+			evaluate.property.name=db.install.create.oracle.file.list
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:db.install.create.oracle.file.list"/>
+	</target>
+</project>

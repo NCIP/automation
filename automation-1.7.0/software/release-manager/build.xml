@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+$Id: build.xml 4839 2008-05-21 14:45:51Z zengje $
+$HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
+-->
+<project name="releasemanager-build" default="release:project" basedir="." 
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	>
+	<description>
+		This file is used to release the BDA project. The process include checking out automation on the given revision number and build the bda-build-uils.zip and branch and tag.
+	</description>
+
+	<!-- Property file related properties and tasks -->
+	<property name="project.name" value="bda_release"/>
+	<property environment="env" />	
+	
+	<property file="local.properties" />
+	<property file="release.properties" />
+	
+	<property name="global.ivy.settings.file" location="common/ivysettings.xml" />
+
+	<property name="bda.utils.filename" value="bda-build-utils" />
+	<property name="bda.templates.filename" value="bda-build-templates" />
+	
+	<property name="automation.resource.dir" value="resource" />
+
+
+	<property name="working.dir" value="${basedir}/working"/>
+	<property name="lib.dir" value="${working.dir}/lib" />
+	<property name="target.dir" location="${basedir}/target"/>
+	<property name="temp.dir" location="${target.dir}/temp"/>
+
+
+	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<condition property="local.cbiit-ivy-repo.dir" value="">
+		<or>
+			<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="local.cbiit-ivy-repo.dir" value="c:/">
+		<os family="windows" />
+	</condition>
+
+	<property name="bda-download.dir" location="${working.dir}/bda-download" />
+	<property name="bda-utils.dir" value="${working.dir}/bda-utils" />	
+	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<mkdir dir="${bda-download.dir}" />
+	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<property name="cbiit-ivy.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/cbiit-ivy-bda-settings.xml" />
+	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	<get src="${cbiit-ivy.src.url}" dest="${bda-download.dir}/cbiit-ivy-bda-settings.xml"/>
+	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
+		<property name="bda.version" value="${bda.version}" />
+		<property name="bda-utils.dir" location="${bda-utils.dir}" />
+		<property name="lib.dir" location="${lib.dir}" />
+		<property name="ivy.settings.file" value="cbiit-ivy-bda-settings.xml"/>
+		<property name="local.cbiit-ivy-repo.dir" value="${local.cbiit-ivy-repo.dir}"/>
+	</ant>
+	
+	<!-- Paths -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="simian-2.2.24.jar" />
+			<include name="ivy-core-2.0.0-beta2.jar" />
+			<include name="ivy-2.0.0-beta2.jar" />
+		</fileset>
+	</path>
+
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/${bda.utils.filename}-${bda.version}.xml" />
+	
+
+
+	<!-- Targets -->
+	<target name="release:project" depends="svn:checkout,release:copy-rename,svn:checkin,release:create-branch-tag,release:update-bda-ivyfiles,release:mail-teams">
+		<echo message="Released BDA revision '${release.version}' and '${next.beta.release.version}'. The beta version '${next.beta.release.version}' is in development and is not supported. " />
+	</target>
+
+
+
+	<target name="svn:checkout" depends="svn-scorch">	
+		<svn username="${new.svn.username}" password="${new.svn.password}">
+			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
+		</svn>
+	</target>
+
+	<target name="svn:automation:checkout" depends="svn:automation-utils:checkout,svn:automation-templates:checkout">	
+	</target>
+
+
+	<target name="svn:automation-utils:checkout" depends="svn-scorch,svn:ivy:checkout">	
+		<svn username="${old.svn.username}" password="${old.svn.password}">
+			<checkout url="${svn.automation.url}/${svn.automation.project}" revision="${default.automation.revision}" destPath="${svn.automation-utils.checkout}" />
+		</svn>	
+	</target>
+	<target name="svn:automation-templates:checkout" depends="svn-scorch,svn:ivy:checkout">	
+		<svn username="${old.svn.username}" password="${old.svn.password}">
+			<checkout url="${svn.automation.url}/${svn.templates.project}" revision="${default.automation.revision}" destPath="${svn.automation-templates.checkout}" />
+		</svn>	
+	</target>	
+	<target name="svn:ivy:checkout" depends="svn-scorch">	
+		<svn username="${old.svn.username}" password="${old.svn.password}">
+			<checkout url="${svn.automation.url}/${svn.ivy.project}" revision="${default.automation.revision}" destPath="${svn.ivy.checkout}" />
+		</svn>	
+	</target>
+	
+	<target name="svn-scorch">
+		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
+		<delete dir="${svn.local.checkout}" />
+		<delete dir="${svn.automation.checkout}" />
+		<delete dir="${svn.ivy.checkout}" />
+		<mkdir dir="working"/>
+	</target>
+
+	<target name="release:copy-rename" depends="release-manager:get-latest-automation">
+		<copy todir="${svn.local.checkout}/${next.beta.release.version}">
+			<fileset dir="${svn.local.checkout}/${current.beta.release.version}"/>
+		</copy>
+
+		<copy todir="${svn.local.checkout}/${release.version}" >
+			 <fileset dir="${svn.local.checkout}/${current.beta.release.version}"/>
+		</copy>
+
+
+		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.xml"/>
+		<move file="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.utils.filename}-${release.version}.zip"/>
+		<move file="${svn.local.checkout}/${release.version}/${bda.templates.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${release.version}/${bda.templates.filename}-${release.version}.zip"/>
+
+		<xmltask preservetype="true" outputter="default" source="${svn.local.checkout}/${release.version}/ivy.xml" dest="${svn.local.checkout}/${release.version}/ivy.xml">			
+			<replace path="//ivy-module/info/@revision" withtext="${release.version}" />			
+		</xmltask>
+
+		
+		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml"/>
+		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip"/>
+		<move file="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${current.beta.release.version}.zip" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${next.beta.release.version}.zip"/>
+		
+		<xmltask preservetype="true" outputter="default" source="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" dest="${svn.local.checkout}/${next.beta.release.version}/ivy.xml">
+			<replace path="//ivy-module/info/@revision" withtext="${next.beta.release.version}" />
+		</xmltask>
+		
+		<!--
+		<delete dir="${svn.local.checkout}/${previous.beta.release.version}"/>
+	-->				
+	</target>
+
+	<target name="release-manager:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
+		<echo message="cp ${svn.automation-utils.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml"/>
+		<copy file="${svn.automation-utils.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.xml" overwrite="true"/>
+		
+
+		<delete file="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip"/>
+		<zip destfile="${svn.local.checkout}/${current.beta.release.version}/${bda.utils.filename}-${current.beta.release.version}.zip">
+			<zipfileset dir="${svn.automation-utils.checkout}/${automation.resource.dir}" prefix="resource" />
+		</zip>
+
+		<copy file="${svn.automation-utils.checkout}/ivy.xml" tofile="${svn.local.checkout}/${current.beta.release.version}/ivy.xml" overwrite="true"/>
+		
+		<replaceregexp match="^(.*bda-build-template version.*)([0-9].[0-9].[0-9])(.*)" replace="\1${release.version} \3" flags="g" byline="true">
+			<fileset dir="${svn.automation-templates.checkout}/software/build">
+				<include name="**/*.xml"/>
+				<include name="**/*.properties"/>
+				<include name="**/*.template"/>
+			</fileset>
+		</replaceregexp>
+
+		<zip destfile="${svn.local.checkout}/${current.beta.release.version}/${bda.templates.filename}-${current.beta.release.version}.zip">
+			<zipfileset dir="${svn.automation-templates.checkout}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${svn.automation-templates.checkout}/software/common" excludes="**/.svn/*" prefix="common"/>
+		</zip>
+
+<!-- prepare the automation area for the development -->		
+		<xmltask preservetype="true" outputter="default" source="${svn.automation-utils.checkout}/ivy.xml" dest="${svn.automation-utils.checkout}/ivy.xml">
+			<replace path="//ivy-module/info/@revision" withtext="${next.beta.release.version}" />			
+		</xmltask>		
+
+		<replaceregexp file="${svn.automation-utils.checkout}/build.properties" byline="true"
+			match="^(bda.version)=(.*)"
+			replace="\1=${next.beta.release.version}"/>
+	</target>
+
+	<target name="release:get-latest-automation" depends="svn:automation:checkout,svn:checkout">
+		<echo message="cp ${svn.automation-utils.checkout}/${bda.utils.filename}.xml ${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml"/>
+		<copy file="${svn.automation-utils.checkout}/${bda.utils.filename}.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.xml" overwrite="true"/>
+		
+
+		<delete file="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip"/>
+		<zip destfile="${svn.local.checkout}/${next.beta.release.version}/${bda.utils.filename}-${next.beta.release.version}.zip">
+			<zipfileset dir="${svn.automation-utils.checkout}/${automation.resource.dir}" prefix="resource" />
+		</zip>
+
+		<copy file="${svn.automation-utils.checkout}/ivy.xml" tofile="${svn.local.checkout}/${next.beta.release.version}/ivy.xml" overwrite="true"/>
+		
+
+		<zip destfile="${svn.local.checkout}/${next.beta.release.version}/${bda.templates.filename}-${next.beta.release.version}.zip">
+			<zipfileset dir="${svn.automation-templates.checkout}/software/build" excludes="**/.svn/*" prefix="build"/>
+			<zipfileset dir="${svn.automation-templates.checkout}/software/common" excludes="**/.svn/*" prefix="common"/>
+		</zip>
+	</target>
+
+
+	<target name="release:beta" depends="release:get-latest-automation,svn:automation:checkin">
+
+	</target>
+
+	<target name="release:create-branch-tag" depends="svn:automation:checkout,svn:checkout">
+		<svn username="${old.svn.username}" password="${old.svn.password}">			
+			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.branchurl}" message="create a branch for release ${release.version}" revision="${default.automation.revision}"/>
+			<copy srcUrl="${svn.automation.url}" destUrl="${svn.automation.tagurl}" message="create a tag for release ${release.version}" revision="${default.automation.revision}"/>
+		</svn>
+	</target>
+
+
+	<target name="svn:checkin">
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
+			<commit message="Prepare the BDA release for development" dir="${svn.automation-utils.checkout}"/>
+		</svn>
+		<!-- added by ssaksa -->
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
+			<commit message="Prepare the BDA release for development" dir="${svn.automation-templates.checkout}"/>
+		</svn>
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
+			<add dir="${svn.local.checkout}/${release.version}"/>
+		</svn>
+
+		
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
+			<status path="${svn.local.checkout}/${next.beta.release.version}" textStatusProperty="next.beta.version.svn.status"/>
+		</svn>
+		<if>
+			<equals arg1="${next.beta.version.svn.status}" arg2="unversioned"/>
+			<then>
+				<svn username="${old.svn.username}" password="${old.svn.password}">		
+					<add dir="${svn.local.checkout}/${next.beta.release.version}"/>
+					<!--
+					<delete dir="${svn.local.checkout}/${previous.current.beta.release.version}"/>
+					-->
+				</svn>
+			</then>
+		</if>
+		<svn username="${new.svn.username}" password="${new.svn.password}">		
+			<commit message="Latest BDA revision ${release.version} and beta revision ${next.beta.release.version}" dir="${svn.local.checkout}"/>
+		</svn>	
+	</target>
+
+
+	<target name="svn:automation:checkin">	
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
+			<commit message="Latest BDA revision " dir="${svn.local.checkout}/${next.beta.release.version}"/>
+		</svn>	
+	</target>
+
+	<target name="release:update-bda-ivyfiles" depends="svn:automation:checkout">	
+		<xmltask preservetype="true" outputter="default" source="${svn.ivy.checkout}/bda-ivy-build.xml" dest="${svn.ivy.checkout}/bda-ivy-build.xml">
+			<replace path="//project/property[@name='bda.version']/@value" withtext="${release.version}" />
+		</xmltask>
+
+		<xmltask preservetype="true" outputter="default" source="${svn.ivy.checkout}/bda-ivy-2.0.0-build.xml" dest="${svn.ivy.checkout}/bda-ivy-2.0.0-build.xml">
+			<replace path="//project/property[@name='bda.version']/@value" withtext="${release.version}" />
+		</xmltask>
+
+		<zip destfile="${basedir}/working/bda-download.zip">
+			<zipfileset dir="${svn.ivy.checkout}" />
+		</zip>
+
+		<svn username="${old.svn.username}" password="${old.svn.password}">			
+			<commit message="Latest BDA released revision " dir="${svn.ivy.checkout}"/>
+		</svn>	
+
+	</target>
+	
+	<target name="release:post-release">	
+		<delete dir="${bda-utils.dir}" />
+		<delete dir="${lib.dir}" />
+		<delete file="${basedir}/${automation.ivy}/bda-ivy-build.xml" />
+		<delete file="${basedir}/${automation.ivy}/ivy-bda.xml" />
+		<delete file="${basedir}/${automation.ivy}/ivy-bda-settings.xml" />
+	</target>
+	
+	<target name="svn:delete-beta" >	
+		<svn username="${new.svn.username}" password="${new.svn.password}">			
+			<delete url="${svn.project.url}/${svn.delete-beta.version}" message="Delete the beta revision " />
+		</svn>
+	</target>
+
+	<target name="release:mail-teams">	
+		<mail mailhost="${mail.server.host}" mailport="${mail.server.port}"  tolist="${tolist}" subject="BDA ${release.version} released">
+			<from address="${fromaddress}"/>						
+			<message>Released BDA revision '${release.version}' and '${next.beta.release.version}'. The beta version '${next.beta.release.version}' is in development and is not supported. </message>
+		</mail>	
+	</target>
+
+	<target name="update:wikidocs" description="Updates the wiki doc Flash XML">
+	   <get src="${svn.wikidocs.url}/bda-wiki-home.template" dest="${svn.local.checkout}/bda-wiki-home.template" verbose="on" />
+		<filterset id="embedded.filterset">
+			<filter token="bda.version" value="${bda.version}"/>
+			<filter token="bda.release.date" value="${bda.release.date}"/>
+		</filterset>
+		<copy todir="../../docs/wiki/flash/resources" filtering="true">
+		  <fileset dir="${svn.local.checkout}">
+			<include name="**/*"/>
+	      </fileset>
+		  <filterset refid="embedded.filterset"/>
+			<filterset>
+				<filtersfile file="${basedir}/release.properties"/>
+			</filterset>
+		</copy>
+		<move file="../../docs/wiki/flash/resources/bda-wiki-home.template" tofile="../../docs/wiki/flash/resources/bda-wiki-home.xml"/>
+		<delete file="../../docs/wiki/flash/resources/bda-wiki-home.template" quiet="true" />
+		<!-- TODO: Need to check in local changes to SVN repository -->
+	</target>
+
+	<target name="temp-svn-status">
+		<svn username="${old.svn.username}" password="${old.svn.password}">		
+			<status path="target" textStatusProperty="release.version.svn.status"/>
+		</svn>
+		<echo message="Target's status is ${release.version.svn.status}"/>
+	</target>
+	<target name="report:grand">
+		<report-grand
+			build.file.location="build.xml" 
+			output.file.dir="." 
+			output.file.name="relase-manager-build.xml" />
+	</target>
+
+	<target name="patch:create:init">
+		<var name="patching.version.has-value" unset="true"/>
+		<propertyregex property="patching.version.has-value"
+			input="${patching.version}"
+			regexp="\S+"
+			select="true"
+			/>
+		<var name="patching.version.unexpanded" unset="true"/>
+		<propertyregex property="patching.version.unexpanded"
+			input="${patching.version}"
+			regexp="\$\{.*\}"
+			select="true"
+			/>
+		<if>
+			<or>
+				<isset property="patching.version.unexpanded"/>
+				<not>
+					<isset property="patching.version.has-value"/>
+				</not>
+			</or>
+			<then>
+				<fail message="Must set patching.version variable"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="patch:create:check-tag" depends="patch:create:init">
+		<if>
+			<not>
+				<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version}"/>
+			</not>
+			<then>
+				<fail message="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version} does not exist"/>
+			</then>
+		</if>
+	</target>
+	<target name="patch:get-next-version" depends="patch:create:init">
+		<echo message="patching version is - ${patching.version}"/>
+		<groovy>
+			 List versionList=properties["patching.version"].split("\\.")
+			 String majorVersion=versionList[0]
+			 String minorVersion=versionList[1]
+			 String patchVersion=versionList[2].toInteger().plus(1).toString()
+			 properties["patched.version"]= majorVersion + "." + minorVersion + "." + patchVersion
+		</groovy>
+		<echo message="patched version is - ${patched.version}"/>
+	</target>
+	<target name="list:tags" depends="patch:create:init" description="Lists tags based on patching.version variable">
+		<osfamily property="os.family"/>
+		<if>
+			<equals arg1="${os.family}" arg2="unix"/>
+			<then>
+				<groovy>
+					 List versionList=properties["patching.version"].split("\\.")
+					 String majorVersion=versionList[0]
+					 String minorVersion=versionList[1]
+					 String baseVersion = majorVersion + "." + minorVersion 
+					 String cmd= "svn list https://gforge.nci.nih.gov/svnroot/automation/tags"
+					 println cmd
+					 process=cmd.execute()
+					 process.in.eachLine{line->if(line.contains(baseVersion)){println line}}
+				</groovy>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<echo message="sorry did not implement"/>
+			</then>
+		</if>
+	</target>
+	<target name="patch:max-tag-version" depends="patch:create:init">
+		<osfamily property="os.family"/>
+		<if>
+			<equals arg1="${os.family}" arg2="unix"/>
+			<then>
+				<groovy>
+					 List versionList=properties["patching.version"].split("\\.")
+					 String majorVersion=versionList[0]
+					 String minorVersion=versionList[1]
+					 Integer patchVersion=versionList[2].toInteger()
+					 String baseVersion = majorVersion + "." + minorVersion 
+					 String cmd= "svn list https://gforge.nci.nih.gov/svnroot/automation/tags"
+					 Integer maxVersion=0
+					 process=cmd.execute()
+					 process.in.eachLine{line->
+					 if(line.contains(baseVersion))
+					 {
+					 m = line =~ /(^.*)\.(\d+)\//
+					 if (m.matches())
+					 {
+					 junk = m.group(1)
+					 curPatchVersion=m.group(2).toInteger()
+					 if( curPatchVersion > maxVersion) {maxVersion=curPatchVersion}
+					 }
+					 }
+					 }
+					 if (maxVersion > patchVersion)
+					 {
+					 String latestVersion = majorVersion + "." + minorVersion + "." + maxVersion
+					 println "WARNING - There is a newer patch version ${latestVersion}"
+					 if(properties["patching.version"] != "true")
+					 {
+					 println "BUILD FAILED - To proceed with this version run the build with -Dpatch.force=true on your command line"
+					 System.exit(2)
+					 }
+					 }
+				</groovy>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${os.family}" arg2="windows"/>
+			<then>
+				<echo message="sorry did not implement"/>
+			</then>
+		</if>
+	</target>
+	<target name="patch:branch:create" description="Creates a branch to patch a released version based on the patching.version + 1 property value"
+		depends="
+		patch:create:init,
+		patch:create:check-tag,
+		patch:max-tag-version,
+		patch:get-next-version
+		">
+		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
+		<property name="svn.automation.previous.tag.url" value="${svn.automation.base.url}/tags/automation-${patching.version}"/>
+		<property name="svn.automation.new.branch.url" value="${svn.automation.base.url}/branches/automation-${patched.version}"/>
+		<echo message="svn.automation.previous.tag.url - ${svn.automation.previous.tag.url}"/>
+		<echo message="svn.automation.new.branch.url - ${svn.automation.new.branch.url}"/>
+
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<copy srcUrl="${svn.automation.previous.tag.url}" destURL="${svn.automation.new.branch.url}" message="Created by release manager patch:dev target"/>
+		</svn>
+	</target>
+	<target name="patch:co:init">
+		<var name="patched.version.has-value" unset="true"/>
+		<propertyregex property="patched.version.has-value"
+			input="${patched.version}"
+			regexp="\S+"
+			select="true"
+			/>
+		<var name="patched.version.unexpanded" unset="true"/>
+		<propertyregex property="patched.version.unexpanded"
+			input="${patched.version}"
+			regexp="\$\{.*\}"
+			select="true"
+			/>
+		<if>
+			<or>
+				<isset property="patched.version.unexpanded"/>
+				<not>
+					<isset property="patched.version.has-value"/>
+				</not>
+			</or>
+			<then>
+				<fail message="Must set patched.version variable"/>
+			</then>
+		</if>
+		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
+		<property name="svn.patch.branch.url" value="${svn.automation.base.url}/branches/automation-${patched.version}"/>
+		<property name="svn.patch.tag.url" value="${svn.automation.base.url}/tags/automation-${patched.version}"/>
+		<property name="svn.bda-template.branch.url" value="${svn.patch.branch.url}/software/bda-build-template"/>
+		<property name="svn.bda-utils.branch.url" value="${svn.patch.branch.url}/software/utils"/>
+		<property name="svn.bda-template.branch.dir" location="${target.dir}/bda-template-${patched.version}"/>
+		<property name="svn.bda-utils.branch.dir" location="${target.dir}/utils-${patched.version}"/>
+		<echo message="svn.bda-template.branch.dir - ${svn.bda-template.branch.dir}"/>
+		<echo message="svn.bda-utils.branch.dir - ${svn.bda-utils.branch.dir}"/>
+	</target>
+	<target name="patch:branch:co" depends="patch:co:init" description="Check out the patch branch based on patched.version property">
+		<bda-co
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.bda-template.url="${svn.bda-template.branch.url}"
+			svn.bda-template.dir="${svn.bda-template.branch.dir}"
+			svn.bda-utils.url="${svn.bda-utils.branch.url}"
+			svn.bda-utils.dir="${svn.bda-utils.branch.dir}"
+			bda.version="${patched.version}"
+			/>
+	</target>
+	<macrodef name="bda-co">
+		<attribute name="svn.user"/>
+		<attribute name="svn.pass"/>
+		<attribute name="svn.bda-template.url"/>
+		<attribute name="svn.bda-utils.url"/>
+		<attribute name="svn.bda-template.dir"/>
+		<attribute name="svn.bda-utils.dir"/>
+		<attribute name="bda.version"/>
+		<sequential>
+			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+				<checkout url="@{svn.bda-template.url}" destpath="@{svn.bda-template.dir}"/>
+				<checkout url="@{svn.bda-utils.url}" destpath="@{svn.bda-utils.dir}"/>
+			</svn>
+			<!-- update version comment -->
+			<replaceregexp
+				byline="true"
+				match="( bda-build-template version )(\S+)"
+				replace="\1@{bda.version}"
+				>
+				<fileset dir="@{svn.bda-template.dir}/software/build">
+					<include name="*.xml"/>
+					<include name="*.properties"/>
+				</fileset>
+			</replaceregexp>
+			<!-- update bda.version -->
+			<replaceregexp file="@{svn.bda-template.dir}/software/build/project.properties"
+				byline="true"
+				match="(bda.version=).*"
+				replace="\1@{bda.version}"
+				/>
+			<!-- update ivy.xml -->
+			<replaceregexp file="@{svn.bda-utils.dir}/ivy.xml"
+				byline="true"
+				match="(.*module=&quot;bda-utils&quot;.*revision=&quot;)[^&quot;]+(&quot;.*)"
+				replace="\1@{bda.version}\2"
+				/>
+			<if>
+				<available file="@{svn.bda-utils.dir}/ivy.xml.oldrepo"/>
+				<then>
+					<replaceregexp file="@{svn.bda-utils.dir}/ivy.xml.oldrepo"
+						byline="true"
+						match="(.*module=&quot;bda-utils&quot;.*revision=&quot;)[^&quot;]+(&quot;.*)"
+						replace="\1@{bda.version}\2"
+						/>
+				</then>
+			</if>
+			<!-- update ivy.xml -->
+		</sequential>
+	</macrodef>
+	<target name="patch:dev"
+		depends="
+		patch:branch:create,
+		patch:branch:co,
+		patch:local-repo:create
+		">
+	</target>
+	<target name="patch:local-repo:init" depends="patch:co:init">
+		<property name="bda-local-repo.base.dir" location="${target.dir}/bda-local-ivy-repo/"/>
+		<property name="bda-local-repo.dir" location="${bda-local-repo.base.dir}/ncicb/bda-utils/${patched.version}"/>
+	</target>
+	<target name="patch:local-repo:create" depends="patch:local-repo:init" description="Copies patch version of automation/software/utils to target/bda-local-ivy-repo for use by patched version target/bda-templates-version">
+		<local-repo-create
+			local-repo.dir="${bda-local-repo.dir}"
+			bda-utils.dir="${svn.bda-utils.branch.dir}"
+			bda.version="${patched.version}"
+			/>
+	</target>
+	<macrodef name="local-repo-create">
+		<attribute name="local-repo.dir"/>
+		<attribute name="bda-utils.dir"/>
+		<attribute name="bda.version"/>
+		<!-- make local repository -->
+		<sequential>
+			<echo message="Create bda-local-repo-dir @{local-repo.dir}"/>
+			<mkdir dir="@{local-repo.dir}"/>
+			<copy file="@{bda-utils.dir}/bda-build-utils.xml" tofile="@{local-repo.dir}/bda-build-utils-@{bda.version}.xml"/>
+			<copy file="@{bda-utils.dir}/ivy.xml" tofile="@{local-repo.dir}/ivy.xml"/>
+			<zip destfile="@{local-repo.dir}/bda-build-utils-@{bda.version}.zip">
+				<zipfileset dir="@{bda-utils.dir}/resource" prefix="resource" />
+			</zip>
+		</sequential>
+	</macrodef>
+	<target name="patch:local-repo:release" depends="patch:local-repo:init" description="Copies the local-repo copy of the templates back into target/utils-version folder for commit" >
+		<local-repo-release
+			local-repo.dir="${bda-local-repo.dir}"
+			local-repo.base.dir="${bda-local-repo.base.dir}"
+			bda-utils.dir="${svn.bda-utils.branch.dir}"
+			bda.version="${patched.version}"
+			/>
+	</target>
+	<macrodef name="local-repo-release">
+		<attribute name="local-repo.dir"/>
+		<attribute name="local-repo.base.dir"/>
+		<attribute name="bda-utils.dir"/>
+		<attribute name="bda.version"/>
+		<sequential>
+			<copy tofile="@{bda-utils.dir}/bda-build-utils.xml" file="@{local-repo.dir}/bda-build-utils-@{bda.version}.xml"/>
+			<copy tofile="@{bda-utils.dir}/ivy.xml" file="@{local-repo.dir}/ivy.xml"/>
+			<zip destfile="${target.dir}/local-repo-old.zip" basedir="@{local-repo.base.dir}"/>
+			<echo message="cleaning @{local-repo.dir}"/>
+			<delete dir="@{local-repo.dir}"/>
+		</sequential>
+	</macrodef>
+	<target name="patch:release" description="Releasese the patch - commits working code in target, creates a tag,  checks out cbiit and legacy repos and creates new version of bda-utils in each repo (based on version)"
+		depends="
+		patch:co:init,
+		patch:release:check-tag,
+		patch:release:automation,
+		patch:release:cbiit-ivy,
+		patch:release:legacy-ivy
+		">
+	</target>
+	<target name="patch:release:check-tag" depends="patch:co:init">
+		<if>
+			<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patched.version}"/>
+			<then>
+				<fail message="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patched.version} already exists"/>
+			</then>
+		</if>
+	</target>
+	<target name="patch:release:automation" depends="patch:co:init" description="Commits the bda-templates and utils under target">
+		<bda-release
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.branch.url="${svn.patch.branch.url}"
+			svn.tag.url="${svn.patch.tag.url}"
+			svn.bda-template.dir="${svn.bda-template.branch.dir}"
+			svn.bda-utils.dir="${svn.bda-utils.branch.dir}"
+			/>
+	</target>
+	<macrodef name="bda-release">
+		<attribute name="svn.user"/>
+		<attribute name="svn.pass"/>
+		<attribute name="svn.branch.url"/>
+		<attribute name="svn.tag.url"/>
+		<attribute name="svn.bda-template.dir"/>
+		<attribute name="svn.bda-utils.dir"/>
+		<sequential>
+			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+				<commit dir="@{svn.bda-template.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+				<commit dir="@{svn.bda-utils.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+			</svn>
+			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+				<copy srcUrl="@{svn.branch.url}" destURL="@{svn.tag.url}" message="Created by release manager patch:dev target"/>
+			</svn>
+		</sequential>
+	</macrodef>
+
+	<target name="patch:release:cbiit-ivy" description="Creates a new version of bda-utils in the cbiit-ivy-repo if patched.version is greater than 1.5" unless="skip.cbiit-ivy"
+		depends="
+		patch:co:init,
+		patch:release:cbiit-ivy:init
+		">
+		<add2ivy
+			svn.user="${new.svn.username}"
+			svn.pass="${new.svn.password}"
+			svn.ivy.bda-utils.url="${svn.cbiit-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.branch.dir}"
+			bda-templates.dir="${svn.bda-template.branch.dir}"
+			bda.version="${patched.version}"
+			legacy="false"
+			/>
+	</target>
+	<target name="cbiit-ivy:init">
+		<property name="svn.cbiit-ivy.base.url" value="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk"/>
+		<property name="svn.cbiit-ivy.utils.url" value="${svn.cbiit-ivy.base.url}/ncicb/bda-utils"/>
+		<property name="svn.cbiit-ivy.utils.dir" value="${target.dir}/cbiit-bda-utils"/>
+	</target>
+	<target name="patch:release:cbiit-ivy:init" depends="cbiit-ivy:init">
+		<var name="skip.cbiit-ivy" unset="true"/>
+		<groovy>
+			 List versionList=properties["patched.version"].split("\\.")
+			 Integer minorVersion=versionList[1].toInteger()
+			 println "minorVersion = ${minorVersion}"
+			 if( minorVersion &lt;= 3) properties["skip.cbiit-ivy"]=true
+		 </groovy>
+		 <if>
+			 <isset property="skip.cbiit-ivy"/>
+			 <then>
+				 <echo message="${patched.version} is less than 1.3 skipping cbiit repo."/>
+			 </then>
+		 </if>
+	</target>
+	<macrodef name="add2ivy">
+		<attribute name="svn.user"/>
+		<attribute name="svn.pass"/>
+		<attribute name="svn.ivy.bda-utils.url"/>
+		<attribute name="svn.ivy.bda-utils.dir"/>
+		<attribute name="bda-utils.dir"/>
+		<attribute name="bda-templates.dir"/>
+		<attribute name="bda.version"/>
+		<attribute name="legacy"/>
+		<sequential>
+			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+				<checkout url="@{svn.ivy.bda-utils.url}" destpath="@{svn.ivy.bda-utils.dir}"/>
+			</svn>
+			<mkdir dir="@{svn.ivy.bda-utils.dir}/@{bda.version}"/>
+			<copy file="@{bda-utils.dir}/bda-build-utils.xml" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/bda-build-utils-@{bda.version}.xml" overwrite="true"/>
+			<if>
+				<and>
+					<equals arg1="@{legacy}" arg2="true"/>
+					<available file="@{bda-utils.dir}/ivy.xml.oldrepo"/>
+				</and>
+				<then>
+					<copy file="@{bda-utils.dir}/ivy.xml.oldrepo" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/ivy.xml" overwrite="true"/>
+				</then>
+				<else>
+					<copy file="@{bda-utils.dir}/ivy.xml" tofile="@{svn.ivy.bda-utils.dir}/@{bda.version}/ivy.xml" overwrite="true"/>
+				</else>
+			</if>
+			<zip destfile="@{svn.ivy.bda-utils.dir}/@{bda.version}/bda-build-utils-@{bda.version}.zip">
+				<zipfileset dir="@{bda-utils.dir}/resource" prefix="resource" />
+			</zip>
+			<zip destfile="@{svn.ivy.bda-utils.dir}/@{bda.version}/bda-build-templates-@{bda.version}.zip">
+				<zipfileset dir="@{bda-templates.dir}/software/build" excludes="**/.svn/*" prefix="build"/>
+				<zipfileset dir="@{bda-templates.dir}/software/common" excludes="**/.svn/*" prefix="common"/>
+			</zip>
+			<var name="svn.status" unset="true"/>
+			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+				<status textStatusProperty="svn.status" path="@{svn.ivy.bda-utils.dir}/@{bda.version}"/>
+			</svn>
+			<echo message="svn status = ${svn.status}"/>
+			<if>
+				<equals arg1="${svn.status}" arg2="unversioned"/>
+				<then>
+					<echo message="Adding @{svn.ivy.bda-utils.dir}/@{bda.version} to ivy-repo"/>
+					<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+						<add dir="@{svn.ivy.bda-utils.dir}/@{bda.version}"/>
+					</svn>
+				</then>
+				<else>
+					<echo message="@{svn.ivy.bda-utils.dir}/@{bda.version} already in ivy-repo"/>
+				</else>
+			</if>
+			<svn username="@{svn.user}" password="@{svn.pass}" javahl="false" svnkit="true">
+				<commit dir="@{svn.ivy.bda-utils.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+			</svn>
+		</sequential>
+	</macrodef>
+
+	<target name="patch:release:legacy-ivy" description="Creates a nw version of bda-utils in the legacy-ivy-repo if the patched.version is less than 1.6" unless="skip.legacy-ivy"
+		depends="
+		patch:co:init,
+		patch:release:legacy-ivy:init
+		">
+		<add2ivy
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.ivy.bda-utils.url="${svn.legacy-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.branch.dir}"
+			bda-templates.dir="${svn.bda-template.branch.dir}"
+			bda.version="${patched.version}"
+			legacy="true"
+			/>
+	</target>
+
+	<target name="legacy-ivy:init">
+		<property name="svn.legacy-ivy.base.url" value="https://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo"/>
+		<property name="svn.legacy-ivy.utils.url" value="${svn.legacy-ivy.base.url}/ncicb/bda-utils"/>
+		<property name="svn.legacy-ivy.utils.dir" value="${target.dir}/legacy-ivy-utils"/>
+	</target>
+	<target name="patch:release:legacy-ivy:init" depends="legacy-ivy:init">
+		<var name="skip.legacy-ivy" unset="true"/>
+		<groovy>
+			 List versionList=properties["patched.version"].split("\\.")
+			 Integer minorVersion=versionList[1].toInteger()
+			 println "minorVersion = ${minorVersion}"
+			 if( minorVersion &gt;= 7) properties["skip.legacy-ivy"]=true
+		 </groovy>
+		 <if>
+			 <isset property="skip.legacy-ivy"/>
+			 <then>
+				 <echo message="${patched.version} is greater than 1.6 skipping legacy repo."/>
+			 </then>
+		 </if>
+	</target>
+	<target name="trunk:init">
+		<var name="current.version.has-value" unset="true"/>
+		<propertyregex property="current.version.has-value"
+			input="${current.version}"
+			regexp="\S+"
+			select="true"
+			/>
+		<var name="current.version.unexpanded" unset="true"/>
+		<propertyregex property="current.version.unexpanded"
+			input="${current.version}"
+			regexp="\$\{.*\}"
+			select="true"
+			/>
+		<if>
+			<or>
+				<isset property="current.version.unexpanded"/>
+				<not>
+					<isset property="current.version.has-value"/>
+				</not>
+			</or>
+			<then>
+				<fail message="Must set current.version variable to upt comments in files, ie  1.7.0."/>
+			</then>
+		</if>
+		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
+		<property name="svn.automation.trunk.url" value="${svn.automation.base.url}/trunk"/>
+		<property name="svn.bda-template.trunk.url" value="${svn.automation.trunk.url}/software/bda-build-template"/>
+		<property name="svn.bda-utils.trunk.url" value="${svn.automation.trunk.url}/software/utils"/>
+		<property name="svn.bda-template.trunk.dir" location="${target.dir}/bda-template-trunk"/>
+		<property name="svn.bda-utils.trunk.dir" location="${target.dir}/utils-trunk"/>
+		<echo message="svn.bda-template.trunk.dir - ${svn.bda-template.trunk.dir}"/>
+		<echo message="svn.bda-utils.trunk.dir - ${svn.bda-utils.trunk.dir}"/>
+	</target>
+	<target name="trunk:co" depends="trunk:init" description="Check out the trunk, must set current.version to add to headers in files, ie 1.7.0">
+		<bda-co
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.bda-template.url="${svn.bda-template.trunk.url}"
+			svn.bda-template.dir="${svn.bda-template.trunk.dir}"
+			svn.bda-utils.url="${svn.bda-utils.trunk.url}"
+			svn.bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda.version="${current.version}-beta"
+			/>
+	</target>
+	<target name="trunk:local-repo:init" depends="trunk:init">
+		<property name="bda-local-repo.base.dir" location="${target.dir}/bda-local-ivy-repo/"/>
+		<property name="bda-local-repo.dir" location="${bda-local-repo.base.dir}/ncicb/bda-utils/${current.version}-beta"/>
+	</target>
+	<target name="trunk:local-repo:create" depends="trunk:local-repo:init" description="Copies patch version of automation/software/utils to target/bda-local-ivy-repo">
+		<local-repo-create
+			local-repo.dir="${bda-local-repo.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda.version="${current.version}-beta"
+			/>
+	</target>
+	<target name="trunk:dev"
+		depends="
+		trunk:co,
+		trunk:local-repo:create
+		">
+	</target>
+	<target name="trunk:local-repo:release" depends="trunk:local-repo:init" description="Copies the local-repo copy of the templates back into target/utils-version folder for commit" >
+		<local-repo-release
+			local-repo.dir="${bda-local-repo.dir}"
+			local-repo.base.dir="${bda-local-repo.base.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda.version="${current.version}-beta"
+			/>
+	</target>
+	<target name="trunk:release" description="Releasese the patch - commits working code in target, creates a tag,  checks out cbiit and legacy repos and creates new version of bda-utils in each repo (based on version)"
+		depends="
+		trunk:init,
+		trunk:release:automation,
+		trunk:release:tag,
+		trunk:release:cbiit-ivy,
+		trunk:release:legacy-ivy
+		">
+	</target>
+
+	<target name="trunk:release:tag">
+		<property name="svn.automation.tag.url" value="${svn.automation.base.url}/tags/automation-${current.version}"/>
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<copy srcUrl="${svn.automation.trunk.url}" destURL="${svn.automation.tag.url}" message="Created by release manager patch:dev target"/>
+		</svn>
+	</target>
+	<target name="trunk:release:automation" depends="trunk:init" description="Commits the bda-templates and utils under target">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<commit dir="${svn.bda-template.trunk.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+			<commit dir="${svn.bda-utils.trunk.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+		</svn>
+	</target>
+	<target name="trunk:release:legacy-ivy" description="Creates a nw version of bda-utils in the legacy-ivy-repo if the patched.version is less than 1.6" depends="trunk:init,trunk:release:legacy-ivy:init" unless="skip.legacy-ivy">
+		<add2ivy
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.ivy.bda-utils.url="${svn.legacy-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${current.version}"
+			legacy="true"
+			/>
+	</target>
+	<target name="trunk:release:cbiit-ivy" description="Creates a nw version of bda-utils in the legacy-ivy-repo if the patched.version is less than 1.6" depends="trunk:init,trunk:release:cbiit-ivy:init" unless="skip.cbiit-ivy">
+		<add2ivy
+			svn.user="${new.svn.username}"
+			svn.pass="${new.svn.password}"
+			svn.ivy.bda-utils.url="${svn.cbiit-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${current.version}"
+			legacy="true"
+			/>
+	</target>
+	<target name="trunk:release:cbiit-ivy:init" depends="cbiit-ivy:init">
+		<var name="skip.cbiit-ivy" unset="true"/>
+		<groovy>
+			 List versionList=properties["current.version"].split("\\.")
+			 Integer minorVersion=versionList[1].toInteger()
+			 println "minorVersion = ${minorVersion}"
+			 if( minorVersion &lt;= 3) properties["skip.cbiit-ivy"]=true
+		 </groovy>
+		 <if>
+			 <isset property="skip.cbiit-ivy"/>
+			 <then>
+				 <echo message="${trunk.version} is less than 1.3 skipping cbiit repo."/>
+			 </then>
+		 </if>
+	</target>
+	<target name="trunk:release:legacy-ivy:init" depends="legacy-ivy:init">
+		<var name="skip.legacy-ivy" unset="true"/>
+		<groovy>
+			 List versionList=properties["current.version"].split("\\.")
+			 Integer minorVersion=versionList[1].toInteger()
+			 println "minorVersion = ${minorVersion}"
+			 if( minorVersion &gt;= 7) properties["skip.legacy-ivy"]=true
+		 </groovy>
+		 <if>
+			 <isset property="skip.legacy-ivy"/>
+			 <then>
+				 <echo message="${current.version} is greater than 1.6 skipping legacy repo."/>
+			 </then>
+		 </if>
+	</target>
+	<target name="trunk:release:beta" description="Releasese the patch - commits working code in target, creates a tag,  checks out cbiit and legacy repos and creates new version of bda-utils in each repo (based on version)"
+		depends="
+		trunk:init,
+		trunk:release:beta:automation,
+		trunk:release:beta:cbiit-ivy,
+		trunk:release:beta:legacy-ivy
+		">
+	</target>
+	<target name="trunk:release:beta:automation" depends="trunk:init" description="Commits the bda-templates and utils under target">
+		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
+			<commit dir="${svn.bda-template.trunk.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+			<commit dir="${svn.bda-utils.trunk.dir}" message="Created by bda-release-manager utility as part of patch process"/>
+		</svn>
+	</target>
+	<target name="trunk:release:beta:legacy-ivy" description="Creates a nw version of bda-utils in the legacy-ivy-repo if the patched.version is less than 1.6" depends="trunk:init,trunk:release:legacy-ivy:init" unless="skip.legacy-ivy">
+		<add2ivy
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.ivy.bda-utils.url="${svn.legacy-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${current.version}-beta"
+			legacy="true"
+			/>
+	</target>
+	<target name="trunk:release:beta:cbiit-ivy" description="Creates a nw version of bda-utils in the legacy-ivy-repo if the patched.version is less than 1.6" depends="trunk:init,trunk:release:cbiit-ivy:init" unless="skip.cbiit-ivy">
+		<add2ivy
+			svn.user="${new.svn.username}"
+			svn.pass="${new.svn.password}"
+			svn.ivy.bda-utils.url="${svn.cbiit-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${current.version}-beta"
+			legacy="false"
+			/>
+	</target>
+</project>

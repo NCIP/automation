@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:UIComponent xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="wikiDataService.send()">
+	
+	<mx:Metadata>
+		[Event(name="wikiTeaserEvent", type="gov.nih.nci.bda.wiki.events.WikiTeaserEvent")]
+		[Event(name="wikiButtonEvent", type="gov.nih.nci.bda.wiki.events.WikiButtonEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import gov.nih.nci.bda.wiki.events.WikiTeaserEvent;
+			import gov.nih.nci.bda.wiki.events.WikiButtonEvent;
+			import mx.collections.ArrayCollection;
+			import mx.core.Application;
+			import gov.nih.nci.bda.wiki.vo.WikiButtonVO;
+			import mx.rpc.events.ResultEvent;
+			import gov.nih.nci.bda.wiki.Constants;
+			
+			private var wikiData:XML;
+			
+			private function wikiXMLLoaded(event:ResultEvent):void {
+				this.wikiData = event.result as XML;
+				var buttonArray:Array = new Array();
+				
+				for each(var b:XML in event.result..button){
+					var button:WikiButtonVO = new WikiButtonVO(b.name, b.name, b.image, b.link, b.teaser);
+					buttonArray.push(button);
+				}
+				
+				// Dispatch a new WikiTeaserEvent
+				var teaserText:String = String(this.wikiData.welcome);
+				var wte:WikiTeaserEvent = new WikiTeaserEvent(teaserText, "wikiTeaserEvent");
+				this.dispatchEvent(wte);
+				
+				// Dispatch a new WikiButtonEvent
+				var wbe:WikiButtonEvent = new WikiButtonEvent(buttonArray, "wikiButtonEvent");
+				this.dispatchEvent(wbe);
+				
+			}
+		]]>
+	</mx:Script>
+
+	<mx:HTTPService id="wikiDataService" 
+					url="{Constants.XML_URL}"
+					result="wikiXMLLoaded(event)"
+					resultFormat="e4x" />
+</mx:UIComponent>

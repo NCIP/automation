@@ -1,0 +1,43 @@
+<ivy-module version="1.0">
+	<info organisation="ncicb" module="bda-blueprints-webapp" />
+	<configurations>
+		<conf name="master" />
+		<conf name="runtime" />
+		<conf name="compile" extends="runtime" />
+		<conf name="test" />
+		<conf name="test-pmd" />
+		<conf name="test-selenium" />
+		<conf name="test-junit" />
+		<conf name="test-acceptance" />
+		<conf name="test-cobertura" />
+		<conf name="test-javancss" />
+		<conf name="test-checkstyle" />
+		<conf name="test-findbugs" />
+		<conf name="test-simian" />
+		<conf name="test-jdepend" />
+	</configurations>
+	
+	<dependencies>
+		<dependency org="javax.servlet" name="servlet-api" rev="2.3" conf="compile->default" />
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.5" conf="runtime->default" />
+		<dependency org="org.seleniumhq.selenium.server" name="selenium-server" rev="1.0.1" conf="test-selenium->default" />
+		<dependency org="org.seleniumhq.selenium.server" name="selenium-server" rev="1.0.1" conf="test-acceptance->default" />
+		<dependency org="junit" name="junit" rev="4.3.1" conf="test-junit->default" />
+		<dependency org="net.sourceforge.cobertura" name="cobertura" rev="1.9.2" conf="test-cobertura->default" />
+		<dependency org="javancss" name="javancss" rev="29.50" conf="test-javancss->default" />
+		<dependency org="checkstyle" name="checkstyle" rev="5.0" conf="test-checkstyle->default" />
+		<dependency org="redhill" name="simian" rev="2.2.4" conf="test-simian->default" />
+		<dependency org="pmd" name="pmd" rev="4.2.5" transitive="true" conf="test-pmd->*" />
+		<!--
+		<dependency org="jaxen" name="jaxen" rev="1.1.1" conf="test-pmd->default"/>
+		<dependency org="asm" name="asm" rev="3.1" conf="test-pmd->default"/>
+		-->
+		<!-- Still in ivy -->
+		<dependency org="fitnesse" name="fitnesse" rev="20080812" conf="test-acceptance->master" />
+		<dependency org="fitnesse" name="webfixture" rev="1.0" conf="test-acceptance->master" />
+		<dependency org="fitlibrary" name="fitrunner" rev="1.0" conf="test-acceptance->master" />
+		<!-- Still in ivy -->
+		<dependency org="xerces" name="xercesImpl" rev="2.6.2" conf="test-acceptance->default" />
+		<dependency org="jdepend" name="jdepend" rev="2.9.1" conf="test-jdepend->default" />
+	</dependencies>
+</ivy-module>

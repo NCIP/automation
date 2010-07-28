@@ -1,0 +1,323 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.addr.street1">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.street1"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.street1=1234 Somplace lane
+			evaluate.property.name=grid.poc.tech.addr.street1
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.street1"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.addr.street2">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.addr.street2"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.addr.street2=
+			evaluate.property.name=grid.poc.tech.addr.street2
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.addr.street2"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.affiliation">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.affiliation"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.affiliation=BDA
+			evaluate.property.name=grid.poc.tech.affiliation
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.affiliation"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.email">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.email"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.email=buildanddeployment@mail.nih.gov
+			evaluate.property.name=grid.poc.tech.email
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.email"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.name.first">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.name.first"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.name.first=DeploymentAutomation
+			evaluate.property.name=grid.poc.tech.name.first
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.name.first"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.name.last">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.name.last"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.name.last=Buildand
+			evaluate.property.name=grid.poc.tech.name.last
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.name.last"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.phone">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.phone"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.phone=0124567890
+			evaluate.property.name=grid.poc.tech.phone
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.phone"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.researchCenter.displayname">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.researchCenter.displayname"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.researchCenter.displayname=bdarc
+			evaluate.property.name=grid.poc.tech.researchCenter.displayname
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.researchCenter.displayname"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.researchCenter.shortname">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.researchCenter.shortname"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.researchCenter.shortname=bda
+			evaluate.property.name=grid.poc.tech.researchCenter.shortname
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.researchCenter.shortname"/>
+	</target>
+	<target name="test:property:pass:grid.poc.tech.role">
+		<echo message="**** Entering test:property:pass:grid.poc.tech.role"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.poc.tech.role=sysadmin
+			evaluate.property.name=grid.poc.tech.role
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.poc.tech.role"/>
+	</target>
+	<target name="test:property:pass:grid.target">
+		<echo message="**** Entering test:property:pass:grid.target"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			grid.target=nci_stage-1.3
+			evaluate.property.name=grid.target
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:grid.target"/>
+	</target>
+	<target name="test:property:pass:ivy.bda.settings.src.url">
+		<echo message="**** Entering test:property:pass:ivy.bda.settings.src.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			ivy.bda.settings.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda-settings.xml
+			evaluate.property.name=ivy.bda.settings.src.url
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:ivy.bda.settings.src.url"/>
+	</target>
+	<target name="test:property:pass:ivy.bda.src.url">
+		<echo message="**** Entering test:property:pass:ivy.bda.src.url"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			ivy.bda.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda.xml
+			evaluate.property.name=ivy.bda.src.url
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:ivy.bda.src.url"/>
+	</target>
+	<target name="test:property:pass:jar-signing.execution.time">
+		<echo message="**** Entering test:property:pass:jar-signing.execution.time"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.execution.time=false
+			evaluate.property.name=jar-signing.execution.time
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.execution.time"/>
+	</target>
+	<target name="test:property:pass:jar-signing.generate-selfsigned">
+		<echo message="**** Entering test:property:pass:jar-signing.generate-selfsigned"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.generate-selfsigned=false
+			evaluate.property.name=jar-signing.generate-selfsigned
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.generate-selfsigned"/>
+	</target>
+	<target name="test:property:pass:jar-signing.jar.list">
+		<echo message="**** Entering test:property:pass:jar-signing.jar.list"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.jar.list=test-signing.jar
+			evaluate.property.name=jar-signing.jar.list
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.jar.list"/>
+	</target>
+	<target name="test:property:pass:jar-signing.keystore.alias">
+		<echo message="**** Entering test:property:pass:jar-signing.keystore.alias"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.keystore.alias=nci-dev-signing
+			evaluate.property.name=jar-signing.keystore.alias
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.keystore.alias"/>
+	</target>
+	<target name="test:property:pass:jar-signing.keystore.cert.cn">
+		<echo message="**** Entering test:property:pass:jar-signing.keystore.cert.cn"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.keystore.cert.cn=BDA
+			evaluate.property.name=jar-signing.keystore.cert.cn
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.keystore.cert.cn"/>
+	</target>
+	<target name="test:property:pass:jar-signing.keystore.cert.c">
+		<echo message="**** Entering test:property:pass:jar-signing.keystore.cert.c"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.keystore.cert.c=US
+			evaluate.property.name=jar-signing.keystore.cert.c
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.keystore.cert.c"/>
+	</target>
+	<target name="test:property:pass:jar-signing.keystore.cert.o">
+		<echo message="**** Entering test:property:pass:jar-signing.keystore.cert.o"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jar-signing.keystore.cert.o=National Cancer Institute
+			evaluate.property.name=jar-signing.keystore.cert.o
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:pass:jar-signing.keystore.cert.o"/>
+	</target>
+</project>

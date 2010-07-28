@@ -1,0 +1,37 @@
+<project name="nbia-query" default="compile" basedir="." >
+	<property name="lib.dir" location="lib" />
+	<property name="src.dir" location="src" />
+	<property name="classes.dir" location="classes" />
+	<path id="compile.project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true">
+			<classpath refid="compile.project.classpath" />
+		</javac>
+	</target>
+	<target name="run">
+		<path id="run.project.classpath">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<!--<pathelement location="${classes.dir}/gov/nih/nci/cagrid/ncia/client"/>-->
+			<pathelement location="${classes.dir}"/>
+		</path>
+		<java classname="gov.nih.nci.cagrid.ncia.client.NCIACoreServiceClientTestCaseFunctional"
+			output="output.log"
+			error="error.log"
+			append="false"
+			classpathref="run.project.classpath"/>
+		<echo message="${run.output}"/>
+		<exec executable="cat" osfamily="unix">
+			<arg line="output.log"/>
+		</exec>
+	</target>
+</project>
+
+

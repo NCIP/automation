@@ -1,0 +1,343 @@
+
+<project name="test-properties" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+	</target>
+	<target name="suiteSetUp">
+		<!-- Use this to run something when you enter this suite, like if your tests are upgrade related you can do an install first to make sure things are in a good state.-->
+		<echo message="**** Entering Properties suiteSetUp"/>
+		<ant inheritAll="false" inheritrefs="false"
+			antfile="build.xml"             
+			dir="${build.dir}"              
+			target="dist:installer:prep"        
+			>                               
+		</ant>                  
+		<echo message="**** Exiting Properties suiteSetUp"/>
+	</target>
+	<target name="test:property:fail:jboss.jms2.netty.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.jms2.netty.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jms2.netty.port=fa il
+			evaluate.property.name=jboss.jms2.netty.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jms2.netty.port"/>
+	</target>
+	<target name="test:property:fail:jboss.jms2.netty.port-port">
+		<echo message="**** Entering test:property:fail:jboss.jms2.netty.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jms2.netty.port=70000
+			evaluate.property.name=jboss.jms2.netty.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jms2.netty.port"/>
+	</target>
+	<target name="test:property:fail:jboss.jms2.netty-ssl.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.jms2.netty-ssl.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jms2.netty-ssl.port=fa il
+			evaluate.property.name=jboss.jms2.netty-ssl.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jms2.netty-ssl.port"/>
+	</target>
+	<target name="test:property:fail:jboss.jms2.netty-ssl.port-port">
+		<echo message="**** Entering test:property:fail:jboss.jms2.netty-ssl.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jms2.netty-ssl.port=70000
+			evaluate.property.name=jboss.jms2.netty-ssl.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jms2.netty-ssl.port"/>
+	</target>
+	<target name="test:property:fail:jboss.jms.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.jms.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jms.port=fa il
+			evaluate.property.name=jboss.jms.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jms.port"/>
+	</target>
+	<target name="test:property:fail:jboss.jms.port-port">
+		<echo message="**** Entering test:property:fail:jboss.jms.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jms.port=70000
+			evaluate.property.name=jboss.jms.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jms.port"/>
+	</target>
+	<target name="test:property:fail:jboss.jmx-rmi.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.jmx-rmi.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jmx-rmi.port=fa il
+			evaluate.property.name=jboss.jmx-rmi.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jmx-rmi.port"/>
+	</target>
+	<target name="test:property:fail:jboss.jmx-rmi.port-port">
+		<echo message="**** Entering test:property:fail:jboss.jmx-rmi.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.jmx-rmi.port=70000
+			evaluate.property.name=jboss.jmx-rmi.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.jmx-rmi.port"/>
+	</target>
+	<target name="test:property:fail:jboss.messaging.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.messaging.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.messaging.port=fa il
+			evaluate.property.name=jboss.messaging.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.messaging.port"/>
+	</target>
+	<target name="test:property:fail:jboss.messaging.port-port">
+		<echo message="**** Entering test:property:fail:jboss.messaging.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.messaging.port=70000
+			evaluate.property.name=jboss.messaging.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.messaging.port"/>
+	</target>
+	<target name="test:property:fail:jboss.ncicb-standard.port-config-syntax">
+		<echo message="**** Entering test:property:fail:jboss.ncicb-standard.port-config"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.ncicb-standard.port-config=fa il
+			evaluate.property.name=jboss.ncicb-standard.port-config
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.ncicb-standard.port-config"/>
+	</target>
+	<target name="test:property:fail:jboss.ncicb-standard.port-config-tf">
+		<echo message="**** Entering test:property:fail:jboss.ncicb-standard.port-config"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.ncicb-standard.port-config=fail
+			evaluate.property.name=jboss.ncicb-standard.port-config
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.ncicb-standard.port-config"/>
+	</target>
+	<target name="test:property:fail:jboss.pooledha.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.pooledha.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.pooledha.port=fa il
+			evaluate.property.name=jboss.pooledha.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.pooledha.port"/>
+	</target>
+	<target name="test:property:fail:jboss.pooledha.port-port">
+		<echo message="**** Entering test:property:fail:jboss.pooledha.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.pooledha.port=70000
+			evaluate.property.name=jboss.pooledha.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.pooledha.port"/>
+	</target>
+	<target name="test:property:fail:jboss.remoting.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.remoting.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.remoting.port=fa il
+			evaluate.property.name=jboss.remoting.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.remoting.port"/>
+	</target>
+	<target name="test:property:fail:jboss.remoting.port-port">
+		<echo message="**** Entering test:property:fail:jboss.remoting.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.remoting.port=70000
+			evaluate.property.name=jboss.remoting.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.remoting.port"/>
+	</target>
+	<target name="test:property:fail:jboss.server.bind.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.server.bind.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.server.bind.port=fa il
+			evaluate.property.name=jboss.server.bind.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.server.bind.port"/>
+	</target>
+	<target name="test:property:fail:jboss.server.bind.port-port">
+		<echo message="**** Entering test:property:fail:jboss.server.bind.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.server.bind.port=70000
+			evaluate.property.name=jboss.server.bind.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.server.bind.port"/>
+	</target>
+	<target name="test:property:fail:jboss.server.hostname-syntax">
+		<echo message="**** Entering test:property:fail:jboss.server.hostname"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.server.hostname=fa il
+			evaluate.property.name=jboss.server.hostname
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.server.hostname"/>
+	</target>
+	<target name="test:property:fail:jboss.server.jndi.port-syntax">
+		<echo message="**** Entering test:property:fail:jboss.server.jndi.port"/>
+		<echo file="${dist.exploded.dir}/local.properties" append="false">
+			jboss.server.jndi.port=fa il
+			evaluate.property.name=jboss.server.jndi.port
+			evaluate.result=fail
+			#groovy.debug=true
+		</echo>
+		<replaceregexp file="${dist.exploded.dir}/local.properties" byline="true"
+			match="^\s+(.*)\s*$"
+			replace="\1"
+			/>
+		<execute-property-test-pass
+			/>
+		<echo message="**** Exiting test:property:fail:jboss.server.jndi.port"/>
+	</target>
+</project>

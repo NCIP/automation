@@ -1,0 +1,71 @@
+<project name="test-jboss-upgrade" default="run" basedir=".">
+	<import file="test-common.xml" />
+	<target name="run">
+		<mkdir dir="${antunit.xml.report.dir}"/>
+		<antunit failOnError="false">
+			<file file="${ant.file}"/>
+			<xmllistener toDir="${antunit.xml.report.dir}" logLevel="verbose" />
+			<plainlistener logLevel="info"/>
+		</antunit>      
+	</target>
+	<target name="test:jboss:upgrade:dac:pass">
+		<echo message="**** Entering test:jboss:upgrade:dac:pass"/>
+		<echo file="${build.dir}/local.properties" message="env.name=dev" append="false"/>
+		<xmltask preservetype="true" source="${build.dir}/install.xml"
+			dest="${build.dir}/install.xml"
+			failWithoutMatch="true" >       
+			<xmlcatalog refid="bda.xml.catalog"/>
+			 <replace path="/project/target[@name='upgrade']/@depends" withtext="upgrade:common:init,common:init,upgrade-dac"/>
+			 <replace path="/project/target[@name='upgrade:tomcat']/@depends" withtext="upgrade:common:init,common:init,upgrade-dac:tomcat"/>
+			 <replace path="/project/target[@name='upgrade:jboss']/@depends" withtext="upgrade:common:init,common:init,upgrade-dac:jboss"/>
+		</xmltask>              
+
+		<buildExpectPass
+			build.target="deploy:local:upgrade"
+			/>
+		<echo message="**** Exiting test:jboss:upgrade:dac:pass"/>
+	</target>
+	<target name="test:jboss:upgrade:cm:pass">
+		<echo message="**** Entering test:jboss:upgrade:cm:pass"/>
+		<echo file="${build.dir}/local.properties" message="" append="false"/>
+		<xmltask preservetype="true" source="${build.dir}/install.xml"
+			dest="${build.dir}/install.xml"
+			failWithoutMatch="true" >       
+			<xmlcatalog refid="bda.xml.catalog"/>
+			 <replace path="/project/target[@name='upgrade']/@depends" withtext="upgrade:common:init,common:init,upgrade-cm"/>
+			 <replace path="/project/target[@name='upgrade:tomcat']/@depends" withtext="upgrade:common:init,common:init,upgrade-cm:tomcat"/>
+			 <replace path="/project/target[@name='upgrade:jboss']/@depends" withtext="upgrade:common:init,common:init,upgrade-cm:jboss"/>
+		</xmltask>              
+
+		<buildExpectPass
+			build.target="deploy:local:upgrade"
+			/>
+		<echo message="**** Exiting test:jboss:upgrade:cm:pass"/>
+	</target>
+	<target name="test:jboss:upgrade:ncm:pass">
+		<echo message="**** Entering test:jboss:upgrade:ncm:pass"/>
+		<echo file="${build.dir}/local.properties" message="" append="false"/>
+		<xmltask preservetype="true" source="${build.dir}/install.xml"
+			dest="${build.dir}/install.xml"
+			failWithoutMatch="true" >       
+			<xmlcatalog refid="bda.xml.catalog"/>
+			 <replace path="/project/target[@name='upgrade']/@depends" withtext="upgrade:common:init,common:init,upgrade-ncm"/>
+			 <replace path="/project/target[@name='upgrade:tomcat']/@depends" withtext="upgrade:common:init,common:init,upgrade-ncm:tomcat"/>
+			 <replace path="/project/target[@name='upgrade:jboss']/@depends" withtext="upgrade:common:init,common:init,upgrade-ncm:jboss"/>
+		</xmltask>              
+
+		<buildExpectPass
+			build.target="deploy:local:upgrade"
+			/>
+		<echo message="**** Exiting test:jboss:upgrade:ncm:pass"/>
+	</target>
+	<target name="suiteSetUp">
+		<!-- Need to install once before upgrades -->
+		<echo message="**** Entering suiteSetUp"/>
+		<antcall target="setUp"/>
+		<echo file="${build.dir}/local.properties" message="" append="false"/>
+		<buildExpectPass
+			/>
+		<echo message="**** Exiting suiteSetUp"/>
+	</target>
+</project>
