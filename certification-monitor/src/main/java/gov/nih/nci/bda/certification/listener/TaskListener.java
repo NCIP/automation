@@ -35,7 +35,7 @@ public class TaskListener implements BuildListener {
 
         Hashtable properties = thisProject.getProperties();
 
-        if (properties != null &&  properties.containsKey("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save")) {
+        if (properties != null && properties.containsKey("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save")) {
 
             propertiesToSave = properties.get("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save");
 
@@ -98,13 +98,13 @@ public class TaskListener implements BuildListener {
         out.close();
     }
 
-    public BufferedWriter getWriter(Project project) {
+    public BufferedWriter getWriter(Project project) throws IOException {
 
         if (out == null) {
-            try {
-                // Create file
-                String fileName = this.getPropertyFilename(project) ;
-                System.out.println("getWriter:fileName=" + fileName);
+            // Create file
+            String fileName = this.getPropertyFilename(project);
+            System.out.println("getWriter:fileName=" + fileName);
+            if (fileName != null) {
                 File theFile = new File(fileName);
                 System.out.println("getWriter:theFile.exists()" + theFile.exists());
                 theFile.createNewFile();
@@ -112,8 +112,6 @@ public class TaskListener implements BuildListener {
                 System.out.println("TaskListener:getWrite theFile = " + theFile.getAbsolutePath());
                 FileWriter fstream = new FileWriter(theFile);
                 out = new BufferedWriter(fstream);
-            } catch (Exception e) {//Catch exception if any
-                System.err.println("Error: " + e.toString());
             }
         }
 

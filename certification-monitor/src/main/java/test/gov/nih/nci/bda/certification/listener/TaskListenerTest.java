@@ -96,7 +96,7 @@ public class TaskListenerTest extends TestCase {
     }
 
     // proves that the getWriter returns a BufferedWriter
-    public void testGetFileWriter() {
+    public void testGetFileWriter() throws IOException {
         TaskListener target = new TaskListener();
         Project p = getMockBuildEvent().getProject() ;
         target.setProject (p);
@@ -350,6 +350,16 @@ public class TaskListenerTest extends TestCase {
         target.buildFinished(e);
 
 
+    }
+
+    //proves that if the property ${gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save}
+    // is not set, no exception is thrown
+    // when buildFinished is called.
+    public void testBuildFinishedNoExceptionIfPropertiesToSaveSet() throws Exception {
+
+        TaskListener target = new TaskListener();
+        Project p = new Project();
+        target.saveProperties(p);
     }
 
 }
