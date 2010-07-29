@@ -5,6 +5,7 @@ import gov.nih.nci.bda.certification.domain.TargetLookup;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.tools.ant.Project;
 
 import java.util.Map;
@@ -31,6 +32,11 @@ public class CertificationManagerTest extends TestCase {
 
     public static Test suite() {
         return new TestSuite(CertificationManagerTest.class);
+    }
+
+    public void testLoadSavePropertiesNoFile() throws ConfigurationException {
+        CertificationManager target = new CertificationManager();
+        target.loadSavedProperties("x.xxxx",new Project(), "blah");
     }
 
 }
