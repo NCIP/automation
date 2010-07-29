@@ -188,7 +188,7 @@
 	<target name="test:property:pass:bda.version">
 		<echo message="**** Entering test:property:pass:bda.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			bda.version=1.7.0-beta
+			bda.version=1.7.0
 			evaluate.property.name=bda.version
 			#groovy.debug=true
 		</echo>
