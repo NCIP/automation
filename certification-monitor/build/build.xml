@@ -466,7 +466,12 @@
 			override.properties.string.property.name="override.properties.string"
 			/>
 
-		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="false" resultproperty="exec.result">
+		<exec   osfamily="unix"
+                executable="ant"
+                dir="${exploded.dir.location}"
+                failonerror="false"
+                resultproperty="exec.result"
+                errorproperty="exec.error">
 			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="-Ddatabase.system.user=${database.system.user}" />
@@ -493,7 +498,7 @@
                 <equals arg1="${exec.result}" arg2="0" />
             </not>
             <then>
-                <fail message="BUILD FAILED.  Target '${single-command.deployment.target}' failed." />
+                <fail message="BUILD FAILED.  Target '${single-command.deployment.target}' failed.  ${exec.error}" />
             </then>
         </if>
 

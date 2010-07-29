@@ -362,4 +362,14 @@ public class TaskListenerTest extends TestCase {
         target.saveProperties(p);
     }
 
+    public void testBuildFinishedNoExceptionIfPropertyFileEmptyString() throws Exception {
+
+        TaskListener target = new TaskListener();
+        Project p = new Project();
+        p.setProperty("gov.nih.nci.bda.certification.listener.TaskListener.propertysavefile", "");
+        target.saveProperties(p);
+    }
+
+
+
 }
