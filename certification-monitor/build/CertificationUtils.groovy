@@ -88,12 +88,11 @@ class CertificationUtils {
     boolean foundAtLeastOne = false ;
 
     project.properties.each
-
     { sysprop ->
 
       if (sysprop.key ==~ /.*application\.url/) {
 
-        println "checkDeploymentShakeout:${sysprop.key} matches and has a value of '${sysprop.value}'."
+        println "checkDeploymentShakeout:${sysprop.key} matches and has a value of '${sysprop.value}'.";
 
         if ( sysprop.value.toString().trim().length() > 0)
         {
@@ -103,8 +102,9 @@ class CertificationUtils {
       }
     }
 
-    if (!foundAtLeastOne){
-      ant.fail( "Could not locate any properties matching .*application\.url.*" );
+    if (foundAtLeastOne != true)
+    {
+      ant.fail( "Could not locate any application.url properties." );
     }
   }
 
