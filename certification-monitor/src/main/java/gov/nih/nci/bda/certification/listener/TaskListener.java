@@ -103,13 +103,17 @@ public class TaskListener implements BuildListener {
         if (out == null) {
             try {
                 // Create file
-                File theFile = new File(this.getPropertyFilename(project));
+                String fileName = this.getPropertyFilename(project) ;
+                System.out.println("getWriter:fileName=" + fileName);
+                File theFile = new File(fileName);
+                System.out.println("getWriter:theFile.exists()" + theFile.exists());
                 theFile.createNewFile();
+                System.out.println("getWriter:createNewFile()");
                 System.out.println("TaskListener:getWrite theFile = " + theFile.getAbsolutePath());
                 FileWriter fstream = new FileWriter(theFile);
                 out = new BufferedWriter(fstream);
             } catch (Exception e) {//Catch exception if any
-                System.err.println("Error: " + e.getMessage());
+                System.err.println("Error: " + e.toString());
             }
         }
 
