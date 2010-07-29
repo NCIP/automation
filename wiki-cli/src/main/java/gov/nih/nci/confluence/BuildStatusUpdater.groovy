@@ -453,6 +453,10 @@ class BuildStatusUpdater {
     returnValue += WIKI_TABLE_END_ROW;
 
     returnValue = returnValue.replace("\"", "'");
+    returnValue = returnValue.replace("{", "\\{");
+    returnValue = returnValue.replace("}", "\\}");
+
+    
 
     return returnValue;
   }
