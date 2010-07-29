@@ -466,29 +466,7 @@
 			override.properties.string.property.name="override.properties.string"
 			/>
 
-        <echoxml>
-            <exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
-                <arg value="-Dproperties.file=install.properties" />
-                <arg value="-Dforce.reinstall=true" />
-                <arg value="-Ddatabase.system.user=${database.system.user}" />
-                <arg value="-Ddatabase.system.password=${database.system.password}" />
-                <arg value="-Ddatabase.server=${database.server}" />
-                <arg value="-Ddatabase.port=${database.port}" />
-                <arg value="-Ddatabase.name=${database.name}" />
-                <arg value="-Ddatabase.user=${database.user}" />
-                <arg value="-Ddatabase.password=${database.password}" />
-                <arg value="-Ddatabase.url=${database.url}" />
-                <arg value="-Ddatabase.system.url=${database.system.url}" />
-                <arg line="${override.properties.string}"/>
-                <arg value="${single-command.deployment.target}" />
-                <arg value="-listener" />
-                <arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-                <redirector outputproperty="redirector1.out">
-                </redirector>
-            </exec>
-        </echoxml>
-	
-		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="true">
+		<exec osfamily="unix" executable="ant" dir="${exploded.dir.location}" failonerror="false" resultproperty="exec.result">
 			<arg value="-Dproperties.file=install.properties" />
 			<arg value="-Dforce.reinstall=true" />
 			<arg value="-Ddatabase.system.user=${database.system.user}" />
@@ -508,26 +486,16 @@
 			</redirector>			
 		</exec>
 
-        <exec osfamily="windows" executable="ant.bat" dir="${exploded.dir.location}" failonerror="true">
-			<arg value="-Dproperties.file=install.properties" />			
-			<arg value="-Dforce.reinstall=true" />
-			<arg value="-Ddatabase.system.user=${database.system.user}" />
-			<arg value="-Ddatabase.system.password=${database.system.password}" />
-			<arg value="-Ddatabase.server=${database.server}" />
-			<arg value="-Ddatabase.port=${database.port}" />
-			<arg value="-Ddatabase.name=${database.name}" />
-			<arg value="-Ddatabase.user=${database.user}" />
-			<arg value="-Ddatabase.password=${database.password}" />
-			<arg value="-Ddatabase.url=${database.url}" />
-			<arg value="-Ddatabase.system.url=${database.system.url}" />
-			<arg line="${override.properties.string}"/>
-			<arg value="${single-command.deployment.target}" />
-			<arg value="-listener" />
-			<arg value="gov.nih.nci.bda.certification.listener.TaskListener" />
-			<redirector outputproperty="redirector1.out">
-			</redirector>
-		</exec>
 		<echo message="REDIRECTOR::::${redirector1.out}"/>
+
+        <if>
+            <not>
+                <equals arg1="${exec.result}" arg2="0" />
+            </not>
+            <then>
+                <fail message="BUILD FAILED.  Target '${single-command.deployment.target}' failed." />
+            </then>
+        </if>
 
 		<propertyregex property="task.list"
 		      input="${redirector1.out}"
