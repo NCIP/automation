@@ -99,6 +99,7 @@ public class TaskListener implements BuildListener {
     }
 
     public BufferedWriter getWriter(Project project) {
+
         if (out == null) {
             try {
                 // Create file

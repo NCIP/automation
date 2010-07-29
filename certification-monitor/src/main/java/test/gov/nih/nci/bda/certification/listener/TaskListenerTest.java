@@ -346,8 +346,8 @@ public class TaskListenerTest extends TestCase {
     public void testBuildFinishedNoException() {
 
         TaskListener target = new TaskListener();
-
-        target.buildFinished(getMockBuildEvent());
+        BuildEvent e = new BuildEvent(new Project());
+        target.buildFinished(e);
 
 
     }
