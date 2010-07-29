@@ -104,7 +104,7 @@ public class TaskListener implements BuildListener {
             // Create file
             String fileName = this.getPropertyFilename(project);
             System.out.println("getWriter:fileName=" + fileName);
-            if (fileName != null) {
+            if (fileName != null && fileName.trim().length() > 0) {
                 File theFile = new File(fileName);
                 System.out.println("getWriter:theFile.exists()" + theFile.exists());
                 theFile.createNewFile();
