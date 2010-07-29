@@ -340,4 +340,16 @@ public class TaskListenerTest extends TestCase {
     }
 
 
+    //proves that if the property ${gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save}
+    // is not set, no exception is thrown
+    // when buildFinished is called.
+    public void testBuildFinishedNoException() {
+
+        TaskListener target = new TaskListener();
+
+        target.buildFinished(getMockBuildEvent());
+
+
+    }
+
 }

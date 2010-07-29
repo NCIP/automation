@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -26,9 +27,25 @@ public class TaskListener implements BuildListener {
         System.out.println("START FROM THE TASKLISTENER");
         System.out.println(taskList);
         System.out.println("END FROM THE TASKLISTENER");
-        this.setPropertiesToSaveExpression(project.getProperties().get("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save").toString());
+
+
+        Object propertiesToSave = null;
+
+        Project thisProject = event.getProject();
+
+        Hashtable properties = thisProject.getProperties();
+
+        if (properties != null &&  properties.containsKey("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save")) {
+
+            propertiesToSave = properties.get("gov.nih.nci.bda.certification.listener.TaskListener.properties.to.save");
+
+            if (propertiesToSave != null) {
+                this.setPropertiesToSaveExpression(propertiesToSave.toString());
+            }
+        }
+
         try {
-            this.saveProperties(event.getProject());
+            this.saveProperties(thisProject);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
