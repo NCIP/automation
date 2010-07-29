@@ -80,30 +80,31 @@ class CertificationUtils {
     def buildFileLocation = project.properties['master.build.location']
     def basedir = project.properties['basedir']
     def useProperties = project.properties['gov.nih.nci.bda.certification.CertificationManager.useproperties']
-
     def web = new WebClient();
-
 
     println "checkDeploymentShakeout:useProperties=" + useProperties
     println "checkDeploymentShakeout:basedir=" + basedir
 
+    boolean foundAtLeastOne = false ;
+
     project.properties.each
+
     { sysprop ->
 
-      println "checkDeploymentShakeout:sysprop.key=${sysprop.key}"
-      if (sysprop.key ==~ /.*application\.url/) {
-        println "checkDeploymentShakeout:${sysprop.key} matches"
+      if (sysprop.key ==~ /.*application\.url.*/) {
 
-        def page = web.getPage( sysprop.value ) ;
+        println "checkDeploymentShakeout:${sysprop.key} matches and has a value of '${sysprop.value}'."
 
-        if ( page == null || page.Title == null )
+        if ( sysprop.value.toString().trim().length() > 0)
         {
-          ant.fail( sysprop.value + "didn't not respond." );
+          foundAtLeastOne = true ;
+          def page = web.getPage( sysprop.value ) ;
         }
-
-//        ant.runseliniumtest(hostname: sysprop.value)
-//            ant.fail("PROJECT NOT BDA ENABLED")
       }
+    }
+
+    if (!foundAtLeastOne){
+      ant.fail( "Could not locate any properties matching .*application\.url.*" );
     }
   }
 
