@@ -91,7 +91,7 @@ class CertificationUtils {
 
     { sysprop ->
 
-      if (sysprop.key ==~ /.*application\.url.*/) {
+      if (sysprop.key ==~ /.*application\.url\.*/) {
 
         println "checkDeploymentShakeout:${sysprop.key} matches and has a value of '${sysprop.value}'."
 
