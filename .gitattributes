@@ -57,6 +57,7 @@ certification-monitor/build/caarray.properties -text
 certification-monitor/build/lookup.properties -text
 certification-monitor/build/project.properties -text
 certification-monitor/dev-install.properties -text
+certification-monitor/ec2-174-129-156-51.compute-1.amazonaws.com.properties -text
 certification-monitor/install.properties -text
 certification-monitor/lib/ant-contrib.jar -text
 certification-monitor/lib/ant-jsch.jar -text
