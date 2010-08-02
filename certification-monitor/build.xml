@@ -251,7 +251,14 @@
         <echo>classpath=${xxx}</echo>
 
         <junit printsummary="yes">
-            <classpath refid="test.classpath"/>
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar" />
+                </fileset>
+                <fileset dir="${dist.dir}">
+                    <include name="**/*.jar" />
+                </fileset>
+            </classpath>
             <batchtest todir="${testoutput.dir}">
                 <fileset dir="${test.classes.dir}">
                   <include name="**/*.class"/>
