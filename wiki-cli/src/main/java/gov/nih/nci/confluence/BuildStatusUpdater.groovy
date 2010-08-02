@@ -455,6 +455,8 @@ class BuildStatusUpdater {
     returnValue = returnValue.replace("\"", "'");
     returnValue = returnValue.replace("{", "\\{");
     returnValue = returnValue.replace("}", "\\}");
+    returnValue = returnValue.replace("[", "\\[");
+    returnValue = returnValue.replace("]", "\\]");
 
     
 
