@@ -209,7 +209,13 @@
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.hostname)=.*" replace="\1=${mail.hostname}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.portnumber)=.*" replace="\1=${mail.portnumber}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.send.address)=.*" replace="\1=${mail.send.address}" />
-		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.additional.recipients)=.*" replace="\1=${mail.additional.recipients}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.additional.recipients)=.*" replace="\1=${mail.additional.recipients}" />
+
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.template.file)=.*" replace="\1=${non-bda.template.file}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.template2.file)=.*" replace="\1=${non-bda.template2.file}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.page.file)=.*" replace="\1=${non-bda.page.file}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.page2.file)=.*" replace="\1=${non-bda.page2.file}" />
+
 	</target>
 
 
