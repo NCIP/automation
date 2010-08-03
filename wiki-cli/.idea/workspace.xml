@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="fb2df1a2-1acd-4ddd-bf11-43ea05a79898" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" afterPath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/wiki.properties" afterPath="$PROJECT_DIR$/src/main/resources/wiki.properties" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="classes/" />
@@ -80,10 +80,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BuildStatusUpdaterTest.groovy" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy">
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="445" column="0" selection-start="19193" selection-end="19193" vertical-scroll-proportion="1.589091">
+            <state line="195" column="40" selection-start="7916" selection-end="7916" vertical-scroll-proportion="-5.130435">
               <folding />
             </state>
           </provider>
@@ -92,7 +92,16 @@
       <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="456" column="0" selection-start="19879" selection-end="19879" vertical-scroll-proportion="0.0">
+            <state line="64" column="63" selection-start="2875" selection-end="2875" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wiki.properties" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/wiki.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="0" selection-start="666" selection-end="666" vertical-scroll-proportion="0.2751423">
               <folding />
             </state>
           </provider>
@@ -108,7 +117,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/StringAssert.java" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/test/StringAssert.java" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java" />
@@ -116,14 +124,15 @@
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java" />
         <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-        <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/wiki.properties" />
         <option value="$PROJECT_DIR$/prod-build.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/build.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
         <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" />
+        <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/ec2-174-129-156-51.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
+        <option value="$PROJECT_DIR$/src/main/resources/wiki.properties" />
       </list>
     </option>
   </component>
@@ -241,14 +250,6 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HistoryTest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -273,28 +274,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="confluence" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wiki-cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -383,17 +362,37 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="109" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="72" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="35" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="92" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="79" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="97" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="75" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="868" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="75" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="886" />
     <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
@@ -728,23 +727,23 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1280" height="718" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42982456" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42982456" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48947367" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.76666665" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24938676" sideWeight="0.6403509" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32809773" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32807016" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34561405" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.299509" sideWeight="0.55789477" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.299509" sideWeight="0.22105263" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4385965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -831,11 +830,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/util/HibernateUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="26" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assembly/release.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="38" column="13" selection-start="981" selection-end="981" vertical-scroll-proportion="0.0" />
@@ -849,11 +843,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="0" selection-start="1373" selection-end="1373" vertical-scroll-proportion="0.70866144" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="68" selection-start="871" selection-end="871" vertical-scroll-proportion="0.53149605" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java">
@@ -880,30 +869,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="43" selection-start="3661" selection-end="3661" vertical-scroll-proportion="0.030927835">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/wiki/History.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="29" column="52" selection-start="922" selection-end="922" vertical-scroll-proportion="0.3503937">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.19372694">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/wiki.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="53" selection-start="4438" selection-end="4438" vertical-scroll-proportion="0.800759">
           <folding />
         </state>
       </provider>
@@ -915,16 +883,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
+    <entry file="file://$PROJECT_DIR$/build.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="456" column="0" selection-start="19879" selection-end="19879" vertical-scroll-proportion="0.0">
+        <state line="7" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.20076482">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ec2-174-129-156-51.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="48" selection-start="375" selection-end="375" vertical-scroll-proportion="0.28680688">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="445" column="0" selection-start="19193" selection-end="19193" vertical-scroll-proportion="1.589091">
+        <state line="404" column="60" selection-start="17777" selection-end="17777" vertical-scroll-proportion="0.28842506">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="58" selection-start="385" selection-end="385" vertical-scroll-proportion="0.17077799">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="195" column="40" selection-start="7916" selection-end="7916" vertical-scroll-proportion="-5.130435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="63" selection-start="2875" selection-end="2875" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/wiki.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="666" selection-end="666" vertical-scroll-proportion="0.2751423">
           <folding />
         </state>
       </provider>
