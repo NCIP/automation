@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="fb2df1a2-1acd-4ddd-bf11-43ea05a79898" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" afterPath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" afterPath="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" afterPath="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
@@ -80,19 +80,19 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BuildStatusUpdaterTest.groovy" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BuildStatusUpdaterTest.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="484" column="31" selection-start="20215" selection-end="20215" vertical-scroll-proportion="0.0">
+            <state line="445" column="0" selection-start="19193" selection-end="19193" vertical-scroll-proportion="1.589091">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BuildStatusUpdater.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="458" column="47" selection-start="20078" selection-end="20078" vertical-scroll-proportion="0.33333334">
+            <state line="456" column="0" selection-start="19879" selection-end="19879" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -122,8 +122,8 @@
         <option value="$PROJECT_DIR$/src/main/resources/wiki.properties" />
         <option value="$PROJECT_DIR$/prod-build.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/build.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" />
         <option value="$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy" />
+        <option value="$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy" />
       </list>
     </option>
   </component>
@@ -401,7 +401,7 @@
       <recent name="gov.nih.nci.test" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BuildStatusUpdaterTest.testBracketAreEscaped">
+  <component name="RunManager" selected="JUnit.BuildStatusUpdaterTest">
     <configuration default="false" name="BuildStatusUpdaterTest" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false">
         <pattern>
@@ -728,9 +728,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1280" height="718" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42982456" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42982456" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48947367" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -744,9 +744,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.299509" sideWeight="0.5491228" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.299509" sideWeight="0.55789477" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4385965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4385965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -768,7 +768,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="https://tracker.nci.nih.gov/browse/BDA-524" />
+    <option name="LAST_COMMIT_MESSAGE" value="https://tracker.nci.nih.gov/browse/BDA-532" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -781,7 +781,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="fix INSERT_SVN_URL" />
     <MESSAGE value="take out email for non-bda-enabled and added debugging messages" />
     <MESSAGE value="added success message" />
     <MESSAGE value="changed the check for failed certification to looking thru all the properties for an (x)" />
@@ -806,6 +805,7 @@
     <MESSAGE value="fix call to getCertificationStatus" />
     <MESSAGE value="format date" />
     <MESSAGE value="https://tracker.nci.nih.gov/browse/BDA-524" />
+    <MESSAGE value="https://tracker.nci.nih.gov/browse/BDA-532" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -915,16 +915,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy">
+    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="484" column="31" selection-start="20215" selection-end="20215" vertical-scroll-proportion="0.0">
+        <state line="456" column="0" selection-start="19879" selection-end="19879" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy">
+    <entry file="file://$PROJECT_DIR$/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="458" column="47" selection-start="20078" selection-end="20078" vertical-scroll-proportion="0.33333334">
+        <state line="445" column="0" selection-start="19193" selection-end="19193" vertical-scroll-proportion="1.589091">
           <folding />
         </state>
       </provider>
