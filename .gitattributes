@@ -155,6 +155,7 @@ wiki-cli/README.txt -text
 wiki-cli/build.properties -text
 wiki-cli/build.xml -text
 wiki-cli/dev-build.properties -text
+wiki-cli/ec2-174-129-156-51.properties -text
 wiki-cli/lib/activation-1.1.jar -text
 wiki-cli/lib/ant-contrib.jar -text
 wiki-cli/lib/ant-jsch.jar -text
