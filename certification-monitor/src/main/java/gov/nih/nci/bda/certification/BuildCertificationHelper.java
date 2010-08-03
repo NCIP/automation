@@ -33,7 +33,7 @@ public class BuildCertificationHelper {
 		this.bmb = bmb;
 	}
 
-	private String formatMessage(String message) {
+	public String formatMessage(String message) {
 		StringBuffer sb = new StringBuffer();
 
 		if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
@@ -41,6 +41,11 @@ public class BuildCertificationHelper {
 
 		message=message.replace("'", "");
 		message=message.replace("\"", "");
+        message=message.replace("[","\\[");
+        message=message.replace("]","\\]");
+        message=message.replace("{","\\{");
+        message=message.replace("}","\\}");
+        message=message.replace("|","\\|");
 		String[] result=message.split("\\n");
 	    for (int x=0; x<result.length; x++)
 	         sb.append(result[x]);
@@ -142,18 +147,6 @@ public class BuildCertificationHelper {
 		String methodName = getSetMethodName(mapName);
 		String searchProject = "%"+projectName+"|%";
 		String projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
-/*
-		if(isReachble(bmb.getProjectRepoUrl()))
-		{
-			searchProject = "%"+projectName+"|%";
-			projectUrl = "'[" + projectName +"|"+ bmb.getProjectRepoUrl()+"]'";
-		}
-		else
-		{
-			searchProject = "%"+projectName+"{color}|%";
-			projectUrl = "'[{color:red}" + projectName +"{color}|"+ bmb.getProjectRepoUrl()+"]'";
-		}
-*/
 
 		certLogger.info("Update the Build Status for the feature :::::::" + mapName);
 		certLogger.info("check isValue:::::::" +bmb.isValue());

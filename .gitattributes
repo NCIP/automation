@@ -111,6 +111,7 @@ certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/TaskL
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/ConfigurationHelper.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/HibernateUtil.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/PropertyLoader.java -text
+certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/BuildCertificationHelperTest.java -text
 certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/CertificationManagerTest.java -text
 certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/domain/TargetLookupTest.java -text
 certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/listener/TaskListenerTest.java -text
