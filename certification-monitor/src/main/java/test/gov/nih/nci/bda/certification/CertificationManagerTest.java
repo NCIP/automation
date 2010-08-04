@@ -405,40 +405,4 @@ public class CertificationManagerTest extends TestCase {
 
      }
 
-    // proves that MarkAllAsFailed() correctly marks TemplateValidation
-     // as failed with the correct wikitip
-     public void testMarkAllAsFailedTemplateValidation() throws FileNotFoundException {
-         String projectName = UUID.randomUUID().toString();
-         CertificationManager target = new CertificationManager();
-         target.markAllAsFailed(projectName,TEST_PROJECT_URL);
-
-         ProjectCertificationStatus projectStatus = ProjectCertificationStatusHelper.getProject(projectName,TEST_PROJECT_URL,false);
-         String actual = projectStatus.getTemplateValidation();
-
-         assertNotNull(projectStatus);
-
-         assertTrue( "getTemplateValidation does not contain '"
-                     + BuildCertificationConstants.WIKI_FAILED
-                     + "' as expected."
-                     , actual.contains(BuildCertificationConstants.WIKI_FAILED));
-
-         assertTrue( "getTemplateValidation does not contain '"
-                     + BuildCertificationConstants.CERTIFICATION_INCOMPLETE
-                     + "' as expected."
-                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
-
-         assertTrue( "getTemplateValidation does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
-                     + projectName
-                     + "/lastBuild/console' as expected."
-                     , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
-                                         + projectName
-                                         + "/lastBuild/console"));
-
-         assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
-                         + projectName
-                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
-                         ,actual);
-
-     }
-
  }
