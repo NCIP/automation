@@ -1055,7 +1055,7 @@
 "caEHR-ESD.remote-upgrade.target","deploy:remote:upgrade:ahp"
 "caEHR-ESD.override.remote.properties","ssh.server.username=hudsonuser,ssh.server.hostname=cbvapp-c1006.nci.nih.gov,ssh.port=22,ssh.key.file=/usr/local/hudsonuser/ssh-pub-key/id_dsa_bda,ssh.dir.temp=/usr/local/hudsonuser/buildcertification/build/working/remote-deploy,application.base.path=/usr/local/hudsonuser/apps/caehr-esd-war-webapp,bash_profile=.bash_profile16"
 "caEHR-ESD.single-command.package.upgrader.target","dist:upgrader"
-"caEHR-ESD.override.properties","application.base.path=/usr/local/hudsonuser/apps/caehr-esd-war-webapp"
+"caEHR-ESD.override.properties","application.base.path=/usr/local/hudsonuser/apps/caehr-esd-war-webapp,database.name=genericdb,database.user=genericuser,database.password=password"
 "caEHR-ESD.build:database-integration.macro.list","database-install"
 "caEHR-ESD.optional.features","build:database-integration,build:private-repository-properties"
 "caEHR-ESD.java.major.version","1.6"
