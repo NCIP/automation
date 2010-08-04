@@ -47,6 +47,8 @@ public class CertificationManager {
 
     public void markAllAsFailed(String projectName, String projectUrl) throws FileNotFoundException {
 
+        certLogger.info("markAllAsFailed:begin");
+
         ProjectCertificationStatus status = ProjectCertificationStatusHelper.getProject(projectName,projectUrl) ;
 
         Session session = HibernateUtil.getSession();
@@ -55,7 +57,7 @@ public class CertificationManager {
 
         Transaction t = session.beginTransaction();
 
-        status.setBdaEnabled( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+//        status.setBdaEnabled( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
         status.setCertificationStatus( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
         status.setCommandLineInstaller( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
         status.setDatabaseIntegration( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
@@ -71,6 +73,7 @@ public class CertificationManager {
 
         t.commit();
 
+        certLogger.info("markAllAsFailed:end");
 
     }
 

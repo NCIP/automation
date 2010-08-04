@@ -51,19 +51,36 @@ public class CertificationManagerTest extends TestCase {
     private static final String TEST_PROJECT_NAME = "testproject";
     private static final String TEST_PROJECT_URL = "http://NotAValidSvnUrl.com" ;
 
-    public void testMarkAllAsFailedBdaEnabled() throws FileNotFoundException {
+
+    // test proves that MarkAsFailed does not change
+    // bdaEnabled from passing to failing 
+    public void testMarkAllDoesNotFailBdaEnabled() throws FileNotFoundException {
+
+        
         String projectName = UUID.randomUUID().toString();
         CertificationManager target = new CertificationManager();
+        ProjectCertificationStatus projectStatus = ProjectCertificationStatusHelper.getProject(projectName,TEST_PROJECT_URL);
+        Session session = HibernateUtil.getSession();
+        session.clear();
+        session.beginTransaction();
+        projectStatus.setBdaEnabled(BuildCertificationConstants.WIKI_SUCCESSFUL);
+        session.update(projectStatus);
+        session.getTransaction().commit();
+
+        // verify it is committed
+        session.clear();
+
+        projectStatus = ProjectCertificationStatusHelper.getProject(projectName,TEST_PROJECT_URL);
+        
+        assertEquals(BuildCertificationConstants.WIKI_SUCCESSFUL, projectStatus.getBdaEnabled());
+
         target.markAllAsFailed(projectName,TEST_PROJECT_URL);
 
-        ProjectCertificationStatus projectStatus = ProjectCertificationStatusHelper.getProject(projectName,TEST_PROJECT_URL,false);
-        
-        assertNotNull(projectStatus);
-        assertTrue(projectStatus.getBdaEnabled().contains(BuildCertificationConstants.WIKI_FAILED));
-        assertTrue(projectStatus.getBdaEnabled().contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
-        assertTrue(projectStatus.getBdaEnabled().contains("http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-" + projectName + "/lastBuild/console"));
-        assertEquals("'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-" + projectName + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'",projectStatus.getBdaEnabled());
-        
+        session.clear();
+
+        projectStatus = ProjectCertificationStatusHelper.getProject(projectName,TEST_PROJECT_URL);
+
+        assertEquals(BuildCertificationConstants.WIKI_SUCCESSFUL, projectStatus.getBdaEnabled());
     }
 
     public void testMarkAllAsFailedCertificationStatus() throws FileNotFoundException {
