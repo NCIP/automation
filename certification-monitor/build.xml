@@ -3,6 +3,13 @@
 
     <property environment="env" />
 
+
+    <property name="database.server" value="localhost" />
+    <property name="database.port" value="3306" />
+    <property name="database.name" value="buildmonitordb" />
+    <property name="database.url" value="jdbc:mysql://${database.server}:${database.port}/${database.name}" />
+    <property name="database.driver" value="com.mysql.jdbc.Driver" />
+
 	<!-- PROPERTIES -->
 	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
