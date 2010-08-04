@@ -5,6 +5,7 @@ import gov.nih.nci.bda.certification.domain.ProjectCertificationStatus;
 import gov.nih.nci.bda.certification.util.ConfigurationHelper;
 import gov.nih.nci.bda.certification.util.HibernateUtil;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
@@ -139,8 +140,7 @@ public class BuildCertificationHelper {
 			pbs.setProduct(projectUrl);
 	}
 
-	public void updateProjectBuildStatus() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
-	{
+	public void updateProjectBuildStatus() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, FileNotFoundException {
 		ProjectCertificationStatus pbs = null;
 		String projectName = bmb.getProjectName();
 		String mapName = bmb.getMapName();

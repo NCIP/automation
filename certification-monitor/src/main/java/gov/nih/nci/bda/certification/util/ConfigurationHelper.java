@@ -12,6 +12,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
+import java.io.FileNotFoundException;
+
 /**
  * @author narram
  * 
@@ -36,7 +38,7 @@ public final class ConfigurationHelper {
 		return new DataConfiguration(config);
 	}
 
-	private static DataSource getDataSource() {
+	private static DataSource getDataSource() throws FileNotFoundException {
 		certLogger.info(" Get the DataSource " );
 		MysqlDataSource ds = new MysqlDataSource();
 		Configuration hibernateConfig = HibernateUtil.getConfiguration();

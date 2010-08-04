@@ -1,11 +1,14 @@
 package gov.nih.nci.bda.certification;
 
+import gov.nih.nci.bda.certification.domain.ProjectCertificationStatus;
+import gov.nih.nci.bda.certification.domain.ProjectCertificationStatusHelper;
 import gov.nih.nci.bda.certification.domain.TargetLookup;
 import gov.nih.nci.bda.certification.listener.SingleCommandListener;
 import gov.nih.nci.bda.certification.util.HibernateUtil;
 import gov.nih.nci.bda.certification.util.PropertyLoader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -28,7 +31,7 @@ public class CertificationManager {
     private Log certLogger = LogFactory.getLog(CertificationManager.class);
     public static boolean projectCertificationStatus = true;
 
-    public static void main(String args[]) throws ConfigurationException {
+    public static void main(String args[]) throws ConfigurationException, FileNotFoundException {
         String projectName = null;
         if (args.length != 1) {
             System.out.println("Enter the project name for certification");
@@ -41,7 +44,13 @@ public class CertificationManager {
         cm.certifyProjects(projectName);
     }
 
-    public void certifyProjects(String projectName) throws ConfigurationException {
+    public void markAllAsFailed(String projectName, String projectUrl) {
+
+        ProjectCertificationStatus status = ProjectCertificationStatusHelper.getProject(projectName,projectUrl) ;
+        status.setBdaEnabled(BuildCertificationConstants.WIKI_FAILED);
+    }
+
+    public void certifyProjects(String projectName) throws ConfigurationException, FileNotFoundException {
 
         certLogger.info("Certifing project :" + projectName);
 
@@ -61,6 +70,12 @@ public class CertificationManager {
 
         certLogger.info("load all the properties from the database for the project :" + projectName);
         PropertyLoader.loadProjectProperties(projectName, project);
+
+        String svnUrl = project.getProperty("svn.project.url").toString();
+
+        this.markAllAsFailed(projectName,svnUrl);
+
+
 
         certLogger.info("load all the general properties from the database");
         PropertyLoader.loadGeneralProperties(project);

@@ -25,8 +25,11 @@ public class ProjectCertificationStatus {
 	public String getProduct() {
 		return product;
 	}
-	public void setProduct(String product) {
-		this.product = product;
+    public void setProduct(String product) {
+        this.product = product;
+	}
+    public void setProduct(String productName, String productSvnUrl) {
+        this.product = "[" + productName + "|" + productSvnUrl + "]" ;
 	}
 	public String getCertificationStatus() {
 		return certificationStatus;

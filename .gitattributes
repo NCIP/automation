@@ -104,6 +104,7 @@ certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/BuildHi
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/BuildHistory.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectCertificationStatus.hbm.xml -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectCertificationStatus.java -text
+certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/ProjectCertificationStatusHelper.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.hbm.xml -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/domain/TargetLookup.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/listener/SingleCommandListener.java -text
@@ -113,8 +114,11 @@ certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/Hibernate
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/util/PropertyLoader.java -text
 certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/BuildCertificationHelperTest.java -text
 certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/CertificationManagerTest.java -text
+certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/domain/ProjectCertificationStatusHelperTest.java -text
+certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/domain/ProjectCertificationStatusTest.java -text
 certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/domain/TargetLookupTest.java -text
 certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/listener/TaskListenerTest.java -text
+certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/util/HibernateUtilTest.java -text
 certification-monitor/src/main/resources/build.xml -text
 certification-monitor/src/main/resources/hibernate.cfg.xml -text
 certification-monitor/src/main/sql/dashboard_properties.csv -text
