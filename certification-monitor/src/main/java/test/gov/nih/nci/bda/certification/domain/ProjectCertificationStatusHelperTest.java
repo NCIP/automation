@@ -52,7 +52,7 @@ public class ProjectCertificationStatusHelperTest extends TestCase {
 
     // this test proves that you can call
     // getProject with noCreate=true and still get a null back
-    public void testGetProjectNoCreateReturnsNull() {
+    public void testGetProjectNoCreateReturnsNull() throws FileNotFoundException {
 
         String projectName = UUID.randomUUID().toString();
 
@@ -69,7 +69,7 @@ public class ProjectCertificationStatusHelperTest extends TestCase {
 
     // this test proves you can call getProject with
     // allowCreate = true and it creates the project
-    public void testGetProjectCreates() {
+    public void testGetProjectCreates() throws FileNotFoundException {
 
         String projectName = UUID.randomUUID().toString();
         ProjectCertificationStatus expected =

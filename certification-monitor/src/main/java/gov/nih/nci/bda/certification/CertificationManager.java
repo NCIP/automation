@@ -22,6 +22,7 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * @author narram
@@ -44,9 +45,15 @@ public class CertificationManager {
         cm.certifyProjects(projectName);
     }
 
-    public void markAllAsFailed(String projectName, String projectUrl) {
+    public void markAllAsFailed(String projectName, String projectUrl) throws FileNotFoundException {
 
         ProjectCertificationStatus status = ProjectCertificationStatusHelper.getProject(projectName,projectUrl) ;
+
+        Session session = HibernateUtil.getSession();
+
+        session.clear();
+
+        Transaction t = session.beginTransaction();
 
         status.setBdaEnabled( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
         status.setCertificationStatus( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
@@ -59,6 +66,12 @@ public class CertificationManager {
         status.setSingleCommandBuild( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
         status.setSingleCommandDeployment( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
         status.setTemplateValidation( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+
+        session.update(status);
+
+        t.commit();
+
+
     }
 
     public void certifyProjects(String projectName) throws ConfigurationException, FileNotFoundException {
@@ -85,8 +98,6 @@ public class CertificationManager {
         String svnUrl = project.getProperty("svn.project.url").toString();
 
         this.markAllAsFailed(projectName,svnUrl);
-
-
 
         certLogger.info("load all the general properties from the database");
         PropertyLoader.loadGeneralProperties(project);

@@ -17,20 +17,10 @@ import java.io.FileNotFoundException;
  */
 public class ProjectCertificationStatusHelper {
 
-    private static Session session ;
-
-    static {
-        try {
-            session = HibernateUtil.getSession();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
 
     public static ProjectCertificationStatus getProject(
             String projectName
-            , String projectUrl)
-    {
+            , String projectUrl) throws FileNotFoundException {
 
         return getProject(projectName, projectUrl, true) ;
 
@@ -39,9 +29,9 @@ public class ProjectCertificationStatusHelper {
     public static ProjectCertificationStatus getProject(
             String projectName
             , String projectUrl
-            , boolean allowCreate)
-    {
+            , boolean allowCreate) throws FileNotFoundException {
         ProjectCertificationStatus returnValue = new ProjectCertificationStatus();
+        Session session = HibernateUtil.getSession();
         Query query = session.createQuery(BuildCertificationConstants.CERTIFICATION_QUERY);
         query.setString(0, "%"+projectName+"|%");
         returnValue = (ProjectCertificationStatus) query.uniqueResult();
