@@ -217,7 +217,7 @@
 		</xmltask>
 	</target>
 
-    <target name="test" depends="compile,package">
+    <target name="test" depends="compile,package,deploy:sql">
 
         <path id="project.classpath">
             <fileset dir="${lib.dir}">
