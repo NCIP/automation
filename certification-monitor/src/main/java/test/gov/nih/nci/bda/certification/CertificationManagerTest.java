@@ -60,6 +60,10 @@ public class CertificationManagerTest extends TestCase {
         
         assertNotNull(projectStatus);
         assertTrue(projectStatus.getBdaEnabled().contains(BuildCertificationConstants.WIKI_FAILED));
+        assertTrue(projectStatus.getBdaEnabled().contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
+        assertTrue(projectStatus.getBdaEnabled().contains("http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-" + projectName + "/lastBuild/console"));
+        assertEquals("'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-" + projectName + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'",projectStatus.getBdaEnabled());
+        
     }
 
 }

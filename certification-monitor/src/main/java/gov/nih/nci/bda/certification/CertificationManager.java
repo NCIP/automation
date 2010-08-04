@@ -47,7 +47,8 @@ public class CertificationManager {
     public void markAllAsFailed(String projectName, String projectUrl) {
 
         ProjectCertificationStatus status = ProjectCertificationStatusHelper.getProject(projectName,projectUrl) ;
-        status.setBdaEnabled(BuildCertificationConstants.WIKI_FAILED);
+
+        status.setBdaEnabled( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
     }
 
     public void certifyProjects(String projectName) throws ConfigurationException, FileNotFoundException {

@@ -22,7 +22,7 @@ import org.hibernate.Session;
  */
 public class BuildCertificationHelper {
 	BuildCertificationBean bmb;
-	private Log certLogger = LogFactory.getLog(BuildCertificationHelper.class);
+	private static Log certLogger = LogFactory.getLog(BuildCertificationHelper.class);
 
 	public BuildCertificationHelper()
 	{
@@ -34,7 +34,7 @@ public class BuildCertificationHelper {
 		this.bmb = bmb;
 	}
 
-	public String formatMessage(String message) {
+	public static String formatMessage(String message) {
 		StringBuffer sb = new StringBuffer();
 
 		if (message.length() >=BuildCertificationConstants.ERROR_MESSAGE_LENGTH)
@@ -55,7 +55,7 @@ public class BuildCertificationHelper {
 	}
 
 
-	private String getLink(String jobName) {
+	public static String getLink(String jobName) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(ConfigurationHelper.getConfiguration().getString(BuildCertificationConstants.CI_SERVER_NAME));
 		sb.append("/" + BuildCertificationConstants.CI_SERVER_JOB_PREFIX +"-"+jobName);
@@ -69,9 +69,10 @@ public class BuildCertificationHelper {
 		return "set"+ mapName.substring(0,1).toUpperCase() + mapName.substring(1);
 	}
 
-	private String getWikiLinkTip(String displayName,String jobName,String message) {
+	public static String getWikiLinkTip(String displayName,String jobName,String message) {
 		String wikiLinkTipStr = null;
-		if (message != null)
+
+        if (message != null)
 		{
 			wikiLinkTipStr = "'[" + displayName +"|"+ getLink(jobName)+"|" + formatMessage(message) + "]'";
 		}
@@ -79,8 +80,10 @@ public class BuildCertificationHelper {
 		{
 			wikiLinkTipStr = displayName;
 		}
-		certLogger.info("LinkTipString::"+wikiLinkTipStr);
-		return wikiLinkTipStr;
+
+        certLogger.info("LinkTipString::"+wikiLinkTipStr);
+
+        return wikiLinkTipStr;
 	}
 
 	private String getWikiProjectCertificationStatus() {
