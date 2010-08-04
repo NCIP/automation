@@ -49,6 +49,16 @@ public class CertificationManager {
         ProjectCertificationStatus status = ProjectCertificationStatusHelper.getProject(projectName,projectUrl) ;
 
         status.setBdaEnabled( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setCertificationStatus( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setCommandLineInstaller( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setDatabaseIntegration( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setDeploymentShakeout( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setLatestCIBuild( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setPrivateRepositoryProperties( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setRemoteUpgrade( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setSingleCommandBuild( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setSingleCommandDeployment( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
+        status.setTemplateValidation( BuildCertificationHelper.getWikiLinkTip( BuildCertificationConstants.WIKI_FAILED,  projectName, BuildCertificationConstants.CERTIFICATION_INCOMPLETE) );
     }
 
     public void certifyProjects(String projectName) throws ConfigurationException, FileNotFoundException {
