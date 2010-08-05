@@ -127,4 +127,13 @@
             <column name="CERT_DATE" type="DATETIME" />
         </addColumn>
     </changeSet>
+
+    <changeSet id="2010.08.05.12.28" author="bassetttj" >
+        <sql>
+            alter table project_poc add project_id int not null auto_increment primary key
+        </sql>
+        <rollback>
+            <sql>ALTER TABLE `project_poc` DROP `project_id`</sql>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
