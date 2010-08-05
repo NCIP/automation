@@ -39,8 +39,8 @@
 	<property name="tests.unit.source.dir" value="${software.dir}/src/tests/unit/groovy" />
 	<property name="tests.unit.classes.dir" value="${target.dir}/unit/classes" />
 	
-	<property name="sql.dist.dir" value="${deploy.dir}/sql" />
-	<property name="sql.src.dir" value="${software.dir}/src/main/sql" />
+    <property name="sql.src.dir" value="${software.dir}/src/main/sql" />
+	<property name="sql.dist.dir" value="${sql.src.dir}" />
 
 
 	<!-- PATHS -->
@@ -200,14 +200,14 @@
 					<include name="**"/>
 			</fileset>		
 		</copy>
-		<copy todir="${sql.dist.dir}">
-			<fileset dir="${sql.src.dir}">
-					<include name="**"/>
-			</fileset>		
-			<filterset>
-					<filtersfile file="${properties.file}"/>
-			</filterset>
-		</copy>		
+		<!--<copy todir="${sql.dist.dir}">-->
+			<!--<fileset dir="${sql.src.dir}">-->
+					<!--<include name="**"/>-->
+			<!--</fileset>		-->
+			<!--<filterset>-->
+					<!--<filtersfile file="${properties.file}"/>-->
+			<!--</filterset>-->
+		<!--</copy>		-->
 	</target>
 
 	<target name="deploy:configure"  description="Package the build monitor">
