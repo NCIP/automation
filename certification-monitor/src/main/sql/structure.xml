@@ -1,7 +1,8 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"
+        logicalFilePath="structure.xml">
 
 
     <changeSet id="2010.06.14.22.29.01" author="bassetttj">
@@ -135,5 +136,48 @@
         <rollback>
             <sql>ALTER TABLE `project_poc` DROP `project_id`</sql>
         </rollback>
+    </changeSet>
+
+    <!--<changeSet id="2010.08.06.11.05" author="bassetttj" >-->
+        <!--<dropColumn tableName="project_poc" columnName="project_id" />-->
+        <!--<addColumn tableName="project_poc">-->
+            <!--<column name="project_id" type="int">-->
+                <!--<constraints nullable="false" />-->
+            <!--</column>-->
+        <!--</addColumn>-->
+        <!--<addPrimaryKey tableName="project_poc"-->
+                       <!--columnNames="project_id"-->
+                       <!--constraintName="project_poc_pk" />-->
+        <!--<sql>ALTER TABLE `project_poc` MODIFY `project_id` AUTO_INCREMENT</sql>-->
+    <!--</changeSet>-->
+
+    <changeSet id="2010.08.05.16.21" author="bassetttj">
+        <createTable tableName="project_history_type">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="project_history_type_pk" nullable="false" />
+            </column>
+            <column name="description" type="varchar(50)">
+                <constraints unique="true" uniqueConstraintName="description_unique" nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="project_history">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="project_history_pk" nullable="false" />
+            </column>
+            <column name="project" type="int">
+                <constraints foreignKeyName="project_history_project_fk"
+                             references="project_poc(project_id)"
+                             nullable="false" />
+            </column>
+            <column name="type" type="int">
+                <constraints foreignKeyName="project_history_project_history_type_fk"
+                             references="project_history_type(id)"
+                             nullable="false" />
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="notes" type="varchar(5000)" />
+        </createTable>
     </changeSet>
 </databaseChangeLog>
