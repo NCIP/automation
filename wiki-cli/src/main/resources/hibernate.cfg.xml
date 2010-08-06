@@ -4,7 +4,7 @@
 <session-factory>
     <!-- Database connection settings -->
     <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property>
-    <property name="connection.url">jdbc:mysql://localhost/buildmonitordb</property>
+    <property name="connection.url">jdbc:mysql://localhost/test</property>
     <property name="connection.username">mysql</property>
     <property name="connection.password">mysql</property>
 
@@ -24,6 +24,9 @@
 
     <mapping resource="gov/nih/nci/bda/domain/ProjectAction.hbm.xml"
              class="gov.nih.nci.bda.domain.ProjectAction"/>
+
+    <mapping resource="gov/nih/nci/bda/domain/ProjectActionType.hbm.xml"
+             class="gov.nih.nci.bda.domain.ProjectActionType"/>
 </session-factory>
 
 </hibernate-configuration>

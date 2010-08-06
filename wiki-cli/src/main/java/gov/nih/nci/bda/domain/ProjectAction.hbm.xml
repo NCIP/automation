@@ -11,7 +11,7 @@
         <property name="date" column="date" type="date"/>
         <property name="notes" column="notes" type="string" />
         <many-to-one name="project"
-                     column="project_id"
+                     column="project"
                      not-null="true"
                      class="gov.nih.nci.bda.domain.Project"/>
 

@@ -237,6 +237,9 @@ wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.java -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectAction.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectAction.java -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectActionType.hbm.xml -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectActionType.java -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectActionTypeHelper.java -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectHelper.java -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy -text
@@ -245,6 +248,8 @@ wiki-cli/src/main/java/gov/nih/nci/test/StringAssert.java -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/History.java -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java -text
+wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectActionTest.java -text
+wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectActionTypeHelperTest.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectHelperTest.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectTest.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy -text
