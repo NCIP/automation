@@ -88,12 +88,12 @@
 
 	<target name="deploy:sql" description="create table and populate data">
 
-        <changeLogSync  changelogfile="${sql.dist.dir}/structure.xml"
-                        url="${database.url}"
-                        username="${database.user}"
-                        password="${database.password}"
-                        driver="${database.driver}"
-                        classpathref="project.classpath" />
+        <!--<changeLogSync  changelogfile="${sql.dist.dir}/structure.xml"-->
+                        <!--url="${database.url}"-->
+                        <!--username="${database.user}"-->
+                        <!--password="${database.password}"-->
+                        <!--driver="${database.driver}"-->
+                        <!--classpathref="project.classpath" />-->
 
         <echo>database.url=${database.url}</echo>
 
