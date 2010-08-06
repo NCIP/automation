@@ -1,6 +1,6 @@
 package test.gov.nih.nci.wiki;
 
-import gov.nih.nci.util.HibernateUtil;
+import gov.nih.nci.bda.certification.util.HibernateUtil;
 import gov.nih.nci.wiki.History;
 import gov.nih.nci.wiki.ProjectCertificationStatus;
 import junit.framework.Test;
@@ -30,16 +30,14 @@ public class HistoryTest extends TestCase {
         super.tearDown();
     }
 
-    Session s = HibernateUtil.getSession();
-    org.hibernate.Query q = s.createQuery(" from ProjectCertificationStatus ");
-
-
     /**
      *
      * Method: getMostRecent()
      *
      */
     public void testGetMostRecent() throws Exception {
+        Session s = HibernateUtil.getSession();
+        org.hibernate.Query q = s.createQuery(" from ProjectCertificationStatus ");
         String projectName = "xxx" ;
         s.beginTransaction();
         ProjectCertificationStatus testStatus = new ProjectCertificationStatus();

@@ -242,7 +242,6 @@ wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/MailSender.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/test/StringAssert.java -text
-wiki-cli/src/main/java/gov/nih/nci/util/HibernateUtil.java -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/History.java -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java -text

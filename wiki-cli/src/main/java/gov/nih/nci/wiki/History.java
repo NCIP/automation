@@ -1,11 +1,12 @@
 package gov.nih.nci.wiki;
 
-import gov.nih.nci.util.HibernateUtil;
+import gov.nih.nci.bda.certification.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 
 /**
@@ -21,7 +22,7 @@ public class History {
     public static final String WIKI_CERTIFICATION_GREEN = "(/)" ;
 
 
-    public ProjectCertificationStatus getMostRecentSuccess(String projectName) {
+    public ProjectCertificationStatus getMostRecentSuccess(String projectName) throws FileNotFoundException {
         ProjectCertificationStatus returnValue = null ;
 
         Session s = HibernateUtil.getSession();
