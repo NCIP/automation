@@ -174,6 +174,7 @@ wiki-cli/lib/axis-1.4.jar -text
 wiki-cli/lib/axis-jaxrpc-1.4.jar -text
 wiki-cli/lib/axis-saaj-1.4.jar -text
 wiki-cli/lib/axis-wsdl4j-1.5.1.jar -text
+wiki-cli/lib/build-certification.jar -text
 wiki-cli/lib/cglib.jar -text
 wiki-cli/lib/cli-1.0.0.jar -text
 wiki-cli/lib/cli-soap-1.0.0.jar -text
@@ -232,6 +233,11 @@ wiki-cli/prod-build.properties -text
 wiki-cli/source.txt -text
 wiki-cli/src/assembly/release.xml -text
 wiki-cli/src/main/Main.iml -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.hbm.xml -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.java -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectAction.hbm.xml -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectAction.java -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectHelper.java -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/BuildStatusUpdater.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/ErrorValidator.groovy -text
 wiki-cli/src/main/java/gov/nih/nci/confluence/MailSender.groovy -text
@@ -240,6 +246,8 @@ wiki-cli/src/main/java/gov/nih/nci/util/HibernateUtil.java -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/History.java -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/wiki/ProjectCertificationStatus.java -text
+wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectHelperTest.java -text
+wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectTest.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy -text
 wiki-cli/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java -text
 wiki-cli/src/main/resources/build.xml -text

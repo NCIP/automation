@@ -4,7 +4,7 @@ import groovy.sql.Sql
 import gov.nih.nci.wiki.History
 import gov.nih.nci.wiki.ProjectCertificationStatus
 import org.hibernate.Session
-import gov.nih.nci.util.HibernateUtil
+import gov.nih.nci.bda.certification.util.HibernateUtil
 import java.text.DateFormat
 
 class BuildStatusUpdater {
@@ -37,7 +37,13 @@ class BuildStatusUpdater {
     String deploymentStatusPageSpace = properties.getProperty("deployment-status.page.space");//"confluence-cli-1.3.0.jar"
 
     // get most recent tempates
-    doCmd("${confluence} -a getPageSource --space \"" + deploymentStatusTemplateSpace + "\" --title \"" + deploymentStatusTemplateFile + "\" --file _temp.txt")
+    String cmd = "${confluence} -a getPageSource --space \"" + deploymentStatusTemplateSpace + "\" --title \"" + deploymentStatusTemplateFile + "\" --file _temp.txt";
+    Process p = doCmd(cmd);
+
+    if (p.exitValue() != 0)
+    {
+      throw new Exception("Failed:" + cmd );
+    }
     String statement = "select PRODUCT,DEV,QA,STAGE,PROD from PROJECT_BUILD_STATUS "
 
 

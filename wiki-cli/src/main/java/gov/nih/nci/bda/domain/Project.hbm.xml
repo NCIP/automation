@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="gov.nih.nci.bda.domain.Project" table="project_poc">
+         <id name="id" column="project_id">
+         	<generator class="increment"/>           
+         </id>
+        <property name="name" column="PROJECT_NAME" />
+        <property name="developer" column="DEV_POC" />
+        <property name="developerEmail" column="DEV_POC_EMAIL" />
+        <property name="government" column="GOV_POC" />
+        <property name="governmentEmail" column="GOV_POC_EMAIL" />
+        <property name="cotr" column="COTR"/>
+        <property name="cotrEmail" column="COTR_EMAIL" type="string" />
+        <property name="friendlyName" column="PROJECT_FRIENDLY" type="string" />
+        <property name="priority" column="priority" type="integer" />
+     </class>
+</hibernate-mapping>
