@@ -339,21 +339,23 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			regexp="\S+"
 			select="true"
 			/>
-		<var name="patching.version.unexpanded" unset="true"/>
-		<propertyregex property="patching.version.unexpanded"
+		<var name="patched.version.has-value" unset="true"/>
+		<propertyregex property="patched.version.has-value"
 			input="${patching.version}"
-			regexp="\$\{.*\}"
+			regexp="\S+"
 			select="true"
 			/>
 		<if>
-			<or>
-				<isset property="patching.version.unexpanded"/>
+			<and>
 				<not>
 					<isset property="patching.version.has-value"/>
 				</not>
-			</or>
+				<not>
+					<isset property="patched.version.has-value"/>
+				</not>
+			</and>
 			<then>
-				<fail message="Must set patching.version variable"/>
+				<fail message="Must set patching.version or patched.version variable"/>
 			</then>
 		</if>
 	</target>
@@ -361,23 +363,32 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<target name="patch:create:check-tag" depends="patch:create:init">
 		<if>
 			<not>
-				<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version}"/>
+				<http url="${svn.automation.tags.url}/automation-${patching.version}"/>
 			</not>
 			<then>
-				<fail message="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patching.version} does not exist"/>
+				<fail message="${svn.automation.tags.url}/automation-${patching.version} does not exist"/>
 			</then>
 		</if>
 	</target>
 	<target name="patch:get-next-version" depends="patch:create:init">
-		<echo message="patching version is - ${patching.version}"/>
-		<groovy>
-			 List versionList=properties["patching.version"].split("\\.")
-			 String majorVersion=versionList[0]
-			 String minorVersion=versionList[1]
-			 String patchVersion=versionList[2].toInteger().plus(1).toString()
-			 properties["patched.version"]= majorVersion + "." + minorVersion + "." + patchVersion
-		</groovy>
-		<echo message="patched version is - ${patched.version}"/>
+		<if>
+			<isset property="patched.version"/>
+			<then>
+				<echo message="patched.version is set to ${patched.version}"/>
+			</then>
+			<else>
+				<echo message="patched.version is not set calculating based on patching version"/>
+				<echo message="patching version is - ${patching.version}"/>
+				<groovy>
+					 List versionList=properties["patching.version"].split("\\.")
+					 String majorVersion=versionList[0]
+					 String minorVersion=versionList[1]
+					 String patchVersion=versionList[2].toInteger().plus(1).toString()
+					 properties["patched.version"]= majorVersion + "." + minorVersion + "." + patchVersion
+				</groovy>
+				<echo message="patched version is - ${patched.version}"/>
+			</else>
+		</if>
 	</target>
 	<target name="list:tags" depends="patch:create:init" description="Lists tags based on patching.version variable">
 		<osfamily property="os.family"/>
@@ -389,7 +400,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 					 String majorVersion=versionList[0]
 					 String minorVersion=versionList[1]
 					 String baseVersion = majorVersion + "." + minorVersion 
-					 String cmd= "svn list https://gforge.nci.nih.gov/svnroot/automation/tags"
+					 String cmd= "svn list " + properties["svn.automation.tags.url"]
 					 println cmd
 					 process=cmd.execute()
 					 process.in.eachLine{line->if(line.contains(baseVersion)){println line}}
@@ -414,7 +425,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 					 String minorVersion=versionList[1]
 					 Integer patchVersion=versionList[2].toInteger()
 					 String baseVersion = majorVersion + "." + minorVersion 
-					 String cmd= "svn list https://gforge.nci.nih.gov/svnroot/automation/tags"
+					 String cmd= "svn list " + properties["svn.automation.tags.url"]
 					 Integer maxVersion=0
 					 process=cmd.execute()
 					 process.in.eachLine{line->
@@ -456,7 +467,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		patch:max-tag-version,
 		patch:get-next-version
 		">
-		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
 		<property name="svn.automation.previous.tag.url" value="${svn.automation.base.url}/tags/automation-${patching.version}"/>
 		<property name="svn.automation.new.branch.url" value="${svn.automation.base.url}/branches/automation-${patched.version}"/>
 		<echo message="svn.automation.previous.tag.url - ${svn.automation.previous.tag.url}"/>
@@ -490,7 +500,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 				<fail message="Must set patched.version variable"/>
 			</then>
 		</if>
-		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
 		<property name="svn.patch.branch.url" value="${svn.automation.base.url}/branches/automation-${patched.version}"/>
 		<property name="svn.patch.tag.url" value="${svn.automation.base.url}/tags/automation-${patched.version}"/>
 		<property name="svn.bda-template.branch.url" value="${svn.patch.branch.url}/software/bda-build-template"/>
@@ -625,9 +634,9 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 	<target name="patch:release:check-tag" depends="patch:co:init">
 		<if>
-			<http url="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patched.version}"/>
+			<http url="${svn.automation.tags.url}/automation-${patched.version}"/>
 			<then>
-				<fail message="http://gforge.nci.nih.gov/svnroot/automation/tags/automation-${patched.version} already exists"/>
+				<fail message="${svn.automation.tags.url}/automation-${patched.version} already exists"/>
 			</then>
 		</if>
 	</target>
@@ -676,7 +685,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			/>
 	</target>
 	<target name="cbiit-ivy:init">
-		<property name="svn.cbiit-ivy.base.url" value="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk"/>
 		<property name="svn.cbiit-ivy.utils.url" value="${svn.cbiit-ivy.base.url}/ncicb/bda-utils"/>
 		<property name="svn.cbiit-ivy.utils.dir" value="${target.dir}/cbiit-bda-utils"/>
 	</target>
@@ -770,7 +778,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="legacy-ivy:init">
-		<property name="svn.legacy-ivy.base.url" value="https://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo"/>
 		<property name="svn.legacy-ivy.utils.url" value="${svn.legacy-ivy.base.url}/ncicb/bda-utils"/>
 		<property name="svn.legacy-ivy.utils.dir" value="${target.dir}/legacy-ivy-utils"/>
 	</target>
@@ -790,30 +797,29 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		 </if>
 	</target>
 	<target name="trunk:init">
-		<var name="current.version.has-value" unset="true"/>
-		<propertyregex property="current.version.has-value"
-			input="${current.version}"
+		<var name="trunk.version.has-value" unset="true"/>
+		<propertyregex property="trunk.version.has-value"
+			input="${trunk.version}"
 			regexp="\S+"
 			select="true"
 			/>
-		<var name="current.version.unexpanded" unset="true"/>
-		<propertyregex property="current.version.unexpanded"
-			input="${current.version}"
+		<var name="trunk.version.unexpanded" unset="true"/>
+		<propertyregex property="trunk.version.unexpanded"
+			input="${trunk.version}"
 			regexp="\$\{.*\}"
 			select="true"
 			/>
 		<if>
 			<or>
-				<isset property="current.version.unexpanded"/>
+				<isset property="trunk.version.unexpanded"/>
 				<not>
-					<isset property="current.version.has-value"/>
+					<isset property="trunk.version.has-value"/>
 				</not>
 			</or>
 			<then>
-				<fail message="Must set current.version variable to upt comments in files, ie  1.7.0."/>
+				<fail message="Must set trunk.version variable to upt comments in files, ie  1.7.0."/>
 			</then>
 		</if>
-		<property name="svn.automation.base.url" value="https://gforge.nci.nih.gov/svnroot/automation"/>
 		<property name="svn.automation.trunk.url" value="${svn.automation.base.url}/trunk"/>
 		<property name="svn.bda-template.trunk.url" value="${svn.automation.trunk.url}/software/bda-build-template"/>
 		<property name="svn.bda-utils.trunk.url" value="${svn.automation.trunk.url}/software/utils"/>
@@ -822,7 +828,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		<echo message="svn.bda-template.trunk.dir - ${svn.bda-template.trunk.dir}"/>
 		<echo message="svn.bda-utils.trunk.dir - ${svn.bda-utils.trunk.dir}"/>
 	</target>
-	<target name="trunk:co" depends="trunk:init" description="Check out the trunk, must set current.version to add to headers in files, ie 1.7.0">
+	<target name="trunk:co" depends="trunk:init" description="Check out the trunk, must set trunk.version to add to headers in files, ie 1.7.0">
 		<bda-co
 			svn.user="${old.svn.username}"
 			svn.pass="${old.svn.password}"
@@ -830,18 +836,18 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			svn.bda-template.dir="${svn.bda-template.trunk.dir}"
 			svn.bda-utils.url="${svn.bda-utils.trunk.url}"
 			svn.bda-utils.dir="${svn.bda-utils.trunk.dir}"
-			bda.version="${current.version}-beta"
+			bda.version="${trunk.version}-beta"
 			/>
 	</target>
 	<target name="trunk:local-repo:init" depends="trunk:init">
 		<property name="bda-local-repo.base.dir" location="${target.dir}/bda-local-ivy-repo/"/>
-		<property name="bda-local-repo.dir" location="${bda-local-repo.base.dir}/ncicb/bda-utils/${current.version}-beta"/>
+		<property name="bda-local-repo.dir" location="${bda-local-repo.base.dir}/ncicb/bda-utils/${trunk.version}-beta"/>
 	</target>
 	<target name="trunk:local-repo:create" depends="trunk:local-repo:init" description="Copies patch version of automation/software/utils to target/bda-local-ivy-repo">
 		<local-repo-create
 			local-repo.dir="${bda-local-repo.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
-			bda.version="${current.version}-beta"
+			bda.version="${trunk.version}-beta"
 			/>
 	</target>
 	<target name="trunk:dev"
@@ -855,12 +861,21 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			local-repo.dir="${bda-local-repo.dir}"
 			local-repo.base.dir="${bda-local-repo.base.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
-			bda.version="${current.version}-beta"
+			bda.version="${trunk.version}-beta"
 			/>
+	</target>
+	<target name="trunk:create:check-tag" depends="trunk:init">
+		<if>
+			<http url="${svn.automation.tags.url}/automation-${trunk.version}"/>
+			<then>
+				<fail message="${svn.automation.tags.url}/automation-${trunk.version} already exists"/>
+			</then>
+		</if>
 	</target>
 	<target name="trunk:release" description="Releasese the patch - commits working code in target, creates a tag,  checks out cbiit and legacy repos and creates new version of bda-utils in each repo (based on version)"
 		depends="
 		trunk:init,
+		trunk:create:check-tag,
 		trunk:release:automation,
 		trunk:release:tag,
 		trunk:release:cbiit-ivy,
@@ -869,7 +884,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	</target>
 
 	<target name="trunk:release:tag">
-		<property name="svn.automation.tag.url" value="${svn.automation.base.url}/tags/automation-${current.version}"/>
+		<property name="svn.automation.tag.url" value="${svn.automation.base.url}/tags/automation-${trunk.version}"/>
 		<svn username="${old.svn.username}" password="${old.svn.password}" javahl="false" svnkit="true">
 			<copy srcUrl="${svn.automation.trunk.url}" destURL="${svn.automation.tag.url}" message="Created by release manager patch:dev target"/>
 		</svn>
@@ -888,7 +903,17 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
 			bda-templates.dir="${svn.bda-template.trunk.dir}"
-			bda.version="${current.version}"
+			bda.version="${trunk.version}"
+			legacy="true"
+			/>
+		<add2ivy
+			svn.user="${old.svn.username}"
+			svn.pass="${old.svn.password}"
+			svn.ivy.bda-utils.url="${svn.legacy-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${trunk.version}-beta"
 			legacy="true"
 			/>
 	</target>
@@ -900,14 +925,24 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
 			bda-templates.dir="${svn.bda-template.trunk.dir}"
-			bda.version="${current.version}"
-			legacy="true"
+			bda.version="${trunk.version}"
+			legacy="false"
+			/>
+		<add2ivy
+			svn.user="${new.svn.username}"
+			svn.pass="${new.svn.password}"
+			svn.ivy.bda-utils.url="${svn.cbiit-ivy.utils.url}"
+			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
+			bda-utils.dir="${svn.bda-utils.trunk.dir}"
+			bda-templates.dir="${svn.bda-template.trunk.dir}"
+			bda.version="${trunk.version}-beta"
+			legacy="false"
 			/>
 	</target>
 	<target name="trunk:release:cbiit-ivy:init" depends="cbiit-ivy:init">
 		<var name="skip.cbiit-ivy" unset="true"/>
 		<groovy>
-			 List versionList=properties["current.version"].split("\\.")
+			 List versionList=properties["trunk.version"].split("\\.")
 			 Integer minorVersion=versionList[1].toInteger()
 			 println "minorVersion = ${minorVersion}"
 			 if( minorVersion &lt;= 3) properties["skip.cbiit-ivy"]=true
@@ -922,7 +957,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 	<target name="trunk:release:legacy-ivy:init" depends="legacy-ivy:init">
 		<var name="skip.legacy-ivy" unset="true"/>
 		<groovy>
-			 List versionList=properties["current.version"].split("\\.")
+			 List versionList=properties["trunk.version"].split("\\.")
 			 Integer minorVersion=versionList[1].toInteger()
 			 println "minorVersion = ${minorVersion}"
 			 if( minorVersion &gt;= 7) properties["skip.legacy-ivy"]=true
@@ -930,7 +965,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		 <if>
 			 <isset property="skip.legacy-ivy"/>
 			 <then>
-				 <echo message="${current.version} is greater than 1.6 skipping legacy repo."/>
+				 <echo message="${trunk.version} is greater than 1.6 skipping legacy repo."/>
 			 </then>
 		 </if>
 	</target>
@@ -956,7 +991,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			svn.ivy.bda-utils.dir="${svn.legacy-ivy.utils.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
 			bda-templates.dir="${svn.bda-template.trunk.dir}"
-			bda.version="${current.version}-beta"
+			bda.version="${trunk.version}-beta"
 			legacy="true"
 			/>
 	</target>
@@ -968,7 +1003,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 			svn.ivy.bda-utils.dir="${svn.cbiit-ivy.utils.dir}"
 			bda-utils.dir="${svn.bda-utils.trunk.dir}"
 			bda-templates.dir="${svn.bda-template.trunk.dir}"
-			bda.version="${current.version}-beta"
+			bda.version="${trunk.version}-beta"
 			legacy="false"
 			/>
 	</target>
