@@ -371,8 +371,15 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/ncia/trunk/software/build.xml $
 		</if>
 	</target>
 	<target name="patch:get-next-version" depends="patch:create:init">
+		<var name="patched.version.has-value" unset="true"/>
+		<propertyregex property="patched.version.has-value"
+			input="${patched.version}"
+			regexp="\S+"
+			select="true"
+			/>
+
 		<if>
-			<isset property="patched.version"/>
+			<isset property="patched.version.has-value"/>
 			<then>
 				<echo message="patched.version is set to ${patched.version}"/>
 			</then>
