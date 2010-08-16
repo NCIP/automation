@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="report-ports" default="report:ports" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:cs="antlib:com.puppycrawl.tools.checkstyle">
+
+	<!-- retrive ivy.jar.files then retrieve bda files and librarires -->
+	<condition property="commonlibrary.dir" value="">
+		<or>
+		<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="commonlibrary.dir" value="c:/">
+		<os family="windows" />
+	</condition>
+
+	<condition property="local.cbiit-ivy-repo.dir" value="">
+		<or>
+		<os family="unix" />
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<condition property="local.cbiit-ivy-repo.dir" value="c:/">
+		<os family="windows" />
+	</condition>
+
+	<property name="target.dir" location="target"/>
+	<property name="temp.dir" location="${target.dir}/temp"/>
+	<property name="software.dir" location="${temp.dir}/project/software"/>
+	<property name="bda-download.dir" location="${target.dir}/bda-download"/>
+	<property name="bda-utils.dir" location="${target.dir}/bda-utils"/>
+	<property name="lib.dir" location="${target.dir}/lib"/>
+
+	<property name="bda.version" value="1.7.0"/>
+	<property name="bda.ivy.settings.file" value="cbiit-ivy-bda-settings.xml"/>
+	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
+
+	<mkdir dir="${bda-download.dir}" />
+	<mkdir dir="${software.dir}" />
+	<mkdir dir="${lib.dir}" />
+
+	<property name="bda-download.xml.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<property name="bda-download.settings.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda.ivy.settings.file}" />
+	<get src="${bda-download.xml.url}" dest="${bda-download.dir}/${bda-download.file}" />
+	<get src="${bda-download.settings.url}" dest="${bda-download.dir}/${bda.ivy.settings.file}" />
+	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
+		<property name="bda.version" value="${bda.version}" />
+		<property name="bda-utils.dir" location="${bda-utils.dir}" />
+		<property name="lib.dir" location="${lib.dir}" />
+		<property name="software.dir" location="${software.dir}" />
+		<property name="commonlibrary.dir" location="${commonlibrary.dir}" />
+		<property name="ivy.settings.file" value="cbiit-ivy-bda-settings.xml"/>
+		<property name="target.dir" location="${target.dir}"/>
+		<property name="local.cbiit-ivy-repo.dir" value="${local.cbiit-ivy-repo.dir}"/>
+	</ant>
+	
+	<!-- Paths -->
+	<path id="bda-utils.classpath">
+		<fileset dir="${bda-utils.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<path id="ivy.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Task definitions -->
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath" />
+	<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda-utils.classpath"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="bda-utils.classpath"/>
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="bda-utils.classpath"/>
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="bda-utils.classpath"/>
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+
+	<target name="report:ports">
+		<property name="jboss.server.bindingfile.location" location="ncicb-bindings.xml"/>
+		<property name="config.list" value="config19080,config19180,config19280,config19380,config19480,config19580,config19680,config19780,config19880,config19980,config29080,config29180,config29280,config29380,config29480,config29580,config29680,config39080,config39180,config49080,config49180,config59080,config59180,config59280,config59380,config59480,config59580,config59680"/>
+		<for list="${config.list}" param="jboss.server.ports.name">
+			<sequential>
+				<echo message="Generating @{jboss.server.ports.name}.properties"/>
+				<echo append="false" file="@{jboss.server.ports.name}.properties" message=""/>
+				<var name="read.http.port" unset="true"/>
+				<var name="read.jndi.port" unset="true"/>
+				<xmltask preservetype="true" failWithoutMatch="true" source="${jboss.server.bindingfile.location}">
+					<xmlcatalog refid="bda.xml.catalog"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.web:service=WebServer']/binding/@port" property="read.http.port" attrValue="true"/>
+					<copy path="//service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
+				</xmltask>
+				<var name="read.ejb.port" unset="true"/>
+				<var name="read.jndi.port" unset="true"/>
+				<var name="read.rmi.port" unset="true"/>
+				<var name="read.ws.port" unset="true"/>
+				<var name="read.rmiobj.port" unset="true"/>
+				<var name="read.bind.port" unset="true"/>
+				<var name="read.hajndi.port" unset="true"/>
+				<var name="read.harmi.port" unset="true"/>
+				<!--<var name="read.harmihttp.port" unset="true"/>-->
+				<var name="read.pooledha.port" unset="true"/>
+				<var name="read.corba.port" unset="true"/>
+				<var name="read.jmx-rmi.port" unset="true"/>
+				<var name="read.snmp-trapd.port" unset="true"/>
+				<var name="read.snmp.port" unset="true"/>
+				<var name="read.jms.port" unset="true"/>
+				<var name="read.remoting.port" unset="true"/>
+				<var name="read.messaging.port" unset="true"/>
+				<xmltask preservetype="true" source="${jboss.server.bindingfile.location}">
+					<xmlcatalog refid="bda.xml.catalog"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.remoting:type=Connector,name=DefaultEjb3Connector,handler=ejb3']/binding/@port" property="read.ejb.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/binding/@port" property="read.jndi.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=Naming']/delegate-config/attribute[@name='RmiPort']/text()" property="read.rmi.port"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=WebService']/binding/@port" property="read.ws.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=jrmp']/binding/@port" property="read.rmiobj.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=pooled']/binding/@port" property="read.bind.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=HAJNDI']/binding/@port" property="read.hajndi.port" attrValue="true"/>
+					<!--<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=HAJNDI']/delegate-config/attribute[@name='RmiPort']/text()" property="read.harmi.port"/>-->
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=jrmpha']/binding/@port" property="read.harmi.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=invoker,type=pooledha']/binding/@port" property="read.pooledha.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss:service=CorbaORB']/binding/@port" property="read.corba.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.jmx:type=Connector,name=RMI']/binding/@port" property="read.jmx-rmi.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.jmx:name=SnmpAgent,service=trapd,type=logger']/binding/@port" property="read.snmp-trapd.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor']/binding/@port" property="read.snmp.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.mq:service=InvocationLayer,type=UIL2']/binding/@port" property="read.jms.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.remoting:service=Connector,transport=Socket']/delegate-config/binding/@port" property="read.remoting.port" attrValue="true"/>
+					<copy path="/service-bindings/server[@name='@{jboss.server.ports.name}']/service-config[@name='jboss.messaging:service=Connector,transport=bisocket']/binding/@port" property="read.messaging.port" attrValue="true"/>
+				</xmltask>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.corbaorb.port=${read.corba.port}${line.separator}"/>
+				<!-- missing from systems's file -->
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.ejbinvoker.port=0${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.hajndi.port=${read.hajndi.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.hajrmi.port=${read.harmi.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.jms.port=${read.jms.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.jmx-rmi.port=${read.jmx-rmi.port}${line.separator}"/>
+				<!-- missing from system's file -->
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.messaging.port=0${line.separator}"/>
+				<!-- missing from system's file -->
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.pooledha.port=0${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.remoting.port=${read.remoting.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.server.bind.port=${read.bind.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.server.jndi.port=${read.jndi.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.server.port=${read.http.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.server.rmi.port=${read.rmi.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.server.rmiobj.port=${read.rmiobj.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.snmp-trapd.port=${read.snmp-trapd.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.snmp.port=${read.snmp.port}${line.separator}"/>
+				<echo append="true" file="@{jboss.server.ports.name}.properties" message="jboss.web-service..port=${read.ws.port}${line.separator}"/>
+			</sequential>
+		</for>
+	</target>
+</project>
