@@ -3983,6 +3983,9 @@ software/release-manager/buildSrc/src/main/resources/org/gradle/build/startscrip
 software/release-manager/buildSrc/src/test/groovy/org/gradle/build/release/VersionTest.groovy -text
 software/release-manager/release.properties -text
 software/release-manager/settings.gradle -text
+software/repo-scripts/cagrid-sync.sh -text
+software/repo-scripts/chk-maven-up2date.pl -text
+software/repo-scripts/maven-rsync.pl -text
 software/scripts/maven-rsync.pl -text
 software/single-command-build/build.bat -text
 software/single-command-build/default.properties -text
