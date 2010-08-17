@@ -237,6 +237,7 @@ wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.java -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectAction.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectAction.java -text
+wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectActionHelper.java -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectActionType.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectActionType.java -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectActionTypeHelper.java -text

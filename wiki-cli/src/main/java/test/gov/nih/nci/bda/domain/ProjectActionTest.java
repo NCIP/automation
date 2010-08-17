@@ -53,16 +53,30 @@ public class ProjectActionTest extends TestCase {
         ProjectActionType pat = getNewProjectActionType(s);
         Project p = getNewProject(s);
 
-        ProjectAction pa = new ProjectAction();
-        pa.setType(pat.getId());
-        pa.setDate(older);
-        pa.setProject(p);
+        ProjectAction paOlder = new ProjectAction();
+        paOlder.setType(pat.getId());
+        paOlder.setDate(older);
+        paOlder.setProject(p);
+
+        ProjectAction paNewer = new ProjectAction();
+        paNewer.setType(pat.getId());
+        paNewer.setDate(newer);
+        paNewer.setProject(p);
 
         Transaction t = s.beginTransaction();
 
-        s.save(pa);
+        s.save(paOlder);
+        s.save(paNewer);
 
         t.commit();
+
+        ProjectAction latest = ProjectActionHelper.getLatestProjectAction(p.getName());
+
+        assertNotNull(latest);
+        assertEquals(paNewer.getDate(),latest.getDate());
+        assertEquals(paNewer.getId(),latest.getId());
+        assertEquals(paNewer.getProject(),latest.getProject());
+        assertEquals(paNewer.getType(),latest.getType());
 
         
 
