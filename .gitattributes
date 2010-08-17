@@ -127,6 +127,7 @@ certification-monitor/src/main/sql/dbchangelog-1.9.xsd -text
 certification-monitor/src/main/sql/example.csv -text
 certification-monitor/src/main/sql/project-poc-for-import.csv -text
 certification-monitor/src/main/sql/project-poc-working-with-legacy.ods -text
+certification-monitor/src/main/sql/project_history_type.csv -text
 certification-monitor/src/main/sql/project_poc-legacy.ods -text
 certification-monitor/src/main/sql/project_poc-master.csv -text
 certification-monitor/src/main/sql/project_poc-master.ods -text

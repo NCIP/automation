@@ -102,7 +102,9 @@
                         username="${database.user}"
                         password="${database.password}"
                         driver="${database.driver}"
-                        classpathref="project.classpath" />
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
 
         <updateDatabase changelogfile="${sql.dist.dir}/dashboard_properties_changelog.xml"
                         url="${database.url}"
@@ -149,16 +151,13 @@
 		<javac srcdir="${source.dir}" destdir="${classes.dir}" classpathref="project.classpath"/>		
 	</target>
 
-	<target name="prepare" description="Package the build monitor">		
-		<copy todir="${classes.dir}" overwrite="true">
-			<fileset dir="${source.dir}">
-				<include name="**/*.xml"/>
-			</fileset>
-		</copy>
-	</target>
+	<target name="package" depends="compile" description="Package the build monitor">
+        <copy todir="${classes.dir}" overwrite="true">
+            <fileset dir="${source.dir}">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
 
-
-	<target name="package" depends="prepare" description="Package the build monitor">
 		<jar destfile="${dist.dir}/${build.certification.jar}" basedir="${classes.dir}" update="true" >
 		    <manifest>
 		      <attribute name="Main-Class" value="gov.nih.nci.bda.certification.CertificationManager"/>

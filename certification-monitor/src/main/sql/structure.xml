@@ -180,4 +180,11 @@
             <column name="notes" type="varchar(5000)" />
         </createTable>
     </changeSet>
+
+    <changeSet id="2010.08.17.15.04" author="bassetttj" runOnChange="true">
+        <delete tableName="project_history_type" />
+        <loadData tableName="project_history_type"
+                  file="${sql.dist.dir}/project_history_type.csv">
+        </loadData>
+    </changeSet>
 </databaseChangeLog>
