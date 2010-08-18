@@ -1394,6 +1394,7 @@ $HeadURL$
 		depends="
 		upgrade:jboss:init:prep,
 		upgrade:jboss:readers:bda,
+		upgrade:jboss-grid:readers:bda,
 		upgrade:jboss:readers:custom
 		">
 		<properties-print
@@ -1419,6 +1420,7 @@ $HeadURL$
 		depends="
 		upgrade:tomcat:init:prep,
 		upgrade:tomcat:readers:bda,
+		upgrade:tomcat-grid:readers:bda,
 		upgrade:tomcat:readers:custom
 		">
 		<properties-print
@@ -1653,6 +1655,16 @@ $HeadURL$
 					/>
 			</then>
 		</if>
+		<read-property-from-properties-service
+			jboss.home="${read.jboss.home}"
+			property.name="property1"
+			/>
+		<read-property-from-properties-service
+			jboss.home="${read.jboss.home}"
+			property.name="property2"
+			/>
+	</target>
+	<target name="upgrade:jboss-grid:readers:bda" unless="exclude.jboss">
 		<if>
 			<not>
 				<isset property="exclude.jboss.grid"/>
@@ -1694,14 +1706,6 @@ $HeadURL$
 					/>
 			</then>
 		</if>
-		<read-property-from-properties-service
-			jboss.home="${read.jboss.home}"
-			property.name="property1"
-			/>
-		<read-property-from-properties-service
-			jboss.home="${read.jboss.home}"
-			property.name="property2"
-			/>
 	</target>
 	<target name="upgrade:tomcat:readers:bda" depends="upgrade:tomcat:init:prep" unless="exclude.tomcat">
 
@@ -1737,6 +1741,12 @@ $HeadURL$
 		<tomcat-read-external-hostname
 			tomcat.home="${read.tomcat.home}"
 			/>
+		<!-- Fail if any read properties are not set -->
+		<echo message="All properties after readers"/>
+		<tomcat-read-dbconfig
+			/>
+	</target>
+	<target name="upgrade:tomcat-grid:readers:bda" depends="upgrade:tomcat:init:prep" unless="exclude.tomcat">
 		<if>
 			<not>
 				<isset property="exclude.tomcat.grid"/>
@@ -1763,10 +1773,6 @@ $HeadURL$
 					/>
 			</then>
 		</if>
-		<!-- Fail if any read properties are not set -->
-		<echo message="All properties after readers"/>
-		<tomcat-read-dbconfig
-			/>
 	</target>
 	<!-- For JBoss 5.1
 		<copy file="${copied.jboss.log4j.dir}/jboss-log4j.xml" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
