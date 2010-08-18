@@ -7,7 +7,11 @@
          	<generator class="increment"/>
          </id>
 
-        <property name="type" column="type" type="int"/>
+        <many-to-one name="type"
+                     column="type"
+                     not-null="true"
+                     class="gov.nih.nci.bda.domain.ProjectActionType"/>
+
         <property name="date" column="date" type="date"/>
         <property name="notes" column="notes" type="string" />
         <many-to-one name="project"

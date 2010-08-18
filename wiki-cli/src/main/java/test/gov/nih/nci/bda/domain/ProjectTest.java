@@ -1,8 +1,15 @@
 package test.gov.nih.nci.bda.domain;
 
+import gov.nih.nci.bda.certification.util.HibernateUtil;
+import gov.nih.nci.bda.domain.Project;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import java.io.FileNotFoundException;
+import java.util.UUID;
 
 /**
  * Project Tester.
@@ -16,8 +23,10 @@ public class ProjectTest extends TestCase {
         super(name);
     }
 
+
     public void setUp() throws Exception {
         super.setUp();
+        HibernateUtil.setConnectionUrl("jdbc:mysql://localhost/test");
     }
 
     public void tearDown() throws Exception {
@@ -208,5 +217,19 @@ public class ProjectTest extends TestCase {
 
     public static Test suite() {
         return new TestSuite(ProjectTest.class);
+    }
+
+    public static Project getTestProject() throws FileNotFoundException {
+
+        Project p = new Project();
+        p.setName(UUID.randomUUID().toString());
+
+        Session s = HibernateUtil.getSession();
+        Transaction t = s.beginTransaction();
+        s.clear();
+        s.save(p);
+        t.commit();
+        return p;
+
     }
 }

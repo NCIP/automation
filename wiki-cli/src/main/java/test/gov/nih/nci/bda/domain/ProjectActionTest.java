@@ -50,16 +50,16 @@ public class ProjectActionTest extends TestCase {
         Session s = HibernateUtil.getSession();
         s.clear();
 
-        ProjectActionType pat = getNewProjectActionType(s);
-        Project p = getNewProject(s);
+        ProjectActionType pat = getNewProjectActionType();
+        Project p = getNewProject();
 
         ProjectAction paOlder = new ProjectAction();
-        paOlder.setType(pat.getId());
+        paOlder.setType(pat);
         paOlder.setDate(older);
         paOlder.setProject(p);
 
         ProjectAction paNewer = new ProjectAction();
-        paNewer.setType(pat.getId());
+        paNewer.setType(pat);
         paNewer.setDate(newer);
         paNewer.setProject(p);
 
@@ -82,7 +82,9 @@ public class ProjectActionTest extends TestCase {
 
     }
 
-    private static Project getNewProject(Session s) throws FileNotFoundException {
+    private static Project getNewProject() throws FileNotFoundException {
+
+        Session s = HibernateUtil.getSession();
 
 
         Project p = new Project();
@@ -106,7 +108,10 @@ public class ProjectActionTest extends TestCase {
 
     }
 
-    private static ProjectActionType getNewProjectActionType(Session s) throws FileNotFoundException {
+    public static ProjectActionType getNewProjectActionType() throws FileNotFoundException {
+
+        Session s = HibernateUtil.getSession();
+
         ProjectActionType pat = new ProjectActionType();
 
         s.clear();
@@ -123,6 +128,19 @@ public class ProjectActionTest extends TestCase {
         pat = ProjectActionTypeHelper.getByDescription(patDescription);
 
         return pat;
+    }
+
+    public static ProjectAction getTestProjectAction() throws FileNotFoundException {
+        ProjectAction pa = new ProjectAction();
+        pa.setProject(ProjectActionTest.getNewProject());
+        pa.setDate(new Date());
+        pa.setNotes(UUID.randomUUID().toString());
+        pa.setType(getNewProjectActionType());
+        Session s = HibernateUtil.getSession();
+        Transaction t = s.beginTransaction();
+        s.save(pa);
+        t.commit();
+        return pa;
     }
 
 

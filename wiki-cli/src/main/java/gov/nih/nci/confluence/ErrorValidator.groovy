@@ -208,7 +208,7 @@ class ErrorValidator {
 
     pa.setProject(p);
     pa.setDate(new Date());
-    pa.setType(pat.getId());
+    pa.setType(pat);
 
     String notes = "";
 

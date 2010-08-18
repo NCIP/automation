@@ -6,6 +6,8 @@ import gov.nih.nci.wiki.ProjectCertificationStatus
 import org.hibernate.Session
 import gov.nih.nci.bda.certification.util.HibernateUtil
 import java.text.DateFormat
+import gov.nih.nci.bda.domain.ProjectAction
+import gov.nih.nci.bda.domain.ProjectActionHelper
 
 class BuildStatusUpdater {
   def properties = null
@@ -304,6 +306,8 @@ class BuildStatusUpdater {
 
   private String getWikiMarkupForRow(String project, String productWikiText, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller, Date lastCertified) {
 
+    ProjectAction lastProjectAction = ProjectActionHelper.getLatestProjectAction(project);
+
     String returnValue = WIKI_TABLE_BEGIN_ROW;
 
     certification = getCertificationStatus(bdaEnabled, singleCommandBuild, singleCommandDeploy, remoteUpgrade, databaseIntegration, privateProperties, deploymentShakeout, templateValidation, ciBuild, commandLineInstaller)
@@ -317,6 +321,14 @@ class BuildStatusUpdater {
       else {
         certification += "n/a";
       }
+
+      certification += "\\\\" ;
+
+      if (lastProjectAction != null)
+      {
+        certification += "Last action: " + lastProjectAction.getType().getDescription() + " on " + DateFormat.getInstance().format(lastProjectAction.getDate());
+      }
+
     }
 
     returnValue += removeEndDinks(productWikiText) + WIKI_TABLE_CELL_TERMINATOR;

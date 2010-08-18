@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class ProjectAction {
     private int id;
-    private int type;
+    private ProjectActionType type;
     private Date date;
     private String notes;
     private Project project;
@@ -40,11 +40,11 @@ public class ProjectAction {
         this.date = date;
     }
 
-    public int getType() {
+    public ProjectActionType getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(ProjectActionType type) {
         this.type = type;
     }
 
