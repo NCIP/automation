@@ -16,24 +16,19 @@ class MailSender {
     println "Set default timeout to ${client.defaultTimeout}."
 
     println "Connecting to ${host} ..."
-    try {
-      client.connect(host, port)
-    } catch (Throwable t) {
-      println "Error connecting to ${host}: ${t.localizedMessage}"
-      return
-    }
+    client.connect(host, port)
 
     client.soTimeout = soTimeout
 
     if (!client.setSender(from)) {
-      println "Error setting sender!"
+      throw new Exception("Error setting sender!");
     }
     println client.replyString
 
     recipients.each {
       println "Adding recipient ${it} ..."
       if (!client.addRecipient(it)) {
-        println "Error adding recipient!"
+        throw new Exception("Error adding recipient!");
       }
       println client.replyString
     }
@@ -48,11 +43,13 @@ class MailSender {
     println "Headers ...\n${header}"
 
     if (!client.sendShortMessageData(header.toString() + message)) {
-      println "Error sending message!"
+      throw new Exception("Error sending message!");
     }
     println client.replyString
 
     disconnect(client)
+
+    return true;
   }
 
   static void disconnect(SMTPClient client) 
