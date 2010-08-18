@@ -1,6 +1,14 @@
 package gov.nih.nci.confluence
 
 import groovy.sql.Sql
+import gov.nih.nci.bda.domain.ProjectAction
+import gov.nih.nci.bda.domain.Project
+import gov.nih.nci.bda.domain.ProjectHelper
+import gov.nih.nci.bda.domain.ProjectActionType
+import gov.nih.nci.bda.domain.ProjectActionTypeHelper
+import org.hibernate.Session
+import gov.nih.nci.bda.certification.util.HibernateUtil
+import org.hibernate.Transaction
 
 class ErrorValidator {
 	def properties = null
@@ -240,6 +248,7 @@ class ErrorValidator {
 				recipientList.add(processToken)
 			}
 			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message)
+            logMessageToProjectHistory(projectName, recipientList , "BDA Certification status for " + projectName,message)
             println "Success Sending Email To:" + projectName ;
 		}
 		catch(Exception ex){
@@ -249,4 +258,36 @@ class ErrorValidator {
 			ex.printStackTrace()
 		}
 	}
+
+  void logMessageToProjectHistory(String projectName, ArrayList recipients, String subject, String text) {
+
+    ProjectAction pa = new ProjectAction();
+    Project p = ProjectHelper.getByName(projectName);
+    ProjectActionType pat = ProjectActionTypeHelper.getByDescription("email");
+
+
+    pa.setProject(p);
+    pa.setDate(new Date());
+    pa.setType(pat.getId());
+
+    String notes = "";
+
+    for(String recipient: recipients.iterator()) {
+      notes += recipient + "\r\n";
+    }
+
+    notes += text;
+
+    pa.setNotes(notes);
+    
+
+    Session s = HibernateUtil.getSession();
+
+    Transaction t = s.beginTransaction();
+
+    s.save(pa);
+
+    t.commit();
+
+  }
 }

@@ -255,6 +255,7 @@ wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectActionTypeHelperTest.j
 wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectHelperTest.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/bda/domain/ProjectTest.java -text
 wiki-cli/src/main/java/test/gov/nih/nci/confluence/BuildStatusUpdaterTest.groovy -text
+wiki-cli/src/main/java/test/gov/nih/nci/confluence/ErrorValidatorTest.groovy -text
 wiki-cli/src/main/java/test/gov/nih/nci/wiki/HistoryTest.java -text
 wiki-cli/src/main/resources/build.xml -text
 wiki-cli/src/main/resources/confluence.bat -text
