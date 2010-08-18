@@ -252,10 +252,13 @@ class ErrorValidator {
             println "Success Sending Email To:" + projectName ;
 		}
 		catch(Exception ex){
-          println "Exception sending email for project:" + projectName;  
+          println "Exception sending email for project:" + projectName;
+
           println ex.toString();
 
-			ex.printStackTrace()
+		  ex.printStackTrace();
+
+          throw ex;
 		}
 	}
 
