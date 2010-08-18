@@ -14,9 +14,9 @@ class BuildStatusUpdater {
   public static final String WIKI_TABLE_BEGIN_ROW = "||";
   public static final String WIKI_TABLE_END_ROW = "|| \n";
   public static final String WIKI_TABLE_CELL_TERMINATOR = "|";
-  public static final String WIKI_CERTIFICATION_GREEN = "(/)" ;
-  public static final String WIKI_CERTIFICATION_RED = "(x)" ;
-  public static final String WIKI_LINE_BREAK = "\\\\" ;
+  public static final String WIKI_CERTIFICATION_GREEN = "(/)";
+  public static final String WIKI_CERTIFICATION_RED = "(x)";
+  public static final String WIKI_LINE_BREAK = "\\\\";
 
 
   static void main(String[] args) {
@@ -39,9 +39,8 @@ class BuildStatusUpdater {
     String cmd = "${confluence} -a getPageSource --space \"" + deploymentStatusTemplateSpace + "\" --title \"" + deploymentStatusTemplateFile + "\" --file _temp.txt";
     Process p = doCmd(cmd);
 
-    if (p.exitValue() != 0)
-    {
-      throw new Exception("Failed:" + cmd );
+    if (p.exitValue() != 0) {
+      throw new Exception("Failed:" + cmd);
     }
     String statement = "select PRODUCT,DEV,QA,STAGE,PROD from PROJECT_BUILD_STATUS "
 
@@ -105,25 +104,21 @@ class BuildStatusUpdater {
       }
 
     }
-    catch (IOException ioe) {
-      ioe.printStackTrace();
-    }
-    finally
-    {
+    finally {
       reader.close();
       reader.finalize();
       writer.close();
       writer.finalize();
     }
 
-    println "Updating page..." ;
+    println "Updating page...";
 
     // update bdafied page
-    println "${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile ;
+    println "${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile;
 
-    doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile) ;
+    doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile);
 
-    println "Page updated..." ;
+    println "Page updated...";
   }
 
   public void updateCertificationStatusForNonBDAProjects() {
@@ -172,22 +167,21 @@ class BuildStatusUpdater {
     catch (IOException ioe) {
       ioe.printStackTrace();
     }
-    finally
-    {
+    finally {
       reader.close();
       reader.finalize();
       writer.close();
       writer.finalize();
     }
 
-    println "Updating page..." ;
+    println "Updating page...";
 
     // update bdafied page
-    println "${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile ;
+    println "${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile;
 
-    doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile) ;
+    doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile);
 
-    println "Page updated..." ;
+    println "Page updated...";
   }
 
   Session s = HibernateUtil.getSession();
@@ -248,23 +242,34 @@ class BuildStatusUpdater {
 
       // repair the cerification - database is unreliable if
       // the build is stopped midway
-      String certification = getCertificationStatus(bdaEnabled,singleCommandBuild,singleCommandDeployment,remoteUpgrade,databaseIntegration,privateProperties,deploymentShakeout,templateValidation,ciBuild,commandLineInstaller) ;
+      String certification = getCertificationStatus(bdaEnabled, singleCommandBuild, singleCommandDeployment, remoteUpgrade, databaseIntegration, privateProperties, deploymentShakeout, templateValidation, ciBuild, commandLineInstaller);
 
-      newHistory.setCertificationStatus(certification) ;
+      newHistory.setCertificationStatus(certification);
 
       System.out.println("Saving history for " + productName)
       s.save(newHistory);
       s.getTransaction().commit();
 
-      Date lastCertifiedDate = getLastCertifiedDate(productName) ;
+      Date lastCertifiedDate = getLastCertifiedDate(productName);
 
       System.out.println("dashboardTableText(" + productString + ":lastCertifiedDate=" + lastCertifiedDate.toString());
 
-      String thisRowText = getWikiMarkupForRow(
-              replaceProductString, replaceBdaEnabledString, certificationStatus, singleCommandBuild, singleCommandDeployment, databaseIntegration, remoteUpgrade, templateValidation, privateProperties, ciBuild, deploymentShakeout, commandLineInstaller, lastCertifiedDate);
+      String thisRowText = getWikiMarkupForRow( productName
+                                                , replaceProductString
+                                                , replaceBdaEnabledString
+                                                , certificationStatus
+                                                , singleCommandBuild
+                                                , singleCommandDeployment
+                                                , databaseIntegration
+                                                , remoteUpgrade
+                                                , templateValidation
+                                                , privateProperties
+                                                , ciBuild
+                                                , deploymentShakeout
+                                                , commandLineInstaller
+                                                , lastCertifiedDate);
 
       returnValue += thisRowText;
-
 
 
     }
@@ -274,18 +279,17 @@ class BuildStatusUpdater {
 
   java.util.Date getLastCertifiedDate(String productString) {
 
-    Date returnValue = null ;
+    Date returnValue = null;
 
     History history = new History();
     ProjectCertificationStatus result = history.getMostRecentSuccess(productString);
 
-    if (result != null && result.getCertificationDate() != null)
-    {
+    if (result != null && result.getCertificationDate() != null) {
       returnValue = result.getCertificationDate();
     }
 
     return returnValue;
-    
+
   }
 
   private Process retrieveTemplate(String certificationTemplateSpace, String certificationTemplateFile, String saveAs) {
@@ -298,39 +302,24 @@ class BuildStatusUpdater {
   }
 
 
-  private String getWikiMarkupForRow( String product
-                                      , String bdaEnabled
-                                      , String certification
-                                      , String singleCommandBuild
-                                      , String singleCommandDeploy
-                                      , String databaseIntegration
-                                      , String remoteUpgrade
-                                      , String templateValidation
-                                      , String privateProperties
-                                      , String ciBuild
-                                      , String deploymentShakeout
-                                      , String commandLineInstaller
-                                      , Date lastCertified ) {
+  private String getWikiMarkupForRow(String project, String productWikiText, String bdaEnabled, String certification, String singleCommandBuild, String singleCommandDeploy, String databaseIntegration, String remoteUpgrade, String templateValidation, String privateProperties, String ciBuild, String deploymentShakeout, String commandLineInstaller, Date lastCertified) {
 
     String returnValue = WIKI_TABLE_BEGIN_ROW;
 
     certification = getCertificationStatus(bdaEnabled, singleCommandBuild, singleCommandDeploy, remoteUpgrade, databaseIntegration, privateProperties, deploymentShakeout, templateValidation, ciBuild, commandLineInstaller)
-    certification = removeEndDinks(certification) ;
+    certification = removeEndDinks(certification);
 
-    if ( certification != WIKI_CERTIFICATION_GREEN )
-    {
-      certification += WIKI_LINE_BREAK + "Last certified: " ;
-      if (lastCertified != null)
-      {
+    if (certification != WIKI_CERTIFICATION_GREEN) {
+      certification += WIKI_LINE_BREAK + "Last certified: ";
+      if (lastCertified != null) {
         certification += DateFormat.getInstance().format(lastCertified);
       }
-      else
-      {
-        certification += "n/a" ;
+      else {
+        certification += "n/a";
       }
     }
 
-    returnValue += removeEndDinks(product) + WIKI_TABLE_CELL_TERMINATOR;
+    returnValue += removeEndDinks(productWikiText) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += removeEndDinks(certification) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += removeEndDinks(bdaEnabled) + WIKI_TABLE_CELL_TERMINATOR;
     returnValue += removeEndDinks(singleCommandBuild) + WIKI_TABLE_CELL_TERMINATOR;
