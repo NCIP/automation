@@ -482,6 +482,11 @@ class BuildStatusUpdater {
 
     Process process = cmdStr.execute()
     println "${process.text} ${process.err.text}"
+    if (process.exitValue() != 0) {
+      println "ERROR VALUE: ${process.exitValue()}"
+      println "ERROR TEXT:  ${process.err.text}"
+      throw new Exception("Command failure code: ${process.exitValue()}\n ${process.err.text()}\n ${cmd}")
+    }
     return process
 
   }
