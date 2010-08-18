@@ -24,9 +24,8 @@ class BuildStatusUpdater {
     buildStatus.loadProperties();
     buildStatus.setDBConnection();
     buildStatus.setDefaultConfluenceString();
-    //buildStatus.updateBuildStatus();
-    buildStatus.updateCertificationStatusForBDAProjects2();
-    buildStatus.updateCertificationStatusForNonBDAProjects2();
+    buildStatus.updateCertificationStatusForBDAProjects();
+    buildStatus.updateCertificationStatusForNonBDAProjects();
     buildStatus.closeDBConnection();
   }
 
@@ -66,7 +65,7 @@ class BuildStatusUpdater {
     }
   }
 
-  public void updateCertificationStatusForBDAProjects2() {
+  public void updateCertificationStatusForBDAProjects() {
 
     String certificationTemplateFile = properties.getProperty("certification.template.file");//"Deployment_Status_Template"
     String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
@@ -127,7 +126,7 @@ class BuildStatusUpdater {
     println "Page updated..." ;
   }
 
-  public void updateCertificationStatusForNonBDAProjects2() {
+  public void updateCertificationStatusForNonBDAProjects() {
 
     String certificationTemplateFile = properties.getProperty("non-bda.template2.file");//"Deployment_Status_Template"
     String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
