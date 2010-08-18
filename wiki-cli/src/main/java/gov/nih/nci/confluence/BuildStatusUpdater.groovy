@@ -481,20 +481,10 @@ class BuildStatusUpdater {
       cmdStr = ["sh", "-c", "${cmd}"]
 
     Process process = cmdStr.execute()
-    process.waitForOrKill(1000 * 240) ;
 
-
-    println "${process.text} ${process.err.text}"
-
-    println "ERROR VALUE: ${process.exitValue()}"
-    println "ERROR TEXT:  ${process.err.text}"
-
-    // wait for 4 minutes
-
-    if (process.exitValue() != 0) {
+    if (process.waitFor() != 0) {
       throw new Exception("Command failure code: ${process.exitValue()}\n ${process.err.text()}\n ${cmd}")
     }
-
 
     return process
 
