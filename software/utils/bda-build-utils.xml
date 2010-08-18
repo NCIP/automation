@@ -439,32 +439,53 @@ $HeadURL$
 	<macrodef name="jboss-start-jboss" description="Starts a local JBoss instance">
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="jboss.major.version" default="${jboss.major.version}"/>
 		<sequential>
-			<available file="@{jboss.home}/server/@{jboss.server.name}/bin" property="jboss.bin.exists"/>
 			<if>
-				<isset property="jboss.bin.exists"/>
+				<and>
+					<available file="@{jboss.home}/server/@{jboss.server.name}/bin/start_jboss"/>
+					<or>
+						<os family="unix"/>
+						<os family="mac"/>
+					</or>
+
+				</and>
 				<then>
-					<echo message="Starting JBoss instance at @{jboss.home} with start_jboss" />
+					<echo message="Starting JBoss instance at @{jboss.home}/server/@{jboss.server.name}/bin with start_jboss" />
 					<exec executable="@{jboss.home}/server/@{jboss.server.name}/bin/start_jboss" osfamily="unix" />
 				</then>
+				<elseif>
+					<and>
+						<available file="@{jboss.home}/bin/start_jboss"/>
+						<or>
+							<os family="unix"/>
+							<os family="mac"/>
+						</or>
+					</and>
+					<then>
+						<echo message="Starting JBoss instance at @{jboss.home} with start_jboss" />
+						<exec executable="@{jboss.home}/bin/start_jboss" osfamily="unix"/>
+					</then>
+				</elseif>
 				<else>
-					<echo message="Starting JBoss instance at @{jboss.home} with run.sh" />
-					<exec osfamily="unix" executable="chmod" spawn="true">
-						<arg value="+x" />
-						<arg file="@{jboss.home}/bin/run.sh" />
-						<arg file="@{jboss.home}/bin/shutdown.sh" />
-					</exec>
-
+					<echo message="Starting JBoss instance at @{jboss.home}/bin/run.sh" />
+					<var name="bind.address.arg" value=""/>
+					<if>
+						<equals arg1="@{jboss.major.version}" arg2="5"/>
+						<then>
+							<property name="bind.address.arg" value="-b 0.0.0.0"/>
+						</then>
+					</if>
 					<exec executable="nohup" osfamily="unix" dir="@{jboss.home}/bin" spawn="true">
 						<env key="NOPAUSE" value="true" />
 						<env key="JBOSS_HOME" value=""/>
-						<arg line="./run.sh -c @{jboss.server.name}" />
+						<arg line="./run.sh -c @{jboss.server.name} ${bind.address.arg}" />
 					</exec>
 
 					<exec osfamily="windows" executable="${bda-utils.resource.dir}/psexec.exe" dir="@{jboss.home}/bin" spawn="true" >
 						<env key="NOPAUSE" value="true" />
 						<env key="JBOSS_HOME" value=""/>
-						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat -c @{jboss.server.name}" />
+						<arg line="-d -i -w @{jboss.home}/bin @{jboss.home}/bin/run.bat -c @{jboss.server.name} ${bind.address.arg}" />
 					</exec>
 					<sleep seconds="15" />
 				</else>
@@ -4156,6 +4177,7 @@ $HeadURL$
 		<attribute name="jems.install.option" default="ejb3" />
 		<attribute name="jboss.home" default="${jboss.home}" />
 		<attribute name="jboss.server.name" default="${jboss.server.name}" />
+		<attribute name="jboss.major.version" default="${jboss.major.version}"/>
 		<sequential>
 			<var name="jboss.is.zip" unset="true"/>
 			<propertyregex property="jboss.is.zip"
@@ -4225,12 +4247,11 @@ $HeadURL$
 					<copy file="@{jboss.home}/config-patches/StatelessEjb.jsp.patched" tofile="@{jboss.home}/server/@{jboss.server.name}/deploy/management/console-mgr.sar/web-console.war/StatelessEjb.jsp" overwrite="true"/>
 				</then>
 			</if>
-
+			<chmod dir="@{jboss.home}/bin" perm="ugo+rx" includes="**/*.sh" osfamily="unix"/>
 			<if>
-				<os family="unix"/>
+				<equals arg1="@{jboss.major.version}" arg2="5"/>
 				<then>
-					<chmod dir="@{jboss.home}/bin" perm="ugo+rx"
-						includes="**/*.sh"/>
+					<chmod dir="@{jboss.home}/bin" perm="ugo+rx" includes="*_jboss"/>
 				</then>
 			</if>
 		</sequential>
@@ -7354,6 +7375,7 @@ $HeadURL$
 		<attribute name="env.name" default="${env.name}"/>
 		<attribute name="jboss.init.file.location" default="@{jboss.home}/bin/init.conf"/>
 		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
+		<attribute name="jboss.major.version" default="${jboss.major.version}"/>
 		<sequential>
 			<var name="nci.env" unset="true"/>
 			<if>
@@ -7372,24 +7394,16 @@ $HeadURL$
 				</then>
 			</if>
 
-			<if>
-				<and>
-					<or>
-						<os family="unix"/>
-						<os family="mac"/>
-					</or>
-					<equals arg1="${nci.env}" arg2="true"/>
-				</and>
-				<then>
-					<jboss-version
-						jboss.home="@{jboss.home}"
-						jboss.version.property.name="jboss-ncic.version"
-						jboss.major.version.property.name="jboss-ncic.major.version"
-						jboss.minor.version.property.name="jboss-ncic.minor.version"
-						jboss.patch.version.property.name="jboss-ncic.patch.version"
-						/>
+			<switch value="@{jboss.major.version}">
+				<case value="4">
 					<if>
-						<equals arg1="${jboss-ncic.major.version}" arg2="4"/>
+						<and>
+							<or>
+								<os family="unix"/>
+								<os family="mac"/>
+							</or>
+							<equals arg1="${nci.env}" arg2="true"/>
+						</and>
 						<then>
 							<jboss41-nci-customizations
 								jboss.home="@{jboss.home}"
@@ -7406,53 +7420,56 @@ $HeadURL$
 								env.name="@{env.name}"
 								/>
 						</then>
+						<else>
+							<echo message="Not setting up NCI customizations because jboss version = 4 and not running unix/mac or not a tier env.name"/>
+
+						</else>
 					</if>
+				</case>
+				<case value="5">
+					<propertyregex property="nci.jboss"
+						input="@{jboss.home}"
+						regexp="nci$"
+						select="true"
+						override="true"
+						/>
 					<if>
-						<equals arg1="${jboss-ncic.major.version}" arg2="5"/>
+						<equals arg1="${nci.jboss}" arg2="true"/>
 						<then>
-							<propertyregex property="nci.jboss"
-								input="@{jboss.home}"
-								regexp="nci$"
-								select="true"
-								override="true"
+							<echo message="Using JBoss 5 but not using NCI provided version, filtering init.conf file only."/>
+							<jboss51-nci-filter
+								jboss.home="@{jboss.home}"
+								jboss.server.name="@{jboss.server.name}"
+								jboss.init.file.location="@{jboss.init.file.location}"
+								project.name="@{project.name}"
+								application.base.path="@{application.base.path}"
+								jboss.server.port="@{jboss.server.port}"
+								jboss.server.jndi.port="@{jboss.server.jndi.port}"
 								/>
-							<if>
-								<equals arg1="${nci.jboss}" arg2="true"/>
-								<then>
-									<jboss51-nci-filter
-										jboss.home="@{jboss.home}"
-										jboss.server.name="@{jboss.server.name}"
-										jboss.init.file.location="@{jboss.init.file.location}"
-										project.name="@{project.name}"
-										application.base.path="@{application.base.path}"
-										jboss.server.port="@{jboss.server.port}"
-										jboss.server.jndi.port="@{jboss.server.jndi.port}"
-										/>
-								</then>
-								<else>
-									<jboss51-nci-customizations
-										jboss.home="@{jboss.home}"
-										jboss.server.name="@{jboss.server.name}"
-										application.base.path="@{application.base.path}"
-										project.name="@{project.name}"
-										logname="@{logname}"
-										java.home="@{java.home}"
-										jboss.server.jndi.port="@{jboss.server.jndi.port}"
-										filterset.name="@{filterset.name}"
-										jboss.java.opts="@{jboss.java.opts}"
-										database.type="@{database.type}"
-										start.jboss="@{start.jboss}"
-										env.name="@{env.name}"
-										/>
-								</else>
-							</if>
 						</then>
+						<else>
+							<echo message="Using JBoss 5 but not and using NCI provided distribution do full customization."/>
+							<jboss51-nci-customizations
+								jboss.home="@{jboss.home}"
+								jboss.server.name="@{jboss.server.name}"
+								application.base.path="@{application.base.path}"
+								project.name="@{project.name}"
+								logname="@{logname}"
+								java.home="@{java.home}"
+								jboss.server.jndi.port="@{jboss.server.jndi.port}"
+								filterset.name="@{filterset.name}"
+								jboss.java.opts="@{jboss.java.opts}"
+								database.type="@{database.type}"
+								start.jboss="@{start.jboss}"
+								env.name="@{env.name}"
+								/>
+						</else>
 					</if>
-				</then>
-				<else>
-					<echo message="NOT setting up jboss-nci-customizations because this system is not Unix or Mac NCI environment"/>
-				</else>
-			</if>
+				</case>
+				<default>
+					<fail message="JBoss major version must be 4 or 5."/>
+				</default>
+			</switch>
 		</sequential>
 	</macrodef>
 	<macrodef name="read-property-from-properties-service">
@@ -10030,6 +10047,8 @@ $HeadURL$
 		<attribute name="application.base.path" default="${application.base.path}"/>
 		<attribute name="jboss.server.port" default="${jboss.server.port}"/>
 		<attribute name="jboss.server.jndi.port" default="${jboss.server.jndi.port}"/>
+		<attribute name="jboss.start.file.location" default="@{jboss.home}/bin/start_jboss"/>
+		<attribute name="jboss.server.ports.name" default="${jboss.server.ports.name}"/>
 		<sequential>
 			<var name="jboss.version.name" unset="true"/>
 			<copy file="@{jboss.init.file.location}" tofile="@{jboss.init.file.location}.orig"/>
@@ -10091,6 +10110,13 @@ $HeadURL$
 				replace=""
 				/>
 			-->
+			<copy file="@{jboss.start.file.location}" tofile="@{jboss.start.file.location}.orig"/>
+			<replaceregexp file="@{jboss.start.file.location}"
+				byline="true"
+				match="ports-\$\{JBOSS_HTTP_PORT\}"
+				replace="@{jboss.server.ports.name}"
+				/>
+			<chmod file="@{jboss.start.file.location}" perm="ugo+rx"/>
 		</sequential>
 	</macrodef>
 	<macrodef name="ivy-retrieve">
