@@ -247,7 +247,10 @@ class ErrorValidator {
 			properties.getProperty("mail.additional.recipients").split(',').eachWithIndex {processToken, i -> 
 				recipientList.add(processToken)
 			}
-			ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message)
+			if (ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message) != true ) {
+              throw new Exception("Error sending mail.");
+            }
+
             logMessageToProjectHistory(projectName, recipientList , "BDA Certification status for " + projectName,message)
             println "Success Sending Email To:" + projectName ;
 		}
