@@ -20,7 +20,7 @@ $HeadURL$
 	<property name="upgrade.properties.file" value="upgrade.properties"/>
 	<echo message="Using properties file of ${properties.file}." />
 	<available file="${properties.file}" property="properties.file.exists" />
-	<!--<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant -Dproperties.file=somepath/somefile', otherwise the build will fail." /> -->
+	<!--<fail unless="properties.file.exists" message="The properties.file ${properties.file} does not exist, please make sure that you pass in an accurate file name with the 'ant ${install.debug} ${install.timing} -Dproperties.file=somepath/somefile', otherwise the build will fail." /> -->
 
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=(.*[\w\d\/\{\}\\]+)[ \t]+\r*$" replace="\1=\2" />
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2" />
@@ -145,6 +145,7 @@ $HeadURL$
 	<property name="bda-blueprints-webapp.src.dir" value="${bda-blueprints-webapp.base.dir}/src/web"/>
 
 	<property name="override.properties.delimiter" value=","/>
+	<property name="remote.shell.profile.file" value=".bash_profile"/>
 
 	<!-- retrive ivy.jar.files then retrieve bda files and librarires -->
 	<condition property="commonlibrary.dir" value="">
@@ -745,9 +746,35 @@ $HeadURL$
 			/>
 	</target>
 
+	<target name="deploy:debug" description="sets debug flag on remote deploys">
+		<var name="install.debug" unset="true"/>
+		<if>                            
+			<equals arg1="${enable.install.debug}" arg2="true"/>
+			<then>                                  
+				<echo message="Turning on ANT debug for install"/>
+				<property name="install.debug" value="-v"/>
+			</then>                         
+			<else>                                  
+				<property name="install.debug" value=""/>
+			</else>                 
+		</if>                   
+		<var name="install.timing" unset="true"/>
+		<if>                            
+			<equals arg1="${enable.install.timing}" arg2="true"/>
+			<then>                                  
+				<echo message="Turning on ANT target/task execution time reporting for install"/>
+				<property name="install.timing" value="-listener   net.java.antutility.BuildMetricsListener"/>
+			</then>                         
+			<else>                          
+				<property name="install.timing" value=""/>
+			</else>                         
+		</if>                   
+	</target>
+
 	<target name="deploy:remote:install" description="Installs and configures the application and required binaries and re-creates the datbase  on a remote machine. Used for NCI tiers (dev, qa, stg, prod)" depends="
 		build:all,
-		dist:installer
+		dist:installer,
+		deploy:debug
 		">
 		<!--
 		  * Will use the target from install.xml specified in ${install.target} (defaults to install unless passed in on command line).
@@ -757,28 +784,31 @@ $HeadURL$
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${bda-blueprints-webapp.install.zip.file}" />
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
+		<remote-ssh remotesshcommand=". ${remote.shell.profile.file};cd ${ssh.dir.temp}; ant ${install.debug} ${install.timing} -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${install.target}" />
 	</target>
 
 	<target name="deploy:remote:upgrade" description="Installs and configures the application and required binaries and re-creates the datbase  on a remote machine. Used for NCI tiers (dev, qa, stg, prod)" depends="
 		build:all,
-		dist:upgrader
+		dist:upgrader,
+		deploy:debug
 		">
 		<!--
 		  * Will use the target from install.xml specified in ${upgrade.target} (defaults to upgrade unless passed in on command line).
 		  * Requires specifying -Dproperties.file=@file@ on the command line to point installer to correct enviornment to install into.
 		  * Calls ant from exec task to ensure properties are do not carry over from current ant runtime and also to emulate a manual install, if you want properties to be used at install time they must be included in a proeprties file.
 		-->
+		<echoproperties prefix="ssh"/>
 		<!-- Call macro to deploy files on desired server -->
 		<deploy-files dist.file="${bda-blueprints-webapp.upgrade.zip.file}" />
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
+		<remote-ssh remotesshcommand=". ${remote.shell.profile.file};cd ${ssh.dir.temp}; ant ${install.debug} ${install.timing} -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${upgrade.target}" />
 	</target>
 
 	<target name="deploy:remote:upgrade:db"
 	       depends="
 		build:all,
-		dist:upgrade:tier:db
+		dist:upgrade:tier:db,
+		deploy:debug
 		">
 		<deploy-files 
 			ssh.user="${db.ssh.server.username}"
@@ -786,12 +816,13 @@ $HeadURL$
 			remote.directory.property.name="db.ssh.dir.temp"
 			dist.file="${bda-blueprints-webapp.install.name}_${bda-blueprints-webapp.version}-db.zip"
 		       />
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${db.ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true -Dexclude.jboss=true -Dexclude.tomcat=true upgrade:database" />
+		<remote-ssh remotesshcommand=". ${remote.shell.profile.file};cd ${db.ssh.dir.temp}; ant ${install.debug} ${install.timing} -Dproperties.file=${properties.file.name} -Dforce.reinstall=true -Dexclude.jboss=true -Dexclude.tomcat=true upgrade:database" />
 	</target>
 	<target name="deploy:remote:upgrade:jboss"
 	       depends="
 		build:all,
-		dist:upgrade:tier:jboss
+		dist:upgrade:tier:jboss,
+		deploy:debug
 		">
 		<deploy-files 
 			ssh.user="${jboss.ssh.server.username}"
@@ -799,12 +830,13 @@ $HeadURL$
 			remote.directory.property.name="jboss.ssh.dir.temp"
 			dist.file="${bda-blueprints-webapp.install.name}_${bda-blueprints-webapp.version}-jboss.zip"
 		       />
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${jboss.ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true -Dexclude.tomcat=true -Dexclude.database=true upgrade:jboss" />
+		<remote-ssh remotesshcommand=". ${remote.shell.profile.file};cd ${jboss.ssh.dir.temp}; ant ${install.debug} ${install.timing} -Dproperties.file=${properties.file.name} -Dforce.reinstall=true -Dexclude.tomcat=true -Dexclude.database=true upgrade:jboss" />
 	</target>
 	<target name="deploy:remote:upgrade:tomcat"
 	       depends="
 		build:all,
-		dist:upgrade:tier:tomcat
+		dist:upgrade:tier:tomcat,
+		deploy:debug
 		">
 		<deploy-files 
 			ssh.user="${tomcat.ssh.server.username}"
@@ -812,7 +844,7 @@ $HeadURL$
 			remote.directory.property.name="tomcat.ssh.dir.temp"
 			dist.file="${bda-blueprints-webapp.install.name}_${bda-blueprints-webapp.version}-tomcat.zip"
 		       />
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${tomcat.ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true -Dexclude.jboss=true -Dexclude.database=true upgrade:tomcat" />
+		<remote-ssh remotesshcommand=". ${remote.shell.profile.file};cd ${tomcat.ssh.dir.temp}; ant ${install.debug} ${install.timing} -Dproperties.file=${properties.file.name} -Dforce.reinstall=true -Dexclude.jboss=true -Dexclude.database=true upgrade:tomcat" />
 	</target>
 
 	<target name="usage" description="Explains how to use this build script">
@@ -950,7 +982,7 @@ $HeadURL$
 			<then>
 				<echo message="To be able to selenium tests on Unix platforms you need to meet the following conditions." />
 				<echo message="You need to be logged in on the console running X (developer linux or mac workstation)." />
-				<echo message=" If you are running it from a server that does not have a console (like a CI server) you need to be running at runlevel 3, running and xframe buffer ('Xvfb :1 -screen 0 1024x768x24', should be setup on a CI server) and have your DISPLAY environment variable sto to match your frame buffer ('DISPLAY=:1.0', should be set in .bash_profile on CI server)." />
+				<echo message=" If you are running it from a server that does not have a console (like a CI server) you need to be running at runlevel 3, running and xframe buffer ('Xvfb :1 -screen 0 1024x768x24', should be setup on a CI server) and have your DISPLAY environment variable sto to match your frame buffer ('DISPLAY=:1.0', should be set in ${remote.shell.profile.file} on CI server)." />
 				<fail unless="env.DISPLAY" message="DISPLAY environment variable not set, please set it as outlined above and run again." />
 			</then>
 		</if>
@@ -1166,7 +1198,7 @@ $HeadURL$
 		<tomcat-read-dbconfig
 			/>
 	</target>
-	<target name="deploy:remote:upgrade:ahp" description="Installs and configures the application and required binaries and re-creates the datbase  on a remote machine. Used for NCI tiers (dev, qa, stg, prod)" >
+	<target name="deploy:remote:upgrade:ahp" depends="deploy:debug" description="Installs and configures the application and required binaries and re-creates the datbase  on a remote machine. Used for NCI tiers (dev, qa, stg, prod)" >
 		<!--
 		  * Will use the target from install.xml specified in ${upgrade.target} (defaults to upgrade unless passed in on command line).
 		  * Requires specifying -Dproperties.file=@file@ on the command line to point installer to correct enviornment to install into.
@@ -1180,7 +1212,7 @@ $HeadURL$
 			override.properties.string.property.name="override.properties.string"
 			/>
 		<!-- SSH to machine ant run ant command line to install application -->
-		<remote-ssh remotesshcommand=". .bash_profile;cd ${ssh.dir.temp}; ant -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${override.properties.string} ${upgrade.target}" />
+		<remote-ssh remotesshcommand=". ${remote.shell.profile.file};cd ${ssh.dir.temp}; ant ${install.debug} ${install.timing} -Dproperties.file=${properties.file.name} -Dforce.reinstall=true ${override.properties.string} ${upgrade.target}" />
 	</target>
 	<target name="keygen">
 		<generate-jar-signing-keystore
@@ -1189,6 +1221,16 @@ $HeadURL$
 	<target name="report:migrate-ivy">
 		<migrate-ivy-report
 			ivy.analyze.file="ivy-caintegrator2.xml"
+			/>
+	</target>
+	<target name="temp:apptab">
+		<setup-apptab
+			application.base.path="gui-installer"
+			start.jboss="N"
+			/>
+	</target>
+	<target name="temp:override">
+		<override-properties-prep
 			/>
 	</target>
 </project>
