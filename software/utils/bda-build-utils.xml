@@ -2304,10 +2304,10 @@ $HeadURL$
 				</then>
 			</if>
 			<get-cacore-sdk
-				cacore-sdk.required="${cacore-sdk.required}"
-				cacore-sdk.src.url="${cacore-sdk.src.url}"
-				download.dir="${download.dir}"
-				cacore-sdk.dir="${cacore-sdk.dir}"
+				cacore-sdk.required="@{cacore-sdk.required}"
+				cacore-sdk.src.url="@{cacore-sdk.src.url}"
+				download.dir="@{download.dir}"
+				cacore-sdk.dir="@{cacore-sdk.dir}"
 				/>
 		</sequential>
 	</macrodef>
@@ -6204,7 +6204,7 @@ $HeadURL$
 			<if>
 				<isset property="jboss.is.51"/>
 				<then>
-					<property name="@{jboss.server.ports.name.property.name}" value="PortsDefaultBindings"/>
+					<property name="@{jboss.server.ports.name.property.name}" value="ports-default"/>
 					<property name="@{jboss.bindings.file.location.property.name}" value="@{jboss.home}/server/@{jboss.server.name}/conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml"/>
 				</then>
 			</if>
@@ -9538,41 +9538,49 @@ $HeadURL$
 					<fail message="start.jboss must be Y/N or y/n"/>
 				</default>
 			</switch>
+			<var name="apptab.file.location" unset="true"/>
+			<property name="apptab.file.location" location="@{application.base.path}/../apptab"/>
+			<var name="apptab.base.entry" unset="true"/>
+			<property name="apptab.base.entry" value="@{logname}:@{jboss.home}/server/@{jboss.server.name}"/>
+			<var name="jboss.start.flag" value="@{start.jboss}"/>
 			<if>
 				<not>
-					<available file="@{application.base.path}/../apptab"/>
+					<available file="${apptab.file.location}"/>
 				</not>
 				<then>
-					<echo file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
+					<echo message="apptab [${apptab.file.location}]file does not exist creating empty file"/>
+					<echo file="${apptab.file.location}" message=""/>
 				</then>
 			</if>
-			<loadfile
-				property="apptab.contents"
-				srcFile="@{application.base.path}/../apptab">
-				<filterchain>
-					<linecontainsregexp>
-						<regexp pattern="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"/>
-					</linecontainsregexp>
-				</filterchain>
-			</loadfile>
-			<var name="apptab.user.found" unset="true"/>
-			<propertyregex property="apptab.user.found"
-				input="${apptab.contents}"
-				regexp="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
-				select="true"
-				/>
-			<if>
-				<isset property="apptab.user.found"/>
-				<then>
-					<replaceregexp file="@{application.base.path}/../apptab" byline="true"
-						match="^@{logname}:@{jboss.home}/server/@{jboss.server.name}.*"
-						replace="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}"
-						/>
-				</then>
-				<else>
-							<echo append="true" file="@{application.base.path}/../apptab" message="@{logname}:@{jboss.home}/server/@{jboss.server.name}:@{start.jboss}${line.separator}"/>
-				</else>
-			</if>
+			<groovy>
+				String fileName = properties["apptab.file.location"]
+				String baseEntry = properties["apptab.base.entry"]
+				String startJboss = properties["jboss.start.flag"]
+				File apptab = new File(fileName)
+				String contents = apptab.text
+				String newContents = ""
+				if (!contents.contains(baseEntry))
+				{
+				println "Entry not found, adding entry"
+				newContents = contents + baseEntry + ":" + startJboss +"\n"
+				}
+				else
+				{
+				println "Found existing entry updating"
+				contents.eachLine{
+				line ->
+				if (line.contains(baseEntry))
+				{
+				newContents = newContents + baseEntry + ":" + startJboss +"\n"
+				}
+				else
+				{
+				newContents = newContents + line + "\n"
+				}
+				}
+				}
+				apptab.write(newContents)
+			</groovy>
 		</sequential>
 	</macrodef>
 	<macrodef name="secure-jboss-console" description="Diagnose the host system before the installation">

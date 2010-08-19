@@ -17,6 +17,10 @@ getPID ()
     PS=pgrep
     procid=$($PS -fu $JBOSS_USER "org.jboss.Main \-c $JBOSS_CONF_BASE")
     ;;
+  Darwin)
+    PS=/bin/ps
+    procid=$($PS -ef | grep $JBOSS_CONF_BASE | grep -v grep | grep $JBOSS_USER | awk '{print $2}')
+    ;;
   esac 
   eval "$1=$procid"
 }
