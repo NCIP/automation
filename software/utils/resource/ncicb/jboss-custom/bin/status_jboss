@@ -8,21 +8,20 @@
 getPID ()
 {
   local procid
-  if [ -f $PIDFILE ]; then
-       procid=`cat ${JBOSS_HOME}/server/${JBOSS_CONF_BASE}/bin/${JBOSS_CONF_BASE}.pid`       
-   else
-       #echo "$PIDFILE not found or readable"	
-       case $(uname) in
-       SunOS)
-         PS=/usr/ucb/ps
-         procid=$($PS -auwwx | grep $JBOSS_CONF_BASE | grep -v grep | grep $JBOSS_USER | awk '{print $2}')
-       ;;
-       Linux)
-         PS=pgrep
-         procid=$($PS -fu $JBOSS_USER "org.jboss.Main \-c $JBOSS_CONF_BASE")
-       ;;
-       esac 
-  fi
+  case $(uname) in
+  SunOS)
+    PS=/usr/ucb/ps
+    procid=$($PS -auwwx | grep $JBOSS_CONF_BASE | grep -v grep | grep $JBOSS_USER | awk '{print $2}')
+    ;;
+  Linux)
+    PS=pgrep
+    procid=$($PS -fu $JBOSS_USER "org.jboss.Main \-c $JBOSS_CONF_BASE")
+    ;;
+  Darwin)
+    PS=/bin/ps
+    procid=$($PS -ef | grep $JBOSS_CONF_BASE | grep -v grep | grep $JBOSS_USER | awk '{print $2}')
+    ;;
+  esac 
   eval "$1=$procid"
 }
 
