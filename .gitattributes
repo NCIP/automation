@@ -52,6 +52,7 @@ certification-monitor/.idea/workspace.xml -text
 certification-monitor/Main.iml -text
 certification-monitor/build.xml -text
 certification-monitor/build/CertificationUtils.groovy -text
+certification-monitor/build/build-test.xml -text
 certification-monitor/build/build.xml -text
 certification-monitor/build/caarray.properties -text
 certification-monitor/build/lookup.properties -text

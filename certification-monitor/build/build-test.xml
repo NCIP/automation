@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="buildmonitor.test" basedir="." default="run" xmlns:au="org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+<import file="build.xml" />
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    <taskdef resource="org/apache/ant/antunit/antlib.xml" />
+    <taskdef resource="org/apache/ant/antunit/antlib.xml">
+                <classpath>
+                  <pathelement location="/opt/apache-ant-1.7.0/lib/ant-antunit-1.1.jar"/>
+                </classpath>
+    </taskdef>
+
+    <target name="run">
+        <antunit>
+            <file file="${basedir}/build-test.xml" />
+            <plainlistener  />
+        </antunit>
+    </target>
+
+    <target name="test1">
+        <echo>x=${x}</echo>
+        <assertEquals expected="1" actual="${x}" />
+        <property name="x" value="100" />
+    </target>
+
+    <!--<target name="test2">-->
+        <!--<property name="x" value="1" />-->
+        <!--<assertEquals expected="1" actual="${x}" />-->
+    <!--</target>-->
+
+    <!--<target name="test3">-->
+        <!--<echo>x=${x}</echo>-->
+        <!--<assertEquals expected="1" actual="${x}" />-->
+    <!--</target>-->
+
+    <!--<target name="test4">-->
+        <!--<property name="x" value="100" />-->
+        <!--<antcall target="xyz" />-->
+    <!--</target>-->
+
+    <!--<target name="xyz">-->
+        <!--<echo>x=${x}</echo>-->
+        <!--<if>-->
+            <!--<equals arg1="${x}" arg2="200"/>-->
+            <!--<then>-->
+                <!--<fail message="jello"/>-->
+            <!--</then>-->
+        <!--</if>-->
+
+    <!--</target>-->
+
+
+</project>
