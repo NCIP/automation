@@ -272,6 +272,9 @@
             </batchtest>
             <formatter type="xml" usefile="true" />
         </junit>
+
+        <ant antfile="${software.dir}/build/build-test.xml"/>
+
     </target>
 
 	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
