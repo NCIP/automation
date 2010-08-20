@@ -273,7 +273,9 @@
             <formatter type="xml" usefile="true" />
         </junit>
 
+        <echo>Running Ant Unit ...</echo>
         <ant antfile="${software.dir}/build/build-test.xml"/>
+        <echo>Running Ant Unit complete.</echo>
 
     </target>
 
