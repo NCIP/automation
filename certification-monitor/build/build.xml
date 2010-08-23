@@ -5,8 +5,11 @@
 		This build file is part of the bda-build-template project.  This is the master build file for the project.  It should be placed in project/software/.  This script wrappers sub projects to build, test and inspect code.  Additionally this project manges creation of distributions and deployment locally or remotely.  Deployments will call the install.xml from the distribution to install or upgrade the application.  Lastly this script will run include targets that require manipulation of containers (selenium tests because they require starting the application server container (and require a fully deployed application which this process is responsible for). This build script assumes two sub-projects bda-blueprints-webapp and bda-blueprints-api. The API targets are commented out and can be removed if not needed.  Also support for both tomcat and jboss download, install and configure are included.  These scripts require Java, Ant, Database and SVN to work.
 	</description>
 
+    <property environment="env"/>
+
     <property   name="bda.version" value="1.6.2" />
     <property   name="database.type" value="mysql" />
+    <property name="build:validate-app-servers.maxwait" value="300" />
 
 <!--
 	<property file="project.properties" />
@@ -15,7 +18,7 @@
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
         <classpath>
-            <pathelement location="../ant-contrib.jar"/>
+            <pathelement location="${env.ANT_HOME}/lib/ant-contrib.jar"/>
         </classpath>
     </taskdef>
 
@@ -565,29 +568,50 @@
 		<invokegroovymethod groovy-file-location="${build.dir}" groovy-file-name="CertificationUtils.groovy" groovy-method-name="checkBdaEnabled"/>
 	</target>
 
+
+
     <target name="build:validate-app-servers" depends="init">
 
-        
-        
+        <propertyselector property="build:validate-app-servers.urllist"
+                          delimiter=","
+                          match=".*application\.url.*" />
+
+        <echo>application.urls found=${build:validate-app-servers.urllist}</echo>
+
+        <foreach delimiter=","
+                 list="${build:validate-app-servers.urllist}"
+                 target="build:validate-app-servers:checkurl"
+                 param="build:validate-app-servers:checkurl.url"
+                 inheritall="true"
+                 inheritrefs="true" />
+
+
 	</target>
 
-    <target name="xyz">
-        <waitfor timeoutproperty="timeout" maxwait="10" maxwaitunit="second">
-            <http url="${url}" /> 
+
+    <target name="build:validate-app-servers:checkurl">
+
+        <echo>build:validate-app-servers:checkurl.url=${build:validate-app-servers:checkurl.url}</echo>
+        <propertycopy name="url.to.check" from="${build:validate-app-servers:checkurl.url}" />
+        <echo>url.to.check=${url.to.check}</echo>
+
+        <waitfor checkevery="5" checkeveryunit="second" maxwait="${build:validate-app-servers.maxwait}" maxwaitunit="second" timeoutproperty="urlfailed">
+            <http url="${url.to.check}" />
         </waitfor>
-        <echo>timeout=${timeout}</echo>
+
+
         <if>
-            <equals arg1="${timeout}" arg2="true"/>
+            <isset property="urlfailed" />
             <then>
-                <fail message="${url} did not respond." />
+                <fail message="Application did not respond to URL: '${url.to.check}'." />
             </then>
         </if>
     </target>
 
-	<target name="test:seleniumrc:stop">
-		<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="${user.home}\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>
-		<sleep seconds="10"/>     
-	</target>
+	<!--<target name="test:seleniumrc:stop">-->
+		<!--<get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDown" dest="${user.home}\selenium-test-cases\shutdown_result.txt" ignoreerrors="true"/>-->
+		<!--<sleep seconds="10"/>     -->
+	<!--</target>-->
 
 	<target name="build:check-commandline-installer" depends="init">				
 		<exec osfamily="unix" executable="ant" dir="${master.build.location}" failonerror="true">

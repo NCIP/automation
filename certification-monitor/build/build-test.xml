@@ -2,9 +2,11 @@
 <project name="buildmonitor.test" basedir="." default="run" xmlns:au="org.apache.ant.antunit"
          xmlns="antlib:org.apache.tools.ant">
 
-    <import file="build.xml"/>
     <property environment="env"/>
     <property name="testoutput.dir" location="." />
+    <property name="build:validate-app-servers.maxwait" value="5" />
+
+    <import file="build.xml"/>
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
         <classpath>
@@ -19,18 +21,65 @@
     </taskdef>
 
     <target name="run">
-        <echo>testoutput.dir=${testoutput.dir}</echo>
         <antunit>
             <file file="${basedir}/build-test.xml"/>
             <xmllistener todir="${testoutput.dir}" />
+            <plainlistener />
         </antunit>
     </target>
 
-    <target name="test1">
-        <echo>x=${x}</echo>
-        <assertEquals expected="1" actual="${x}"/>
-        <property name="x" value="100"/>
+    <target name="testValidateAppServersFailsOnNonExistentUrl">
+        <property name="application.url" value="http://localhost:9090/doesnotexist" />
+
+        <trycatch property="caught">
+            <try>
+                <runtarget target="build:validate-app-servers" />
+            </try>
+            <catch/>
+        </trycatch>
+
+        <if>
+            <not>
+                <isset property="caught"/>
+            </not>
+            <then>
+                <fail message="build:validate-app-servers did not fail as expected." /> 
+            </then>
+        </if>
     </target>
 
+    <target name="testValidateAppServersOnValidUrl">
+        <property name="application.url" value="http://yahoo.com" />
+        <runtarget target="build:validate-app-servers" />
+    </target>
+
+    <target name="testValidateAppServersOnThreeUrls">
+        <property name="somethingelse.application.url" value="http://nowhere.com:8787/nowhere" />
+        <property name="application.url" value="http://yahoo.com" />
+        <property name="jboss.application.url" value="http://yahoo.com" />
+
+        <trycatch property="caught">
+            <try>
+                <runtarget target="build:validate-app-servers" />
+            </try>
+            <catch/>
+        </trycatch>
+
+        <if>
+            <not>
+                <isset property="caught"/>
+            </not>
+            <then>
+                <fail message="build:validate-app-servers did not fail as expected." />
+            </then>
+            <elseif>
+                <contains string="${caught}" substring="${somethingelse.application.url}">
+                </contains>
+                <then>
+                    <fail message="build:validate-app-servers did not fail as expected. There was an error but the error: '${caught}' did not contain '${somethingelse.application.url}'." />
+                </then>
+            </elseif>
+        </if>
+    </target>
 
 </project>
