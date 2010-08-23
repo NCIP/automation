@@ -56,13 +56,6 @@
 	<!-- Includes- include BDA marcos -->
 	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
 
-	<taskdef name="antfetch" classname="net.sf.antcontrib.logic.AntFetch">
-		<classpath>
-			<pathelement location="../ant-contrib.jar"/>
-		</classpath>
-	</taskdef>
-
-
 	<echo message="${project.name}"/>
 <!--
 	<propertycopy name="project.database.type" from="${project.name}.database.type" />
