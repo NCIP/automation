@@ -84,4 +84,18 @@
         </if>
     </target>
 
+    <target name="testValidateAppServersNoUrls">
+        
+        <trycatch property="caught">
+            <try>
+                <runtarget target="build:validate-app-servers" />
+            </try>
+            <catch/>
+        </trycatch>
+
+
+        <echo>caught=${caught}</echo>
+        <assertPropertySet name="caught" message="build:validate-app-servers did not fail when no URLs were specified." />
+
+    </target>
 </project>

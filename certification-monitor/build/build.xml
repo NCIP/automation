@@ -567,9 +567,18 @@
 
         <propertyselector property="build:validate-app-servers.urllist"
                           delimiter=","
-                          match=".*application\.url.*" />
+                          match=".*application\.url" />
 
         <echo>application.urls found=${build:validate-app-servers.urllist}</echo>
+
+        <if>
+            <not>
+                <isset property="build:validate-app-servers.urllist" />
+            </not>
+            <then>
+                <fail message="No properties like .*application.url were set." />
+            </then>
+        </if>
 
         <foreach delimiter=","
                  list="${build:validate-app-servers.urllist}"
