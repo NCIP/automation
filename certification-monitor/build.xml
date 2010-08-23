@@ -274,7 +274,9 @@
         </junit>
 
         <echo>Running Ant Unit ...</echo>
-        <ant antfile="${software.dir}/build/build-test.xml"/>
+        <ant antfile="${software.dir}/build/build-test.xml">
+            <property name="testoutput.dir" value="${testoutput.dir}" />
+        </ant>
         <echo>Running Ant Unit complete.</echo>
 
     </target>
