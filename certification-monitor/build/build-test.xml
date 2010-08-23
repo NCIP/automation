@@ -16,7 +16,7 @@
         </classpath>
     </taskdef>
 
-    <taskdef resource="org/apache/ant/antunit/">
+    <taskdef resource="org/apache/ant/antunit/antlib.xml">
         <classpath>
             <pathelement location="${env.ANT_HOME}/lib/ant-antunit-1.1.jar"/>
         </classpath>
