@@ -31,40 +31,6 @@ class BuildStatusUpdater {
     buildStatus.closeDBConnection();
   }
 
-  public void updateBuildStatus() {
-    String deploymentStatusTemplateFile = properties.getProperty("deployment-status.template.file");//"Deployment_Status_Template"
-    String deploymentStatusTemplateSpace = properties.getProperty("deployment-status.template.space");//"test"
-    String deploymentStatusPageFile = properties.getProperty("deployment-status.page.file");//"page1"
-    String deploymentStatusPageSpace = properties.getProperty("deployment-status.page.space");//"confluence-cli-1.3.0.jar"
-
-    // get most recent tempates
-    String cmd = "${confluence} -a getPageSource --space \"" + deploymentStatusTemplateSpace + "\" --title \"" + deploymentStatusTemplateFile + "\" --file _temp.txt";
-    Process p = doCmd(cmd);
-
-    if (p.exitValue() != 0) {
-      throw new Exception("Failed:" + cmd);
-    }
-    String statement = "select PRODUCT,DEV,QA,STAGE,PROD from PROJECT_BUILD_STATUS "
-
-
-    int count = 0
-    connection.eachRow(statement) { row ->
-      count++
-
-      String productName = row.PRODUCT;
-      String devStatus = row.DEV;
-      String qaStatus = row.QA;
-      String stageStatus = row.STAGE;
-      String prodStatus = row.PROD;
-
-      String findReplace = "--findReplace \"Product${count}:${productName},dev-status${count}:${devStatus},qa-status${count}:${qaStatus},stage-status${count}:${stageStatus},prod-status${count}:${prodStatus}\""
-
-//      println findReplace
-      // update page
-      doCmd("${confluence} -a storePage --space \"" + deploymentStatusPageSpace + "\" --title \"" + deploymentStatusPageFile + "\"   --file _temp.txt ${findReplace}")
-      doCmd("${confluence} -a getPageSource --space \"" + deploymentStatusPageSpace + "\" --title \"" + deploymentStatusPageFile + "\"    --file _temp.txt")
-    }
-  }
 
   public void updateCertificationStatusForBDAProjects() {
 
@@ -178,7 +144,7 @@ class BuildStatusUpdater {
 
     println "Updating page...";
 
-    // update bdafied page
+    // update bdafie-00d page
     println "${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile;
 
     doCmd("${confluence} -a storePage --space \"" + certificationPageSpace + "\" --title \"" + certificationPageFile + "\"   --file " + "x." + dashboardTemplateFile);

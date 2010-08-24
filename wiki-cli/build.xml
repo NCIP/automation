@@ -192,8 +192,6 @@
 
 	<target name="configure" description="Run the class to update Wiki" depends="configure:revision-number">
 
-        <echo>configure.wiki.user=${wiki.user}</echo>
-        <echo>wiki.server=${wiki.server}</echo>
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.name)=.*" replace="\1=${database.name}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.url)=.*" replace="\1=${database.url}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.user)=.*" replace="\1=${database.user}" />
