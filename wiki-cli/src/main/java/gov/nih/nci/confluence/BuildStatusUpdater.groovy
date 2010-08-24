@@ -322,11 +322,13 @@ class BuildStatusUpdater {
         certification += "n/a";
       }
 
-      certification += "\\\\" ;
-
       if (lastProjectAction != null)
       {
-        certification += "Last action: " + lastProjectAction.getType().getDescription() + " on " + DateFormat.getInstance().format(lastProjectAction.getDate());
+        certification += WIKI_LINE_BREAK;
+        certification += "Last action: "
+        certification += lastProjectAction.getType().getDescription()
+        certification += " on  "
+        certification += DateFormat.getInstance().format(lastProjectAction.getDate());
       }
 
     }

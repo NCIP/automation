@@ -358,9 +358,11 @@ class BuildStatusUpdaterTest extends GroovyTestCase {
     String actual = target.getWikiMarkupForRow(
             pa.getProject().getName(), PRODUCT, BDA_ENABLED, CERTIFICATION_STATUS, SINGLE_COMMAND_BUILD, SINGLE_COMMAND_DEPLOYMENT, DATABASE_INTEGRATION, REMOTE_UPGRADE, TEMPLATE_VALIDATION, PRIVATE_PROPERTIES, BuildStatusUpdater.WIKI_CERTIFICATION_RED, DEPLOYMENT_SHAKEOUT, COMMANDLINE_INSTALLER, null);
 
-    String expected = "Last action: " + pa.getType().getDescription() + " on " + DateFormat.getInstance().format(pa.getDate());
 
-    assertContains(expected, actual);
+    assertContains("Last action: ", actual);
+    assertContains(pa.getType().getDescription(), actual);
+    assertContains(" on ", actual);
+    assertContains(DateFormat.getInstance().format(pa.getDate()), actual);
 
   }
 
