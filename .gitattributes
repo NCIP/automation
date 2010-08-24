@@ -152,14 +152,6 @@ certification-monitor/src/tests/functional/certification-test-suite.html -text
 certification-monitor/src/tests/unit/groovy/BDACertificationTest.groovy -text
 docs/BDA_Certification_Stories.doc -text
 docs/BDA_Certification_design.doc -text
-lib/antlr.jar -text
-lib/asm.jar -text
-lib/cglib.jar -text
-lib/commons-collections.jar -text
-lib/commons-logging.jar -text
-lib/dom4j.jar -text
-lib/hibernate-annotations.jar -text
-lib/hibernate.jar -text
 wiki-cli/.classpath -text
 wiki-cli/.idea/ant.xml -text
 wiki-cli/.idea/compiler.xml -text
