@@ -144,6 +144,7 @@ certification-monitor/src/tests/functional/certification-test-suite.html -text
 certification-monitor/src/tests/unit/groovy/BDACertificationTest.groovy -text
 docs/BDA_Certification_Stories.doc -text
 docs/BDA_Certification_design.doc -text
+nih.nci.bda.domain/nih.nci.bda.domain.iml -text
 wiki-cli/.classpath -text
 wiki-cli/.idea/ant.xml -text
 wiki-cli/.idea/compiler.xml -text
