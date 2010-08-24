@@ -1,12 +1,4 @@
 * text=auto !eol
-.idea/compiler.xml -text
-.idea/copyright/profiles_settings.xml -text
-.idea/encodings.xml -text
-.idea/misc.xml -text
-.idea/modules.xml -text
-.idea/uiDesigner.xml -text
-.idea/vcs.xml -text
-.idea/workspace.xml -text
 anthill-monitor/.classpath -text
 anthill-monitor/.project -text
 anthill-monitor/build/build.xml -text
