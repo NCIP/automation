@@ -1,4 +1,12 @@
 * text=auto !eol
+.idea/compiler.xml -text
+.idea/copyright/profiles_settings.xml -text
+.idea/encodings.xml -text
+.idea/misc.xml -text
+.idea/modules.xml -text
+.idea/uiDesigner.xml -text
+.idea/vcs.xml -text
+.idea/workspace.xml -text
 anthill-monitor/.classpath -text
 anthill-monitor/.project -text
 anthill-monitor/build/build.xml -text
@@ -144,6 +152,14 @@ certification-monitor/src/tests/functional/certification-test-suite.html -text
 certification-monitor/src/tests/unit/groovy/BDACertificationTest.groovy -text
 docs/BDA_Certification_Stories.doc -text
 docs/BDA_Certification_design.doc -text
+lib/antlr.jar -text
+lib/asm.jar -text
+lib/cglib.jar -text
+lib/commons-collections.jar -text
+lib/commons-logging.jar -text
+lib/dom4j.jar -text
+lib/hibernate-annotations.jar -text
+lib/hibernate.jar -text
 nih.nci.bda.domain/nih.nci.bda.domain.iml -text
 wiki-cli/.classpath -text
 wiki-cli/.idea/ant.xml -text
