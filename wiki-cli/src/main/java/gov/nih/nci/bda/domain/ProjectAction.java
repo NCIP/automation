@@ -1,5 +1,7 @@
 package gov.nih.nci.bda.domain;
 
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -37,6 +39,14 @@ public class ProjectAction {
     }
 
     public void setDate(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+
+        if( c.get(Calendar.HOUR) == 0
+            && c.get(Calendar.MINUTE) == 0
+            && c.get(Calendar.SECOND) == 0) {
+            throw new IllegalArgumentException("Must specify time in date.");
+        }
         this.date = date;
     }
 

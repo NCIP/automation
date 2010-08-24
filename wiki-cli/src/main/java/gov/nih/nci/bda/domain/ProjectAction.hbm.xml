@@ -12,7 +12,7 @@
                      not-null="true"
                      class="gov.nih.nci.bda.domain.ProjectActionType"/>
 
-        <property name="date" column="date" type="date"/>
+        <property name="date" column="date" type="timestamp"/>
         <property name="notes" column="notes" type="string" />
         <many-to-one name="project"
                      column="project"

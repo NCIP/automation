@@ -40,6 +40,67 @@ public class ProjectActionTest extends TestCase {
         return new TestSuite(ProjectActionTest.class);
     }
 
+    private static Project getNewProject() throws FileNotFoundException {
+
+        Session s = HibernateUtil.getSession();
+
+
+        Project p = new Project();
+
+        s.clear();
+        String projectName = UUID.randomUUID().toString();
+        p.setName(projectName);
+
+        Transaction t = s.beginTransaction();
+
+        s.save(p);
+
+        t.commit();
+
+        p = ProjectHelper.getByName(projectName);
+
+        return p;
+
+
+
+
+    }
+
+    public static ProjectActionType getNewProjectActionType() throws FileNotFoundException {
+
+        Session s = HibernateUtil.getSession();
+
+        ProjectActionType pat = new ProjectActionType();
+
+        s.clear();
+        String patDescription = UUID.randomUUID().toString();
+        pat.setDescription(patDescription);
+
+        Transaction t = s.beginTransaction();
+
+        s.save(pat);
+
+        t.commit();
+
+
+        pat = ProjectActionTypeHelper.getByDescription(patDescription);
+
+        return pat;
+    }
+
+    public static ProjectAction getTestProjectAction() throws FileNotFoundException {
+        ProjectAction pa = new ProjectAction();
+        pa.setProject(ProjectActionTest.getNewProject());
+        pa.setDate(new Date());
+        pa.setNotes(UUID.randomUUID().toString());
+        pa.setType(getNewProjectActionType());
+        Session s = HibernateUtil.getSession();
+        Transaction t = s.beginTransaction();
+        s.save(pa);
+        t.commit();
+        return pa;
+    }
+
     public void testGetMostRecentByProjectName() throws Exception {
         Calendar c = Calendar.getInstance();
         Date older = c.getTime();
@@ -82,66 +143,32 @@ public class ProjectActionTest extends TestCase {
 
     }
 
-    private static Project getNewProject() throws FileNotFoundException {
 
-        Session s = HibernateUtil.getSession();
+    public void testDateWithNoTimeThrowException() {
 
+        IllegalArgumentException caught = null;
+        ProjectAction target = new ProjectAction();
 
-        Project p = new Project();
+        Date d = new Date();
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND,0);
+        d.setTime(c.getTime().getTime());
 
-        s.clear();
-        String projectName = UUID.randomUUID().toString();
-        p.setName(projectName);
+        try
+        {
+            target.setDate(d);
+        }
+        catch(IllegalArgumentException ex)
+        {
+            caught = ex;
+        }
 
-        Transaction t = s.beginTransaction();
-
-        s.save(p);
-
-        t.commit();
-
-        p = ProjectHelper.getByName(projectName);
-
-        return p;
-
-        
-
-
+        assertNotNull(caught);
     }
 
-    public static ProjectActionType getNewProjectActionType() throws FileNotFoundException {
 
-        Session s = HibernateUtil.getSession();
-
-        ProjectActionType pat = new ProjectActionType();
-
-        s.clear();
-        String patDescription = UUID.randomUUID().toString();
-        pat.setDescription(patDescription);
-
-        Transaction t = s.beginTransaction();
-
-        s.save(pat);
-
-        t.commit();
-
-
-        pat = ProjectActionTypeHelper.getByDescription(patDescription);
-
-        return pat;
-    }
-
-    public static ProjectAction getTestProjectAction() throws FileNotFoundException {
-        ProjectAction pa = new ProjectAction();
-        pa.setProject(ProjectActionTest.getNewProject());
-        pa.setDate(new Date());
-        pa.setNotes(UUID.randomUUID().toString());
-        pa.setType(getNewProjectActionType());
-        Session s = HibernateUtil.getSession();
-        Transaction t = s.beginTransaction();
-        s.save(pa);
-        t.commit();
-        return pa;
-    }
 
 
 }
