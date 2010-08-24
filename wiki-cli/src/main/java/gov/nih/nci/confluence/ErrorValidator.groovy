@@ -174,10 +174,19 @@ class ErrorValidator {
 			message = message.replaceAll("DEV_POC_NAME",devPoc)
 			gov.nih.nci.confluence.MailSender ms = new gov.nih.nci.confluence.MailSender()
 			ArrayList recipientList = new ArrayList()
-			println("Sending email to Dev Poc " +devPocEmail + " And GOV Poc " + govPocEmail)
-			recipientList.add(devPocEmail)
-			recipientList.add(govPocEmail)
-            recipientList.add(cotrEmail);
+            if( devPocEmail != null && devPocEmail.trim().length() > 0  ) {
+              recipientList.add(devPocEmail);
+            }
+
+            if ( govPocEmail != null && govPocEmail.trim().length() > 0 ) {
+              recipientList.add(govPocEmail);
+            }
+
+
+            if ( cotrEmail != null && cotrEmail.trim().length() > 0 ) {
+              recipientList.add(cotrEmail);
+            }
+
 			properties.getProperty("mail.additional.recipients").split(',').eachWithIndex {processToken, i -> 
 				recipientList.add(processToken)
 			}
