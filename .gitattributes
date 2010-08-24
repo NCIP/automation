@@ -160,7 +160,6 @@ lib/commons-logging.jar -text
 lib/dom4j.jar -text
 lib/hibernate-annotations.jar -text
 lib/hibernate.jar -text
-nih.nci.bda.domain/nih.nci.bda.domain.iml -text
 wiki-cli/.classpath -text
 wiki-cli/.idea/ant.xml -text
 wiki-cli/.idea/compiler.xml -text
