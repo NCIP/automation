@@ -185,6 +185,7 @@
 			/>
 		<echo message="**** Exiting test:property:pass:bda-blueprints-webapp.version"/>
 	</target>
+	<!--
 	<target name="test:property:pass:bda.version">
 		<echo message="**** Entering test:property:pass:bda.version"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
@@ -200,6 +201,7 @@
 			/>
 		<echo message="**** Exiting test:property:pass:bda.version"/>
 	</target>
+	-->
 	<target name="test:property:pass:build.bda.src.url">
 		<echo message="**** Entering test:property:pass:build.bda.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
