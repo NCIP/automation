@@ -145,6 +145,7 @@ certification-monitor/src/tests/unit/groovy/BDACertificationTest.groovy -text
 docs/BDA_Certification_Stories.doc -text
 docs/BDA_Certification_design.doc -text
 jobs/build-certification-tim/config.xml -text
+jobs/hello/config.xml -text
 software/.idea/compiler.xml -text
 software/.idea/copyright/profiles_settings.xml -text
 software/.idea/encodings.xml -text
