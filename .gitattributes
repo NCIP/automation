@@ -91,6 +91,10 @@ certification-monitor/lib/selenium-server-tests.jar -text
 certification-monitor/lib/selenium-server.jar -text
 certification-monitor/lib/slf4j-api-1.5.2.jar -text
 certification-monitor/lib/slf4j-simple-1.5.2.jar -text
+certification-monitor/lib/svnClientAdapter-1.2.1.jar -text
+certification-monitor/lib/svnant-1.2.1.jar -text
+certification-monitor/lib/svnjavahl-1.2.1.jar -text
+certification-monitor/lib/svnkit-1.2.1.jar -text
 certification-monitor/lib/tools.jar -text
 certification-monitor/lib/xercesImpl.jar -text
 certification-monitor/lib/xmltask-1.15.1.jar -text
