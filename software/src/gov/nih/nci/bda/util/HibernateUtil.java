@@ -45,6 +45,10 @@ public class HibernateUtil {
                 f = new File("software/src/hibernate.cfg.xml");
             }
             if (!f.exists()) {
+                f = new File("src/hibernate.cfg.xml");
+            }
+
+            if (!f.exists()) {
                 File root = new File(".");
                 throw new FileNotFoundException("hibernate.cfg.xml in " + root.getAbsolutePath());
             }

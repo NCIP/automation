@@ -16,7 +16,8 @@
     <property name="hibernate.config.file" value="hibernate.cfg.xml" />
     <property name="java.dir" value="${software.dir}/src" />
     <property name="classes.dir" value="${software.dir}/classes" />
-    <property name="test-classes.dir" value="${software.dir}/test-classes" />
+    <property name="test-classes.dir" value="${classes.dir}/test" />
+    <property name="testresult.dir" value="${software.dir}/testresult" />
 	<property name="database.name" value="wikiDB" />
 	<property name="database.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
 	<property name="database.url" value="jdbc:derby:${database.name};create=true" />
@@ -28,8 +29,8 @@
 	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
 	<property name="properties.file" value="build.properties" />
 	<property name="wiki.properties.file" value="wiki.properties" />
-    <property name="software.assert.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
-    <property name="assert.target.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
+    <!--<property name="software.assert.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />-->
+    <!--<property name="assert.target.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />-->
 	
 	<echo message="${lib.dir}"/>
 
@@ -42,9 +43,7 @@
 		</fileset>
 	</path>
 
-	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
-	<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask" classpathref="project.classpath"/>
-	
+
 	<target name="init" depends="clean" description="create table and populate data">
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${target.dir}" />
@@ -55,8 +54,7 @@
 		<delete dir="${classes.dir}" />
 		<delete dir="${target.dir}" />
 		<delete dir="${dist.dir}" />
-        <delete dir="${test-classes.dir}" />
-        <delete dir="${basedir}/testresult" />
+        <delete dir="${testresult.dir}" />
 	</target>
 
 
@@ -85,42 +83,41 @@
 
     <target name="test"
             depends="package,package-assert">
-        <mkdir dir="${test-classes.dir}" />
 
-        <javac srcdir="${software.dir}/src/main/java/test"
-               destdir="${test-classes.dir}"
-               classpathref="project.classpath"
-               classpath=";${dist.dir}/assert.jar">
-            <classpath refid="project.classpath"/>
-            <classpath>
-                <pathelement location="${dist.dir}/${software.jar.file}"/>
-            </classpath>
-            <classpath>
-                <pathelement location="${dist.dir}/assert.jar"/>
-            </classpath>
-        </javac>
+        <jar destfile="${dist.dir}/tests.jar" basedir="${classes.dir}" />
 
-
-        <jar destfile="${dist.dir}/tests.jar" basedir="${test-classes.dir}" update="true" />
-
-        <mkdir dir="${basedir}/testresult" />
-        <echo>jar=${dist.dir}/${software.jar.file}</echo>
+        <mkdir dir="${testresult.dir}" />
+        <!--<echo>jar=${dist.dir}/${software.jar.file}</echo>-->
         <path id="test.classpath">
             <fileset dir="${lib.dir}">
                 <include name="**/*.jar" />
             </fileset>
-            <fileset dir="${dist.dir}">
+            <fileset dir="${dist.dir}/">
                 <include name="**/*.jar" />
             </fileset>
         </path>
         <property name="xxx" refid="test.classpath"/>
         <echo>classpath=${xxx}</echo>
+
+        <echo>classes.dir=${test-classes.dir}</echo>
+        <!--<fileset dir="${classes.dir}" id="classes.fileset">-->
+            <!--<include name="test/**/*.class" />-->
+        <!--</fileset>-->
+        <!--<property name="zzz" refid="classes.fileset"/>-->
+        <!--<echo>classes.fileset=${xxx}</echo>-->
+
         <junit printsummary="yes">
             <classpath refid="test.classpath"/>
-            <batchtest todir="${basedir}/testresult">
-                <fileset dir="${test-classes.dir}">
-                  <include name="**/*.class"/>
+
+            <batchtest todir="${testresult.dir}">
+                
+                <fileset dir="${classes.dir}">
+                    <include name="test/**/*.class" />
                 </fileset>
+                <!--<fileset dir="${test-classes.dir}">-->
+                    <!--<include name="**/*.class" />-->
+                <!--</fileset>-->
+                <!--<fileset refid="classes.fileset" />-->
             </batchtest>
             <formatter type="xml" usefile="true" />
         </junit>
@@ -128,11 +125,11 @@
 
 
     <target name="package-assert">
-        <javac srcdir="${software.assert.dir}"
-               destdir="${assert.target.dir}"
-               classpathref = "project.classpath"
-               debug = "on" />
-        <jar basedir="${assert.target.dir}" destfile="${dist.dir}/assert.jar" />
+        <!--<javac srcdir="${software.assert.dir}"-->
+               <!--destdir="${assert.target.dir}"-->
+               <!--classpathref = "project.classpath"-->
+               <!--debug = "on" />-->
+        <!--<jar basedir="${assert.target.dir}" destfile="${dist.dir}/assert.jar" />-->
     </target>
 
 	<target name="package"
@@ -145,7 +142,9 @@
             </fileset>
         </copy>
 
-		<jar destfile="${dist.dir}/${software.jar.file}" basedir="${classes.dir}" update="true" />
+		<jar destfile="${dist.dir}/${software.jar.file}" basedir="${classes.dir}" update="true">
+            <exclude name="test/**" />
+        </jar>
 	</target>
 
 
@@ -163,7 +162,7 @@
 	</target>
 
 
-	<target name="configure" description="Run the class to update Wiki" depends="configure:revision-number">
+	<target name="configure" description="Run the class to update Wiki">
 
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.name)=.*" replace="\1=${database.name}" />
 		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.url)=.*" replace="\1=${database.url}" />
@@ -195,20 +194,12 @@
 		<java classname="gov.nih.nci.confluence.BuildStatusUpdater">	
 			<classpath>
 				<pathelement location="${deploy.dir}/wiki_cli_nci.jar"/>
-				<pathelement location="${deploy.lib.dir}/groovy-all-1.6-beta-1.jar"/>
 				<pathelement location="${deploy.lib.dir}/mysql-connector-java-5.0.5.jar"/>
 			</classpath>
 		</java>		
 	</target>
 	
-	<target name="configure:revision-number" description="Run the class to update Wiki">
-		<svn javahl="false">
-			<status path="${basedir}" revisionProperty="svn.revision" urlProperty="svn.url"/>
-		</svn>
-		<echo message="${svn.revision}"/>
-		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.revision.number)=.*" replace="\1=${svn.revision}" />
-	</target>
-	
+
 	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
 		<attribute name="sql.file" />
 		<attribute name="sql.delimiter" default=";" />
