@@ -3,6 +3,10 @@
 
     <property environment="env" />
 
+    <property name="backupconfig.checkout.dir" value="./tmp/configs" />
+    <property name="svn.username" value="user" />
+    <property name="svn.password" value="password" />
+
 
     <property name="database.server" value="localhost" />
     <property name="database.port" value="3306" />
@@ -53,6 +57,9 @@
 
 
 	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="project.classpath"/>
+    <!--<taskdef resource="org/tigris/subversion/
+    ant/svnantlib.xml" classpathref="project.classpath" />-->
+    <taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask" classpathref="project.classpath" />
 	
 	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
 	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="project.classpath"/>
@@ -323,5 +330,43 @@
 		</replaceregexp>
 	</target>
 
+    <target name="backupconfig">
+        <if>
+            <not>
+                <isset property="env.HUDSON_HOME" />
+            </not>
+            <then>
+                <fail message="env.HUDSON_HOME is not set." />
+            </then>
+        </if>
 
+        <delete dir="${backupconfig.checkout.dir}" includeemptydirs="true" />
+
+        <echo>HUDSON_HOME=${env.HUDSON_HOME}</echo>
+        <svn javahl="false">
+            <checkout   url="https://gforge.nci.nih.gov/svnroot/automation/branches/bda-dashboard-1.0.1/jobs/"
+                        destpath="${backupconfig.checkout.dir}"/>
+        </svn>
+        <fileset  dir="${env.HUDSON_HOME}/jobs" id="configstobackup">
+            <include name="**/config.xml" />
+        </fileset>
+
+        <property name="display" refid="configstobackup" />
+        <echo>configstobackup=${display}</echo>
+
+        <mkdir dir="${backupconfig.checkout.dir}"  />
+
+        <copy todir="${backupconfig.checkout.dir}">
+            <fileset refid="configstobackup" />
+        </copy>
+
+        <svn javahl="false" >
+            <add dir="${backupconfig.checkout.dir}" force="true" recurse="true" />
+        </svn>
+
+        <svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >
+            <commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />
+        </svn>
+
+    </target>
 </project>
