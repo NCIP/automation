@@ -1,7 +1,12 @@
 * text=auto !eol
+.idea/ant.xml -text
 .idea/compiler.xml -text
 .idea/copyright/profiles_settings.xml -text
 .idea/encodings.xml -text
+.idea/libraries/lib.xml -text
+.idea/libraries/lib1.xml -text
+.idea/libraries/lib2.xml -text
+.idea/libraries/lib3.xml -text
 .idea/misc.xml -text
 .idea/modules.xml -text
 .idea/uiDesigner.xml -text
@@ -108,7 +113,6 @@ certification-monitor/lib/xercesImpl.jar -text
 certification-monitor/lib/xmltask-1.15.1.jar -text
 certification-monitor/prod-install.properties -text
 certification-monitor/result.csv -text
-certification-monitor/src/main/Main.iml -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationConstants.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationHelper.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/CertificationManager.java -text
@@ -518,25 +522,6 @@ jobs/update-wiki/config.xml -text
 jobs/validate-certification-prod/config.xml -text
 jobs/wiki-dev/config.xml -text
 jobs/x/config.xml -text
-software/.idea/compiler.xml -text
-software/.idea/copyright/profiles_settings.xml -text
-software/.idea/encodings.xml -text
-software/.idea/libraries/hibernate3.xml -text
-software/.idea/misc.xml -text
-software/.idea/modules.xml -text
-software/.idea/uiDesigner.xml -text
-software/.idea/vcs.xml -text
-software/.idea/workspace.xml -text
-software/lib/antlr.jar -text
-software/lib/asm.jar -text
-software/lib/cglib.jar -text
-software/lib/commons-collections.jar -text
-software/lib/commons-logging.jar -text
-software/lib/dom4j.jar -text
-software/lib/hibernate-annotations.jar -text
-software/lib/hibernate.jar -text
-software/src/Main.java -text
-software/src/hibernate.cfg.xml -text
 wiki-cli/.classpath -text
 wiki-cli/.idea/ant.xml -text
 wiki-cli/.idea/compiler.xml -text
