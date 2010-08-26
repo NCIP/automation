@@ -9,12 +9,12 @@
 	<!-- PROPERTIES -->
 	<property file="${properties.file}"/>
     <echo>wiki.password=${wiki.password}</echo>
-	<property name="software.dir" value="${basedir}/src" />
+	<property name="software.dir" value="${basedir}" />
 	<property name="lib.dir" value="${software.dir}/lib" />
 	<property name="sql.dir" value="${software.dir}/sql" />
 	<property name="resources.dir" value="${software.dir}/src/main/resources" />
     <property name="hibernate.config.file" value="hibernate.cfg.xml" />
-    <property name="java.dir" value="${software.dir}" />
+    <property name="java.dir" value="${software.dir}/src" />
     <property name="classes.dir" value="${software.dir}/classes" />
     <property name="test-classes.dir" value="${software.dir}/test-classes" />
 	<property name="database.name" value="wikiDB" />
