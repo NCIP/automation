@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="wikimod" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+    <property environment="env" />
+    <property name="wiki.user" value="${env.WIKI.USER}" />
+    <property name="wiki.password" value="${env.WIKI.PASSWORD}" />
+    <echo>wiki.password=${wiki.password}</echo>
+
+	<!-- PROPERTIES -->
+	<property file="${properties.file}"/>
+    <echo>wiki.password=${wiki.password}</echo>
+	<property name="software.dir" value="${basedir}/src" />
+	<property name="lib.dir" value="${software.dir}/lib" />
+	<property name="sql.dir" value="${software.dir}/sql" />
+	<property name="resources.dir" value="${software.dir}/src/main/resources" />
+    <property name="hibernate.config.file" value="hibernate.cfg.xml" />
+    <property name="java.dir" value="${software.dir}" />
+    <property name="classes.dir" value="${software.dir}/classes" />
+    <property name="test-classes.dir" value="${software.dir}/test-classes" />
+	<property name="database.name" value="wikiDB" />
+	<property name="database.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+	<property name="database.url" value="jdbc:derby:${database.name};create=true" />
+	<property name="sql.file" value="${sql.dir}/populate_wikiDB.sql" />
+	<property name="target.dir" value="${software.dir}/target" />
+	<property name="dist.dir" value="${target.dir}/dist" />
+	<property name="deploy.dir" value="${user.home}/wiki-cli" />
+	<property name="software.jar.file" value="software.jar" />
+	<property name="deploy.lib.dir" value="${deploy.dir}/lib" />
+	<property name="properties.file" value="build.properties" />
+	<property name="wiki.properties.file" value="wiki.properties" />
+    <property name="software.assert.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
+    <property name="assert.target.dir" value="${software.dir}/src/main/java/gov/nih/nci/test" />
+	
+	<echo message="${lib.dir}"/>
+
+
+
+	<!-- PATHS -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
+	<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask" classpathref="project.classpath"/>
+	
+	<target name="init" depends="clean" description="create table and populate data">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="clean" description="create table and populate data">
+		<delete dir="${classes.dir}" />
+		<delete dir="${target.dir}" />
+		<delete dir="${dist.dir}" />
+        <delete dir="${test-classes.dir}" />
+        <delete dir="${basedir}/testresult" />
+	</target>
+
+
+	<target name="generate-sql" description="create table and populate data">
+		<run-sql-script sql.file="${sql.file}"  database.url="${database.url}" database.user="" database.password=""/>
+	
+	</target>
+
+
+	<target name="run" depends="init,build,package,deploy,configure" description="Run the class to update Wiki">
+		
+	</target>
+	
+	
+	<target name="build"
+            depends="init"
+            description="build the class to update Wiki">
+
+        <javac srcdir="${java.dir}"
+               destdir="${classes.dir}"
+               classpathref="project.classpath">
+            <classpath refid="project.classpath"/>
+        </javac>
+
+	</target>
+
+    <target name="test"
+            depends="package,package-assert">
+        <mkdir dir="${test-classes.dir}" />
+
+        <javac srcdir="${software.dir}/src/main/java/test"
+               destdir="${test-classes.dir}"
+               classpathref="project.classpath"
+               classpath=";${dist.dir}/assert.jar">
+            <classpath refid="project.classpath"/>
+            <classpath>
+                <pathelement location="${dist.dir}/${software.jar.file}"/>
+            </classpath>
+            <classpath>
+                <pathelement location="${dist.dir}/assert.jar"/>
+            </classpath>
+        </javac>
+
+
+        <jar destfile="${dist.dir}/tests.jar" basedir="${test-classes.dir}" update="true" />
+
+        <mkdir dir="${basedir}/testresult" />
+        <echo>jar=${dist.dir}/${software.jar.file}</echo>
+        <path id="test.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+        </path>
+        <property name="xxx" refid="test.classpath"/>
+        <echo>classpath=${xxx}</echo>
+        <junit printsummary="yes">
+            <classpath refid="test.classpath"/>
+            <batchtest todir="${basedir}/testresult">
+                <fileset dir="${test-classes.dir}">
+                  <include name="**/*.class"/>
+                </fileset>
+            </batchtest>
+            <formatter type="xml" usefile="true" />
+        </junit>
+    </target>
+
+
+    <target name="package-assert">
+        <javac srcdir="${software.assert.dir}"
+               destdir="${assert.target.dir}"
+               classpathref = "project.classpath"
+               debug = "on" />
+        <jar basedir="${assert.target.dir}" destfile="${dist.dir}/assert.jar" />
+    </target>
+
+	<target name="package"
+            depends="build"
+            description="package the jar to update Wiki">
+
+        <copy todir="${classes.dir}" overwrite="true" verbose="true">
+            <fileset dir="${java.dir}">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+
+		<jar destfile="${dist.dir}/${software.jar.file}" basedir="${classes.dir}" update="true" />
+	</target>
+
+
+	<target name="deploy" description="Run the class to update Wiki">
+		<copy todir="${deploy.lib.dir}" overwrite="true">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+
+		<copy file="${dist.dir}/${software.jar.file}" todir="${deploy.dir}" />
+		<copy file="${resources.dir}/${wiki.properties.file}" todir="${deploy.dir}" />
+		<copy file="${resources.dir}/build.xml" todir="${deploy.dir}" />
+        <copy file="${resources.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
+	</target>
+
+
+	<target name="configure" description="Run the class to update Wiki" depends="configure:revision-number">
+
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.name)=.*" replace="\1=${database.name}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.url)=.*" replace="\1=${database.url}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.user)=.*" replace="\1=${database.user}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(database.password)=.*" replace="\1=${database.password}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(wiki.server)=.*" replace="\1=${wiki.server}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(wiki.user)=.*" replace="\1=${wiki.user}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(wiki.password)=.*" replace="\1=${wiki.password}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.template.space)=.*" replace="\1=${certification.template.space}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.template.file)=.*" replace="\1=${certification.template.file}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.space)=.*" replace="\1=${certification.page.space}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(certification.page.file)=.*" replace="\1=${certification.page.file}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.release.version)=.*" replace="\1=${dashboard.release.version}" />		
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.hostname)=.*" replace="\1=${mail.hostname}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.portnumber)=.*" replace="\1=${mail.portnumber}" />
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.send.address)=.*" replace="\1=${mail.send.address}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(mail.additional.recipients)=.*" replace="\1=${mail.additional.recipients}" />
+
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.template.file)=.*" replace="\1=${non-bda.template.file}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.template2.file)=.*" replace="\1=${non-bda.template2.file}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.page.file)=.*" replace="\1=${non-bda.page.file}" />
+        <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.page2.file)=.*" replace="\1=${non-bda.page2.file}" />
+
+	</target>
+
+
+
+	<target name="execute" description="Run the class to update Wiki">
+		<java classname="gov.nih.nci.confluence.BuildStatusUpdater">	
+			<classpath>
+				<pathelement location="${deploy.dir}/wiki_cli_nci.jar"/>
+				<pathelement location="${deploy.lib.dir}/groovy-all-1.6-beta-1.jar"/>
+				<pathelement location="${deploy.lib.dir}/mysql-connector-java-5.0.5.jar"/>
+			</classpath>
+		</java>		
+	</target>
+	
+	<target name="configure:revision-number" description="Run the class to update Wiki">
+		<svn javahl="false">
+			<status path="${basedir}" revisionProperty="svn.revision" urlProperty="svn.url"/>
+		</svn>
+		<echo message="${svn.revision}"/>
+		<replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(dashboard.revision.number)=.*" replace="\1=${svn.revision}" />
+	</target>
+	
+	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
+		<attribute name="sql.file" />
+		<attribute name="sql.delimiter" default=";" />
+		<attribute name="sql.delimitertype" default="normal" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="onerror" default="abort" />
+		<sequential>
+			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+				<classpath>
+					<pathelement location="${lib.dir}/derby.jar" />
+				</classpath>
+			</sql>
+		</sequential>
+	</macrodef>
+
+
+</project>

@@ -586,6 +586,7 @@ jobs/update-wiki/config.xml -text
 jobs/validate-certification-prod/config.xml -text
 jobs/wiki-dev/config.xml -text
 jobs/x/config.xml -text
+software/build.xml -text
 software/lib/antlr.jar -text
 software/lib/asm.jar -text
 software/lib/cglib.jar -text
