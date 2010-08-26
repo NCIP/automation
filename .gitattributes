@@ -1,4 +1,12 @@
 * text=auto !eol
+.idea/compiler.xml -text
+.idea/copyright/profiles_settings.xml -text
+.idea/encodings.xml -text
+.idea/misc.xml -text
+.idea/modules.xml -text
+.idea/uiDesigner.xml -text
+.idea/vcs.xml -text
+.idea/workspace.xml -text
 anthill-monitor/.classpath -text
 anthill-monitor/.project -text
 anthill-monitor/build/build.xml -text
@@ -619,7 +627,6 @@ wiki-cli/pom.xml -text
 wiki-cli/prod-build.properties -text
 wiki-cli/source.txt -text
 wiki-cli/src/assembly/release.xml -text
-wiki-cli/src/main/Main.iml -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.hbm.xml -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/Project.java -text
 wiki-cli/src/main/java/gov/nih/nci/bda/domain/ProjectAction.hbm.xml -text
@@ -662,4 +669,3 @@ wiki-cli/target/examples/input.txt -text
 wiki-cli/target/examples/source.txt -text
 wiki-cli/target/release.xml -text
 wiki-cli/wiki-cli.iml -text
-/x.xml -text
