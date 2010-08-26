@@ -113,6 +113,7 @@ certification-monitor/lib/xercesImpl.jar -text
 certification-monitor/lib/xmltask-1.15.1.jar -text
 certification-monitor/prod-install.properties -text
 certification-monitor/result.csv -text
+certification-monitor/src/main/dashboard.iml -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationConstants.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationHelper.java -text
 certification-monitor/src/main/java/gov/nih/nci/bda/certification/CertificationManager.java -text
@@ -522,7 +523,6 @@ jobs/update-wiki/config.xml -text
 jobs/validate-certification-prod/config.xml -text
 jobs/wiki-dev/config.xml -text
 jobs/x/config.xml -text
-wiki-cli/.classpath -text
 wiki-cli/.idea/ant.xml -text
 wiki-cli/.idea/compiler.xml -text
 wiki-cli/.idea/copyright/profiles_settings.xml -text
@@ -534,7 +534,6 @@ wiki-cli/.idea/modules.xml -text
 wiki-cli/.idea/uiDesigner.xml -text
 wiki-cli/.idea/vcs.xml -text
 wiki-cli/.idea/workspace.xml -text
-wiki-cli/.project -text
 wiki-cli/README.txt -text
 wiki-cli/build.properties -text
 wiki-cli/build.xml -text
@@ -645,6 +644,7 @@ wiki-cli/src/main/resources/examples/source.txt -text
 wiki-cli/src/main/resources/hibernate.cfg.xml -text
 wiki-cli/src/main/resources/log4j.properties -text
 wiki-cli/src/main/resources/wiki.properties -text
+wiki-cli/src/main/wiki.iml -text
 wiki-cli/target/README.txt -text
 wiki-cli/target/confluence.bat -text
 wiki-cli/target/examples/addUserToGroupWithFile.csv -text

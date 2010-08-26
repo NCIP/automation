@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/wiki-cli/src/main/Main.iml" filepath="$PROJECT_DIR$/wiki-cli/src/main/Main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/certification-monitor/src/main/Main1.iml" filepath="$PROJECT_DIR$/certification-monitor/src/main/Main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/certification-monitor/src/main/dashboard.iml" filepath="$PROJECT_DIR$/certification-monitor/src/main/dashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wiki-cli/src/main/wiki.iml" filepath="$PROJECT_DIR$/wiki-cli/src/main/wiki.iml" />
     </modules>
   </component>
 </project>
