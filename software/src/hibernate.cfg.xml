@@ -1,0 +1,32 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+<session-factory>
+    <!-- Database connection settings -->
+    <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property>
+    <property name="connection.url">jdbc:mysql://localhost/test</property>
+    <property name="connection.username">mysql</property>
+    <property name="connection.password">mysql</property>
+
+    <!-- SQL dialect -->
+    <property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql">true</property>
+
+    <property name="current_session_context_class">thread</property>
+
+    <!--<mapping resource="gov/nih/nci/wiki/ProjectCertificationStatus.hbm.xml"-->
+             <!--class="gov.nih.nci.wiki.ProjectCertificationStatus"/>-->
+
+    <!--<mapping resource="gov/nih/nci/bda/domain/Project.hbm.xml"-->
+             <!--class="gov.nih.nci.bda.domain.Project"/>-->
+
+    <!--<mapping resource="gov/nih/nci/bda/domain/ProjectAction.hbm.xml"-->
+             <!--class="gov.nih.nci.bda.domain.ProjectAction"/>-->
+
+    <mapping resource="gov/nih/nci/bda/domain/ProjectActionType.hbm.xml"
+             class="gov.nih.nci.bda.domain.ProjectActionType"/>
+</session-factory>
+
+</hibernate-configuration>
