@@ -187,4 +187,18 @@
                   file="${sql.dist.dir}/project_history_type.csv">
         </loadData>
     </changeSet>
+
+
+    <changeSet id="https://tracker.nci.nih.gov/browse/BDA-570" author="bassetttj">
+        <insert tableName="project_poc">
+            <column name="PROJECT_FRIENDLY" value="ObjectCart" />
+            <column name="PROJECT_NAME" value="objectcart" />
+            <!--<column name="COTR_EMAIL" value="" />-->
+            <!--<column name="GOV_POC" value="" />-->
+            <!--<column name="COTR" value="" />-->
+            <column name="DEV_POC" value="Denis Avdic" />
+            <column name="DEV_POC_EMAIL" value="avdicd@mail.nih.gov" />
+            <column name="GOV_POC_EMAIL" value="" />
+        </insert>
+    </changeSet>
 </databaseChangeLog>
