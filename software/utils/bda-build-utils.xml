@@ -3073,6 +3073,7 @@ $HeadURL$
 		<attribute name="grid.target" default="${grid.target}"/>
 		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
 		<attribute name="cagrid-console.target" default="deployJBoss"/>
+		<attribute name="wscore.src.url" default="${wscore.src.url}"/>
 		<sequential>
 			<grid-appserver-configure
 				appserver.home="@{jboss.home}"
@@ -3125,6 +3126,7 @@ $HeadURL$
 				grid.target="@{grid.target}"
 				cagrid-console.dir="@{cagrid-console.dir}"
 				cagrid-console.target="@{cagrid-console.target}"
+				wscore.src.url="@{wscore.src.url}"
 				/>
 		</sequential>
 	</macrodef>
@@ -3180,6 +3182,7 @@ $HeadURL$
 		<attribute name="grid.target" default="${grid.target}"/>
 		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
 		<attribute name="cagrid-console.target" default="deployTomcat"/>
+		<attribute name="wscore.src.url" default="${wscore.src.url}"/>
 		<sequential>
 			<grid-appserver-configure
 				appserver.home="@{tomcat.home}"
@@ -3232,6 +3235,7 @@ $HeadURL$
 				grid.target="@{grid.target}"
 				cagrid-console.dir="@{cagrid-console.dir}"
 				cagrid-console.target="@{cagrid-console.target}"
+				wscore.src.url="@{wscore.src.url}"
 				/>
 		</sequential>
 	</macrodef>
@@ -3286,7 +3290,59 @@ $HeadURL$
 		<attribute name="grid.target" default="${grid.target}"/>
 		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
 		<attribute name="cagrid-console.target" default="deployJboss"/>
+		<attribute name="wscore.src.url" default="${wscore.src.url}"/>
 		<sequential>
+			<if>
+				<not>
+					<isset property="env.GLOBUS_LOCATION"/>
+				</not>
+				<then>
+					<echo message="env.GLOBUS_LOCATION not set, installing temporary copy"/>
+					<property name="working.dir" location="${basedir}/working"/>
+					<var name="env.GLOBUS_LOCATION" value="${working.dir}/${wscore.binaries.relative.dir}"/>
+					<if>
+						<not>
+							<available file="${env.GLOBUS_LOCATION}"/>
+						</not>
+						<then>
+							<echo message="temporary copy not found, installing"/>
+							<if>
+								<not>
+									<available file="${tools.dist.relative.dir}/ws-core-enum-4.0.3.zip"/>
+								</not>
+								<then>
+									<var name="wscore.src.url.unexpanded" unset="true"/>
+									<propertyregex property="wscore.src.url.unexpanded"
+										input="@{wscore.src.url}"
+										regexp="^\${.*}"
+										select="true"
+										/>
+									<if>
+										<isset property="wscore.src.url.unexpanded"/>
+										<then>
+											<property name="tmp.wscore.src.url" value="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/techstack-2006/os-independent/ws-core-enum-4.0.3.zip"/>
+										</then>
+										<else>
+											<property name="tmp.wscore.src.url" value="@{wscore.src.url}"/>
+										</else>
+									</if>
+									<var name="temp.file.name" usnet="true"/>
+									<basename file="" property="temp.file.name"/>
+									<get src="${temp.wscore.src.url}" dest="${tools.dist.relative.dir}/${temp.file.name}"/>
+								</then>
+								<else>
+									<echo message="Installing WSCORE, and continuing onto cagrid-console install"/>
+									<unzip dest="${working.dir}" src="${tools.dist.relative.dir}/ws-core-enum-4.0.3.zip"/>
+								</else>
+							</if>
+						</then>
+					</if>
+				</then>
+				<else>
+					<echo message="GLOBUS_LOCATION (${env.GLOBUS_LOCATION}) found continuing to cagrid-console install"/>
+				</else>
+			</if>
+			<var name="ext.globus.dir" value="${env.GLOBUS_LOCATION}"/>
 			<if>
 				<equals arg1="@{grid.secure.enable}" arg2="true"/>
 				<then>
@@ -3486,15 +3542,18 @@ $HeadURL$
 						>
 						<property name="jboss.dir" value="@{appserver.home}"/>
 						<property name="wsrf.webapp.dir" value="@{appserver.webapp.dir}/@{grid.application.relative.dir}"/>
+						<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 					</ant>
 				</then>
 				<else>
 					<echo message="in gui-installer, using exec to run cagrid-console build"/>
 					<exec osfamily="unix" executable="ant" dir="@{cagrid-console.dir}">
 						<arg line="-Djboss.dir=@{appserver.home} -Dwsrf.webapp.dir=@{appserver.webapp.dir}/@{grid.application.relative.dir} @{cagrid-console.target}"/>
+						<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 					</exec>
 					<exec osfamily="windows" executable="ant.bat" dir="@{cagrid-console.dir}">
 						<arg line="-Djboss.dir=@{appserver.home} -Dwsrf.webapp.dir=@{appserver.webapp.dir}/@{grid.application.relative.dir} @{cagrid-console.target}"/>
+						<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 					</exec>
 				</else>
 			</if>
@@ -8749,17 +8808,21 @@ $HeadURL$
 							<echo message="Configuring syncgts to target grid"/>
 							<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
 								<arg line="all" />
+								<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 							</exec>
 							<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
 								<arg line="all" />
+								<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 							</exec>
 
 							<echo message="Syncing with fabric"/>
 							<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
 								<arg line="syncWithTrustFabric" />
+								<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 							</exec>
 							<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
 								<arg line="syncWithTrustFabric" />
+								<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 							</exec>
 						</then>
 						<else>
@@ -8769,14 +8832,18 @@ $HeadURL$
 								antfile="build.xml"
 								target="all"
 								dir="@{sync-gts.build.dir}"
-								/>
+								>
+								<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
+							</ant>
 							<!-- sync with fabric-->
 							<echo message="Syncing with fabric"/>
 							<ant inheritAll="false" inheritRefs="false"
 								antfile="build.xml"
 								target="syncWithTrustFabric"
 								dir="@{sync-gts.build.dir}"
-								/>
+								>
+								<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
+							</ant>
 						</else>
 					</if>
 					<!-- only run if jboss -->
@@ -8801,9 +8868,11 @@ $HeadURL$
 								<then>
 									<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
 										<arg line="-Denv.JBOSS_HOME=@{appserver.home} deployJBoss" />
+										<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 									</exec>
 									<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
 										<arg line="-Denv.JBOSS_HOME=@{appserver.home} deployJBoss" />
+										<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 									</exec>
 								</then>
 								<else>
@@ -8814,6 +8883,7 @@ $HeadURL$
 										dir="@{sync-gts.build.dir}"
 										>
 										<property name="env.JBOSS_HOME" location="@{appserver.home}"/>
+										<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 									</ant>
 								</else>
 							</if>
@@ -8843,9 +8913,11 @@ $HeadURL$
 								<then>
 									<exec osfamily="windows" executable="ant.bat" dir="@{sync-gts.build.dir}" failonerror="true">
 										<arg line="-Denv.CATALINA_HOME=@{appserver.home} deployTomcat" />
+										<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 									</exec>
 									<exec osfamily="unix" executable="ant" dir="@{sync-gts.build.dir}" failonerror="true">
 										<arg line="-Denv.CATALINA_HOME=@{appserver.home} deployTomcat" />
+										<env key="GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 									</exec>
 								</then>
 								<else>
@@ -8856,6 +8928,7 @@ $HeadURL$
 										dir="@{sync-gts.build.dir}"
 										>
 										<property name="env.CATALINA_HOME" location="@{appserver.home}"/>
+										<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
 									</ant>
 								</else>
 							</if>
