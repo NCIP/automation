@@ -38,22 +38,31 @@ class BuildStatusUpdater {
     String certificationTemplateSpace = properties.getProperty("certification.template.space");//"test"
     String certificationPageFile = properties.getProperty("certification.page.file");//"page1"
     String certificationPageSpace = properties.getProperty("certification.page.space");//"confluence-cli-1.3.0.jar"
-
-
     String dashboardVersion = properties.getProperty("dashboard.release.version");//"1.0.0"
     String dashboardRevision = properties.getProperty("dashboard.revision.number");//"100"
+
+
+    System.out.println("updateCertificationStatusForBDAProjects:certificationTemplateFile=" + certificationTemplateFile );
+    System.out.println("updateCertificationStatusForBDAProjects:certificationTemplateSpace=" + certificationTemplateSpace );
+    System.out.println("updateCertificationStatusForBDAProjects:certificationPageFile=" + certificationPageFile);
+    System.out.println("updateCertificationStatusForBDAProjects:certificationPageSpace=" + certificationPageSpace );
+    System.out.println("updateCertificationStatusForBDAProjects:dashboardVersion=" + dashboardVersion );
+    System.out.println("updateCertificationStatusForBDAProjects:dashboardRevision=" + dashboardRevision );
+
 
     String dashboardRelease = "[" + dashboardVersion + "|#anchor|" + dashboardRevision + "]"
 
     String dashboardTemplateFile = certificationTemplateFile + "_temp.txt";
 
-    // get most recent tempates
-    doCmd("${confluence} -a getPageSource --space \""
+    String cmd = "${confluence} -a getPageSource --space \""
             + certificationTemplateSpace
             + "\" --title \""
             + certificationTemplateFile
             + "\" --file "
-            + dashboardTemplateFile)
+            + dashboardTemplateFile ;
+
+    // get most recent tempates
+    doCmd( cmd );
 
     String replacementText = dashboardTableText("select PRODUCT,CERTIFICATION_STATUS,SINGLE_COMMAND_BUILD,SINGLE_COMMAND_DEPLOYMENT,REMOTE_UPGRADE,DATABASE_INTEGRATION,TEMPLATE_VALIDATION,PRIVATE_PROPERTIES,CI_BUILD,BDA_ENABLED,DEPLOYMENT_SHAKEOUT,COMMANDLINE_INSTALLER from PROJECT_CERTIFICATION_STATUS WHERE SUBSTR(BDA_ENABLED,LOCATE('[\',BDA_ENABLED)+1,LOCATE('|',BDA_ENABLED)-3) = '(/)' ORDER BY CERTIFICATION_STATUS");
 
