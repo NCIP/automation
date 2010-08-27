@@ -61,6 +61,9 @@ class BuildStatusUpdater {
             + "\" --file "
             + dashboardTemplateFile ;
 
+
+    System.out.println("cmd=" + cmd);
+
     // get most recent tempates
     doCmd( cmd );
 
