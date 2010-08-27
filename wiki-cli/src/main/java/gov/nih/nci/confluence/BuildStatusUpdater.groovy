@@ -54,13 +54,7 @@ class BuildStatusUpdater {
 
     String dashboardTemplateFile = certificationTemplateFile + "_temp.txt";
 
-    String cmd = "${confluence} -a getPageSource --space \""
-            + certificationTemplateSpace
-            + "\" --title \""
-            + certificationTemplateFile
-            + "\" --file "
-            + dashboardTemplateFile ;
-
+    String cmd = "${confluence} -a getPageSource --space \"" + certificationTemplateSpace + "\" --title \"" + certificationTemplateFile + "\" --file " + dashboardTemplateFile ;
 
     System.out.println("cmd=" + cmd);
 
