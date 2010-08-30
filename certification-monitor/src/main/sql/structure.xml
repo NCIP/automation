@@ -201,4 +201,23 @@
             <column name="GOV_POC_EMAIL" value="" />
         </insert>
     </changeSet>
+
+    <changeSet id="https://tracker.nci.nih.gov/browse/BDA-581" author="bassetttj">
+        <delete tableName="project_poc">
+            <where>
+                PROJECT_NAME = "caehr" AND PROJECT_FRIENDLY = "caEHR Enterprise Services Development- 5AM"
+            </where>
+        </delete>
+        <delete tableName="project_poc">
+            <where>
+                PROJECT_NAME = "camod" AND GOV_POC = "Anand Basu"
+            </where>
+        </delete>
+        <delete tableName="project_poc">
+            <where>
+                PROJECT_NAME IS NULL OR PROJECT_NAME = ""
+            </where>
+        </delete>
+        <addUniqueConstraint tableName="project_poc" columnNames="PROJECT_NAME" constraintName="project_poc_project_name" />
+    </changeSet>
 </databaseChangeLog>
