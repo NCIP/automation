@@ -340,25 +340,14 @@
             </then>
         </if>
 
-        <if>
-            <not>
-                <available file="${backupconfig.checkout.dir}" />
-            </not>
-            <then>
-                <mkdir dir="${backupconfig.checkout.dir}" />
-            </then>
-        </if>
 
-
-        <echo>HUDSON_HOME=${env.HUDSON_HOME}</echo>
-        <!--<svn javahl="false">-->
-            <!--<checkout   url="https://gforge.nci.nih.gov/svnroot/automation/branches/bda-dashboard-1.0.1/jobs/"-->
-                        <!--destpath="${backupconfig.checkout.dir}"/>-->
-        <!--</svn>-->
-
-        <fileset  dir="${env.HUDSON_HOME}/jobs" id="configstobackup">
+        <fileset  dir="${env.WORKSPACE}/jobs" id="configstobackup">
             <include name="**/config.xml" />
+            <!--<exclude name="**/${env.JOB_NAME}" />-->
         </fileset>
+
+        <!--delete thyself! to prevent recursion-->
+        <!--<delete dir="${env.HUDSON_HOME}/jobs/${env.JOB_NAME}" failonerror="true" />-->
 
         <property name="display" refid="configstobackup" />
         <echo>configstobackup=${display}</echo>
@@ -371,14 +360,12 @@
             <add>
                 <fileset dir="${backupconfig.checkout.dir}" >
                     <include name="**/config.xml" />
-                    <exclude name="**/tmp/config.xml" />
-                    <exclude name="**/${env.JOB_NAME}" />
                 </fileset>
             </add>
         </svn>
 
-        <svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >
-            <commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />
-        </svn>
+        <!--<svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >-->
+            <!--<commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />-->
+        <!--</svn>-->
     </target>
 </project>
