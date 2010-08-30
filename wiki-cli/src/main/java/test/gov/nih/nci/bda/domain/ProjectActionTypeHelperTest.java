@@ -1,6 +1,5 @@
 package test.gov.nih.nci.bda.domain;
 
-import gov.nih.nci.bda.certification.util.HibernateUtil;
 import gov.nih.nci.bda.domain.ProjectActionType;
 import gov.nih.nci.bda.domain.ProjectActionTypeHelper;
 import junit.framework.Test;

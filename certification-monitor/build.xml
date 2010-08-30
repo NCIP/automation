@@ -368,7 +368,11 @@
         </copy>
 
         <svn javahl="false" >
-            <add dir="${backupconfig.checkout.dir}" force="true" recurse="true" />
+            <add>
+                <fileset dir="${backupconfig.checkout.dir}">
+                    <include name="**/config.xml" />
+                </fileset>
+            </add>
         </svn>
 
         <svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >

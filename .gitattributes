@@ -10,6 +10,8 @@
 .idea/libraries/lib1.xml -text
 .idea/libraries/lib2.xml -text
 .idea/libraries/lib3.xml -text
+.idea/libraries/lib32.xml -text
+.idea/libraries/lib4.xml -text
 .idea/misc.xml -text
 .idea/modules.xml -text
 .idea/uiDesigner.xml -text
@@ -1135,6 +1137,7 @@ jobs/update-wiki/config.xml -text
 jobs/validate-certification-prod/config.xml -text
 jobs/wiki-dev/config.xml -text
 jobs/x/config.xml -text
+software/Software.iml -text
 software/build.xml -text
 software/lib/antlr.jar -text
 software/lib/asm.jar -text

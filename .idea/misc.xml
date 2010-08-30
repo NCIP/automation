@@ -3,24 +3,6 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="FacetAutodetectingManager">
-    <autodetection-disabled>
-      <facet-type id="hibernate">
-        <modules>
-          <module name="Software">
-            <files>
-              <file url="file://$PROJECT_DIR$/software/src/hibernate.cfg.xml" />
-            </files>
-          </module>
-          <module name="gov.nih.nci.bda">
-            <files>
-              <file url="file://$PROJECT_DIR$/software/gov.nih.nci.bda/src/hibernate.cfg.xml" />
-            </files>
-          </module>
-        </modules>
-      </facet-type>
-    </autodetection-disabled>
-  </component>
   <component name="IdProvider" IDEtalkID="A5187616CF58C497446EB891E34DD615" />
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />

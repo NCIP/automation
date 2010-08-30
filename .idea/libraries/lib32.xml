@@ -1,0 +1,46 @@
+<component name="libraryTable">
+  <library name="lib3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-java-client-driver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/slf4j-api-1.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-java-client-driver-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/javassist-3.4.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/commons-lang-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-server-test-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/xmltask-1.15.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-server-coreless.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/groovy-all-1.6-beta-1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/tools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-java-client-driver-test-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/liquibase-core-1.9.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/ant-nodeps.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/commons-collections-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/antlr-2.7.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/hibernate3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/ant-jsch.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/mysql-connector-java-5.0.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/junit.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/ant.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/jsch-0.1.39.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/svnjavahl-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/svnClientAdapter-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-server-tests.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/commons-configuration-1.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-java-client-driver-tests.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-server.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/svnkit-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/htmlunit-2.7.zip!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/ant-launcher.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/xercesImpl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/selenium-server-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/jta-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/ant-contrib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/slf4j-simple-1.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/dom4j-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/certification-monitor/lib/svnant-1.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
