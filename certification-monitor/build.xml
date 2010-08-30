@@ -3,7 +3,7 @@
 
     <property environment="env" />
 
-    <property name="backupconfig.checkout.dir" value="./tmp/configs" />
+    <property name="backupconfig.checkout.dir" value="${env.WORKSPACE}/jobs" />
     <property name="svn.username" value="user" />
     <property name="svn.password" value="password" />
 
@@ -340,21 +340,28 @@
             </then>
         </if>
 
-        <delete dir="${backupconfig.checkout.dir}" includeemptydirs="true" />
+        <if>
+            <not>
+                <available file="${backupconfig.checkout.dir}" />
+            </not>
+            <then>
+                <mkdir dir="${backupconfig.checkout.dir}" />
+            </then>
+        </if>
+
 
         <echo>HUDSON_HOME=${env.HUDSON_HOME}</echo>
-        <svn javahl="false">
-            <checkout   url="https://gforge.nci.nih.gov/svnroot/automation/branches/bda-dashboard-1.0.1/jobs/"
-                        destpath="${backupconfig.checkout.dir}"/>
-        </svn>
+        <!--<svn javahl="false">-->
+            <!--<checkout   url="https://gforge.nci.nih.gov/svnroot/automation/branches/bda-dashboard-1.0.1/jobs/"-->
+                        <!--destpath="${backupconfig.checkout.dir}"/>-->
+        <!--</svn>-->
+
         <fileset  dir="${env.HUDSON_HOME}/jobs" id="configstobackup">
             <include name="**/config.xml" />
         </fileset>
 
         <property name="display" refid="configstobackup" />
         <echo>configstobackup=${display}</echo>
-
-        <mkdir dir="${backupconfig.checkout.dir}"  />
 
         <copy todir="${backupconfig.checkout.dir}">
             <fileset refid="configstobackup" />
@@ -367,6 +374,5 @@
         <svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >
             <commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />
         </svn>
-
     </target>
 </project>
