@@ -367,10 +367,12 @@
             <fileset refid="configstobackup" />
         </copy>
 
-        <svn javahl="false" >
+        <svn javahl="false">
             <add>
-                <fileset dir="${backupconfig.checkout.dir}">
+                <fileset dir="${backupconfig.checkout.dir}" >
                     <include name="**/config.xml" />
+                    <exclude name="**/tmp/config.xml" />
+                    <exclude name="**/${env.JOB_NAME}" />
                 </fileset>
             </add>
         </svn>
