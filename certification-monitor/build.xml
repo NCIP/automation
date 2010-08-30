@@ -377,8 +377,8 @@
             </add>
         </svn>
 
-        <svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >
-            <commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />
-        </svn>
+        <!--<svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >-->
+            <!--<commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />-->
+        <!--</svn>-->
     </target>
 </project>
