@@ -238,7 +238,6 @@ software/lib/hibernate.jar -text
 software/lib/jta-1.1.jar -text
 software/lib/junit.jar -text
 software/lib/mysql-connector-java-5.0.5.jar -text
-software/lib/software.jar -text
 software/software.iml -text
 software/src/Main.java -text
 software/src/gov/nih/nci/bda/domain/ProjectActionType.hbm.xml -text
@@ -319,6 +318,7 @@ wiki-cli/lib/selenium-server.jar -text
 wiki-cli/lib/servlet-api-2.3.jar -text
 wiki-cli/lib/slf4j-api-1.5.2.jar -text
 wiki-cli/lib/slf4j-simple-1.5.2.jar -text
+wiki-cli/lib/software.jar -text
 wiki-cli/lib/svnClientAdapter-1.2.1.jar -text
 wiki-cli/lib/svnant-1.2.1.jar -text
 wiki-cli/lib/svnjavahl-1.2.1.jar -text
