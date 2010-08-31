@@ -1,18 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
-  <actions class="java.util.concurrent.CopyOnWriteArrayList"/>
+  <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <jdk>(Default)</jdk>
   <triggers class="vector">
     <hudson.triggers.TimerTrigger>
       <spec>0 10 * * 2</spec>
     </hudson.triggers.TimerTrigger>
   </triggers>
+  <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Ant>
       <targets>run-validate</targets>
