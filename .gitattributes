@@ -238,6 +238,7 @@ software/lib/hibernate.jar -text
 software/lib/jta-1.1.jar -text
 software/lib/junit.jar -text
 software/lib/mysql-connector-java-5.0.5.jar -text
+software/lib/software.jar -text
 software/software.iml -text
 software/src/Main.java -text
 software/src/gov/nih/nci/bda/domain/ProjectActionType.hbm.xml -text
