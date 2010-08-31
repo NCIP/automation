@@ -233,7 +233,7 @@ class ErrorValidator {
 
     if( p == null)
     {
-      throw new IllegalArgumentException("Cannot located a project record for " + projectName)
+      throw new IllegalArgumentException("Cannot located a project record for '" + projectName + "'")
     }
 
     ProjectActionType pat = ProjectActionTypeHelper.getByDescription("email");
