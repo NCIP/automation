@@ -214,6 +214,7 @@
         <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.page.file)=.*" replace="\1=${non-bda.page.file}" />
         <replaceregexp file="${deploy.dir}/${wiki.properties.file}" byline="true" match="^(non-bda.page2.file)=.*" replace="\1=${non-bda.page2.file}" />
 
+        <replaceregexp file="${deploy.dir}/${hibernate.config.file}" byline="true" match="test" replace="${database.name}" />
 	</target>
 
 
