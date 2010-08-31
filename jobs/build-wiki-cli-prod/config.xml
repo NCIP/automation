@@ -16,11 +16,6 @@
           <description></description>
           <defaultValue>password</defaultValue>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.PasswordParameterDefinition>
-          <name>test</name>
-          <description></description>
-          <defaultValue>nf5UUPVjkJQhnOVfu5ZHew==</defaultValue>
-        </hudson.model.PasswordParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
