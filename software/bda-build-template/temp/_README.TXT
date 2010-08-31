@@ -26,5 +26,3 @@ CruiseControl
 2) Install by running the installation executable or extracting the .zip file
 3) Start the Server
 4) Copy the files from http://integratebutton-svn.cvsdude.com/bda-blueprints/config/cruisecontrol to your local CruiseControl installation and restart the CruiseControl server. This runs a full-featured CI system with CruiseControl and Ant for a Java web application
-
-
