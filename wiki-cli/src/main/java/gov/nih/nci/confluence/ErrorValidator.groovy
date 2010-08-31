@@ -171,9 +171,19 @@ class ErrorValidator {
                 cotrEmail = row.COTR_EMAIL;
 			}
 			println ("Dev POC: " + devPoc)
+            if( devPoc == null )
+            {
+              devPoc = "";
+            }
+
 			message = message.replaceAll("DEV_POC_NAME",devPoc)
+
 			gov.nih.nci.confluence.MailSender ms = new gov.nih.nci.confluence.MailSender()
+          
+
 			ArrayList recipientList = new ArrayList()
+
+
             if( devPocEmail != null && devPocEmail.trim().length() > 0  ) {
               recipientList.add(devPocEmail);
             }
@@ -190,11 +200,13 @@ class ErrorValidator {
 			properties.getProperty("mail.additional.recipients").split(',').eachWithIndex {processToken, i -> 
 				recipientList.add(processToken)
 			}
-			if (ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message) != true ) {
-              throw new Exception("Error sending mail.");
-            }
 
-            logMessageToProjectHistory(projectName, recipientList , "BDA Certification status for " + projectName,message)
+//          if (ms.sendMessage(properties.getProperty("mail.hostname"),Integer.parseInt(properties.getProperty("mail.portnumber")),properties.getProperty("mail.send.address"),recipientList , "BDA Certification status for " + projectName,message) != true ) {
+//              throw new Exception("Error sending mail.");
+//            }
+
+            logMessageToProjectHistory(projectName, recipientList , "BDA Certification status for " + projectName, message)
+
             println "Success Sending Email To:" + projectName ;
 		}
 		catch(Exception ex){
@@ -210,8 +222,20 @@ class ErrorValidator {
 
   void logMessageToProjectHistory(String projectName, ArrayList recipients, String subject, String text) {
 
+
+    System.out.println("logMessageToProjectHistory:projectName=" + projectName);
+    System.out.println("logMessageToProjectHistory:recipients=" + recipients.toString());
+    System.out.println("logMessageToProjectHistory:subject=" + subject);
+    System.out.println("logMessageToProjectHistory:text=" + text);
+
     ProjectAction pa = new ProjectAction();
     Project p = ProjectHelper.getByName(projectName);
+
+    if( p == null)
+    {
+      throw new IllegalArgumentException("Cannot located a project record for " + projectName)
+    }
+
     ProjectActionType pat = ProjectActionTypeHelper.getByDescription("email");
 
 
@@ -237,6 +261,8 @@ class ErrorValidator {
     s.save(pa);
 
     t.commit();
+
+    System.out.println("logMessageToProjectHistory:commit()-(projectName=" + projectName + ")");
 
   }
 }
