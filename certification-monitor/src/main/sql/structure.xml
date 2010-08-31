@@ -220,4 +220,13 @@
         </delete>
         <addUniqueConstraint tableName="project_poc" columnNames="PROJECT_NAME" constraintName="project_poc_project_name" />
     </changeSet>
+    
+    <changeSet id="https://tracker.nci.nih.gov/browse/BDA-586" author="bassetttj">
+        <update tableName="project_poc">
+            <column name="project_name" value="cacore-workbench" />
+            <where>
+                PROJECT_NAME = "workbench"
+            </where>
+        </update>
+    </changeSet>
 </databaseChangeLog>
