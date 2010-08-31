@@ -341,13 +341,10 @@
         </if>
 
 
-        <fileset  dir="${env.WORKSPACE}/jobs" id="configstobackup">
+        <fileset  dir="${env.HUDSON_HOME}/jobs" id="configstobackup">
             <include name="**/config.xml" />
             <!--<exclude name="**/${env.JOB_NAME}" />-->
         </fileset>
-
-        <!--delete thyself! to prevent recursion-->
-        <delete dir="${env.HUDSON_HOME}/jobs/${env.JOB_NAME}/workspace" />
 
         <property name="display" refid="configstobackup" />
         <echo>configstobackup=${display}</echo>
@@ -355,6 +352,19 @@
         <copy todir="${backupconfig.checkout.dir}">
             <fileset refid="configstobackup" />
         </copy>
+
+        <!--delete thyself! to prevent recursion-->
+        <property name="workspace.for.my.own.job.dir" value="${env.WORKSPACE}/jobs/${env.JOB_NAME}/workspace" />
+        <echo>workspace.for.my.own.job.dir=${workspace.for.my.own.job.dir}</echo>
+        <if>
+            <available file="${workspace.for.my.own.job.dir}" type="dir" />
+            <then>
+                <delete dir="${env.WORKSPACE}/jobs/${env.JOB_NAME}/workspace" />
+            </then>
+        </if>
+
+
+
 
         <svn javahl="false">
             <add>
