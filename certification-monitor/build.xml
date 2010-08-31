@@ -347,7 +347,7 @@
         </fileset>
 
         <!--delete thyself! to prevent recursion-->
-        <!--<delete dir="${env.HUDSON_HOME}/jobs/${env.JOB_NAME}" failonerror="true" />-->
+        <delete dir="${env.HUDSON_HOME}/jobs/${env.JOB_NAME}/workspace" />
 
         <property name="display" refid="configstobackup" />
         <echo>configstobackup=${display}</echo>
@@ -364,8 +364,8 @@
             </add>
         </svn>
 
-        <!--<svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >-->
-            <!--<commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />-->
-        <!--</svn>-->
+        <svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >
+            <commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />
+        </svn>
     </target>
 </project>
