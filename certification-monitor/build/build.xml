@@ -220,6 +220,16 @@
 	
 	<target name="validate:svn:checkout-project" depends="init,svn:scorch,svn:init">
 
+
+        <if>
+            <not>
+                <available file="${svn.local.checkout}" type="dir" />
+            </not>
+            <then>
+                <mkdir dir="${svn.local.checkout}" />
+            </then>
+        </if>
+
 		<svn username="${svn.username}" password="${svn.password}">
 			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
 		</svn>
