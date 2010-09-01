@@ -219,15 +219,17 @@
 
 	
 	<target name="validate:svn:checkout-project" depends="init,svn:scorch,svn:init">
-
-
         <if>
             <not>
                 <available file="${svn.local.checkout}" type="dir" />
             </not>
             <then>
+                <echo>Making directory: ${svn.local.checkout}</echo>
                 <mkdir dir="${svn.local.checkout}" />
             </then>
+            <else>
+                <echo>Directory exists: ${svn.local.checkout}</echo>
+            </else>
         </if>
 
 		<svn username="${svn.username}" password="${svn.password}">
