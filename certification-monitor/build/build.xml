@@ -240,15 +240,23 @@
 	<target name="svn:scorch" unless="svn.no.scorch">
 		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
 
-        <fileset dir="${svn.local.checkout}" id="svn:scorch.checkout.files.before">
-            <include name="**/*.*" />
-            <include name="**/.*" />
-        </fileset>
+        <if>
+            <available file="${svn.local.checkout}" type="dir" />
+            <then>
+                <fileset dir="${svn.local.checkout}" id="svn:scorch.checkout.files.before">
+                    <include name="**/*.*" />
+                    <include name="**/.*" />
+                </fileset>
 
-        <property name="svn:scorch.checkout.files.for.output.before" refid="svn:scorch.checkout.files.before" />
+                <property name="svn:scorch.checkout.files.for.output.before" refid="svn:scorch.checkout.files.before" />
 
-        <echo>Output of contents of: ${svn.local.checkout}</echo>
-        <echo>${svn:scorch.checkout.files.for.output.before}</echo>
+                <echo>Output of contents of: ${svn.local.checkout}</echo>
+                <echo>${svn:scorch.checkout.files.for.output.before}</echo>
+            </then>
+            <else>
+                <echo>${svn.local.checkout} does not exist.</echo>                
+            </else>
+        </if>
 
 		<delete dir="${svn.local.checkout}" failonerror="false" verbose="true" includeemptydirs="true" />
 
