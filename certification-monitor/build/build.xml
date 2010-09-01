@@ -10,6 +10,7 @@
     <property   name="bda.version" value="1.6.2" />
     <property   name="database.type" value="mysql" />
     <property name="build:validate-app-servers.maxwait" value="300" />
+    <property name="svn.local.checkout" value="working" />
 
 <!--
 	<property file="project.properties" />
@@ -226,7 +227,37 @@
 	
 	<target name="svn:scorch" unless="svn.no.scorch">
 		<echo message="Scorching local SVN working directory ${svn.local.checkout}..." />
-		<delete dir="${svn.local.checkout}" />
+
+        <fileset dir="${svn.local.checkout}" id="svn:scorch.checkout.files.before">
+            <include name="**/*.*" />
+            <include name="**/.*" />
+        </fileset>
+
+        <property name="svn:scorch.checkout.files.for.output.before" refid="svn:scorch.checkout.files.before" />
+
+        <echo>Output of contents of: ${svn.local.checkout}</echo>
+        <echo>${svn:scorch.checkout.files.for.output.before}</echo>
+
+		<delete dir="${svn.local.checkout}" failonerror="false" verbose="true" includeemptydirs="true" />
+
+        <if>
+            <available file="${svn.local.checkout}" type="dir" />
+            <then>
+                <fileset dir="${svn.local.checkout}" id="svn:scorch.checkout.files.after">
+                    <include name="**/*.*" />
+                    <include name="**/.*" />
+                </fileset>
+
+                <property name="svn:scorch.checkout.files.for.output.after" refid="svn:scorch.checkout.files.after" />
+
+                <echo>Output of contents after delete: ${svn.local.checkout}</echo>
+                <echo>${svn:scorch.checkout.files.for.output.after}</echo>
+            </then>
+            <else>
+                <echo>Successfully deleted: ${svn.local.checkout}</echo>                
+            </else>
+        </if>
+
 	</target>
 	
 	<target name="svn:init">
