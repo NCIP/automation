@@ -13,7 +13,7 @@
   <jdk>(Default)</jdk>
   <triggers class="vector">
     <hudson.triggers.TimerTrigger>
-      <spec>0 22 * * *</spec>
+      <spec>0 11 * * *</spec>
     </hudson.triggers.TimerTrigger>
   </triggers>
   <builders>
