@@ -1,4 +1,5 @@
 <project name="test-jboss-upgrade" default="run" basedir=".">
+    <!--see https://wiki.nci.nih.gov/display/BuildandDeploymentAutomation/BDA+Template+Scripts for definitions of different test cases-->
 	<import file="test-common.xml" />
 	<target name="run">
 		<mkdir dir="${antunit.xml.report.dir}"/>

@@ -2658,6 +2658,7 @@ software/bda-build-template/.classpath -text
 software/bda-build-template/.project -text
 software/bda-build-template/docs/build.jpg -text
 software/bda-build-template/docs/release_notes.txt -text
+software/bda-build-template/software/blueprints-webapp/Blueprints-webapp1.iml -text
 software/bda-build-template/software/blueprints-webapp/_common-configuration.xml -text
 software/bda-build-template/software/blueprints-webapp/build.xml -text
 software/bda-build-template/software/blueprints-webapp/compile.xml -text
@@ -2684,6 +2685,7 @@ software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_three.sql -text
 software/bda-build-template/software/blueprints-webapp/db/db-upgrade/mysql/drop-ssaksa_two.sql -text
 software/bda-build-template/software/blueprints-webapp/ivy-blueprints.xml -text
+software/bda-build-template/software/blueprints-webapp/src/Blueprints-webapp.iml -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/BadUsernameException.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/InvalidLoginException.java -text
 software/bda-build-template/software/blueprints-webapp/src/java/bda/blueprints/business/data/LoginDao.java -text
@@ -2712,6 +2714,7 @@ software/bda-build-template/software/blueprints-webapp/src/web/study.jsp -text
 software/bda-build-template/software/blueprints-webapp/src/web/stylesheets/onsq.css -text
 software/bda-build-template/software/blueprints-webapp/static-analysis-build.xml -text
 software/bda-build-template/software/blueprints-webapp/testing.xml -text
+software/bda-build-template/software/blueprints-webapp/tests/Tests.iml -text
 software/bda-build-template/software/blueprints-webapp/tests/acceptance/FitNesseRoot/BdaBlueprints/CalculatorTest/content.txt -text
 software/bda-build-template/software/blueprints-webapp/tests/acceptance/FitNesseRoot/BdaBlueprints/CalculatorTest/properties.xml -text
 software/bda-build-template/software/blueprints-webapp/tests/acceptance/FitNesseRoot/BdaBlueprints/SetUp/content.txt -text
@@ -2864,6 +2867,7 @@ software/bda-build-template/software/blueprints-webapp/tests/performance/README.
 software/bda-build-template/software/blueprints-webapp/tests/performance/bda/blueprints/business/service/ExampleTimedTest.java -text
 software/bda-build-template/software/blueprints-webapp/tests/performance/bda/blueprints/business/service/StudyServicePerformanceTest.java -text
 software/bda-build-template/software/blueprints-webapp/tests/unit/README.TXT -text
+software/bda-build-template/software/blueprints-webapp/tests/unit/Unit.iml -text
 software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/blueprints/business/service/RegularExpressionTest.java -text
 software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/blueprints/business/service/StudyDaoStub.java -text
 software/bda-build-template/software/blueprints-webapp/tests/unit/java/bda/blueprints/business/service/StudyServiceUnitTest.java -text
