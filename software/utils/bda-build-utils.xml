@@ -7918,7 +7918,14 @@ $HeadURL$
 				<http url="@{jboss.application.url}"/>
 			</waitfor>
 
-			<var name="jboss.socket.list.has.values" unset="true"/>
+            <if>
+                <isset property="jboss.timeout" />
+                <then>
+                    <echo>Application did not respond at ${jboss.application.url}</echo>
+                </then>
+            </if>
+
+            <var name="jboss.socket.list.has.values" unset="true"/>
 			<propertyregex property="jboss.socket.list.has.values"
 				input="@{jboss.socket.list}"
 				regexp="[\d\,]+"
