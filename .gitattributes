@@ -4034,6 +4034,7 @@ software/upt-configuration/lib/xalan-2.7.1.jar -text
 software/upt-configuration/lib/xercesImpl-2.8.1.jar -text
 software/upt-configuration/lib/xml-apis-1.3.04.jar -text
 software/upt-configuration/src/test/gov/nih/nci/bda/UptConfigurator.java -text
+software/utils/bda-build-utils-test.xml -text
 software/utils/bda-build-utils.xml -text
 software/utils/build.properties -text
 software/utils/build.xml -text

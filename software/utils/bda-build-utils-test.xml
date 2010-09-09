@@ -1,0 +1,47 @@
+<project name="bda-utils-test" default="run" xmlns:au="org.apache.ant.antunit">
+
+
+    <property environment="env"/>
+    <property name="testoutput.dir" location="." />
+    <property name="build:validate-app-servers.maxwait" value="5" />
+
+    <import file="bda-build-utils.xml"/>
+
+    <echo>au=${env.ANT_HOME}/lib/ant-antunit-1.1.jar</echo>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="${env.ANT_HOME}/lib/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>
+
+    <taskdef resource="org/apache/ant/antunit/antlib.xml">
+        <classpath>
+            <pathelement location="${env.ANT_HOME}/lib/ant-antunit-1.1.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="run">
+        <echo>Running tests...</echo>
+        <antunit>
+            <file file="${basedir}/bda-build-utils-test.xml"/>
+            <xmllistener todir="${testoutput.dir}" />
+            <plainlistener />
+            <propertyset id="bda-utils.dir">
+                <!--<propertyref name="bda-utils.dir" />-->
+                </propertyset>
+            
+        </antunit>
+        <echo>Tests complete</echo>
+    </target>
+
+
+    <target name="testXyz">
+
+    </target>
+
+    <target name="testAbc">
+        <fail/>
+    </target>
+    
+</project>
