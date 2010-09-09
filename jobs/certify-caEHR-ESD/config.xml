@@ -24,6 +24,7 @@
   <builders>
     <hudson.tasks.Ant>
       <targets>run</targets>
+      <antOpts>-Xmx1024m</antOpts>
       <buildFile>build.xml</buildFile>
       <properties>certification.project.name=caEHR-ESD</properties>
     </hudson.tasks.Ant>
