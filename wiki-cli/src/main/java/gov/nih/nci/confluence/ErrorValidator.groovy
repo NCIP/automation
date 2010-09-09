@@ -57,6 +57,20 @@ class ErrorValidator {
 
             String wholeCertification = singleCommandBuild + singleCommandDeployment + databaseIntegration + remoteUpgrade + templateValidation + privateProperties + ciBuild + deploymentShakeout + commandLineInstaller ;
 
+            println "productString=" + productString ;
+            println "certificationStatus=" + certificationStatus;
+            println "singleCommandBuild=" +singleCommandBuild ;
+            println "singleCommandDeployment=" + singleCommandDeployment ;
+            println "databaseIntegration=" + databaseIntegration ;
+            println "remoteUpgrade=" + remoteUpgrade ;
+            println "templateValidation=" + templateValidation ;
+            println "privateProperties=" + privateProperties ;
+            println "ciBuild=" + ciBuild ;
+            println "bdaEnabled=" + bdaEnabled ;
+            println "deploymentShakeout=" + deploymentShakeout;
+            println "commandLineInstaller=" + commandLineInstaller ;
+
+
 
 			if(wholeCertification.contains(gov.nih.nci.confluence.BuildStatusUpdater.WIKI_CERTIFICATION_RED))
 			{
