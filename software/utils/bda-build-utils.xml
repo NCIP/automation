@@ -2420,7 +2420,7 @@ $HeadURL$
 	-->
 	<macrodef name="generate-erd">
 		<attribute name="report.dir" default="${target.dir}/reports/schema-spy" />
-		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.8.jar" />
+		<attribute name="database.driver.jar" default="mysql-connector-java-5.1.13.jar" />
 		<attribute name="schemaspy.jar" default="schemaspy_3.1.1.jar" />
 		<attribute name="database.server" default="${database.server}" />
 		<attribute name="database.port" default="${database.port}" />
