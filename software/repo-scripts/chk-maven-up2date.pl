@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 #use LWP::Simple;
+use Net::SMTP;
 use Time::Local;
 
 my %monthHash=("Jan" => 1, "Feb" => 2, "Mar" => 3, "Apr" => 4, "May" => 5, "Jun" => 6, "Jul" => 7, "Aug" => 8, "Sep" => 9, "Oct" => 10, "Nov" => 11, "Dec" => 12,);
@@ -53,14 +54,30 @@ if ($content =~ /^(\w+)\s+(\w+)\s+(\d+)\s+([\d\:]+)\s+(\w+)\s+(\d+).*/)
 	{
 		print "Check FAILED last updated (${lastupdated}) is older than two weeks ago (${twoweeks})\n";
 		print "Sending Failure email\n";
-		my $sendmail = "/usr/sbin/sendmail -t"; 
-		open(SENDMAIL, "|$sendmail") or die "Cannot open $sendmail: $!";
-		print SENDMAIL "To: steve.saksa\@gmail.com\n";
-		print SENDMAIL "From: saksass\@mail.nih.gov\n";
-		print SENDMAIL "Subject: Maven is out of date\n";
-		print SENDMAIL "Content-type: text/plain\n\n";
-		print SENDMAIL "The date (${content}) is older than two weeks, maven is probably out of date.\n";
-		close(SENDMAIL); 
+		#my $sendmail = "/usr/sbin/sendmail -t"; 
+		#open(SENDMAIL, "|$sendmail") or die "Cannot open $sendmail: $!";
+		#print SENDMAIL "To: steve.saksa\@gmail.com\n";
+		#print SENDMAIL "From: saksass\@mail.nih.gov\n";
+		#print SENDMAIL "Subject: Maven is out of date\n";
+		#print SENDMAIL "Content-type: text/plain\n\n";
+		#print SENDMAIL "The date (${content}) is older than two weeks, maven is probably out of date.\n";
+		#close(SENDMAIL); 
+
+		my $message="The date (${content}) is older than two weeks, maven is probably out of date.\n";
+		my $smtp = Net::SMTP->new('mailfwd.nih.gov');
+		$smtp->mail('saksass@mail.nih.gov');
+		$smtp->to('steven.saksa@stelligent.com');
+		$smtp->data();
+		$smtp->datasend("To: steven.saksa\@stelligent.com
+From:  <saksass\@mail.nih.gov>
+Subject: Maven is out of date.
+Importance: high
+
+$message
+");
+		$smtp->dataend();
+		$smtp->quit;
+
 	}
 	else
 	{
