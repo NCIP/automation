@@ -219,6 +219,7 @@ jobs/certify-tcga/config.xml -text
 jobs/certify-tfs/config.xml -text
 jobs/certify-upt/config.xml -text
 jobs/certify-workbench/config.xml -text
+jobs/config.xml -text
 jobs/update-build-schedule-prod/config.xml -text
 jobs/update-wiki/config.xml -text
 jobs/validate-certification-prod/config.xml -text
