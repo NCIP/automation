@@ -1,0 +1,2 @@
+# Need to update the password (-p) before submitting to cron
+0 22 * * * /maven/bin/maven-rsync.pl -u bda_user -p ****** 2>&1 > /maven/logs/maven-rsync.log

@@ -3958,6 +3958,7 @@ software/release-manager/build.xml -text
 software/release-manager/release.properties -text
 software/repo-scripts/cagrid-sync.sh -text
 software/repo-scripts/chk-maven-up2date.pl -text
+software/repo-scripts/crontab.dat -text
 software/repo-scripts/maven-rsync.pl -text
 software/scripts/maven-rsync.pl -text
 software/single-command-build/build.bat -text
