@@ -177,6 +177,9 @@
 
 
 	<target name="deploy" description="Run the class to update Wiki">
+        <delete dir="${deploy.dir}" />
+        <mkdir dir="${deploy.dir}" />
+        
 		<copy todir="${deploy.lib.dir}" overwrite="true">
 			<fileset dir="${lib.dir}">
 				<include name="**/*.jar"/>
