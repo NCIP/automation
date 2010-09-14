@@ -446,7 +446,7 @@ class CertificationUtils {
       println "parseAndFormatDate:Date of the build:" + dataStr
       println "parseAndFormatDate:Status of the build:" + ciStatusStr
       if (ciStatusStr == "Success") {
-        wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL + "|" + project.properties['ci-server.url'] + "/hudson/job/" + project.properties['ci-server.jobname'] + "/" + buildNumber + "/")
+        wikiStr = wikiStr.append(this.WIKI_SUCCESSFUL + "|" + project.properties['ci-server.url'] + "/job/" + project.properties['ci-server.jobname'] + "/" + buildNumber + "/")
         if (sb != null)
           wikiStr = wikiStr.append("|" + sb + "]'")
 
@@ -454,7 +454,7 @@ class CertificationUtils {
         project.setProperty("certification.property.value", wikiStr.toString());
       }
       else {
-        wikiStr = wikiStr.append(getStatusOnDate(dataStr) + "|" + project.properties['ci-server.url'] + "/hudson/job/" + project.properties['ci-server.jobname'] + "/" + buildNumber + "/")
+        wikiStr = wikiStr.append(getStatusOnDate(dataStr) + "|" + project.properties['ci-server.url'] + "/job/" + project.properties['ci-server.jobname'] + "/" + buildNumber + "/")
         if (sb != null)
           wikiStr = wikiStr.append("|" + sb + "]'")
 

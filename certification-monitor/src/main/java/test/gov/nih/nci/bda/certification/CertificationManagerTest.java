@@ -93,8 +93,8 @@ public class CertificationManagerTest extends TestCase {
         assertNotNull(projectStatus);
         assertTrue("getCertificationStatus does not contain '" + BuildCertificationConstants.WIKI_FAILED + "' as expected.", projectStatus.getCertificationStatus().contains(BuildCertificationConstants.WIKI_FAILED));
         assertTrue("getCertificationStatus does not contain '" + BuildCertificationConstants.CERTIFICATION_INCOMPLETE + "' as expected.", projectStatus.getCertificationStatus().contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
-        assertTrue("getCertificationStatus does not contain '" + "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-" + projectName + "/lastBuild/console" + "' as expected.", projectStatus.getCertificationStatus().contains("http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-" + projectName + "/lastBuild/console"));
-        assertEquals("'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-" + projectName + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'",projectStatus.getCertificationStatus());
+        assertTrue("getCertificationStatus does not contain '" + "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-" + projectName + "/lastBuild/console" + "' as expected.", projectStatus.getCertificationStatus().contains("http://cbvapp-c1006.nci.nih.gov:48080/job/certify-" + projectName + "/lastBuild/console"));
+        assertEquals("'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-" + projectName + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'",projectStatus.getCertificationStatus());
 
     }
 
@@ -120,14 +120,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getCommandLineInstaller does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getCommandLineInstaller does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -156,14 +156,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getDatabaseIntegration does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getDatabaseIntegration does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -192,14 +192,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getDeploymentShakeout does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getDeploymentShakeout does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -228,14 +228,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getLatestCIBuild does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getLatestCIBuild does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -264,14 +264,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getPrivateRepositoryProperties does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getPrivateRepositoryProperties does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -300,14 +300,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getRemoteUpgrade does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getRemoteUpgrade does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -336,14 +336,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getSingleCommandBuild does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getSingleCommandBuild does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -372,14 +372,14 @@ public class CertificationManagerTest extends TestCase {
                     + "' as expected."
                     , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-        assertTrue( "getSingleCommandDeployment does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertTrue( "getSingleCommandDeployment does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                     + projectName
                     + "/lastBuild/console' as expected."
-                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                    , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                         + projectName
                                         + "/lastBuild/console"));
 
-        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+        assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                         + projectName
                         + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                         ,actual);
@@ -408,14 +408,14 @@ public class CertificationManagerTest extends TestCase {
                      + "' as expected."
                      , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-         assertTrue( "getTemplateValidation does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+         assertTrue( "getTemplateValidation does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                      + projectName
                      + "/lastBuild/console' as expected."
-                     , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                     , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                          + projectName
                                          + "/lastBuild/console"));
 
-         assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+         assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                          + projectName
                          + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                          ,actual);
@@ -447,14 +447,14 @@ public class CertificationManagerTest extends TestCase {
                      + "' as expected."
                      , actual.contains(BuildCertificationConstants.CERTIFICATION_INCOMPLETE));
 
-         assertTrue( "getTemplateValidation does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+         assertTrue( "getTemplateValidation does not contain 'http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                      + projectName
                      + "/lastBuild/console' as expected."
-                     , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+                     , actual.contains(  "http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                                          + projectName
                                          + "/lastBuild/console"));
 
-         assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/hudson/job/certify-"
+         assertEquals(   "'[(x)|http://cbvapp-c1006.nci.nih.gov:48080/job/certify-"
                          + projectName
                          + "/lastBuild/console|Status unknown; certification build incomplete (canceled or failed).]'"
                          ,actual);
