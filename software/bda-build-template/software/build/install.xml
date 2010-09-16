@@ -49,6 +49,7 @@ $HeadURL$
 	<property location="${basedir}/logs" name="log.dir"/>
 	<property location="${basedir}/working" name="working.dir"/>
 	<property location="${working.dir}/temp" name="temp.dir"/>
+    <property name="copied.jboss.log4j.dir" value="${working.dir}/copied-log4j"/>
 
 
 	<!-- Install Time properties -->
@@ -700,7 +701,7 @@ $HeadURL$
 	<target depends="upgrade:common:init,common:init,upgrade-dac:tomcat" description="Wrapper target to call all targets required to upgrade tomcat container." name="upgrade:tomcat" unless="exclude.tomcat">
 	</target>
 
-	<target depends="upgrade:common:init,common:init,upgrade-dac" description="Upgrades JBoss and Database" name="upgrade">
+	<target depends="upgrade:common:init,common:init,upgrade-ncm" description="Upgrades JBoss and Database" name="upgrade">
 	</target>
 
 	<target depends="upgrade:common:init,common:init,upgrade-ncm:with-dbinstall" description="Upgrades JBoss and Database" name="upgrade-with-dbinstall">
@@ -1131,7 +1132,6 @@ $HeadURL$
 		<jboss-read-java_opts jboss.bin.dir="${read.jboss.home}/server/${jboss.server.name}/bin"/>
 		<jboss-read-java_opts jboss.home="${read.jboss.home}"/>
 		<!-- will have to add code to install:post:jboss to copy this back if exists -->
-		<property name="copied.jboss.log4j.dir" value="${working.dir}/copied-log4j"/>
 		<if>
 			<equals arg1="${jboss.major.version}" arg2="4"/>
 			<then>
