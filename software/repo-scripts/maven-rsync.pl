@@ -21,6 +21,7 @@ my $from="From: ncicbiitbda\@mail.nih.gov\n";
 
 &verifyOptions;
 &mavensync;
+&updateFileList;
 &fixsha;
 &svnadd;
 &notify;
@@ -115,13 +116,26 @@ sub mavensync()
 
 sub notify()
 {
-	open(SENDMAIL, "|$sendmail") or die "Cannot open $sendmail: $!";
-	print SENDMAIL $reply_to;
-	print SENDMAIL $subject;
-	print SENDMAIL $send_to;
-	print SENDMAIL "Content-type: text/plain\n\n";
-	print SENDMAIL $emailBody;
-	close(SENDMAIL);
+#	open(SENDMAIL, "|$sendmail") or die "Cannot open $sendmail: $!";
+#	print SENDMAIL $reply_to;
+#	print SENDMAIL $subject;
+#	print SENDMAIL $send_to;
+#	print SENDMAIL "Content-type: text/plain\n\n";
+#	print SENDMAIL $emailBody;
+#	close(SENDMAIL);
+	my $smtp = Net::SMTP->new('mailfwd.nih.gov');
+	$smtp->mail('bda_user@mail.nih.gov');
+	$smtp->to($send_to);
+	$smtp->data();
+	$smtp->datasend("To: ${send_to}
+From:  <saksass\@mail.nih.gov>
+Subject: ${subject}
+Importance: high
+
+$emailBody
+");
+	$smtp->dataend();
+	$smtp->quit;
 	print "EMAIL Sent.";
 	print LF "EMAIL Sent.";
 }
@@ -277,4 +291,22 @@ sub verifyOptions
     # die if unknown options and print usage
     die "$usage" if  ! $rt  ;
     die "$usage" if ! defined $cmdOpts{user} || ! defined $cmdOpts{password};
+}
+sub updateFileList
+{
+	print "Updating File List\n";
+	print LF "Updating File List\n";
+	chdir $mavenDir;
+	print "Changing dir to $mavenDir\n";
+	my $fileListFile="$mavenDir/file-list.txt";
+	my $i=0;
+	open (FL,">$fileListFile") || die "Could not open $fileListFile}\n";
+	open(FIND,"find . -name *.jar |") || die "could not run find command\n";
+	while (my $line = <FIND>)
+	{
+		$i++;
+		print FL "$line";
+	}
+	close(FIND);
+	close(FL);
 }

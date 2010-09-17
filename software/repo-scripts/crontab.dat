@@ -1,5 +1,4 @@
 # Need to update the password (-p) before submitting to cron
 0 22 * * 7 /maven/bin/maven-rsync.pl -u bda_user -p ***** 2>&1 > /maven/logs/maven-rsync.log
-0 22 * * 1 /maven/bin/cagrid-sync.sh 2>&1 > /maven/logs/cagrid-sync-`date +%Y%m%d-%H%M`.log
-0 22 * * 0 /maven/bin/chk-maven-up2date.pl 2>&1 >> /maven/logs/chk-maven-up2date.log
-
+0 0 * * 1 /maven/bin/chk-maven-up2date.pl 2>&1 >> /maven/logs/chk-maven-up2date.log
+0 22 * * 0 /maven/bin/cagrid-sync.sh 2>&1 > /maven/logs/cagrid-sync.log
