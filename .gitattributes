@@ -3956,6 +3956,7 @@ software/provisioner/src/main/java/gov/nih/nci/bda/provisioner/ProvisionerManage
 software/provisioner/src/main/java/gov/nih/nci/bda/provisioner/util/ConfigurationHelper.java -text
 software/release-manager/build.xml -text
 software/release-manager/release.properties -text
+software/repo-scripts/cagrid-svn.pl -text
 software/repo-scripts/cagrid-sync.sh -text
 software/repo-scripts/chk-maven-up2date.pl -text
 software/repo-scripts/crontab.dat -text
