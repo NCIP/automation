@@ -3960,6 +3960,7 @@ software/repo-scripts/cagrid-svn.pl -text
 software/repo-scripts/cagrid-sync.sh -text
 software/repo-scripts/chk-maven-up2date.pl -text
 software/repo-scripts/crontab.dat -text
+software/repo-scripts/ivy-repo-flist.sh -text
 software/repo-scripts/maven-rsync.pl -text
 software/scripts/maven-rsync.pl -text
 software/single-command-build/build.bat -text
