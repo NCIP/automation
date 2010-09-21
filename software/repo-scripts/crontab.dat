@@ -2,3 +2,4 @@
 0 22 * * 6 /maven/bin/maven-rsync.pl -u bda_user -p ***** 2>&1 > /maven/logs/maven-rsync.log
 0 0 * * 0 /maven/bin/chk-maven-up2date.pl 2>&1 >> /maven/logs/chk-maven-up2date.log
 0 22 * * 7 /maven/bin/cagrid-sync.sh bda_user *****  2>&1 > /maven/logs/cagrid-sync.log
+0 0 * * * /maven/bin/ivy-repo-flist.sh 2>&1 >> /maven/logs/ivy-repo-flist.log
