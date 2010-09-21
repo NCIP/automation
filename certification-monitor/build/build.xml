@@ -217,8 +217,16 @@
 			/>
 	</target>
 
+    <target name="debug:output-disk-info">
+        <exec executable="df">
+            <arg line="-h" />
+        </exec>
+        <exec executable="du">
+            <arg line="-h --max-depth=1 /" />
+        </exec>
+    </target>
 	
-	<target name="validate:svn:checkout-project" depends="init,svn:scorch,svn:init">
+	<target name="validate:svn:checkout-project" depends="debug:output-disk-info,init,svn:scorch,svn:init">
         <if>
             <not>
                 <available file="${svn.local.checkout}" type="dir" />
@@ -696,6 +704,8 @@
 			<arg line="${override.properties.string}"/>
 			<arg value="${single-command.deployment.target}" />
 		</exec>
+
+        <runtarget target="debug:output-disk-info" /> 
 
 	</target>
 
