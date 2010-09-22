@@ -229,4 +229,15 @@
             </where>
         </update>
     </changeSet>
+    
+    <changeSet id="https://tracker.nci.nih.gov/browse/BDA-590" author="bassetttj">
+        <update tableName="dashboard_properties">
+            <column name="dashboard_value" value="https://ncisvn.nci.nih.gov/svn/ncit/" />
+            <where>dashboard_key = 'ncit.svn.project.url'</where>
+        </update>
+        <update tableName="dashboard_properties">
+            <column name="dashboard_value" value="https://ncisvn.nci.nih.gov/svn/ncirw/trunk" />
+            <where>dashboard_key = 'reportwriter.svn.project.url'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>
