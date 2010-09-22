@@ -162,6 +162,9 @@ public class CertificationManager {
             }
         }
 
+        // run the disk usage target after we're all done
+        project.executeTarget("debug:output-disk-info");
+
         session.close();
         certLogger.info("Certification Complete");
     }
