@@ -241,6 +241,7 @@
         </if>
 
 		<svn username="${svn.username}" password="${svn.password}">
+            <echo>validate:svn:checkout-project: Checking out URL of '${svn.project.url}' to '${svn.local.checkout}'</echo>
 			<checkout url="${svn.project.url}" revision="HEAD" destPath="${svn.local.checkout}" />
 		</svn>
 	</target>

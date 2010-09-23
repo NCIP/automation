@@ -15,9 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="95867e41-5548-45a0-9322-3c5a1f963779" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/certification-monitor/src/main/sql/structure.xml" afterPath="$PROJECT_DIR$/certification-monitor/src/main/sql/structure.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/lib2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/lib2.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/certification-monitor/build/build.xml" afterPath="$PROJECT_DIR$/certification-monitor/build/build.xml" />
     </list>
     <ignored path="$USER_HOME_GRAILS$/" />
     <ignored path="$USER_HOME_GRIFFON$/" />
@@ -95,10 +95,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="structure.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="structure.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/sql/structure.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="232" column="19" selection-start="10383" selection-end="10425" vertical-scroll-proportion="0.6938776">
+            <state line="230" column="42" selection-start="10358" selection-end="10358" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -131,10 +131,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/certification-monitor/build/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="707" column="49" selection-start="33991" selection-end="34013" vertical-scroll-proportion="0.0">
+            <state line="240" column="63" selection-start="12631" selection-end="12631" vertical-scroll-proportion="0.69072163">
               <folding />
             </state>
           </provider>
@@ -175,9 +175,9 @@
         <option value="$PROJECT_DIR$/certification-monitor/build/CertificationUtils.groovy" />
         <option value="$PROJECT_DIR$/certification-monitor/src/main/java/test/gov/nih/nci/bda/certification/CertificationManagerTest.java" />
         <option value="$PROJECT_DIR$/wiki-cli/build.xml" />
-        <option value="$PROJECT_DIR$/certification-monitor/build/build.xml" />
         <option value="$PROJECT_DIR$/certification-monitor/src/main/java/gov/nih/nci/bda/certification/CertificationManager.java" />
         <option value="$PROJECT_DIR$/certification-monitor/src/main/sql/structure.xml" />
+        <option value="$PROJECT_DIR$/certification-monitor/build/build.xml" />
       </list>
     </option>
   </component>
@@ -221,9 +221,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -300,21 +297,24 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Favorites" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="194" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="150" />
     <property name="project.structure.last.edited" value="Modules" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="150" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="35" />
-    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="169" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="140" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="165" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/ncicb/bda-utils/1.5.9" />
@@ -330,10 +330,10 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -532,7 +532,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="25" width="1604" height="734" extended-state="6" />
+    <frame x="-4" y="25" width="1588" height="718" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -547,7 +547,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2477361" sideWeight="0.39078498" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2503268" sideWeight="0.39078498" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -572,7 +572,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="https://tracker.nci.nih.gov/browse/BDA-606" />
+    <option name="LAST_COMMIT_MESSAGE" value="https://tracker.nci.nih.gov/browse/BDA-590" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -594,6 +594,7 @@
     <MESSAGE value="https://tracker.nci.nih.gov/browse/BDA-597" />
     <MESSAGE value="https://tracker.nci.nih.gov/browse/BDA-598" />
     <MESSAGE value="https://tracker.nci.nih.gov/browse/BDA-606" />
+    <MESSAGE value="https://tracker.nci.nih.gov/browse/BDA-590" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -643,6 +644,11 @@
         <state line="184" column="24" selection-start="7440" selection-end="7440" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/sql/dashboard_properties.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="745" column="29" selection-start="50402" selection-end="50430" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/java/gov/nih/nci/bda/certification/BuildCertificationConstants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="38" selection-start="659" selection-end="673" vertical-scroll-proportion="0.0" />
@@ -655,16 +661,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/certification-monitor/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="46" selection-start="6525" selection-end="6525" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="144" column="46" selection-start="6525" selection-end="6525" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/certification-monitor/build/build.xml">
+    <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/java/gov/nih/nci/bda/certification/CertificationManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="707" column="49" selection-start="33991" selection-end="34013" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="165" column="53" selection-start="8499" selection-end="8521" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/sql/target_lookup.csv">
@@ -672,23 +674,16 @@
         <state line="11" column="3" selection-start="716" selection-end="749" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/java/gov/nih/nci/bda/certification/CertificationManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="53" selection-start="8499" selection-end="8521" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/sql/dashboard_properties.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="745" column="29" selection-start="50402" selection-end="50430" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/certification-monitor/src/main/sql/structure.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="232" column="19" selection-start="10383" selection-end="10425" vertical-scroll-proportion="0.6938776">
+        <state line="230" column="42" selection-start="10358" selection-end="10358" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/certification-monitor/build/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="240" column="63" selection-start="12631" selection-end="12631" vertical-scroll-proportion="0.69072163">
           <folding />
         </state>
       </provider>
