@@ -14,10 +14,10 @@ my $currentTransfer=undef;
 
 my $emailBody="";
 my $sendmail = "/usr/sbin/sendmail -t";
-my $reply_to = "Reply-to: ncicbiitbda\@mail.nih.gov\n";
-my $subject = "Subject: maven-rsync status report\n";
-my $send_to="To: steven.saksa\@stelligent.com\n";
-my $from="From: ncicbiitbda\@mail.nih.gov\n";
+my $reply_to = "ncicbiitbda\@mail.nih.gov\n";
+my $subject = "maven-rsync status report\n";
+my $send_to="steven.saksa\@stelligent.com\n";
+my $from="ncicbiitbda\@mail.nih.gov\n";
 
 &verifyOptions;
 &mavensync;
