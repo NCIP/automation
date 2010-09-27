@@ -3,3 +3,4 @@
 0 0 * * 0 /maven/bin/chk-maven-up2date.pl 2>&1 >> /maven/logs/chk-maven-up2date.log
 0 22 * * 7 /maven/bin/cagrid-sync.sh bda_user *****  2>&1 > /maven/logs/cagrid-sync.log
 0 0 * * * /maven/bin/ivy-repo-flist.sh 2>&1 >> /maven/logs/ivy-repo-flist.log
+0 0 * * * find /maven/logs -type f -mtime +30 -exec rm {} \; 2>&1 > /dev/null
