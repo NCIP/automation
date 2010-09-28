@@ -1234,4 +1234,52 @@ $HeadURL$
 		<override-properties-prep
 			/>
 	</target>
+	<target name="dist:tools:retrieve:cagrid13" depends="init,validate:pre:build">
+		<property name="cagrid.binaries.file" value="caGrid-1.3.0.2.zip"/>
+		<property name="cagrid.src.url" value="http://gforge.nci.nih.gov/frs/download.php/7811/${cagrid.binaries.file}"/>
+		<property name="cagrid.binaries.relative.dir" value="caGrid"/>
+		<property name="cagrid.dest.file" value="${download.dir}/${cagrid.binaries.file}"/>
+		<echo message="Checking for existence of CAGRID_LOCATION envrironment variable."/>
+		<if>
+			<not>
+				<isset property="env.CAGRID_LOCATION"/>
+			</not>
+			<then>
+				<echo message="CAGRID_LOCATION not set, downloading and installing ${cagrid.src.url}"/>
+				<if>
+					<not>
+						<available file="${cagrid.dest.file}"/>
+					</not>
+					<then>
+						<get src="${cagrid.src.url}"
+							dest="${cagrid.dest.file}"/>
+					</then>
+				</if>
+				<var name="env.CAGRID_LOCATION" value="${application.base.path}/${cagrid.binaries.relative.dir}"/>
+				<if>
+					<not>
+						<available file="${env.CAGRID_LOCATION}/project.properties"/>
+					</not>
+					<then>
+						<unzip dest="${application.base.path}" src="${cagrid.dest.file}"/>
+						<ant inheritAll="false" inheritRefs="false" 
+							antfile="build.xml"
+							target="all"
+							dir="${env.CAGRID_LOCATION}"
+							>
+							<property name="env.CAGRID_LOCATION" value="${env.CAGRID_LOCATION}"/>
+							<property name="env.GLOBUS_LOCATION" value="${env.GLOBUS_LOCATION}"/>
+						</ant>
+						<echo message="Completed install of cagrid files into ${env.CAGRID_LOCATION} "/>
+					</then>
+					<else>
+						<echo message="${env.CAGRID_LOCATION} already exists."/>
+					</else>
+				</if>
+			</then>
+			<else>
+				<echo message="CAGRID_LOCATION is set to ${env.CAGRID_LOCATION} nothing needs to be done."/>
+			</else>
+		</if>
+	</target>
 </project>
