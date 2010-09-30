@@ -140,6 +140,7 @@
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.relative.path"/>
 	</target>
+	<!--
 	<target name="test:property:pass:jboss.http-connector.remove">
 		<echo message="**** Entering test:property:pass:jboss.http-connector.remove"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
@@ -155,6 +156,7 @@
 			/>
 		<echo message="**** Exiting test:property:pass:jboss.http-connector.remove"/>
 	</target>
+	-->
 	<target name="test:property:pass:jboss.java.opts">
 		<echo message="**** Entering test:property:pass:jboss.java.opts"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
