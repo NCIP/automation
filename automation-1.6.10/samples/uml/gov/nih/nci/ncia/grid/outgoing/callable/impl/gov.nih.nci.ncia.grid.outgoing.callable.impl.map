@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" href="./DoResultsExistCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="16,18,280,122"/>
+<area shape="rect" href="./GetCurationDataForCollectionsCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="325,18,589,122"/>
+<area shape="rect" href="./GetDataForImagesCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="635,10,899,130"/>
+<area shape="rect" href="./GetDataForSeriesCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="944,18,1208,122"/>
+<area shape="rect" href="./GetFilterDataCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="1253,18,1517,122"/>
+<area shape="rect" href="./GetImagesForSeriesCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="1563,18,1827,122"/>
+<area shape="rect" href="./GetPatientsCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="1872,18,2168,122"/>
+<area shape="rect" href="./GetSearchValuesCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="2213,26,2477,114"/>
+<area shape="rect" href="./GetStudiesForPatientCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="2523,18,2819,122"/>
+<area shape="rect" href="./IsAliveCallImpl.html" title="&lt;TABLE&gt;" alt="" coords="2864,26,3120,114"/>
+</map>

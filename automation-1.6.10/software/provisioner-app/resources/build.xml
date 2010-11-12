@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project name="setup-utils" default="init" basedir="." >
+	<description>
+		This build file is part of the bda-build-template project.  This is the master build file for the project.  It should be placed in project/software/.  This script wrappers sub projects to build, test and inspect code.  Additionally this project manges creation of distributions and deployment locally or remotely.  Deployments will call the install.xml from the distribution to install or upgrade the application.  Lastly this script will run include targets that require manipulation of containers (selenium tests because they require starting the application server container (and require a fully deployed application which this process is responsible for). This build script assumes two sub-projects bda-blueprints-webapp and bda-blueprints-api. The API targets are commented out and can be removed if not needed.  Also support for both tomcat and jboss download, install and configure are included.  These scripts require Java, Ant, Database and SVN to work.
+	</description>
+
+	<property file="local.properties"/>
+	<property name="build.dir" location="${basedir}" />
+	<property name="bda-download.dir" location="${build.dir}/bda-download" />
+	<property name="lib.dir" location="${build.dir}/lib" />
+	<property name="bda-utils.dir" location="${build.dir}/bda-utils" />
+	<property name="log.dir" location="${build.dir}/logs" />
+
+	
+	<!-- retrive ivy files then retrieve bda files and librarires -->
+	<property name="bda-download.file" value="bda-ivy-build.xml" />
+	<mkdir dir="${bda-download.dir}" />
+	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/${bda-download.file}" />
+	<get src="${bda-download.src.url}" dest="${bda-download.dir}/${bda-download.file}" />
+
+	<ant inheritAll="false" inheritRefs="false" antfile="${bda-download.file}" target="retrieve-bda" dir="${bda-download.dir}">
+		<property name="bda.version" value="${bda.version}" />
+		<property name="bda-utils.dir" location="${bda-utils.dir}" />
+		<property name="lib.dir" location="${lib.dir}" />
+		<property name="software.dir" location="${build.dir}" />
+	</ant>
+
+	<!-- Includes- include BDA marcos -->
+	<import file="${bda-utils.dir}/bda-build-utils-${bda.version}.xml" />
+	
+	<switch value="${database.type}">
+		<case value="oracle">
+			<property name="database.dialect" value="org.hibernate.dialect.OracleDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
+			<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="database.schema" value="${database.name}"/>
+		</case>
+		<case value="mysql">
+			<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.8.jar"/>
+			<property name="database.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="database.schema" value="${database.name}"/>
+		</case>
+		<case value="postgresql">
+			<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="database.driver.file" value="${bda-utils.dir}/postgresql-jdbc3-8.3-603.jar"/>
+			<property name="database.driver" value="org.postgresql.Driver"/>
+			<property name="database.schema" value="public"/>
+		</case>
+		<default>
+			<fail message="Invalid database type ${database.type}"/>
+		</default>
+	</switch>	
+
+	<!-- Start logging -->
+	<mkdir dir="${log.dir}" />
+	<tstamp>
+		<format property="install.time" pattern="yyyy-MM-dd-HH-mm" />
+	</tstamp>
+	<record name="${log.dir}/install-${install.time}.log" action="start" />
+
+
+	<path id="jdbc.driver.classpath">
+		<pathelement location="${database.driver.file}"/>
+	</path>
+
+
+	<!-- Targets -->
+
+	<target name="init" description="Sets up build are and initalizes variables">		
+		<echo message="IN INIT::::${database.type}"/>
+	</target>
+
+	<target name="database:create" description="Create a database ">
+		<database-create 
+			database.driver="${database.driver}"
+			database.system.url="${database.system.url}"
+			database.system.user="${database.system.user}"
+			database.system.password="${database.system.password}"
+			database.version="${database.version}"
+			database.name="${database.name}"
+			database.server="${database.server}"
+			database.url="${database.url}"
+			database.user="${database.user}"
+			database.password="${database.password}"
+		/>
+	</target>
+	
+
+</project>
