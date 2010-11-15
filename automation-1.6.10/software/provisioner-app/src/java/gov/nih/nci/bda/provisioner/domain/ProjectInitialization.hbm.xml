@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="gov.nih.nci.bda.provisioner.domain.ProjectInitialization" table="PROJECT_INITIALIZATION">
+         <id name="id" column="id"> 
+         	<generator class="increment"/>           
+         </id>
+         <property name="projectName" column="PROJECT_NAME"/>
+         <property name="commandName" column="COMMAND_NAME"/>
+         <property name="toLocation" column="TO_LOCATION"/>
+         <property name="isFile" column="IS_FILE"/>
+         <property name="runAsRoot" column="RUN_AS_ROOT"/>
+         <property name="isRebootRequired" column="IS_REBOOT_REQUIRED"/>
+         <property name="runCommand" column="RUN_COMMAND"/>
+     </class>	
+</hibernate-mapping>

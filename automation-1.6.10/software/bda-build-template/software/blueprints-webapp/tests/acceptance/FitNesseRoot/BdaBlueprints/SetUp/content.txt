@@ -1,0 +1,7 @@
+!include -c .VariableDefinitions
+
+!|com.neuri.webfixture.PlainSeleniumTest|
+
+!|start browser|${browser}|localhost|4444|${bdaserver}|
+
+!|open|${bdaserver}/bda-blueprints-webapp|
