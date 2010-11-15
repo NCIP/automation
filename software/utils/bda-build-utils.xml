@@ -3074,7 +3074,11 @@ $HeadURL$
 		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
 		<attribute name="cagrid-console.target" default="deployJBoss"/>
 		<attribute name="wscore.src.url" default="${wscore.src.url}"/>
+		<attribute name="cagrid-console.enabled" default="${cagrid-console.enabled}"/>
 		<sequential>
+			<if>
+			  <equals arg1="@{cagrid-console.enabled}" arg2="true"/>
+			<then>
 			<grid-appserver-configure
 				appserver.home="@{jboss.home}"
 				appserver.server.name="@{jboss.server.name}"
@@ -3128,6 +3132,11 @@ $HeadURL$
 				cagrid-console.target="@{cagrid-console.target}"
 				wscore.src.url="@{wscore.src.url}"
 				/>
+			</then>
+			<else>
+			    <echo message="cagrid-console.enabled was not enabled or false, so skipping cagrid installtion..."/>
+		    </else>
+		 </if>
 		</sequential>
 	</macrodef>
 	<macrodef name="tomcat-configure-grid">
@@ -3183,7 +3192,11 @@ $HeadURL$
 		<attribute name="cagrid-console.dir" default="${basedir}/caGrid-console"/>
 		<attribute name="cagrid-console.target" default="deployTomcat"/>
 		<attribute name="wscore.src.url" default="${wscore.src.url}"/>
+		<attribute name="cagrid-console.enabled" default="${cagrid-console.enabled}"/>
 		<sequential>
+			<if>
+			  <equals arg1="@{cagrid-console.enabled}" arg2="true"/>
+			<then>
 			<grid-appserver-configure
 				appserver.home="@{tomcat.home}"
 				appserver.server.name="@{tomcat.server.name}"
@@ -3237,6 +3250,11 @@ $HeadURL$
 				cagrid-console.target="@{cagrid-console.target}"
 				wscore.src.url="@{wscore.src.url}"
 				/>
+				</then>
+				<else>
+				    <echo message="cagrid-console.enabled was not enabled or false, so skipping cagrid installtion..."/>
+			    </else>
+			 </if>
 		</sequential>
 	</macrodef>
 	<macrodef name="grid-appserver-configure">
