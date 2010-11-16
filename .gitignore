@@ -3,6 +3,16 @@ automation-1.6.10/software/bda-build-template/software/build/target[!!-~]local.p
 automation-1.6.10/software/bda-build-template/software/target
 automation-1.6.10/software/heartbeat/target
 automation-1.6.10/software/release-manager/local.properties
+automation-1.6.12/automation-1.6.10/software/bda-build-template/software/blueprints-webapp/target
+automation-1.6.12/automation-1.6.10/software/bda-build-template/software/build/target[!!-~]local.properties
+automation-1.6.12/automation-1.6.10/software/bda-build-template/software/target
+automation-1.6.12/automation-1.6.10/software/heartbeat/target
+automation-1.6.12/automation-1.6.10/software/release-manager/local.properties
+automation-1.6.12/software/bda-build-template/software/blueprints-webapp/target
+automation-1.6.12/software/bda-build-template/software/build/target[!!-~]local.properties
+automation-1.6.12/software/bda-build-template/software/target
+automation-1.6.12/software/heartbeat/target
+automation-1.6.12/software/release-manager/local.properties
 software/bda-build-template/software/blueprints-webapp/target
 software/bda-build-template/software/build/target[!!-~]local.properties
 software/bda-build-template/software/target

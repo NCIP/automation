@@ -1,0 +1,422 @@
+<engine version="">
+	<!-- see master-egine-config.xml -->
+	<container-types>
+	</container-types>
+	<builders>
+	</builders>
+	<property-types>
+	</property-types>
+
+	<project name="">
+		<project-details>
+			<description></description>
+			<contacts>
+				<contact name="" type="tech|pm"/>
+			</contacts>
+			<web-url/>
+			<repository-url/>
+		</project-details>
+			<sub-projects numberofsub-projects="">
+		</sub-projects>
+		<!-- Architecture -->
+		<containers>
+			<container container-type="database" prefix="prefix">
+				<database-types type="" minimum-version="" default="true|false"/>
+			</container>
+			<container container-type="jboss" prefix="prefix" version="version"/>
+			<container container-type="tomcat" prefix="prefix" version="version"/>
+			<container container-type="custom" prefix="prefix" version="version"/>
+		</containers>
+	</project>
+	<build-plugins>
+		<!-- descriptions maybe be show on web-ui -->
+		<plugin name="build" version="" class="" prefix="" action="build" phase="build" container="" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<sub-projects>
+				<!-- Anything that the dev team wants to include in a distribution need to be done in this target -->
+				<!-- install time considerations...
+					For BDA Projects
+						Build-time - Call dist:installer/upgrader:prep targets
+						Install-time - Call the standard install:{container}:{webapp}* as default target for install and configure of application.
+					For non-BDA Projects
+						Build time- must copy install-time build file, resource and properties files into distribution
+						Install time-
+				-->
+				<sub-project prefix="" builder="ant|maven|ect" build-base-dir="" build-file="" build-target="">
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+			</sub-projects>
+		</plugin>
+		<plugin name="test" version="" class="" prefix="" action="build" phase="build" container="" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<sub-projects>
+				<sub-project prefix="" builder="ant|maven|ect" test-base-dir="" test-file="" test-target="" test-output-dir="" >
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+			</sub-projects>
+		</plugin>
+		<plugin name="static-analysis" version="" class="" prefix="" action="build" phase="build" container="" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<sub-projects>
+				<sub-project prefix="" builder="ant|maven|ect" sa-base-dir="" sa-file="" sa-target="" sa-output-dir="" >
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</sub-project>
+			</sub-projects>
+		</plugin>
+
+		<plugin name="dist" version="" class="" prefix="" action="build" phase="dist" container="" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<properties>
+				<property name="install.required.property.list" value=""/>
+				<property name="install.optional.property.list" value=""/>
+				<property name="install.delete.property.list" value=""/>
+				<property name="install.comment.property.list" value=""/>
+				<property name="install.uncomment.property.list" value=""/>
+
+				<property name="upgrade.required.property.list" value=""/>
+				<property name="upgrade.optional.property.list" value=""/>
+				<property name="upgrade.delete.property.list" value=""/>
+				<property name="upgrade.comment.property.list" value=""/>
+				<property name="upgrade.uncomment.property.list" value=""/>
+				
+				<property name="distribution.type" value="complete|container"/>
+			</properties>
+			<containers>
+				<!-- All products will have
+					bda-utils.dir
+					install.xml renamed to build.xml and modified
+					properties files
+					commmon.dir
+				-->
+				<!-- Sub-project deterimes which artifacts from projects are included -->
+				<container type="jboss" prefix="">
+					<!-- inlcudes jboss binaries/patches and grid files if install-grid=true -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
+				</container>
+				<container type="tomcat" prefix="">
+					<!-- inlcudes tomcat binaries/patches and grid files if install-grid=true -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
+				</container>
+				<container type="database" prefix="">
+					<!-- Requires install scripts in one directory and upgrade in another.
+					     Requires child directory for each type of db supported with files under them.
+					     So teams may need to restructure
+						sub-poject/database-(install|upgrade)/${database.type}/*.sql
+					-->
+					<sub-project prefix="" database-install-dir="" database-upgrade-dir=""/>
+				</container>
+				<container type="custom" prefix="">
+					<!-- inlcudes tomcat binaries/patches and grid files if install-grid=true -->
+					<sub-project prefix="" build-artifact-dir="" build-artifact-pattern="" install-grid="true|false"/>
+				</container>
+			</containers>
+			<distribution name="source">
+				<!-- source for whole project -->
+				<source builder="ant|maven|ect" build-base-dir="" build-file="" build-target="">
+					<property-maps>
+						<property-map sub-project.property.name="" bda-project.property.name=""/>
+					</proeprty-maps>
+				</source>
+			</distribution>
+		</plugin>
+
+		<plugin name="deploy" version="" class="" prefix="" action="build" phase="deploy" container="" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<properties>
+				<property name="distribution.type" value="complete|container"/>
+			</properties>
+		</plugin>
+		<plugin name="some-utility" version="" class="" prefix="" action="build" phase="utility" container="" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+		</plugin>
+		<plugin name="unclassified-plugin" version="" class="" prefix="" action="build" phase="other" container="" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+		</plugin>
+	</build-plugins>
+	<install-plugins>
+		<!-- Loads props from files and environment, also adds properties which reference other property values (have embedded ${}) to the a filter set used when copying files.  -->
+		<!-- Not configured through UI, done by each project -->
+		<plugin name="properties-load" version="" class="" prefix="" action="install" phase="init" container="common" ordinal="1"/>
+		<!-- Sets up global properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+		<plugin name="common-properties-init" version="" class="" prefix="" action="install" phase="init" container="common" ordinal="2"/>
+		<!-- Not configured through UI, done by each project -->
+		<!-- Do any "bda-utils" like import or taskdefs -->
+		<plugin name="libraries-init" version="" class="" prefix="" action="install" phase="init" container="common" ordinal="2"/>
+		<!-- Reads the database properties -->
+		<plugin name="database-read-props" version="" class="" prefix="" action="install" phase="init" container="database" ordinal="3" install-type="upgrade" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Not configured through UI, done by each project -->
+		<!-- Sets up db properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+		<plugin name="database-properties-init-db" version="" class="" prefix="" action="install" phase="init" container="database" ordinal="4"/>
+		<!-- If upgrade then read db props -->
+		<plugin name="jboss-read-props" version="" class="" prefix="" action="install" phase="init" container="jboss" ordinal="3" install-type="upgrade" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Not configured through UI, done by each project -->
+		<!-- Sets up jboss properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+		<plugin name="jboss-properties-init" version="" class="" prefix="" action="install" phase="init" container="jboss" ordinal="4"/>
+		<!-- If upgrade then read db props -->
+		<plugin name="tomcat-read-props" version="" class="" prefix="" action="install" phase="init" container="tomcat" ordinal="3" install-type="upgrade" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Not configured through UI, done by each project -->
+		<!-- Sets up tomcat properties, split (basename,dirname)  and os derived props (like application.base.path) -->
+		<plugin name="tomcat-properties-init" version="" class="" prefix="" action="install" phase="init" container="tomcat" ordinal="4"/>
+		<!-- This whole section is not configured through UI, properties often determine if plugin is run -->
+		<!-- Checks versions of required tools, Ant, Java, ect-->
+		<!-- May want to do this under each container -->
+		<plugin name="common-validate-env" version="" class="" prefix="" action="install" phase="pre-validation" container="common" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Checks property values -->
+		<plugin name="common-validate-props" version="" class="" prefix="" action="install" phase="pre-validation" container="common" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Makes sure the application.base.path is not a restricted dir, checks that it is an absolute path-->
+		<plugin name="common-validate-base-path" version="" class="" prefix="" action="install" phase="pre-validation" container="common" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Validates that env.name has valid value -->
+		<plugin name="common-validate-env-nane" version="" class="" prefix="" action="install" phase="pre-validation" container="common" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Validates that passwords do not contain special characters that break the build. -->
+		<plugin name="common-validate-passwords" version="" class="" prefix="" action="install" phase="pre-validation" container="common" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+
+		<!-- Verifies that all required db props (properties.template) are set and that database.system.user and database.user not the same, if my sql database name not mysql, ect -->
+		<plugin name="database-verify-properties" version="" class="" prefix="" action="install" phase="pre-validation" container="database" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Check that you can connect, skipped if env.name=local -->
+		<plugin name="database-verify-connect" version="" class="" prefix="" action="install" phase="pre-validation" container="database" ordinal="2" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+		<!-- Check that version is greather than property in propfile, if not set skipped -->
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<plugin name="database-verify-version" version="" class="" prefix="" action="install" phase="pre-validation" container="database" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- If force.re-install not set warn that db exists -->
+		<plugin name="database-warn-exists" version="" class="" prefix="" action="install" phase="pre-validation" container="database" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Verifies that lower.case.table.names=1 if flag set in properties file -->
+		<plugin name="database-mysql-lowercase-tablenames" version="" class="" prefix="" action="install" phase="pre-validation" container="database" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+		<!-- Plugin groups allow us to present a group of plugins as one plugin to the UI.  Whatever they select for the plugin options will be passed to all plugins in the group. -->
+		<plugin-group name="jboss-pre-validation">
+			<desc></desc>
+			<!-- Verifies that all jboss props (properties.template) are set -->
+			<plugin name="jboss-verify-props" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+			</plugin>
+			<!-- Verifies that specified version is supported by build and project-->
+			<plugin name="jboss-verify-version" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+				<!-- properties for basedir, build.file.location and build target could be specified here-->
+			</plugin>
+			<!-- If ssl is enabled verify keystore -->
+			<plugin name="jboss-verify-keystore" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+			</plugin>
+			<!-- stop jboss  -->
+			<plugin name="jboss-stop" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+			</plugin>
+			<!-- Verify ports not in use after stopping JBoss -->
+			<plugin name="jboss-verify-ports" version="" class="" prefix="" action="install" phase="pre-validation" container="jboss" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+			</plugin>
+		</plugin-group>
+
+		<!-- Verifies that all tomcat props (properties.template are set -->
+		<plugin name="tomcat-verify-props" version="" class="" prefix="" action="install" phase="pre-validation" container="tomcat" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Verifies that specified version is supported by build and project-->
+		<plugin name="tomcat-verify-version" version="" class="" prefix="" action="install" phase="pre-validation" container="tomcat" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- If ssl is enabled verify keystore -->
+		<plugin name="tomcat-verify-keystore" version="" class="" prefix="" action="install" phase="pre-validation" container="tomcat" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- stop tomcat  -->
+		<plugin name="tomcat-stop" version="" class="" prefix="" action="install" phase="pre-validation" container="tomcat" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Verify ports not in use after stopping tomcat -->
+		<plugin name="tomcat-verify-ports" version="" class="" prefix="" action="install" phase="pre-validation" container="tomcat" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+		<!-- Run unless exclude flag set in properties file -->
+		<plugin name="jboss-backup" version="" class="" prefix="" action="install" phase="backup" container="jboss" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Run unless exclude flag set in properties file -->
+		<plugin name="tomcat-backup" version="" class="" prefix="" action="install" phase="backup" container="tomcat" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+
+		<!-- Cleans, installs and upgrades database -->
+		<plugin name="database-install" version="" class="" prefix="" action="install" phase="execution" container="database" ordinal="1" install.type="install" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Upgrades database using liquibase -->
+		<plugin name="database-upgrade" version="" class="" prefix="" action="install" phase="execution" container="database" ordinal="1" install.type="upgrade" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+
+
+
+		<!-- Installs and patches binaries -->
+		<plugin name="jboss-install-binaries" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="2" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Copies a static or dynamic (filtered) bindings file into JBoss and modifies jboss-service.xml to enable binding manager. -->
+		<plugin name="jboss-configure-bindings" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- Inserts xml block into login-config.xml for configuring appliction authentication policy. -->
+		<plugin name="jboss-configure-login" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-console" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-shutdown" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-ssl" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<!--
+		<plugin name="jboss-configure-ejbssl" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+		-->
+		<!-- -->
+		<plugin name="jboss-configure-gridssl" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-java-opts" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-external" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-accesslog" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-install-webapp" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="4" prefix="" disable="false" override="true" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-webapp" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="4" prefix="" disable="false" override="true" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-install-grid" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false" grid.artifact.file.name="">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-configure-grid" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-changelog" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-start" version="" class="" prefix="" action="install" phase="execution" container="jboss" ordinal="6" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+
+		<!-- Installs and patches binaries -->
+		<plugin name="tomcat-install-binaries" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="2" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-ports" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-datasource" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-ssl" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-gridssl" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-external" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-accesslog" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="3" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-install-webapp" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="4" prefix="" disable="false" override="true" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-webapp" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="4" prefix="" disable="false" override="true" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-install-grid" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-configure-grid" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="4" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-changelog" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="5" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-start" version="" class="" prefix="" action="install" phase="execution" container="tomcat" ordinal="6" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+
+
+		<!-- -->
+		<plugin name="custom-install" version="" class="" prefix="" action="install" phase="execution" container="custom" ordinal="6" prefix="" disable="false" override="true" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+
+
+		<!-- -->
+		<plugin name="common-post" version="" class="" prefix="" action="install" phase="post-validation" container="common" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="jboss-post" version="" class="" prefix="" action="install" phase="post-validation" container="jboss" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+		<!-- -->
+		<plugin name="tomcat-post" version="" class="" prefix="" action="install" phase="post-validation" container="tomcat" ordinal="1" prefix="" disable="false" override="false" pre-run="false" post-run="false">
+			<!-- properties for basedir, build.file.location and build target could be specified here-->
+		</plugin>
+	</install-plugins>
+</project>

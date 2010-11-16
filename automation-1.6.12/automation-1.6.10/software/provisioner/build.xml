@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="build-provisioner" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+	<!-- PROPERTIES -->
+	<property name="software.dir" value="${basedir}" />
+	<property name="dist.dir" value="${software.dir}/dist" />
+	<property name="dist.lib.dir" value="${dist.dir}/lib" />
+	<property name="provisioner.jar" value="provisioner.jar" />
+	<property name="dist.resources.dir" value="${dist.dir}/resources" />
+	
+	<property environment="env" />	
+	
+
+	<!-- PATHS -->
+	<path id="project.classpath">
+		<fileset dir="${dist.lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+
+	<target name="run" description="Run the class to update Wiki">
+	<echo message="${env.JAVA16_HOME}"/>
+		<java classname="gov.nih.nci.bda.provisioner.ProvisionerManager" classpath="${dist.lib.dir}/${provisioner.jar}" classpathref="project.classpath"
+			jvm="${env.JAVA16_HOME}/bin/java" fork="true"
+			taskname="java1.6" >
+
+		</java>
+	</target>
+	
+
+</project>

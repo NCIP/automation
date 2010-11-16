@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gov.nih.nci.bda</groupId>
+	<artifactId>heartbeat</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1</version>
+	<name>Heartbeat Web Application</name>
+	<url>http://www.nci.nih.gov</url>
+	<description>NCI Build and Deployment Automation</description>
+	<inceptionYear>2008</inceptionYear>
+
+	<properties>
+		<jboss.home>/tools/jboss-4.2.2.GA</jboss.home>
+		<jboss.hostname>localhost</jboss.hostname>
+		<jboss.port>8080</jboss.port>
+		<jboss.naming.port>1099</jboss.naming.port>
+		<jboss.configuration>default</jboss.configuration>
+
+		<servlet-api.version>2.4</servlet-api.version>
+		<jsp-api.version>2.0</jsp-api.version>
+		<junit.version>3.8.1</junit.version>
+	</properties>
+
+	<dependencies>
+
+		<!-- Junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!--  Struts 2 -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>2.0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-codebehind-plugin</artifactId>
+			<version>2.0.9</version>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+			<version>2.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>2.0.5</version>
+		</dependency>
+
+		<!-- Database driver (change for your specific database) -->
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+		</dependency>
+
+		<!-- Servlet, Jsp, and Portlet APIs -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<finalName>heartbeat</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<configuration>
+					<deployer>
+						<deployables>
+							<deployable>
+								<pingURL>
+									http://${jboss.hostname}:${jboss.port}/heartbeat/index.jsp
+								</pingURL>
+								<location>
+									${pom.basedir}/target/heartbeat.war
+								</location>
+							</deployable>
+						</deployables>
+					</deployer>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.cargo</groupId>
+					<artifactId>cargo-maven2-plugin</artifactId>
+					<configuration>
+						<container>
+							<containerId>jboss4x</containerId>
+							<type>installed</type>
+							<home>${jboss.home}</home>
+						</container>
+						<configuration>
+							<type>existing</type>
+							<home>
+								${jboss.home}/server/${jboss.configuration}
+							</home>
+							<properties>
+								<cargo.jboss.configuration>
+									${jboss.configuration}
+								</cargo.jboss.configuration>
+								<cargo.hostname>
+									${jboss.hostname}
+								</cargo.hostname>
+								<cargo.servlet.port>
+									${jboss.port}
+								</cargo.servlet.port>
+							</properties>
+						</configuration>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

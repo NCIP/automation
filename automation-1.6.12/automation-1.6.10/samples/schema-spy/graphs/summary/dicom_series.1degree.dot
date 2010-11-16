@@ -1,0 +1,37 @@
+// dot 2.16.1 on Linux 2.6.25.6-27.fc8
+digraph "dicom_series" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "dicom_series" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD PORT="dicom_series.heading" COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">dicom_series</TD></TR>
+      <TR><TD PORT="GENERAL_SERIES_PK_ID" COLSPAN="3" ALIGN="LEFT">GENERAL_SERIES_PK_ID</TD></TR>
+      <TR><TD PORT="BODY_PART_EXAMINED" COLSPAN="3" ALIGN="LEFT">BODY_PART_EXAMINED</TD></TR>
+      <TR><TD PORT="FRAME_OF_REFERENCE_UID" COLSPAN="3" ALIGN="LEFT">FRAME_OF_REFERENCE_UID</TD></TR>
+      <TR><TD PORT="SERIES_LATERALITY" COLSPAN="3" ALIGN="LEFT">SERIES_LATERALITY</TD></TR>
+      <TR><TD PORT="MODALITY" COLSPAN="3" ALIGN="LEFT">MODALITY</TD></TR>
+      <TR><TD PORT="PROTOCOL_NAME" COLSPAN="3" ALIGN="LEFT">PROTOCOL_NAME</TD></TR>
+      <TR><TD PORT="SERIES_DATE" COLSPAN="3" ALIGN="LEFT">SERIES_DATE</TD></TR>
+      <TR><TD PORT="SERIES_DESC" COLSPAN="3" ALIGN="LEFT">SERIES_DESC</TD></TR>
+      <TR><TD PORT="SERIES_INSTANCE_UID" COLSPAN="3" ALIGN="LEFT">SERIES_INSTANCE_UID</TD></TR>
+      <TR><TD PORT="SERIES_NUMBER" COLSPAN="3" ALIGN="LEFT">SERIES_NUMBER</TD></TR>
+      <TR><TD PORT="SYNC_FRAME_OF_REF_UID" COLSPAN="3" ALIGN="LEFT">SYNC_FRAME_OF_REF_UID</TD></TR>
+      <TR><TD PORT="STUDY_PK_ID" COLSPAN="3" ALIGN="LEFT">STUDY_PK_ID</TD></TR>
+      <TR><TD PORT="GENERAL_EQUIPMENT_PK_ID" COLSPAN="3" ALIGN="LEFT">GENERAL_EQUIPMENT_PK_ID</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/dicom_series.html#"
+    tooltip="dicom_series"
+  ];
+}

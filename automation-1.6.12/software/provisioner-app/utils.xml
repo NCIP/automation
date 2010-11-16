@@ -1,0 +1,109 @@
+<project name="utils" xmlns:antunit="antlib:org.apache.ant.antunit">
+
+	<!--
+	properties-exist macro checks if the value of the property is set in the list of properties separated by ','
+	usage: <properties-exist properties.list="${properties.list}"/>
+		The properties.list must be set and passed when calling this macro
+	-->
+	<macrodef name="properties-exist" description="Check if the value of the property is set">
+		<attribute name="properties.list" />
+		<sequential>
+			<for list="@{properties.list}" param="prop.list.item" delimiter=",">
+				<sequential>
+					<propertyregex property="prop.list.item.trimmed"
+						input="@{prop.list.item}"
+						regexp="\s*(\S+)\s*"
+						select="\1"
+						override="true"
+						/>
+					<echo level="debug" message="Verifying ${prop.list.item.trimmed} is set"/>
+					<if>
+						<not>
+							<isset property="${prop.list.item.trimmed}"/>
+						</not>
+						<then>
+							<fail message="Property ${prop.list.item.trimmed} is not set, it needs to be set, please set it to continue"/>
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+	
+	<!-- remote-ssh macro is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execute remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.
+	usage: <remote-ssh remotesshcommand="mv ${jboss.temp.dir}/caarray.ear ${jboss.home}/deploy/" />
+	-->
+	<macrodef name="remote-ssh" description="This is a remote SSH procedure. It will use SSH connection defaults as defined in the environment property file to initiate SSH connections and execure remote unix commands. remoteSshCommand is a mandatory attribute to this macrodef.">
+		<attribute name="remoteSshCommand" />
+		<attribute name="remoteSshPort" default="22" />
+		<attribute name="remoteSshHost" default="${ssh.server.hostname}" />
+		<attribute name="remoteSshUser" default="${ssh.server.username}" />
+		<attribute name="remoteSshPassword" default="${ssh.server.password}" />
+		<attribute name="remoteSshSleep" default="5" />
+		<sequential>
+			<sshexec port="@{remoteSshPort}" host="@{remoteSshHost}" username="@{remoteSshUser}" password="@{remoteSshPassword}" verbose="true" trust="true" command="@{remoteSshCommand}" />
+			<sleep seconds="@{remoteSshSleep}" />
+			<echo message="Performed @{remoteSshCommand} command on @{remoteSshHost}:@{remoteSshPort} using SSH..." />
+		</sequential>
+	</macrodef>
+
+	<!-- remote-scp macro copies files in a secure manner using SCP.
+	remoteScpToDir and remoteScpFileToCopy are required attributes to this macrodef
+	usage: <remote-scp remoteScpFileToCopy="${caarray.ear}"
+	remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:${jboss.temp.dir}" />
+	-->
+	<macrodef name="remote-scp" description="This task copies files in a secure manner using SCP.
+	remoteScpToDir and remoteScpFileToCopy are required attributes to this macrodef.">
+		<attribute name="remoteScpFileToCopy" />
+		<attribute name="remoteScpToDir" />
+		<attribute name="remoteScpKeyFile" default="${ssh.key.file}" />
+		<attribute name="remoteScpPassphrase" default="" />
+		<attribute name="remoteScpTrust" default="true" />
+		<attribute name="remoteScpVerbose" default="true" />
+		<attribute name="remoteScpSleep" default="5"  />
+		<attribute name="remoteScpPassword" default="5"  />
+		<sequential>
+			<scp file="@{remoteScpFileToCopy}" trust="@{remoteScpTrust}" verbose="@{remoteScpVerbose}" todir="@{remoteScpToDir}" password="@{remoteScpPassword}" />
+			<sleep seconds="@{remoteScpSleep}" />
+			<echo message="Copied @{remoteScpFileToCopy} to @{remoteScpToDir} using SCP..." />
+		</sequential>
+	</macrodef>
+	
+	
+	<!--
+	generate-erd macro will generate an ERD from the Database
+		usage: <generate-erd />
+		report.dir is the directory where the ERD is generated.
+	-->
+	<macrodef name="generate-erd">
+		<attribute name="report.dir" default="${target.dir}/reports/schema-spy" />
+		<attribute name="database.driver.jar" default="mysql-connector-java-5.0.8.jar" />
+		<attribute name="schemaspy.jar" default="schemaspy-4.1.1.jar" />
+		<attribute name="database.server" default="${database.server}" />
+		<attribute name="database.port" default="${database.port}" />
+		<attribute name="database.name" default="${database.name}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="database.type" default="${database.type}" />
+		<sequential>
+			<mkdir dir="@{report.dir}"/>
+			<echo message="${bda-lib.dir}/@{schemaspy.jar}"/>
+			<java jar="${bda-lib.dir}/@{schemaspy.jar}"
+			output="@{report.dir}/schemaspy-out.log"
+			error="@{report.dir}/schemaspy-error.log"
+			fork="true">
+				<arg line="-t @{database.type}"/>
+				<arg line="-host @{database.server}"/>
+				<arg line="-port @{database.port}"/>
+				<arg line="-db @{database.name}"/>
+				<arg line="-u @{database.user}"/>
+				<arg line="-p @{database.password}"/>
+				<arg line="-cp ${bda-lib.dir}/@{database.driver.jar}"/>
+				<arg line="-o @{report.dir}"/>
+			</java>
+		</sequential>
+	</macrodef>
+
+
+	
+</project>
