@@ -2089,7 +2089,10 @@ $HeadURL$
 				</filterset>
 			</copy>
 			<if>
-				<equals arg1="@{jboss.http-connector.remove}" arg2="true"/>
+				<and>
+				 <equals arg1="@{jboss.http-connector.remove}" arg2="true"/>
+				 <equals arg1="@{jboss.secure.grid.enable}" arg2="true"/>
+				</and>
 				<then>
 					<echo message="Changing redirect port in bindings file to @{grid.secure.port}"/>
 					<replaceregexp file="@{jboss.server.bindingfile.location}"
