@@ -1,0 +1,1 @@
+*/15 * * * * . /home/nbia/.bashrc;cd /home/nbia/src/cloud-arch/;mkdir -p logs;ant run 2>&1 >> logs/nbia-perf.log

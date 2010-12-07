@@ -1,0 +1,5 @@
+﻿<flash_project name="bda-wiki-home" version="1">
+    <project_file path="./bda-wiki-home.fla" filetype="fla" profile="" def_file="true" />
+    <project_file path="./WikiButton.as" filetype="as" />
+    <project_file path="./WikiHome.as" filetype="as" />
+</flash_project>

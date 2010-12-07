@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" href="./CriteriaCollectionHandler.html" title="&lt;TABLE&gt;" alt="" coords="16,189,349,309"/>
+<area shape="rect" href="./CriteriaHandler.html" title="&lt;TABLE&gt;" alt="" coords="749,11,1059,131"/>
+<area shape="rect" href="./ModelSoftwareCriteriaHandler.html" title="&lt;TABLE&gt;" alt="" coords="395,189,704,309"/>
+<area shape="rect" href="./RangeCriteriaHandler.html" title="&lt;TABLE&gt;" alt="" coords="749,197,1059,301"/>
+<area shape="rect" href="./UrlParamCriteriaHandler.html" title="&lt;TABLE&gt;" alt="" coords="1104,197,1413,301"/>
+<area shape="rect" href="./VisibilityCriteriaHandler.html" title="&lt;TABLE&gt;" alt="" coords="1459,197,1768,301"/>
+</map>

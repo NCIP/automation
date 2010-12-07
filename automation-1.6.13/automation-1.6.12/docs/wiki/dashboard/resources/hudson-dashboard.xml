@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<dashboard>
+	<title>CBIIT Quality Dashboard</title>
+	<subtitle>Real-Time Monitoring of Hudson CI</subtitle>
+	<welcome><![CDATA[<H1>Welcome to BDA</H1><P>Remember to check out the latest BDA Release 0.5.0 in the <a href='https://dashboard.nci.nih.gov/x/HRSZ'>Downloads</a> section.<br/><br/><b>Tip of the month</b>: Reduce resource duplication and ease dependency management through Ivy. <a href='https://dashboard.nci.nih.gov/x/xKN8'>Read more...</a>]]></welcome>
+
+	<!-- caArray2 -->
+	<projectgroup>
+		<name>caArray2</name>
+		<description>caArray2 CI Server</description>
+		<link>http://cbvapp-c1003.nci.nih.gov:48080/hudson/</link>
+		<rsslink>http://cbvapp-c1003.nci.nih.gov:48080/hudson/rssAll</rsslink>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/dashboard/flash/images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>caarray2-2.1.0-ci</name>
+			<description>caarray2-2.1.0-ci</description>
+			<link>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-2.1.0-ci/</link>
+			<rsslink>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-2.1.0-ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>caarray2-2.1.1-ci</name>
+			<description>caarray2-2.1.1-ci</description>
+			<link>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-2.1.1-ci</link>
+			<rsslink>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-2.1.1-ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>caarray2-ci</name>
+			<description>caarray2-ci</description>
+			<link>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-ci/</link>
+			<rsslink>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>caarray2-nightly</name>
+			<description>caarray2-nightly</description>
+			<link>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-nightly/</link>
+			<rsslink>http://cbvapp-c1003.nci.nih.gov:48080/hudson/job/caarray2-nightly/rssAll</rsslink>
+		</project>
+	</projectgroup>
+	
+	<!-- NCIA -->
+	<projectgroup>
+		<name>NCIA</name>
+		<description>NCIA CI Server</description>
+		<link>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/</link>
+		<rsslink>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/rssAll</rsslink>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/dashboard/flash/images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>ncia_ci</name>
+			<description>ncia_ci</description>
+			<link>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_ci/</link>
+			<rsslink>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>ncia_ci-install</name>
+			<description>ncia_ci-install</description>
+			<link>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_ci-install/</link>
+			<rsslink>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_ci-install/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>ncia_mysql_ci</name>
+			<description>ncia_mysql_ci</description>
+			<link>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_mysql_ci/</link>
+			<rsslink>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_mysql_ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>ncia_mysql_ci-install</name>
+			<description>ncia_mysql_ci-install</description>
+			<link>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_mysql_ci-install/</link>
+			<rsslink>http://cbv-ciweb-base.nci.nih.gov:48080/hudson/job/ncia_mysql_ci-install/rssAll</rsslink>
+		</project>
+	</projectgroup>
+	
+	<!-- CSM -->
+	<projectgroup>
+		<name>CSM</name>
+		<description>CSM CI Server</description>
+		<link>http://cbvapp-c1002.nci.nih.gov:48080/hudson/</link>
+		<rsslink>http://cbvapp-c1002.nci.nih.gov:48080/hudson/rssAll</rsslink>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/dashboard/flash/images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>csm-install</name>
+			<description>csm-install</description>
+			<link>http://cbvapp-c1002.nci.nih.gov:48080/hudson/job/csm-install/</link>
+			<rsslink>http://cbvapp-c1002.nci.nih.gov:48080/hudson/job/csm-install/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>csm-upgrade</name>
+			<description>csm-upgrade</description>
+			<link>http://cbvapp-c1002.nci.nih.gov:48080/hudson/job/csm-upgrade/</link>
+			<rsslink>http://cbvapp-c1002.nci.nih.gov:48080/hudson/job/csm-upgrade/rssAll</rsslink>
+		</project>
+	</projectgroup>
+	
+	<!-- caIntegrator2 -->
+	<projectgroup>
+		<name>caIntegrator2</name>
+		<description>caIntegrator2 CI Server</description>
+		<link>http://cbvapp-c1004.nci.nih.gov:48080/hudson/</link>
+		<rsslink>http://cbvapp-c1004.nci.nih.gov:48080/hudson/rssAll</rsslink>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/dashboard/flash/images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>caintegrator2-ci</name>
+			<description>caintegrator2-ci</description>
+			<link>http://cbvapp-c1004.nci.nih.gov:48080/hudson/job/caintegrator2-ci/</link>
+			<rsslink>http://cbvapp-c1004.nci.nih.gov:48080/hudson/job/caintegrator2-ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>caintegrator2-nightly</name>
+			<description>caintegrator2-nightly</description>
+			<link>http://cbvapp-c1004.nci.nih.gov:48080/hudson/job/caintegrator2-nightly/</link>
+			<rsslink>http://cbvapp-c1004.nci.nih.gov:48080/hudson/job/caintegrator2-nightly/rssAll</rsslink>
+		</project>
+	</projectgroup>
+	
+	<!-- COPPA -->
+	<projectgroup>
+		<name>COPPA</name>
+		<description>COPPA CI Server</description>
+		<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/</link>
+		<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/rssAll</rsslink>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/dashboard/flash/images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>coppa-iso-datatypes</name>
+			<description>coppa-iso-datatypes</description>
+			<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/coppa-iso-datatypes/</link>
+			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/coppa-iso-datatypes/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>coppa-po-ci</name>
+			<description>coppa-po-ci</description>
+			<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/coppa-po-ci/</link>
+			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/coppa-po-ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>coppa-po-ci-full</name>
+			<description>coppa-po-ci-full</description>
+			<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/coppa-po-ci-full/</link>
+			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/coppa-po-ci-full/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>pa-bda-ci</name>
+			<description>pa-bda-ci</description>
+			<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/pa-bda-ci/</link>
+			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/pa-bda-ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>pa-bda-nightly</name>
+			<description>pa-bda-nightly</description>
+			<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/pa-bda-nightly/</link>
+			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/pa-bda-nightly/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>po-bda-ci</name>
+			<description>po-bda-ci</description>
+			<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/po-bda-ci/</link>
+			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/po-bda-ci/rssAll</rsslink>
+		</project>
+		
+		<project>
+			<name>po-bda-nightly</name>
+			<description>po-bda-nightly</description>
+			<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/po-bda-nightly/</link>
+			<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/job/po-bda-nightly/rssAll</rsslink>
+		</project>
+	</projectgroup>
+	
+	<!-- COPPA -->
+	<projectgroup>
+		<name>JBOSS</name>
+		<description>JBOSS CI Server</description>
+		<link>http://cbvapp-c1005.nci.nih.gov:48080/hudson/</link>
+		<rsslink>http://cbvapp-c1005.nci.nih.gov:48080/hudson/rssAll</rsslink>
+		<image>https://gforge.nci.nih.gov/svnroot/automation/trunk/docs/dashboard/flash/images/internet.png</image>
+		<teaser><![CDATA[<H1>News</H1><UL><LI>Learn the <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">latest status</a> of BDA projects <a href="https://dashboard.nci.nih.gov/pages/viewrecentblogposts.action?key=BuildandDeploymentAutomation">here</a></LI><LI>For a <a href="https://dashboard.nci.nih.gov/x/1AKM">calendar</a> of BDA projects, go <a href="https://dashboard.nci.nih.gov/x/1AKM">here</a></LI><LI>Levent Gurses will be hosting a workshop on <a href="https://dashboard.nci.nih.gov/x/AgmZ">Improving Code Quality With Eclipse and its Java Plugins</a> on Wednesday, Sep 3rd, 2008. Workshop materials and setup instructions are available on the <a href="https://dashboard.nci.nih.gov/x/AgmZ">workshop dashboard page</a></LI></UL>]]></teaser>
+		
+		<project>
+			<name>jbosstools-docs-nightly</name>
+			<description>jbosstools-docs-nightly</description>
+			<link>http://hudson.jboss.org/hudson/view/JBossTools/job/jbosstools-docs-nightly/</link>
+			<rsslink>http://hudson.jboss.org/hudson/view/JBossTools/job/jbosstools-docs-nightly/rssAll</rsslink>
+		</project>
+	</projectgroup>
+</dashboard>

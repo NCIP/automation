@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<project name="build-template" default="deploy:remote:install" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" >
+	<description>
+		 This is the master build file for the project. These scripts require Java, Ant, Database and SVN to work.
+	</description>
+
+	<!-- Property file related properties and tasks -->
+	<property environment="env" />
+	<property file="${user.home}/local.properties" />
+	<property file="project.properties" />
+	
+	<property name="build.dir" location="." />
+	<property name="dist.dir" location="${build.dir}/dist" />
+	<property name="bda-lib.dir" location="${build.dir}/bda-lib" />
+	
+	<import file="${build.dir}/taskdefs.xml" />
+	<import file="${build.dir}/utils.xml" />
+	
+	
+	<target name="init" description="Sets up build are and initalizes variables">
+	    <delete dir="${dist.dir}" includes="**/*"/>
+	</target>
+	
+	
+	<target name="deploy:remote:install" description="Deploys on the remote machine" depends="init">
+		
+	
+		<!-- Run grails clean, grails war locally -->
+		<exec osfamily="unix" executable="grails" dir=".">
+		       <arg line="clean" />
+		</exec>
+		<exec osfamily="unix" executable="grails" dir=".">
+		       <arg line="war" />
+		</exec>
+
+		<exec osfamily="windows" executable="grails" dir=".">
+		       <arg line="clean" />
+		</exec>
+		<exec osfamily="windows" executable="grails" dir=".">
+		       <arg line="war" />
+		</exec>
+
+		<remote-ssh
+			remoteSshHost="${ssh.server.hostname}"
+			remoteSshUser="${ssh.server.username}"
+			remoteSshPassword="${ssh.server.password}"
+			remotesshcommand=". /mnt/hudsonuser/.bash_profile;/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/shutdown.sh" />
+		<!-- Delete provisioner application deployments on remote machine -->
+		<remote-ssh
+			remoteSshHost="${ssh.server.hostname}"
+			remoteSshUser="${ssh.server.username}"
+			remoteSshPassword="${ssh.server.password}"
+			remotesshcommand="rm -rf /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/provisioner*" />
+		<!-- copy WAR file to remote system -->
+		<remote-scp
+			remoteScpFileToCopy="./provisioner.war" 
+			remoteScpToDir="${ssh.server.username}@${ssh.server.hostname}:/mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/webapps/" 
+			remoteScpPassword="${ssh.server.password}"/>
+		<!-- Startup Tomcat -->
+		<remote-ssh
+			remoteSshHost="${ssh.server.hostname}"
+			remoteSshUser="${ssh.server.username}"
+			remoteSshPassword="${ssh.server.password}"
+			remotesshcommand=". /mnt/hudsonuser/.bash_profile;nohup /mnt/hudsonuser/hudson/application/apache-tomcat-5.5.20/bin/startup.sh &amp;" />
+	</target>
+	
+
+</project>

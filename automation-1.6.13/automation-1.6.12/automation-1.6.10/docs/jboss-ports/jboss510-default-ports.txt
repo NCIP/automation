@@ -1,0 +1,85 @@
+# binding port = is assumed after service-config
+
+#### jboss-service.xml
+#jboss:service=Naming atribute name="RmiPort"
+jboss.server.rmi.port=1098
+#jboss:service=Naming name="Port"
+jboss.server.jndi.port=1099
+#jboss:service=WebService
+jboss.web.service.port=8083
+#UnifiedInvokerConnector
+jboss.unifiedinvoker.port=4446 ***
+#jboss:service=invoker,type=jrmp
+jboss.service.rmiobject.port=4444
+#jboss:service=invoker,type=pooled
+jboss.server.bind.port=4445
+
+#### cluster-service.xml
+#jboss:service=HAJNDI bindingName="RmiPort"
+jboss.hajrmi.port=1101
+#jboss:service=HAJNDI bindingName="Port"
+jboss.hajndi.port=1100
+#jboss:service=HAJNDI bindingName="AutoDiscovery"
+jboss.hajndi.auto.port=1102 ***
+#jboss:service=invoker,type=jrmpha (used to be 4444)
+jboss.service.rmiobject.port=4447
+#jboss:service=invoker,type=pooledha (used to be 4445)
+jboss.pooledha.port=4448
+
+#### iiop-service.xml
+#jboss:service=CorbaORB
+jboss.cobraorb.port=3528
+
+#### snmp-adaptor.sar
+#jboss.jmx:name=SnmpAgent,service=trapd,type=logger
+jboss.snmp-trapd.port=1162
+#jboss.jmx:name=SnmpAgent,service=snmp,type=adaptor
+jboss.snmp.port=1161
+
+#### deploy/jmx-remoting.sar
+#jboss.remoting:service=JMXConnectorServer,protocol=rmi (used to be 19001)
+jboss.jmx-rmi.port=1090
+
+#### jbossmq-service.xml ?
+#jboss.mq:service=InvocationLayer,type=UIL2
+jboss.jms.port=8093 @@@@
+
+####  deploy/httpha-invoker.sar
+#jboss.web:service=WebServer
+jboss.server.port=8080
+#jboss.web:service=WebServer bindingName="HttpsConnector"
+jboss.ssl.port=8443 ***
+
+#### deploy/messaging/remoting-bisocket-service.xml
+#jboss.messaging:service=Connector,transport=bisocket
+jboss.messaging.port=4457
+#JBM2 bindingName="netty-port"
+jboss.jms2.netty.port=5445 ***
+#JBM2 bindingName="netty-ssl-port"
+jboss.jms2.netty-ssl.port=5446 ***
+
+
+#### deploy/transaction-jboss-beans.xml
+#TransactionManager bindingName="recoveryManager"
+jboss.transaction.recovery.port=4712 ***
+#TransactionManager bindingName="transactionStatusManager"
+jboss.transaction.status.port=4713 ***
+#TransactionManager bindingName="socketProcessId"
+jboss.transaction.processid.port=4714 ***
+
+#### EJB3 Remoting Connector ejb3.deployer/META-INF/jboss-service.xml
+#jboss.remoting:type=Connector,name=DefaultEjb3Connector,handler=ejb3
+jboss.ejbinvoker.port=3873 &&&
+
+#****** Missing in Base Templage from nci
+#### remoting-service.xml
+#jboss.remoting:service=Connector,transport=Socket
+=18084
+#jboss.remoting:service=Connector,transport=Async
+=18085
+
+#****** Diff between sample and our template
+#jboss.messaging:service=Connector,transport=socket in sample
+#jboss.messaging:service=Connector,transport=bisocket in template
+
+

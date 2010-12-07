@@ -1,0 +1,33 @@
+<plugin name="" property-prefix="" class="" validation-class="" test-class="" version=""/>
+	<description>
+	<description/>
+	<release-notes>
+	</release-notes>
+	<container-type name="jboss|tomcat|database|custom">
+		<versions>
+			<version value="x.x"/>
+			<version value="x.y"/>
+		</version>
+	</container-type>
+	<!-- for defining custom types not already provided by core engine, mostly used by lists -->
+	<property-types>
+		<property-type name="" base-type="number|string|boolean|list" validation-class="" validation-target="">
+			<!-- if you want to provide a list of values add below -->
+			<list-type value="single|multiple"/>
+			<property-choice value=""/>
+		</property-type>
+	</property-types>
+	<tier-properties>
+		<!-- This element is used to identify properties from properties files that are related to this plugin, it can be used in validation phase of configurator -->
+		<!-- Default will allow variable expansion so that way we can build vars from prefix/suffix, this will be suggested value or may even be added to file if user approves. -->
+		<!-- profile can be install.proeprties, upgrade.properties, tier.proprties (both) or project.properties -->
+		<property name="" type="" required="true|false" default="" propfile="see-above" description=""/>
+	</tier-properties>
+	<project-properties>
+		<property name="" type="" required="true|false" default="" propfile="see-above" description=""/>
+	</project-properties>	
+	<engine-properties>
+		<property name="" type="" display-type="select|multi-select|combo|radio|checkbox|text|text-area" default="" display-name="" display-short-description="" display-long-description=""/>
+	</property>
+	</engine-properties>
+</plugin>
