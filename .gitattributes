@@ -3684,6 +3684,7 @@ software/heartbeat/src/main/webapp/index.jsp -text
 software/hudson-manager/bash_profile -text
 software/hudson-manager/build.xml -text
 software/hudson-manager/install.properties -text
+software/ivy-project/apply_ivy_nexus_patch.xml -text
 software/provisioner-app/.classpath -text
 software/provisioner-app/.project -text
 software/provisioner-app/.settings/org.codehaus.groovy.eclipse.preferences.prefs -text
