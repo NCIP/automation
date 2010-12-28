@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+
+
+    <changeSet id="2010.06.14.22.33.01" author="bassetttj" runOnChange="true">
+        <delete tableName="target_lookup" />
+        <loadData tableName="target_lookup"
+                  file="${sql.dist.dir}/target_lookup.csv">
+        </loadData>
+    </changeSet>
+
+
+
+</databaseChangeLog>

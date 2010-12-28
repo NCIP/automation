@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="buildmonitor" basedir="." default="run" xmlns:antunit="antlib:org.apache.ant.antunit" xmlns="antlib:org.apache.tools.ant">
+
+    <property environment="env" />
+
+    <property name="backupconfig.checkout.dir" value="${env.WORKSPACE}/jobs" />
+    <property name="svn.username" value="user" />
+    <property name="svn.password" value="password" />
+
+
+    <property name="database.server" value="localhost" />
+    <property name="database.port" value="3306" />
+    <property name="database.name" value="buildmonitordb" />
+    <property name="database.url" value="jdbc:mysql://${database.server}:${database.port}/${database.name}" />
+    <property name="database.driver" value="com.mysql.jdbc.Driver" />
+
+	<!-- PROPERTIES -->
+	<property name="software.dir" value="${basedir}" />
+	<property name="lib.dir" value="${software.dir}/lib" />
+	<property name="source.dir" value="${software.dir}/src/main/java" />
+	<property name="resource.dir" value="${software.dir}/src/main/resources" />
+	<property name="classes.dir" value="${software.dir}/classes" />
+    <property name="test.source.dir" value="${source.dir}/test" />
+    <property name="test.classes.dir" value="${software.dir}/test-classes" />
+
+    <property name="testoutput.dir" value="${basedir}/testresult" />
+
+	<property name="build.dir" value="${software.dir}/build" />
+	<property name="target.dir" value="${software.dir}/target" />
+	<property name="selenium.tests.src.dir" value="${software.dir}/src/tests/functional" />
+	<property name="dist.dir" value="${target.dir}/dist" />
+	<property name="build.certification.jar" value="build-certification.jar" />
+	<property name="cron.expr" value="\110 07 * * *\2"/>
+	
+	<property name="properties.file" value="dev-install.properties" />
+	<property file="${basedir}/${properties.file}"/>
+	
+	<property name="deploy.dir" value="${user.home}/buildcertification" />
+	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
+	<property name="tests.dir" value="${deploy.dir}/certification-tests/tests" />
+	<property name="results.dir" value="${deploy.dir}/certification-tests/results" />	
+
+	<property name="tests.unit.source.dir" value="${software.dir}/src/tests/unit/groovy" />
+	<property name="tests.unit.classes.dir" value="${target.dir}/unit/classes" />
+	
+    <property name="sql.src.dir" value="${software.dir}/src/main/sql" />
+	<property name="sql.dist.dir" value="${sql.src.dir}" />
+
+
+	<!-- PATHS -->
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="project.classpath"/>
+    <!--<taskdef resource="org/tigris/subversion/
+    ant/svnantlib.xml" classpathref="project.classpath" />-->
+    <taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask" classpathref="project.classpath" />
+	
+	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="project.classpath"/>
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="project.classpath"/>
+    <taskdef resource="liquibasetasks.properties" classpathref="project.classpath" />
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="project.classpath"/>
+
+	<target name="init" depends="clean" description="create table and populate data">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${tests.unit.classes.dir}" />
+        <mkdir dir="${testoutput.dir}" />
+        <mkdir dir="${test.classes.dir}" />
+	</target>
+
+	<target name="clean" description="create table and populate data">
+		<delete dir="${classes.dir}" />
+		<delete dir="${target.dir}" />
+		<delete dir="${dist.dir}" />
+        <delete dir="${testoutput.dir}" />
+        <delete dir="${test.classes.dir}" />
+	</target>
+
+	<target name="deploy:init" depends="deploy:clean" description="create table and populate data">
+		<mkdir dir="${deploy.dir}" />
+		<mkdir dir="${tests.dir}/" />
+		<mkdir dir="${results.dir}/" />
+	</target>
+
+	<target name="deploy:clean" description="create table and populate data">
+		<delete dir="${deploy.dir}" />
+	</target>
+
+	<target name="deploy:sql" description="create table and populate data">
+
+        <!--<changeLogSync  changelogfile="${sql.dist.dir}/structure.xml"-->
+                        <!--url="${database.url}"-->
+                        <!--username="${database.user}"-->
+                        <!--password="${database.password}"-->
+                        <!--driver="${database.driver}"-->
+                        <!--classpathref="project.classpath" />-->
+
+        <echo>database.url=${database.url}</echo>
+
+        <updateDatabase changelogfile="${sql.dist.dir}/structure.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
+
+        <updateDatabase changelogfile="${sql.dist.dir}/dashboard_properties_changelog.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
+
+        <updateDatabase changelogfile="${sql.dist.dir}/project_poc.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
+
+        <updateDatabase changelogfile="${sql.dist.dir}/target_lookup.xml"
+                        url="${database.url}"
+                        username="${database.user}"
+                        password="${database.password}"
+                        driver="${database.driver}"
+                        classpathref="project.classpath">
+            <changelogproperty name="sql.dist.dir" value="${sql.dist.dir}" />
+        </updateDatabase>
+
+        
+	</target>
+
+	<target name="install:database" description="Runs install scripts">
+		<database-install
+			db.install.create.file.list="${db.deploy.mysql.file.list}"
+			/>
+	</target>
+
+
+	<target name="run" depends="test,deploy" description="Run the class to update Wiki">
+
+	</target>
+	
+	<target name="compile" depends="init"  description="Compile the build monitor source">
+		<javac srcdir="${source.dir}" destdir="${classes.dir}" classpathref="project.classpath"/>		
+	</target>
+
+	<target name="package" depends="compile" description="Package the build monitor">
+        <copy todir="${classes.dir}" overwrite="true">
+            <fileset dir="${source.dir}">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+
+		<jar destfile="${dist.dir}/${build.certification.jar}" basedir="${classes.dir}" update="true" >
+		    <manifest>
+		      <attribute name="Main-Class" value="gov.nih.nci.bda.certification.CertificationManager"/>
+		    </manifest>
+		</jar>
+	</target>
+
+	<target name="deploy:artifacts" depends="deploy:init,package" description="Package the build monitor">
+		<copy todir="${deploy.dir}" overwrite="true">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+
+		<copy file="${dist.dir}/${build.certification.jar}" todir="${deploy.dir}" />
+        <copy file="${dist.dir}/${build.certification.jar}" todir="${user.home}/.ant/lib" />
+		<copy file="${resource.dir}/${hibernate.config.file}" todir="${deploy.dir}" />
+		<copy file="${resource.dir}/build.xml" todir="${deploy.dir}" />
+		
+		<copy file="${build.dir}/build.xml" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/project.properties" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/CertificationUtils.groovy" todir="${deploy.dir}/build" />
+		<copy file="${build.dir}/lookup.properties" todir="${deploy.dir}/build" />
+
+        <!--this allows you to deploy locally with a project-->
+        <!--properties file without having the build server copy-->
+        <!--these properties file in.  build server uses the values out-->
+        <!--of the database.-->
+        <if>
+            <available file="${build.dir}/${project.name}.properties" /> 
+            <then>
+                <copy file="${build.dir}/${project.name}.properties" todir="${deploy.dir}/build" />
+            </then>
+        </if>
+
+		
+		<copy todir="${tests.dir}">
+			<fileset dir="${selenium.tests.src.dir}">
+					<include name="**"/>
+			</fileset>		
+		</copy>
+		<!--<copy todir="${sql.dist.dir}">-->
+			<!--<fileset dir="${sql.src.dir}">-->
+					<!--<include name="**"/>-->
+			<!--</fileset>		-->
+			<!--<filterset>-->
+					<!--<filtersfile file="${properties.file}"/>-->
+			<!--</filterset>-->
+		<!--</copy>		-->
+	</target>
+
+	<target name="deploy:configure"  description="Package the build monitor">
+		<xmltask failWithoutMatch="true" source="${deploy.dir}/${hibernate.config.file}" 
+			dest="${deploy.dir}/${hibernate.config.file}"
+			public="-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+               		system="http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"
+               		omitHeader="true"
+		>		
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.driver_class']/text()" withtext="${database.driver}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.url']/text()" withtext="${database.url}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.username']/text()" withtext="${database.user}"/>
+			<replace path="/hibernate-configuration/session-factory/property[@name='connection.password']/text()" withtext="${database.password}"/>
+		</xmltask>
+	</target>
+
+    <target name="test" depends="compile,package,deploy:sql">
+
+        <path id="project.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+        </path>
+
+        <javac srcdir="${test.source.dir}"
+               destdir="${test.classes.dir}"
+               classpathref="project.classpath">
+        </javac>
+
+
+        <jar destfile="${dist.dir}/tests.jar" basedir="${classes.dir}" update="true" />
+
+
+        <path id="test.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+        </path>
+
+        <property name="xxx" refid="test.classpath"/>
+
+        <echo>classpath=${xxx}</echo>
+
+        <junit printsummary="yes">
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar" />
+                </fileset>
+                <fileset dir="${dist.dir}">
+                    <include name="**/*.jar" />
+                </fileset>
+            </classpath>
+            <batchtest todir="${testoutput.dir}">
+                <fileset dir="${test.classes.dir}">
+                  <include name="**/*.class"/>
+                </fileset>
+            </batchtest>
+            <formatter type="xml" usefile="true" />
+        </junit>
+
+        <echo>Running Ant Unit ...</echo>
+        <ant antfile="${software.dir}/build/build-test.xml">
+            <property name="testoutput.dir" value="${testoutput.dir}" />
+        </ant>
+        <echo>Running Ant Unit complete.</echo>
+
+    </target>
+
+	<target name="deploy" depends="deploy:artifacts,deploy:configure,deploy:sql" description="deploy the build monitor">
+
+	</target>
+		
+	<target name="test:execute" description="Run the class to update Wiki">
+		<groovy>
+		   <arg line="${tests.unit.source.dir}"/>
+		   def loader = new GroovyClassLoader(getClass().getClassLoader())
+		   def testClass = loader.parseClass(new File(args[0]+"/BDACertificationTest.groovy"))
+		   println testClass
+		   junit.textui.TestRunner.run(testClass)
+		</groovy>		
+	</target>
+	
+	<macrodef name="run-sql-script" description="By default this will use the database.url, to use drop database &amp; user use the database.system.url property">
+		<attribute name="sql.file" />
+		<attribute name="sql.delimiter" default=";" />
+		<attribute name="sql.delimitertype" default="normal" />
+		<attribute name="database.url" default="${database.url}" />
+		<attribute name="database.user" default="${database.user}" />
+		<attribute name="database.password" default="${database.password}" />
+		<attribute name="onerror" default="abort" />
+		<sequential>
+			<sql driver="${database.driver}" url="@{database.url}" userid="@{database.user}" password="@{database.password}" src="@{sql.file}" onerror="@{onerror}" autocommit="true" delimiter="@{sql.delimiter}" delimitertype="@{sql.delimitertype}" keepformat="true">
+				<classpath>
+					<pathelement location="${deploy.dir}/mysql-connector-java-5.0.5.jar" />
+				</classpath>
+			</sql>
+		</sequential>
+	</macrodef>
+	                                                
+	<echo message="HOME is: ${env.HOME}" />
+	<target name="update:build:schedule">
+        <property name="build.schedule.hour" value="20" />
+        <property name="build.schedule.minute" value="0" />
+        <property name="build.schedule" value="${build.schedule.minute} ${build.schedule.hour} * * *" />
+        <echo>build.schedule=${build.schedule}</echo>
+		<replaceregexp match="(&lt;spec&gt;).*(&lt;/spec&gt;)" replace="\1${build.schedule}\2"  byline="true">
+   			 <fileset dir="${env.HOME}/hudson_data/jobs" includes="certify*/config.xml"/>
+		</replaceregexp>
+	</target>
+
+    <target name="backupconfig">
+        <if>
+            <not>
+                <isset property="env.HUDSON_HOME" />
+            </not>
+            <then>
+                <fail message="env.HUDSON_HOME is not set." />
+            </then>
+        </if>
+
+
+        <fileset  dir="${env.HUDSON_HOME}/jobs" id="configstobackup">
+            <include name="**/config.xml" />
+            <!--<exclude name="**/${env.JOB_NAME}" />-->
+        </fileset>
+
+        <property name="display" refid="configstobackup" />
+        <echo>configstobackup=${display}</echo>
+
+        <copy todir="${backupconfig.checkout.dir}">
+            <fileset refid="configstobackup" />
+        </copy>
+
+        <!--delete thyself! to prevent recursion-->
+        <property name="workspace.for.my.own.job.dir" value="${env.WORKSPACE}/jobs/${env.JOB_NAME}/workspace" />
+        <echo>workspace.for.my.own.job.dir=${workspace.for.my.own.job.dir}</echo>
+        <if>
+            <available file="${workspace.for.my.own.job.dir}" type="dir" />
+            <then>
+                <delete dir="${env.WORKSPACE}/jobs/${env.JOB_NAME}/workspace" />
+            </then>
+        </if>
+
+
+
+
+        <svn javahl="false">
+            <add>
+                <fileset dir="${backupconfig.checkout.dir}" >
+                    <include name="**/config.xml" />
+                </fileset>
+            </add>
+        </svn>
+
+        <svn javahl="false" username="${svn.username}" password="${svn.password}" failonerror="true" >
+            <commit dir="${backupconfig.checkout.dir}" message="Backup of Hudson jobs" recurse="true" />
+        </svn>
+    </target>
+</project>

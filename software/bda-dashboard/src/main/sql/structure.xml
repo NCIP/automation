@@ -1,0 +1,232 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"
+        logicalFilePath="structure.xml">
+
+
+    <changeSet id="2010.06.14.22.29.01" author="bassetttj">
+        <createTable tableName="dashboard_properties">
+            <column name="dashboard_key" type="varchar(600)"/>
+            <column name="dashboard_value" type="varchar(2000)" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2010.06.14.19.30.01" author="bassetttj">
+        <createTable tableName="target_lookup">
+            <column name="ID" type="int8"/>
+            <column name="TARGET_NAME" type="varchar(150)"/>
+            <column name="MAP_NAME" type="varchar(150)"/>
+            <column name="IS_VALUE" type="varchar(15)"/>
+            <column name="IS_OPTIONAL" type="varchar(15)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2010.06.14.22.17.01" author="bassettj">
+        <createTable tableName="project_poc">
+            <column name="PROJECT_NAME" type="varchar(100)"/>
+            <column name="DEV_POC" type="varchar(200)"/>
+            <column name="DEV_POC_EMAIL" type="varchar(200)" />
+            <column name="GOV_POC" type="varchar(200)" />
+            <column name="GOV_POC_EMAIL" type="varchar(200)" />
+            <column name="BDA_POC_EMAIL" type="varchar(200)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2010.06.15.11.55.00" author="bassetttj">
+        <createTable tableName="PROJECT_CERTIFICATION_STATUS">
+            <column name="ID" type="INT(11)" />
+            <column name="PRODUCT" type="VARCHAR(500)" />
+            <column name="CERTIFICATION_STATUS" type="VARCHAR(500)" />
+            <column name="SINGLE_COMMAND_BUILD" type="VARCHAR(500)" />
+            <column name="SINGLE_COMMAND_DEPLOYMENT" type="VARCHAR(500)" />
+            <column name="REMOTE_UPGRADE" type="VARCHAR(500)" />
+            <column name="DATABASE_INTEGRATION" type="VARCHAR(500)" />
+            <column name="TEMPLATE_VALIDATION" type="VARCHAR(500)" />
+            <column name="PRIVATE_PROPERTIES" type="VARCHAR(500)" />
+            <column name="CI_BUILD" type="VARCHAR(500)" />
+            <column name="DEPLOYMENT_SHAKEOUT" type="VARCHAR(500)" />
+            <column name="BDA_ENABLED" type="VARCHAR(500)" />
+            <column name="COMMANDLINE_INSTALLER" type="VARCHAR(500)" />
+        </createTable>
+    </changeSet>
+
+    <!--http://stelligent.jira.com/browse/BDA-107-->
+    <changeSet id="2010.06.16.2010" author="bassetttj">
+        <addColumn tableName="project_poc">
+            <column name="COTR" type="varchar(200)"/>
+            <column name="COTR_EMAIL" type="varchar (200)" />
+        </addColumn>
+    </changeSet>
+
+    <!--http://stelligent.jira.com/browse/BDA-107-->
+    <changeSet id="2010.06.23.1542" author="bassetttj">
+        <addColumn tableName="project_poc">
+            <column name="PROJECT_FRIENDLY" type="varchar(500)"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="2010.07.12.1427" author="bassetttj">
+        <addColumn tableName="PROJECT_CERTIFICATION_STATUS">
+            <column name="CERT_DATE" type="TIMESTAMP" />
+        </addColumn>
+        <update tableName="PROJECT_CERTIFICATION_STATUS">
+            <column name="CERT_DATE" value="CURRENT_TIMESTAMP" />
+        </update>
+        <addNotNullConstraint tableName="PROJECT_CERTIFICATION_STATUS" columnName="CERT_DATE" columnDataType="TIMESTAMP" />
+    </changeSet>
+
+    <changeSet id="2010.07.13.1036" author="bassetttj">
+        <addNotNullConstraint tableName="PROJECT_CERTIFICATION_STATUS" columnName="CERT_DATE" columnDataType="TIMESTAMP" />
+    </changeSet>
+
+    <changeSet id="2010.07.13.1430" author="bassetttj">
+        <delete tableName="PROJECT_CERTIFICATION_STATUS">
+            <where>
+                product like '%cadsr-semanticTools%'
+            </where>
+        </delete>
+    </changeSet>
+
+    <changeSet id="2010.07.16.09.53" author="bassetttj">
+        <createTable tableName="certification_history">
+            <column name="ID" type="INT(11)" />
+            <column name="PRODUCT" type="VARCHAR(500)" />
+            <column name="CERTIFICATION_STATUS" type="VARCHAR(500)" />
+            <column name="SINGLE_COMMAND_BUILD" type="VARCHAR(500)" />
+            <column name="SINGLE_COMMAND_DEPLOYMENT" type="VARCHAR(500)" />
+            <column name="REMOTE_UPGRADE" type="VARCHAR(500)" />
+            <column name="DATABASE_INTEGRATION" type="VARCHAR(500)" />
+            <column name="TEMPLATE_VALIDATION" type="VARCHAR(500)" />
+            <column name="PRIVATE_PROPERTIES" type="VARCHAR(500)" />
+            <column name="CI_BUILD" type="VARCHAR(500)" />
+            <column name="DEPLOYMENT_SHAKEOUT" type="VARCHAR(500)" />
+            <column name="BDA_ENABLED" type="VARCHAR(500)" />
+            <column name="COMMANDLINE_INSTALLER" type="VARCHAR(500)" />
+            <column name="CERT_DATE" type="TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="2010.07.20.17.18" author="bassetttj">
+        <addColumn tableName="target_lookup">
+            <column name="SAVE_PROPERTIES" type="VARCHAR(500)" />
+            <column name="USE_PROPERTIES" type="VARCHAR(500)" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2010.07.21.14.07" author="bassetttj">
+        <addColumn tableName="project_poc">
+            <column name="priority" type="int" defaultValue="9999999" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2010.07.27.14.39" author="bassetttj">
+        <dropColumn tableName="certification_history" columnName="CERT_DATE"/>
+        <addColumn tableName="certification_history">
+            <column name="CERT_DATE" type="DATETIME" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2010.08.05.12.28" author="bassetttj" >
+        <sql>
+            alter table project_poc add project_id int not null auto_increment primary key
+        </sql>
+        <rollback>
+            <sql>ALTER TABLE `project_poc` DROP `project_id`</sql>
+        </rollback>
+    </changeSet>
+
+    <!--<changeSet id="2010.08.06.11.05" author="bassetttj" >-->
+        <!--<dropColumn tableName="project_poc" columnName="project_id" />-->
+        <!--<addColumn tableName="project_poc">-->
+            <!--<column name="project_id" type="int">-->
+                <!--<constraints nullable="false" />-->
+            <!--</column>-->
+        <!--</addColumn>-->
+        <!--<addPrimaryKey tableName="project_poc"-->
+                       <!--columnNames="project_id"-->
+                       <!--constraintName="project_poc_pk" />-->
+        <!--<sql>ALTER TABLE `project_poc` MODIFY `project_id` AUTO_INCREMENT</sql>-->
+    <!--</changeSet>-->
+
+    <changeSet id="2010.08.05.16.21" author="bassetttj">
+        <createTable tableName="project_history_type">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="project_history_type_pk" nullable="false" />
+            </column>
+            <column name="description" type="varchar(50)">
+                <constraints unique="true" uniqueConstraintName="description_unique" nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="project_history">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="project_history_pk" nullable="false" />
+            </column>
+            <column name="project" type="int">
+                <constraints foreignKeyName="project_history_project_fk"
+                             references="project_poc(project_id)"
+                             nullable="false" />
+            </column>
+            <column name="type" type="int">
+                <constraints foreignKeyName="project_history_project_history_type_fk"
+                             references="project_history_type(id)"
+                             nullable="false" />
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="notes" type="varchar(5000)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2010.08.17.15.04" author="bassetttj" runOnChange="true">
+        <delete tableName="project_history_type" />
+        <loadData tableName="project_history_type"
+                  file="${sql.dist.dir}/project_history_type.csv">
+        </loadData>
+    </changeSet>
+
+
+    <changeSet id="https://tracker.nci.nih.gov/browse/BDA-570" author="bassetttj">
+        <insert tableName="project_poc">
+            <column name="PROJECT_FRIENDLY" value="ObjectCart" />
+            <column name="PROJECT_NAME" value="objectcart" />
+            <!--<column name="COTR_EMAIL" value="" />-->
+            <!--<column name="GOV_POC" value="" />-->
+            <!--<column name="COTR" value="" />-->
+            <column name="DEV_POC" value="Denis Avdic" />
+            <column name="DEV_POC_EMAIL" value="avdicd@mail.nih.gov" />
+            <column name="GOV_POC_EMAIL" value="" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="https://tracker.nci.nih.gov/browse/BDA-581" author="bassetttj">
+        <delete tableName="project_poc">
+            <where>
+                PROJECT_NAME = "caehr" AND PROJECT_FRIENDLY = "caEHR Enterprise Services Development- 5AM"
+            </where>
+        </delete>
+        <delete tableName="project_poc">
+            <where>
+                PROJECT_NAME = "camod" AND GOV_POC = "Anand Basu"
+            </where>
+        </delete>
+        <delete tableName="project_poc">
+            <where>
+                PROJECT_NAME IS NULL OR PROJECT_NAME = ""
+            </where>
+        </delete>
+        <addUniqueConstraint tableName="project_poc" columnNames="PROJECT_NAME" constraintName="project_poc_project_name" />
+    </changeSet>
+    
+    <changeSet id="https://tracker.nci.nih.gov/browse/BDA-586" author="bassetttj">
+        <update tableName="project_poc">
+            <column name="project_name" value="cacore-workbench" />
+            <where>
+                PROJECT_NAME = "workbench"
+            </where>
+        </update>
+    </changeSet>
+</databaseChangeLog>

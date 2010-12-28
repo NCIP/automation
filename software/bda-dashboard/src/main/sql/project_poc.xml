@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+
+
+    <changeSet id="2010.06.14.22.33.01" author="bassetttj">
+        <delete tableName="project_poc" />
+        <loadData tableName="project_poc"
+                  file="${sql.dist.dir}/project_poc.csv">
+        </loadData>
+    </changeSet>
+
+    <changeSet id="2010.06.23.1543" author="bassetttj" runOnChange="true">
+        <rollback changeSetAuthor="bassetttj" changeSetId="2010.06.14.22.33.01"/>
+        <delete tableName="project_poc" />
+    </changeSet>
+
+    <changeSet id="2010.06.23.1614" author="bassetttj" runOnChange="true">
+        <delete tableName="project_poc" />
+        <loadData tableName="project_poc"
+                  file="${sql.dist.dir}/project-poc-for-import.csv">
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>
