@@ -197,6 +197,7 @@ docs/reference-architecture/scripts/README -text
 docs/reference-architecture/template.build.properties -text
 docs/release_management/cbiit-releases.xls -text
 docs/requirements/installer_use_case_specification.doc -text
+docs/requirements_traceability/bda_requirements_traceability_matrix.xlsx -text svneol=unset#application/vnd.ms-excel
 docs/roadmap/bda-demo.ppt -text
 docs/roadmap/bda-overview-lsdpm.ppt -text
 docs/roadmap/bda-roadmap.doc -text
