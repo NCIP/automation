@@ -266,6 +266,7 @@ docs/screencasts/cbiit-bda.swf -text
 docs/screencasts/ci-hudson.swf -text
 docs/special-projects/ehr-tech-eval.docx -text
 docs/system_and_software_design/bda_software_architecture_document.doc -text svneol=unset#application/msword
+docs/test/system_and_software_test_report.doc -text svneol=unset#application/msword
 docs/wiki/dashboard/certification.tiff -text
 docs/wiki/dashboard/dashboard.swf -text
 docs/wiki/dashboard/resources/hudson-dashboard.xml -text
