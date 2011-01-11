@@ -19,6 +19,11 @@ my $subject = "maven-rsync status report\n";
 my $send_to="steven.saksa\@stelligent.com\n";
 my $from="ncicbiitbda\@mail.nih.gov\n";
 
+my $rsync_count=0;
+my $svn_added=0;
+my $svn_updated=0;
+my $svn_failed=0;
+
 &verifyOptions;
 &mavensync;
 &updateFileList;
@@ -85,6 +90,7 @@ sub mavensync()
 		$emailBody .= "$cnt files transfered\n";
 		print "$cnt files transfered\n";
 		print LF "$cnt files transfered\n";
+		$rsync_count+=$cnt;
 		if($cnt == 0) {$complete="true"} 
 	
 		my $endEpoch=time();
@@ -123,6 +129,12 @@ sub notify()
 #	print SENDMAIL "Content-type: text/plain\n\n";
 #	print SENDMAIL $emailBody;
 #	close(SENDMAIL);
+	my $email_msg="Records synced via rsync - ${rsync_count}
+Records updated in svn - ${svn_updated}
+Records added in svn - ${svn_added}
+Records failed in svn - ${svn_failed}
+";
+
 	my $smtp = Net::SMTP->new('mailfwd.nih.gov');
 	$smtp->mail('bda_user@mail.nih.gov');
 	$smtp->to($send_to);
@@ -132,7 +144,7 @@ From:  <saksass\@mail.nih.gov>
 Subject: ${subject}
 Importance: high
 
-$emailBody
+$email_msg
 ");
 	$smtp->dataend();
 	$smtp->quit;
@@ -210,7 +222,13 @@ sub svnadd ()
 				print LF "Adding $obj to svn\n";
 				my $rc = qx(svn --username $svnUser --password '$svnPass' add $obj );
 				my $rc = qx(svn --username $svnUser --password '$svnPass' commit -m "Added by automated routine after rsync on $runDate" $obj );
-				print LF "\tRC - $rc\n";
+				if ($rc !~ /Commmited revision \d+/)
+				{
+					print "No commit message, commit probably failed\n";
+					print LF "No commit message, commit probably failed\n";
+					$svn_failed++;
+				}
+				print LF "\tAdd 1 RC - $rc\n";
 				$emailBody .= "\tRC - $rc\n";
 			}
 			elsif($line =~/^A\s+(.*)/)
@@ -221,7 +239,13 @@ sub svnadd ()
 				print "Adding $obj to svn\n";
 				print LF "Adding $obj to svn\n";
 				my $rc = qx(svn --username $svnUser --password '$svnPass' commit -m "Added by automated routine after rsync on $runDate" $obj );
-				print LF "\tRC - $rc\n";
+				if ($rc !~ /Commmited revision \d+/)
+				{
+					print "No commit message, commit probably failed\n";
+					print LF "No commit message, commit probably failed\n";
+					$svn_failed++;
+				}
+				print LF "\tAdd 2 RC - $rc\n";
 				$emailBody .= "\tRC - $rc\n";
 			}
 			elsif($line =~/^\M\s+(.*)/)
@@ -235,7 +259,13 @@ sub svnadd ()
 					print "Updating $obj in svn\n";
 					print LF "Updating $obj in svn\n";
 					my $rc = qx(svn --username $svnUser --password '$svnPass' commit -m "Updated by automated routine after rsync on $runDate" $obj 2>&1 );
-					print LF "\tRC - $rc\n";
+					if ($rc !~ /Commmited revision \d+/)
+					{
+						print "No commit message, commit probably failed\n";
+						print LF "No commit message, commit probably failed\n";
+						$svn_failed++;
+					}
+					print LF "\tUpdate 1 RC - $rc\n";
 					$emailBody .= "\tRC - $rc\n";
 				}
 				elsif($obj =~/[pom$|sha1$|md5%]/)
@@ -245,7 +275,13 @@ sub svnadd ()
 					print "Updating $obj in svn\n";
 					print LF "Updating $obj in svn\n";
 					my $rc = qx(svn --username $svnUser --password '$svnPass' commit -m "Updated by automated routine after rsync on $runDate" $obj 2>&1 );
-					print LF "\tRC - $rc\n";
+					if ($rc !~ /Commmited revision \d+/)
+					{
+						print "No commit message, commit probably failed\n";
+						print LF "No commit message, commit probably failed\n";
+						$svn_failed++;
+					}
+					print LF "\tUpdate 2 RC - $rc\n";
 					$emailBody .= "\tRC - $rc\n";
 				}
 				else
