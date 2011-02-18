@@ -30,6 +30,6 @@ This is the definition of a virtual module called bda-download that has a depend
     <dependency org="checkstyle" name="checkstyle" rev="4.6" conf="test-checkstyle->runtime"/>
     <dependency org="pmd" name="pmd" rev="4.2.5" conf="test-pmd->runtime"/>
     <dependency org="gov.nih.nci.bda-utils" name="bda-build-utils" rev="${bda.version}" changing="true" conf="runtime"/>
-    <dependency org="org.codehaus.groovy" name="groovy-all" rev="1.6.3" changing="true" conf="runtime"/>
+    <dependency org="org.codehaus.groovy" name="groovy-all" rev="1.6.3" changing="true" conf="runtime->master"/>
   </dependencies>
 </ivy-module>
