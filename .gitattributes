@@ -3442,6 +3442,7 @@ software/bda-download/cbiit-ivy-bda-settings.xml -text
 software/bda-download/ivy-bda-2.0.0.xml -text
 software/bda-download/ivy-bda-settings.xml -text
 software/bda-download/ivy-bda.xml -text
+software/bda-download/ivy-nexus-bda-2.0.0.xml -text
 software/bda-download/nexus-bda-settings.xml -text
 software/bda-installer/.classpath -text
 software/bda-installer/.project -text
