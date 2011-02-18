@@ -24,7 +24,7 @@ This ant build file downloads the bda project from the official NCICB Ivy Reposi
 	<property name="bda.version" value="1.7.5"/>
 
 	<property name="ivy.jar.file" value="ivy-2.2.0.jar"/>
-	<property name="ivy.settings.file" value="bda-ivy-2.0.0-build.xml"/>
+	<property name="ivy.settings.file" value="nexus-bda-settings.xml"/>
 	<property name="ivy.bda.file" value="ivy-nexus-bda-2.0.0.xml"/>
 
 	<property name="ivy.src.url" value="https://ncimvn.nci.nih.gov/nexus/content/groups/stelligent_bda_dev_group_repo/org/apache/ivy/ivy/2.2.0/${ivy.jar.file}"/>
