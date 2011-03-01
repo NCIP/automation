@@ -14,10 +14,10 @@ my $currentTransfer=undef;
 
 my $emailBody="";
 my $sendmail = "/usr/sbin/sendmail -t";
-my $reply_to = "ncicbiitbda\@mail.nih.gov\n";
+my $reply_to = "NCIWebSCMSupport\@mail.nih.gov\n";
 my $subject = "maven-rsync status report\n";
-my $send_to="steven.saksa\@stelligent.com\n";
-my $from="ncicbiitbda\@mail.nih.gov\n";
+my $send_to="NCIWebSCMSupport\@mail.nih.gov\n";
+my $from="NCIWebSCMSupport\@mail.nih.gov\n";
 
 my $rsync_count=0;
 my $svn_added=0;
@@ -140,7 +140,7 @@ Records failed in svn - ${svn_failed}
 	$smtp->to($send_to);
 	$smtp->data();
 	$smtp->datasend("To: ${send_to}
-From:  <saksass\@mail.nih.gov>
+From:  <NCIWebSCMSupport\@mail.nih.gov>
 Subject: ${subject}
 Importance: high
 

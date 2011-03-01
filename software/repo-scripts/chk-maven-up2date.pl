@@ -65,11 +65,11 @@ if ($content =~ /^(\w+)\s+(\w+)\s+(\d+)\s+([\d\:]+)\s+(\w+)\s+(\d+).*/)
 
 		my $message="The date (${content}) is older than two weeks, maven is probably out of date.\n";
 		my $smtp = Net::SMTP->new('mailfwd.nih.gov');
-		$smtp->mail('saksass@mail.nih.gov');
-		$smtp->to('steven.saksa@stelligent.com');
+		$smtp->mail('NCIWebSCMSupport@mail.nih.gov');
+		$smtp->to('NCIWebSCMSupport@mail.nih.gov');
 		$smtp->data();
-		$smtp->datasend("To: steven.saksa\@stelligent.com
-From:  <saksass\@mail.nih.gov>
+		$smtp->datasend("To: NCIWebSCMSupport\@mail.nih.gov
+From:  <NCIWebSCMSupport\@mail.nih.gov>
 Subject: Maven is out of date.
 Importance: high
 
