@@ -25,7 +25,7 @@
 	<property name="bda-download.file" value="bda-ivy-2.0.0-build.xml" />
 	<property name="bda.ivy.settings.file" value="cbiit-ivy-bda-settings.xml"/>
 	<property name="bda.ivy.def.file" value="ivy-bda-2.0.0.xml"/>
-	<property name="bda-download.src.url" value="http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download" />
+	<property name="bda-download.src.url" value="http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download" />
 
 	<mkdir dir="${target.dir}"/>
 	<mkdir dir="${lib.dir}"/>
@@ -198,7 +198,7 @@
 	</target>
 	<target name="setup-bda-templates">
 		<svn-co
-			svn.checkout.url="https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-template/software/blueprints-webapp"
+			svn.checkout.url="https://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-build-template/software/blueprints-webapp"
 			svn.checkout.dir="${project.root.dir}/software/blueprints-webapp"
 			delete="false"                          
 			/>                                      

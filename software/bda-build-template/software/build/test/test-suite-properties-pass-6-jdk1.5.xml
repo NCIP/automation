@@ -143,7 +143,7 @@
 	<target name="test:property:pass:jboss-bindings.src.url">
 		<echo message="**** Entering test:property:pass:jboss-bindings.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			jboss-bindings.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml
+			jboss-bindings.src.url=http://ncisvn.nci.nih.gov/svn/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml
 			evaluate.property.name=jboss-bindings.src.url
 			#groovy.debug=true
 		</echo>

@@ -188,7 +188,7 @@
 	<target name="test:property:pass:ivy.bda.settings.src.url">
 		<echo message="**** Entering test:property:pass:ivy.bda.settings.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			ivy.bda.settings.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda-settings.xml
+			ivy.bda.settings.src.url=http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/ivy-bda-settings.xml
 			evaluate.property.name=ivy.bda.settings.src.url
 			#groovy.debug=true
 		</echo>
@@ -203,7 +203,7 @@
 	<target name="test:property:pass:ivy.bda.src.url">
 		<echo message="**** Entering test:property:pass:ivy.bda.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			ivy.bda.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda.xml
+			ivy.bda.src.url=http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/ivy-bda.xml
 			evaluate.property.name=ivy.bda.src.url
 			#groovy.debug=true
 		</echo>

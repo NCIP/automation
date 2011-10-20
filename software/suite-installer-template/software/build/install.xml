@@ -2,7 +2,7 @@
 <!-- bda-build-template version 1.1.1  -->
 <!--
 $Id: install.xml 1775 2009-06-26 18:34:54Z saksass $
-$HeadURL: https://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-template/software/build/install.xml $
+$HeadURL: https://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-build-template/software/build/install.xml $
 -->
 
 <project name="bda-blueprints-installer" default="upgrade" basedir="." 

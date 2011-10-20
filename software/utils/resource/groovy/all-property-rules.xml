@@ -119,7 +119,7 @@
 				<conditions>
 					<condition>jboss.application.url ==~ /^http.*:\/\/.*/</condition>
 				</conditions>
-				<fail-message>jboss.application.url did not pass validation. jboss.application.url must be http(s)://* Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
+				<fail-message>jboss.application.url did not pass validation. jboss.application.url must be http(s)://* Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -147,7 +147,7 @@
 				<conditions>
 					<condition>tomcat.application.url ==~ /^http.*:\/\/.*/</condition>
 				</conditions>
-				<fail-message>tomcat.application.url did not pass validation. tomcat.application.url must be http(s)://* Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
+				<fail-message>tomcat.application.url did not pass validation. tomcat.application.url must be http(s)://* Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -358,7 +358,7 @@
 						<condition>build.bda.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>build.bda.src.url did not pass validation. build.bda.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
+				<fail-message>build.bda.src.url did not pass validation. build.bda.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
 			</rule>
 			<rule>
 				<name>build.bda.src.url-url</name>
@@ -366,7 +366,7 @@
 				<conditions>
 					<condition>build.bda.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
 				</conditions>
-				<fail-message>build.bda.src.url did not pass validation. build.bda.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
+				<fail-message>build.bda.src.url did not pass validation. build.bda.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2652,7 +2652,7 @@
 						<condition>ivy.bda.settings.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>ivy.bda.settings.src.url did not pass validation. ivy.bda.settings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda-settings.xml".</fail-message>
+				<fail-message>ivy.bda.settings.src.url did not pass validation. ivy.bda.settings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/ivy-bda-settings.xml".</fail-message>
 			</rule>
 			<rule>
 				<name>ivy.bda.settings.src.url-url</name>
@@ -2660,7 +2660,7 @@
 				<conditions>
 					<condition>ivy.bda.settings.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
 				</conditions>
-				<fail-message>ivy.bda.settings.src.url did not pass validation. ivy.bda.settings.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda-settings.xml".</fail-message>
+				<fail-message>ivy.bda.settings.src.url did not pass validation. ivy.bda.settings.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/ivy-bda-settings.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -2680,7 +2680,7 @@
 						<condition>ivy.bda.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>ivy.bda.src.url did not pass validation. ivy.bda.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda.xml".</fail-message>
+				<fail-message>ivy.bda.src.url did not pass validation. ivy.bda.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/ivy-bda.xml".</fail-message>
 			</rule>
 			<rule>
 				<name>ivy.bda.src.url-url</name>
@@ -2688,7 +2688,7 @@
 				<conditions>
 					<condition>ivy.bda.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
 				</conditions>
-				<fail-message>ivy.bda.src.url did not pass validation. ivy.bda.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/ivy-bda.xml".</fail-message>
+				<fail-message>ivy.bda.src.url did not pass validation. ivy.bda.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/ivy-bda.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -3055,7 +3055,7 @@
 						<condition>jboss-bindings.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
+				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
 			</rule>
 			<rule>
 				<name>jboss-bindings.src.url-url</name>
@@ -3063,7 +3063,7 @@
 				<conditions>
 					<condition>jboss-bindings.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
 				</conditions>
-				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
+				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>

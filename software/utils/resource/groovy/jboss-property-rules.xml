@@ -23,7 +23,7 @@
 				<conditions>
 					<condition>jboss.application.url ==~ /^http.*:\/\/.*/</condition>
 				</conditions>
-				<fail-message>jboss.application.url did not pass validation. jboss.application.url must be http(s)://* Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
+				<fail-message>jboss.application.url did not pass validation. jboss.application.url must be http(s)://* Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>
@@ -458,7 +458,7 @@
 						<condition>jboss-bindings.src.url == "" </condition>
 					</or>
 				</conditions>
-				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
+				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be null or have a value and not contain spaces or  back slashes (\). Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
 			</rule>
 			<rule>
 				<name>jboss-bindings.src.url-url</name>
@@ -466,7 +466,7 @@
 				<conditions>
 					<condition>jboss-bindings.src.url ==~ /^http.*:\/\/.*.nci.nih.gov.*/</condition>
 				</conditions>
-				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
+				<fail-message>jboss-bindings.src.url did not pass validation. jboss-bindings.src.url must be http(s)://*.nci.nih.gov/*. Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/resources/jboss-bindings/ncicb-bindings-dac-jboss-4.0.x.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>

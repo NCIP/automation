@@ -23,7 +23,7 @@
 				<conditions>
 					<condition>tomcat.application.url ==~ /^http.*:\/\/.*/</condition>
 				</conditions>
-				<fail-message>tomcat.application.url did not pass validation. tomcat.application.url must be http(s)://* Sample valid value - "http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
+				<fail-message>tomcat.application.url did not pass validation. tomcat.application.url must be http(s)://* Sample valid value - "http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/bda-ivy-build.xml".</fail-message>
 			</rule>
 		</rules>
 	</property>

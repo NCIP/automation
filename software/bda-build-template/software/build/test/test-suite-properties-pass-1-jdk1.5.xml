@@ -205,7 +205,7 @@
 	<target name="test:property:pass:build.bda.src.url">
 		<echo message="**** Entering test:property:pass:build.bda.src.url"/>
 		<echo file="${dist.exploded.dir}/local.properties" append="false">
-			build.bda.src.url=http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-download/bda-ivy-build.xml
+			build.bda.src.url=http://ncisvn.nci.nih.gov/svn/automation/trunk/software/bda-download/bda-ivy-build.xml
 			evaluate.property.name=build.bda.src.url
 			#groovy.debug=true
 		</echo>
