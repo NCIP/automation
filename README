@@ -1,0 +1,9 @@
+As part of SVN to GitHub migration of this repository done in May 2017, below large files (>100 MB) were removed as GitHub 
+does not support large files with it's basic subscription:
+
+alok-drt-screencast.flv
+bda-flash-converted.flv
+caarray_distribution_2_1_0.zip
+
+If you need access to these files, please use https://cbiit.nci.nih.gov/about/contact-us to contact support 
+and mention that you need access to these files from archived automation SVN repository.  
